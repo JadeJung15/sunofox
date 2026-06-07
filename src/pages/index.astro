@@ -95,35 +95,34 @@ const releases = [
   }
 ];
 
+const news = [
+  ['2026.06.07', 'Official Site Direction Updated', 'YOASOBI 공식 사이트 흐름을 기준으로 홈 구조를 NEWS 중심으로 재정렬했습니다.'],
+  ['2026.06.01', 'ARCHIVE vol.1 Released', '각성, 전투, 이별, 도시 야경을 담은 SunoFox OST 아카이브를 공개했습니다.'],
+  ['2026.05.25', 'Flamebreaker Music Video', 'ARCHIVE vol.1의 첫 번째 전투형 오프닝 트랙을 YouTube에서 공개했습니다.']
+];
+
+const media = [
+  {
+    label: 'LATEST VIDEO',
+    title: 'Flamebreaker',
+    href: `https://www.youtube.com/watch?v=${releases[0].youtubeId}`
+  },
+  {
+    label: 'STREAMING',
+    title: 'SunoFox on Spotify',
+    href: artistLinks.spotify
+  },
+  {
+    label: 'KOREA',
+    title: 'Melon Artist Page',
+    href: artistLinks.melon
+  }
+];
+
 const series = [
   ['AWAKENING', '각성의 테마', '무너진 세계에서 다시 일어서는 주인공의 사운드트랙'],
-  ['BATTLE', '전투의 테마', '빠른 드럼, 심포닉 브라스, 네온처럼 터지는 후렴'],
-  ['FAREWELL', '이별의 테마', '도시의 밤과 마지막 인사를 그리는 감정선'],
-  ['DAILY LIFE', '일상의 테마', '애니메이션 속 여백과 따뜻한 장면을 위한 곡']
-];
-
-const news = [
-  ['2026.06.07', 'Official Website Renewal', 'YOASOBI 스타일의 Deep Dark Neon 사이트 콘셉트 공개'],
-  ['2026.06.01', 'Anime OST Archive', '각성, 전투, 이별, 일상 시리즈 카테고리 확장'],
-  ['2026.05.25', 'Latest Track Update', 'Nameless Awakening YouTube 공개'],
-  ['2026.05.18', 'Platform Expansion', 'YouTube Music, Spotify, Apple Music 링크 정리'],
-  ['2026.05.10', 'Studio Direction', 'Suno AI + Human Curation 제작 방식 정리']
-];
-
-const gallery = [
-  '/assets/releases/archive-vol-1/flamebreaker.webp',
-  '/assets/releases/archive-vol-1/flame-of-the-echo.webp',
-  '/assets/releases/archive-vol-1/rewind-of-destiny.webp',
-  '/assets/releases/archive-vol-1/starlight-calling.webp',
-  '/assets/releases/archive-vol-1/r3dl1n3.webp',
-  '/assets/releases/archive-vol-1/neon-rush.webp'
-];
-
-const workflow = [
-  ['01', 'Scene Brief', '캐릭터, 도시, 시간대, 감정선을 먼저 설계합니다.'],
-  ['02', 'AI Draft', 'Suno AI로 여러 사운드 방향을 빠르게 실험합니다.'],
-  ['03', 'Human Curation', '후렴, 가사, 장면감, 플랫폼 문구를 사람이 정리합니다.'],
-  ['04', 'Visual World', '썸네일, 영상, 세계관 콘텐츠로 확장합니다.']
+  ['BATTLE', '전투의 테마', '빠른 드럼, 심포닉 브라스, 강한 후렴 중심의 전개'],
+  ['FAREWELL', '이별의 테마', '도시의 밤과 마지막 인사를 그리는 감정선']
 ];
 
 const structuredData = {
@@ -148,211 +147,174 @@ const structuredData = {
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   </Fragment>
 
-  <div class="pointer-events-none fixed inset-0 -z-10">
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(139,92,246,.35),transparent_30%),radial-gradient(circle_at_80%_10%,rgba(236,72,153,.28),transparent_28%),radial-gradient(circle_at_50%_80%,rgba(34,211,238,.18),transparent_32%),linear-gradient(180deg,#05010f_0%,#03030a_55%,#000_100%)]"></div>
-    <div class="absolute inset-0 opacity-[0.14] bg-[linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)] bg-[size:72px_72px]"></div>
-  </div>
+  <header class="site-header" aria-label="SunoFox header">
+    <a class="site-logo" href="#top" aria-label="SunoFox home">
+      <span class="site-logo-mark">SF</span>
+      <span>SunoFox</span>
+    </a>
 
-  <header class="fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-black/45 backdrop-blur-2xl">
-    <nav class="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 md:px-8" aria-label="Main navigation">
-      <a href="#top" class="flex items-center gap-3 font-black tracking-tight" aria-label="SunoFox home">
-        <span class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-fuchsia-500 to-cyan-400 text-xl shadow-[0_0_32px_rgba(34,211,238,.45)]">SF</span>
-        <span class="text-2xl">SUNOFOX</span>
-      </a>
-
-      <button id="menuButton" class="neon-button rounded-full px-4 py-2 text-sm font-black md:hidden" aria-expanded="false" aria-controls="mobileMenu" type="button">
-        MENU
-      </button>
-
-      <div class="hidden items-center gap-8 text-sm font-bold uppercase tracking-[0.18em] text-white/70 md:flex">
-        <a class="hover:text-cyan-300" href="#releases">Releases</a>
-        <a class="hover:text-cyan-300" href="#series">Series</a>
-        <a class="hover:text-cyan-300" href="#news">News</a>
-        <a class="hover:text-cyan-300" href="#gallery">Gallery</a>
-        <a class="hover:text-cyan-300" href="#about">About</a>
-      </div>
-
-      <a href="https://www.youtube.com/@sunofox" class="neon-button hidden rounded-full px-5 py-3 text-sm font-black md:inline-flex" target="_blank" rel="noopener noreferrer">
-        YouTube
-      </a>
-    </nav>
-
-    <div id="mobileMenu" class="hidden border-t border-white/10 bg-black/90 px-5 py-5 md:hidden">
-      <div class="grid gap-4 text-sm font-black uppercase tracking-[0.18em] text-white/75">
-        <a href="#releases">Releases</a>
-        <a href="#series">Series</a>
-        <a href="#news">News</a>
-        <a href="#gallery">Gallery</a>
-        <a href="#about">About</a>
-        <a href="https://www.youtube.com/@sunofox" target="_blank" rel="noopener noreferrer">YouTube</a>
-      </div>
-    </div>
+    <button id="menuButton" class="menu-trigger" type="button" aria-expanded="false" aria-controls="overlayMenu" aria-label="전체 메뉴 열기">
+      <span class="menu-trigger-label">MENU</span>
+      <span class="menu-trigger-lines" aria-hidden="true">
+        <span></span>
+        <span></span>
+      </span>
+    </button>
   </header>
 
-  <main id="top">
-    <section class="relative flex min-h-screen items-center overflow-hidden px-5 pt-28 md:px-8">
-      <div class="absolute right-[-12vw] top-28 h-[48vw] w-[48vw] rounded-full bg-fuchsia-500/20 blur-3xl"></div>
-      <div class="absolute bottom-10 left-[-8vw] h-[36vw] w-[36vw] rounded-full bg-cyan-400/20 blur-3xl"></div>
+  <aside id="overlayMenu" class="overlay-menu" aria-hidden="true">
+    <div class="overlay-menu-inner">
+      <nav class="overlay-nav" aria-label="Overlay navigation">
+        <a href="#profile">PROFILE</a>
+        <a href="#news">NEWS</a>
+        <a href="#media">MEDIA</a>
+        <a href="#songs">SONGS / NOVELS</a>
+        <a href="#live">LIVE</a>
+        <a href="#contact">CONTACT</a>
+      </nav>
 
-      <div class="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[1.02fr_.98fr]">
-        <div class="reveal">
-          <p class="mb-5 text-sm font-black uppercase tracking-[0.34em] text-cyan-300">Anime OST Studio / AI Music Project</p>
-          <h1 class="neon-title text-6xl font-black leading-[0.88] tracking-[-0.07em] md:text-8xl lg:text-9xl">SUNOFOX</h1>
-          <p class="mt-7 max-w-2xl text-2xl font-bold leading-tight text-white md:text-4xl">
-            감정을 그리는 애니메이션 사운드트랙
-            <span class="block text-white/60">Animation soundtracks painted with emotion.</span>
-          </p>
-          <div class="mt-9 flex flex-col gap-4 sm:flex-row">
-            <a class="neon-button rounded-full px-7 py-4 text-center font-black" href="#latest">Latest Track 듣기</a>
-            <a class="rounded-full border border-white/20 px-7 py-4 text-center font-black text-white/80 hover:border-cyan-300 hover:text-cyan-200" href="#series">OST 세계관 보기</a>
-          </div>
-        </div>
-
-        <div id="latest" class="glass-card reveal overflow-hidden rounded-[28px] p-3">
-          <div class="aspect-video overflow-hidden rounded-[20px] bg-black">
-            <iframe
-              class="h-full w-full"
-              src="https://www.youtube.com/embed/RPg5y7WbvRo"
-              title="SunoFox Latest Track"
-              loading="lazy"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen></iframe>
-          </div>
-          <div class="grid gap-2 p-5">
-            <span class="text-xs font-black uppercase tracking-[0.24em] text-fuchsia-300">Latest Track</span>
-            <strong class="text-2xl">Nameless Awakening / 이름 없는 각성</strong>
-            <p class="text-white/60">Suno AI와 Human Curation으로 완성한 시네마틱 애니 OST.</p>
-          </div>
-        </div>
+      <div class="overlay-socials" aria-label="SunoFox external links">
+        <a href={artistLinks.youtube} target="_blank" rel="noopener noreferrer">YOUTUBE</a>
+        <a href={artistLinks.spotify} target="_blank" rel="noopener noreferrer">SPOTIFY</a>
+        <a href={artistLinks.melon} target="_blank" rel="noopener noreferrer">MELON</a>
+        <a href={artistLinks.soundcloud} target="_blank" rel="noopener noreferrer">SOUNDCLOUD</a>
       </div>
+    </div>
+  </aside>
+
+  <main id="top" class="site-main">
+    <section class="hero-stage" aria-labelledby="heroTitle">
+      <div class="hero-center reveal">
+        <p class="hero-kicker">ANIME OST STUDIO</p>
+        <h1 id="heroTitle" class="hero-wordmark">SUNOFOX</h1>
+        <p class="hero-tagline">
+          감정을 그리는 애니메이션 사운드트랙
+          <span>Animation soundtracks painted with emotion.</span>
+        </p>
+        <a class="micro-button" href="#profile">PROFILE</a>
+      </div>
+      <a class="scroll-cue" href="#news" aria-label="뉴스 섹션으로 이동">SCROLL DOWN</a>
     </section>
 
-    <section id="releases" class="mx-auto max-w-7xl px-5 py-24 md:px-8">
-      <p class="text-sm font-black uppercase tracking-[0.3em] text-cyan-300">Latest Releases</p>
-      <h2 class="neon-title mt-3 text-5xl font-black tracking-[-0.05em] md:text-7xl">TRACK ARCHIVE</h2>
-      <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {releases.map((release) => <ReleaseCard release={release} />)}
+    <section id="news" class="home-section split-section" aria-labelledby="newsTitle">
+      <div class="section-heading">
+        <p class="section-kicker">NEWS</p>
+        <h2 id="newsTitle">NEWS</h2>
       </div>
-    </section>
 
-    <section id="series" class="mx-auto max-w-7xl px-5 py-24 md:px-8">
-      <p class="text-sm font-black uppercase tracking-[0.3em] text-pink-300">Signature Series</p>
-      <h2 class="neon-title mt-3 max-w-4xl text-5xl font-black tracking-[-0.05em] md:text-7xl">ANIME EPISODE SOUND WORLDS</h2>
-
-      <div class="mt-12 grid gap-4 md:grid-cols-2">
-        {series.map(([en, ko, desc], index) => (
-          <article class="glass-card group rounded-[28px] p-8 transition hover:-translate-y-1 hover:border-cyan-300/60">
-            <span class="text-sm font-black text-cyan-300">0{index + 1}</span>
-            <h3 class="mt-5 text-4xl font-black tracking-[-0.04em]">{en}</h3>
-            <p class="mt-2 text-xl font-bold text-fuchsia-200">{ko}</p>
-            <p class="mt-5 text-white/60">{desc}</p>
-            <a class="neon-button mt-6 inline-flex rounded-full px-5 py-3 text-sm font-black" href="https://www.youtube.com/@sunofox" target="_blank" rel="noopener noreferrer">
-              Listen on YouTube
-            </a>
-          </article>
-        ))}
-      </div>
-    </section>
-
-    <section id="news" class="mx-auto max-w-7xl px-5 py-24 md:px-8">
-      <p class="text-sm font-black uppercase tracking-[0.3em] text-cyan-300">News & Updates</p>
-      <h2 class="neon-title mt-3 text-5xl font-black tracking-[-0.05em] md:text-7xl">TIMELINE</h2>
-      <div class="mt-12 grid gap-4">
+      <div class="news-list">
         {news.map(([date, title, body]) => (
-          <article class="glass-card grid gap-4 rounded-[24px] p-6 md:grid-cols-[180px_1fr]">
-            <time class="font-black text-fuchsia-300">{date}</time>
+          <article class="news-row reveal">
+            <time datetime={date.replaceAll('.', '-')}>{date}</time>
             <div>
-              <h3 class="text-2xl font-black">{title}</h3>
-              <p class="mt-2 text-white/60">{body}</p>
+              <h3>{title}</h3>
+              <p>{body}</p>
             </div>
           </article>
         ))}
       </div>
     </section>
 
-    <section id="gallery" class="mx-auto max-w-7xl px-5 py-24 md:px-8">
-      <p class="text-sm font-black uppercase tracking-[0.3em] text-pink-300">Visual Gallery</p>
-      <h2 class="neon-title mt-3 text-5xl font-black tracking-[-0.05em] md:text-7xl">SCENES</h2>
-      <div class="mt-12 columns-1 gap-4 sm:columns-2 lg:columns-3">
-        {gallery.map((src, index) => (
-          <button class="gallery-item mb-4 block w-full overflow-hidden rounded-[24px] border border-white/10 bg-white/5 text-left" data-src={src} aria-label={`SunoFox visual ${index + 1} 확대 보기`} type="button">
-            <img
-              class="w-full object-cover transition duration-500 hover:scale-105"
-              src={src}
-              alt={`SunoFox visual scene ${index + 1}`}
-              loading="lazy"
-              onerror="this.onerror=null; this.src='/assets/sf-studio-icon-512.png'; this.classList.add('bg-black/60','p-16');"
-            />
-          </button>
+    <section id="media" class="home-section media-section" aria-labelledby="mediaTitle">
+      <div class="section-heading">
+        <p class="section-kicker">MEDIA</p>
+        <h2 id="mediaTitle">MEDIA</h2>
+      </div>
+
+      <div class="media-grid">
+        {media.map((item) => (
+          <a class="media-card reveal" href={item.href} target="_blank" rel="noopener noreferrer">
+            <span>{item.label}</span>
+            <strong>{item.title}</strong>
+          </a>
         ))}
       </div>
     </section>
 
-    <section id="about" class="mx-auto max-w-7xl px-5 py-24 md:px-8">
-      <div class="glass-card rounded-[32px] p-8 md:p-12">
-        <p class="text-sm font-black uppercase tracking-[0.3em] text-cyan-300">About SunoFox</p>
-        <h2 class="neon-title mt-4 text-5xl font-black tracking-[-0.05em] md:text-7xl">AI + HUMAN CURATION</h2>
-        <p class="mt-6 max-w-3xl text-lg leading-8 text-white/65">
-          SunoFox는 Suno AI를 기반으로 하되, 단순 생성물이 아니라 장면 기획, 감정선, 캐릭터 서사, 편곡 방향을 사람이 큐레이션하는 Anime OST Studio입니다.
+    <section id="songs" class="home-section songs-section" aria-labelledby="songsTitle">
+      <div class="section-heading section-heading-wide">
+        <p class="section-kicker">SONGS / NOVELS</p>
+        <h2 id="songsTitle">ARCHIVE vol.1</h2>
+        <p>
+          각 곡은 하나의 장면, 하나의 캐릭터, 하나의 세계관에서 시작됩니다.
+          SunoFox는 애니메이션 OST처럼 들리는 AI Music 프로젝트입니다.
         </p>
-
-        <div class="mt-10 grid gap-4 md:grid-cols-4">
-          {workflow.map(([num, title, body]) => (
-            <article class="rounded-[24px] border border-white/10 bg-white/[0.045] p-6">
-              <span class="text-sm font-black text-cyan-300">{num}</span>
-              <h3 class="mt-4 text-2xl font-black">{title}</h3>
-              <p class="mt-3 text-sm leading-6 text-white/55">{body}</p>
-            </article>
-          ))}
-        </div>
       </div>
+
+      <div class="release-grid">
+        {releases.map((release) => <ReleaseCard release={release} />)}
+      </div>
+    </section>
+
+    <section id="live" class="home-section live-section" aria-labelledby="liveTitle">
+      <div class="section-heading">
+        <p class="section-kicker">LIVE</p>
+        <h2 id="liveTitle">SERIES</h2>
+      </div>
+
+      <div class="series-grid">
+        {series.map(([en, ko, desc]) => (
+          <article class="series-card reveal">
+            <p>{en}</p>
+            <h3>{ko}</h3>
+            <span>{desc}</span>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section id="profile" class="home-section profile-section" aria-labelledby="profileTitle">
+      <div class="profile-copy reveal">
+        <p class="section-kicker">PROFILE</p>
+        <h2 id="profileTitle">SunoFox</h2>
+        <p>
+          SunoFox는 Suno AI를 기반으로 하되, 단순 생성물이 아니라 장면 기획, 감정선,
+          캐릭터 서사, 편곡 방향을 사람이 큐레이션하는 Anime OST Studio입니다.
+        </p>
+      </div>
+
+      <form id="contactForm" class="contact-panel reveal">
+        <p id="contact" class="section-kicker">CONTACT</p>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" required placeholder="your@email.com" />
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="4" required placeholder="메시지를 입력하세요"></textarea>
+        <button class="micro-button micro-button-solid" type="submit">SEND</button>
+        <p id="contactStatus" class="contact-status" role="status" aria-live="polite"></p>
+      </form>
     </section>
   </main>
 
-  <footer class="border-t border-white/10 px-5 py-14 md:px-8">
-    <div class="mx-auto grid max-w-7xl gap-10 md:grid-cols-[1fr_420px]">
-      <div>
-        <h2 class="text-3xl font-black">SUNOFOX</h2>
-        <p class="mt-3 max-w-xl text-white/55">감정을 그리는 애니메이션 사운드트랙 / Animation soundtracks painted with emotion.</p>
-        <div class="mt-6 flex flex-wrap gap-3">
-          <a class="neon-button rounded-full px-5 py-3 text-sm font-black" href="https://www.youtube.com/@sunofox" target="_blank" rel="noopener noreferrer">YouTube</a>
-          <a class="neon-button rounded-full px-5 py-3 text-sm font-black" href="https://open.spotify.com/artist/5fzr4xqw1e0c5cI8dVj11D" target="_blank" rel="noopener noreferrer">Spotify</a>
-          <a class="neon-button rounded-full px-5 py-3 text-sm font-black" href="https://www.melon.com/artist/song.htm?artistId=4881689" target="_blank" rel="noopener noreferrer">Melon</a>
-          <a class="neon-button rounded-full px-5 py-3 text-sm font-black" href="https://soundcloud.com/sunopogseu" target="_blank" rel="noopener noreferrer">SoundCloud</a>
-        </div>
-      </div>
-
-      <form id="contactForm" class="glass-card grid gap-4 rounded-[24px] p-6">
-        <label class="text-sm font-black text-cyan-300" for="email">Contact / 문의</label>
-        <input id="email" name="email" type="email" required placeholder="your@email.com" class="rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-white outline-none focus:border-cyan-300" />
-        <textarea name="message" rows="4" required placeholder="메시지를 입력하세요" class="rounded-xl border border-white/10 bg-black/30 px-4 py-3 text-white outline-none focus:border-cyan-300"></textarea>
-        <button class="neon-button rounded-full px-5 py-3 font-black" type="submit">Send Message</button>
-        <p id="contactStatus" class="hidden text-sm text-white/60" role="status" aria-live="polite"></p>
-      </form>
+  <footer class="site-footer">
+    <p>© 2026 SunoFox. All rights reserved.</p>
+    <div>
+      <a href={artistLinks.youtube} target="_blank" rel="noopener noreferrer">YouTube</a>
+      <a href={artistLinks.spotify} target="_blank" rel="noopener noreferrer">Spotify</a>
+      <a href={artistLinks.melon} target="_blank" rel="noopener noreferrer">Melon</a>
     </div>
-
-    <p class="mx-auto mt-10 max-w-7xl text-sm text-white/40">© 2026 SunoFox Anime OST Studio. All rights reserved.</p>
   </footer>
-
-  <div id="lightbox" class="fixed inset-0 z-[80] hidden items-center justify-center bg-black/90 p-5" role="dialog" aria-modal="true" aria-label="이미지 확대 보기">
-    <button id="lightboxClose" class="absolute right-5 top-5 rounded-full border border-white/20 px-4 py-2 font-black" type="button">Close</button>
-    <img id="lightboxImage" class="max-h-[86vh] max-w-[92vw] rounded-[24px] object-contain" src="" alt="확대된 SunoFox visual" />
-  </div>
 
   <script is:inline>
     const menuButton = document.getElementById('menuButton');
-    const mobileMenu = document.getElementById('mobileMenu');
+    const overlayMenu = document.getElementById('overlayMenu');
+
+    function setMenu(open) {
+      document.body.classList.toggle('menu-open', open);
+      menuButton?.setAttribute('aria-expanded', String(open));
+      menuButton?.setAttribute('aria-label', open ? '전체 메뉴 닫기' : '전체 메뉴 열기');
+      overlayMenu?.setAttribute('aria-hidden', String(!open));
+    }
 
     menuButton?.addEventListener('click', () => {
-      const isOpen = mobileMenu?.classList.toggle('hidden') === false;
-      menuButton.setAttribute('aria-expanded', String(isOpen));
+      setMenu(!document.body.classList.contains('menu-open'));
     });
 
-    document.querySelectorAll('#mobileMenu a').forEach((link) => {
-      link.addEventListener('click', () => {
-        mobileMenu?.classList.add('hidden');
-        menuButton?.setAttribute('aria-expanded', 'false');
-      });
+    document.querySelectorAll('#overlayMenu a').forEach((link) => {
+      link.addEventListener('click', () => setMenu(false));
+    });
+
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') setMenu(false);
     });
 
     const observer = new IntersectionObserver((entries) => {
@@ -361,41 +323,7 @@ const structuredData = {
       });
     }, { threshold: 0.12 });
 
-    document.querySelectorAll('.reveal, section article, section h2').forEach((el) => observer.observe(el));
-
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImage = document.getElementById('lightboxImage');
-    const lightboxClose = document.getElementById('lightboxClose');
-    const imageFallback = '/assets/sf-studio-icon-512.png';
-
-    if (lightboxImage) {
-      lightboxImage.addEventListener('error', () => {
-        if (lightboxImage.src.endsWith(imageFallback)) return;
-        lightboxImage.src = imageFallback;
-      });
-    }
-
-    document.querySelectorAll('.gallery-item').forEach((item) => {
-      item.addEventListener('click', () => {
-        lightboxImage.src = item.dataset.src;
-        lightbox.classList.remove('hidden');
-        lightbox.classList.add('flex');
-      });
-    });
-
-    function closeLightbox() {
-      lightbox.classList.add('hidden');
-      lightbox.classList.remove('flex');
-      lightboxImage.src = '';
-    }
-
-    lightboxClose?.addEventListener('click', closeLightbox);
-    lightbox?.addEventListener('click', (event) => {
-      if (event.target === lightbox) closeLightbox();
-    });
-    window.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') closeLightbox();
-    });
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
 
     const contactForm = document.getElementById('contactForm');
     const contactStatus = document.getElementById('contactStatus');
@@ -410,10 +338,7 @@ const structuredData = {
         page: window.location.pathname
       };
 
-      if (contactStatus) {
-        contactStatus.classList.remove('hidden');
-        contactStatus.textContent = '메시지를 전송하는 중입니다.';
-      }
+      if (contactStatus) contactStatus.textContent = '메시지를 전송하는 중입니다.';
       submitButton.disabled = true;
 
       try {

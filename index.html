@@ -4,67 +4,217 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#070b16">
-    <title>SunoFox | Official Artist Portfolio</title>
-    <meta name="description" content="스토리 기반 애니메이션 OST를 만드는 SunoFox 공식 웹사이트입니다. 최신곡, 인기곡, 세계관과 비하인드 스토리를 확인하세요.">
-    <meta property="og:title" content="SunoFox | Official Artist Portfolio">
+    <title>SunoFox | Anime OST AI Music Project</title>
+    <meta name="description" content="스토리 기반 애니메이션 OST를 만드는 SunoFox 공식 웹사이트입니다. 최신곡, 인기곡, 세계관, 가사, 비하인드, 팬 커뮤니티를 확인하세요.">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="SunoFox | Anime OST AI Music Project">
     <meta property="og:description" content="SunoFox의 애니메이션 OST, 스토리, 가사, 비하인드 콘텐츠를 한 화면에서 감상하세요.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://sunofox.com/">
-    <meta property="og:image" content="https://sunofox.com/assets/figma-home/sf-home-reference-v2.jpg">
+    <meta property="og:site_name" content="SunoFox">
+    <meta property="og:image" content="https://sunofox.com/assets/home/hero-anime-city.jpg?v=20260607-art2">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SunoFox | Anime OST AI Music Project">
+    <meta name="twitter:description" content="스토리 기반 애니메이션 OST를 만드는 SunoFox 공식 웹사이트입니다.">
+    <meta name="twitter:image" content="https://sunofox.com/assets/home/hero-anime-city.jpg?v=20260607-art2">
     <link rel="canonical" href="https://sunofox.com/">
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" href="./assets/sf-studio-icon-192.png">
+    <link rel="preload" as="image" href="./assets/home/hero-anime-city.jpg?v=20260607-art2">
     <link rel="stylesheet" href="./css/style.css?v=20260607-fanpage">
-    <link rel="stylesheet" href="./css/sf-home.css?v=20260607-figma-reference-v2">
+    <link rel="stylesheet" href="./css/sf-home.css?v=20260607-semantic-home-art4">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "MusicGroup",
+        "name": "SunoFox",
+        "url": "https://sunofox.com/",
+        "genre": ["Anime OST", "AI Music", "Symphonic DnB", "Ethereal Pop"],
+        "sameAs": [
+          "https://www.youtube.com/channel/UC8M-2aXbknDT3tDcN1PMvuQ",
+          "https://soundcloud.com/sunopogseu"
+        ]
+      }
+    </script>
   </head>
-  <body class="sf-home-body">
-    <main class="sf-reference-shell" aria-label="SunoFox official website">
-      <img class="sf-reference-visual" src="./assets/figma-home/sf-home-reference-v2.jpg" alt="SunoFox official website home">
+  <body class="sf-home-body" data-page="home">
+    <header class="sf-home-header sf-site-header">
+      <a class="sf-home-brand" href="/" aria-label="SunoFox 홈" data-track="nav_home">
+        <img src="./assets/sunofox-logo-black.png" alt="">
+        <span>SunoFox</span>
+      </a>
+      <nav class="sf-home-nav" aria-label="SunoFox 메뉴">
+        <a href="/" aria-current="page" data-track="nav_home">Home</a>
+        <a href="/archive" data-track="nav_songs">Songs</a>
+        <a href="#story-universe" data-track="nav_stories">Stories</a>
+        <a href="#lyrics" data-track="nav_lyrics">Lyrics</a>
+        <a href="#behind" data-track="nav_behind">Behind</a>
+        <a href="#about" data-track="nav_about">About</a>
+        <a href="#connect" data-track="nav_links">Links</a>
+      </nav>
+      <div class="sf-home-socials" aria-label="SunoFox 공식 채널">
+        <a href="https://www.youtube.com/channel/UC8M-2aXbknDT3tDcN1PMvuQ" aria-label="YouTube" data-track="social_youtube">YT</a>
+        <a href="https://soundcloud.com/sunopogseu" aria-label="SoundCloud" data-track="social_soundcloud">SC</a>
+        <a href="mailto:hello@sunofox.com" aria-label="Email" data-track="social_email">Mail</a>
+      </div>
+    </header>
 
-      <a class="sf-hotspot is-brand" href="/" data-track="nav_home">SunoFox Home</a>
-      <a class="sf-hotspot is-nav-home" href="/" data-track="nav_home">Home</a>
-      <a class="sf-hotspot is-nav-songs" href="#songs" data-track="nav_songs">Songs</a>
-      <a class="sf-hotspot is-nav-stories" href="#stories" data-track="nav_stories">Stories</a>
-      <a class="sf-hotspot is-nav-lyrics" href="#lyrics" data-track="nav_lyrics">Lyrics</a>
-      <a class="sf-hotspot is-nav-behind" href="#behind" data-track="nav_behind">Behind</a>
-      <a class="sf-hotspot is-nav-about" href="#about" data-track="nav_about">About</a>
-      <a class="sf-hotspot is-nav-links" href="#links" data-track="nav_links">Links</a>
-      <a class="sf-hotspot is-social-youtube" href="https://www.youtube.com/channel/UC8M-2aXbknDT3tDcN1PMvuQ" data-track="social_youtube">YouTube</a>
-      <a class="sf-hotspot is-social-instagram" href="https://www.instagram.com/" data-track="social_instagram">Instagram</a>
-      <a class="sf-hotspot is-social-x" href="https://x.com/" data-track="social_x">X</a>
-      <a class="sf-hotspot is-social-email" href="mailto:hello@sunofox.com" data-track="social_email">Email</a>
+    <main class="sf-home-main">
+      <section class="sf-hero-panel" aria-labelledby="hero-title">
+        <div class="sf-hero-copy">
+          <span class="sf-home-kicker">AI Music Project</span>
+          <h1 id="hero-title">Suno<span>Fox</span></h1>
+          <p class="sf-hero-lead">스토리 기반 애니메이션 OST를 만드는 AI Music Project</p>
+          <p class="sf-hero-note">각 곡은 하나의 장면, 하나의 캐릭터, 하나의 세계관에서 시작됩니다.</p>
+          <div class="sf-hero-actions">
+            <a class="sf-primary-action" href="https://www.youtube.com/watch?v=RPg5y7WbvRo" data-track="hero_latest">
+              <span aria-hidden="true">▶</span>
+              최신곡 듣기
+            </a>
+            <a class="sf-secondary-action" href="/archive" data-track="hero_song_list">곡 목록 보기</a>
+          </div>
+        </div>
+      </section>
 
-      <a class="sf-hotspot is-hero-latest" href="https://www.youtube.com/watch?v=RPg5y7WbvRo" data-track="hero_latest">최신곡 듣기</a>
-      <a class="sf-hotspot is-hero-songs" href="#songs" data-track="hero_song_list">곡 목록 보기</a>
+      <section id="songs" class="sf-dashboard-grid" aria-label="SunoFox 음악 대시보드">
+        <article class="sf-release-card">
+          <div class="sf-section-title">
+            <span>Latest Release</span>
+            <h2>이름 없는 각성</h2>
+          </div>
+          <a class="sf-release-cover" href="https://www.youtube.com/watch?v=RPg5y7WbvRo" data-track="latest_release_play" aria-label="이름 없는 각성 재생">
+            <img src="./assets/home/release-awakening.jpg?v=20260607-art2" width="720" height="405" alt="이름 없는 각성 커버 이미지">
+            <span class="sf-badge">New</span>
+            <span class="sf-play-mark" aria-hidden="true">▶</span>
+          </a>
+          <div class="sf-release-info">
+            <strong>Nameless Awakening</strong>
+            <p>Anime Rock / Awakening / Emotional</p>
+            <p>폐허가 된 신전 한가운데, 이름조차 없던 자가 처음 눈을 뜨는 순간.</p>
+            <div class="sf-inline-links">
+              <a href="https://www.youtube.com/watch?v=RPg5y7WbvRo" data-track="latest_youtube">YouTube</a>
+              <a href="https://soundcloud.com/sunopogseu" data-track="latest_soundcloud">SoundCloud</a>
+            </div>
+          </div>
+          <a class="sf-card-link" href="https://www.youtube.com/watch?v=RPg5y7WbvRo" data-track="latest_detail">자세히 보기 →</a>
+        </article>
 
-      <a id="songs" class="sf-hotspot is-latest-card" href="https://www.youtube.com/watch?v=RPg5y7WbvRo" data-track="latest_release_play">Latest Release</a>
-      <a class="sf-hotspot is-latest-detail" href="https://www.youtube.com/watch?v=RPg5y7WbvRo" data-track="latest_detail">자세히 보기</a>
-      <a class="sf-hotspot is-popular-more" href="#songs" data-track="popular_more">전체</a>
-      <a class="sf-hotspot is-popular-1" href="https://www.youtube.com/watch?v=RPg5y7WbvRo" data-track="popular_reviver">Reviver</a>
-      <a class="sf-hotspot is-popular-2" href="https://www.youtube.com/watch?v=Vt7lvPplsWY" data-track="popular_last_greeting">마지막 인사</a>
-      <a class="sf-hotspot is-popular-3" href="#songs" data-track="popular_falter">한낮의 결투자</a>
-      <a class="sf-hotspot is-popular-4" href="#songs" data-track="popular_unbreakable">Unbreakable</a>
+        <section class="sf-popular-panel" aria-labelledby="popular-title">
+          <div class="sf-section-title is-row">
+            <div>
+              <span>Popular Songs</span>
+              <h2 id="popular-title">인기곡</h2>
+            </div>
+            <a href="/archive" data-track="popular_more">전체 →</a>
+          </div>
+          <div class="sf-song-grid">
+            <article class="sf-song-card">
+              <a href="https://www.youtube.com/watch?v=RPg5y7WbvRo" data-track="popular_reviver">
+                <img src="./assets/home/popular-reviver.jpg?v=20260607-art2" width="480" height="300" alt="Reviver 썸네일">
+                <span class="sf-play-mark" aria-hidden="true">▶</span>
+                <strong>Reviver</strong>
+                <small>조회수 40만회</small>
+              </a>
+            </article>
+            <article class="sf-song-card">
+              <a href="https://www.youtube.com/watch?v=Vt7lvPplsWY" data-track="popular_last_greeting">
+                <img src="./assets/home/popular-last-greeting.jpg?v=20260607-art2" width="480" height="300" alt="마지막 인사 썸네일">
+                <span class="sf-play-mark" aria-hidden="true">▶</span>
+                <strong>마지막 인사</strong>
+                <small>이별 발라드</small>
+              </a>
+            </article>
+            <article class="sf-song-card">
+              <a href="/archive" data-track="popular_falter">
+                <img src="./assets/home/popular-falter.jpg?v=20260607-art2" width="480" height="300" alt="한낮의 결투자 썸네일">
+                <span class="sf-play-mark" aria-hidden="true">▶</span>
+                <strong>한낮의 결투자</strong>
+                <small>전투 OST</small>
+              </a>
+            </article>
+            <article class="sf-song-card">
+              <a href="/archive" data-track="popular_unbreakable">
+                <img src="./assets/home/popular-unbreakable.jpg?v=20260607-art2" width="480" height="300" alt="Unbreakable 썸네일">
+                <span class="sf-play-mark" aria-hidden="true">▶</span>
+                <strong>Unbreakable</strong>
+                <small>각성 ver.</small>
+              </a>
+            </article>
+          </div>
+        </section>
 
-      <a class="sf-hotspot is-archive" href="#songs" data-track="archive_more">Anime OST Archive</a>
-      <a id="stories" class="sf-hotspot is-story" href="#stories" data-track="story_universe">Story Universe</a>
-      <a id="lyrics" class="sf-hotspot is-lyrics" href="#lyrics" data-track="lyrics_read">Lyrics and Translation</a>
-      <a id="behind" class="sf-hotspot is-behind" href="#behind" data-track="behind_open">Behind Story</a>
+        <aside class="sf-archive-panel" aria-labelledby="archive-title">
+          <div class="sf-section-title">
+            <span>Anime OST Archive</span>
+            <h2 id="archive-title">아카이브</h2>
+          </div>
+          <a href="/archive" data-track="archive_awakening"><span>각</span><strong>각성 / Awakening</strong><em>12 Songs</em></a>
+          <a href="/archive" data-track="archive_battle"><span>전</span><strong>전투 / Battle</strong><em>9 Songs</em></a>
+          <a href="/archive" data-track="archive_farewell"><span>이</span><strong>이별 / Farewell</strong><em>7 Songs</em></a>
+          <a href="/archive" data-track="archive_daily"><span>일</span><strong>일상 / Daily Life</strong><em>6 Songs</em></a>
+        </aside>
 
-      <a id="about" class="sf-hotspot is-subscribe" href="mailto:hello@sunofox.com?subject=SunoFox%20Subscribe" data-track="subscribe_click">구독하기</a>
-      <a class="sf-hotspot is-connect-youtube" href="https://www.youtube.com/channel/UC8M-2aXbknDT3tDcN1PMvuQ" data-track="connect_youtube">YouTube</a>
-      <a class="sf-hotspot is-connect-instagram" href="https://www.instagram.com/" data-track="connect_instagram">Instagram</a>
-      <a class="sf-hotspot is-connect-x" href="https://x.com/" data-track="connect_x">X</a>
-      <a class="sf-hotspot is-connect-email" href="mailto:hello@sunofox.com" data-track="connect_email">Email</a>
-      <a id="links" class="sf-hotspot is-linktree" href="https://linktr.ee/sunofox" data-track="footer_linktree">linktr.ee/sunofox</a>
+        <article id="story-universe" class="sf-feature-card">
+          <img src="./assets/home/story-universe.jpg?v=20260607-art2" width="720" height="300" alt="SunoFox 세계관 이미지">
+          <div>
+            <span>Story Universe</span>
+            <h2>SunoFox 세계관 입문</h2>
+            <p>각 곡이 살고 있는 도시와 캐릭터 관계를 연결합니다.</p>
+            <a href="/news" data-track="story_universe">세계관 살펴보기 →</a>
+          </div>
+        </article>
 
-      <section class="sf-seo-copy" aria-label="SunoFox site summary">
-        <h1>SunoFox</h1>
-        <p>스토리 기반 애니메이션 OST를 만드는 AI Music Project입니다.</p>
-        <p>Latest Release: 이름 없는 각성, Nameless Awakening.</p>
-        <p>Popular Songs: Reviver, 마지막 인사, 한낮의 결투자, Unbreakable.</p>
+        <article id="lyrics" class="sf-feature-card">
+          <img src="./assets/home/lyrics-translation.jpg?v=20260607-art2" width="720" height="300" alt="가사와 번역 이미지">
+          <div>
+            <span>Lyrics & Translation</span>
+            <h2>가사와 번역 자료</h2>
+            <p>한국어 원문과 영문 번역을 트랙별로 정리합니다.</p>
+            <a href="/archive" data-track="lyrics_read">가사 열기 →</a>
+          </div>
+        </article>
+
+        <article id="behind" class="sf-feature-card">
+          <img src="./assets/home/behind-story.jpg?v=20260607-art2" width="720" height="300" alt="비하인드 스토리 이미지">
+          <div>
+            <span>Behind Story</span>
+            <h2>곡 뒤의 이야기</h2>
+            <p>한 곡의 장면 묘사와 멜로디가 만들어지는 과정을 남깁니다.</p>
+            <a href="/news" data-track="behind_open">비하인드 →</a>
+          </div>
+        </article>
+      </section>
+
+      <section id="about" class="sf-about-panel" aria-labelledby="about-title">
+        <div>
+          <span class="sf-home-kicker">About SunoFox</span>
+          <h2 id="about-title">애니메이션 OST처럼 장면을 먼저 설계하는 음악 프로젝트</h2>
+        </div>
+        <p>Anime OST, Symphonic DnB, Ethereal Pop을 바탕으로 캐릭터와 도시, 감정의 장면을 음악으로 연결합니다.</p>
+      </section>
+
+      <section id="connect" class="sf-connect-panel" aria-labelledby="connect-title">
+        <div class="sf-connect-copy">
+          <img src="./assets/sunofox-logo-black.png" width="52" height="52" alt="">
+          <div>
+            <span class="sf-home-kicker">Stay Connected</span>
+            <h2 id="connect-title">새로운 음악과 이야기를 가장 먼저 받아보세요.</h2>
+          </div>
+        </div>
+        <form class="sf-subscribe-form" action="mailto:hello@sunofox.com" method="post" enctype="text/plain">
+          <label class="sf-visually-hidden" for="subscribe-email">이메일 주소</label>
+          <input id="subscribe-email" name="email" type="email" autocomplete="email" placeholder="이메일을 입력하세요">
+          <button type="submit" data-track="subscribe_click">구독하기</button>
+        </form>
+        <nav class="sf-connect-links" aria-label="외부 채널">
+          <a href="https://www.youtube.com/channel/UC8M-2aXbknDT3tDcN1PMvuQ" data-track="connect_youtube">YouTube</a>
+          <a href="https://soundcloud.com/sunopogseu" data-track="connect_soundcloud">SoundCloud</a>
+          <a href="/community" data-track="connect_community">Community</a>
+          <a href="mailto:hello@sunofox.com" data-track="connect_email">Email</a>
+        </nav>
       </section>
     </main>
 
-    <script src="./js/sfLinkHub.js?v=20260607-media-fix" defer></script>
+    <script src="./js/sfLinkHub.js?v=20260607-semantic-home" defer></script>
   </body>
 </html>

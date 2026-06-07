@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/
+Disallow: /community-post
+Disallow: /login
+Disallow: /mv-studio
+Disallow: /signup
+
+Sitemap: https://sunofox.com/sitemap.xml

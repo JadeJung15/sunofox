@@ -1,17 +1,25 @@
-const SF_STUDIO_CACHE = 'sf-studio-20260607-figma-reference-v2';
+const SF_STUDIO_CACHE = 'sf-studio-20260607-semantic-home-art4';
 const SF_STUDIO_ASSETS = [
   '/manifest.webmanifest',
   '/css/style.css?v=20260607-fanpage',
-  '/css/sf-home.css?v=20260607-figma-reference-v2',
+  '/css/sf-home.css?v=20260607-semantic-home-art4',
   '/css/sf-category.css?v=20260607-categories',
   '/css/sf-community.css?v=20260607-d1-community',
   '/css/mv-storyboard.css?v=20260607-auth',
-  '/js/sfLinkHub.js?v=20260607-media-fix',
+  '/js/sfLinkHub.js?v=20260607-semantic-home',
   '/js/sfCommunity.js?v=20260607-d1-community',
   '/js/sfCommunityPost.js?v=20260607-d1-community',
   '/js/mvStoryboardStudio.js?v=20260607-auth',
   '/assets/sunofox-logo-black.png',
-  '/assets/figma-home/sf-home-reference-v2.jpg',
+  '/assets/home/hero-anime-city.jpg?v=20260607-art2',
+  '/assets/home/release-awakening.jpg?v=20260607-art2',
+  '/assets/home/popular-reviver.jpg?v=20260607-art2',
+  '/assets/home/popular-last-greeting.jpg?v=20260607-art2',
+  '/assets/home/popular-falter.jpg?v=20260607-art2',
+  '/assets/home/popular-unbreakable.jpg?v=20260607-art2',
+  '/assets/home/story-universe.jpg?v=20260607-art2',
+  '/assets/home/lyrics-translation.jpg?v=20260607-art2',
+  '/assets/home/behind-story.jpg?v=20260607-art2',
   '/assets/sf-studio-icon-192.png',
   '/assets/sf-studio-icon-512.png'
 ];

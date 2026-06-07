@@ -1,13 +1,13 @@
 {
-  "name": "SunoFox Official Link Hub",
+  "name": "SunoFox Official Website",
   "short_name": "SunoFox",
-  "description": "SunoFox music, video, streaming, and fan community link hub",
+  "description": "스토리 기반 애니메이션 OST를 만드는 SunoFox 공식 웹사이트입니다.",
   "id": "/",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#f8fafc",
-  "theme_color": "#f8fafc",
+  "background_color": "#070b16",
+  "theme_color": "#070b16",
   "icons": [
     {
       "src": "/assets/sf-studio-icon-192.png",

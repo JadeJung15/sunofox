@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>SF Studio 사용자 승인</title>
+  <link rel="icon" href="./assets/sf-studio-icon-192.png">
+  <link rel="stylesheet" href="./css/sf-auth.css">
+</head>
+<body class="sf-auth-body sf-admin-body" data-auth-page="admin">
+  <main class="sf-admin-shell">
+    <section class="sf-admin-head">
+      <div>
+        <span class="sf-auth-kicker">OWNER APPROVAL</span>
+        <h1>사용자 승인</h1>
+        <p>소유자 계정으로 로그인했거나 관리자 키를 입력하면 가입 신청 목록을 확인하고 승인 또는 거절할 수 있습니다.</p>
+      </div>
+      <a href="/mv-studio">SF Studio</a>
+    </section>
+
+    <section class="sf-admin-panel">
+      <form id="sf-admin-key-form" class="sf-admin-key-form">
+        <label>
+          <span>관리자 키</span>
+          <input id="sf-admin-key" type="password" autocomplete="current-password" placeholder="선택 입력">
+        </label>
+        <button type="submit">목록 불러오기</button>
+      </form>
+      <div id="sf-auth-message" class="sf-auth-message" hidden></div>
+      <div id="sf-admin-users" class="sf-admin-users"></div>
+    </section>
+  </main>
+  <script src="./js/sfAuth.js" defer></script>
+</body>
+</html>

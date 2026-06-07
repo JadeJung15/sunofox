@@ -1,0 +1,3 @@
+/admin/users /admin 302
+/mv-studio.html /mv-studio 301
+/mv-studio/* /mv-studio 200

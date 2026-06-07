@@ -1,0 +1,292 @@
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.sf-auth-body {
+  background: #f6f7f9;
+  color: #111827;
+  font-family: "Inter", "Pretendard", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+.sf-auth-shell,
+.sf-admin-shell {
+  min-height: 100vh;
+  padding: 28px;
+}
+
+.sf-auth-shell {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.sf-auth-card,
+.sf-admin-panel,
+.sf-admin-head {
+  background: #ffffff;
+  border: 1px solid #dbe3ef;
+  border-radius: 8px;
+  box-shadow: 0 14px 40px rgba(15, 23, 42, 0.08);
+}
+
+.sf-auth-card {
+  display: grid;
+  gap: 14px;
+  max-width: 440px;
+  padding: 28px;
+  width: min(100%, 440px);
+}
+
+.sf-auth-logo {
+  height: auto;
+  justify-self: center;
+  width: 92px;
+}
+
+.sf-auth-kicker {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sf-auth-card h1,
+.sf-admin-head h1 {
+  color: #0f172a;
+  font-size: clamp(32px, 5vw, 46px);
+  letter-spacing: 0;
+  line-height: 1;
+  margin: 0;
+}
+
+.sf-auth-card p,
+.sf-admin-head p {
+  color: #64748b;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.sf-auth-form,
+.sf-admin-key-form {
+  display: grid;
+  gap: 12px;
+}
+
+.sf-auth-form label,
+.sf-admin-key-form label {
+  display: grid;
+  gap: 8px;
+}
+
+.sf-auth-form span,
+.sf-admin-key-form span {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.sf-auth-form input,
+.sf-auth-form textarea,
+.sf-admin-key-form input {
+  border: 1px solid #dbe3ef;
+  border-radius: 8px;
+  color: #0f172a;
+  font: inherit;
+  outline: none;
+  padding: 12px 14px;
+  width: 100%;
+}
+
+.sf-auth-form textarea {
+  resize: vertical;
+}
+
+.sf-auth-form input:focus,
+.sf-auth-form textarea:focus,
+.sf-admin-key-form input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.sf-auth-form button,
+.sf-admin-key-form button,
+.sf-user-actions button {
+  background: #111827;
+  border: 0;
+  border-radius: 8px;
+  color: #ffffff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 900;
+  min-height: 46px;
+  padding: 0 16px;
+}
+
+.sf-auth-form button:disabled,
+.sf-admin-key-form button:disabled,
+.sf-user-actions button:disabled {
+  cursor: wait;
+  opacity: 0.55;
+}
+
+.sf-auth-message {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  color: #1d4ed8;
+  font-size: 13px;
+  font-weight: 800;
+  padding: 10px 12px;
+}
+
+.sf-auth-message[data-type="error"] {
+  background: #fff1f2;
+  border-color: #fecdd3;
+  color: #be123c;
+}
+
+.sf-auth-message[data-type="success"] {
+  background: #ecfdf5;
+  border-color: #bbf7d0;
+  color: #047857;
+}
+
+.sf-auth-links {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.sf-auth-links a,
+.sf-admin-head a {
+  color: #111827;
+  font-size: 13px;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.sf-admin-shell {
+  display: grid;
+  gap: 16px;
+}
+
+.sf-admin-head {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 24px;
+}
+
+.sf-admin-panel {
+  display: grid;
+  gap: 16px;
+  padding: 20px;
+}
+
+.sf-admin-key-form {
+  align-items: end;
+  grid-template-columns: minmax(220px, 1fr) auto;
+}
+
+.sf-admin-users {
+  display: grid;
+  gap: 10px;
+}
+
+.sf-empty {
+  color: #64748b;
+  margin: 0;
+}
+
+.sf-user-row {
+  align-items: center;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  display: grid;
+  gap: 12px;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  padding: 14px;
+}
+
+.sf-user-row div:first-child {
+  display: grid;
+  gap: 4px;
+}
+
+.sf-user-row strong {
+  color: #0f172a;
+}
+
+.sf-user-row span,
+.sf-user-row small {
+  color: #64748b;
+}
+
+.sf-user-row mark {
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+  padding: 5px 9px;
+}
+
+.sf-user-row mark[data-status="approved"] {
+  background: #dcfce7;
+  color: #047857;
+}
+
+.sf-user-row mark[data-status="rejected"] {
+  background: #ffe4e6;
+  color: #be123c;
+}
+
+.sf-user-row mark[data-status="pending"] {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.sf-user-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.sf-user-actions button:nth-child(2) {
+  background: #475569;
+}
+
+.sf-user-actions button:nth-child(3) {
+  background: #be123c;
+}
+
+@media (max-width: 720px) {
+  .sf-auth-shell,
+  .sf-admin-shell {
+    padding: 16px;
+  }
+
+  .sf-admin-head,
+  .sf-user-row {
+    align-items: stretch;
+    grid-template-columns: 1fr;
+  }
+
+  .sf-admin-head {
+    display: grid;
+  }
+
+  .sf-admin-key-form {
+    grid-template-columns: 1fr;
+  }
+
+  .sf-user-actions {
+    flex-wrap: wrap;
+  }
+}

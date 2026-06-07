@@ -1,0 +1,14 @@
+{
+  "name": "sf-studio",
+  "pages_build_output_dir": ".",
+  "compatibility_date": "2026-06-07",
+  "kv_namespaces": [
+    {
+      "binding": "SF_STUDIO_AUTH",
+      "id": "643e40247e1547648f1579999d2326f2"
+    }
+  ],
+  "vars": {
+    "SF_STUDIO_ADMIN_EMAIL": "jadejung15@gmail.com"
+  }
+}

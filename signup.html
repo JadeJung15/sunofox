@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>SunoFox 가입 신청</title>
+  <link rel="icon" href="./assets/sf-studio-icon-192.png">
+  <link rel="stylesheet" href="./css/sf-auth.css">
+</head>
+<body class="sf-auth-body" data-auth-page="signup">
+  <main class="sf-auth-shell">
+    <section class="sf-auth-card">
+      <img src="./assets/sunofox-logo-black.png" alt="sunofox" class="sf-auth-logo">
+      <span class="sf-auth-kicker">MEMBER REQUEST</span>
+      <h1>가입 신청</h1>
+      <p>이메일을 신청하면 사이트 주인이 승인한 뒤 로그인할 수 있습니다.</p>
+      <form id="sf-signup-form" class="sf-auth-form">
+        <label>
+          <span>이메일</span>
+          <input id="sf-signup-email" name="email" type="email" autocomplete="email" required placeholder="email@example.com">
+        </label>
+        <label>
+          <span>이름</span>
+          <input id="sf-signup-name" name="name" type="text" autocomplete="name" placeholder="표시 이름">
+        </label>
+        <label>
+          <span>메모</span>
+          <textarea id="sf-signup-note" name="note" rows="3" placeholder="신청 목적을 간단히 적어 주세요."></textarea>
+        </label>
+        <button type="submit">신청하기</button>
+      </form>
+      <div id="sf-auth-message" class="sf-auth-message" hidden></div>
+      <nav class="sf-auth-links">
+        <a href="/">홈</a>
+        <a href="/community">팬 게시판</a>
+        <a href="/login">로그인</a>
+      </nav>
+    </section>
+  </main>
+  <script src="./js/sfAuth.js" defer></script>
+</body>
+</html>

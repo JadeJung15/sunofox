@@ -1,0 +1,10 @@
+.wrangler/
+output/
+.playwright-mcp/
+
+.env
+.env.*
+*.log
+
+.DS_Store
+Thumbs.db

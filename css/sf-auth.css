@@ -211,7 +211,7 @@ body {
 .sf-admin-summary {
   display: grid;
   gap: 12px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .sf-admin-summary article {
@@ -282,7 +282,8 @@ body {
   margin: 0;
 }
 
-.sf-admin-posts {
+.sf-admin-posts,
+.sf-admin-comments {
   display: grid;
   gap: 10px;
 }
@@ -338,7 +339,8 @@ body {
   color: #92400e;
 }
 
-.sf-post-admin-row {
+.sf-post-admin-row,
+.sf-comment-admin-row {
   align-items: start;
   border: 1px solid #e5e7eb;
   border-radius: 8px;

@@ -11,6 +11,7 @@ SunoFox 팬페이지와 관리자 전용 SF Studio를 함께 운영하는 Cloudf
 - SF Studio route: `/mv-studio` 관리자 전용
 - Cloudflare Pages 프로젝트명: `sf-studio`
 - 접근 제어: 팬 게시글 작성은 승인 계정, SF Studio는 관리자 이메일만 허용
+- 커뮤니티 저장소: Cloudflare D1 `sf_community`
 - 관리자 계정: `jadejung15@gmail.com`
 - 브릿지 확장: `SF 미디어 브릿지` v1.5.17
 
@@ -19,7 +20,7 @@ SunoFox 팬페이지와 관리자 전용 SF Studio를 함께 운영하는 Cloudf
 Cloudflare Pages routing behavior:
 
 ```powershell
-npx wrangler pages dev . --port 4173 --compatibility-date=2026-05-25
+npx wrangler pages dev . --port 4173 --compatibility-date=2026-06-07
 ```
 
 Then check:
@@ -44,17 +45,23 @@ Cloudflare Access is intentionally disabled for this project. The site uses Clou
 - `/signup`: email signup request
 - `/login`: approved email + studio entry code login
 - `/community`: public fan board with approved-account posting
+- `/community-post?id=...`: public post detail and comments
 - `/news`, `/archive`, `/events`: public fan page category pages
 - `/mv-studio`: admin-only creator workspace
 - `/admin`: admin-only owner approval screen
 - `/api/auth/*`: signup, login, logout, session check
-- `/api/posts`: list, create, and admin-manage fan posts
+- `/api/community/posts`: list, detail, create, and admin-manage fan posts
+- `/api/community/comments`: list, create, and admin-manage comments
+- `/api/community/reactions`: approved-account recommend/downvote
+- `/api/posts`: compatibility endpoint for post list/create/admin actions
 - `/api/admin/users`: list and approve/reject users with pending-request alert support
 
 Required Cloudflare bindings/secrets before production deployment:
 
 ```powershell
 npx wrangler kv namespace create SF_STUDIO_AUTH
+npx wrangler d1 create sf_community
+npx wrangler d1 migrations apply sf_community --remote
 npx wrangler pages secret put SF_STUDIO_SESSION_SECRET --project-name sf-studio
 npx wrangler pages secret put SF_STUDIO_LOGIN_CODE --project-name sf-studio
 ```

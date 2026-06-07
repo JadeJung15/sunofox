@@ -6,6 +6,23 @@
   const refreshButton = document.getElementById('sf-post-refresh');
   const titleInput = document.getElementById('sf-post-title');
   const bodyInput = document.getElementById('sf-post-body');
+  const boardSelect = document.getElementById('sf-post-board');
+  const tabs = document.getElementById('sf-board-tabs');
+  const searchForm = document.getElementById('sf-board-search');
+  const queryInput = document.getElementById('sf-board-query');
+  const pageLabel = document.getElementById('sf-board-page');
+  const prevButton = document.getElementById('sf-board-prev');
+  const nextButton = document.getElementById('sf-board-next');
+  const boardTitle = document.getElementById('board-title');
+
+  const state = {
+    board: 'all',
+    q: '',
+    page: 1,
+    limit: 30,
+    total: 0,
+    boards: []
+  };
 
   function setMessage(text, type) {
     if (!message) return;
@@ -40,11 +57,11 @@
   }
 
   function renderAuth(user) {
-    if (!authBox) return;
+    if (!authBox || !form) return;
     if (!user) {
       form.hidden = true;
       authBox.innerHTML = `
-        <p>팬 게시글 작성은 승인된 계정 로그인 후 사용할 수 있습니다.</p>
+        <p>글쓰기와 추천은 승인된 계정 로그인 후 사용할 수 있습니다.</p>
         <div class="sf-community-auth-actions">
           <a href="/login?next=/community">로그인</a>
           <a href="/signup">가입 신청</a>
@@ -59,11 +76,22 @@
 
   async function loadPosts() {
     if (refreshButton) refreshButton.disabled = true;
+    const params = new URLSearchParams({
+      board: state.board,
+      page: String(state.page),
+      limit: String(state.limit)
+    });
+    if (state.q) params.set('q', state.q);
+
     try {
-      const data = await requestJson('/api/posts');
+      const data = await requestJson(`/api/community/posts?${params.toString()}`);
+      state.total = data.total || 0;
+      state.boards = data.boards || state.boards;
       renderPosts(data.posts || []);
+      renderPager();
+      syncBoardTitle();
     } catch (error) {
-      list.innerHTML = `<p class="sf-community-empty">${escapeHtml(error.message)}</p>`;
+      list.innerHTML = `<tr><td colspan="7">${escapeHtml(error.message)}</td></tr>`;
     } finally {
       if (refreshButton) refreshButton.disabled = false;
     }
@@ -72,22 +100,72 @@
   function renderPosts(posts) {
     if (!list) return;
     if (!posts.length) {
-      list.innerHTML = '<p class="sf-community-empty">아직 등록된 팬 게시글이 없습니다.</p>';
+      list.innerHTML = '<tr><td colspan="7">등록된 게시글이 없습니다.</td></tr>';
       return;
     }
 
-    list.innerHTML = posts.map((post) => `
-      <article class="sf-post-card">
-        <div class="sf-post-meta">
-          ${post.pinned ? '<mark>고정</mark>' : ''}
-          <span>${escapeHtml(post.authorName || 'fan')}</span>
-          <time datetime="${escapeHtml(post.createdAt || '')}">${formatDate(post.createdAt)}</time>
-        </div>
-        <h3>${escapeHtml(post.title)}</h3>
-        <p>${escapeHtml(post.body).replace(/\n/g, '<br>')}</p>
-      </article>
-    `).join('');
+    const startNumber = state.total - ((state.page - 1) * state.limit);
+    list.innerHTML = posts.map((post, index) => {
+      const number = post.pinned ? '공지' : String(Math.max(startNumber - index, 1));
+      const title = `${post.pinned ? '<mark>고정</mark>' : ''}${escapeHtml(post.title)}${post.commentCount ? ` <em>[${post.commentCount}]</em>` : ''}`;
+      return `
+        <tr>
+          <td class="sf-board-no">${number}</td>
+          <td><span class="sf-board-badge">${escapeHtml(post.boardName || boardLabel(post.board))}</span></td>
+          <td class="sf-board-title-cell">
+            <a href="/community-post?id=${encodeURIComponent(post.id)}">${title}</a>
+          </td>
+          <td>${escapeHtml(post.authorName || 'fan')}</td>
+          <td>${formatShortDate(post.createdAt)}</td>
+          <td>${Number(post.views || 0)}</td>
+          <td>${Number(post.likeCount || 0)}</td>
+        </tr>
+      `;
+    }).join('');
   }
+
+  function renderPager() {
+    const maxPage = Math.max(1, Math.ceil(state.total / state.limit));
+    if (pageLabel) pageLabel.textContent = `${state.page} / ${maxPage}`;
+    if (prevButton) prevButton.disabled = state.page <= 1;
+    if (nextButton) nextButton.disabled = state.page >= maxPage;
+  }
+
+  function syncBoardTitle() {
+    if (!boardTitle) return;
+    boardTitle.textContent = state.board === 'all' ? '전체 게시글' : `${boardLabel(state.board)} 게시판`;
+  }
+
+  tabs?.addEventListener('click', (event) => {
+    const button = event.target.closest('button[data-board]');
+    if (!button) return;
+    state.board = button.dataset.board || 'all';
+    state.page = 1;
+    tabs.querySelectorAll('button[data-board]').forEach((item) => {
+      item.setAttribute('aria-pressed', String(item === button));
+    });
+    loadPosts();
+  });
+
+  searchForm?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    state.q = queryInput?.value.trim() || '';
+    state.page = 1;
+    loadPosts();
+  });
+
+  prevButton?.addEventListener('click', () => {
+    if (state.page <= 1) return;
+    state.page -= 1;
+    loadPosts();
+  });
+
+  nextButton?.addEventListener('click', () => {
+    const maxPage = Math.max(1, Math.ceil(state.total / state.limit));
+    if (state.page >= maxPage) return;
+    state.page += 1;
+    loadPosts();
+  });
 
   form?.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -95,15 +173,17 @@
     button.disabled = true;
     setMessage('게시글을 등록하는 중입니다.', 'info');
     try {
-      await requestJson('/api/posts', {
+      await requestJson('/api/community/posts', {
         method: 'POST',
         body: JSON.stringify({
+          board: boardSelect?.value || 'free',
           title: titleInput?.value,
           body: bodyInput?.value
         })
       });
       form.reset();
       setMessage('게시글이 등록되었습니다.', 'success');
+      state.page = 1;
       await loadPosts();
     } catch (error) {
       setMessage(error.message, 'error');
@@ -116,12 +196,22 @@
     loadPosts();
   });
 
-  function formatDate(value) {
+  function boardLabel(board) {
+    if (board === 'notice') return '공지';
+    if (board === 'media') return '영상';
+    if (board === 'event') return '이벤트';
+    if (board === 'free') return '자유';
+    return '전체';
+  }
+
+  function formatShortDate(value) {
     if (!value) return '';
     try {
       return new Intl.DateTimeFormat('ko-KR', {
-        dateStyle: 'medium',
-        timeStyle: 'short'
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
       }).format(new Date(value));
     } catch {
       return value;

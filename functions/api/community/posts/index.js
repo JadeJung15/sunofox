@@ -2,7 +2,7 @@ import {
   handleCommunityPostsGet,
   handleCommunityPostsPatch,
   handleCommunityPostsPost
-} from '../../_shared/community.js';
+} from '../../../_shared/community.js';
 
 export const onRequestGet = handleCommunityPostsGet;
 export const onRequestPost = handleCommunityPostsPost;

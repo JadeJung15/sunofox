@@ -1,7 +1,7 @@
 :root {
   --sf-bg: #060b16;
-  --sf-reference-w: 1400;
-  --sf-reference-h: 812;
+  --sf-reference-w: 1396;
+  --sf-reference-h: 810;
   --sf-reference-ratio: calc(var(--sf-reference-w) / var(--sf-reference-h));
 }
 
@@ -300,7 +300,7 @@ html {
   width: 1px;
 }
 
-@media (max-aspect-ratio: 1400 / 812) {
+@media (max-aspect-ratio: 1396 / 810) {
   .sf-reference-shell {
     height: auto;
     width: 100vw;

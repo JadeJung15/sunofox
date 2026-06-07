@@ -106,13 +106,14 @@
       if (target) trackClick(target);
     });
 
-    fetchCommunityData({ limit: 3 })
-      .then((data) => renderRecentPosts(data.posts || []))
-      .catch(() => {
-        const container = document.getElementById('sf-recent-posts');
-        if (container) {
-          container.innerHTML = '<p>최근 팬 게시글은 커뮤니티에서 확인하실 수 있습니다.</p>';
-        }
-      });
+    // Community previews are temporarily disabled until the backend data source is ready.
+    // fetchCommunityData({ limit: 3 })
+    //   .then((data) => renderRecentPosts(data.posts || []))
+    //   .catch(() => {
+    //     const container = document.getElementById('sf-recent-posts');
+    //     if (container) {
+    //       container.innerHTML = '<p>최근 팬 게시글은 커뮤니티에서 확인하실 수 있습니다.</p>';
+    //     }
+    //   });
   });
 }());

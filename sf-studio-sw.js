@@ -1,8 +1,8 @@
-const SF_STUDIO_CACHE = 'sf-studio-20260607-futech-frame';
+const SF_STUDIO_CACHE = 'sf-studio-20260607-figma-reference';
 const SF_STUDIO_ASSETS = [
   '/manifest.webmanifest',
   '/css/style.css?v=20260607-fanpage',
-  '/css/sf-home.css?v=20260607-futech-frame',
+  '/css/sf-home.css?v=20260607-figma-reference',
   '/css/sf-category.css?v=20260607-categories',
   '/css/sf-community.css?v=20260607-d1-community',
   '/css/mv-storyboard.css?v=20260607-auth',
@@ -11,6 +11,7 @@ const SF_STUDIO_ASSETS = [
   '/js/sfCommunityPost.js?v=20260607-d1-community',
   '/js/mvStoryboardStudio.js?v=20260607-auth',
   '/assets/sunofox-logo-black.png',
+  '/assets/figma-home/sf-home-reference.jpg',
   '/assets/sf-studio-icon-192.png',
   '/assets/sf-studio-icon-512.png'
 ];

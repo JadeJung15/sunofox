@@ -1,8 +1,8 @@
-const SF_STUDIO_CACHE = 'sf-studio-20260607-linkhub';
+const SF_STUDIO_CACHE = 'sf-studio-20260607-icon';
 const SF_STUDIO_ASSETS = [
   '/manifest.webmanifest',
   '/css/style.css?v=20260607-fanpage',
-  '/css/sf-home.css?v=20260607-linkhub',
+  '/css/sf-home.css?v=20260607-icon',
   '/css/sf-category.css?v=20260607-categories',
   '/css/sf-community.css?v=20260607-d1-community',
   '/css/mv-storyboard.css?v=20260607-auth',

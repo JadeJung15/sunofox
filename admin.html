@@ -51,6 +51,47 @@
       </form>
       <div id="sf-auth-message" class="sf-auth-message" hidden></div>
       <div id="sf-admin-alerts" class="sf-admin-alerts"></div>
+    </section>
+
+    <section class="sf-admin-panel sf-admin-compose-panel">
+      <div class="sf-admin-section-head">
+        <div>
+          <span class="sf-auth-kicker">OWNER POST</span>
+          <h2>운영 게시글 작성</h2>
+        </div>
+        <a href="/community" class="sf-admin-section-link">게시판 보기</a>
+      </div>
+      <form id="sf-admin-post-form" class="sf-admin-post-form">
+        <div class="sf-admin-post-grid">
+          <label>
+            <span>게시판</span>
+            <select id="sf-admin-post-board">
+              <option value="notice">공지</option>
+              <option value="event">이벤트</option>
+              <option value="media">영상</option>
+              <option value="free">자유</option>
+            </select>
+          </label>
+          <label>
+            <span>제목</span>
+            <input id="sf-admin-post-title" type="text" maxlength="90" required placeholder="공지 제목">
+          </label>
+        </div>
+        <label>
+          <span>내용</span>
+          <textarea id="sf-admin-post-body" rows="5" maxlength="5000" required placeholder="팬들에게 보여줄 내용을 입력하세요."></textarea>
+        </label>
+        <div class="sf-admin-post-options">
+          <label>
+            <input id="sf-admin-post-pinned" type="checkbox" checked>
+            <span>게시판 상단에 고정</span>
+          </label>
+          <button type="submit">운영 게시글 등록</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="sf-admin-panel">
       <div class="sf-admin-section-head">
         <div>
           <span class="sf-auth-kicker">MEMBER REQUESTS</span>

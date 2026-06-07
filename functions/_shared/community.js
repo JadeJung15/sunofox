@@ -1,4 +1,5 @@
 import {
+  getAdminEmail,
   getUser,
   json,
   kvListPrefix,
@@ -114,6 +115,16 @@ async function requireApprovedUser(request, env) {
   }
 
   return { email, user, authorName: getDisplayName(user, email) };
+}
+
+async function requireAdminPostActor(request, env) {
+  if (!(await requireAdminAccess(request, env))) {
+    return { error: json({ ok: false, message: '소유자 로그인 또는 관리자 키가 필요합니다.' }, { status: 401 }) };
+  }
+
+  const session = await verifySession(request, env);
+  const email = normalizeEmail(session?.email || getAdminEmail(env));
+  return { email, authorName: 'SunoFox 운영' };
 }
 
 async function migrateLegacyPosts(env) {
@@ -251,17 +262,17 @@ export async function handleCommunityPostsPost(context) {
   const db = getDb(context.env);
   if (!db) return json({ ok: false, message: '커뮤니티 데이터베이스가 연결되지 않았습니다.' }, { status: 500 });
 
-  const actor = await requireApprovedUser(context.request, context.env);
-  if (actor.error) return actor.error;
-
   const body = await parseJsonBody(context.request);
   if (!body) return json({ ok: false, message: '요청 형식이 올바르지 않습니다.' }, { status: 400 });
 
   const board = normalizeBoard(body.board);
   if (board === 'all') return json({ ok: false, message: '게시판을 선택해 주세요.' }, { status: 400 });
-  if (board === 'notice' && !(await requireAdminAccess(context.request, context.env))) {
-    return json({ ok: false, message: '공지 게시판은 관리자만 작성할 수 있습니다.' }, { status: 403 });
-  }
+  const pinned = Boolean(body.pinned);
+  const needsAdmin = board === 'notice' || pinned || body.admin === true;
+  const actor = needsAdmin
+    ? await requireAdminPostActor(context.request, context.env)
+    : await requireApprovedUser(context.request, context.env);
+  if (actor.error) return actor.error;
 
   const title = cleanText(body.title, MAX_TITLE_LENGTH);
   const content = cleanText(body.body, MAX_BODY_LENGTH);
@@ -275,8 +286,8 @@ export async function handleCommunityPostsPost(context) {
       id, board_slug, title, body, author_email, author_name, status,
       pinned, views, like_count, dislike_count, created_at, updated_at
     )
-    VALUES (?, ?, ?, ?, ?, ?, 'published', 0, 0, 0, 0, ?, ?)
-  `).bind(id, board, title, content, actor.email, actor.authorName, now, now).run();
+    VALUES (?, ?, ?, ?, ?, ?, 'published', ?, 0, 0, 0, ?, ?)
+  `).bind(id, board, title, content, actor.email, actor.authorName, pinned ? 1 : 0, now, now).run();
 
   const row = await getPostRow(context.env, id, { admin: false });
   return json({ ok: true, post: publicPost(row) }, { status: 201 });

@@ -260,6 +260,45 @@
     });
   }
 
+  function bindAdminPostForm(getAdminKey) {
+    const form = document.getElementById('sf-admin-post-form');
+    const boardInput = document.getElementById('sf-admin-post-board');
+    const titleInput = document.getElementById('sf-admin-post-title');
+    const bodyInput = document.getElementById('sf-admin-post-body');
+    const pinnedInput = document.getElementById('sf-admin-post-pinned');
+    if (!form) return;
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const button = form.querySelector('button[type="submit"]');
+      const adminKey = getAdminKey();
+      button.disabled = true;
+      setMessage('운영 게시글을 등록하는 중입니다.', 'info');
+      try {
+        await requestJson('/api/community/posts', {
+          method: 'POST',
+          headers: adminHeaders(adminKey),
+          body: JSON.stringify({
+            admin: true,
+            board: boardInput?.value || 'notice',
+            title: titleInput?.value,
+            body: bodyInput?.value,
+            pinned: Boolean(pinnedInput?.checked)
+          })
+        });
+        form.reset();
+        if (boardInput) boardInput.value = 'notice';
+        if (pinnedInput) pinnedInput.checked = true;
+        setMessage('운영 게시글을 등록했습니다.', 'success');
+        await loadDashboard(adminKey);
+      } catch (error) {
+        setMessage(error.message, 'error');
+      } finally {
+        button.disabled = false;
+      }
+    });
+  }
+
   async function loadDashboard(adminKey) {
     setMessage('관리 데이터를 불러오는 중입니다.', 'info');
     const headers = adminHeaders(adminKey);
@@ -282,11 +321,13 @@
   function bindAdmin() {
     const form = document.getElementById('sf-admin-key-form');
     const input = document.getElementById('sf-admin-key');
+    const getAdminKey = () => input?.value.trim() || '';
+    bindAdminPostForm(getAdminKey);
+
     form?.addEventListener('submit', async (event) => {
       event.preventDefault();
-      const adminKey = input?.value.trim();
       try {
-        await loadDashboard(adminKey);
+        await loadDashboard(getAdminKey());
       } catch (error) {
         setMessage(error.message, 'error');
       }

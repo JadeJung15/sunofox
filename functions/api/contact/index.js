@@ -1,3 +1,5 @@
+import { requireAdminAccess } from '../../_shared/auth.js';
+
 function json(data, init = {}) {
   return new Response(JSON.stringify(data), {
     ...init,
@@ -7,6 +9,12 @@ function json(data, init = {}) {
       ...(init.headers || {})
     }
   });
+}
+
+function clampLimit(value, fallback = 100) {
+  const parsed = Number.parseInt(value, 10);
+  if (!Number.isFinite(parsed)) return fallback;
+  return Math.min(Math.max(parsed, 1), 200);
 }
 
 function normalizeEmail(value) {
@@ -56,6 +64,32 @@ export async function onRequestPost({ request, env }) {
   `).bind(id, email, message, page, userAgent, now).run();
 
   return json({ ok: true, message: '문의가 저장되었습니다. 확인 후 연락드리겠습니다.' }, { status: 201 });
+}
+
+export async function onRequestGet({ request, env }) {
+  const isAdmin = await requireAdminAccess(request, env);
+  if (!isAdmin) {
+    return json({ ok: false, message: '관리자 권한이 필요합니다.' }, { status: 401 });
+  }
+
+  const db = env.SF_COMMUNITY_DB || env.SUNOFOX_DB || env.CONTACT_DB;
+  if (!db) {
+    return json({ ok: false, message: '문의 저장소가 연결되지 않았습니다.' }, { status: 503 });
+  }
+
+  const url = new URL(request.url);
+  const status = cleanText(url.searchParams.get('status') || 'new', 40);
+  const limit = clampLimit(url.searchParams.get('limit'), 100);
+
+  const result = await db.prepare(`
+    SELECT id, email, message, page, user_agent, status, created_at, updated_at
+    FROM contact_messages
+    WHERE status = ?1
+    ORDER BY created_at DESC
+    LIMIT ?2
+  `).bind(status, limit).all();
+
+  return json({ ok: true, messages: result.results || [] });
 }
 
 export async function onRequestOptions() {

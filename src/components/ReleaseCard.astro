@@ -1,19 +1,34 @@
 ---
 const { release } = Astro.props;
+const youtubeHref = release.youtubeId
+  ? `https://www.youtube.com/watch?v=${release.youtubeId}`
+  : release.links.youtube;
 ---
 
 <article class="glass-card reveal group overflow-hidden rounded-[28px]">
-  <a href={release.href} target="_blank" rel="noopener noreferrer" class="block" aria-label={`${release.ko} 듣기`}>
-    <div class="relative aspect-[4/5] overflow-hidden">
-      <img class="h-full w-full object-cover transition duration-500 group-hover:scale-110" src={release.image} alt={`${release.ko} 앨범아트`} loading="lazy" />
-      <div class="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-transparent"></div>
-      <span class="absolute right-5 top-5 rounded-full bg-white/15 px-4 py-2 text-xs font-black backdrop-blur-xl">PLAY</span>
+  <div class="relative aspect-[4/5] overflow-hidden">
+    <img
+      class="h-full w-full object-cover transition duration-500 group-hover:scale-110"
+      src={release.image}
+      alt={`${release.title} album artwork`}
+      loading="lazy"
+      onerror="this.onerror=null; this.src='/assets/sf-studio-icon-512.png'; this.classList.add('bg-black/60','p-16');"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-transparent"></div>
+    <a class="absolute right-5 top-5 rounded-full bg-white/15 px-4 py-2 text-xs font-black backdrop-blur-xl transition hover:bg-cyan-300 hover:text-black" href={youtubeHref} target="_blank" rel="noopener noreferrer" aria-label={`${release.title} YouTube에서 듣기`}>
+      PLAY
+    </a>
+  </div>
+  <div class="p-6">
+    <p class="text-sm font-bold text-cyan-300">{release.tag}</p>
+    <h3 class="mt-2 text-3xl font-black">{release.title}</h3>
+    <p class="mt-1 text-white/55">{release.ko}</p>
+    <p class="mt-4 text-sm leading-6 text-white/55">{release.desc}</p>
+    <div class="mt-5 flex flex-wrap gap-2">
+      <a class="neon-button rounded-full px-4 py-2 text-xs font-black" href={youtubeHref} target="_blank" rel="noopener noreferrer">YouTube</a>
+      <a class="rounded-full border border-white/15 px-4 py-2 text-xs font-black text-white/70 transition hover:border-[#1db954] hover:text-white" href={release.links.spotify} target="_blank" rel="noopener noreferrer">Spotify</a>
+      <a class="rounded-full border border-white/15 px-4 py-2 text-xs font-black text-white/70 transition hover:border-[#00cd3c] hover:text-white" href={release.links.melon} target="_blank" rel="noopener noreferrer">Melon</a>
+      <a class="rounded-full border border-white/15 px-4 py-2 text-xs font-black text-white/70 transition hover:border-fuchsia-300 hover:text-white" href={release.links.appleMusic} target="_blank" rel="noopener noreferrer">Apple</a>
     </div>
-    <div class="p-6">
-      <p class="text-sm font-bold text-cyan-300">{release.tag}</p>
-      <h3 class="mt-2 text-3xl font-black">{release.title}</h3>
-      <p class="mt-1 text-white/55">{release.ko}</p>
-      <p class="mt-4 text-sm leading-6 text-white/55">{release.desc}</p>
-    </div>
-  </a>
+  </div>
 </article>

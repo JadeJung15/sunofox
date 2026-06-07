@@ -2,14 +2,98 @@
 import ReleaseCard from '../components/ReleaseCard.astro';
 import Layout from '../layouts/Layout.astro';
 
+const artistLinks = {
+  youtube: 'https://www.youtube.com/@sunofox',
+  spotify: 'https://open.spotify.com/artist/5fzr4xqw1e0c5cI8dVj11D',
+  appleMusic: 'https://music.apple.com/kr/artist/%EC%88%98%EB%85%B8%ED%8F%AD%EC%8A%A4/1874158480',
+  melon: 'https://www.melon.com/artist/song.htm?artistId=4881689',
+  bugs: 'https://music.bugs.co.kr/artist/14591489',
+  soundcloud: 'https://soundcloud.com/sunopogseu'
+};
+
 const releases = [
-  ['Nameless Awakening', '이름 없는 각성', 'Anime Rock / Awakening', '이름을 잃은 주인공이 처음으로 자신의 불꽃을 되찾는 각성 테마.', 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80', 'https://www.youtube.com/watch?v=RPg5y7WbvRo'],
-  ['Glass City Fire', '유리 도시의 불꽃', 'Symphonic DnB / Neon City', '네온 도시의 밤을 질주하는 고속 드럼과 심포닉 신스의 조합.', 'https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=900&q=80', 'https://www.youtube.com/@sunofox'],
-  ['Last Greeting', '마지막 인사', 'Ethereal Pop / Farewell', '돌아오지 않는 사람에게 전하는 마지막 대사를 담은 감성 OST.', 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80', 'https://www.youtube.com/@sunofox'],
-  ['Reviver', '다시 일어서는 자', 'Battle OST / Recovery', '무너진 팀이 다시 전열을 갖추는 전투 후반부 리커버리 테마.', 'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=900&q=80', 'https://www.youtube.com/watch?v=RPg5y7WbvRo'],
-  ['Unbreakable', '부서지지 않는 마음', 'Hero Theme / Chorus', '상처를 딛고 앞으로 나아가는 주인공의 메인 후렴 테마.', 'https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=900&q=80', 'https://www.youtube.com/@sunofox'],
-  ['Midnight Promise', '자정의 약속', 'Ethereal Pop / Night Scene', '도시의 끝에서 다시 만나기로 한 두 인물의 밤 장면.', 'https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=900&q=80', 'https://www.youtube.com/@sunofox']
-].map(([title, ko, tag, desc, image, href]) => ({ title, ko, tag, desc, image, href }));
+  {
+    title: 'Flamebreaker',
+    ko: '플레임브레이커',
+    tag: 'Anime OST / Battle Opening',
+    desc: 'ARCHIVE vol.1의 첫 인상을 여는 강한 전투형 오프닝 트랙입니다.',
+    image: '/assets/releases/archive-vol-1/flamebreaker.webp',
+    youtubeId: 'RPg5y7WbvRo',
+    links: artistLinks
+  },
+  {
+    title: 'Flame of the Echo',
+    ko: '메아리의 불꽃',
+    tag: 'Symphonic Rock / Echo Scene',
+    desc: '되살아나는 불꽃과 반복되는 기억을 그리는 시네마틱 록 테마입니다.',
+    image: '/assets/releases/archive-vol-1/flame-of-the-echo.webp',
+    youtubeId: '',
+    links: artistLinks
+  },
+  {
+    title: 'Rewind of Destiny',
+    ko: '운명의 되감기',
+    tag: 'Time Loop / Emotional OST',
+    desc: '되감기는 운명과 다시 선택해야 하는 장면을 위한 감정형 OST입니다.',
+    image: '/assets/releases/archive-vol-1/rewind-of-destiny.webp',
+    youtubeId: '',
+    links: artistLinks
+  },
+  {
+    title: 'Starlight Calling',
+    ko: '별빛의 부름',
+    tag: 'Ethereal Pop / Hope Theme',
+    desc: '어두운 도시 위로 도착하는 신호와 희망을 담은 에테리얼 팝 트랙입니다.',
+    image: '/assets/releases/archive-vol-1/starlight-calling.webp',
+    youtubeId: '',
+    links: artistLinks
+  },
+  {
+    title: 'R3DL1N3',
+    ko: '레드라인',
+    tag: 'Cyber DnB / Chase Scene',
+    desc: '한계선 위를 질주하는 추격 장면을 위한 사이버 DnB 테마입니다.',
+    image: '/assets/releases/archive-vol-1/r3dl1n3.webp',
+    youtubeId: '',
+    links: artistLinks
+  },
+  {
+    title: 'Neon Rush',
+    ko: '네온 러시',
+    tag: 'Neon City / Speed Battle',
+    desc: '네온이 번지는 밤거리와 속도감 있는 액션 장면을 그리는 트랙입니다.',
+    image: '/assets/releases/archive-vol-1/neon-rush.webp',
+    youtubeId: '',
+    links: artistLinks
+  },
+  {
+    title: 'Anti-Christmas, Anti-Couple',
+    ko: '안티 크리스마스, 안티 커플',
+    tag: 'Alt Pop / Seasonal Satire',
+    desc: '축제의 반짝임 뒤에 남겨진 외로움을 비틀어 표현한 시즌형 트랙입니다.',
+    image: '/assets/releases/archive-vol-1/anti-christmas-anti-couple.webp',
+    youtubeId: '',
+    links: artistLinks
+  },
+  {
+    title: 'Heavenfall Protocol',
+    ko: '헤븐폴 프로토콜',
+    tag: 'Epic OST / Collapse Scene',
+    desc: '하늘에서 무너지는 시스템과 마지막 방어선을 그리는 에픽 테마입니다.',
+    image: '/assets/releases/archive-vol-1/heavenfall-protocol.webp',
+    youtubeId: '',
+    links: artistLinks
+  },
+  {
+    title: 'The Devil Walks Tonight',
+    ko: '오늘 밤 악마가 걷는다',
+    tag: 'Dark Anime OST / Villain Theme',
+    desc: '도시의 어둠 속에서 등장하는 빌런의 발자국을 따라가는 다크 OST입니다.',
+    image: '/assets/releases/archive-vol-1/the-devil-walks-tonight.webp',
+    youtubeId: '',
+    links: artistLinks
+  }
+];
 
 const series = [
   ['AWAKENING', '각성의 테마', '무너진 세계에서 다시 일어서는 주인공의 사운드트랙'],
@@ -27,12 +111,12 @@ const news = [
 ];
 
 const gallery = [
-  'https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=900&q=80',
-  'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80',
-  'https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=900&q=80',
-  'https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=900&q=80',
-  'https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=900&q=80',
-  'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80'
+  '/assets/releases/archive-vol-1/flamebreaker.webp',
+  '/assets/releases/archive-vol-1/flame-of-the-echo.webp',
+  '/assets/releases/archive-vol-1/rewind-of-destiny.webp',
+  '/assets/releases/archive-vol-1/starlight-calling.webp',
+  '/assets/releases/archive-vol-1/r3dl1n3.webp',
+  '/assets/releases/archive-vol-1/neon-rush.webp'
 ];
 
 const workflow = [
@@ -192,7 +276,13 @@ const structuredData = {
       <div class="mt-12 columns-1 gap-4 sm:columns-2 lg:columns-3">
         {gallery.map((src, index) => (
           <button class="gallery-item mb-4 block w-full overflow-hidden rounded-[24px] border border-white/10 bg-white/5 text-left" data-src={src} aria-label={`SunoFox visual ${index + 1} 확대 보기`} type="button">
-            <img class="w-full object-cover transition duration-500 hover:scale-105" src={src} alt={`SunoFox visual scene ${index + 1}`} loading="lazy" />
+            <img
+              class="w-full object-cover transition duration-500 hover:scale-105"
+              src={src}
+              alt={`SunoFox visual scene ${index + 1}`}
+              loading="lazy"
+              onerror="this.onerror=null; this.src='/assets/sf-studio-icon-512.png'; this.classList.add('bg-black/60','p-16');"
+            />
           </button>
         ))}
       </div>
@@ -276,6 +366,14 @@ const structuredData = {
     const lightbox = document.getElementById('lightbox');
     const lightboxImage = document.getElementById('lightboxImage');
     const lightboxClose = document.getElementById('lightboxClose');
+    const imageFallback = '/assets/sf-studio-icon-512.png';
+
+    if (lightboxImage) {
+      lightboxImage.addEventListener('error', () => {
+        if (lightboxImage.src.endsWith(imageFallback)) return;
+        lightboxImage.src = imageFallback;
+      });
+    }
 
     document.querySelectorAll('.gallery-item').forEach((item) => {
       item.addEventListener('click', () => {

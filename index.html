@@ -4,135 +4,192 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#f8fafc">
-    <title>SunoFox | Fan Page</title>
-    <meta name="description" content="SunoFox 팬페이지입니다. 팬 게시글, 새 소식, 영상 아카이브를 준비합니다.">
-    <meta property="og:title" content="SunoFox | Fan Page">
-    <meta property="og:description" content="SunoFox 팬들이 응원글과 아이디어를 남기는 공식 팬 허브입니다.">
+    <title>SunoFox | Official Link Hub</title>
+    <meta name="description" content="SunoFox 공식 링크 허브입니다. 최신 Anime OST, Symphonic DnB, Ethereal Pop 작업물과 스트리밍 링크를 한곳에서 확인하세요.">
+    <meta property="og:title" content="SunoFox | Official Link Hub">
+    <meta property="og:description" content="SunoFox 음악, 영상, 팬 커뮤니티를 연결하는 공식 올인원 링크 허브입니다.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://sunofox.com/">
-    <meta property="og:image" content="https://sunofox.com/assets/sf-studio-icon-512.png">
+    <meta property="og:image" content="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/6e/6d/9d/6e6d9d6c-8617-7a86-2808-21f68d8a5c1b/8800360897720_cover.jpg/1200x630cw.png">
     <link rel="canonical" href="https://sunofox.com/">
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" href="./assets/sf-studio-icon-192.png">
+    <link rel="preconnect" href="https://www.youtube-nocookie.com">
+    <link rel="preconnect" href="https://i.ytimg.com">
     <link rel="stylesheet" href="./css/style.css?v=20260607-fanpage">
-    <link rel="stylesheet" href="./css/sf-home.css?v=20260607-fanpage">
+    <link rel="stylesheet" href="./css/sf-home.css?v=20260607-linkhub">
+
+    <!-- GA4 placeholder
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    -->
+
+    <!-- Meta Pixel placeholder
+    <script>
+      !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+      n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
+      (window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '000000000000000');
+      fbq('track', 'PageView');
+    </script>
+    -->
   </head>
   <body class="sf-home-body">
     <header class="sf-home-header">
-      <a class="sf-home-brand" href="/" aria-label="SunoFox 홈">
+      <a class="sf-home-brand" href="/" aria-label="SunoFox 홈" data-track="nav_home">
         <img src="./assets/sunofox-logo-black.png" alt="SunoFox">
         <span>SunoFox</span>
       </a>
       <nav class="sf-home-nav" aria-label="SunoFox 메뉴">
-        <a href="#fan-categories">카테고리</a>
-        <a href="/community">팬 게시판</a>
-        <a href="/signup">가입 신청</a>
-        <a href="/login">로그인</a>
+        <a href="#listen" data-track="nav_listen">Listen</a>
+        <a href="/community" data-track="nav_community">Community</a>
+        <a href="/signup" data-track="nav_signup">Join</a>
       </nav>
     </header>
 
-    <main>
-      <section class="sf-home-hero">
-        <div class="sf-home-hero-copy">
-          <span class="sf-home-kicker">SUNOFOX FAN PAGE</span>
-          <h1>SunoFox 팬페이지</h1>
-          <p>음악, 영상, 팬 메시지를 모아두는 공식 팬 허브입니다. 팬들이 남긴 응원과 아이디어가 다음 콘텐츠의 흐름으로 이어집니다.</p>
-          <div class="sf-home-actions">
-            <a class="sf-home-button primary" href="/community">팬 게시판 보기</a>
-            <a class="sf-home-button" href="/signup">가입 신청</a>
-          </div>
-        </div>
-        <div class="sf-home-panel" aria-label="SunoFox 팬페이지 미리보기">
-          <div class="sf-home-panel-head">
-            <img src="./assets/sf-studio-icon-512.png" alt="">
-            <div>
-              <span>FAN SIGNAL</span>
-              <strong>공개 팬 허브</strong>
-            </div>
-          </div>
-          <div class="sf-home-panel-list">
-            <span>응원글</span>
-            <span>감상평</span>
-            <span>새 소식</span>
-            <span>영상 아카이브</span>
-          </div>
-          <div class="sf-home-status" aria-label="SunoFox 운영 상태">
-            <div>
-              <span>홈 공개 범위</span>
-              <strong>팬페이지 공개</strong>
-            </div>
-            <div>
-              <span>글쓰기 방식</span>
-              <strong>승인 계정</strong>
-            </div>
-          </div>
+    <main class="sf-link-main">
+      <section class="sf-profile" aria-labelledby="profile-title">
+        <img class="sf-profile-logo" src="./assets/sunofox-logo-black.png" alt="SunoFox logo">
+        <p class="sf-home-kicker">OFFICIAL LINK HUB</p>
+        <h1 id="profile-title">SunoFox</h1>
+        <p class="sf-profile-copy">Anime OST, Symphonic DnB, Ethereal Pop 기반의 음악과 영상을 한곳에서 감상하세요.</p>
+        <div class="sf-profile-tags" aria-label="SunoFox 장르">
+          <span>Anime OST</span>
+          <span>Symphonic DnB</span>
+          <span>Ethereal Pop</span>
         </div>
       </section>
 
-      <section class="sf-home-section" id="fan-categories" aria-labelledby="fan-categories-title">
-        <div class="sf-home-section-head">
-          <span class="sf-home-kicker">FAN PAGE CATEGORIES</span>
-          <h2 id="fan-categories-title">팬들이 먼저 쓰고, 운영자는 조용히 관리합니다</h2>
+      <section class="sf-showcase" aria-labelledby="showcase-title">
+        <div class="sf-showcase-copy">
+          <span class="sf-home-kicker">FEATURED VIDEO</span>
+          <h2 id="showcase-title">Fire in the Glass City</h2>
+          <p>Symphonic DnB x Ethereal Pop 무드의 SunoFox 대표 쇼케이스입니다.</p>
         </div>
-        <div class="sf-tool-grid">
-          <article class="sf-tool-card active">
-            <div class="sf-tool-card-head">
-              <span>01</span>
-              <mark>사용 가능</mark>
-            </div>
-            <h3>팬 게시판</h3>
-            <p>팬들이 응원글, 작업 아이디어, 감상평을 남길 수 있는 중심 공간입니다.</p>
-            <a href="/community">게시판으로 이동</a>
-          </article>
+        <div class="sf-video-frame">
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/RPg5y7WbvRo"
+            title="SunoFox - Fire in the Glass City"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+        </div>
+        <a class="sf-primary-link" href="https://www.youtube.com/watch?v=RPg5y7WbvRo" target="_blank" rel="noopener noreferrer" data-track="featured_fire_in_the_glass_city">
+          YouTube에서 보기
+        </a>
+      </section>
 
-          <article class="sf-tool-card">
-            <div class="sf-tool-card-head">
-              <span>02</span>
-              <mark>준비 중</mark>
-            </div>
-            <h3>새 소식</h3>
-            <p>업로드 예정, 공개 알림, 운영 공지를 가볍게 보여줄 수 있는 영역입니다.</p>
-            <a href="/news">새 소식 보기</a>
-          </article>
-
-          <article class="sf-tool-card">
-            <div class="sf-tool-card-head">
-              <span>03</span>
-              <mark>준비 중</mark>
-            </div>
-            <h3>영상 아카이브</h3>
-            <p>뮤직비디오, 쇼츠, 썸네일 후보를 정리하는 공개 컬렉션으로 확장합니다.</p>
-            <a href="/archive">아카이브 보기</a>
-          </article>
-
-          <article class="sf-tool-card">
-            <div class="sf-tool-card-head">
-              <span>04</span>
-              <mark>준비 중</mark>
-            </div>
-            <h3>팬 이벤트</h3>
-            <p>추후 댓글 이벤트, 투표, 신청 폼을 연결할 수 있는 카테고리입니다.</p>
-            <a href="/events">이벤트 보기</a>
-          </article>
+      <section class="sf-link-section" id="listen" aria-labelledby="listen-title">
+        <div class="sf-section-title">
+          <span class="sf-home-kicker">STREAMING</span>
+          <h2 id="listen-title">Listen everywhere</h2>
+        </div>
+        <div class="sf-link-list">
+          <a class="sf-link-card is-primary" href="https://open.spotify.com/artist/5fzr4xqw1e0c5cI8dVj11D?si=lYMzkqudQDmpVKgzkG18Kg" target="_blank" rel="noopener noreferrer" data-track="stream_spotify">
+            <span>Spotify</span>
+            <strong>수노폭스 아티스트</strong>
+          </a>
+          <a class="sf-link-card" href="https://music.apple.com/kr/artist/%EC%88%98%EB%85%B8%ED%8F%AD%EC%8A%A4/1874158480" target="_blank" rel="noopener noreferrer" data-track="stream_apple_music">
+            <span>Apple Music</span>
+            <strong>수노폭스 아티스트</strong>
+          </a>
+          <a class="sf-link-card" href="https://music.youtube.com/channel/UCjPuy8z0pdzW3OVUXka0lMw?si=2ljpP0CVll5jXeQe" target="_blank" rel="noopener noreferrer" data-track="stream_youtube_music">
+            <span>YouTube Music</span>
+            <strong>공식 음악 채널</strong>
+          </a>
+          <a class="sf-link-card" href="https://www.melon.com/artist/song.htm?artistId=4881689" target="_blank" rel="noopener noreferrer" data-track="stream_melon">
+            <span>Melon</span>
+            <strong>수노폭스 아티스트</strong>
+          </a>
         </div>
       </section>
 
-      <section class="sf-home-section sf-home-access" aria-labelledby="access-title">
-        <div>
-          <span class="sf-home-kicker">MEMBER ACCESS</span>
-          <h2 id="access-title">글쓰기는 승인된 팬 계정만 이용합니다</h2>
-          <p>메인 홈과 게시글 목록은 공개로 열어 팬페이지 성격을 살리고, 게시글 작성은 승인된 이메일과 입장 코드로 보호합니다.</p>
+      <section class="sf-link-section" aria-labelledby="korea-title">
+        <div class="sf-section-title">
+          <span class="sf-home-kicker">KOREA PLATFORMS</span>
+          <h2 id="korea-title">국내 플랫폼</h2>
         </div>
-        <div class="sf-home-access-actions">
-          <a class="sf-home-button primary" href="/login">로그인</a>
-          <a class="sf-home-button" href="/signup">가입 신청</a>
+        <div class="sf-link-list compact">
+          <a class="sf-link-card" href="https://www.genie.co.kr/detail/artistInfo?xxnm=83205861" target="_blank" rel="noopener noreferrer" data-track="stream_genie">
+            <span>Genie</span>
+            <strong>수노폭스 아티스트</strong>
+          </a>
+          <a class="sf-link-card" href="https://music.bugs.co.kr/artist/14591489" target="_blank" rel="noopener noreferrer" data-track="stream_bugs">
+            <span>Bugs</span>
+            <strong>수노폭스 아티스트</strong>
+          </a>
+          <a class="sf-link-card" href="https://www.music-flo.com/detail/artist/413342628/track?sortType=POPULARITY&roleType=ALL" target="_blank" rel="noopener noreferrer" data-track="stream_flo">
+            <span>FLO</span>
+            <strong>수노폭스 아티스트</strong>
+          </a>
+          <a class="sf-link-card" href="https://vibe.naver.com/artist/10398991" target="_blank" rel="noopener noreferrer" data-track="stream_vibe">
+            <span>VIBE</span>
+            <strong>수노폭스 아티스트</strong>
+          </a>
+          <a class="sf-link-card" href="https://kakaomusic.kakao.com/share/artist/4881689?channelId=KakaoStory&contentId=4881689&version=v11" target="_blank" rel="noopener noreferrer" data-track="stream_kakaomusic">
+            <span>KakaoMusic</span>
+            <strong>수노폭스 아티스트</strong>
+          </a>
+        </div>
+      </section>
+
+      <section class="sf-link-section" aria-labelledby="global-title">
+        <div class="sf-section-title">
+          <span class="sf-home-kicker">GLOBAL LINKS</span>
+          <h2 id="global-title">More ways to listen</h2>
+        </div>
+        <div class="sf-link-list compact">
+          <a class="sf-link-card" href="https://www.youtube.com/@sunofox" target="_blank" rel="noopener noreferrer" data-track="channel_youtube">
+            <span>YouTube</span>
+            <strong>공식 채널</strong>
+          </a>
+          <a class="sf-link-card" href="https://www.soundcloud.com/sunopogseu?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing" target="_blank" rel="noopener noreferrer" data-track="stream_soundcloud">
+            <span>SoundCloud</span>
+            <strong>프로필 열기</strong>
+          </a>
+          <a class="sf-link-card" href="https://tidal.com/artist/73947996/u" target="_blank" rel="noopener noreferrer" data-track="stream_tidal">
+            <span>TIDAL</span>
+            <strong>수노폭스 아티스트</strong>
+          </a>
+          <a class="sf-link-card" href="https://music.amazon.com/albums/B0GL5HGW5T" target="_blank" rel="noopener noreferrer" data-track="stream_amazon_archive_vol_1">
+            <span>Amazon Music</span>
+            <strong>ARCHIVE vol.1</strong>
+          </a>
+          <a class="sf-link-card" href="https://linktr.ee/sunofox" target="_blank" rel="noopener noreferrer" data-track="channel_linktree">
+            <span>Linktree</span>
+            <strong>공식 링크 모음</strong>
+          </a>
+        </div>
+      </section>
+
+      <section class="sf-link-section" aria-labelledby="community-title">
+        <div class="sf-section-title">
+          <span class="sf-home-kicker">COMMUNITY</span>
+          <h2 id="community-title">팬 커뮤니티</h2>
+        </div>
+        <div class="sf-community-links">
+          <a class="sf-primary-link" href="/community" data-track="community_open">팬 게시판 보기</a>
+          <a class="sf-secondary-link" href="/signup" data-track="community_signup">가입 신청</a>
+          <a class="sf-secondary-link" href="/login" data-track="community_login">로그인</a>
+        </div>
+        <div class="sf-recent-posts" id="sf-recent-posts" aria-live="polite">
+          <p>최근 팬 게시글을 불러오는 중입니다.</p>
         </div>
       </section>
     </main>
 
     <footer class="sf-home-footer">
-      <span>SunoFox fan page</span>
-      <a href="/mv-studio">관리자</a>
+      <span>SunoFox official link hub</span>
+      <a href="/mv-studio" data-track="footer_admin_studio">SF Studio</a>
     </footer>
+
+    <script src="./js/sfLinkHub.js?v=20260607-linkhub" defer></script>
   </body>
 </html>

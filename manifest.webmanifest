@@ -1,7 +1,7 @@
 {
-  "name": "SunoFox Fan Page",
+  "name": "SunoFox Official Link Hub",
   "short_name": "SunoFox",
-  "description": "SunoFox fan page and community board",
+  "description": "SunoFox music, video, streaming, and fan community link hub",
   "id": "/",
   "start_url": "/",
   "scope": "/",

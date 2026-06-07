@@ -1,0 +1,37 @@
+---
+import '../styles/global.css';
+
+const {
+  title = 'SunoFox Anime OST Studio',
+  description = '감정을 그리는 애니메이션 사운드트랙. Suno AI와 Human Curation으로 완성하는 SunoFox 공식 웹사이트.'
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#03030a" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://sunofox.com/" />
+    <meta property="og:site_name" content="SunoFox" />
+    <meta property="og:image" content="https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1600&q=80" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1600&q=80" />
+    <link rel="canonical" href="https://sunofox.com/" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="icon" href="/assets/sf-studio-icon-192.png" />
+    <slot name="head" />
+  </head>
+  <body class="page-enter min-h-screen overflow-x-hidden bg-[#03030a] text-white">
+    <slot />
+  </body>
+</html>

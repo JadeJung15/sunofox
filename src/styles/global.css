@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+  --bg: #03030a;
+  --purple: #8b5cf6;
+  --pink: #ec4899;
+  --cyan: #22d3ee;
+  --text: #ffffff;
+  --muted: rgba(255, 255, 255, 0.64);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, Pretendard, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  margin: 0;
+}
+
+button,
+a,
+input,
+textarea {
+  font: inherit;
+}
+
+.neon-title {
+  background: linear-gradient(90deg, #ffffff, #c084fc, #22d3ee, #f472b6);
+  -webkit-background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 44px rgba(139, 92, 246, 0.42);
+}
+
+.neon-button {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.34), rgba(34, 211, 238, 0.14));
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.32);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.neon-button:hover {
+  border-color: rgba(34, 211, 238, 0.75);
+  box-shadow: 0 0 46px rgba(34, 211, 238, 0.36);
+  transform: translateY(-2px);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.34);
+}
+
+@supports (backdrop-filter: blur(18px)) {
+  .glass-card {
+    backdrop-filter: blur(18px);
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 760ms ease, transform 760ms ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-enter {
+  animation: pageEnter 680ms ease both;
+}
+
+@keyframes pageEnter {
+  from {
+    filter: blur(8px);
+    opacity: 0;
+  }
+
+  to {
+    filter: blur(0);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal,
+  .page-enter,
+  .neon-button {
+    animation: none;
+    transition: none;
+  }
+}

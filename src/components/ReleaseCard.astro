@@ -1,0 +1,19 @@
+---
+const { release } = Astro.props;
+---
+
+<article class="glass-card reveal group overflow-hidden rounded-[28px]">
+  <a href={release.href} target="_blank" rel="noopener noreferrer" class="block" aria-label={`${release.ko} 듣기`}>
+    <div class="relative aspect-[4/5] overflow-hidden">
+      <img class="h-full w-full object-cover transition duration-500 group-hover:scale-110" src={release.image} alt={`${release.ko} 앨범아트`} loading="lazy" />
+      <div class="absolute inset-0 bg-gradient-to-t from-black via-black/25 to-transparent"></div>
+      <span class="absolute right-5 top-5 rounded-full bg-white/15 px-4 py-2 text-xs font-black backdrop-blur-xl">PLAY</span>
+    </div>
+    <div class="p-6">
+      <p class="text-sm font-bold text-cyan-300">{release.tag}</p>
+      <h3 class="mt-2 text-3xl font-black">{release.title}</h3>
+      <p class="mt-1 text-white/55">{release.ko}</p>
+      <p class="mt-4 text-sm leading-6 text-white/55">{release.desc}</p>
+    </div>
+  </a>
+</article>

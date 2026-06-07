@@ -1,6 +1,9 @@
 .wrangler/
 output/
 .playwright-mcp/
+.astro/
+dist/
+node_modules/
 
 .env
 .env.*

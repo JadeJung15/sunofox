@@ -100,7 +100,30 @@
       .replace(/'/g, '&#039;');
   }
 
+  function setupMenuToggle() {
+    const toggle = document.querySelector('.sf-menu-toggle');
+    const nav = document.getElementById('sf-home-nav');
+    if (!toggle || !nav) return;
+
+    function setOpen(isOpen) {
+      document.body.classList.toggle('sf-nav-open', isOpen);
+      toggle.setAttribute('aria-expanded', String(isOpen));
+    }
+
+    toggle.addEventListener('click', () => {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    nav.addEventListener('click', (event) => {
+      if (event.target.closest('a') && window.matchMedia('(max-width: 760px)').matches) {
+        setOpen(false);
+      }
+    });
+  }
+
   onReady(() => {
+    setupMenuToggle();
+
     document.addEventListener('click', (event) => {
       const target = event.target.closest('[data-track]');
       if (target) trackClick(target);

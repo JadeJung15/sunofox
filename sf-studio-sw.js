@@ -1,12 +1,12 @@
-const SF_STUDIO_CACHE = 'sf-studio-20260607-semantic-home-art4';
+const SF_STUDIO_CACHE = 'sf-studio-20260607-nav-platforms-5';
 const SF_STUDIO_ASSETS = [
   '/manifest.webmanifest',
   '/css/style.css?v=20260607-fanpage',
-  '/css/sf-home.css?v=20260607-semantic-home-art4',
+  '/css/sf-home.css?v=20260607-nav-platforms-5',
   '/css/sf-category.css?v=20260607-categories',
   '/css/sf-community.css?v=20260607-d1-community',
   '/css/mv-storyboard.css?v=20260607-auth',
-  '/js/sfLinkHub.js?v=20260607-semantic-home',
+  '/js/sfLinkHub.js?v=20260607-nav-platforms',
   '/js/sfCommunity.js?v=20260607-d1-community',
   '/js/sfCommunityPost.js?v=20260607-d1-community',
   '/js/mvStoryboardStudio.js?v=20260607-auth',

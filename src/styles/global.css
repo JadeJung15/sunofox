@@ -525,6 +525,7 @@ body.menu-open .overlay-menu {
   font-weight: 950;
   line-height: 0.95;
   letter-spacing: -0.07em;
+  min-height: 66px;
 }
 
 .release-body span {
@@ -532,14 +533,19 @@ body.menu-open .overlay-menu {
   margin-top: 10px;
   color: var(--muted);
   font-weight: 700;
+  min-height: 24px;
 }
 
 .release-body small {
-  display: block;
+  display: -webkit-box;
   margin-top: 14px;
   color: var(--muted);
   font-size: 13px;
   line-height: 1.7;
+  min-height: 66px;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }
 
 .release-actions {

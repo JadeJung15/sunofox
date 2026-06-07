@@ -91,18 +91,6 @@ img {
   letter-spacing: -0.04em;
 }
 
-.site-logo-mark {
-  display: grid;
-  width: 36px;
-  height: 36px;
-  place-items: center;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  color: var(--pink);
-  font-size: 12px;
-  letter-spacing: 0.08em;
-}
-
 .menu-trigger {
   display: inline-flex;
   align-items: center;

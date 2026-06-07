@@ -87,6 +87,14 @@ export async function kvPut(env, key, value) {
   getMemoryStore().set(key, value);
 }
 
+export async function kvDelete(env, key) {
+  if (env.SF_STUDIO_AUTH) {
+    await env.SF_STUDIO_AUTH.delete(key);
+    return;
+  }
+  getMemoryStore().delete(key);
+}
+
 export async function kvListPrefix(env, prefix) {
   if (env.SF_STUDIO_AUTH) {
     const listed = await env.SF_STUDIO_AUTH.list({ prefix });

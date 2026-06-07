@@ -203,6 +203,15 @@
   gap: 8px;
 }
 
+.sf-post-meta mark {
+  background: #dbeafe;
+  border-radius: 999px;
+  color: #1d4ed8;
+  font-size: 12px;
+  font-weight: 900;
+  padding: 2px 7px;
+}
+
 @media (max-width: 880px) {
   .sf-community-layout {
     grid-template-columns: 1fr;

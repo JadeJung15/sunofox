@@ -1,11 +1,12 @@
-const SF_STUDIO_CACHE = 'sf-studio-20260607-fanpage';
+const SF_STUDIO_CACHE = 'sf-studio-20260607-categories';
 const SF_STUDIO_ASSETS = [
   '/manifest.webmanifest',
   '/css/style.css?v=20260607-fanpage',
   '/css/sf-home.css?v=20260607-fanpage',
-  '/css/sf-community.css?v=20260607-community',
+  '/css/sf-category.css?v=20260607-categories',
+  '/css/sf-community.css?v=20260607-community-admin',
   '/css/mv-storyboard.css?v=20260607-auth',
-  '/js/sfCommunity.js?v=20260607-community',
+  '/js/sfCommunity.js?v=20260607-community-admin',
   '/js/mvStoryboardStudio.js?v=20260607-auth',
   '/assets/sunofox-logo-black.png',
   '/assets/sf-studio-icon-192.png',

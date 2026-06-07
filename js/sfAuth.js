@@ -120,7 +120,7 @@
               action: button.dataset.action
             })
           });
-          await loadUsers(adminKey);
+          await loadDashboard(adminKey);
         } catch (error) {
           setMessage(error.message, 'error');
         } finally {
@@ -130,14 +130,97 @@
     });
   }
 
-  async function loadUsers(adminKey) {
-    setMessage('가입 신청 목록을 불러오는 중입니다.', 'info');
-    const data = await requestJson('/api/admin/users', {
-      method: 'GET',
-      headers: adminHeaders(adminKey)
+  function renderAlerts(users) {
+    const root = document.getElementById('sf-admin-alerts');
+    if (!root) return;
+    const pending = users.filter((user) => user.status === 'pending');
+    if (!pending.length) {
+      root.innerHTML = '<p class="sf-admin-alert is-clear">새 가입 신청이 없습니다.</p>';
+      return;
+    }
+    root.innerHTML = `
+      <div class="sf-admin-alert">
+        <strong>새 가입 신청 ${pending.length}건</strong>
+        <span>${pending.slice(0, 3).map((user) => escapeHtml(user.email)).join(', ')}${pending.length > 3 ? ' 외' : ''}</span>
+      </div>
+    `;
+  }
+
+  function renderStats(users, posts) {
+    const pendingCount = document.getElementById('sf-admin-pending-count');
+    const publishedCount = document.getElementById('sf-admin-published-count');
+    const hiddenCount = document.getElementById('sf-admin-hidden-count');
+    if (pendingCount) pendingCount.textContent = String(users.filter((user) => user.status === 'pending').length);
+    if (publishedCount) publishedCount.textContent = String(posts.filter((post) => post.status === 'published').length);
+    if (hiddenCount) hiddenCount.textContent = String(posts.filter((post) => post.status === 'hidden').length);
+  }
+
+  function renderPosts(posts, adminKey) {
+    const root = document.getElementById('sf-admin-posts');
+    if (!root) return;
+    const activePosts = posts.filter((post) => post.status !== 'deleted');
+    if (!activePosts.length) {
+      root.innerHTML = '<p class="sf-empty">관리할 팬 게시글이 없습니다.</p>';
+      return;
+    }
+    root.innerHTML = activePosts.map((post) => `
+      <article class="sf-post-admin-row" data-post-id="${escapeHtml(post.id)}">
+        <div class="sf-post-admin-main">
+          <div class="sf-post-admin-meta">
+            <mark data-status="${escapeHtml(post.status)}">${postStatusLabel(post.status)}</mark>
+            ${post.pinned ? '<mark data-status="pinned">고정</mark>' : ''}
+            <span>${escapeHtml(post.authorName || 'fan')}</span>
+            <time datetime="${escapeHtml(post.createdAt || '')}">${formatDate(post.createdAt)}</time>
+          </div>
+          <strong>${escapeHtml(post.title)}</strong>
+          <p>${escapeHtml(post.body)}</p>
+          <small>${escapeHtml(post.authorEmail || '')}</small>
+        </div>
+        <div class="sf-post-admin-actions">
+          <button type="button" data-post-action="${post.status === 'published' ? 'hide' : 'publish'}">${post.status === 'published' ? '숨김' : '공개'}</button>
+          <button type="button" data-post-action="${post.pinned ? 'unpin' : 'pin'}">${post.pinned ? '고정 해제' : '고정'}</button>
+          <button type="button" data-post-action="delete">삭제</button>
+        </div>
+      </article>
+    `).join('');
+
+    root.querySelectorAll('button[data-post-action]').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const row = button.closest('[data-post-id]');
+        button.disabled = true;
+        try {
+          await requestJson('/api/posts', {
+            method: 'PATCH',
+            headers: adminHeaders(adminKey),
+            body: JSON.stringify({
+              id: row.dataset.postId,
+              action: button.dataset.postAction
+            })
+          });
+          await loadDashboard(adminKey);
+        } catch (error) {
+          setMessage(error.message, 'error');
+        } finally {
+          button.disabled = false;
+        }
+      });
     });
-    setMessage('가입 신청 목록을 불러왔습니다.', 'success');
-    renderUsers(data.users || [], adminKey);
+  }
+
+  async function loadDashboard(adminKey) {
+    setMessage('관리 데이터를 불러오는 중입니다.', 'info');
+    const headers = adminHeaders(adminKey);
+    const [usersData, postsData] = await Promise.all([
+      requestJson('/api/admin/users', { method: 'GET', headers }),
+      requestJson('/api/posts?admin=1', { method: 'GET', headers })
+    ]);
+    const users = usersData.users || [];
+    const posts = postsData.posts || [];
+    setMessage('관리 데이터를 불러왔습니다.', 'success');
+    renderStats(users, posts);
+    renderAlerts(users);
+    renderUsers(users, adminKey);
+    renderPosts(posts, adminKey);
   }
 
   function bindAdmin() {
@@ -147,13 +230,13 @@
       event.preventDefault();
       const adminKey = input?.value.trim();
       try {
-        await loadUsers(adminKey);
+        await loadDashboard(adminKey);
       } catch (error) {
         setMessage(error.message, 'error');
       }
     });
 
-    loadUsers('').catch(() => {
+    loadDashboard('').catch(() => {
       setMessage('소유자 계정으로 로그인했거나 관리자 키가 있으면 가입 신청을 관리할 수 있습니다.', 'info');
     });
   }
@@ -171,6 +254,24 @@
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#039;');
+  }
+
+  function postStatusLabel(status) {
+    if (status === 'hidden') return '숨김';
+    if (status === 'deleted') return '삭제';
+    return '공개';
+  }
+
+  function formatDate(value) {
+    if (!value) return '';
+    try {
+      return new Intl.DateTimeFormat('ko-KR', {
+        dateStyle: 'short',
+        timeStyle: 'short'
+      }).format(new Date(value));
+    } catch {
+      return value;
+    }
   }
 
   if (page === 'login') bindLogin();

@@ -5,6 +5,9 @@ SunoFox 팬페이지와 관리자 전용 SF Studio를 함께 운영하는 Cloudf
 - 정본 도메인: `https://sunofox.com`
 - 메인 홈: `/`
 - 팬 게시판: `/community`
+- 새 소식: `/news`
+- 영상 아카이브: `/archive`
+- 팬 이벤트: `/events`
 - SF Studio route: `/mv-studio` 관리자 전용
 - Cloudflare Pages 프로젝트명: `sf-studio`
 - 접근 제어: 팬 게시글 작성은 승인 계정, SF Studio는 관리자 이메일만 허용
@@ -41,11 +44,12 @@ Cloudflare Access is intentionally disabled for this project. The site uses Clou
 - `/signup`: email signup request
 - `/login`: approved email + studio entry code login
 - `/community`: public fan board with approved-account posting
+- `/news`, `/archive`, `/events`: public fan page category pages
 - `/mv-studio`: admin-only creator workspace
 - `/admin`: admin-only owner approval screen
 - `/api/auth/*`: signup, login, logout, session check
-- `/api/posts`: list and create fan posts
-- `/api/admin/users`: list and approve/reject users
+- `/api/posts`: list, create, and admin-manage fan posts
+- `/api/admin/users`: list and approve/reject users with pending-request alert support
 
 Required Cloudflare bindings/secrets before production deployment:
 

@@ -79,6 +79,7 @@
     list.innerHTML = posts.map((post) => `
       <article class="sf-post-card">
         <div class="sf-post-meta">
+          ${post.pinned ? '<mark>고정</mark>' : ''}
           <span>${escapeHtml(post.authorName || 'fan')}</span>
           <time datetime="${escapeHtml(post.createdAt || '')}">${formatDate(post.createdAt)}</time>
         </div>

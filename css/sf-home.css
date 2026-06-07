@@ -280,6 +280,12 @@
   box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08);
 }
 
+.sf-tool-card:not(.active) a {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #111827;
+}
+
 .sf-tool-card-head {
   align-items: center;
   display: flex;
@@ -319,6 +325,10 @@
   align-self: end;
   border: 0;
   width: fit-content;
+}
+
+.sf-tool-card:not(.active) a {
+  border: 1px solid #cbd5e1;
 }
 
 .sf-tool-card button {

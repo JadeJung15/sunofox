@@ -582,7 +582,7 @@ body.menu-open .overlay-menu {
   color: inherit;
   display: flex;
   flex-direction: column;
-  min-height: 210px;
+  min-height: 250px;
   padding: 28px;
   text-decoration: none;
   transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
@@ -594,12 +594,30 @@ body.menu-open .overlay-menu {
   transform: translateY(-2px);
 }
 
-.series-card h3 {
-  margin: 12px 0 0;
-  color: #ffffff;
-  font-size: 30px;
+.series-card small {
+  color: var(--pink);
+  font-size: 11px;
   font-weight: 950;
-  letter-spacing: -0.06em;
+  letter-spacing: 0.16em;
+}
+
+.series-card strong {
+  display: block;
+  margin-top: 26px;
+  color: #ffffff;
+  font-size: clamp(34px, 4vw, 54px);
+  font-weight: 950;
+  letter-spacing: -0.07em;
+  line-height: 0.92;
+}
+
+.series-card p {
+  margin: 14px 0 0;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 13px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: none;
 }
 
 .series-card span {

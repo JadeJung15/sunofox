@@ -478,14 +478,27 @@ body.menu-open .overlay-socials {
   background: var(--pink);
 }
 
+.micro-button-muted {
+  border-color: transparent;
+  padding-inline: 10px;
+  color: var(--muted);
+}
+
+.micro-button-muted:hover,
+.micro-button-muted:focus-visible {
+  border-color: transparent;
+  background: transparent;
+  color: #ffffff;
+}
+
 .subscribe-button {
-  min-width: 156px;
-  box-shadow: 0 0 0 1px rgba(255, 10, 91, 0.1), 0 16px 48px rgba(255, 10, 91, 0.22);
+  min-width: 164px;
+  box-shadow: 0 16px 48px rgba(255, 10, 91, 0.2);
 }
 
 .subscribe-button:hover,
 .subscribe-button:focus-visible {
-  box-shadow: 0 0 0 1px rgba(255, 10, 91, 0.18), 0 20px 60px rgba(255, 10, 91, 0.32);
+  box-shadow: 0 18px 56px rgba(255, 10, 91, 0.3);
 }
 
 .scroll-cue {
@@ -520,38 +533,13 @@ body.menu-open .overlay-socials {
   margin-top: 0;
 }
 
-.subscribe-panel {
-  display: grid;
-  gap: 10px;
-  width: min(560px, 100%);
-  margin: 28px auto 0;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: linear-gradient(135deg, rgba(255, 10, 91, 0.13), rgba(255, 255, 255, 0.025));
-  padding: 18px 22px;
-  text-align: left;
-}
-
-.subscribe-panel span {
-  color: var(--pink);
-  font-family: var(--font-condensed);
-  font-size: 11px;
-  font-weight: 950;
-  letter-spacing: 0.18em;
-}
-
-.subscribe-panel strong {
-  color: #ffffff;
-  font-size: clamp(18px, 2.2vw, 24px);
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  line-height: 1.25;
-}
-
-.subscribe-panel p {
-  margin: 0;
+.subscribe-line {
+  max-width: 520px;
+  margin: 18px auto 0;
   color: var(--muted);
   font-size: 14px;
   line-height: 1.7;
+  text-align: center;
 }
 
 .landing-note {
@@ -1194,14 +1182,14 @@ body.menu-open .overlay-socials {
   }
 
   .hero-actions .subscribe-button {
-    width: min(100%, 260px);
+    width: min(100%, 240px);
     min-width: 0;
     order: -1;
   }
 
-  .subscribe-panel {
-    margin-top: 22px;
-    padding: 16px;
+  .subscribe-line {
+    margin-top: 14px;
+    font-size: 13px;
   }
 
   .hero-wordmark {

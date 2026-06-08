@@ -1,7 +1,7 @@
 ---
 import SiteChrome from '../components/SiteChrome.astro';
 import Layout from '../layouts/Layout.astro';
-import { structuredData } from '../data/siteContent.js';
+import { artistLinks, structuredData } from '../data/siteContent.js';
 ---
 
 <Layout>
@@ -21,10 +21,18 @@ import { structuredData } from '../data/siteContent.js';
           <span>Animation soundtracks painted with emotion.</span>
         </p>
         <div class="hero-actions" aria-label="SunoFox main categories">
+          <a class="micro-button micro-button-solid subscribe-button" href={artistLinks.youtubeSubscribe} target="_blank" rel="noopener noreferrer" data-track="home_youtube_subscribe">
+            구독하러 가기
+          </a>
           <a class="micro-button micro-button-solid" href="/news">NEWS</a>
           <a class="micro-button" href="/songs">SONGS</a>
           <a class="micro-button" href="/series">SERIES</a>
         </div>
+        <aside class="subscribe-panel reveal" aria-label="SunoFox subscribe">
+          <span>SUBSCRIBE</span>
+          <strong>새로운 OST와 세계관 업데이트를 가장 먼저 받아보세요.</strong>
+          <p>신곡, 시리즈 재생목록, 제작 비하인드는 YouTube에서 가장 먼저 공개됩니다.</p>
+        </aside>
       </div>
       <p class="landing-note">MENU에서 모든 카테고리를 별도 페이지로 열 수 있습니다.</p>
     </section>

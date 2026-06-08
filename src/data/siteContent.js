@@ -1,5 +1,6 @@
 export const artistLinks = {
   youtube: 'https://www.youtube.com/@sunofox',
+  youtubeSubscribe: 'https://www.youtube.com/@sunofox?sub_confirmation=1',
   youtubePlaylists: 'https://www.youtube.com/@sunofox/playlists',
   spotify: 'https://open.spotify.com/artist/5fzr4xqw1e0c5cI8dVj11D',
   appleMusic: 'https://music.apple.com/kr/artist/%EC%88%98%EB%85%B8%ED%8F%AD%EC%8A%A4/1874158480',

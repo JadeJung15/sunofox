@@ -23,10 +23,9 @@ function adminOnlyResponse() {
     <main>
       <section>
         <h1>관리자 전용 페이지입니다</h1>
-        <p>SF Studio는 사이트 관리자만 사용할 수 있습니다. 팬 계정은 팬 게시판과 공개 홈을 이용해 주세요.</p>
+        <p>SF Studio는 사이트 관리자만 사용할 수 있습니다. 공개 홈으로 이동해 주세요.</p>
         <div>
           <a href="/">홈으로 이동</a>
-          <a href="/community">팬 게시판</a>
         </div>
       </section>
     </main>

@@ -18,7 +18,7 @@ export async function onRequestPost(context) {
 
   const email = normalizeEmail(body.email);
   const code = String(body.code || '').trim();
-  const next = String(body.next || '/community');
+  const next = String(body.next || '/');
   const adminEmail = getAdminEmail(context.env);
 
   if (!email || !code) {

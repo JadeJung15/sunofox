@@ -11,7 +11,7 @@
 
   function getNext() {
     const params = new URLSearchParams(window.location.search);
-    return params.get('next') || '/community';
+    return params.get('next') || '/';
   }
 
   async function requestJson(url, options) {
@@ -45,7 +45,7 @@
             next: getNext()
           })
         });
-        window.location.assign(data.next || '/community');
+        window.location.assign(data.next || '/');
       } catch (error) {
         setMessage(error.message, 'error');
       } finally {
@@ -146,183 +146,30 @@
     `;
   }
 
-  function renderStats(users, posts, comments) {
+  function renderStats(users) {
     const pendingCount = document.getElementById('sf-admin-pending-count');
-    const publishedCount = document.getElementById('sf-admin-published-count');
-    const hiddenCount = document.getElementById('sf-admin-hidden-count');
-    const commentCount = document.getElementById('sf-admin-comment-count');
+    const approvedCount = document.getElementById('sf-admin-approved-count');
+    const rejectedCount = document.getElementById('sf-admin-rejected-count');
     if (pendingCount) pendingCount.textContent = String(users.filter((user) => user.status === 'pending').length);
-    if (publishedCount) publishedCount.textContent = String(posts.filter((post) => post.status === 'published').length);
-    if (hiddenCount) hiddenCount.textContent = String(posts.filter((post) => post.status === 'hidden').length);
-    if (commentCount) commentCount.textContent = String(comments.filter((comment) => comment.status !== 'deleted').length);
-  }
-
-  function renderPosts(posts, adminKey) {
-    const root = document.getElementById('sf-admin-posts');
-    if (!root) return;
-    const activePosts = posts.filter((post) => post.status !== 'deleted');
-    if (!activePosts.length) {
-      root.innerHTML = '<p class="sf-empty">관리할 팬 게시글이 없습니다.</p>';
-      return;
-    }
-    root.innerHTML = activePosts.map((post) => `
-      <article class="sf-post-admin-row" data-post-id="${escapeHtml(post.id)}">
-        <div class="sf-post-admin-main">
-          <div class="sf-post-admin-meta">
-            <mark data-status="${escapeHtml(post.status)}">${postStatusLabel(post.status)}</mark>
-            ${post.pinned ? '<mark data-status="pinned">고정</mark>' : ''}
-            <span>${escapeHtml(post.authorName || 'fan')}</span>
-            <time datetime="${escapeHtml(post.createdAt || '')}">${formatDate(post.createdAt)}</time>
-          </div>
-          <strong>${escapeHtml(post.title)}</strong>
-          <p>${escapeHtml(post.body)}</p>
-          <small>${escapeHtml(post.authorEmail || '')}</small>
-        </div>
-        <div class="sf-post-admin-actions">
-          <button type="button" data-post-action="${post.status === 'published' ? 'hide' : 'publish'}">${post.status === 'published' ? '숨김' : '공개'}</button>
-          <button type="button" data-post-action="${post.pinned ? 'unpin' : 'pin'}">${post.pinned ? '고정 해제' : '고정'}</button>
-          <button type="button" data-post-action="delete">삭제</button>
-        </div>
-      </article>
-    `).join('');
-
-    root.querySelectorAll('button[data-post-action]').forEach((button) => {
-      button.addEventListener('click', async () => {
-        const row = button.closest('[data-post-id]');
-        button.disabled = true;
-        try {
-          await requestJson('/api/community/posts', {
-            method: 'PATCH',
-            headers: adminHeaders(adminKey),
-            body: JSON.stringify({
-              id: row.dataset.postId,
-              action: button.dataset.postAction
-            })
-          });
-          await loadDashboard(adminKey);
-        } catch (error) {
-          setMessage(error.message, 'error');
-        } finally {
-          button.disabled = false;
-        }
-      });
-    });
-  }
-
-  function renderComments(comments, adminKey) {
-    const root = document.getElementById('sf-admin-comments');
-    if (!root) return;
-    const activeComments = comments.filter((comment) => comment.status !== 'deleted');
-    if (!activeComments.length) {
-      root.innerHTML = '<p class="sf-empty">관리할 댓글이 없습니다.</p>';
-      return;
-    }
-
-    root.innerHTML = activeComments.map((comment) => `
-      <article class="sf-comment-admin-row" data-comment-id="${escapeHtml(comment.id)}">
-        <div class="sf-post-admin-main">
-          <div class="sf-post-admin-meta">
-            <mark data-status="${escapeHtml(comment.status)}">${commentStatusLabel(comment.status)}</mark>
-            <span>${escapeHtml(comment.authorName || 'fan')}</span>
-            <time datetime="${escapeHtml(comment.createdAt || '')}">${formatDate(comment.createdAt)}</time>
-          </div>
-          <strong>${escapeHtml(comment.postTitle || '게시글 없음')}</strong>
-          <p>${escapeHtml(comment.body)}</p>
-          <small>${escapeHtml(comment.authorEmail || '')}</small>
-        </div>
-        <div class="sf-post-admin-actions">
-          <button type="button" data-comment-action="${comment.status === 'published' ? 'hide' : 'publish'}">${comment.status === 'published' ? '숨김' : '공개'}</button>
-          <button type="button" data-comment-action="delete">삭제</button>
-        </div>
-      </article>
-    `).join('');
-
-    root.querySelectorAll('button[data-comment-action]').forEach((button) => {
-      button.addEventListener('click', async () => {
-        const row = button.closest('[data-comment-id]');
-        button.disabled = true;
-        try {
-          await requestJson('/api/community/comments', {
-            method: 'PATCH',
-            headers: adminHeaders(adminKey),
-            body: JSON.stringify({
-              id: row.dataset.commentId,
-              action: button.dataset.commentAction
-            })
-          });
-          await loadDashboard(adminKey);
-        } catch (error) {
-          setMessage(error.message, 'error');
-        } finally {
-          button.disabled = false;
-        }
-      });
-    });
-  }
-
-  function bindAdminPostForm(getAdminKey) {
-    const form = document.getElementById('sf-admin-post-form');
-    const boardInput = document.getElementById('sf-admin-post-board');
-    const titleInput = document.getElementById('sf-admin-post-title');
-    const bodyInput = document.getElementById('sf-admin-post-body');
-    const pinnedInput = document.getElementById('sf-admin-post-pinned');
-    if (!form) return;
-
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      const button = form.querySelector('button[type="submit"]');
-      const adminKey = getAdminKey();
-      button.disabled = true;
-      setMessage('운영 게시글을 등록하는 중입니다.', 'info');
-      try {
-        await requestJson('/api/community/posts', {
-          method: 'POST',
-          headers: adminHeaders(adminKey),
-          body: JSON.stringify({
-            admin: true,
-            board: boardInput?.value || 'notice',
-            title: titleInput?.value,
-            body: bodyInput?.value,
-            pinned: Boolean(pinnedInput?.checked)
-          })
-        });
-        form.reset();
-        if (boardInput) boardInput.value = 'notice';
-        if (pinnedInput) pinnedInput.checked = true;
-        setMessage('운영 게시글을 등록했습니다.', 'success');
-        await loadDashboard(adminKey);
-      } catch (error) {
-        setMessage(error.message, 'error');
-      } finally {
-        button.disabled = false;
-      }
-    });
+    if (approvedCount) approvedCount.textContent = String(users.filter((user) => user.status === 'approved').length);
+    if (rejectedCount) rejectedCount.textContent = String(users.filter((user) => user.status === 'rejected').length);
   }
 
   async function loadDashboard(adminKey) {
     setMessage('관리 데이터를 불러오는 중입니다.', 'info');
     const headers = adminHeaders(adminKey);
-    const [usersData, postsData, commentsData] = await Promise.all([
-      requestJson('/api/admin/users', { method: 'GET', headers }),
-      requestJson('/api/community/posts?admin=1', { method: 'GET', headers }),
-      requestJson('/api/community/comments?admin=1', { method: 'GET', headers })
-    ]);
+    const usersData = await requestJson('/api/admin/users', { method: 'GET', headers });
     const users = usersData.users || [];
-    const posts = postsData.posts || [];
-    const comments = commentsData.comments || [];
     setMessage('관리 데이터를 불러왔습니다.', 'success');
-    renderStats(users, posts, comments);
+    renderStats(users);
     renderAlerts(users);
     renderUsers(users, adminKey);
-    renderPosts(posts, adminKey);
-    renderComments(comments, adminKey);
   }
 
   function bindAdmin() {
     const form = document.getElementById('sf-admin-key-form');
     const input = document.getElementById('sf-admin-key');
     const getAdminKey = () => input?.value.trim() || '';
-    bindAdminPostForm(getAdminKey);
 
     form?.addEventListener('submit', async (event) => {
       event.preventDefault();
@@ -351,30 +198,6 @@
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#039;');
-  }
-
-  function postStatusLabel(status) {
-    if (status === 'hidden') return '숨김';
-    if (status === 'deleted') return '삭제';
-    return '공개';
-  }
-
-  function commentStatusLabel(status) {
-    if (status === 'hidden') return '숨김';
-    if (status === 'deleted') return '삭제';
-    return '공개';
-  }
-
-  function formatDate(value) {
-    if (!value) return '';
-    try {
-      return new Intl.DateTimeFormat('ko-KR', {
-        dateStyle: 'short',
-        timeStyle: 'short'
-      }).format(new Date(value));
-    } catch {
-      return value;
-    }
   }
 
   if (page === 'login') bindLogin();

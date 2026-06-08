@@ -1,0 +1,146 @@
+---
+import { artistLinks, menuItems } from '../data/siteContent.js';
+
+const { active = 'home' } = Astro.props;
+---
+
+<div class="custom-cursor" aria-hidden="true">
+  <span class="cursor-dot"></span>
+  <span class="cursor-ring"></span>
+</div>
+
+<header class="site-header" aria-label="SunoFox header">
+  <a class:list={['site-logo', active === 'home' && 'is-current']} href="/" aria-label="SunoFox home">
+    <span>SunoFox</span>
+  </a>
+
+  <button id="menuButton" class="menu-trigger" type="button" aria-expanded="false" aria-controls="overlayMenu" aria-label="전체 메뉴 열기">
+    <span class="menu-trigger-label">MENU</span>
+    <span class="menu-trigger-lines" aria-hidden="true">
+      <span></span>
+      <span></span>
+    </span>
+  </button>
+</header>
+
+<aside id="overlayMenu" class="overlay-menu" aria-hidden="true">
+  <div class="overlay-menu-inner">
+    <nav class="overlay-nav" aria-label="Overlay navigation">
+      {menuItems.map((item) => (
+        <a
+          class:list={[
+            item.key === active && 'is-current',
+            item.secondary && 'overlay-nav-secondary'
+          ]}
+          href={item.href}
+          aria-current={item.key === active ? 'page' : undefined}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="overlay-socials" aria-label="SunoFox external links">
+      <a href={artistLinks.youtube} target="_blank" rel="noopener noreferrer">YOUTUBE</a>
+      <a href={artistLinks.spotify} target="_blank" rel="noopener noreferrer">SPOTIFY</a>
+      <a href={artistLinks.melon} target="_blank" rel="noopener noreferrer">MELON</a>
+      <a href={artistLinks.soundcloud} target="_blank" rel="noopener noreferrer">SOUNDCLOUD</a>
+    </div>
+  </div>
+</aside>
+
+<script is:inline>
+  function initSiteChrome() {
+    const supportsFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const allowsMotion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const cursorRoot = document.querySelector('.custom-cursor');
+    const cursorDot = document.querySelector('.cursor-dot');
+    const cursorRing = document.querySelector('.cursor-ring');
+    const menuButton = document.getElementById('menuButton');
+    const overlayMenu = document.getElementById('overlayMenu');
+    const menuLabel = menuButton?.querySelector('.menu-trigger-label');
+
+    function setMenu(open) {
+      document.body.classList.toggle('menu-open', open);
+      menuButton?.setAttribute('aria-expanded', String(open));
+      menuButton?.setAttribute('aria-label', open ? '전체 메뉴 닫기' : '전체 메뉴 열기');
+      overlayMenu?.setAttribute('aria-hidden', String(!open));
+      if (menuLabel) menuLabel.textContent = open ? 'CLOSE' : 'MENU';
+    }
+
+    menuButton?.addEventListener('click', () => {
+      setMenu(!document.body.classList.contains('menu-open'));
+    });
+
+    document.querySelectorAll('#overlayMenu a').forEach((link) => {
+      link.addEventListener('click', () => setMenu(false));
+    });
+
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') setMenu(false);
+    });
+
+    const revealItems = document.querySelectorAll('.reveal');
+    revealItems.forEach((el, index) => {
+      el.style.setProperty('--reveal-delay', `${Math.min(index % 6, 5) * 70}ms`);
+    });
+
+    if ('IntersectionObserver' in window) {
+      document.body.classList.add('reveal-ready');
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) entry.target.classList.add('is-visible');
+        });
+      }, { threshold: 0.12 });
+
+      revealItems.forEach((el) => revealObserver.observe(el));
+    } else {
+      revealItems.forEach((el) => el.classList.add('is-visible'));
+    }
+
+    if (supportsFinePointer && allowsMotion && cursorRoot && cursorDot && cursorRing) {
+      document.body.classList.add('custom-cursor-ready');
+      let pointerX = window.innerWidth / 2;
+      let pointerY = window.innerHeight / 2;
+      let ringX = pointerX;
+      let ringY = pointerY;
+      let dotX = pointerX;
+      let dotY = pointerY;
+
+      const moveCursor = () => {
+        dotX += (pointerX - dotX) * 0.9;
+        dotY += (pointerY - dotY) * 0.9;
+        ringX += (pointerX - ringX) * 0.18;
+        ringY += (pointerY - ringY) * 0.18;
+        cursorDot.style.transform = `translate3d(${dotX}px, ${dotY}px, 0) translate(-50%, -50%)`;
+        cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+        requestAnimationFrame(moveCursor);
+      };
+
+      window.addEventListener('pointermove', (event) => {
+        pointerX = event.clientX;
+        pointerY = event.clientY;
+        cursorRoot.classList.add('is-visible');
+      }, { passive: true });
+
+      window.addEventListener('pointerleave', () => cursorRoot.classList.remove('is-visible'));
+      window.addEventListener('pointerenter', () => cursorRoot.classList.add('is-visible'));
+
+      document.addEventListener('pointerover', (event) => {
+        const target = event.target.closest('a, button, input, textarea, .release-card, .media-card, .series-card, .category-card');
+        document.body.classList.toggle('cursor-hover', Boolean(target));
+      });
+
+      document.addEventListener('pointerdown', () => document.body.classList.add('cursor-down'));
+      document.addEventListener('pointerup', () => document.body.classList.remove('cursor-down'));
+
+      moveCursor();
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSiteChrome, { once: true });
+  } else {
+    initSiteChrome();
+  }
+</script>

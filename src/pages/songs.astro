@@ -1,0 +1,27 @@
+---
+import ReleaseCard from '../components/ReleaseCard.astro';
+import SiteChrome from '../components/SiteChrome.astro';
+import Layout from '../layouts/Layout.astro';
+import { releases } from '../data/siteContent.js';
+---
+
+<Layout title="Songs / Novels | SunoFox Anime OST Studio">
+  <SiteChrome active="songs" />
+
+  <main class="site-main category-page">
+    <section class="category-hero reveal" aria-labelledby="songsTitle">
+      <p class="section-kicker">SONGS / NOVELS</p>
+      <h1 id="songsTitle">ARCHIVE vol.1</h1>
+      <p>
+        각 곡은 하나의 장면, 하나의 캐릭터, 하나의 세계관에서 시작됩니다.
+        SunoFox는 애니메이션 OST처럼 들리는 AI Music 프로젝트입니다.
+      </p>
+    </section>
+
+    <section class="category-content" aria-label="SunoFox release archive">
+      <div class="release-grid">
+        {releases.map((release) => <ReleaseCard release={release} />)}
+      </div>
+    </section>
+  </main>
+</Layout>

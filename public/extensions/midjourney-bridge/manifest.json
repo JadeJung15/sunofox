@@ -1,0 +1,61 @@
+{
+  "manifest_version": 3,
+  "name": "SF 미디어 브릿지",
+  "version": "1.5.17",
+  "description": "SF Studio 프롬프트와 후보 이미지를 제작 도구 입력창으로 전송합니다.",
+  "permissions": ["tabs", "storage", "unlimitedStorage", "debugger"],
+  "host_permissions": [
+    "https://sunofox.com/*",
+    "http://127.0.0.1:*/*",
+    "http://localhost:*/*",
+    "https://www.midjourney.com/*",
+    "https://midjourney.com/*",
+    "https://grok.com/*",
+    "https://www.grok.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://sunofox.com/*",
+        "http://127.0.0.1:*/*",
+        "http://localhost:*/*"
+      ],
+      "js": ["pageBridge.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.midjourney.com/*",
+        "https://midjourney.com/*"
+      ],
+      "js": ["midjourneyFill.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://grok.com/*",
+        "https://www.grok.com/*"
+      ],
+      "js": ["grokFill.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "action": {
+    "default_title": "SF 미디어 브릿지",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  }
+}

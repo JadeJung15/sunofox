@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f8fafc">
+    <title>팬 커뮤니티 | SunoFox</title>
+    <meta name="description" content="SunoFox 팬 커뮤니티입니다. 게시판, 댓글, 추천 기능을 제공합니다.">
+    <meta property="og:title" content="팬 커뮤니티 | SunoFox">
+    <meta property="og:description" content="SunoFox fan community board.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sunofox.com/community">
+    <meta property="og:image" content="https://sunofox.com/assets/sf-studio-icon-512.png">
+    <link rel="canonical" href="https://sunofox.com/community">
+    <link rel="icon" href="./assets/sf-studio-icon-192.png">
+    <link rel="stylesheet" href="./css/style.css?v=20260607-fanpage">
+    <link rel="stylesheet" href="./css/sf-home.css?v=20260607-fanpage">
+    <link rel="stylesheet" href="./css/sf-community.css?v=20260607-d1-community">
+  </head>
+  <body class="sf-home-body sf-community-body" data-page="community">
+    <header class="sf-home-header">
+      <a class="sf-home-brand" href="/" aria-label="SunoFox 홈">
+        <img src="./assets/sunofox-logo-black.png" alt="SunoFox">
+        <span>SunoFox</span>
+      </a>
+      <nav class="sf-home-nav" aria-label="SunoFox 메뉴">
+        <a href="/">홈</a>
+        <a href="/community" aria-current="page">팬 커뮤니티</a>
+        <a href="/news">새 소식</a>
+        <a href="/login">로그인</a>
+      </nav>
+    </header>
+
+    <main class="sf-community-main">
+      <section class="sf-community-hero sf-board-hero">
+        <div>
+          <span class="sf-home-kicker">SUNOFOX COMMUNITY</span>
+          <h1>팬 커뮤니티</h1>
+          <p>공지, 자유, 영상, 이벤트 게시판에서 팬들이 글과 댓글을 남길 수 있습니다.</p>
+        </div>
+        <div class="sf-board-metrics" aria-label="커뮤니티 상태">
+          <article>
+            <span>읽기</span>
+            <strong>공개</strong>
+          </article>
+          <article>
+            <span>글쓰기</span>
+            <strong>승인 계정</strong>
+          </article>
+          <article>
+            <span>관리</span>
+            <strong>관리자</strong>
+          </article>
+        </div>
+      </section>
+
+      <section class="sf-board-shell">
+        <div class="sf-board-toolbar">
+          <div id="sf-board-tabs" class="sf-board-tabs" aria-label="게시판 선택">
+            <button type="button" data-board="all" aria-pressed="true">전체</button>
+            <button type="button" data-board="notice">공지</button>
+            <button type="button" data-board="free">자유</button>
+            <button type="button" data-board="media">영상</button>
+            <button type="button" data-board="event">이벤트</button>
+          </div>
+          <form id="sf-board-search" class="sf-board-search" role="search">
+            <input id="sf-board-query" type="search" placeholder="제목, 내용, 작성자 검색">
+            <button type="submit">검색</button>
+          </form>
+        </div>
+
+        <div class="sf-board-layout">
+          <section class="sf-board-list-panel" aria-labelledby="board-title">
+            <div class="sf-board-list-head">
+              <div>
+                <span class="sf-home-kicker">BOARD</span>
+                <h2 id="board-title">전체 게시글</h2>
+              </div>
+              <button id="sf-post-refresh" type="button">새로고침</button>
+            </div>
+            <div class="sf-board-table-wrap">
+              <table class="sf-board-table">
+                <thead>
+                  <tr>
+                    <th scope="col">번호</th>
+                    <th scope="col">게시판</th>
+                    <th scope="col">제목</th>
+                    <th scope="col">작성자</th>
+                    <th scope="col">날짜</th>
+                    <th scope="col">조회</th>
+                    <th scope="col">추천</th>
+                  </tr>
+                </thead>
+                <tbody id="sf-post-list">
+                  <tr>
+                    <td colspan="7">게시글을 불러오는 중입니다.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="sf-board-pagination">
+              <button id="sf-board-prev" type="button">이전</button>
+              <span id="sf-board-page">1</span>
+              <button id="sf-board-next" type="button">다음</button>
+            </div>
+          </section>
+
+          <aside class="sf-community-panel" aria-labelledby="write-title">
+            <div>
+              <span class="sf-home-kicker">WRITE</span>
+              <h2 id="write-title">글쓰기</h2>
+            </div>
+            <div id="sf-community-auth" class="sf-community-auth">
+              <p>로그인 상태를 확인하고 있습니다.</p>
+            </div>
+            <form id="sf-post-form" class="sf-post-form" hidden>
+              <label>
+                <span>게시판</span>
+                <select id="sf-post-board">
+                  <option value="free">자유</option>
+                  <option value="media">영상</option>
+                  <option value="event">이벤트</option>
+                </select>
+              </label>
+              <label>
+                <span>제목</span>
+                <input id="sf-post-title" type="text" maxlength="90" placeholder="게시글 제목">
+              </label>
+              <label>
+                <span>내용</span>
+                <textarea id="sf-post-body" rows="8" maxlength="5000" placeholder="응원글, 아이디어, 감상평을 남겨 주세요."></textarea>
+              </label>
+              <button type="submit">등록</button>
+            </form>
+            <div id="sf-community-message" class="sf-community-message" hidden></div>
+          </aside>
+        </div>
+      </section>
+    </main>
+    <script src="./js/sfCommunity.js?v=20260607-d1-community" defer></script>
+  </body>
+</html>

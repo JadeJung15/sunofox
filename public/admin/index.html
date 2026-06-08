@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>SunoFox 관리자</title>
+  <link rel="icon" href="./assets/sf-studio-icon-192.png">
+  <link rel="stylesheet" href="./css/sf-auth.css">
+</head>
+<body class="sf-auth-body sf-admin-body" data-auth-page="admin">
+  <main class="sf-admin-shell">
+    <section class="sf-admin-head">
+      <div>
+        <span class="sf-auth-kicker">OWNER APPROVAL</span>
+        <h1>SunoFox 관리자</h1>
+        <p>가입 신청과 팬 게시글을 관리합니다. SF Studio와 관리자 기능은 소유자 계정에서만 사용할 수 있습니다.</p>
+      </div>
+      <div class="sf-admin-head-actions">
+        <a href="/">홈</a>
+        <a href="/mv-studio">SF Studio</a>
+      </div>
+    </section>
+
+    <section class="sf-admin-summary" aria-label="관리 요약">
+      <article>
+        <span>대기 신청</span>
+        <strong id="sf-admin-pending-count">0</strong>
+      </article>
+      <article>
+        <span>공개 게시글</span>
+        <strong id="sf-admin-published-count">0</strong>
+      </article>
+      <article>
+        <span>숨김 게시글</span>
+        <strong id="sf-admin-hidden-count">0</strong>
+      </article>
+      <article>
+        <span>댓글</span>
+        <strong id="sf-admin-comment-count">0</strong>
+      </article>
+    </section>
+
+    <section class="sf-admin-panel">
+      <form id="sf-admin-key-form" class="sf-admin-key-form">
+        <label>
+          <span>관리자 키</span>
+          <input id="sf-admin-key" type="password" autocomplete="current-password" placeholder="선택 입력">
+        </label>
+        <button type="submit">목록 불러오기</button>
+      </form>
+      <div id="sf-auth-message" class="sf-auth-message" hidden></div>
+      <div id="sf-admin-alerts" class="sf-admin-alerts"></div>
+    </section>
+
+    <section class="sf-admin-panel sf-admin-compose-panel">
+      <div class="sf-admin-section-head">
+        <div>
+          <span class="sf-auth-kicker">OWNER POST</span>
+          <h2>운영 게시글 작성</h2>
+        </div>
+        <a href="/community" class="sf-admin-section-link">게시판 보기</a>
+      </div>
+      <form id="sf-admin-post-form" class="sf-admin-post-form">
+        <div class="sf-admin-post-grid">
+          <label>
+            <span>게시판</span>
+            <select id="sf-admin-post-board">
+              <option value="notice">공지</option>
+              <option value="event">이벤트</option>
+              <option value="media">영상</option>
+              <option value="free">자유</option>
+            </select>
+          </label>
+          <label>
+            <span>제목</span>
+            <input id="sf-admin-post-title" type="text" maxlength="90" required placeholder="공지 제목">
+          </label>
+        </div>
+        <label>
+          <span>내용</span>
+          <textarea id="sf-admin-post-body" rows="5" maxlength="5000" required placeholder="팬들에게 보여줄 내용을 입력하세요."></textarea>
+        </label>
+        <div class="sf-admin-post-options">
+          <label>
+            <input id="sf-admin-post-pinned" type="checkbox" checked>
+            <span>게시판 상단에 고정</span>
+          </label>
+          <button type="submit">운영 게시글 등록</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="sf-admin-panel">
+      <div class="sf-admin-section-head">
+        <div>
+          <span class="sf-auth-kicker">MEMBER REQUESTS</span>
+          <h2>가입 신청 관리</h2>
+        </div>
+      </div>
+      <div id="sf-admin-users" class="sf-admin-users"></div>
+    </section>
+
+    <section class="sf-admin-panel">
+      <div class="sf-admin-section-head">
+        <div>
+          <span class="sf-auth-kicker">FAN POSTS</span>
+          <h2>팬 게시글 관리</h2>
+        </div>
+      </div>
+      <div id="sf-admin-posts" class="sf-admin-posts"></div>
+    </section>
+
+    <section class="sf-admin-panel">
+      <div class="sf-admin-section-head">
+        <div>
+          <span class="sf-auth-kicker">COMMENTS</span>
+          <h2>댓글 관리</h2>
+        </div>
+      </div>
+      <div id="sf-admin-comments" class="sf-admin-comments"></div>
+    </section>
+  </main>
+  <script src="./js/sfAuth.js" defer></script>
+</body>
+</html>

@@ -40,6 +40,26 @@ function adminOnlyResponse() {
   });
 }
 
+async function studioResponse(context) {
+  if (!context.env.ASSETS?.fetch) {
+    return context.next();
+  }
+
+  const url = new URL(context.request.url);
+  const assetUrl = new URL('/_sf-studio-entry', url.origin);
+  const assetResponse = await context.env.ASSETS.fetch(new Request(assetUrl, context.request));
+  const headers = new Headers(assetResponse.headers);
+  headers.set('content-type', 'text/html; charset=utf-8');
+  headers.set('cache-control', 'no-store');
+  headers.set('x-robots-tag', 'noindex, nofollow');
+
+  return new Response(assetResponse.body, {
+    status: assetResponse.status,
+    statusText: assetResponse.statusText,
+    headers
+  });
+}
+
 export async function onRequest(context) {
   const url = new URL(context.request.url);
   if (url.hostname === 'www.sunofox.com' || url.hostname === 'sf-studio.pages.dev') {
@@ -63,6 +83,10 @@ export async function onRequest(context) {
 
   if (normalizeEmail(session.email) !== getAdminEmail(context.env)) {
     return adminOnlyResponse();
+  }
+
+  if (isProtectedStudioPath(url.pathname)) {
+    return studioResponse(context);
   }
 
   return context.next();

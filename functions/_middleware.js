@@ -42,7 +42,7 @@ function adminOnlyResponse() {
 
 export async function onRequest(context) {
   const url = new URL(context.request.url);
-  if (url.hostname === 'www.sunofox.com' || url.hostname === 'sf-studio.pages.dev' || url.hostname.endsWith('.sf-studio.pages.dev')) {
+  if (url.hostname === 'www.sunofox.com' || url.hostname === 'sf-studio.pages.dev') {
     url.protocol = 'https:';
     url.hostname = 'sunofox.com';
     return Response.redirect(url.toString(), 301);

@@ -575,12 +575,23 @@ body.menu-open .overlay-menu {
 }
 
 .series-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .series-card {
+  color: inherit;
+  display: flex;
+  flex-direction: column;
   min-height: 210px;
   padding: 28px;
+  text-decoration: none;
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.series-card:hover {
+  border-color: var(--pink);
+  background: var(--pink-soft);
+  transform: translateY(-2px);
 }
 
 .series-card h3 {
@@ -596,6 +607,16 @@ body.menu-open .overlay-menu {
   margin-top: 24px;
   color: var(--muted);
   line-height: 1.75;
+}
+
+.series-card em {
+  margin-top: auto;
+  padding-top: 28px;
+  color: #ffffff;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 950;
+  letter-spacing: 0.16em;
 }
 
 .profile-section {

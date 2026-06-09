@@ -1567,7 +1567,8 @@ body.menu-open .overlay-nav a:nth-child(13) { animation-delay: 240ms; }
 
 .community-status {
   display: grid;
-  grid-template-columns: minmax(160px, 0.28fr) 1fr;
+  grid-template-columns: minmax(150px, 0.24fr) minmax(0, 1fr) auto;
+  align-items: center;
   gap: 24px;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
@@ -1593,6 +1594,17 @@ body.menu-open .overlay-nav a:nth-child(13) { animation-delay: 240ms; }
   font-size: 16px;
   line-height: 1.8;
   word-break: keep-all;
+}
+
+.community-status-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.community-status-actions .main-button {
+  min-width: 132px;
 }
 
 .community-flow {
@@ -3253,6 +3265,16 @@ body.menu-open .overlay-nav a:nth-child(13) { animation-delay: 240ms; }
   .community-status {
     gap: 12px;
     padding: 20px 0;
+  }
+
+  .community-status-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: stretch;
+  }
+
+  .community-status-actions .main-button {
+    width: 100%;
   }
 
   .community-layout {

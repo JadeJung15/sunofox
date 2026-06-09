@@ -24,7 +24,11 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
     <section class="category-content" aria-label="SunoFox fan board">
       <div class="community-status reveal">
         <span>OPEN BETA</span>
-        <p>게시글 목록은 누구나 볼 수 있습니다. 작성은 스팸 방지를 위해 가입 신청 후 사이트 주인 승인을 받은 계정부터 이용할 수 있습니다.</p>
+        <p>일반 게시물 리스트는 누구나 볼 수 있습니다. 작성은 스팸 방지를 위해 가입 신청 후 사이트 주인 승인을 받은 계정부터 이용할 수 있습니다.</p>
+        <div class="community-status-actions">
+          <a class="main-button" href="/community/?board=free#communityPosts">GENERAL POSTS</a>
+          <a class="main-button main-button-muted" href="/signup">JOIN</a>
+        </div>
       </div>
 
       <div class="community-flow reveal" aria-label="Fan board publishing flow">
@@ -64,6 +68,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
               type="button"
               class={item.key === 'all' ? 'is-current' : undefined}
               data-community-board={item.key}
+              aria-pressed={item.key === 'all' ? 'true' : 'false'}
             >
               <span>{item.label}</span>
               <strong>{item.title}</strong>
@@ -152,7 +157,8 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
       const filterButtons = [...document.querySelectorAll('[data-community-board]')];
       const initialPostsNode = document.getElementById('communityInitialPosts');
       const initialPosts = JSON.parse(initialPostsNode?.textContent || '[]');
-      let activeBoard = 'all';
+      const allowedBoards = new Set(['all', ...filterButtons.map((button) => button.dataset.communityBoard).filter(Boolean)]);
+      let activeBoard = getBoardFromUrl();
 
       function escapeHtml(value) {
         return String(value || '')
@@ -200,6 +206,30 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
         if (!formMessage) return;
         formMessage.textContent = text || '';
         formMessage.dataset.type = type || 'info';
+      }
+
+      function getBoardFromUrl() {
+        const board = new URLSearchParams(window.location.search).get('board') || 'all';
+        return allowedBoards.has(board) ? board : 'all';
+      }
+
+      function updateBoardUrl(board) {
+        const nextUrl = new URL(window.location.href);
+        if (board === 'all') {
+          nextUrl.searchParams.delete('board');
+        } else {
+          nextUrl.searchParams.set('board', board);
+        }
+        nextUrl.hash = 'communityPosts';
+        window.history.pushState({ board }, '', nextUrl);
+      }
+
+      function syncFilterButtons() {
+        filterButtons.forEach((button) => {
+          const current = button.dataset.communityBoard === activeBoard;
+          button.classList.toggle('is-current', current);
+          button.setAttribute('aria-pressed', String(current));
+        });
       }
 
       function getFallbackPosts() {
@@ -312,7 +342,8 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
       filterButtons.forEach((button) => {
         button.addEventListener('click', () => {
           activeBoard = button.dataset.communityBoard || 'all';
-          filterButtons.forEach((item) => item.classList.toggle('is-current', item === button));
+          syncFilterButtons();
+          updateBoardUrl(activeBoard);
           loadPosts();
         });
       });
@@ -340,7 +371,8 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
           }
           form.reset();
           activeBoard = 'all';
-          filterButtons.forEach((item) => item.classList.toggle('is-current', item.dataset.communityBoard === 'all'));
+          syncFilterButtons();
+          updateBoardUrl(activeBoard);
           setFormMessage('게시글이 등록되었습니다.', 'success');
           await loadPosts();
         } catch (error) {
@@ -453,6 +485,13 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
         }
       });
 
+      window.addEventListener('popstate', () => {
+        activeBoard = getBoardFromUrl();
+        syncFilterButtons();
+        loadPosts();
+      });
+
+      syncFilterButtons();
       loadPosts();
     }
 

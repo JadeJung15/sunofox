@@ -208,6 +208,27 @@
     ].join('\n');
   }
 
+  function approvalGuideUserFromRow(row) {
+    return {
+      email: row?.dataset.email || '',
+      name: row?.dataset.name || ''
+    };
+  }
+
+  function setApprovalPreview(row, button) {
+    if (!row) return;
+    const preview = row.querySelector('[data-approval-preview]');
+    const previewCopy = row.querySelector('[data-approval-preview-copy]');
+    if (!preview || !previewCopy) return;
+    const shouldOpen = preview.hidden;
+    previewCopy.textContent = approvalGuideText(approvalGuideUserFromRow(row));
+    preview.hidden = !shouldOpen;
+    if (button) {
+      button.textContent = shouldOpen ? '미리보기 닫기' : '안내문 미리보기';
+      button.setAttribute('aria-expanded', String(shouldOpen));
+    }
+  }
+
   async function copyTextToClipboard(text) {
     if (navigator.clipboard?.writeText && window.isSecureContext) {
       await navigator.clipboard.writeText(text);
@@ -356,23 +377,45 @@
       root.innerHTML = '<p class="sf-empty">조건에 맞는 가입 신청이 없습니다.</p>';
       return;
     }
-    root.innerHTML = filteredUsers.map((user) => `
-      <article class="sf-user-row" data-email="${escapeHtml(user.email)}" data-name="${escapeHtml(user.name || '')}">
-        <div>
-          <strong>${escapeHtml(user.email)}</strong>
-          <span>${escapeHtml(user.name || '이름 없음')}</span>
-          <small>${escapeHtml(user.note || '')}</small>
-        </div>
-        <mark data-status="${escapeHtml(user.status)}">${statusLabel(user.status)}</mark>
-        <div class="sf-user-actions">
-          <button type="button" data-action="approve">승인</button>
-          <button type="button" data-action="pending">대기</button>
-          <button type="button" data-action="reject">거절</button>
-          ${user.status === 'approved' ? '<button class="sf-copy-guide-button" type="button" data-copy-approval>안내문 복사</button>' : ''}
-        </div>
-        <span class="sf-user-row-feedback" aria-live="polite"></span>
-      </article>
-    `).join('');
+    root.innerHTML = filteredUsers.map((user, index) => {
+      const isApproved = user.status === 'approved';
+      const previewId = `sf-approval-preview-${index}`;
+      return `
+        <article class="sf-user-row" data-email="${escapeHtml(user.email)}" data-name="${escapeHtml(user.name || '')}">
+          <div>
+            <strong>${escapeHtml(user.email)}</strong>
+            <span>${escapeHtml(user.name || '이름 없음')}</span>
+            <small>${escapeHtml(user.note || '')}</small>
+          </div>
+          <mark data-status="${escapeHtml(user.status)}">${statusLabel(user.status)}</mark>
+          <div class="sf-user-actions">
+            <button type="button" data-action="approve">승인</button>
+            <button type="button" data-action="pending">대기</button>
+            <button type="button" data-action="reject">거절</button>
+            ${isApproved ? `
+              <button class="sf-preview-guide-button" type="button" data-preview-approval aria-expanded="false" aria-controls="${previewId}">안내문 미리보기</button>
+              <button class="sf-copy-guide-button" type="button" data-copy-approval>안내문 복사</button>
+            ` : ''}
+          </div>
+          <span class="sf-user-row-feedback" aria-live="polite"></span>
+          ${isApproved ? `
+            <div class="sf-approval-guide-preview" id="${previewId}" data-approval-preview hidden>
+              <div class="sf-approval-guide-preview-head">
+                <strong>승인 안내문 미리보기</strong>
+                <button class="sf-copy-guide-button" type="button" data-copy-approval>미리보기 복사</button>
+              </div>
+              <pre data-approval-preview-copy></pre>
+            </div>
+          ` : ''}
+        </article>
+      `;
+    }).join('');
+
+    root.querySelectorAll('button[data-preview-approval]').forEach((button) => {
+      button.addEventListener('click', () => {
+        setApprovalPreview(button.closest('[data-email]'), button);
+      });
+    });
 
     root.querySelectorAll('button[data-copy-approval]').forEach((button) => {
       button.addEventListener('click', async () => {
@@ -381,10 +424,7 @@
         button.disabled = true;
         setUserRowFeedback(row, 'processing', '복사 중');
         try {
-          await copyTextToClipboard(approvalGuideText({
-            email: row.dataset.email,
-            name: row.dataset.name
-          }));
+          await copyTextToClipboard(approvalGuideText(approvalGuideUserFromRow(row)));
           setUserRowFeedback(row, 'complete', '안내문 복사 완료');
           setMessage(`${row.dataset.email} 승인 안내문을 복사했습니다. [입장 코드]만 실제 코드로 바꿔 전달해 주세요.`, 'success');
           await wait(900);

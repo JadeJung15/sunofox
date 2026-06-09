@@ -691,6 +691,48 @@ body {
   word-break: keep-all;
 }
 
+.sf-approval-guide-preview {
+  background: #f8fafc;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  display: grid;
+  gap: 10px;
+  grid-column: 1 / -1;
+  padding: 14px;
+}
+
+.sf-approval-guide-preview[hidden] {
+  display: none;
+}
+
+.sf-approval-guide-preview-head {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.sf-approval-guide-preview-head strong {
+  color: #0f172a;
+  font-size: 14px;
+}
+
+.sf-approval-guide-preview pre {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  color: #334155;
+  font-family: "Pretendard", "Apple SD Gothic Neo", sans-serif;
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 0;
+  max-height: 240px;
+  overflow: auto;
+  padding: 12px;
+  white-space: pre-wrap;
+  word-break: keep-all;
+}
+
 .sf-admin-users {
   display: grid;
   gap: 10px;
@@ -1298,6 +1340,33 @@ body {
   border-color: rgba(34, 211, 238, 0.34);
   background: rgba(34, 211, 238, 0.1);
   color: #d8fbff;
+}
+
+.sf-admin-body .sf-preview-guide-button {
+  border-color: rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.075);
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.sf-admin-body .sf-approval-guide-preview {
+  border-color: rgba(255, 255, 255, 0.14);
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.sf-admin-body .sf-approval-guide-preview-head strong {
+  color: #ffffff;
+  font-family: "Roboto Condensed", "Arial Narrow", "Pretendard", sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sf-admin-body .sf-approval-guide-preview pre {
+  border-color: rgba(255, 255, 255, 0.12);
+  border-radius: 0;
+  background: rgba(0, 0, 0, 0.28);
+  color: rgba(255, 255, 255, 0.78);
 }
 
 .sf-admin-body .sf-admin-alert {

@@ -6,6 +6,9 @@ export const artistLinks = {
   appleMusic: 'https://music.apple.com/kr/artist/%EC%88%98%EB%85%B8%ED%8F%AD%EC%8A%A4/1874158480',
   melon: 'https://www.melon.com/artist/song.htm?artistId=4881689',
   bugs: 'https://music.bugs.co.kr/artist/14591489',
+  flo: 'https://www.music-flo.com/detail/artist/413342628/track?roleType=ALL&sortType=POPULARITY',
+  tidal: 'https://tidal.com/artist/73947996/u',
+  linktree: 'https://linktr.ee/sunofox',
   soundcloud: 'https://soundcloud.com/sunopogseu'
 };
 
@@ -13,10 +16,22 @@ export const platformLinks = [
   { label: 'YOUTUBE', title: 'Official Channel', href: artistLinks.youtube },
   { label: 'PLAYLISTS', title: 'YouTube Playlists', href: artistLinks.youtubePlaylists },
   { label: 'SPOTIFY', title: 'Artist Page', href: artistLinks.spotify },
-  { label: 'MELON', title: 'Artist Page', href: artistLinks.melon },
   { label: 'APPLE MUSIC', title: 'Artist Page', href: artistLinks.appleMusic },
+  { label: 'MELON', title: 'Artist Page', href: artistLinks.melon },
+  { label: 'BUGS', title: 'Artist Page', href: artistLinks.bugs },
+  { label: 'FLO', title: 'Artist Page', href: artistLinks.flo },
+  { label: 'TIDAL', title: 'Artist Page', href: artistLinks.tidal },
   { label: 'SOUNDCLOUD', title: 'Sketch Archive', href: artistLinks.soundcloud }
 ];
+
+export const archiveVol1 = {
+  title: 'ARCHIVE vol.1',
+  releaseDate: '2026.02.09',
+  tracks: 9,
+  duration: '33 MIN',
+  type: '정규 앨범',
+  summary: 'SunoFox의 첫 정규 아카이브. 판타지 OST, 전투 오프닝, 감성적인 장면 음악을 9곡으로 묶었습니다.'
+};
 
 export const menuItems = [
   { key: 'home', label: 'HOME', href: '/' },
@@ -175,9 +190,9 @@ export const releases = [
 ];
 
 export const news = [
-  ['2026.06.07', 'Official Site Direction Updated', 'YOASOBI 공식 사이트 흐름을 기준으로 홈 구조를 NEWS 중심으로 재정렬했습니다.'],
-  ['2026.06.01', 'ARCHIVE vol.1 Released', '각성, 전투, 이별, 도시 야경을 담은 SunoFox OST 아카이브를 공개했습니다.'],
-  ['2026.05.25', 'Flamebreaker Music Video', 'ARCHIVE vol.1의 첫 번째 전투형 오프닝 트랙을 YouTube에서 공개했습니다.']
+  ['2026.06.07', 'Official Website Preview Updated', 'SunoFox 공식 사이트의 홈, 미디어, 시리즈 페이지를 새 구조로 정리했습니다.'],
+  ['2026.02.09', 'ARCHIVE vol.1 Released', '9곡, 약 33분 분량의 첫 정규 아카이브가 주요 음원 플랫폼에 공개되었습니다.'],
+  ['2026.02.09', 'Flamebreaker Available', 'ARCHIVE vol.1의 오프닝 트랙 Flamebreaker를 YouTube와 스트리밍 플랫폼에서 감상할 수 있습니다.']
 ];
 
 export const media = [
@@ -188,18 +203,23 @@ export const media = [
   },
   {
     label: 'PLAYLISTS',
-    title: 'YouTube Playlists',
+    title: 'YouTube Playlist Hub',
     href: artistLinks.youtubePlaylists
   },
   {
-    label: 'STREAMING',
-    title: 'SunoFox on Spotify',
+    label: 'ARTIST PAGE',
+    title: 'Spotify',
     href: artistLinks.spotify
   },
   {
     label: 'KOREA',
-    title: 'Melon Artist Page',
+    title: 'Melon',
     href: artistLinks.melon
+  },
+  {
+    label: 'KOREA',
+    title: 'Bugs',
+    href: artistLinks.bugs
   }
 ];
 
@@ -254,6 +274,9 @@ export const structuredData = {
     artistLinks.spotify,
     artistLinks.appleMusic,
     artistLinks.melon,
+    artistLinks.bugs,
+    artistLinks.flo,
+    artistLinks.tidal,
     artistLinks.soundcloud
   ]
 };

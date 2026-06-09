@@ -61,9 +61,16 @@ const featuredSeries = series.slice(0, 2);
         <p class="section-kicker">FAN BOARD</p>
         <h2>COMMUNITY</h2>
       </div>
-      <p>듣고 싶은 분위기, 장르, 캐릭터 아이디어를 일반 게시물 리스트로 함께 모으는 팬 소통 공간입니다.</p>
+      <div class="home-community-copy">
+        <p>듣고 싶은 곡, 장면 분위기, 감상 후기를 팬 게시물로 모으는 소통 공간입니다.</p>
+        <div class="home-community-links" aria-label="Community quick links">
+          <a href="/community/?board=request#communityPosts" data-track="home_community_request">REQUEST</a>
+          <a href="/community/?board=mood#communityPosts" data-track="home_community_mood">MOOD</a>
+          <a href="/community/?board=feedback#communityPosts" data-track="home_community_feedback">FEEDBACK</a>
+        </div>
+      </div>
       <div class="home-community-actions">
-        <a class="main-button" href="/community/?board=free#communityPosts" data-track="home_community_general">GENERAL POSTS</a>
+        <a class="main-button" href="/community/?board=free#communityPosts" data-track="home_community_general">FREE TALK</a>
         <a class="main-button main-button-muted" href="/signup" data-track="home_community_join">JOIN</a>
       </div>
     </section>

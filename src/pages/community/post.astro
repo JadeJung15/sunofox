@@ -177,6 +177,13 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
         commentMessage.dataset.type = type || 'info';
       }
 
+      function communityToastMeta(type, title) {
+        if (title) return { icon: type === 'error' ? '!' : type === 'info' ? 'i' : '✓', title };
+        if (type === 'error') return { icon: '!', title: 'CHECK REQUIRED' };
+        if (type === 'info') return { icon: 'i', title: 'NOTICE' };
+        return { icon: '✓', title: 'COMMENT READY' };
+      }
+
       function showCommunityToast(text, type, title) {
         let toast = document.getElementById('communityToast');
         if (!toast) {
@@ -186,14 +193,14 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
           document.body.appendChild(toast);
         }
         const toastType = type || 'success';
-        const toastTitle = title || (toastType === 'error' ? 'CHECK REQUIRED' : 'DONE');
+        const meta = communityToastMeta(toastType, title);
         toast.dataset.type = toastType;
         toast.setAttribute('role', toastType === 'error' ? 'alert' : 'status');
         toast.setAttribute('aria-live', toastType === 'error' ? 'assertive' : 'polite');
         toast.innerHTML = `
-          <span class="community-toast-icon" aria-hidden="true">${toastType === 'error' ? '!' : '✓'}</span>
+          <span class="community-toast-icon" aria-hidden="true">${meta.icon}</span>
           <span class="community-toast-copy">
-            <strong>${escapeHtml(toastTitle)}</strong>
+            <strong>${escapeHtml(meta.title)}</strong>
             <span>${escapeHtml(text)}</span>
           </span>
           <button type="button" aria-label="알림 닫기">닫기</button>
@@ -329,7 +336,7 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
           setCommentMessage(text, 'success');
           showCommunityToast(text, 'success', data.duplicate ? 'REPORT EXISTS' : 'REPORT RECEIVED');
         } catch (error) {
-          const text = `${error.message} 로그인 또는 가입 승인이 필요할 수 있습니다.`;
+          const text = `${error.message} 승인 계정으로 로그인 후 다시 시도해 주세요.`;
           setCommentMessage(text, 'error');
           showCommunityToast(text, 'error');
         } finally {
@@ -393,7 +400,7 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
           document.querySelector('[data-detail-likes]').textContent = String(data.post?.likeCount || 0);
           reactionButton.classList.toggle('is-active', Number(data.activeValue || 0) === 1);
         } catch (error) {
-          const text = `${error.message} 로그인 또는 가입 승인이 필요할 수 있습니다.`;
+          const text = `${error.message} 승인 계정으로 로그인 후 다시 시도해 주세요.`;
           setCommentMessage(text, 'error');
           showCommunityToast(text, 'error');
         } finally {
@@ -432,11 +439,11 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
           const data = await response.json().catch(() => ({}));
           if (!response.ok || !data.ok) throw new Error(data.message || '댓글을 등록하지 못했습니다.');
           commentForm.reset();
-          setCommentMessage('댓글이 등록되었습니다.', 'success');
-          showCommunityToast('댓글이 등록되었습니다.', 'success', 'COMMENT POSTED');
+          setCommentMessage('댓글 등록 완료.', 'success');
+          showCommunityToast('댓글 등록 완료. 게시글 아래에서 확인할 수 있습니다.', 'success', 'COMMENT READY');
           await loadComments();
         } catch (error) {
-          const text = `${error.message} 로그인 또는 가입 승인이 필요할 수 있습니다.`;
+          const text = `${error.message} 승인 계정으로 로그인 후 다시 시도해 주세요.`;
           setCommentMessage(text, 'error');
           showCommunityToast(text, 'error');
         } finally {

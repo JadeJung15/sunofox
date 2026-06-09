@@ -59,7 +59,7 @@
         return '이미 신청된 이메일입니다. 승인 안내를 받을 때까지 잠시만 기다려 주세요.';
       }
       if (original.includes('가입 신청이 접수')) {
-        return '가입 신청이 접수되었습니다. 승인 전에도 커뮤니티 글은 읽을 수 있고, 승인 후 글 작성과 SF Studio가 열립니다.';
+        return '신청이 접수되었습니다. 승인 안내를 받은 뒤 로그인해 주세요.';
       }
       if (original.includes('관리자 이메일')) {
         return '소유자 이메일은 자동 승인되었습니다. 로그인 화면에서 입장 코드를 입력해 주세요.';
@@ -177,7 +177,7 @@
       if (resultCopy) {
         resultCopy.textContent = isApproved
           ? '이미 승인된 이메일입니다. 로그인 화면에서 이메일과 입장 코드를 입력해 주세요.'
-          : '신청이 접수되었습니다. 주인 승인 후 입장 코드로 로그인할 수 있습니다.';
+          : '신청 완료. 승인 안내 후 입장 코드로 로그인할 수 있습니다.';
       }
       resultPanel.dataset.status = isApproved ? 'approved' : 'pending';
       resultPanel.hidden = false;
@@ -241,46 +241,18 @@
     });
   }
 
-  function approvalSentKey(email) {
-    return String(email || '').trim().toLowerCase();
+  function isApprovalGuideSent(user) {
+    return Boolean(user?.approvalGuideSentAt);
   }
 
-  function getApprovalSentMap() {
-    try {
-      return JSON.parse(window.localStorage?.getItem('sfApprovalGuideSent') || '{}') || {};
-    } catch {
-      return {};
-    }
-  }
-
-  function isApprovalGuideSent(email) {
-    return Boolean(getApprovalSentMap()[approvalSentKey(email)]);
-  }
-
-  function setApprovalGuideSent(email, sent) {
-    const key = approvalSentKey(email);
-    if (!key) return;
-    try {
-      if (!window.localStorage) return;
-      const sentMap = getApprovalSentMap();
-      if (sent) {
-        sentMap[key] = new Date().toISOString();
-      } else {
-        delete sentMap[key];
-      }
-      window.localStorage.setItem('sfApprovalGuideSent', JSON.stringify(sentMap));
-    } catch {
-      // Storage can be blocked in private modes. The UI still works for the current row.
-    }
-  }
-
-  function updateApprovalSentState(row, sent) {
+  function updateApprovalSentState(row, sent, sentAt) {
     if (!row) return;
     row.dataset.approvalSent = sent ? 'true' : 'false';
+    row.dataset.approvalSentAt = sentAt || '';
     const toggle = row.querySelector('[data-approval-sent-toggle]');
     const status = row.querySelector('[data-approval-sent-status]');
     if (toggle) toggle.checked = sent;
-    if (status) status.textContent = sent ? '전송 체크됨' : '복사 후 전송 체크';
+    if (status) status.textContent = sent ? '전송 완료 저장됨' : '복사 후 전송 체크';
   }
 
   function userActionResult(action) {
@@ -570,15 +542,17 @@
     }
     root.innerHTML = filteredUsers.map((user, index) => {
       const isApproved = user.status === 'approved';
-      const guideSent = isApproved && isApprovalGuideSent(user.email);
+      const guideSent = isApproved && isApprovalGuideSent(user);
       const previewId = `sf-approval-preview-${index}`;
       const requestedAt = formatDate(user.createdAt || user.updatedAt);
+      const guideSentAt = formatDate(user.approvalGuideSentAt);
       return `
-        <article class="sf-user-row" data-email="${escapeHtml(user.email)}" data-name="${escapeHtml(user.name || '')}" data-approval-sent="${guideSent ? 'true' : 'false'}">
+        <article class="sf-user-row" data-email="${escapeHtml(user.email)}" data-name="${escapeHtml(user.name || '')}" data-approval-sent="${guideSent ? 'true' : 'false'}" data-approval-sent-at="${escapeHtml(user.approvalGuideSentAt || '')}">
           <div>
             <strong>${escapeHtml(user.email)}</strong>
             <span>${escapeHtml(user.name || '이름 없음')}</span>
             ${requestedAt ? `<small>신청 ${escapeHtml(requestedAt)}</small>` : ''}
+            ${guideSentAt ? `<small>안내문 전송 ${escapeHtml(guideSentAt)}</small>` : ''}
             <small>${escapeHtml(user.note || '')}</small>
           </div>
           <mark data-status="${escapeHtml(user.status)}">${statusLabel(user.status)}</mark>
@@ -591,7 +565,7 @@
               <button class="sf-copy-guide-button" type="button" data-copy-approval>안내문 복사</button>
               <label class="sf-approval-sent-check">
                 <input type="checkbox" data-approval-sent-toggle ${guideSent ? 'checked' : ''}>
-                <span data-approval-sent-status>${guideSent ? '전송 체크됨' : '복사 후 전송 체크'}</span>
+                <span data-approval-sent-status>${guideSent ? '전송 완료 저장됨' : '복사 후 전송 체크'}</span>
               </label>
             ` : ''}
           </div>
@@ -641,17 +615,38 @@
     });
 
     root.querySelectorAll('[data-approval-sent-toggle]').forEach((toggle) => {
-      toggle.addEventListener('change', () => {
+      toggle.addEventListener('change', async () => {
         const row = toggle.closest('[data-email]');
         const sent = Boolean(toggle.checked);
-        setApprovalGuideSent(row?.dataset.email, sent);
-        updateApprovalSentState(row, sent);
-        setUserRowFeedback(row, sent ? 'complete' : 'processing', sent ? '전송 체크됨' : '전송 체크 해제');
-        setMessage(sent ? '승인 안내문 전송 완료로 표시했습니다.' : '승인 안내문 전송 체크를 해제했습니다.', sent ? 'success' : 'info');
-        showAdminToast(sent ? '승인 안내문 전송 완료로 표시했습니다.' : '승인 안내문 전송 체크를 해제했습니다.', sent ? 'success' : 'info', sent ? 'SENT CHECKED' : 'CHECK REMOVED');
-        window.setTimeout(() => {
-          if (row?.isConnected) clearUserRowFeedback(row);
-        }, 900);
+        const previous = !sent;
+        toggle.disabled = true;
+        setUserRowFeedback(row, 'processing', '저장 중');
+        try {
+          const result = await requestJson('/api/admin/users', {
+            method: 'POST',
+            headers: adminHeaders(adminKey),
+            body: JSON.stringify({
+              email: row?.dataset.email,
+              action: sent ? 'guide-sent' : 'guide-unsent'
+            })
+          });
+          const user = result.user || {};
+          cachedUsers = cachedUsers.map((item) => item.email === user.email ? user : item);
+          updateApprovalSentState(row, Boolean(user.approvalGuideSentAt), user.approvalGuideSentAt || '');
+          setUserRowFeedback(row, 'complete', sent ? '전송 저장됨' : '체크 해제됨');
+          setMessage(result.message || (sent ? '승인 안내문 전송 완료 상태를 저장했습니다.' : '승인 안내문 전송 체크를 해제했습니다.'), sent ? 'success' : 'info');
+          showAdminToast(result.message || (sent ? '승인 안내문 전송 완료 상태를 저장했습니다.' : '승인 안내문 전송 체크를 해제했습니다.'), sent ? 'success' : 'info', sent ? 'SENT SAVED' : 'CHECK REMOVED');
+        } catch (error) {
+          updateApprovalSentState(row, previous, row?.dataset.approvalSentAt || '');
+          setUserRowFeedback(row, 'error', '저장 실패');
+          setMessage(error.message, 'error');
+          showAdminToast(error.message, 'error');
+        } finally {
+          toggle.disabled = false;
+          window.setTimeout(() => {
+            if (row?.isConnected) clearUserRowFeedback(row);
+          }, 900);
+        }
       });
     });
 

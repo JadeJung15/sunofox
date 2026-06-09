@@ -46,6 +46,6 @@ export async function onRequestPost(context) {
     status,
     message: status === 'approved'
       ? '관리자 이메일은 자동 승인되었습니다. 로그인해 주세요.'
-      : '가입 신청이 접수되었습니다. 사이트 주인 승인 후 로그인할 수 있습니다.'
+      : '가입 신청이 접수되었습니다. 승인 안내를 받은 뒤 로그인해 주세요.'
   });
 }

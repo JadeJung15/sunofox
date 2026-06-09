@@ -173,9 +173,9 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
             </form>
 
             <div class="community-published-panel" data-community-published-panel hidden>
-              <span>POST PUBLISHED</span>
-              <h3 data-community-published-title>게시글이 등록되었습니다.</h3>
-              <p>방금 작성한 글이 게시판 목록에 반영되었습니다. 상세 화면에서 댓글과 반응을 확인할 수 있습니다.</p>
+              <span>POST READY</span>
+              <h3 data-community-published-title>게시글 등록 완료</h3>
+              <p>방금 작성한 글이 팬게시판 목록에 반영되었습니다. 상세 화면에서 댓글과 반응을 확인할 수 있습니다.</p>
               <div class="community-published-actions">
                 <a href="/community/" data-community-published-link>방금 쓴 글 보기</a>
                 <a href="#communityPosts">목록에서 확인</a>
@@ -330,6 +330,13 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
         formMessage.dataset.type = type || 'info';
       }
 
+      function communityToastMeta(type, title) {
+        if (title) return { icon: type === 'error' ? '!' : type === 'info' ? 'i' : '✓', title };
+        if (type === 'error') return { icon: '!', title: 'CHECK REQUIRED' };
+        if (type === 'info') return { icon: 'i', title: 'NOTICE' };
+        return { icon: '✓', title: 'POST READY' };
+      }
+
       function showCommunityToast(text, type, title) {
         let toast = document.getElementById('communityToast');
         if (!toast) {
@@ -339,14 +346,14 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
           document.body.appendChild(toast);
         }
         const toastType = type || 'success';
-        const toastTitle = title || (toastType === 'error' ? 'CHECK REQUIRED' : 'DONE');
+        const meta = communityToastMeta(toastType, title);
         toast.dataset.type = toastType;
         toast.setAttribute('role', toastType === 'error' ? 'alert' : 'status');
         toast.setAttribute('aria-live', toastType === 'error' ? 'assertive' : 'polite');
         toast.innerHTML = `
-          <span class="community-toast-icon" aria-hidden="true">${toastType === 'error' ? '!' : '✓'}</span>
+          <span class="community-toast-icon" aria-hidden="true">${meta.icon}</span>
           <span class="community-toast-copy">
-            <strong>${escapeHtml(toastTitle)}</strong>
+            <strong>${escapeHtml(meta.title)}</strong>
             <span>${escapeHtml(text)}</span>
           </span>
           <button type="button" aria-label="알림 닫기">닫기</button>
@@ -376,7 +383,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
           publishedPanel.hidden = true;
           return;
         }
-        if (publishedTitle) publishedTitle.textContent = post.title || '게시글이 등록되었습니다.';
+        if (publishedTitle) publishedTitle.textContent = post.title || '게시글 등록 완료';
         if (publishedLink) publishedLink.href = `/community/post/?id=${encodeURIComponent(post.id)}`;
         publishedPanel.hidden = false;
       }
@@ -601,7 +608,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
           }
           showCommunityToast(text, 'success', result.duplicate ? 'REPORT EXISTS' : 'REPORT RECEIVED');
         } catch (error) {
-          const text = `${error.message} 로그인 또는 가입 승인이 필요할 수 있습니다.`;
+          const text = `${error.message} 승인 계정으로 로그인 후 다시 시도해 주세요.`;
           if (messageTarget) {
             messageTarget.textContent = text;
             messageTarget.dataset.type = 'error';
@@ -688,8 +695,8 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
           activeBoard = createdPost.board || String(data.get('board') || 'all');
           syncFilterButtons();
           updateBoardUrl(activeBoard);
-          setFormMessage('게시글이 등록되었습니다. 목록에서 방금 쓴 글을 강조 표시했습니다.', 'success');
-          showCommunityToast('게시글이 등록되었습니다. 목록에서 방금 쓴 글을 확인할 수 있습니다.', 'success', 'POST PUBLISHED');
+          setFormMessage('등록 완료. 팬게시판 목록에서 확인할 수 있습니다.', 'success');
+          showCommunityToast('등록 완료. 팬게시판 목록에서 확인할 수 있습니다.', 'success', 'POST READY');
           setPublishedPanel(createdPost);
           await loadPosts();
           const createdRow = recentPostId ? list?.querySelector(`[data-post-id="${CSS.escape(recentPostId)}"]`) : null;
@@ -699,7 +706,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
             publishedPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
           }
         } catch (error) {
-          const text = `${error.message} 로그인 또는 가입 승인이 필요할 수 있습니다.`;
+          const text = `${error.message} 승인 계정으로 로그인 후 다시 시도해 주세요.`;
           setFormMessage(text, 'error');
           showCommunityToast(text, 'error');
         } finally {
@@ -775,7 +782,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
           } catch (error) {
             const row = reactionButton.closest('.community-post-main');
             const panel = row?.querySelector('.community-comments');
-            const text = `${error.message} 로그인 또는 가입 승인이 필요할 수 있습니다.`;
+            const text = `${error.message} 승인 계정으로 로그인 후 다시 시도해 주세요.`;
             if (panel) {
               panel.hidden = false;
               const msg = panel.querySelector('[data-community-comment-message]');
@@ -820,13 +827,13 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
           }
           commentForm.reset();
           if (messageTarget) {
-            messageTarget.textContent = '댓글이 등록되었습니다.';
+            messageTarget.textContent = '댓글 등록 완료.';
             messageTarget.dataset.type = 'success';
           }
-          showCommunityToast('댓글이 등록되었습니다.', 'success', 'COMMENT POSTED');
+          showCommunityToast('댓글 등록 완료. 게시글 아래에서 확인할 수 있습니다.', 'success', 'COMMENT READY');
           await loadComments(postId, commentForm.closest('.community-comments'));
         } catch (error) {
-          const text = `${error.message} 로그인 또는 가입 승인이 필요할 수 있습니다.`;
+          const text = `${error.message} 승인 계정으로 로그인 후 다시 시도해 주세요.`;
           if (messageTarget) {
             messageTarget.textContent = text;
             messageTarget.dataset.type = 'error';

@@ -27,7 +27,7 @@ export async function onRequestPost(context) {
 
   const email = normalizeEmail(body.email);
   const action = String(body.action || '').trim();
-  if (!email || !['approve', 'reject', 'pending'].includes(action)) {
+  if (!email || !['approve', 'reject', 'pending', 'guide-sent', 'guide-unsent'].includes(action)) {
     return json({ ok: false, message: '이메일과 처리 상태를 확인해 주세요.' }, { status: 400 });
   }
 
@@ -37,13 +37,34 @@ export async function onRequestPost(context) {
   }
 
   const now = new Date().toISOString();
+  if (action === 'guide-sent' || action === 'guide-unsent') {
+    if (user.status !== 'approved') {
+      return json({ ok: false, message: '승인된 계정만 안내문 전송 상태를 저장할 수 있습니다.' }, { status: 400 });
+    }
+    await saveUser(context.env, {
+      ...user,
+      updatedAt: now,
+      approvalGuideSentAt: action === 'guide-sent' ? now : null,
+      approvalGuideSentBy: action === 'guide-sent' ? getAdminEmail(context.env) : null
+    });
+    return json({
+      ok: true,
+      user: await getUser(context.env, email),
+      message: action === 'guide-sent'
+        ? '승인 안내문 전송 완료 상태를 저장했습니다.'
+        : '승인 안내문 전송 체크를 해제했습니다.'
+    });
+  }
+
   const status = action === 'approve' ? 'approved' : action === 'reject' ? 'rejected' : 'pending';
   await saveUser(context.env, {
     ...user,
     status,
     updatedAt: now,
     approvedAt: status === 'approved' ? now : user.approvedAt || null,
-    approvedBy: status === 'approved' ? getAdminEmail(context.env) : user.approvedBy || null
+    approvedBy: status === 'approved' ? getAdminEmail(context.env) : user.approvedBy || null,
+    approvalGuideSentAt: status === 'approved' ? user.approvalGuideSentAt || null : null,
+    approvalGuideSentBy: status === 'approved' ? user.approvalGuideSentBy || null : null
   });
 
   return json({ ok: true, user: await getUser(context.env, email) });

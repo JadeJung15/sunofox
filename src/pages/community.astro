@@ -108,8 +108,8 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
           <div id="communityWrite" class="community-write-panel" aria-label="Fan board write status">
             <div class="community-write-copy">
               <span>WRITE POST</span>
-              <h2>일반 게시물 작성</h2>
-              <p>승인된 계정으로 로그인하면 팬게시판에 글을 남길 수 있습니다. 아직 승인 전이면 가입 신청을 먼저 보내 주세요.</p>
+              <h2>팬 게시글 작성</h2>
+              <p>승인된 계정으로 로그인하면 팬게시판에 글을 남길 수 있습니다. 모바일에서도 짧게 작성할 수 있도록 제목과 핵심 아이디어만 먼저 남겨 주세요.</p>
             </div>
 
             <div class="community-first-post-guide" aria-label="첫 게시글 작성 가이드">
@@ -131,17 +131,22 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
                     <option value={item.key}>{item.title}</option>
                   ))}
                 </select>
+                <small>곡 제안, 분위기, 감상 후기 중 가장 가까운 주제를 선택해 주세요.</small>
               </label>
 
               <label>
                 <span>제목</span>
                 <input name="title" type="text" maxlength="90" required placeholder="예: 비 오는 도시 전투 OST가 듣고 싶어요" />
+                <small>모바일에서는 20자 안팎의 짧은 제목이 가장 읽기 좋습니다.</small>
               </label>
 
               <label>
                 <span>내용</span>
-                <textarea name="body" rows="5" maxlength="5000" required placeholder="듣고 싶은 분위기, 장르, 캐릭터 아이디어, 감상 후기를 자유롭게 적어 주세요."></textarea>
+                <textarea name="body" rows="4" maxlength="5000" required placeholder="듣고 싶은 분위기, 장르, 캐릭터 아이디어, 감상 후기를 자유롭게 적어 주세요."></textarea>
+                <small>예: 시작은 조용한 피아노, 후반은 Symphonic DnB로 터지는 장면이 좋아요.</small>
               </label>
+
+              <p class="community-write-note">게시 후 문제가 있는 글은 운영자가 숨김 또는 삭제 처리할 수 있습니다.</p>
 
               <div class="community-write-actions">
                 <button class="main-button" type="submit">PUBLISH POST</button>

@@ -2,6 +2,8 @@
 import SiteChrome from '../components/SiteChrome.astro';
 import Layout from '../layouts/Layout.astro';
 import { artistLinks, structuredData } from '../data/siteContent.js';
+
+const wordmark = 'SUNOFOX'.split('');
 ---
 
 <Layout>
@@ -15,20 +17,22 @@ import { artistLinks, structuredData } from '../data/siteContent.js';
     <section class="hero-stage hero-stage-landing" aria-labelledby="heroTitle">
       <div class="hero-center reveal">
         <p class="hero-kicker">ANIME OST STUDIO</p>
-        <h1 id="heroTitle" class="hero-wordmark">SUNOFOX</h1>
+        <h1 id="heroTitle" class="hero-wordmark sign-wordmark" aria-label="SUNOFOX">
+          {wordmark.map((letter, index) => (
+            <span aria-hidden="true" style={`--letter-index: ${index}`}>{letter}</span>
+          ))}
+        </h1>
         <p class="hero-tagline">
-          감정을 그리는 애니메이션 사운드트랙
-          <span>Animation soundtracks painted with emotion.</span>
+          Animation soundtracks painted with emotion.
         </p>
-        <div class="hero-actions" aria-label="SunoFox main categories">
-          <a class="micro-button micro-button-solid subscribe-button" href={artistLinks.youtubeSubscribe} target="_blank" rel="noopener noreferrer" data-track="home_youtube_subscribe">
-            구독하러 가기
-          </a>
-          <a class="micro-button micro-button-muted" href="/songs">SONGS</a>
-        </div>
-        <p class="subscribe-line">신곡, 시리즈 재생목록, 제작 비하인드는 YouTube에서 가장 먼저 공개됩니다.</p>
       </div>
-      <p class="landing-note">NEWS · SONGS · SERIES · MEDIA · PROFILE</p>
+
+      <div class="hero-side-actions" aria-label="SunoFox quick actions">
+        <a class="main-button" href="/profile" data-track="home_profile">PROFILE</a>
+        <a class="main-button main-button-muted" href={artistLinks.youtubeSubscribe} target="_blank" rel="noopener noreferrer" data-track="home_youtube_subscribe">SUBSCRIBE</a>
+      </div>
+
+      <p class="landing-note">SCROLL DOWN</p>
     </section>
   </main>
 </Layout>

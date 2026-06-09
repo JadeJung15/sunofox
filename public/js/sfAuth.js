@@ -2,6 +2,9 @@
   const page = document.body?.dataset.authPage;
   const message = document.getElementById('sf-auth-message');
   let cachedUsers = [];
+  let cachedPosts = [];
+  let cachedComments = [];
+  let cachedReports = [];
   let adminToastTimer = 0;
 
   function setMessage(text, type) {
@@ -762,6 +765,50 @@
     `;
   }
 
+  function adminLoadingState(title, copy, kicker = 'LOADING') {
+    return `
+      <div class="sf-admin-loading-state" role="status" aria-live="polite">
+        <span>${escapeHtml(kicker)}</span>
+        <strong>${escapeHtml(title)}</strong>
+        <p>${escapeHtml(copy)}</p>
+      </div>
+    `;
+  }
+
+  function adminSectionErrorState(title, copy, actions = []) {
+    return adminEmptyState(title, copy, actions, 'LOAD FAILED');
+  }
+
+  function renderAdminLoading(rootId, title, copy, kicker) {
+    const root = document.getElementById(rootId);
+    if (!root) return;
+    root.innerHTML = adminLoadingState(title, copy, kicker);
+  }
+
+  function renderAdminError(rootId, title, error, actions = []) {
+    const root = document.getElementById(rootId);
+    if (!root) return;
+    const messageText = error?.message || '잠시 후 다시 시도해 주세요.';
+    root.innerHTML = adminSectionErrorState(title, messageText, actions);
+  }
+
+  function setAdminSummaryText(id, text) {
+    const target = document.getElementById(id);
+    if (target) target.textContent = text;
+  }
+
+  function renderAlertsLoading() {
+    const root = document.getElementById('sf-admin-alerts');
+    if (!root) return;
+    root.innerHTML = '<p class="sf-admin-alert is-loading">가입 신청 데이터를 불러오는 중입니다.</p>';
+  }
+
+  function renderAlertsError(error) {
+    const root = document.getElementById('sf-admin-alerts');
+    if (!root) return;
+    root.innerHTML = `<p class="sf-admin-alert is-error">${escapeHtml(error?.message || '가입 신청 데이터를 불러오지 못했습니다.')}</p>`;
+  }
+
   function renderAlerts(users) {
     const root = document.getElementById('sf-admin-alerts');
     if (!root) return;
@@ -1055,31 +1102,139 @@
     });
   }
 
+  async function loadAdminUsersSection(adminKey, headers) {
+    setAdminSummaryText('sf-admin-pending-count', '...');
+    setAdminSummaryText('sf-admin-approved-count', '...');
+    setAdminSummaryText('sf-admin-rejected-count', '...');
+    setAdminSummaryText('sf-admin-user-filter-summary', '가입 신청 데이터를 불러오는 중입니다.');
+    renderAlertsLoading();
+    renderAdminLoading(
+      'sf-admin-users',
+      '가입 신청을 불러오는 중입니다.',
+      '승인, 대기, 거절 상태를 먼저 가져옵니다.',
+      'MEMBERS'
+    );
+    try {
+      const usersData = await requestJson('/api/admin/users', { method: 'GET', headers });
+      const users = usersData.users || [];
+      cachedUsers = users;
+      renderStats(users);
+      renderAlerts(users);
+      renderUsers(users, adminKey);
+      return { ok: true, label: '가입 신청', count: users.length };
+    } catch (error) {
+      setAdminSummaryText('sf-admin-pending-count', '-');
+      setAdminSummaryText('sf-admin-approved-count', '-');
+      setAdminSummaryText('sf-admin-rejected-count', '-');
+      setAdminSummaryText('sf-admin-user-filter-summary', '가입 신청 데이터를 불러오지 못했습니다.');
+      renderAlertsError(error);
+      renderAdminError(
+        'sf-admin-users',
+        '가입 신청을 불러오지 못했습니다.',
+        error,
+        [{ href: '/login?next=%2Fadmin', label: '다시 로그인' }]
+      );
+      return { ok: false, label: '가입 신청', message: error.message };
+    }
+  }
+
+  async function loadAdminPostsSection(adminKey, headers) {
+    setAdminSummaryText('sf-admin-post-count', '...');
+    setAdminSummaryText('sf-admin-community-filter-summary', '게시글 데이터를 불러오는 중입니다.');
+    renderAdminLoading(
+      'sf-admin-community-posts',
+      '게시글을 불러오는 중입니다.',
+      '게시글 데이터가 도착하면 댓글과 신고를 기다리지 않고 바로 표시합니다.',
+      'POSTS'
+    );
+    try {
+      const postsData = await requestJson(`/api/community/posts?${getCommunityPostQuery()}`, { method: 'GET', headers });
+      const posts = postsData.posts || [];
+      cachedPosts = posts;
+      renderCommunityStats(posts);
+      renderCommunityPosts(posts, adminKey);
+      return { ok: true, label: '게시글', count: posts.length };
+    } catch (error) {
+      setAdminSummaryText('sf-admin-post-count', '-');
+      setAdminSummaryText('sf-admin-community-filter-summary', '게시글 데이터를 불러오지 못했습니다.');
+      renderAdminError(
+        'sf-admin-community-posts',
+        '게시글을 불러오지 못했습니다.',
+        error,
+        [{ href: '/community/', label: '게시판 열기' }]
+      );
+      return { ok: false, label: '게시글', message: error.message };
+    }
+  }
+
+  async function loadAdminCommentsSection(adminKey, headers) {
+    setAdminSummaryText('sf-admin-comment-filter-summary', '댓글 데이터를 불러오는 중입니다.');
+    renderAdminLoading(
+      'sf-admin-community-comments',
+      '댓글을 불러오는 중입니다.',
+      '댓글 목록은 게시글, 신고와 별도로 준비되는 즉시 표시됩니다.',
+      'COMMENTS'
+    );
+    try {
+      const commentsData = await requestJson(`/api/community/comments?${getCommunityCommentQuery()}`, { method: 'GET', headers });
+      const comments = commentsData.comments || [];
+      cachedComments = comments;
+      renderCommunityComments(comments, adminKey);
+      return { ok: true, label: '댓글', count: comments.length };
+    } catch (error) {
+      setAdminSummaryText('sf-admin-comment-filter-summary', '댓글 데이터를 불러오지 못했습니다.');
+      renderAdminError(
+        'sf-admin-community-comments',
+        '댓글을 불러오지 못했습니다.',
+        error,
+        [{ href: '/community/', label: '커뮤니티 확인' }]
+      );
+      return { ok: false, label: '댓글', message: error.message };
+    }
+  }
+
+  async function loadAdminReportsSection(adminKey, headers) {
+    setAdminSummaryText('sf-admin-report-filter-summary', '신고 데이터를 불러오는 중입니다.');
+    renderAdminLoading(
+      'sf-admin-community-reports',
+      '신고를 불러오는 중입니다.',
+      '신고 데이터는 다른 섹션과 분리해서 준비되는 즉시 표시됩니다.',
+      'REPORTS'
+    );
+    try {
+      const reportsData = await requestJson(`/api/community/reports?${getCommunityReportQuery()}`, { method: 'GET', headers });
+      const reports = reportsData.reports || [];
+      cachedReports = reports;
+      renderCommunityReports(reports, adminKey);
+      return { ok: true, label: '신고', count: reports.length };
+    } catch (error) {
+      setAdminSummaryText('sf-admin-report-filter-summary', '신고 데이터를 불러오지 못했습니다.');
+      renderAdminError(
+        'sf-admin-community-reports',
+        '신고를 불러오지 못했습니다.',
+        error,
+        [{ href: '/community/', label: '게시판 보기' }]
+      );
+      return { ok: false, label: '신고', message: error.message };
+    }
+  }
+
   async function loadDashboard(adminKey) {
-    setMessage('관리 데이터를 불러오는 중입니다.', 'info');
+    setMessage('관리 데이터를 섹션별로 불러오는 중입니다.', 'info');
     const headers = adminHeaders(adminKey);
-    const communityPostQuery = getCommunityPostQuery();
-    const communityCommentQuery = getCommunityCommentQuery();
-    const communityReportQuery = getCommunityReportQuery();
-    const [usersData, postsData, commentsData, reportsData] = await Promise.all([
-      requestJson('/api/admin/users', { method: 'GET', headers }),
-      requestJson(`/api/community/posts?${communityPostQuery}`, { method: 'GET', headers }),
-      requestJson(`/api/community/comments?${communityCommentQuery}`, { method: 'GET', headers }),
-      requestJson(`/api/community/reports?${communityReportQuery}`, { method: 'GET', headers })
+    const results = await Promise.all([
+      loadAdminUsersSection(adminKey, headers),
+      loadAdminPostsSection(adminKey, headers),
+      loadAdminCommentsSection(adminKey, headers),
+      loadAdminReportsSection(adminKey, headers)
     ]);
-    const users = usersData.users || [];
-    const posts = postsData.posts || [];
-    const comments = commentsData.comments || [];
-    const reports = reportsData.reports || [];
-    cachedUsers = users;
+    const failed = results.filter((result) => !result.ok);
+    if (failed.length) {
+      setMessage(`${failed.map((result) => result.label).join(', ')} 데이터를 불러오지 못했습니다. 나머지 섹션은 계속 사용할 수 있습니다.`, 'error');
+      return results;
+    }
     setMessage('관리 데이터를 불러왔습니다.', 'success');
-    renderStats(users);
-    renderCommunityStats(posts);
-    renderAlerts(users);
-    renderUsers(users, adminKey);
-    renderCommunityPosts(posts, adminKey);
-    renderCommunityComments(comments, adminKey);
-    renderCommunityReports(reports, adminKey);
+    return results;
   }
 
   function bindAdmin() {

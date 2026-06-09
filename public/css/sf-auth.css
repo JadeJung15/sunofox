@@ -1605,6 +1605,22 @@ body {
   color: #caffd9;
 }
 
+.sf-admin-body .sf-admin-alert.is-loading {
+  border-color: rgba(255, 255, 255, 0.16);
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035), rgba(255, 10, 91, 0.12), rgba(255, 255, 255, 0.035)),
+    rgba(255, 255, 255, 0.028);
+  background-size: 220% 100%;
+  color: rgba(255, 255, 255, 0.72);
+  animation: sf-admin-alert-sheen 1.6s ease-in-out infinite;
+}
+
+.sf-admin-body .sf-admin-alert.is-error {
+  border-color: rgba(248, 113, 113, 0.38);
+  background: rgba(127, 29, 29, 0.28);
+  color: #fecaca;
+}
+
 .sf-admin-toast {
   position: fixed;
   top: 20px;
@@ -2086,6 +2102,26 @@ body {
 @keyframes sfAdminSpin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes sf-admin-alert-sheen {
+  0% {
+    background-position: 220% 0;
+  }
+
+  100% {
+    background-position: -20% 0;
+  }
+}
+
+@keyframes sf-admin-loading-sheen {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
   }
 }
 
@@ -2962,6 +2998,58 @@ body {
   word-break: keep-all;
 }
 
+.sf-admin-loading-state {
+  position: relative;
+  display: grid;
+  gap: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.055), transparent 58%),
+    rgba(255, 255, 255, 0.026);
+  padding: clamp(20px, 4vw, 28px);
+}
+
+.sf-admin-loading-state::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 10, 91, 0.16), transparent);
+  opacity: 0.72;
+  transform: translateX(-100%);
+  animation: sf-admin-loading-sheen 1.8s ease-in-out infinite;
+}
+
+.sf-admin-loading-state > * {
+  position: relative;
+  z-index: 1;
+}
+
+.sf-admin-loading-state > span {
+  color: #ff0a5b;
+  font-family: "Roboto Condensed", "Arial Narrow", "Pretendard", sans-serif;
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0.16em;
+}
+
+.sf-admin-loading-state strong {
+  color: #ffffff;
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 950;
+  line-height: 1.14;
+  word-break: keep-all;
+}
+
+.sf-admin-loading-state p {
+  max-width: 680px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 14px;
+  line-height: 1.75;
+  word-break: keep-all;
+}
+
 .sf-admin-empty-actions {
   display: flex;
   flex-wrap: wrap;
@@ -3287,7 +3375,9 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .sf-admin-body .sf-auth-message,
   .sf-auth-body:not(.sf-admin-body) .sf-auth-message,
-  .sf-auth-result-panel:not([hidden]) {
+  .sf-auth-result-panel:not([hidden]),
+  .sf-admin-loading-state::before,
+  .sf-admin-body .sf-admin-alert.is-loading {
     animation: none;
   }
 }

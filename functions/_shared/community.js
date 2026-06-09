@@ -343,14 +343,33 @@ export async function handleCommunityCommentsGet(context) {
     if (!(await requireAdminAccess(context.request, context.env))) {
       return json({ ok: false, message: '소유자 로그인 또는 관리자 키가 필요합니다.' }, { status: 401 });
     }
+    const status = String(url.searchParams.get('status') || '').trim();
+    const search = cleanText(url.searchParams.get('q'), 80);
+    const limit = clampLimit(url.searchParams.get('limit'));
+    const where = [];
+    const params = [];
+
+    if (['published', 'hidden', 'deleted'].includes(status)) {
+      where.push('c.status = ?');
+      params.push(status);
+    } else {
+      where.push("c.status != 'deleted'");
+    }
+
+    if (search) {
+      where.push('(c.body LIKE ? OR c.author_name LIKE ? OR c.author_email LIKE ? OR p.title LIKE ?)');
+      params.push(`%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`);
+    }
+
+    const whereSql = where.length ? `WHERE ${where.join(' AND ')}` : '';
     const { results } = await db.prepare(`
       SELECT c.*, p.title AS post_title
       FROM comments c
       LEFT JOIN posts p ON p.id = c.post_id
-      WHERE c.status != 'deleted'
+      ${whereSql}
       ORDER BY c.created_at DESC
-      LIMIT 120
-    `).all();
+      LIMIT ?
+    `).bind(...params, limit).all();
     return json({ ok: true, comments: (results || []).map(adminComment) });
   }
 

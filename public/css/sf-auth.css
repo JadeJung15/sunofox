@@ -492,6 +492,11 @@ body {
   color: #475569;
 }
 
+.sf-post-admin-meta mark[data-status="deleted"] {
+  background: #ffe4e6;
+  color: #be123c;
+}
+
 .sf-post-admin-meta mark[data-status="pinned"] {
   background: #dbeafe;
   color: #1d4ed8;

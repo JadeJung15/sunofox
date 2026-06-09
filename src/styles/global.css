@@ -2063,6 +2063,48 @@ body.menu-open .overlay-nav a:nth-child(13) { animation-delay: 240ms; }
   padding: 24px;
 }
 
+.community-first-post-guide {
+  display: grid;
+  gap: 14px;
+  border: 1px solid rgba(255, 10, 91, 0.24);
+  background: rgba(255, 10, 91, 0.045);
+  padding: 18px;
+}
+
+.community-first-post-guide strong {
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1.4;
+  word-break: keep-all;
+}
+
+.community-first-post-guide div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.community-first-post-guide span {
+  min-height: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  padding: 6px 10px;
+  color: rgba(255, 255, 255, 0.76);
+  font-family: var(--font-condensed);
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.community-first-post-guide p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.75;
+  word-break: keep-all;
+}
+
 .community-write-copy {
   display: grid;
   gap: 10px;

@@ -107,6 +107,22 @@
           <h2>댓글 관리</h2>
         </div>
       </div>
+      <form id="sf-admin-comment-filter" class="sf-admin-filter-form">
+        <label>
+          <span>상태</span>
+          <select id="sf-admin-comment-status">
+            <option value="">삭제 제외 전체</option>
+            <option value="published">공개</option>
+            <option value="hidden">숨김</option>
+            <option value="deleted">삭제</option>
+          </select>
+        </label>
+        <label>
+          <span>검색</span>
+          <input id="sf-admin-comment-query" type="search" placeholder="댓글, 게시글, 작성자">
+        </label>
+        <button type="submit">필터 적용</button>
+      </form>
       <div id="sf-admin-community-comments" class="sf-admin-comments"></div>
     </section>
   </main>

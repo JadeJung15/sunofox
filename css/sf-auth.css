@@ -1569,6 +1569,106 @@ body {
   color: #caffd9;
 }
 
+.sf-admin-toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 50;
+  display: grid;
+  width: min(420px, calc(100vw - 32px));
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: start;
+  border: 1px solid rgba(134, 239, 172, 0.34);
+  background:
+    linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(255, 255, 255, 0.04)),
+    rgba(0, 0, 0, 0.84);
+  box-shadow: 0 26px 70px rgba(0, 0, 0, 0.45);
+  color: #ffffff;
+  opacity: 0;
+  padding: 14px;
+  pointer-events: none;
+  transform: translate3d(0, -12px, 0);
+  transition: opacity 180ms ease, transform 180ms ease;
+  backdrop-filter: blur(18px);
+}
+
+.sf-admin-toast[hidden] {
+  display: none;
+}
+
+.sf-admin-toast.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate3d(0, 0, 0);
+}
+
+.sf-admin-toast[data-type="error"] {
+  border-color: rgba(255, 10, 91, 0.5);
+  background:
+    linear-gradient(135deg, rgba(255, 10, 91, 0.18), rgba(255, 255, 255, 0.035)),
+    rgba(0, 0, 0, 0.86);
+}
+
+.sf-admin-toast-icon {
+  display: inline-grid;
+  width: 26px;
+  height: 26px;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  color: #86efac;
+  font-family: "Roboto Condensed", "Arial Narrow", "Pretendard", sans-serif;
+  font-size: 13px;
+  font-weight: 950;
+  line-height: 1;
+}
+
+.sf-admin-toast[data-type="error"] .sf-admin-toast-icon {
+  color: #ff8fb1;
+}
+
+.sf-admin-toast-copy {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.sf-admin-toast-copy strong {
+  color: #ffffff;
+  font-family: "Roboto Condensed", "Arial Narrow", "Pretendard", sans-serif;
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+}
+
+.sf-admin-toast-copy span {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 13px;
+  line-height: 1.55;
+  word-break: keep-all;
+}
+
+.sf-admin-toast button {
+  min-height: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.72);
+  cursor: pointer;
+  font-family: "Roboto Condensed", "Arial Narrow", "Pretendard", sans-serif;
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  padding: 0 9px;
+  text-transform: uppercase;
+}
+
+.sf-admin-toast button:hover,
+.sf-admin-toast button:focus-visible {
+  border-color: rgba(255, 255, 255, 0.34);
+  color: #ffffff;
+}
+
 .sf-admin-body .sf-user-row,
 .sf-admin-body .sf-post-admin-row,
 .sf-admin-body .sf-comment-admin-row,
@@ -1813,6 +1913,20 @@ body {
 
   .sf-admin-jump-nav {
     position: static;
+  }
+
+  .sf-admin-toast {
+    top: auto;
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+    width: auto;
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .sf-admin-toast button {
+    grid-column: 1 / -1;
+    justify-self: stretch;
   }
 
   .sf-admin-key-form {

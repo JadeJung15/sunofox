@@ -2,6 +2,7 @@
   const page = document.body?.dataset.authPage;
   const message = document.getElementById('sf-auth-message');
   let cachedUsers = [];
+  let adminToastTimer = 0;
 
   function setMessage(text, type) {
     if (!message) return;
@@ -29,6 +30,47 @@
       return { icon: '!', title: text?.includes('대기') ? 'WAITING APPROVAL' : 'CHECK REQUIRED' };
     }
     return { icon: 'i', title: 'PROCESSING' };
+  }
+
+  function showAdminToast(text, type, title) {
+    if (page !== 'admin') return;
+    let toast = document.getElementById('sf-admin-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'sf-admin-toast';
+      toast.className = 'sf-admin-toast';
+      document.body.appendChild(toast);
+    }
+    const toastType = type || 'success';
+    const meta = title ? { icon: toastType === 'error' ? '!' : '✓', title } : messageMeta(toastType, text);
+    toast.dataset.type = toastType;
+    toast.setAttribute('role', toastType === 'error' ? 'alert' : 'status');
+    toast.setAttribute('aria-live', toastType === 'error' ? 'assertive' : 'polite');
+    toast.innerHTML = `
+      <span class="sf-admin-toast-icon" aria-hidden="true">${meta.icon}</span>
+      <span class="sf-admin-toast-copy">
+        <strong>${escapeHtml(meta.title)}</strong>
+        <span>${escapeHtml(text)}</span>
+      </span>
+      <button type="button" aria-label="알림 닫기">닫기</button>
+    `;
+    toast.hidden = false;
+    window.requestAnimationFrame(() => {
+      toast.classList.add('is-visible');
+    });
+    toast.querySelector('button')?.addEventListener('click', hideAdminToast);
+    window.clearTimeout(adminToastTimer);
+    adminToastTimer = window.setTimeout(hideAdminToast, toastType === 'error' ? 7000 : 4600);
+  }
+
+  function hideAdminToast() {
+    const toast = document.getElementById('sf-admin-toast');
+    if (!toast) return;
+    toast.classList.remove('is-visible');
+    window.clearTimeout(adminToastTimer);
+    adminToastTimer = window.setTimeout(() => {
+      toast.hidden = true;
+    }, 220);
   }
 
   function getNext() {
@@ -466,6 +508,7 @@
           await copyTextToClipboard(approvalGuideText(approvalGuideUserFromRow(row)));
           setUserRowFeedback(row, 'complete', '안내문 복사 완료');
           setMessage(`${row.dataset.email} 승인 안내문을 복사했습니다. [입장 코드]만 실제 코드로 바꿔 전달해 주세요.`, 'success');
+          showAdminToast('승인 안내문을 복사했습니다. 입장 코드만 실제 코드로 바꿔 전달해 주세요.', 'success', 'COPY READY');
           await wait(900);
           if (row?.isConnected && row.dataset.actionState === 'complete') {
             clearUserRowFeedback(row);
@@ -473,6 +516,7 @@
         } catch (error) {
           setUserRowFeedback(row, 'error', '복사 실패');
           setMessage(error.message, 'error');
+          showAdminToast(error.message, 'error');
         } finally {
           button.disabled = false;
         }
@@ -504,11 +548,13 @@
           }
           setUserRowFeedback(row, 'complete', result.feedback);
           setMessage(`${row?.dataset.email || '가입 신청'} 상태를 ${result.statusLabel}로 변경했습니다.`, 'success');
+          showAdminToast(`${row?.dataset.email || '가입 신청'} 상태를 ${result.statusLabel}로 변경했습니다.`, 'success', 'MEMBER UPDATED');
           await wait(520);
           await loadDashboard(adminKey);
         } catch (error) {
           setUserRowFeedback(row, 'error', '처리 실패');
           setMessage(error.message, 'error');
+          showAdminToast(error.message, 'error');
         } finally {
           buttons.forEach((item) => {
             item.disabled = false;
@@ -550,6 +596,15 @@
   function renderCommunityStats(posts) {
     const postCount = document.getElementById('sf-admin-post-count');
     if (postCount) postCount.textContent = String(posts.filter((post) => post.status === 'published').length);
+  }
+
+  function postActionLabel(action) {
+    if (action === 'publish') return '공개';
+    if (action === 'hide') return '숨김';
+    if (action === 'pin') return '고정';
+    if (action === 'unpin') return '고정 해제';
+    if (action === 'delete') return '삭제';
+    return action || '처리';
   }
 
   function renderCommunityPosts(posts, adminKey) {
@@ -599,9 +654,11 @@
               action: button.dataset.postAction
             })
           });
+          showAdminToast(`게시글을 ${postActionLabel(button.dataset.postAction)} 처리했습니다.`, 'success', 'POST UPDATED');
           await loadDashboard(adminKey);
         } catch (error) {
           setMessage(error.message, 'error');
+          showAdminToast(error.message, 'error');
         } finally {
           button.disabled = false;
         }
@@ -651,9 +708,11 @@
               action: button.dataset.commentAction
             })
           });
+          showAdminToast(`댓글을 ${postActionLabel(button.dataset.commentAction)} 처리했습니다.`, 'success', 'COMMENT UPDATED');
           await loadDashboard(adminKey);
         } catch (error) {
           setMessage(error.message, 'error');
+          showAdminToast(error.message, 'error');
         } finally {
           button.disabled = false;
         }
@@ -744,9 +803,11 @@
               status: button.dataset.reportStatus
             })
           });
+          showAdminToast(`신고 상태를 ${reportStatusLabel(button.dataset.reportStatus)}로 변경했습니다.`, 'success', 'REPORT UPDATED');
           await loadDashboard(adminKey);
         } catch (error) {
           setMessage(error.message, 'error');
+          showAdminToast(error.message, 'error');
         } finally {
           button.disabled = false;
         }

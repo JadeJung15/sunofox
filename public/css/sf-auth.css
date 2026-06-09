@@ -78,21 +78,24 @@ body {
 
 .sf-auth-form,
 .sf-admin-key-form,
-.sf-admin-post-form {
+.sf-admin-post-form,
+.sf-admin-filter-form {
   display: grid;
   gap: 12px;
 }
 
 .sf-auth-form label,
 .sf-admin-key-form label,
-.sf-admin-post-form label {
+.sf-admin-post-form label,
+.sf-admin-filter-form label {
   display: grid;
   gap: 8px;
 }
 
 .sf-auth-form span,
 .sf-admin-key-form span,
-.sf-admin-post-form span {
+.sf-admin-post-form span,
+.sf-admin-filter-form span {
   color: #64748b;
   font-size: 12px;
   font-weight: 800;
@@ -103,7 +106,9 @@ body {
 .sf-admin-key-form input,
 .sf-admin-post-form input,
 .sf-admin-post-form select,
-.sf-admin-post-form textarea {
+.sf-admin-post-form textarea,
+.sf-admin-filter-form input,
+.sf-admin-filter-form select {
   border: 1px solid #dbe3ef;
   border-radius: 8px;
   color: #0f172a;
@@ -123,7 +128,9 @@ body {
 .sf-admin-key-form input:focus,
 .sf-admin-post-form input:focus,
 .sf-admin-post-form select:focus,
-.sf-admin-post-form textarea:focus {
+.sf-admin-post-form textarea:focus,
+.sf-admin-filter-form input:focus,
+.sf-admin-filter-form select:focus {
   border-color: #2563eb;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
 }
@@ -131,6 +138,7 @@ body {
 .sf-auth-form button,
 .sf-admin-key-form button,
 .sf-admin-post-form button,
+.sf-admin-filter-form button,
 .sf-user-actions button {
   background: #111827;
   border: 0;
@@ -146,6 +154,7 @@ body {
 .sf-auth-form button:disabled,
 .sf-admin-key-form button:disabled,
 .sf-admin-post-form button:disabled,
+.sf-admin-filter-form button:disabled,
 .sf-user-actions button:disabled {
   cursor: wait;
   opacity: 0.55;
@@ -299,6 +308,11 @@ body {
 .sf-admin-key-form {
   align-items: end;
   grid-template-columns: minmax(220px, 1fr) auto;
+}
+
+.sf-admin-filter-form {
+  align-items: end;
+  grid-template-columns: minmax(150px, 0.6fr) minmax(150px, 0.6fr) minmax(220px, 1fr) auto;
 }
 
 .sf-admin-users {
@@ -543,6 +557,10 @@ body {
   }
 
   .sf-admin-key-form {
+    grid-template-columns: 1fr;
+  }
+
+  .sf-admin-filter-form {
     grid-template-columns: 1fr;
   }
 

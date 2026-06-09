@@ -45,6 +45,18 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
         </article>
       </div>
 
+      <section class="community-rules reveal" aria-label="Fan board rules">
+        <div>
+          <span>BOARD RULES</span>
+          <h2>팬게시판 운영 기준</h2>
+        </div>
+        <ul>
+          <li>음악 감상, 듣고 싶은 분위기, 장르, 캐릭터/세계관 아이디어를 자유롭게 남길 수 있습니다.</li>
+          <li>비방, 개인정보, 광고, 도배, 저작권 침해 요청은 숨김 또는 삭제될 수 있습니다.</li>
+          <li>문제가 있는 글이나 댓글은 관리자 확인 후 숨김/삭제 처리합니다.</li>
+        </ul>
+      </section>
+
       <div class="community-layout">
         <aside class="community-categories reveal" aria-label="Fan board categories">
           {communityCategories.map((item) => (
@@ -220,6 +232,9 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
                 <span>${escapeHtml(post.status).toUpperCase()}</span>
               </div>
               <div class="community-post-actions">
+                <a href="/community/post/?id=${encodeURIComponent(post.id)}">
+                  DETAIL
+                </a>
                 <button type="button" data-community-reaction data-post-id="${escapeHtml(post.id)}" data-value="1">
                   LIKE <strong>${post.likes}</strong>
                 </button>

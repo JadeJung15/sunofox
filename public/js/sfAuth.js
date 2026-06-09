@@ -103,6 +103,20 @@
     return `${text.slice(0, maxLength - 1)}…`;
   }
 
+  function getCommunityPostQuery() {
+    const params = new URLSearchParams({
+      admin: '1',
+      limit: '120'
+    });
+    const board = document.getElementById('sf-admin-community-board')?.value || 'all';
+    const status = document.getElementById('sf-admin-community-status')?.value || '';
+    const query = document.getElementById('sf-admin-community-query')?.value.trim() || '';
+    params.set('board', board);
+    if (status) params.set('status', status);
+    if (query) params.set('q', query);
+    return params.toString();
+  }
+
   function renderUsers(users, adminKey) {
     const root = document.getElementById('sf-admin-users');
     if (!root) return;
@@ -289,9 +303,10 @@
   async function loadDashboard(adminKey) {
     setMessage('관리 데이터를 불러오는 중입니다.', 'info');
     const headers = adminHeaders(adminKey);
+    const communityPostQuery = getCommunityPostQuery();
     const [usersData, postsData, commentsData] = await Promise.all([
       requestJson('/api/admin/users', { method: 'GET', headers }),
-      requestJson('/api/community/posts?admin=1&limit=120', { method: 'GET', headers }),
+      requestJson(`/api/community/posts?${communityPostQuery}`, { method: 'GET', headers }),
       requestJson('/api/community/comments?admin=1', { method: 'GET', headers })
     ]);
     const users = usersData.users || [];
@@ -308,6 +323,7 @@
 
   function bindAdmin() {
     const form = document.getElementById('sf-admin-key-form');
+    const filterForm = document.getElementById('sf-admin-community-filter');
     const input = document.getElementById('sf-admin-key');
     const getAdminKey = () => input?.value.trim() || '';
 
@@ -331,6 +347,15 @@
           button.disabled = false;
         }
       });
+    });
+
+    filterForm?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      try {
+        await loadDashboard(getAdminKey());
+      } catch (error) {
+        setMessage(error.message, 'error');
+      }
     });
 
     loadDashboard('').catch(() => {

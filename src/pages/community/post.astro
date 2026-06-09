@@ -1,0 +1,246 @@
+---
+import SiteChrome from '../../components/SiteChrome.astro';
+import Layout from '../../layouts/Layout.astro';
+import { communityPosts } from '../../data/siteContent.js';
+
+const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c');
+---
+
+<Layout
+  title="Community Post | SunoFox Anime OST Studio"
+  description="SunoFox 팬게시판 게시글 상세 보기입니다."
+  canonical="https://sunofox.com/community/post/"
+>
+  <SiteChrome active="community" />
+
+  <main class="site-main category-page community-page community-detail-page">
+    <section class="category-hero reveal" aria-labelledby="communityPostTitle">
+      <p class="section-kicker">COMMUNITY</p>
+      <h1 id="communityPostTitle">POST DETAIL</h1>
+      <p>팬게시판의 글, 댓글, 반응을 한 화면에서 확인합니다.</p>
+    </section>
+
+    <section class="community-detail-shell reveal" aria-live="polite">
+      <a class="community-back-link" href="/community/">← FAN BOARD</a>
+      <div class="community-board-message" data-detail-message>게시글을 불러오는 중입니다.</div>
+
+      <article class="community-detail-post" data-detail-post hidden>
+        <div class="community-post-meta">
+          <span data-detail-board>COMMUNITY</span>
+          <time data-detail-date></time>
+        </div>
+        <div class="community-post-main">
+          <h2 data-detail-title></h2>
+          <p data-detail-body></p>
+          <div>
+            <span data-detail-author></span>
+            <span data-detail-comments></span>
+            <span data-detail-status></span>
+          </div>
+          <div class="community-post-actions">
+            <button type="button" data-detail-reaction data-value="1">LIKE <strong data-detail-likes>0</strong></button>
+          </div>
+        </div>
+      </article>
+
+      <section class="community-comments community-detail-comments" data-detail-comments-panel hidden>
+        <div class="community-comments-list" data-detail-comments-list>
+          <p>댓글을 불러오는 중입니다.</p>
+        </div>
+        <form class="community-comment-form" data-detail-comment-form>
+          <textarea name="body" rows="3" maxlength="1200" required placeholder="댓글을 입력해 주세요. 승인된 계정만 작성할 수 있습니다."></textarea>
+          <button type="submit">COMMENT</button>
+        </form>
+        <p class="community-comment-message" data-detail-comment-message role="status" aria-live="polite"></p>
+      </section>
+    </section>
+  </main>
+
+  <script id="communityInitialPosts" type="application/json" set:html={initialPostsJson}></script>
+  <script is:inline>
+    function initCommunityPostDetail() {
+      const params = new URLSearchParams(window.location.search);
+      const postId = params.get('id') || '';
+      const initialPosts = JSON.parse(document.getElementById('communityInitialPosts')?.textContent || '[]');
+      const message = document.querySelector('[data-detail-message]');
+      const postRoot = document.querySelector('[data-detail-post]');
+      const commentsPanel = document.querySelector('[data-detail-comments-panel]');
+      const commentsList = document.querySelector('[data-detail-comments-list]');
+      const commentForm = document.querySelector('[data-detail-comment-form]');
+      const commentMessage = document.querySelector('[data-detail-comment-message]');
+      const reactionButton = document.querySelector('[data-detail-reaction]');
+      let activePostId = postId;
+
+      function escapeHtml(value) {
+        return String(value || '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      }
+
+      function formatDate(value) {
+        if (!value) return '';
+        const parsed = new Date(value);
+        if (Number.isNaN(parsed.getTime())) return String(value);
+        return new Intl.DateTimeFormat('ko-KR', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit'
+        }).format(parsed).replace(/\s/g, '');
+      }
+
+      function normalizePost(post) {
+        return {
+          id: post.id || '',
+          category: post.boardName || post.category || 'COMMUNITY',
+          title: post.title || '',
+          body: post.body || post.excerpt || '',
+          author: post.authorName || post.author || 'Fan',
+          date: formatDate(post.createdAt || post.date),
+          comments: Number(post.commentCount ?? post.comments ?? 0),
+          likes: Number(post.likeCount || 0),
+          status: post.pinned ? 'PINNED' : (post.status || 'PUBLISHED')
+        };
+      }
+
+      function setMessage(text, type) {
+        if (!message) return;
+        message.hidden = !text;
+        message.textContent = text || '';
+        message.dataset.type = type || 'info';
+      }
+
+      function setCommentMessage(text, type) {
+        if (!commentMessage) return;
+        commentMessage.textContent = text || '';
+        commentMessage.dataset.type = type || 'info';
+      }
+
+      function renderPost(post) {
+        const normalized = normalizePost(post);
+        activePostId = normalized.id;
+        document.querySelector('[data-detail-board]').textContent = normalized.category;
+        document.querySelector('[data-detail-date]').textContent = normalized.date;
+        document.querySelector('[data-detail-title]').textContent = normalized.title;
+        document.querySelector('[data-detail-body]').textContent = normalized.body;
+        document.querySelector('[data-detail-author]').textContent = normalized.author;
+        document.querySelector('[data-detail-comments]').textContent = `${normalized.comments} COMMENTS`;
+        document.querySelector('[data-detail-status]').textContent = normalized.status.toUpperCase();
+        document.querySelector('[data-detail-likes]').textContent = String(normalized.likes);
+        postRoot.hidden = false;
+        commentsPanel.hidden = false;
+      }
+
+      function renderComments(comments) {
+        if (!comments.length) {
+          commentsList.innerHTML = '<p>아직 댓글이 없습니다. 첫 댓글을 남겨 주세요.</p>';
+          return;
+        }
+        commentsList.innerHTML = comments.map((comment) => `
+          <article class="community-comment-row">
+            <strong>${escapeHtml(comment.authorName || 'Fan')}</strong>
+            <time datetime="${escapeHtml(comment.createdAt || '')}">${escapeHtml(formatDate(comment.createdAt))}</time>
+            <p>${escapeHtml(comment.body || '')}</p>
+          </article>
+        `).join('');
+      }
+
+      async function loadComments() {
+        if (!activePostId || activePostId.startsWith('idea-') || activePostId.startsWith('notice-')) {
+          renderComments([]);
+          return;
+        }
+        const response = await fetch(`/api/community/comments?postId=${encodeURIComponent(activePostId)}`);
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok || !data.ok) throw new Error(data.message || '댓글을 불러오지 못했습니다.');
+        renderComments(data.comments || []);
+      }
+
+      async function loadPost() {
+        if (!postId) {
+          setMessage('게시글 ID가 없습니다. 팬게시판 목록에서 다시 선택해 주세요.', 'error');
+          return;
+        }
+
+        const fallback = initialPosts.find((post) => post.id === postId);
+        try {
+          const response = await fetch(`/api/community/posts?id=${encodeURIComponent(postId)}&view=1`);
+          const data = await response.json().catch(() => ({}));
+          if (!response.ok || !data.ok) throw new Error(data.message || '게시글을 불러오지 못했습니다.');
+          renderPost(data.post);
+          setMessage('', 'success');
+          await loadComments();
+        } catch (error) {
+          if (!fallback) {
+            setMessage(error.message, 'error');
+            return;
+          }
+          renderPost(fallback);
+          setMessage('현재 예시 게시글 상세를 표시하고 있습니다.', 'info');
+          renderComments([]);
+        }
+      }
+
+      reactionButton?.addEventListener('click', async () => {
+        if (!activePostId || activePostId.startsWith('idea-') || activePostId.startsWith('notice-')) {
+          setCommentMessage('예시 게시글에는 좋아요를 남길 수 없습니다.', 'error');
+          return;
+        }
+        reactionButton.disabled = true;
+        try {
+          const response = await fetch('/api/community/reactions', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ postId: activePostId, value: 1 })
+          });
+          const data = await response.json().catch(() => ({}));
+          if (!response.ok || !data.ok) throw new Error(data.message || '추천을 처리하지 못했습니다.');
+          document.querySelector('[data-detail-likes]').textContent = String(data.post?.likeCount || 0);
+          reactionButton.classList.toggle('is-active', Number(data.activeValue || 0) === 1);
+        } catch (error) {
+          setCommentMessage(`${error.message} 로그인 또는 가입 승인이 필요할 수 있습니다.`, 'error');
+        } finally {
+          reactionButton.disabled = false;
+        }
+      });
+
+      commentForm?.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        if (!activePostId || activePostId.startsWith('idea-') || activePostId.startsWith('notice-')) {
+          setCommentMessage('예시 게시글에는 댓글을 남길 수 없습니다.', 'error');
+          return;
+        }
+        const button = commentForm.querySelector('button[type="submit"]');
+        button.disabled = true;
+        setCommentMessage('댓글을 등록하는 중입니다.', 'info');
+        try {
+          const formData = new FormData(commentForm);
+          const response = await fetch('/api/community/comments', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ postId: activePostId, body: formData.get('body') })
+          });
+          const data = await response.json().catch(() => ({}));
+          if (!response.ok || !data.ok) throw new Error(data.message || '댓글을 등록하지 못했습니다.');
+          commentForm.reset();
+          setCommentMessage('댓글이 등록되었습니다.', 'success');
+          await loadComments();
+        } catch (error) {
+          setCommentMessage(`${error.message} 로그인 또는 가입 승인이 필요할 수 있습니다.`, 'error');
+        } finally {
+          button.disabled = false;
+        }
+      });
+
+      loadPost();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initCommunityPostDetail, { once: true });
+    } else {
+      initCommunityPostDetail();
+    }
+  </script>
+</Layout>

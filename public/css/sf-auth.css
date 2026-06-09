@@ -1422,6 +1422,42 @@ body {
   color: #ffffff;
 }
 
+.sf-admin-status-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.sf-admin-status-tabs button {
+  min-height: 42px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.035);
+  color: rgba(255, 255, 255, 0.72);
+  font-family: "Roboto Condensed", "Arial Narrow", "Pretendard", sans-serif;
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  transition:
+    border-color 160ms ease,
+    color 160ms ease,
+    background 160ms ease,
+    transform 160ms ease;
+}
+
+.sf-admin-status-tabs button:hover,
+.sf-admin-status-tabs button:focus-visible,
+.sf-admin-status-tabs button.is-active {
+  border-color: rgba(255, 10, 91, 0.72);
+  background: rgba(255, 10, 91, 0.12);
+  color: #ffffff;
+}
+
+.sf-admin-status-tabs button.is-active {
+  box-shadow: inset 0 0 0 1px rgba(255, 10, 91, 0.22);
+}
+
 .sf-admin-body .sf-admin-copy-note {
   border-left-color: rgba(255, 10, 91, 0.68);
   color: rgba(255, 255, 255, 0.58);
@@ -3174,17 +3210,18 @@ body {
   .sf-auth-stage {
     min-height: auto;
     align-content: start;
-    padding: 18px 14px;
-    gap: 18px;
+    padding: 16px 13px;
+    gap: 15px;
   }
 
   .sf-auth-stage .sf-auth-brand {
-    font-size: 17px;
+    min-height: 38px;
+    font-size: 16px;
   }
 
   .sf-auth-brand-mark {
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
   }
 
   .sf-auth-ambient-word {
@@ -3193,19 +3230,19 @@ body {
 
   .sf-auth-title {
     max-width: 100%;
-    font-size: clamp(40px, 13vw, 56px);
+    font-size: clamp(37px, 12.3vw, 52px);
     letter-spacing: -0.018em;
-    line-height: 0.98;
+    line-height: 0.94;
     transform: none;
   }
 
   .sf-auth-copy {
-    gap: 14px;
+    gap: 11px;
   }
 
   .sf-auth-copy > p {
-    font-size: 14px;
-    line-height: 1.6;
+    font-size: 13px;
+    line-height: 1.52;
     word-break: normal;
     overflow-wrap: anywhere;
   }
@@ -3225,28 +3262,60 @@ body {
 
   .sf-auth-route {
     display: grid;
+    gap: 6px;
   }
 
   .sf-auth-route span {
     width: 100%;
     justify-content: center;
+    min-height: 28px;
+    font-size: 10px;
   }
 
   .sf-auth-status-list {
-    gap: 8px;
+    gap: 6px;
   }
 
   .sf-auth-status-list span {
     min-height: auto;
-    padding: 12px;
+    padding: 9px 10px;
+  }
+
+  .sf-auth-status-list small {
+    font-size: 11px;
   }
 
   .sf-auth-body:not(.sf-admin-body) .sf-auth-card {
-    padding: 20px 16px;
+    gap: 12px;
+    padding: 17px 14px;
   }
 
   .sf-auth-body:not(.sf-admin-body) .sf-auth-card h2 {
-    font-size: clamp(31px, 10vw, 42px);
+    font-size: clamp(29px, 9vw, 38px);
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-card-head p,
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-footnote {
+    font-size: 12px;
+    line-height: 1.52;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-form {
+    gap: 9px;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-form input,
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-form textarea,
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-form button {
+    min-height: 46px;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-form textarea {
+    min-height: 64px;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-message {
+    padding: 10px;
   }
 
   .sf-auth-body:not(.sf-admin-body) .sf-auth-links {
@@ -3278,11 +3347,11 @@ body {
 
 @media (max-width: 400px) {
   .sf-auth-title {
-    font-size: clamp(36px, 12vw, 46px);
+    font-size: clamp(34px, 11.4vw, 43px);
   }
 
   .sf-auth-body:not(.sf-admin-body) .sf-auth-card {
-    padding: 18px 14px;
+    padding: 15px 12px;
   }
 
   .sf-auth-body:not(.sf-admin-body) .sf-auth-links,
@@ -3293,7 +3362,7 @@ body {
   .sf-auth-body:not(.sf-admin-body) .sf-auth-links a,
   .sf-auth-result-actions a {
     justify-content: center;
-    min-height: 38px;
+    min-height: 36px;
   }
 }
 
@@ -3781,6 +3850,7 @@ body {
   .sf-admin-dashboard-meta,
   .sf-admin-jump-nav,
   .sf-admin-body .sf-admin-head-actions,
+  .sf-admin-status-tabs,
   .sf-admin-body .sf-admin-key-form,
   .sf-admin-body .sf-admin-summary,
   .sf-admin-body .sf-admin-filter-form,
@@ -3807,6 +3877,16 @@ body {
 
   .sf-admin-body .sf-admin-panel {
     padding: 20px 14px;
+  }
+
+  .sf-admin-status-tabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px;
+  }
+
+  .sf-admin-status-tabs button {
+    min-height: 38px;
+    font-size: 11px;
   }
 }
 

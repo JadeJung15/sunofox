@@ -21,13 +21,13 @@
 
   function messageMeta(type, text) {
     if (type === 'success') {
-      return { icon: '✓', title: 'ACCESS READY' };
+      return { icon: '✓', title: text?.includes('불러왔') ? 'DATA READY' : 'ACCESS READY' };
     }
     if (type === 'pending') {
       return { icon: '…', title: 'APPROVAL PENDING' };
     }
     if (type === 'error') {
-      return { icon: '!', title: text?.includes('대기') ? 'WAITING APPROVAL' : 'CHECK REQUIRED' };
+      return { icon: '!', title: text?.includes('대기') || text?.includes('승인') ? 'APPROVAL CHECK' : 'CHECK REQUIRED' };
     }
     return { icon: 'i', title: 'PROCESSING' };
   }
@@ -38,31 +38,31 @@
 
     if (context === 'login') {
       if (original.includes('입장 코드가 올바르지')) {
-        return '입장 코드가 맞지 않습니다. 승인 안내문에 적힌 코드를 다시 확인해 주세요.';
+        return '입장 코드가 일치하지 않습니다. 승인 안내문에 적힌 코드를 다시 확인해 주세요.';
       }
       if (original.includes('가입 신청 후')) {
-        return '아직 가입 신청이 확인되지 않았습니다. JOIN REQUEST에서 먼저 신청해 주세요.';
+        return '가입 신청 내역이 아직 없습니다. JOIN REQUEST에서 먼저 신청해 주세요.';
       }
       if (original.includes('승인 대기')) {
-        return '가입 신청은 접수되어 있고 아직 승인 대기 중입니다. 승인 안내를 받은 뒤 로그인해 주세요.';
+        return '가입 신청은 접수되어 있습니다. 승인 안내와 입장 코드를 받은 뒤 로그인해 주세요.';
       }
       if (original.includes('승인되지 않은')) {
-        return '현재 승인되지 않은 계정입니다. 이메일을 확인하거나 사이트 주인에게 문의해 주세요.';
+        return '아직 승인되지 않은 계정입니다. 이메일을 확인하거나 사이트 주인에게 승인 상태를 문의해 주세요.';
       }
     }
 
     if (context === 'signup') {
       if (original.includes('이미 승인된')) {
-        return '이미 승인된 이메일입니다. 로그인 화면에서 이메일과 입장 코드를 입력해 주세요.';
+        return '이미 승인된 이메일입니다. LOGIN 화면에서 이메일과 입장 코드를 입력해 주세요.';
       }
       if (original.includes('이미 신청된')) {
-        return '이미 신청된 이메일입니다. 승인 안내를 받을 때까지 잠시만 기다려 주세요.';
+        return '이미 신청된 이메일입니다. 승인 안내가 도착할 때까지 잠시만 기다려 주세요.';
       }
       if (original.includes('가입 신청이 접수')) {
-        return '신청이 접수되었습니다. 승인 안내를 받은 뒤 로그인해 주세요.';
+        return '신청이 접수되었습니다. 승인 안내와 입장 코드를 받은 뒤 로그인해 주세요.';
       }
       if (original.includes('관리자 이메일')) {
-        return '소유자 이메일은 자동 승인되었습니다. 로그인 화면에서 입장 코드를 입력해 주세요.';
+        return '소유자 이메일은 승인 완료 상태입니다. LOGIN 화면에서 입장 코드를 입력해 주세요.';
       }
     }
 
@@ -176,8 +176,8 @@
       if (resultTitle) resultTitle.textContent = isApproved ? '승인이 완료되었습니다.' : '승인 대기 중입니다.';
       if (resultCopy) {
         resultCopy.textContent = isApproved
-          ? '이미 승인된 이메일입니다. 로그인 화면에서 이메일과 입장 코드를 입력해 주세요.'
-          : '신청 완료. 승인 안내 후 입장 코드로 로그인할 수 있습니다.';
+          ? '이미 승인된 이메일입니다. LOGIN 화면에서 이메일과 입장 코드를 입력해 주세요.'
+          : '신청이 접수되었습니다. 승인 안내와 입장 코드를 받은 뒤 로그인해 주세요.';
       }
       resultPanel.dataset.status = isApproved ? 'approved' : 'pending';
       resultPanel.hidden = false;
@@ -399,7 +399,14 @@
     const statusInput = document.getElementById('sf-admin-user-status');
     const pendingButton = document.getElementById('sf-admin-user-pending-only');
     const sortButton = document.getElementById('sf-admin-user-sort');
+    const statusButtons = document.querySelectorAll('[data-user-status-filter]');
+    const currentStatus = statusInput?.value || '';
     const isPendingOnly = statusInput?.value === 'pending';
+    statusButtons.forEach((button) => {
+      const isActive = button.dataset.userStatusFilter === currentStatus;
+      button.classList.toggle('is-active', isActive);
+      button.setAttribute('aria-pressed', String(isActive));
+    });
     if (pendingButton) {
       pendingButton.classList.toggle('is-active', isPendingOnly);
       pendingButton.setAttribute('aria-pressed', String(isPendingOnly));
@@ -1025,6 +1032,7 @@
     const userFilterReset = document.getElementById('sf-admin-user-reset');
     const userPendingOnly = document.getElementById('sf-admin-user-pending-only');
     const userSort = document.getElementById('sf-admin-user-sort');
+    const userStatusTabs = document.querySelectorAll('[data-user-status-filter]');
     const filterForm = document.getElementById('sf-admin-community-filter');
     const filterReset = document.getElementById('sf-admin-community-reset');
     const commentFilterForm = document.getElementById('sf-admin-comment-filter');
@@ -1078,6 +1086,16 @@
         statusInput.value = statusInput.value === 'pending' ? '' : 'pending';
       }
       renderUsers(cachedUsers, getAdminKey());
+    });
+
+    userStatusTabs.forEach((button) => {
+      button.addEventListener('click', () => {
+        const statusInput = document.getElementById('sf-admin-user-status');
+        if (statusInput) {
+          statusInput.value = button.dataset.userStatusFilter || '';
+        }
+        renderUsers(cachedUsers, getAdminKey());
+      });
     });
 
     userSort?.addEventListener('click', () => {

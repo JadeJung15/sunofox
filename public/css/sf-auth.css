@@ -1075,6 +1075,17 @@ body {
   gap: 8px;
 }
 
+.sf-user-actions {
+  flex-wrap: wrap;
+  justify-content: end;
+  max-width: 430px;
+}
+
+.sf-user-actions button {
+  min-width: 78px;
+  white-space: nowrap;
+}
+
 .sf-post-admin-actions {
   flex-wrap: wrap;
   justify-content: end;
@@ -1111,6 +1122,10 @@ body {
 
 .sf-copy-guide-button {
   min-width: 112px;
+}
+
+.sf-preview-guide-button {
+  min-width: 132px;
 }
 
 .sf-admin-body {
@@ -1550,6 +1565,17 @@ body {
     grid-template-columns: 1fr;
   }
 
+  .sf-admin-filter-form button {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .sf-admin-filter-summary,
+  .sf-admin-copy-note {
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
   .sf-user-actions,
   .sf-post-admin-actions,
   .sf-admin-post-options {
@@ -1557,10 +1583,60 @@ body {
     justify-content: start;
   }
 
+  .sf-user-row {
+    gap: 14px;
+    padding: 16px;
+  }
+
+  .sf-user-row > mark {
+    justify-self: start;
+  }
+
+  .sf-user-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: none;
+    width: 100%;
+  }
+
+  .sf-user-actions button {
+    justify-content: center;
+    min-width: 0;
+    padding: 0 10px;
+    width: 100%;
+  }
+
+  .sf-user-actions .sf-copy-guide-button,
+  .sf-user-actions .sf-preview-guide-button {
+    grid-column: span 2;
+  }
+
   .sf-user-row-feedback {
     position: static;
     justify-self: start;
     width: fit-content;
+  }
+
+  .sf-approval-guide-preview {
+    margin-top: 2px;
+    min-width: 0;
+    padding: 12px;
+  }
+
+  .sf-approval-guide-preview-head {
+    align-items: stretch;
+    display: grid;
+  }
+
+  .sf-approval-guide-preview-head .sf-copy-guide-button {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .sf-approval-guide-preview pre {
+    font-size: 12px;
+    max-height: 260px;
+    padding: 11px;
   }
 
   .sf-admin-section-head {
@@ -1571,6 +1647,17 @@ body {
   .sf-admin-section-button {
     justify-content: center;
     width: 100%;
+  }
+}
+
+@media (max-width: 420px) {
+  .sf-user-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .sf-user-actions .sf-copy-guide-button,
+  .sf-user-actions .sf-preview-guide-button {
+    grid-column: auto;
   }
 }
 

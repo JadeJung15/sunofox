@@ -251,13 +251,46 @@
   function getUserFilter() {
     return {
       status: document.getElementById('sf-admin-user-status')?.value || '',
-      query: document.getElementById('sf-admin-user-query')?.value.trim().toLowerCase() || ''
+      query: document.getElementById('sf-admin-user-query')?.value.trim().toLowerCase() || '',
+      sortOrder: document.getElementById('sf-admin-user-sort')?.dataset.sortOrder === 'asc' ? 'asc' : 'desc'
     };
+  }
+
+  function userRequestTime(user) {
+    const timestamp = Date.parse(user?.createdAt || user?.updatedAt || '');
+    return Number.isFinite(timestamp) ? timestamp : 0;
+  }
+
+  function sortUsersForView(users, sortOrder) {
+    return [...users].sort((a, b) => {
+      const diff = userRequestTime(a) - userRequestTime(b);
+      if (diff) {
+        return sortOrder === 'asc' ? diff : -diff;
+      }
+      return String(a.email || '').localeCompare(String(b.email || ''));
+    });
+  }
+
+  function syncUserQuickControls() {
+    const statusInput = document.getElementById('sf-admin-user-status');
+    const pendingButton = document.getElementById('sf-admin-user-pending-only');
+    const sortButton = document.getElementById('sf-admin-user-sort');
+    const isPendingOnly = statusInput?.value === 'pending';
+    if (pendingButton) {
+      pendingButton.classList.toggle('is-active', isPendingOnly);
+      pendingButton.setAttribute('aria-pressed', String(isPendingOnly));
+    }
+    if (sortButton) {
+      const sortOrder = sortButton.dataset.sortOrder === 'asc' ? 'asc' : 'desc';
+      sortButton.classList.toggle('is-active', sortOrder === 'desc');
+      sortButton.setAttribute('aria-pressed', String(sortOrder === 'desc'));
+      sortButton.textContent = sortOrder === 'asc' ? '오래된 신청 우선' : '최근 신청 우선';
+    }
   }
 
   function filterUsers(users) {
     const filter = getUserFilter();
-    return users.filter((user) => {
+    const filtered = users.filter((user) => {
       if (filter.status && user.status !== filter.status) {
         return false;
       }
@@ -272,6 +305,7 @@
       ].map((value) => String(value || '').toLowerCase()).join(' ');
       return haystack.includes(filter.query);
     });
+    return sortUsersForView(filtered, filter.sortOrder);
   }
 
   function updateUserFilterSummary(totalCount, filteredCount) {
@@ -284,7 +318,8 @@
     }
     const statusText = filter.status ? `${statusLabel(filter.status)} 상태` : '전체 상태';
     const queryText = filter.query ? `, 검색어 "${filter.query}"` : '';
-    summary.textContent = `${statusText}${queryText}: ${filteredCount} / ${totalCount}건 표시`;
+    const sortText = filter.sortOrder === 'asc' ? '오래된 신청 우선' : '최근 신청 우선';
+    summary.textContent = `${statusText}${queryText}: ${filteredCount} / ${totalCount}건 표시 · ${sortText}`;
   }
 
   function selectedOptionText(id) {
@@ -367,6 +402,7 @@
   function renderUsers(users, adminKey) {
     const root = document.getElementById('sf-admin-users');
     if (!root) return;
+    syncUserQuickControls();
     const filteredUsers = filterUsers(users);
     updateUserFilterSummary(users.length, filteredUsers.length);
     if (!users.length) {
@@ -380,11 +416,13 @@
     root.innerHTML = filteredUsers.map((user, index) => {
       const isApproved = user.status === 'approved';
       const previewId = `sf-approval-preview-${index}`;
+      const requestedAt = formatDate(user.createdAt || user.updatedAt);
       return `
         <article class="sf-user-row" data-email="${escapeHtml(user.email)}" data-name="${escapeHtml(user.name || '')}">
           <div>
             <strong>${escapeHtml(user.email)}</strong>
             <span>${escapeHtml(user.name || '이름 없음')}</span>
+            ${requestedAt ? `<small>신청 ${escapeHtml(requestedAt)}</small>` : ''}
             <small>${escapeHtml(user.note || '')}</small>
           </div>
           <mark data-status="${escapeHtml(user.status)}">${statusLabel(user.status)}</mark>
@@ -746,6 +784,8 @@
     const form = document.getElementById('sf-admin-key-form');
     const userFilterForm = document.getElementById('sf-admin-user-filter');
     const userFilterReset = document.getElementById('sf-admin-user-reset');
+    const userPendingOnly = document.getElementById('sf-admin-user-pending-only');
+    const userSort = document.getElementById('sf-admin-user-sort');
     const filterForm = document.getElementById('sf-admin-community-filter');
     const filterReset = document.getElementById('sf-admin-community-reset');
     const commentFilterForm = document.getElementById('sf-admin-comment-filter');
@@ -789,6 +829,20 @@
       const queryInput = document.getElementById('sf-admin-user-query');
       if (statusInput) statusInput.value = '';
       if (queryInput) queryInput.value = '';
+      if (userSort) userSort.dataset.sortOrder = 'desc';
+      renderUsers(cachedUsers, getAdminKey());
+    });
+
+    userPendingOnly?.addEventListener('click', () => {
+      const statusInput = document.getElementById('sf-admin-user-status');
+      if (statusInput) {
+        statusInput.value = statusInput.value === 'pending' ? '' : 'pending';
+      }
+      renderUsers(cachedUsers, getAdminKey());
+    });
+
+    userSort?.addEventListener('click', () => {
+      userSort.dataset.sortOrder = userSort.dataset.sortOrder === 'asc' ? 'desc' : 'asc';
       renderUsers(cachedUsers, getAdminKey());
     });
 

@@ -673,6 +673,36 @@ body {
   color: #111827;
 }
 
+.sf-admin-quick-tools {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: -2px 0 0;
+}
+
+.sf-admin-chip-button {
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  color: #334155;
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 900;
+  min-height: 36px;
+  padding: 0 13px;
+}
+
+.sf-admin-chip-button.is-active,
+.sf-admin-chip-button[aria-pressed="true"] {
+  border-color: #2563eb;
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
 .sf-admin-filter-summary {
   color: #64748b;
   font-size: 13px;
@@ -1305,6 +1335,25 @@ body {
   color: rgba(255, 255, 255, 0.58);
 }
 
+.sf-admin-body .sf-admin-chip-button {
+  border-color: rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.055);
+  color: rgba(255, 255, 255, 0.72);
+  font-family: "Roboto Condensed", "Arial Narrow", "Pretendard", sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.sf-admin-body .sf-admin-chip-button:hover,
+.sf-admin-body .sf-admin-chip-button:focus-visible,
+.sf-admin-body .sf-admin-chip-button.is-active,
+.sf-admin-body .sf-admin-chip-button[aria-pressed="true"] {
+  border-color: rgba(255, 10, 91, 0.72);
+  background: rgba(255, 10, 91, 0.16);
+  color: #ffffff;
+}
+
 .sf-admin-body .sf-admin-copy-note {
   border-left-color: rgba(255, 10, 91, 0.68);
   color: rgba(255, 255, 255, 0.58);
@@ -1570,6 +1619,17 @@ body {
     width: 100%;
   }
 
+  .sf-admin-quick-tools {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .sf-admin-chip-button {
+    justify-content: center;
+    width: 100%;
+  }
+
   .sf-admin-filter-summary,
   .sf-admin-copy-note {
     font-size: 12px;
@@ -1651,6 +1711,7 @@ body {
 }
 
 @media (max-width: 420px) {
+  .sf-admin-quick-tools,
   .sf-user-actions {
     grid-template-columns: 1fr;
   }

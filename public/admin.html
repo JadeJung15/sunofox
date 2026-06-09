@@ -86,6 +86,10 @@
         <button type="submit">필터 적용</button>
         <button type="button" id="sf-admin-user-reset" class="sf-admin-filter-reset">초기화</button>
       </form>
+      <div class="sf-admin-quick-tools" aria-label="가입 신청 빠른 보기">
+        <button type="button" id="sf-admin-user-pending-only" class="sf-admin-chip-button" aria-pressed="false">승인 대기만 보기</button>
+        <button type="button" id="sf-admin-user-sort" class="sf-admin-chip-button" data-sort-order="desc" aria-pressed="true">최근 신청 우선</button>
+      </div>
       <p id="sf-admin-user-filter-summary" class="sf-admin-filter-summary">목록을 불러오면 필터를 사용할 수 있습니다.</p>
       <p class="sf-admin-copy-note">승인된 계정에는 안내문 복사 버튼이 표시됩니다. 복사 문구의 [입장 코드]는 실제 코드로 바꿔서 전달해 주세요.</p>
       <div id="sf-admin-users" class="sf-admin-users"></div>

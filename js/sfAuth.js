@@ -638,7 +638,7 @@
     });
   }
 
-  function adminEmptyState(title, copy, actions = []) {
+  function adminEmptyState(title, copy, actions = [], kicker = 'NO REQUESTS') {
     const actionMarkup = actions.length
       ? `<div class="sf-admin-empty-actions">${actions.map((action) => `
           <a href="${escapeHtml(action.href)}">${escapeHtml(action.label)}</a>
@@ -646,7 +646,7 @@
       : '';
     return `
       <div class="sf-admin-empty-state">
-        <span>NO REQUESTS</span>
+        <span>${escapeHtml(kicker)}</span>
         <strong>${escapeHtml(title)}</strong>
         <p>${escapeHtml(copy)}</p>
         ${actionMarkup}
@@ -698,7 +698,15 @@
     if (!root) return;
     updateCommunityPostFilterSummary(posts.length);
     if (!posts.length) {
-      root.innerHTML = '<p class="sf-empty">관리할 게시글이 없습니다.</p>';
+      root.innerHTML = adminEmptyState(
+        '관리할 게시글이 없습니다.',
+        '팬게시판에 새 글이 올라오면 공개, 숨김, 고정, 삭제 처리를 이 영역에서 바로 관리할 수 있습니다.',
+        [
+          { href: '/community/', label: '게시판 열기' },
+          { href: '/signup', label: '가입 신청 화면' }
+        ],
+        'NO POSTS'
+      );
       return;
     }
 
@@ -757,7 +765,14 @@
     if (!root) return;
     updateCommunityCommentFilterSummary(comments.length);
     if (!comments.length) {
-      root.innerHTML = '<p class="sf-empty">관리할 댓글이 없습니다.</p>';
+      root.innerHTML = adminEmptyState(
+        '관리할 댓글이 없습니다.',
+        '새 댓글이 등록되면 댓글 원문, 작성자, 연결된 게시글을 확인하고 공개/숨김/삭제를 처리할 수 있습니다.',
+        [
+          { href: '/community/', label: '커뮤니티 확인' }
+        ],
+        'NO COMMENTS'
+      );
       return;
     }
 
@@ -811,7 +826,14 @@
     if (!root) return;
     updateCommunityReportFilterSummary(reports.length);
     if (!reports.length) {
-      root.innerHTML = '<p class="sf-empty">관리할 신고가 없습니다.</p>';
+      root.innerHTML = adminEmptyState(
+        '처리할 신고가 없습니다.',
+        '신고가 접수되면 대상 글/댓글, 신고 사유, 상세 내용을 확인하고 검토/처리/기각 상태로 관리할 수 있습니다.',
+        [
+          { href: '/community/', label: '게시판 보기' }
+        ],
+        'NO REPORTS'
+      );
       return;
     }
 

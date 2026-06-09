@@ -3143,6 +3143,8 @@ body {
       "copy"
       "card";
     grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    align-items: start;
     min-height: auto;
   }
 
@@ -3170,7 +3172,8 @@ body {
   }
 
   .sf-auth-stage {
-    min-height: calc(100svh - 20px);
+    min-height: auto;
+    align-content: start;
     padding: 18px 14px;
     gap: 18px;
   }
@@ -3236,7 +3239,12 @@ body {
     font-size: clamp(31px, 10vw, 42px);
   }
 
-  .sf-auth-body:not(.sf-admin-body) .sf-auth-links,
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-links {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
   .sf-auth-result-actions {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -3256,6 +3264,17 @@ body {
 
   .sf-auth-body:not(.sf-admin-body) .sf-auth-card {
     padding: 18px 14px;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-links,
+  .sf-auth-result-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-links a,
+  .sf-auth-result-actions a {
+    justify-content: center;
+    min-height: 38px;
   }
 }
 

@@ -129,6 +129,19 @@
     return params.toString();
   }
 
+  function getCommunityReportQuery() {
+    const params = new URLSearchParams({
+      limit: '120'
+    });
+    const status = document.getElementById('sf-admin-report-status')?.value || '';
+    const targetType = document.getElementById('sf-admin-report-target')?.value || '';
+    const query = document.getElementById('sf-admin-report-query')?.value.trim() || '';
+    if (status) params.set('status', status);
+    if (targetType) params.set('targetType', targetType);
+    if (query) params.set('q', query);
+    return params.toString();
+  }
+
   function renderUsers(users, adminKey) {
     const root = document.getElementById('sf-admin-users');
     if (!root) return;
@@ -312,19 +325,83 @@
     });
   }
 
+  function renderCommunityReports(reports, adminKey) {
+    const root = document.getElementById('sf-admin-community-reports');
+    if (!root) return;
+    if (!reports.length) {
+      root.innerHTML = '<p class="sf-empty">관리할 신고가 없습니다.</p>';
+      return;
+    }
+
+    root.innerHTML = reports.map((report) => {
+      const targetTitle = report.targetType === 'comment'
+        ? (report.postTitle ? `댓글: ${report.postTitle}` : '댓글')
+        : (report.postTitle || '게시글');
+      const commentBody = report.commentBody ? `<p>${escapeHtml(compactText(report.commentBody, 140))}</p>` : '';
+      return `
+        <article class="sf-report-admin-row" data-report-id="${escapeHtml(report.id)}">
+          <div class="sf-post-admin-main">
+            <div class="sf-post-admin-meta">
+              <mark data-status="${escapeHtml(report.status)}">${reportStatusLabel(report.status)}</mark>
+              <span>${targetTypeLabel(report.targetType)}</span>
+              <span>${escapeHtml(formatDate(report.createdAt))}</span>
+              <span>${escapeHtml(report.reporterName || 'Fan')}</span>
+              <span>${escapeHtml(targetTitle)}</span>
+            </div>
+            <strong>${escapeHtml(report.reason)}</strong>
+            ${commentBody}
+            ${report.detail ? `<p>${escapeHtml(compactText(report.detail, 180))}</p>` : ''}
+            <small>${escapeHtml(report.reporterEmail || '')}</small>
+          </div>
+          <div class="sf-post-admin-actions">
+            <button type="button" data-report-status="reviewing">검토</button>
+            <button type="button" data-report-status="resolved">처리</button>
+            <button type="button" data-report-status="dismissed">기각</button>
+          </div>
+        </article>
+      `;
+    }).join('');
+
+    root.querySelectorAll('button[data-report-status]').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const row = button.closest('[data-report-id]');
+        if (!row) return;
+        button.disabled = true;
+        try {
+          await requestJson('/api/community/reports', {
+            method: 'PATCH',
+            headers: adminHeaders(adminKey),
+            body: JSON.stringify({
+              id: row.dataset.reportId,
+              status: button.dataset.reportStatus
+            })
+          });
+          await loadDashboard(adminKey);
+        } catch (error) {
+          setMessage(error.message, 'error');
+        } finally {
+          button.disabled = false;
+        }
+      });
+    });
+  }
+
   async function loadDashboard(adminKey) {
     setMessage('관리 데이터를 불러오는 중입니다.', 'info');
     const headers = adminHeaders(adminKey);
     const communityPostQuery = getCommunityPostQuery();
     const communityCommentQuery = getCommunityCommentQuery();
-    const [usersData, postsData, commentsData] = await Promise.all([
+    const communityReportQuery = getCommunityReportQuery();
+    const [usersData, postsData, commentsData, reportsData] = await Promise.all([
       requestJson('/api/admin/users', { method: 'GET', headers }),
       requestJson(`/api/community/posts?${communityPostQuery}`, { method: 'GET', headers }),
-      requestJson(`/api/community/comments?${communityCommentQuery}`, { method: 'GET', headers })
+      requestJson(`/api/community/comments?${communityCommentQuery}`, { method: 'GET', headers }),
+      requestJson(`/api/community/reports?${communityReportQuery}`, { method: 'GET', headers })
     ]);
     const users = usersData.users || [];
     const posts = postsData.posts || [];
     const comments = commentsData.comments || [];
+    const reports = reportsData.reports || [];
     setMessage('관리 데이터를 불러왔습니다.', 'success');
     renderStats(users);
     renderCommunityStats(posts);
@@ -332,12 +409,14 @@
     renderUsers(users, adminKey);
     renderCommunityPosts(posts, adminKey);
     renderCommunityComments(comments, adminKey);
+    renderCommunityReports(reports, adminKey);
   }
 
   function bindAdmin() {
     const form = document.getElementById('sf-admin-key-form');
     const filterForm = document.getElementById('sf-admin-community-filter');
     const commentFilterForm = document.getElementById('sf-admin-comment-filter');
+    const reportFilterForm = document.getElementById('sf-admin-report-filter');
     const input = document.getElementById('sf-admin-key');
     const getAdminKey = () => input?.value.trim() || '';
 
@@ -381,6 +460,15 @@
       }
     });
 
+    reportFilterForm?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      try {
+        await loadDashboard(getAdminKey());
+      } catch (error) {
+        setMessage(error.message, 'error');
+      }
+    });
+
     loadDashboard('').catch(() => {
       setMessage('소유자 계정으로 로그인했거나 관리자 키가 있으면 가입 신청을 관리할 수 있습니다.', 'info');
     });
@@ -397,6 +485,20 @@
     if (status === 'hidden') return '숨김';
     if (status === 'deleted') return '삭제';
     return status || '상태 없음';
+  }
+
+  function reportStatusLabel(status) {
+    if (status === 'open') return '대기';
+    if (status === 'reviewing') return '검토';
+    if (status === 'resolved') return '처리';
+    if (status === 'dismissed') return '기각';
+    return status || '상태 없음';
+  }
+
+  function targetTypeLabel(targetType) {
+    if (targetType === 'post') return '게시글';
+    if (targetType === 'comment') return '댓글';
+    return targetType || '대상 없음';
   }
 
   function escapeHtml(value) {

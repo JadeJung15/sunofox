@@ -39,6 +39,7 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
           </div>
           <div class="community-post-actions">
             <button type="button" data-detail-reaction data-value="1">LIKE <strong data-detail-likes>0</strong></button>
+            <button type="button" data-detail-report-post>REPORT</button>
           </div>
         </div>
       </article>
@@ -69,6 +70,7 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
       const commentForm = document.querySelector('[data-detail-comment-form]');
       const commentMessage = document.querySelector('[data-detail-comment-message]');
       const reactionButton = document.querySelector('[data-detail-reaction]');
+      const postReportButton = document.querySelector('[data-detail-report-post]');
       let activePostId = postId;
 
       function escapeHtml(value) {
@@ -143,8 +145,36 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
             <strong>${escapeHtml(comment.authorName || 'Fan')}</strong>
             <time datetime="${escapeHtml(comment.createdAt || '')}">${escapeHtml(formatDate(comment.createdAt))}</time>
             <p>${escapeHtml(comment.body || '')}</p>
+            <button type="button" data-detail-report-comment data-comment-id="${escapeHtml(comment.id)}">REPORT</button>
           </article>
         `).join('');
+      }
+
+      async function submitReport(targetType, targetId, button) {
+        if (!targetId || targetId.startsWith('idea-') || targetId.startsWith('notice-')) {
+          setCommentMessage('예시 게시글은 신고할 수 없습니다.', 'error');
+          return;
+        }
+
+        const reason = window.prompt('신고 사유를 짧게 입력해 주세요. 예: 광고, 비방, 개인정보, 저작권 문제');
+        if (!reason || !reason.trim()) return;
+
+        if (button) button.disabled = true;
+        setCommentMessage('신고를 접수하는 중입니다.', 'info');
+        try {
+          const response = await fetch('/api/community/reports', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ targetType, targetId, reason })
+          });
+          const data = await response.json().catch(() => ({}));
+          if (!response.ok || !data.ok) throw new Error(data.message || '신고를 접수하지 못했습니다.');
+          setCommentMessage(data.duplicate ? '이미 신고가 접수되어 있습니다.' : '신고가 접수되었습니다. 운영자가 확인하겠습니다.', 'success');
+        } catch (error) {
+          setCommentMessage(`${error.message} 로그인 또는 가입 승인이 필요할 수 있습니다.`, 'error');
+        } finally {
+          if (button) button.disabled = false;
+        }
       }
 
       async function loadComments() {
@@ -204,6 +234,16 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
         } finally {
           reactionButton.disabled = false;
         }
+      });
+
+      postReportButton?.addEventListener('click', async () => {
+        await submitReport('post', activePostId, postReportButton);
+      });
+
+      commentsList?.addEventListener('click', async (event) => {
+        const reportButton = event.target.closest('[data-detail-report-comment]');
+        if (!reportButton) return;
+        await submitReport('comment', reportButton.dataset.commentId || '', reportButton);
       });
 
       commentForm?.addEventListener('submit', async (event) => {

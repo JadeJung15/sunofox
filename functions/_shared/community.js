@@ -12,9 +12,13 @@ const BOARDS = new Set(['notice', 'free', 'media', 'event']);
 const MAX_TITLE_LENGTH = 90;
 const MAX_BODY_LENGTH = 5000;
 const MAX_COMMENT_LENGTH = 1200;
+const MAX_REPORT_REASON_LENGTH = 80;
+const MAX_REPORT_DETAIL_LENGTH = 1000;
 const MAX_LIST_LIMIT = 50;
 const DEFAULT_LIST_LIMIT = 30;
 const LEGACY_MIGRATION_FLAG = '__sfCommunityLegacyMigrated';
+const REPORT_TARGETS = new Set(['post', 'comment']);
+const REPORT_STATUSES = new Set(['open', 'reviewing', 'resolved', 'dismissed']);
 
 function getDb(env) {
   return env.SF_COMMUNITY_DB;
@@ -99,6 +103,25 @@ function adminComment(row) {
     authorEmail: row.author_email || '',
     postTitle: row.post_title || '',
     deletedAt: row.deleted_at || null
+  };
+}
+
+function adminReport(row) {
+  return {
+    id: row.id,
+    targetType: row.target_type || '',
+    targetId: row.target_id || '',
+    postId: row.post_id || '',
+    reason: row.reason || '',
+    detail: row.detail || '',
+    reporterEmail: row.reporter_email || '',
+    reporterName: row.reporter_name || 'fan',
+    status: row.status || 'open',
+    createdAt: row.created_at || '',
+    updatedAt: row.updated_at || '',
+    resolvedAt: row.resolved_at || null,
+    postTitle: row.post_title || row.comment_post_title || '',
+    commentBody: row.comment_body || ''
   };
 }
 
@@ -488,4 +511,168 @@ export async function handleCommunityReactionPost(context) {
 
   const updated = await getPostRow(context.env, postId, { admin: false });
   return json({ ok: true, activeValue, post: publicPost(updated) });
+}
+
+export async function handleCommunityReportsGet(context) {
+  const db = getDb(context.env);
+  if (!db) return json({ ok: false, message: '커뮤니티 데이터베이스가 연결되지 않았습니다.' }, { status: 500 });
+  if (!(await requireAdminAccess(context.request, context.env))) {
+    return json({ ok: false, message: '소유자 로그인 또는 관리자 키가 필요합니다.' }, { status: 401 });
+  }
+
+  const url = new URL(context.request.url);
+  const status = String(url.searchParams.get('status') || '').trim();
+  const targetType = String(url.searchParams.get('targetType') || '').trim();
+  const search = cleanText(url.searchParams.get('q'), 80);
+  const limit = clampLimit(url.searchParams.get('limit'));
+  const where = [];
+  const params = [];
+
+  if (REPORT_STATUSES.has(status)) {
+    where.push('r.status = ?');
+    params.push(status);
+  } else {
+    where.push("r.status != 'dismissed'");
+  }
+
+  if (REPORT_TARGETS.has(targetType)) {
+    where.push('r.target_type = ?');
+    params.push(targetType);
+  }
+
+  if (search) {
+    where.push(`(
+      r.reason LIKE ? OR r.detail LIKE ? OR r.reporter_name LIKE ? OR r.reporter_email LIKE ? OR
+      p.title LIKE ? OR cp.title LIKE ? OR c.body LIKE ?
+    )`);
+    params.push(`%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`);
+  }
+
+  const whereSql = where.length ? `WHERE ${where.join(' AND ')}` : '';
+  const { results } = await db.prepare(`
+    SELECT r.*,
+      p.title AS post_title,
+      c.body AS comment_body,
+      cp.title AS comment_post_title
+    FROM community_reports r
+    LEFT JOIN posts p ON r.target_type = 'post' AND p.id = r.target_id
+    LEFT JOIN comments c ON r.target_type = 'comment' AND c.id = r.target_id
+    LEFT JOIN posts cp ON cp.id = c.post_id
+    ${whereSql}
+    ORDER BY
+      CASE r.status
+        WHEN 'open' THEN 0
+        WHEN 'reviewing' THEN 1
+        WHEN 'resolved' THEN 2
+        ELSE 3
+      END,
+      r.created_at DESC
+    LIMIT ?
+  `).bind(...params, limit).all();
+
+  return json({ ok: true, reports: (results || []).map(adminReport) });
+}
+
+export async function handleCommunityReportsPost(context) {
+  const db = getDb(context.env);
+  if (!db) return json({ ok: false, message: '커뮤니티 데이터베이스가 연결되지 않았습니다.' }, { status: 500 });
+
+  const actor = await requireApprovedUser(context.request, context.env);
+  if (actor.error) return actor.error;
+
+  const body = await parseJsonBody(context.request);
+  if (!body) return json({ ok: false, message: '요청 형식이 올바르지 않습니다.' }, { status: 400 });
+
+  const targetType = String(body.targetType || '').trim();
+  const targetId = String(body.targetId || '').trim();
+  const reason = cleanText(body.reason, MAX_REPORT_REASON_LENGTH);
+  const detail = cleanText(body.detail, MAX_REPORT_DETAIL_LENGTH);
+
+  if (!REPORT_TARGETS.has(targetType) || !targetId) {
+    return json({ ok: false, message: '신고 대상을 확인해 주세요.' }, { status: 400 });
+  }
+  if (reason.length < 2) {
+    return json({ ok: false, message: '신고 사유를 2자 이상 입력해 주세요.' }, { status: 400 });
+  }
+
+  let postId = targetId;
+  if (targetType === 'post') {
+    const post = await getPostRow(context.env, targetId, { admin: false });
+    if (!post) return json({ ok: false, message: '신고할 게시글을 찾을 수 없습니다.' }, { status: 404 });
+  }
+
+  if (targetType === 'comment') {
+    const comment = await db.prepare(`
+      SELECT c.*, p.status AS post_status
+      FROM comments c
+      LEFT JOIN posts p ON p.id = c.post_id
+      WHERE c.id = ? AND c.status = 'published'
+    `).bind(targetId).first();
+    if (!comment || comment.post_status !== 'published') {
+      return json({ ok: false, message: '신고할 댓글을 찾을 수 없습니다.' }, { status: 404 });
+    }
+    postId = comment.post_id;
+  }
+
+  const existing = await db.prepare(`
+    SELECT id, status FROM community_reports
+    WHERE target_type = ? AND target_id = ? AND reporter_email = ?
+  `).bind(targetType, targetId, actor.email).first();
+  if (existing) {
+    return json({ ok: true, duplicate: true, message: '이미 신고가 접수되어 있습니다.' });
+  }
+
+  const now = new Date().toISOString();
+  const id = crypto.randomUUID();
+  await db.prepare(`
+    INSERT INTO community_reports (
+      id, target_type, target_id, post_id, reason, detail,
+      reporter_email, reporter_name, status, created_at, updated_at
+    )
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'open', ?, ?)
+  `).bind(id, targetType, targetId, postId, reason, detail, actor.email, actor.authorName, now, now).run();
+
+  return json({ ok: true, report: { id, targetType, targetId, status: 'open' } }, { status: 201 });
+}
+
+export async function handleCommunityReportsPatch(context) {
+  const db = getDb(context.env);
+  if (!db) return json({ ok: false, message: '커뮤니티 데이터베이스가 연결되지 않았습니다.' }, { status: 500 });
+  if (!(await requireAdminAccess(context.request, context.env))) {
+    return json({ ok: false, message: '소유자 로그인 또는 관리자 키가 필요합니다.' }, { status: 401 });
+  }
+
+  const body = await parseJsonBody(context.request);
+  if (!body) return json({ ok: false, message: '요청 형식이 올바르지 않습니다.' }, { status: 400 });
+
+  const id = String(body.id || '').trim();
+  const status = String(body.status || '').trim();
+  if (!id || !REPORT_STATUSES.has(status)) {
+    return json({ ok: false, message: '신고와 처리 상태를 확인해 주세요.' }, { status: 400 });
+  }
+
+  const existing = await db.prepare('SELECT * FROM community_reports WHERE id = ?').bind(id).first();
+  if (!existing) return json({ ok: false, message: '신고 내역을 찾을 수 없습니다.' }, { status: 404 });
+
+  const now = new Date().toISOString();
+  const resolvedAt = ['resolved', 'dismissed'].includes(status) ? now : null;
+  await db.prepare(`
+    UPDATE community_reports
+    SET status = ?, updated_at = ?, resolved_at = ?
+    WHERE id = ?
+  `).bind(status, now, resolvedAt, id).run();
+
+  const row = await db.prepare(`
+    SELECT r.*,
+      p.title AS post_title,
+      c.body AS comment_body,
+      cp.title AS comment_post_title
+    FROM community_reports r
+    LEFT JOIN posts p ON r.target_type = 'post' AND p.id = r.target_id
+    LEFT JOIN comments c ON r.target_type = 'comment' AND c.id = r.target_id
+    LEFT JOIN posts cp ON cp.id = c.post_id
+    WHERE r.id = ?
+  `).bind(id).first();
+
+  return json({ ok: true, report: adminReport(row) });
 }

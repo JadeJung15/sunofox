@@ -282,6 +282,9 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
                 <button type="button" data-community-comments-toggle data-post-id="${escapeHtml(post.id)}">
                   COMMENTS
                 </button>
+                <button type="button" data-community-report-post data-post-id="${escapeHtml(post.id)}">
+                  REPORT
+                </button>
               </div>
               <div class="community-comments" data-community-comments="${escapeHtml(post.id)}" hidden>
                 <div class="community-comments-list" data-community-comments-list>
@@ -310,8 +313,66 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
             <strong>${escapeHtml(comment.authorName || 'Fan')}</strong>
             <time datetime="${escapeHtml(comment.createdAt || '')}">${escapeHtml(formatDate(comment.createdAt))}</time>
             <p>${escapeHtml(comment.body || '')}</p>
+            <button type="button" data-community-report-comment data-comment-id="${escapeHtml(comment.id)}">REPORT</button>
           </article>
         `).join('');
+      }
+
+      async function submitReport({ targetType, targetId, messageTarget, button }) {
+        if (!targetId || targetId.startsWith('idea-') || targetId.startsWith('notice-')) {
+          const text = '예시 게시글은 신고할 수 없습니다.';
+          if (messageTarget) {
+            messageTarget.textContent = text;
+            messageTarget.dataset.type = 'error';
+          } else {
+            setMessage(text, 'error');
+          }
+          return;
+        }
+
+        const reason = window.prompt('신고 사유를 짧게 입력해 주세요. 예: 광고, 비방, 개인정보, 저작권 문제');
+        if (!reason || !reason.trim()) return;
+
+        if (button) button.disabled = true;
+        if (messageTarget) {
+          messageTarget.textContent = '신고를 접수하는 중입니다.';
+          messageTarget.dataset.type = 'info';
+        } else {
+          setMessage('신고를 접수하는 중입니다.', 'info');
+        }
+
+        try {
+          const response = await fetch('/api/community/reports', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({
+              targetType,
+              targetId,
+              reason
+            })
+          });
+          const result = await response.json().catch(() => ({}));
+          if (!response.ok || !result.ok) {
+            throw new Error(result.message || '신고를 접수하지 못했습니다.');
+          }
+          const text = result.duplicate ? '이미 신고가 접수되어 있습니다.' : '신고가 접수되었습니다. 운영자가 확인하겠습니다.';
+          if (messageTarget) {
+            messageTarget.textContent = text;
+            messageTarget.dataset.type = 'success';
+          } else {
+            setMessage(text, 'success');
+          }
+        } catch (error) {
+          const text = `${error.message} 로그인 또는 가입 승인이 필요할 수 있습니다.`;
+          if (messageTarget) {
+            messageTarget.textContent = text;
+            messageTarget.dataset.type = 'error';
+          } else {
+            setMessage(text, 'error');
+          }
+        } finally {
+          if (button) button.disabled = false;
+        }
       }
 
       async function loadComments(postId, panel) {
@@ -396,6 +457,28 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
       list?.addEventListener('click', async (event) => {
         const commentsButton = event.target.closest('[data-community-comments-toggle]');
         const reactionButton = event.target.closest('[data-community-reaction]');
+        const postReportButton = event.target.closest('[data-community-report-post]');
+        const commentReportButton = event.target.closest('[data-community-report-comment]');
+
+        if (postReportButton) {
+          await submitReport({
+            targetType: 'post',
+            targetId: postReportButton.dataset.postId || '',
+            button: postReportButton
+          });
+          return;
+        }
+
+        if (commentReportButton) {
+          const panel = commentReportButton.closest('.community-comments');
+          await submitReport({
+            targetType: 'comment',
+            targetId: commentReportButton.dataset.commentId || '',
+            messageTarget: panel?.querySelector('[data-community-comment-message]'),
+            button: commentReportButton
+          });
+          return;
+        }
 
         if (commentsButton) {
           const postId = commentsButton.dataset.postId;

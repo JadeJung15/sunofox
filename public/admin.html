@@ -125,6 +125,41 @@
       </form>
       <div id="sf-admin-community-comments" class="sf-admin-comments"></div>
     </section>
+
+    <section class="sf-admin-panel">
+      <div class="sf-admin-section-head">
+        <div>
+          <span class="sf-auth-kicker">COMMUNITY REPORTS</span>
+          <h2>신고 관리</h2>
+        </div>
+      </div>
+      <form id="sf-admin-report-filter" class="sf-admin-filter-form">
+        <label>
+          <span>상태</span>
+          <select id="sf-admin-report-status">
+            <option value="">기각 제외 전체</option>
+            <option value="open">대기</option>
+            <option value="reviewing">검토</option>
+            <option value="resolved">처리</option>
+            <option value="dismissed">기각</option>
+          </select>
+        </label>
+        <label>
+          <span>대상</span>
+          <select id="sf-admin-report-target">
+            <option value="">전체</option>
+            <option value="post">게시글</option>
+            <option value="comment">댓글</option>
+          </select>
+        </label>
+        <label>
+          <span>검색</span>
+          <input id="sf-admin-report-query" type="search" placeholder="신고 사유, 게시글, 작성자">
+        </label>
+        <button type="submit">필터 적용</button>
+      </form>
+      <div id="sf-admin-community-reports" class="sf-admin-reports"></div>
+    </section>
   </main>
   <script src="/js/sfAuth.js" defer></script>
 </body>

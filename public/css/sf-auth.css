@@ -377,7 +377,8 @@ body {
 }
 
 .sf-admin-posts,
-.sf-admin-comments {
+.sf-admin-comments,
+.sf-admin-reports {
   display: grid;
   gap: 10px;
 }
@@ -434,7 +435,8 @@ body {
 }
 
 .sf-post-admin-row,
-.sf-comment-admin-row {
+.sf-comment-admin-row,
+.sf-report-admin-row {
   align-items: start;
   border: 1px solid #e5e7eb;
   border-radius: 8px;
@@ -502,6 +504,26 @@ body {
   color: #1d4ed8;
 }
 
+.sf-post-admin-meta mark[data-status="open"] {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.sf-post-admin-meta mark[data-status="reviewing"] {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.sf-post-admin-meta mark[data-status="resolved"] {
+  background: #dcfce7;
+  color: #047857;
+}
+
+.sf-post-admin-meta mark[data-status="dismissed"] {
+  background: #f1f5f9;
+  color: #475569;
+}
+
 .sf-user-actions,
 .sf-post-admin-actions {
   display: flex;
@@ -551,6 +573,7 @@ body {
   .sf-admin-head,
   .sf-user-row,
   .sf-post-admin-row,
+  .sf-report-admin-row,
   .sf-admin-post-grid,
   .sf-admin-summary {
     align-items: stretch;

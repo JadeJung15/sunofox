@@ -1873,6 +1873,7 @@ body.menu-open .overlay-nav a:nth-child(13) { animation-delay: 240ms; }
 
 .community-post-actions a,
 .community-post-actions button,
+.community-comment-row button,
 .community-comment-form button {
   display: inline-flex;
   align-items: center;
@@ -1897,6 +1898,8 @@ body.menu-open .overlay-nav a:nth-child(13) { animation-delay: 240ms; }
 .community-post-actions button:hover,
 .community-post-actions button:focus-visible,
 .community-post-actions button.is-active,
+.community-comment-row button:hover,
+.community-comment-row button:focus-visible,
 .community-comment-form button:hover,
 .community-comment-form button:focus-visible {
   border-color: rgba(255, 10, 91, 0.58);
@@ -1905,6 +1908,7 @@ body.menu-open .overlay-nav a:nth-child(13) { animation-delay: 240ms; }
 }
 
 .community-post-actions button:disabled,
+.community-comment-row button:disabled,
 .community-comment-form button:disabled {
   cursor: wait;
   opacity: 0.55;
@@ -1971,6 +1975,16 @@ body.menu-open .overlay-nav a:nth-child(13) { animation-delay: 240ms; }
   font-size: 14px;
   line-height: 1.65;
   word-break: keep-all;
+}
+
+.community-comment-row button {
+  grid-column: 1 / -1;
+  width: fit-content;
+  min-height: 30px;
+  margin-top: 6px;
+  padding: 0 11px;
+  color: var(--subtle);
+  font-size: 10px;
 }
 
 .community-comment-form {

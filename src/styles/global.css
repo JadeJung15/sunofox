@@ -4044,8 +4044,8 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   }
 
   .community-layout {
-    gap: 28px;
-    padding-top: 30px;
+    gap: 18px;
+    padding-top: 22px;
   }
 
   .community-flow {
@@ -4070,13 +4070,36 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
 
   .community-categories {
     position: static;
+    display: flex;
     gap: 8px;
+    width: calc(100% + 32px);
+    margin: 0 -16px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    padding: 0 16px 6px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .community-categories::-webkit-scrollbar {
+    display: none;
   }
 
   .community-categories a,
   .community-categories button {
-    padding: 18px;
+    flex: 0 0 min(74vw, 218px);
+    min-height: 104px;
+    padding: 14px;
+    scroll-snap-align: start;
     transform: none !important;
+  }
+
+  .community-categories p {
+    display: none;
+  }
+
+  .community-categories strong {
+    font-size: 16px;
   }
 
   .community-board-head {
@@ -4087,7 +4110,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
 
   .community-post-row {
     gap: 14px;
-    padding: 24px 0;
+    padding: 22px 0;
   }
 
   .community-post-row:hover {

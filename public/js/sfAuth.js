@@ -731,7 +731,7 @@
           setMessage(`${row?.dataset.email || '가입 신청'}: ${result.message}`, 'success');
           showAdminToast(result.message, 'success', result.toastTitle);
           await wait(button.dataset.action === 'approve' ? 850 : 620);
-          await loadDashboard(adminKey);
+          await loadAdminUsersSection(adminKey, adminHeaders(adminKey));
         } catch (error) {
           setUserRowFeedback(row, 'error', '처리 실패');
           setMessage(error.message, 'error');
@@ -925,7 +925,7 @@
             })
           });
           showAdminToast(`게시글을 ${postActionLabel(button.dataset.postAction)} 처리했습니다.`, 'success', 'POST UPDATED');
-          await loadDashboard(adminKey);
+          await loadAdminPostsSection(adminKey, adminHeaders(adminKey));
         } catch (error) {
           setMessage(error.message, 'error');
           showAdminToast(error.message, 'error');
@@ -988,7 +988,7 @@
             })
           });
           showAdminToast(`댓글을 ${postActionLabel(button.dataset.commentAction)} 처리했습니다.`, 'success', 'COMMENT UPDATED');
-          await loadDashboard(adminKey);
+          await loadAdminCommentsSection(adminKey, adminHeaders(adminKey));
         } catch (error) {
           setMessage(error.message, 'error');
           showAdminToast(error.message, 'error');
@@ -1091,7 +1091,7 @@
             })
           });
           showAdminToast(`신고 상태를 ${reportStatusLabel(button.dataset.reportStatus)}로 변경했습니다.`, 'success', 'REPORT UPDATED');
-          await loadDashboard(adminKey);
+          await loadAdminReportsSection(adminKey, adminHeaders(adminKey));
         } catch (error) {
           setMessage(error.message, 'error');
           showAdminToast(error.message, 'error');
@@ -1252,9 +1252,31 @@
     const reportFilterReset = document.getElementById('sf-admin-report-reset');
     const input = document.getElementById('sf-admin-key');
     const getAdminKey = () => input?.value.trim() || '';
-    const reloadDashboard = async () => {
+    const headers = () => adminHeaders(getAdminKey());
+    const reloadUsers = async () => {
       try {
-        await loadDashboard(getAdminKey());
+        await loadAdminUsersSection(getAdminKey(), headers());
+      } catch (error) {
+        setMessage(error.message, 'error');
+      }
+    };
+    const reloadPosts = async () => {
+      try {
+        await loadAdminPostsSection(getAdminKey(), headers());
+      } catch (error) {
+        setMessage(error.message, 'error');
+      }
+    };
+    const reloadComments = async () => {
+      try {
+        await loadAdminCommentsSection(getAdminKey(), headers());
+      } catch (error) {
+        setMessage(error.message, 'error');
+      }
+    };
+    const reloadReports = async () => {
+      try {
+        await loadAdminReportsSection(getAdminKey(), headers());
       } catch (error) {
         setMessage(error.message, 'error');
       }
@@ -1314,11 +1336,16 @@
       renderUsers(cachedUsers, getAdminKey());
     });
 
-    document.querySelectorAll('[data-admin-refresh="community"]').forEach((button) => {
+    document.querySelectorAll('[data-admin-refresh]').forEach((button) => {
       button.addEventListener('click', async () => {
         button.disabled = true;
         try {
-          await loadDashboard(getAdminKey());
+          const target = button.dataset.adminRefresh || '';
+          if (target === 'users') await reloadUsers();
+          else if (target === 'posts') await reloadPosts();
+          else if (target === 'comments') await reloadComments();
+          else if (target === 'reports') await reloadReports();
+          else await loadDashboard(getAdminKey());
         } catch (error) {
           setMessage(error.message, 'error');
         } finally {
@@ -1329,7 +1356,7 @@
 
     filterForm?.addEventListener('submit', async (event) => {
       event.preventDefault();
-      await reloadDashboard();
+      await reloadPosts();
     });
 
     filterReset?.addEventListener('click', async () => {
@@ -1339,12 +1366,12 @@
       if (boardInput) boardInput.value = 'all';
       if (statusInput) statusInput.value = '';
       if (queryInput) queryInput.value = '';
-      await reloadDashboard();
+      await reloadPosts();
     });
 
     commentFilterForm?.addEventListener('submit', async (event) => {
       event.preventDefault();
-      await reloadDashboard();
+      await reloadComments();
     });
 
     commentFilterReset?.addEventListener('click', async () => {
@@ -1352,12 +1379,12 @@
       const queryInput = document.getElementById('sf-admin-comment-query');
       if (statusInput) statusInput.value = '';
       if (queryInput) queryInput.value = '';
-      await reloadDashboard();
+      await reloadComments();
     });
 
     reportFilterForm?.addEventListener('submit', async (event) => {
       event.preventDefault();
-      await reloadDashboard();
+      await reloadReports();
     });
 
     reportFilterReset?.addEventListener('click', async () => {
@@ -1367,7 +1394,7 @@
       if (statusInput) statusInput.value = '';
       if (targetInput) targetInput.value = '';
       if (queryInput) queryInput.value = '';
-      await reloadDashboard();
+      await reloadReports();
     });
 
     loadDashboard('').catch(() => {

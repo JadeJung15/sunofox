@@ -202,6 +202,44 @@
     summary.textContent = `${statusText}${queryText}: ${filteredCount} / ${totalCount}건 표시`;
   }
 
+  function selectedOptionText(id) {
+    const field = document.getElementById(id);
+    return field?.selectedOptions?.[0]?.textContent.trim() || '';
+  }
+
+  function updateAdminResultSummary(summaryId, count, labels) {
+    const summary = document.getElementById(summaryId);
+    if (!summary) return;
+    const conditions = labels.filter(Boolean).join(' · ');
+    summary.textContent = `${conditions || '전체 조건'}: ${count}건 표시`;
+  }
+
+  function updateCommunityPostFilterSummary(count) {
+    const query = document.getElementById('sf-admin-community-query')?.value.trim() || '';
+    updateAdminResultSummary('sf-admin-community-filter-summary', count, [
+      selectedOptionText('sf-admin-community-board') || '전체 게시판',
+      selectedOptionText('sf-admin-community-status') || '삭제 제외 전체',
+      query ? `검색어 "${query}"` : ''
+    ]);
+  }
+
+  function updateCommunityCommentFilterSummary(count) {
+    const query = document.getElementById('sf-admin-comment-query')?.value.trim() || '';
+    updateAdminResultSummary('sf-admin-comment-filter-summary', count, [
+      selectedOptionText('sf-admin-comment-status') || '삭제 제외 전체',
+      query ? `검색어 "${query}"` : ''
+    ]);
+  }
+
+  function updateCommunityReportFilterSummary(count) {
+    const query = document.getElementById('sf-admin-report-query')?.value.trim() || '';
+    updateAdminResultSummary('sf-admin-report-filter-summary', count, [
+      selectedOptionText('sf-admin-report-status') || '기각 제외 전체',
+      selectedOptionText('sf-admin-report-target') || '전체 대상',
+      query ? `검색어 "${query}"` : ''
+    ]);
+  }
+
   function getCommunityPostQuery() {
     const params = new URLSearchParams({
       admin: '1',
@@ -347,6 +385,7 @@
   function renderCommunityPosts(posts, adminKey) {
     const root = document.getElementById('sf-admin-community-posts');
     if (!root) return;
+    updateCommunityPostFilterSummary(posts.length);
     if (!posts.length) {
       root.innerHTML = '<p class="sf-empty">관리할 게시글이 없습니다.</p>';
       return;
@@ -403,6 +442,7 @@
   function renderCommunityComments(comments, adminKey) {
     const root = document.getElementById('sf-admin-community-comments');
     if (!root) return;
+    updateCommunityCommentFilterSummary(comments.length);
     if (!comments.length) {
       root.innerHTML = '<p class="sf-empty">관리할 댓글이 없습니다.</p>';
       return;
@@ -454,6 +494,7 @@
   function renderCommunityReports(reports, adminKey) {
     const root = document.getElementById('sf-admin-community-reports');
     if (!root) return;
+    updateCommunityReportFilterSummary(reports.length);
     if (!reports.length) {
       root.innerHTML = '<p class="sf-empty">관리할 신고가 없습니다.</p>';
       return;
@@ -575,10 +616,20 @@
     const userFilterForm = document.getElementById('sf-admin-user-filter');
     const userFilterReset = document.getElementById('sf-admin-user-reset');
     const filterForm = document.getElementById('sf-admin-community-filter');
+    const filterReset = document.getElementById('sf-admin-community-reset');
     const commentFilterForm = document.getElementById('sf-admin-comment-filter');
+    const commentFilterReset = document.getElementById('sf-admin-comment-reset');
     const reportFilterForm = document.getElementById('sf-admin-report-filter');
+    const reportFilterReset = document.getElementById('sf-admin-report-reset');
     const input = document.getElementById('sf-admin-key');
     const getAdminKey = () => input?.value.trim() || '';
+    const reloadDashboard = async () => {
+      try {
+        await loadDashboard(getAdminKey());
+      } catch (error) {
+        setMessage(error.message, 'error');
+      }
+    };
 
     form?.addEventListener('submit', async (event) => {
       event.preventDefault();
@@ -625,29 +676,45 @@
 
     filterForm?.addEventListener('submit', async (event) => {
       event.preventDefault();
-      try {
-        await loadDashboard(getAdminKey());
-      } catch (error) {
-        setMessage(error.message, 'error');
-      }
+      await reloadDashboard();
+    });
+
+    filterReset?.addEventListener('click', async () => {
+      const boardInput = document.getElementById('sf-admin-community-board');
+      const statusInput = document.getElementById('sf-admin-community-status');
+      const queryInput = document.getElementById('sf-admin-community-query');
+      if (boardInput) boardInput.value = 'all';
+      if (statusInput) statusInput.value = '';
+      if (queryInput) queryInput.value = '';
+      await reloadDashboard();
     });
 
     commentFilterForm?.addEventListener('submit', async (event) => {
       event.preventDefault();
-      try {
-        await loadDashboard(getAdminKey());
-      } catch (error) {
-        setMessage(error.message, 'error');
-      }
+      await reloadDashboard();
+    });
+
+    commentFilterReset?.addEventListener('click', async () => {
+      const statusInput = document.getElementById('sf-admin-comment-status');
+      const queryInput = document.getElementById('sf-admin-comment-query');
+      if (statusInput) statusInput.value = '';
+      if (queryInput) queryInput.value = '';
+      await reloadDashboard();
     });
 
     reportFilterForm?.addEventListener('submit', async (event) => {
       event.preventDefault();
-      try {
-        await loadDashboard(getAdminKey());
-      } catch (error) {
-        setMessage(error.message, 'error');
-      }
+      await reloadDashboard();
+    });
+
+    reportFilterReset?.addEventListener('click', async () => {
+      const statusInput = document.getElementById('sf-admin-report-status');
+      const targetInput = document.getElementById('sf-admin-report-target');
+      const queryInput = document.getElementById('sf-admin-report-query');
+      if (statusInput) statusInput.value = '';
+      if (targetInput) targetInput.value = '';
+      if (queryInput) queryInput.value = '';
+      await reloadDashboard();
     });
 
     loadDashboard('').catch(() => {

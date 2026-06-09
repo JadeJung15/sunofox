@@ -655,6 +655,18 @@ body {
   grid-template-columns: minmax(150px, 0.45fr) minmax(220px, 1fr) auto auto;
 }
 
+.sf-admin-community-filter-form {
+  grid-template-columns: minmax(150px, 0.55fr) minmax(150px, 0.55fr) minmax(220px, 1fr) auto auto;
+}
+
+.sf-admin-comment-filter-form {
+  grid-template-columns: minmax(150px, 0.55fr) minmax(220px, 1fr) auto auto;
+}
+
+.sf-admin-report-filter-form {
+  grid-template-columns: minmax(150px, 0.55fr) minmax(150px, 0.55fr) minmax(220px, 1fr) auto auto;
+}
+
 .sf-admin-filter-form button.sf-admin-filter-reset {
   background: #ffffff;
   border: 1px solid #cbd5e1;

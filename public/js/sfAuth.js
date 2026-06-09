@@ -4,9 +4,30 @@
 
   function setMessage(text, type) {
     if (!message) return;
+    const messageType = type || 'info';
+    const meta = messageMeta(messageType, text);
     message.hidden = false;
-    message.textContent = text;
-    message.dataset.type = type || 'info';
+    message.dataset.type = messageType;
+    message.innerHTML = `
+      <span class="sf-auth-message-icon" aria-hidden="true">${meta.icon}</span>
+      <span class="sf-auth-message-copy">
+        <strong>${escapeHtml(meta.title)}</strong>
+        <span>${escapeHtml(text)}</span>
+      </span>
+    `;
+  }
+
+  function messageMeta(type, text) {
+    if (type === 'success') {
+      return { icon: '✓', title: 'ACCESS READY' };
+    }
+    if (type === 'pending') {
+      return { icon: '…', title: 'APPROVAL PENDING' };
+    }
+    if (type === 'error') {
+      return { icon: '!', title: text?.includes('대기') ? 'WAITING APPROVAL' : 'CHECK REQUIRED' };
+    }
+    return { icon: 'i', title: 'PROCESSING' };
   }
 
   function getNext() {
@@ -24,7 +45,10 @@
     });
     const data = await response.json().catch(() => ({}));
     if (!response.ok) {
-      throw new Error(data.message || '요청을 처리하지 못했습니다.');
+      const error = new Error(data.message || '요청을 처리하지 못했습니다.');
+      error.status = data.status || '';
+      error.statusCode = response.status;
+      throw error;
     }
     return data;
   }
@@ -47,7 +71,7 @@
         });
         window.location.assign(data.next || '/');
       } catch (error) {
-        setMessage(error.message, 'error');
+        setMessage(error.message, error.status === 'pending' ? 'pending' : 'error');
       } finally {
         button.disabled = false;
       }
@@ -70,10 +94,11 @@
             note: document.getElementById('sf-signup-note')?.value
           })
         });
-        setMessage(data.message || '가입 신청이 접수되었습니다.', data.status === 'approved' ? 'success' : 'info');
+        const messageType = data.status === 'approved' ? 'success' : data.status === 'pending' ? 'pending' : 'info';
+        setMessage(data.message || '가입 신청이 접수되었습니다.', messageType);
         form.reset();
       } catch (error) {
-        setMessage(error.message, 'error');
+        setMessage(error.message, error.status === 'pending' ? 'pending' : 'error');
       } finally {
         button.disabled = false;
       }

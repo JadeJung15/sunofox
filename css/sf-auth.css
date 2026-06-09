@@ -161,19 +161,58 @@ body {
 }
 
 .sf-auth-message {
+  align-items: flex-start;
   background: #eff6ff;
   border: 1px solid #bfdbfe;
   border-radius: 8px;
   color: #1d4ed8;
+  display: flex;
   font-size: 13px;
   font-weight: 800;
+  gap: 10px;
   padding: 10px 12px;
+}
+
+.sf-auth-message[hidden] {
+  display: none;
+}
+
+.sf-auth-message-icon {
+  display: inline-grid;
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.12);
+  font-size: 13px;
+  line-height: 1;
+}
+
+.sf-auth-message-copy {
+  display: grid;
+  gap: 3px;
+}
+
+.sf-auth-message-copy strong {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+.sf-auth-message-copy span {
+  line-height: 1.55;
 }
 
 .sf-auth-message[data-type="error"] {
   background: #fff1f2;
   border-color: #fecdd3;
   color: #be123c;
+}
+
+.sf-auth-message[data-type="pending"] {
+  background: #fffbeb;
+  border-color: #fde68a;
+  color: #92400e;
 }
 
 .sf-auth-message[data-type="success"] {
@@ -406,15 +445,51 @@ body {
   color: #c8f7ff;
 }
 
+.sf-auth-body:not(.sf-admin-body) .sf-auth-message-icon {
+  background: rgba(34, 211, 238, 0.14);
+  color: #c8f7ff;
+  font-family: "Roboto Condensed", "Arial Narrow", "Pretendard", sans-serif;
+  font-weight: 950;
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-message-copy strong {
+  color: rgba(255, 255, 255, 0.9);
+  font-family: "Roboto Condensed", "Arial Narrow", "Pretendard", sans-serif;
+  font-weight: 950;
+}
+
 .sf-auth-body:not(.sf-admin-body) .sf-auth-message[data-type="error"] {
   border-color: rgba(255, 10, 91, 0.36);
   background: rgba(255, 10, 91, 0.12);
   color: #ffd5e2;
 }
 
+.sf-auth-body:not(.sf-admin-body) .sf-auth-message[data-type="error"] .sf-auth-message-icon {
+  background: rgba(255, 10, 91, 0.18);
+  color: #ffd5e2;
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-message[data-type="pending"] {
+  border-color: rgba(255, 10, 91, 0.34);
+  background:
+    linear-gradient(135deg, rgba(255, 10, 91, 0.15), rgba(255, 255, 255, 0.035)),
+    rgba(0, 0, 0, 0.36);
+  color: #ffe1ea;
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-message[data-type="pending"] .sf-auth-message-icon {
+  background: rgba(255, 10, 91, 0.2);
+  color: #ffffff;
+}
+
 .sf-auth-body:not(.sf-admin-body) .sf-auth-message[data-type="success"] {
   border-color: rgba(34, 197, 94, 0.36);
   background: rgba(34, 197, 94, 0.12);
+  color: #caffd9;
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-message[data-type="success"] .sf-auth-message-icon {
+  background: rgba(34, 197, 94, 0.18);
   color: #caffd9;
 }
 

@@ -81,11 +81,36 @@
 
   function bindSignup() {
     const form = document.getElementById('sf-signup-form');
+    const resultPanel = document.querySelector('[data-signup-result]');
+    const resultKicker = document.querySelector('[data-signup-result-kicker]');
+    const resultTitle = document.querySelector('[data-signup-result-title]');
+    const resultCopy = document.querySelector('[data-signup-result-copy]');
+
+    function hideSignupResult() {
+      if (resultPanel) resultPanel.hidden = true;
+    }
+
+    function showSignupResult(data) {
+      if (!resultPanel) return;
+      const isApproved = data?.status === 'approved';
+      if (resultKicker) resultKicker.textContent = isApproved ? 'ACCESS READY' : 'REQUEST SENT';
+      if (resultTitle) resultTitle.textContent = isApproved ? '승인이 완료되었습니다.' : '승인 대기 중입니다.';
+      if (resultCopy) {
+        resultCopy.textContent = isApproved
+          ? '이미 승인된 이메일입니다. 로그인 화면에서 이메일과 입장 코드를 입력해 주세요.'
+          : '신청이 접수되었습니다. 사이트 주인이 확인 후 승인하면 입장 코드로 로그인할 수 있습니다.';
+      }
+      resultPanel.dataset.status = isApproved ? 'approved' : 'pending';
+      resultPanel.hidden = false;
+      resultPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
     form?.addEventListener('submit', async (event) => {
       event.preventDefault();
       const button = form.querySelector('button[type="submit"]');
       button.disabled = true;
       setMessage('가입 신청을 접수 중입니다.', 'info');
+      hideSignupResult();
       try {
         const data = await requestJson('/api/auth/signup', {
           method: 'POST',
@@ -97,6 +122,7 @@
         });
         const messageType = data.status === 'approved' ? 'success' : data.status === 'pending' ? 'pending' : 'info';
         setMessage(data.message || '가입 신청이 접수되었습니다.', messageType);
+        showSignupResult(data);
         form.reset();
       } catch (error) {
         setMessage(error.message, error.status === 'pending' ? 'pending' : 'error');

@@ -1681,6 +1681,97 @@ body {
   word-break: keep-all;
 }
 
+.sf-auth-result-panel {
+  display: grid;
+  gap: 12px;
+  border: 1px solid rgba(255, 10, 91, 0.36);
+  background:
+    linear-gradient(135deg, rgba(255, 10, 91, 0.12), transparent 48%),
+    rgba(255, 255, 255, 0.035);
+  padding: 16px;
+}
+
+.sf-auth-result-panel[hidden] {
+  display: none;
+}
+
+.sf-auth-result-panel > span {
+  color: #ff0a5b;
+  font-family: "Roboto Condensed", "Arial Narrow", "Pretendard", sans-serif;
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0.16em;
+}
+
+.sf-auth-result-panel strong {
+  color: #ffffff;
+  font-size: clamp(20px, 3vw, 28px);
+  font-weight: 950;
+  letter-spacing: -0.02em;
+  line-height: 1.16;
+  word-break: keep-all;
+}
+
+.sf-auth-result-panel p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.66);
+  font-size: 13px;
+  line-height: 1.68;
+  word-break: keep-all;
+}
+
+.sf-auth-result-steps,
+.sf-auth-result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sf-auth-result-steps span,
+.sf-auth-result-actions a {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: rgba(255, 255, 255, 0.72);
+  font-family: "Roboto Condensed", "Arial Narrow", "Pretendard", sans-serif;
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  padding: 0 10px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.sf-auth-result-actions a:first-child {
+  border-color: rgba(255, 255, 255, 0.24);
+  color: #ffffff;
+}
+
+.sf-auth-result-actions a:last-child,
+.sf-auth-result-panel[data-status="approved"] .sf-auth-result-actions a:last-child {
+  border-color: rgba(255, 10, 91, 0.64);
+  background: rgba(255, 10, 91, 0.12);
+  color: #ffffff;
+}
+
+.sf-auth-result-panel[data-status="approved"] {
+  border-color: rgba(34, 197, 94, 0.38);
+  background:
+    linear-gradient(135deg, rgba(34, 197, 94, 0.1), transparent 50%),
+    rgba(255, 255, 255, 0.035);
+}
+
+.sf-auth-result-panel[data-status="approved"] > span {
+  color: #86efac;
+}
+
+.sf-auth-result-actions a:hover,
+.sf-auth-result-actions a:focus-visible {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
 .sf-auth-bg span:nth-child(4) {
   left: 32%;
   bottom: -18px;
@@ -1797,6 +1888,15 @@ body {
   .sf-auth-body:not(.sf-admin-body) .sf-auth-links a {
     justify-content: center;
     border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  .sf-auth-result-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .sf-auth-result-actions a {
+    justify-content: center;
   }
 }
 

@@ -128,6 +128,40 @@
     return `${text.slice(0, maxLength - 1)}…`;
   }
 
+  function wait(ms) {
+    return new Promise((resolve) => {
+      window.setTimeout(resolve, ms);
+    });
+  }
+
+  function userActionResult(action) {
+    if (action === 'approve') {
+      return { status: 'approved', statusLabel: '승인', feedback: '승인 완료' };
+    }
+    if (action === 'reject') {
+      return { status: 'rejected', statusLabel: '거절', feedback: '거절 완료' };
+    }
+    return { status: 'pending', statusLabel: '대기', feedback: '대기 전환' };
+  }
+
+  function setUserRowFeedback(row, state, text) {
+    if (!row) return;
+    const feedback = row.querySelector('.sf-user-row-feedback');
+    row.dataset.actionState = state;
+    if (feedback) {
+      feedback.textContent = text;
+    }
+  }
+
+  function clearUserRowFeedback(row) {
+    if (!row) return;
+    delete row.dataset.actionState;
+    const feedback = row.querySelector('.sf-user-row-feedback');
+    if (feedback) {
+      feedback.textContent = '';
+    }
+  }
+
   function getCommunityPostQuery() {
     const params = new URLSearchParams({
       admin: '1',
@@ -187,13 +221,19 @@
           <button type="button" data-action="pending">대기</button>
           <button type="button" data-action="reject">거절</button>
         </div>
+        <span class="sf-user-row-feedback" aria-live="polite"></span>
       </article>
     `).join('');
 
     root.querySelectorAll('button[data-action]').forEach((button) => {
       button.addEventListener('click', async () => {
         const row = button.closest('[data-email]');
-        button.disabled = true;
+        const buttons = row ? [...row.querySelectorAll('button[data-action]')] : [button];
+        const result = userActionResult(button.dataset.action);
+        buttons.forEach((item) => {
+          item.disabled = true;
+        });
+        setUserRowFeedback(row, 'processing', '처리 중');
         try {
           await requestJson('/api/admin/users', {
             method: 'POST',
@@ -203,11 +243,26 @@
               action: button.dataset.action
             })
           });
+          const statusMark = row?.querySelector('mark[data-status]');
+          if (statusMark) {
+            statusMark.dataset.status = result.status;
+            statusMark.textContent = result.statusLabel;
+          }
+          setUserRowFeedback(row, 'complete', result.feedback);
+          setMessage(`${row?.dataset.email || '가입 신청'} 상태를 ${result.statusLabel}로 변경했습니다.`, 'success');
+          await wait(520);
           await loadDashboard(adminKey);
         } catch (error) {
+          setUserRowFeedback(row, 'error', '처리 실패');
           setMessage(error.message, 'error');
         } finally {
-          button.disabled = false;
+          buttons.forEach((item) => {
+            item.disabled = false;
+          });
+          if (row?.isConnected && row.dataset.actionState === 'error') {
+            await wait(900);
+            clearUserRowFeedback(row);
+          }
         }
       });
     });

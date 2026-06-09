@@ -732,6 +732,8 @@ body {
   gap: 12px;
   grid-template-columns: minmax(0, 1fr) auto auto;
   padding: 14px;
+  position: relative;
+  transition: border-color 180ms ease, box-shadow 180ms ease, background 180ms ease, transform 180ms ease;
 }
 
 .sf-user-row div:first-child {
@@ -768,6 +770,79 @@ body {
 .sf-user-row mark[data-status="pending"] {
   background: #fef3c7;
   color: #92400e;
+}
+
+.sf-user-row-feedback {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: inline-flex;
+  min-height: 26px;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid #bfdbfe;
+  border-radius: 999px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-size: 12px;
+  font-weight: 900;
+  opacity: 0;
+  padding: 0 10px;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition: opacity 160ms ease, transform 160ms ease;
+}
+
+.sf-user-row-feedback::before {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  content: "";
+  background: currentColor;
+}
+
+.sf-user-row[data-action-state] .sf-user-row-feedback {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.sf-user-row[data-action-state="processing"] {
+  border-color: #bfdbfe;
+  background: #eff6ff;
+}
+
+.sf-user-row[data-action-state="processing"] .sf-user-row-feedback::before {
+  width: 10px;
+  height: 10px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  background: transparent;
+  animation: sfAdminSpin 700ms linear infinite;
+}
+
+.sf-user-row[data-action-state="complete"] {
+  border-color: #bbf7d0;
+  background: #ecfdf5;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.12);
+  transform: translateY(-1px);
+}
+
+.sf-user-row[data-action-state="complete"] .sf-user-row-feedback {
+  border-color: #bbf7d0;
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.sf-user-row[data-action-state="error"] {
+  border-color: #fecdd3;
+  background: #fff1f2;
+  box-shadow: 0 0 0 3px rgba(190, 18, 60, 0.08);
+}
+
+.sf-user-row[data-action-state="error"] .sf-user-row-feedback {
+  border-color: #fecdd3;
+  background: #fff1f2;
+  color: #be123c;
 }
 
 .sf-post-admin-row,
@@ -1182,6 +1257,49 @@ body {
   background: rgba(255, 255, 255, 0.035);
 }
 
+.sf-admin-body .sf-user-row-feedback {
+  border-color: rgba(34, 211, 238, 0.36);
+  border-radius: 999px;
+  background: rgba(34, 211, 238, 0.12);
+  color: #c8f7ff;
+  font-family: "Roboto Condensed", "Arial Narrow", "Pretendard", sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.sf-admin-body .sf-user-row[data-action-state="processing"] {
+  border-color: rgba(34, 211, 238, 0.36);
+  background:
+    linear-gradient(135deg, rgba(34, 211, 238, 0.1), rgba(255, 255, 255, 0.035)),
+    rgba(0, 0, 0, 0.48);
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.08);
+}
+
+.sf-admin-body .sf-user-row[data-action-state="complete"] {
+  border-color: rgba(255, 10, 91, 0.5);
+  background:
+    linear-gradient(135deg, rgba(255, 10, 91, 0.16), rgba(255, 255, 255, 0.04)),
+    rgba(0, 0, 0, 0.52);
+  box-shadow: 0 0 26px rgba(255, 10, 91, 0.16);
+}
+
+.sf-admin-body .sf-user-row[data-action-state="complete"] .sf-user-row-feedback {
+  border-color: rgba(255, 10, 91, 0.5);
+  background: rgba(255, 10, 91, 0.18);
+  color: #ffffff;
+}
+
+.sf-admin-body .sf-user-row[data-action-state="error"] {
+  border-color: rgba(255, 10, 91, 0.46);
+  background: rgba(255, 10, 91, 0.12);
+}
+
+.sf-admin-body .sf-user-row[data-action-state="error"] .sf-user-row-feedback {
+  border-color: rgba(255, 10, 91, 0.5);
+  background: rgba(255, 10, 91, 0.18);
+  color: #ffd5e2;
+}
+
 .sf-admin-body .sf-user-row strong,
 .sf-admin-body .sf-post-admin-main strong {
   color: #ffffff;
@@ -1305,6 +1423,12 @@ body {
     justify-content: start;
   }
 
+  .sf-user-row-feedback {
+    position: static;
+    justify-self: start;
+    width: fit-content;
+  }
+
   .sf-admin-section-head {
     align-items: start;
     display: grid;
@@ -1313,5 +1437,11 @@ body {
   .sf-admin-section-button {
     justify-content: center;
     width: 100%;
+  }
+}
+
+@keyframes sfAdminSpin {
+  to {
+    transform: rotate(360deg);
   }
 }

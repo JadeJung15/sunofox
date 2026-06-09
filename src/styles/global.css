@@ -2833,6 +2833,81 @@ body.menu-open .overlay-nav a:nth-child(13) { animation-delay: 240ms; }
   transform: translateY(-1px);
 }
 
+.community-write-panel {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(255, 255, 255, 0.14);
+  background:
+    linear-gradient(135deg, rgba(255, 10, 91, 0.09), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.012)),
+    rgba(3, 3, 10, 0.74);
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.46);
+}
+
+.community-write-panel::before {
+  position: absolute;
+  top: -1px;
+  left: 24px;
+  width: min(140px, 34vw);
+  height: 2px;
+  content: "";
+  background: var(--pink);
+  box-shadow: 0 0 18px rgba(255, 10, 91, 0.45);
+}
+
+.community-write-copy,
+.community-auth-note,
+.community-first-post-guide,
+.community-write-form,
+.community-published-panel {
+  position: relative;
+  z-index: 1;
+}
+
+.community-write-copy > span,
+.community-auth-note span {
+  color: var(--pink);
+  font-family: var(--font-condensed);
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.community-auth-note,
+.community-first-post-guide {
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.028);
+}
+
+.community-first-post-guide {
+  background:
+    linear-gradient(135deg, rgba(255, 10, 91, 0.08), transparent 48%),
+    rgba(255, 255, 255, 0.018);
+}
+
+.community-write-form {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 20px;
+}
+
+.community-write-form input,
+.community-write-form select,
+.community-write-form textarea {
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.034);
+}
+
+.community-write-form input::placeholder,
+.community-write-form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.34);
+}
+
+.community-write-note {
+  border-left-color: var(--pink);
+  color: rgba(255, 255, 255, 0.58);
+}
+
 .community-post-row.is-new {
   border-color: rgba(255, 10, 91, 0.54);
   background: linear-gradient(90deg, rgba(255, 10, 91, 0.075), transparent 60%);
@@ -4059,6 +4134,17 @@ body.menu-open .overlay-nav a:nth-child(13) { animation-delay: 240ms; }
   .community-rules li {
     font-size: 14px;
     line-height: 1.78;
+    word-break: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .community-page .category-hero p,
+  .community-board-note,
+  .community-write-form label small,
+  .community-form-message,
+  .community-empty-card p {
+    word-break: normal;
+    overflow-wrap: anywhere;
   }
 
   .community-post-main div {

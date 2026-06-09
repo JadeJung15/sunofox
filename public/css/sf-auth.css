@@ -3206,6 +3206,16 @@ body {
   .sf-auth-copy > p {
     font-size: 14px;
     line-height: 1.6;
+    word-break: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-card p,
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-message-copy span,
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-form label,
+  .sf-auth-result-steps span {
+    word-break: normal;
+    overflow-wrap: anywhere;
   }
 
   .sf-auth-route,
@@ -3611,6 +3621,42 @@ body {
   transform: translateY(-1px);
 }
 
+.sf-approval-sent-check {
+  grid-column: 1 / -1;
+  display: inline-grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  min-height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.028);
+  color: rgba(255, 255, 255, 0.72);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1.35;
+  padding: 8px 10px;
+  user-select: none;
+}
+
+.sf-approval-sent-check input {
+  width: 16px;
+  height: 16px;
+  accent-color: #ff0a5b;
+}
+
+.sf-approval-sent-check span {
+  color: inherit;
+  font-size: 12px;
+  font-weight: 950;
+}
+
+.sf-user-row[data-approval-sent="true"] .sf-approval-sent-check {
+  border-color: rgba(134, 239, 172, 0.38);
+  background: rgba(34, 197, 94, 0.1);
+  color: #d7ffe2;
+}
+
 @keyframes sfAuthFeedbackIn {
   from {
     opacity: 0;
@@ -3739,6 +3785,9 @@ body {
   .sf-auth-body:not(.sf-admin-body) .sf-auth-card-head p,
   .sf-auth-body:not(.sf-admin-body) .sf-auth-footnote,
   .sf-auth-body:not(.sf-admin-body) .sf-auth-message-copy span {
+    display: block;
+    width: 100%;
+    max-width: 100%;
     word-break: normal;
     overflow-wrap: anywhere;
   }

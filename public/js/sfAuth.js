@@ -177,7 +177,7 @@
       if (resultCopy) {
         resultCopy.textContent = isApproved
           ? '이미 승인된 이메일입니다. 로그인 화면에서 이메일과 입장 코드를 입력해 주세요.'
-          : '신청이 접수되었습니다. 커뮤니티는 읽을 수 있고, 글 작성과 SF Studio는 승인 후 입장 코드로 열립니다.';
+          : '신청이 접수되었습니다. 주인 승인 후 입장 코드로 로그인할 수 있습니다.';
       }
       resultPanel.dataset.status = isApproved ? 'approved' : 'pending';
       resultPanel.hidden = false;
@@ -239,6 +239,48 @@
     return new Promise((resolve) => {
       window.setTimeout(resolve, ms);
     });
+  }
+
+  function approvalSentKey(email) {
+    return String(email || '').trim().toLowerCase();
+  }
+
+  function getApprovalSentMap() {
+    try {
+      return JSON.parse(window.localStorage?.getItem('sfApprovalGuideSent') || '{}') || {};
+    } catch {
+      return {};
+    }
+  }
+
+  function isApprovalGuideSent(email) {
+    return Boolean(getApprovalSentMap()[approvalSentKey(email)]);
+  }
+
+  function setApprovalGuideSent(email, sent) {
+    const key = approvalSentKey(email);
+    if (!key) return;
+    try {
+      if (!window.localStorage) return;
+      const sentMap = getApprovalSentMap();
+      if (sent) {
+        sentMap[key] = new Date().toISOString();
+      } else {
+        delete sentMap[key];
+      }
+      window.localStorage.setItem('sfApprovalGuideSent', JSON.stringify(sentMap));
+    } catch {
+      // Storage can be blocked in private modes. The UI still works for the current row.
+    }
+  }
+
+  function updateApprovalSentState(row, sent) {
+    if (!row) return;
+    row.dataset.approvalSent = sent ? 'true' : 'false';
+    const toggle = row.querySelector('[data-approval-sent-toggle]');
+    const status = row.querySelector('[data-approval-sent-status]');
+    if (toggle) toggle.checked = sent;
+    if (status) status.textContent = sent ? '전송 체크됨' : '복사 후 전송 체크';
   }
 
   function userActionResult(action) {
@@ -528,10 +570,11 @@
     }
     root.innerHTML = filteredUsers.map((user, index) => {
       const isApproved = user.status === 'approved';
+      const guideSent = isApproved && isApprovalGuideSent(user.email);
       const previewId = `sf-approval-preview-${index}`;
       const requestedAt = formatDate(user.createdAt || user.updatedAt);
       return `
-        <article class="sf-user-row" data-email="${escapeHtml(user.email)}" data-name="${escapeHtml(user.name || '')}">
+        <article class="sf-user-row" data-email="${escapeHtml(user.email)}" data-name="${escapeHtml(user.name || '')}" data-approval-sent="${guideSent ? 'true' : 'false'}">
           <div>
             <strong>${escapeHtml(user.email)}</strong>
             <span>${escapeHtml(user.name || '이름 없음')}</span>
@@ -546,6 +589,10 @@
             ${isApproved ? `
               <button class="sf-preview-guide-button" type="button" data-preview-approval aria-expanded="false" aria-controls="${previewId}">안내문 미리보기</button>
               <button class="sf-copy-guide-button" type="button" data-copy-approval>안내문 복사</button>
+              <label class="sf-approval-sent-check">
+                <input type="checkbox" data-approval-sent-toggle ${guideSent ? 'checked' : ''}>
+                <span data-approval-sent-status>${guideSent ? '전송 체크됨' : '복사 후 전송 체크'}</span>
+              </label>
             ` : ''}
           </div>
           <span class="sf-user-row-feedback" aria-live="polite"></span>
@@ -576,9 +623,9 @@
         setUserRowFeedback(row, 'processing', '복사 중');
         try {
           await copyTextToClipboard(approvalGuideText(approvalGuideUserFromRow(row)));
-          setUserRowFeedback(row, 'complete', '안내문 복사 완료');
+          setUserRowFeedback(row, 'complete', '복사 완료 · 전송 후 체크');
           setMessage(`${row.dataset.email} 승인 안내문을 복사했습니다. [입장 코드]만 실제 코드로 바꿔 보내 주세요.`, 'success');
-          showAdminToast('승인 안내문을 복사했습니다. [입장 코드]만 실제 코드로 바꿔 보내 주세요.', 'success', 'COPY READY');
+          showAdminToast('승인 안내문을 복사했습니다. 전송까지 마치면 행의 체크박스를 눌러 표시해 주세요.', 'success', 'COPY READY');
           await wait(900);
           if (row?.isConnected && row.dataset.actionState === 'complete') {
             clearUserRowFeedback(row);
@@ -590,6 +637,21 @@
         } finally {
           button.disabled = false;
         }
+      });
+    });
+
+    root.querySelectorAll('[data-approval-sent-toggle]').forEach((toggle) => {
+      toggle.addEventListener('change', () => {
+        const row = toggle.closest('[data-email]');
+        const sent = Boolean(toggle.checked);
+        setApprovalGuideSent(row?.dataset.email, sent);
+        updateApprovalSentState(row, sent);
+        setUserRowFeedback(row, sent ? 'complete' : 'processing', sent ? '전송 체크됨' : '전송 체크 해제');
+        setMessage(sent ? '승인 안내문 전송 완료로 표시했습니다.' : '승인 안내문 전송 체크를 해제했습니다.', sent ? 'success' : 'info');
+        showAdminToast(sent ? '승인 안내문 전송 완료로 표시했습니다.' : '승인 안내문 전송 체크를 해제했습니다.', sent ? 'success' : 'info', sent ? 'SENT CHECKED' : 'CHECK REMOVED');
+        window.setTimeout(() => {
+          if (row?.isConnected) clearUserRowFeedback(row);
+        }, 900);
       });
     });
 

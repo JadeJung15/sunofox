@@ -17,6 +17,39 @@ const youtubeHref = release.youtubeId
   ? `https://www.youtube.com/watch?v=${release.youtubeId}`
   : release.playlistHref || artistLinks.youtubePlaylists;
 const nextRelease = releases[(releaseIndex + 1) % releases.length];
+const canonical = `https://sunofox.com/songs/${release.slug}/`;
+const ogImage = `https://sunofox.com${release.image}`;
+const songJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'MusicRecording',
+  name: release.title,
+  alternateName: release.ko,
+  url: canonical,
+  image: ogImage,
+  duration: release.duration,
+  byArtist: {
+    '@type': 'MusicGroup',
+    name: 'SunoFox',
+    url: 'https://sunofox.com/'
+  },
+  inAlbum: {
+    '@type': 'MusicAlbum',
+    name: 'ARCHIVE vol.1',
+    byArtist: {
+      '@type': 'MusicGroup',
+      name: 'SunoFox'
+    }
+  },
+  genre: release.tag,
+  sameAs: [
+    youtubeHref,
+    artistLinks.youtubeMusic,
+    artistLinks.spotify,
+    artistLinks.appleMusic,
+    artistLinks.melon,
+    artistLinks.vibe
+  ]
+};
 const detailNotes = [
   ['STORY', release.story],
   ['WORLD', release.world],
@@ -24,7 +57,14 @@ const detailNotes = [
 ].filter(([, value]) => Boolean(value));
 ---
 
-<Layout title={`${release.title} | SunoFox Anime OST Studio`} description={`${release.ko} - ${release.desc}`}>
+<Layout
+  title={`${release.title} | SunoFox Anime OST Studio`}
+  description={`${release.ko} - ${release.desc}`}
+  canonical={canonical}
+  image={ogImage}
+  type="music.song"
+  jsonLd={songJsonLd}
+>
   <SiteChrome active="songs" />
 
   <main class="site-main category-page release-detail-page">
@@ -59,6 +99,10 @@ const detailNotes = [
             <dd>ARCHIVE vol.1</dd>
           </div>
           <div>
+            <dt>Duration</dt>
+            <dd>{release.durationLabel || 'ARCHIVE track'}</dd>
+          </div>
+          <div>
             <dt>Listen</dt>
             <dd>{release.youtubeId ? 'Official video available' : 'Playlist hub available'}</dd>
           </div>
@@ -66,6 +110,7 @@ const detailNotes = [
 
         <div class="release-detail-actions" aria-label={`${release.title} links`}>
           <a class="main-button" href={youtubeHref} target="_blank" rel="noopener noreferrer">YOUTUBE</a>
+          <a class="main-button main-button-muted" href={artistLinks.youtubeMusic} target="_blank" rel="noopener noreferrer">YOUTUBE MUSIC</a>
           <a class="main-button main-button-muted" href={artistLinks.spotify} target="_blank" rel="noopener noreferrer">SPOTIFY</a>
           <a class="main-button main-button-muted" href={artistLinks.melon} target="_blank" rel="noopener noreferrer">MELON</a>
           <a class="main-button main-button-muted" href={artistLinks.vibe} target="_blank" rel="noopener noreferrer">VIBE</a>

@@ -3,8 +3,14 @@ import '../styles/global.css';
 
 const {
   title = 'SunoFox Anime OST Studio',
-  description = '감정을 그리는 애니메이션 사운드트랙. Suno AI와 Human Curation으로 완성하는 SunoFox 공식 웹사이트.'
+  description = '감정을 그리는 애니메이션 사운드트랙. Suno AI와 Human Curation으로 완성하는 SunoFox 공식 웹사이트.',
+  canonical = 'https://sunofox.com/',
+  image = 'https://sunofox.com/assets/sf-studio-icon-512.png',
+  type = 'website',
+  jsonLd
 } = Astro.props;
+
+const jsonLdString = jsonLd ? JSON.stringify(jsonLd) : '';
 ---
 
 <!doctype html>
@@ -18,20 +24,21 @@ const {
     <meta name="robots" content="index, follow" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://sunofox.com/" />
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="SunoFox" />
-    <meta property="og:image" content="https://sunofox.com/assets/sf-studio-icon-512.png" />
+    <meta property="og:image" content={image} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="https://sunofox.com/assets/sf-studio-icon-512.png" />
-    <link rel="canonical" href="https://sunofox.com/" />
+    <meta name="twitter:image" content={image} />
+    <link rel="canonical" href={canonical} />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="icon" href="/assets/sf-studio-icon-192.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700;900&display=swap" rel="stylesheet" />
+    {jsonLdString && <script type="application/ld+json" set:html={jsonLdString} />}
     <slot name="head" />
   </head>
   <body class="page-enter min-h-screen overflow-x-hidden bg-[#03030a] text-white">

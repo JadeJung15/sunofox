@@ -279,6 +279,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
       let pendingReport = null;
       let reportReturnFocus = null;
       let recentPostId = '';
+      let communityToastTimer = 0;
 
       function escapeHtml(value) {
         return String(value || '')
@@ -327,6 +328,46 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
         if (!formMessage) return;
         formMessage.textContent = text || '';
         formMessage.dataset.type = type || 'info';
+      }
+
+      function showCommunityToast(text, type, title) {
+        let toast = document.getElementById('communityToast');
+        if (!toast) {
+          toast = document.createElement('div');
+          toast.id = 'communityToast';
+          toast.className = 'community-toast';
+          document.body.appendChild(toast);
+        }
+        const toastType = type || 'success';
+        const toastTitle = title || (toastType === 'error' ? 'CHECK REQUIRED' : 'DONE');
+        toast.dataset.type = toastType;
+        toast.setAttribute('role', toastType === 'error' ? 'alert' : 'status');
+        toast.setAttribute('aria-live', toastType === 'error' ? 'assertive' : 'polite');
+        toast.innerHTML = `
+          <span class="community-toast-icon" aria-hidden="true">${toastType === 'error' ? '!' : '✓'}</span>
+          <span class="community-toast-copy">
+            <strong>${escapeHtml(toastTitle)}</strong>
+            <span>${escapeHtml(text)}</span>
+          </span>
+          <button type="button" aria-label="알림 닫기">닫기</button>
+        `;
+        toast.hidden = false;
+        window.requestAnimationFrame(() => {
+          toast.classList.add('is-visible');
+        });
+        toast.querySelector('button')?.addEventListener('click', hideCommunityToast);
+        window.clearTimeout(communityToastTimer);
+        communityToastTimer = window.setTimeout(hideCommunityToast, toastType === 'error' ? 7000 : 4600);
+      }
+
+      function hideCommunityToast() {
+        const toast = document.getElementById('communityToast');
+        if (!toast) return;
+        toast.classList.remove('is-visible');
+        window.clearTimeout(communityToastTimer);
+        communityToastTimer = window.setTimeout(() => {
+          toast.hidden = true;
+        }, 220);
       }
 
       function setPublishedPanel(post) {
@@ -521,6 +562,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
           } else {
             setMessage(text, 'error');
           }
+          showCommunityToast(text, 'error');
           return;
         }
 
@@ -557,6 +599,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
           } else {
             setMessage(text, 'success');
           }
+          showCommunityToast(text, 'success', result.duplicate ? 'REPORT EXISTS' : 'REPORT RECEIVED');
         } catch (error) {
           const text = `${error.message} 로그인 또는 가입 승인이 필요할 수 있습니다.`;
           if (messageTarget) {
@@ -565,6 +608,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
           } else {
             setMessage(text, 'error');
           }
+          showCommunityToast(text, 'error');
         } finally {
           if (button) button.disabled = false;
         }
@@ -645,6 +689,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
           syncFilterButtons();
           updateBoardUrl(activeBoard);
           setFormMessage('게시글이 등록되었습니다. 목록에서 방금 쓴 글을 강조 표시했습니다.', 'success');
+          showCommunityToast('게시글이 등록되었습니다. 목록에서 방금 쓴 글을 확인할 수 있습니다.', 'success', 'POST PUBLISHED');
           setPublishedPanel(createdPost);
           await loadPosts();
           const createdRow = recentPostId ? list?.querySelector(`[data-post-id="${CSS.escape(recentPostId)}"]`) : null;
@@ -654,7 +699,9 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
             publishedPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
           }
         } catch (error) {
-          setFormMessage(`${error.message} 로그인 또는 가입 승인이 필요할 수 있습니다.`, 'error');
+          const text = `${error.message} 로그인 또는 가입 승인이 필요할 수 있습니다.`;
+          setFormMessage(text, 'error');
+          showCommunityToast(text, 'error');
         } finally {
           submitButton.disabled = false;
         }
@@ -728,14 +775,16 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
           } catch (error) {
             const row = reactionButton.closest('.community-post-main');
             const panel = row?.querySelector('.community-comments');
+            const text = `${error.message} 로그인 또는 가입 승인이 필요할 수 있습니다.`;
             if (panel) {
               panel.hidden = false;
               const msg = panel.querySelector('[data-community-comment-message]');
               if (msg) {
-                msg.textContent = `${error.message} 로그인 또는 가입 승인이 필요할 수 있습니다.`;
+                msg.textContent = text;
                 msg.dataset.type = 'error';
               }
             }
+            showCommunityToast(text, 'error');
           } finally {
             reactionButton.disabled = false;
           }
@@ -774,12 +823,15 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
             messageTarget.textContent = '댓글이 등록되었습니다.';
             messageTarget.dataset.type = 'success';
           }
+          showCommunityToast('댓글이 등록되었습니다.', 'success', 'COMMENT POSTED');
           await loadComments(postId, commentForm.closest('.community-comments'));
         } catch (error) {
+          const text = `${error.message} 로그인 또는 가입 승인이 필요할 수 있습니다.`;
           if (messageTarget) {
-            messageTarget.textContent = `${error.message} 로그인 또는 가입 승인이 필요할 수 있습니다.`;
+            messageTarget.textContent = text;
             messageTarget.dataset.type = 'error';
           }
+          showCommunityToast(text, 'error');
         } finally {
           button.disabled = false;
         }

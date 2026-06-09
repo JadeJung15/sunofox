@@ -123,6 +123,7 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
       let activePostId = postId;
       let pendingReport = null;
       let reportReturnFocus = null;
+      let communityToastTimer = 0;
 
       detailLoginLinks.forEach((link) => {
         link.href = `/login?next=${encodeURIComponent(`${window.location.pathname}${window.location.search}`)}`;
@@ -174,6 +175,46 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
         if (!commentMessage) return;
         commentMessage.textContent = text || '';
         commentMessage.dataset.type = type || 'info';
+      }
+
+      function showCommunityToast(text, type, title) {
+        let toast = document.getElementById('communityToast');
+        if (!toast) {
+          toast = document.createElement('div');
+          toast.id = 'communityToast';
+          toast.className = 'community-toast';
+          document.body.appendChild(toast);
+        }
+        const toastType = type || 'success';
+        const toastTitle = title || (toastType === 'error' ? 'CHECK REQUIRED' : 'DONE');
+        toast.dataset.type = toastType;
+        toast.setAttribute('role', toastType === 'error' ? 'alert' : 'status');
+        toast.setAttribute('aria-live', toastType === 'error' ? 'assertive' : 'polite');
+        toast.innerHTML = `
+          <span class="community-toast-icon" aria-hidden="true">${toastType === 'error' ? '!' : '✓'}</span>
+          <span class="community-toast-copy">
+            <strong>${escapeHtml(toastTitle)}</strong>
+            <span>${escapeHtml(text)}</span>
+          </span>
+          <button type="button" aria-label="알림 닫기">닫기</button>
+        `;
+        toast.hidden = false;
+        window.requestAnimationFrame(() => {
+          toast.classList.add('is-visible');
+        });
+        toast.querySelector('button')?.addEventListener('click', hideCommunityToast);
+        window.clearTimeout(communityToastTimer);
+        communityToastTimer = window.setTimeout(hideCommunityToast, toastType === 'error' ? 7000 : 4600);
+      }
+
+      function hideCommunityToast() {
+        const toast = document.getElementById('communityToast');
+        if (!toast) return;
+        toast.classList.remove('is-visible');
+        window.clearTimeout(communityToastTimer);
+        communityToastTimer = window.setTimeout(() => {
+          toast.hidden = true;
+        }, 220);
       }
 
       function closeReportModal(result) {
@@ -265,7 +306,9 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
 
       async function submitReport(targetType, targetId, button) {
         if (!targetId || targetId.startsWith('idea-') || targetId.startsWith('notice-')) {
-          setCommentMessage('SAMPLE 게시글은 신고할 수 없습니다. 실제 팬 게시글에서 신고 기능을 사용할 수 있습니다.', 'error');
+          const text = 'SAMPLE 게시글은 신고할 수 없습니다. 실제 팬 게시글에서 신고 기능을 사용할 수 있습니다.';
+          setCommentMessage(text, 'error');
+          showCommunityToast(text, 'error');
           return;
         }
 
@@ -282,9 +325,13 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
           });
           const data = await response.json().catch(() => ({}));
           if (!response.ok || !data.ok) throw new Error(data.message || '신고를 접수하지 못했습니다.');
-          setCommentMessage(data.duplicate ? '이미 신고가 접수되어 있습니다.' : '신고가 접수되었습니다. 운영자가 확인하겠습니다.', 'success');
+          const text = data.duplicate ? '이미 신고가 접수되어 있습니다.' : '신고가 접수되었습니다. 운영자가 확인하겠습니다.';
+          setCommentMessage(text, 'success');
+          showCommunityToast(text, 'success', data.duplicate ? 'REPORT EXISTS' : 'REPORT RECEIVED');
         } catch (error) {
-          setCommentMessage(`${error.message} 로그인 또는 가입 승인이 필요할 수 있습니다.`, 'error');
+          const text = `${error.message} 로그인 또는 가입 승인이 필요할 수 있습니다.`;
+          setCommentMessage(text, 'error');
+          showCommunityToast(text, 'error');
         } finally {
           if (button) button.disabled = false;
         }
@@ -329,7 +376,9 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
 
       reactionButton?.addEventListener('click', async () => {
         if (!activePostId || activePostId.startsWith('idea-') || activePostId.startsWith('notice-')) {
-          setCommentMessage('SAMPLE 게시글에는 좋아요를 남길 수 없습니다. 실제 팬 게시글에서 반응을 남겨 주세요.', 'error');
+          const text = 'SAMPLE 게시글에는 좋아요를 남길 수 없습니다. 실제 팬 게시글에서 반응을 남겨 주세요.';
+          setCommentMessage(text, 'error');
+          showCommunityToast(text, 'error');
           return;
         }
         reactionButton.disabled = true;
@@ -344,7 +393,9 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
           document.querySelector('[data-detail-likes]').textContent = String(data.post?.likeCount || 0);
           reactionButton.classList.toggle('is-active', Number(data.activeValue || 0) === 1);
         } catch (error) {
-          setCommentMessage(`${error.message} 로그인 또는 가입 승인이 필요할 수 있습니다.`, 'error');
+          const text = `${error.message} 로그인 또는 가입 승인이 필요할 수 있습니다.`;
+          setCommentMessage(text, 'error');
+          showCommunityToast(text, 'error');
         } finally {
           reactionButton.disabled = false;
         }
@@ -363,7 +414,9 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
       commentForm?.addEventListener('submit', async (event) => {
         event.preventDefault();
         if (!activePostId || activePostId.startsWith('idea-') || activePostId.startsWith('notice-')) {
-          setCommentMessage('SAMPLE 게시글에는 댓글을 남길 수 없습니다. 가입 승인 후 실제 팬 게시글에서 댓글을 남겨 주세요.', 'error');
+          const text = 'SAMPLE 게시글에는 댓글을 남길 수 없습니다. 가입 승인 후 실제 팬 게시글에서 댓글을 남겨 주세요.';
+          setCommentMessage(text, 'error');
+          showCommunityToast(text, 'error');
           return;
         }
         const button = commentForm.querySelector('button[type="submit"]');
@@ -380,9 +433,12 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
           if (!response.ok || !data.ok) throw new Error(data.message || '댓글을 등록하지 못했습니다.');
           commentForm.reset();
           setCommentMessage('댓글이 등록되었습니다.', 'success');
+          showCommunityToast('댓글이 등록되었습니다.', 'success', 'COMMENT POSTED');
           await loadComments();
         } catch (error) {
-          setCommentMessage(`${error.message} 로그인 또는 가입 승인이 필요할 수 있습니다.`, 'error');
+          const text = `${error.message} 로그인 또는 가입 승인이 필요할 수 있습니다.`;
+          setCommentMessage(text, 'error');
+          showCommunityToast(text, 'error');
         } finally {
           button.disabled = false;
         }

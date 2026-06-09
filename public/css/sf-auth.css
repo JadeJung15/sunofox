@@ -1468,6 +1468,61 @@ body {
   background: rgba(255, 10, 91, 0.16);
 }
 
+.sf-admin-body .sf-user-actions button.is-safe,
+.sf-admin-body .sf-post-admin-actions button.is-safe {
+  border-color: rgba(134, 239, 172, 0.44);
+  background: rgba(34, 197, 94, 0.13);
+  color: #dcffe8;
+}
+
+.sf-admin-body .sf-user-actions button.is-neutral,
+.sf-admin-body .sf-post-admin-actions button.is-neutral {
+  border-color: rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.075);
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.sf-admin-body .sf-user-actions button.is-warning,
+.sf-admin-body .sf-post-admin-actions button.is-warning {
+  border-color: rgba(255, 209, 102, 0.44);
+  background: rgba(255, 209, 102, 0.13);
+  color: #ffe8a3;
+}
+
+.sf-admin-body .sf-user-actions button.is-danger,
+.sf-admin-body .sf-post-admin-actions button.is-danger {
+  border-color: rgba(255, 10, 91, 0.56);
+  background: rgba(255, 10, 91, 0.16);
+  color: #ffd7e3;
+}
+
+.sf-admin-body .sf-user-actions button.is-safe:hover,
+.sf-admin-body .sf-user-actions button.is-safe:focus-visible,
+.sf-admin-body .sf-post-admin-actions button.is-safe:hover,
+.sf-admin-body .sf-post-admin-actions button.is-safe:focus-visible {
+  border-color: rgba(134, 239, 172, 0.72);
+  background: rgba(34, 197, 94, 0.22);
+  color: #ffffff;
+}
+
+.sf-admin-body .sf-user-actions button.is-warning:hover,
+.sf-admin-body .sf-user-actions button.is-warning:focus-visible,
+.sf-admin-body .sf-post-admin-actions button.is-warning:hover,
+.sf-admin-body .sf-post-admin-actions button.is-warning:focus-visible {
+  border-color: rgba(255, 209, 102, 0.72);
+  background: rgba(255, 209, 102, 0.2);
+  color: #ffffff;
+}
+
+.sf-admin-body .sf-user-actions button.is-danger:hover,
+.sf-admin-body .sf-user-actions button.is-danger:focus-visible,
+.sf-admin-body .sf-post-admin-actions button.is-danger:hover,
+.sf-admin-body .sf-post-admin-actions button.is-danger:focus-visible {
+  border-color: rgba(255, 10, 91, 0.78);
+  background: rgba(255, 10, 91, 0.24);
+  color: #ffffff;
+}
+
 .sf-admin-body .sf-copy-guide-button {
   border-color: rgba(34, 211, 238, 0.34);
   background: rgba(34, 211, 238, 0.1);

@@ -197,15 +197,15 @@
     return [
       greeting,
       '',
-      'SunoFox 가입 승인이 완료되었습니다.',
+      'SunoFox 공식 사이트 가입 신청이 승인되었습니다.',
       '',
-      '아래 정보로 로그인해 주세요.',
+      '아래 정보로 로그인하시면 팬게시판과 SF Studio를 이용하실 수 있습니다.',
       '로그인 URL: https://sunofox.com/login',
       `이메일: ${email}`,
       '입장 코드: [입장 코드]',
       '',
-      '로그인 후 팬게시판 글 작성과 SF Studio 접근이 가능합니다.',
-      '감사합니다.'
+      '입장 코드는 외부에 공유하지 말고 본인만 사용해 주세요.',
+      '앞으로 SunoFox 음악과 이야기로 자주 뵙겠습니다. 감사합니다.'
     ].join('\n');
   }
 
@@ -428,9 +428,9 @@
           </div>
           <mark data-status="${escapeHtml(user.status)}">${statusLabel(user.status)}</mark>
           <div class="sf-user-actions">
-            <button type="button" data-action="approve">승인</button>
-            <button type="button" data-action="pending">대기</button>
-            <button type="button" data-action="reject">거절</button>
+          <button class="is-safe" type="button" data-action="approve">승인</button>
+          <button class="is-neutral" type="button" data-action="pending">대기</button>
+          <button class="is-danger" type="button" data-action="reject">거절</button>
             ${isApproved ? `
               <button class="sf-preview-guide-button" type="button" data-preview-approval aria-expanded="false" aria-controls="${previewId}">안내문 미리보기</button>
               <button class="sf-copy-guide-button" type="button" data-copy-approval>안내문 복사</button>
@@ -578,9 +578,9 @@
           <small>${escapeHtml(post.authorEmail || '')}</small>
         </div>
         <div class="sf-post-admin-actions">
-          <button type="button" data-post-action="${post.status === 'published' ? 'hide' : 'publish'}">${post.status === 'published' ? '숨김' : '공개'}</button>
-          <button type="button" data-post-action="${post.pinned ? 'unpin' : 'pin'}">${post.pinned ? '고정 해제' : '고정'}</button>
-          <button type="button" data-post-action="delete">삭제</button>
+          <button class="${post.status === 'published' ? 'is-warning' : 'is-safe'}" type="button" data-post-action="${post.status === 'published' ? 'hide' : 'publish'}">${post.status === 'published' ? '숨김' : '공개'}</button>
+          <button class="is-neutral" type="button" data-post-action="${post.pinned ? 'unpin' : 'pin'}">${post.pinned ? '고정 해제' : '고정'}</button>
+          <button class="is-danger" type="button" data-post-action="delete">삭제</button>
         </div>
       </article>
     `).join('');
@@ -631,8 +631,8 @@
           <small>${escapeHtml(comment.authorEmail || '')}</small>
         </div>
         <div class="sf-post-admin-actions">
-          <button type="button" data-comment-action="${comment.status === 'published' ? 'hide' : 'publish'}">${comment.status === 'published' ? '숨김' : '공개'}</button>
-          <button type="button" data-comment-action="delete">삭제</button>
+          <button class="${comment.status === 'published' ? 'is-warning' : 'is-safe'}" type="button" data-comment-action="${comment.status === 'published' ? 'hide' : 'publish'}">${comment.status === 'published' ? '숨김' : '공개'}</button>
+          <button class="is-danger" type="button" data-comment-action="delete">삭제</button>
         </div>
       </article>
     `).join('');
@@ -722,9 +722,9 @@
             </details>
           </div>
           <div class="sf-post-admin-actions">
-            <button type="button" data-report-status="reviewing">검토</button>
-            <button type="button" data-report-status="resolved">처리</button>
-            <button type="button" data-report-status="dismissed">기각</button>
+            <button class="is-warning" type="button" data-report-status="reviewing">검토</button>
+            <button class="is-safe" type="button" data-report-status="resolved">처리</button>
+            <button class="is-neutral" type="button" data-report-status="dismissed">기각</button>
           </div>
         </article>
       `;

@@ -5,6 +5,7 @@ const youtubeHref = release.youtubeId
   : release.playlistHref || release.links.youtubePlaylists || release.links.youtube;
 const youtubeLabel = release.youtubeId ? 'YouTube' : 'YouTube Playlist';
 const trackKey = release.title.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+const detailHref = `/songs/${release.slug}/`;
 ---
 
 <article class="release-card reveal">
@@ -26,6 +27,7 @@ const trackKey = release.title.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace
   </div>
 
   <div class="release-actions" aria-label={`${release.title} artist and platform links`}>
+    <a href={detailHref} data-track={`release_${trackKey}_detail`}>Detail</a>
     <a href={youtubeHref} target="_blank" rel="noopener noreferrer" data-track={`release_${trackKey}_youtube`}>{youtubeLabel}</a>
     <a href={release.links.spotify} target="_blank" rel="noopener noreferrer" data-track={`release_${trackKey}_spotify`}>Spotify Artist</a>
     <a href={release.links.melon} target="_blank" rel="noopener noreferrer" data-track={`release_${trackKey}_melon`}>Melon Artist</a>

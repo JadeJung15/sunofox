@@ -1558,6 +1558,103 @@ body.menu-open .overlay-socials {
   color: #ffffff;
 }
 
+.release-detail-page .category-content {
+  width: min(1180px, calc(100% - 40px));
+}
+
+.release-detail-layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.88fr) minmax(280px, 1fr);
+  gap: 48px;
+  align-items: stretch;
+}
+
+.release-detail-cover {
+  border: 1px solid var(--line);
+  background: #050508;
+}
+
+.release-detail-cover img {
+  width: 100%;
+  height: 100%;
+  min-height: 480px;
+  object-fit: cover;
+}
+
+.release-detail-panel {
+  display: grid;
+  align-content: end;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.02);
+  padding: clamp(28px, 5vw, 52px);
+}
+
+.release-detail-panel > span {
+  color: var(--pink);
+  font-family: var(--font-condensed);
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.18em;
+}
+
+.release-detail-panel h2 {
+  margin: 28px 0 0;
+  color: #ffffff;
+  font-family: var(--font-condensed);
+  font-size: clamp(42px, 6vw, 86px);
+  font-weight: 950;
+  letter-spacing: -0.04em;
+  line-height: 0.94;
+}
+
+.release-detail-panel p {
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-weight: 800;
+  line-height: 1.7;
+}
+
+.release-detail-meta {
+  display: grid;
+  gap: 0;
+  margin: 42px 0 0;
+  border-top: 1px solid var(--line);
+}
+
+.release-detail-meta div {
+  display: grid;
+  grid-template-columns: 112px 1fr;
+  gap: 24px;
+  border-bottom: 1px solid var(--line);
+  padding: 18px 0;
+}
+
+.release-detail-meta dt {
+  color: var(--pink);
+  font-family: var(--font-condensed);
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.release-detail-meta dd {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.release-detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 34px;
+}
+
+.release-next-panel {
+  padding-top: 32px;
+}
+
 .series-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -1927,7 +2024,8 @@ body.menu-open .overlay-socials {
   .home-subscribe-panel,
   .media-feature,
   .platform-strip,
-  .coming-soon-grid {
+  .coming-soon-grid,
+  .release-detail-layout {
     grid-template-columns: 1fr;
   }
 
@@ -2178,6 +2276,20 @@ body.menu-open .overlay-socials {
 
   .series-card strong {
     white-space: normal;
+  }
+
+  .release-detail-cover img {
+    min-height: auto;
+    aspect-ratio: 1 / 1;
+  }
+
+  .release-detail-meta div {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .release-detail-actions .main-button {
+    width: 100%;
   }
 
   .section-heading h2,

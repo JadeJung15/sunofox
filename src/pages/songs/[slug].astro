@@ -1,0 +1,78 @@
+---
+import SiteChrome from '../../components/SiteChrome.astro';
+import Layout from '../../layouts/Layout.astro';
+import { artistLinks, releases, series } from '../../data/siteContent.js';
+
+export function getStaticPaths() {
+  return releases.map((release) => ({
+    params: { slug: release.slug },
+    props: { release }
+  }));
+}
+
+const { release } = Astro.props;
+const releaseIndex = releases.findIndex((item) => item.slug === release.slug);
+const seriesMeta = series.find((item) => item.id === release.seriesId);
+const youtubeHref = release.youtubeId
+  ? `https://www.youtube.com/watch?v=${release.youtubeId}`
+  : release.playlistHref || artistLinks.youtubePlaylists;
+const nextRelease = releases[(releaseIndex + 1) % releases.length];
+---
+
+<Layout title={`${release.title} | SunoFox Anime OST Studio`} description={`${release.ko} - ${release.desc}`}>
+  <SiteChrome active="songs" />
+
+  <main class="site-main category-page release-detail-page">
+    <section class="category-hero release-detail-hero reveal" aria-labelledby="releaseTitle">
+      <p class="section-kicker">SONGS / NOVELS</p>
+      <h1 id="releaseTitle">{release.title}</h1>
+      <p>{release.desc}</p>
+    </section>
+
+    <section class="category-content release-detail-layout" aria-label={`${release.title} detail`}>
+      <div class="release-detail-cover reveal">
+        <img
+          src={release.image}
+          alt={`${release.title} album artwork`}
+          loading="eager"
+          onerror="this.onerror=null; this.src='/assets/sf-studio-icon-512.png'; this.classList.add('release-cover-fallback');"
+        />
+      </div>
+
+      <article class="release-detail-panel reveal">
+        <span>{String(releaseIndex + 1).padStart(2, '0')} / {releases.length}</span>
+        <h2>{release.ko}</h2>
+        <p>{release.tag}</p>
+
+        <dl class="release-detail-meta">
+          <div>
+            <dt>Series</dt>
+            <dd>{seriesMeta ? `${seriesMeta.title} · ${seriesMeta.ko}` : 'ARCHIVE vol.1'}</dd>
+          </div>
+          <div>
+            <dt>Archive</dt>
+            <dd>ARCHIVE vol.1</dd>
+          </div>
+          <div>
+            <dt>Listen</dt>
+            <dd>{release.youtubeId ? 'Official video available' : 'Playlist hub available'}</dd>
+          </div>
+        </dl>
+
+        <div class="release-detail-actions" aria-label={`${release.title} links`}>
+          <a class="main-button" href={youtubeHref} target="_blank" rel="noopener noreferrer">YOUTUBE</a>
+          <a class="main-button main-button-muted" href={artistLinks.spotify} target="_blank" rel="noopener noreferrer">SPOTIFY</a>
+          <a class="main-button main-button-muted" href={artistLinks.melon} target="_blank" rel="noopener noreferrer">MELON</a>
+        </div>
+      </article>
+    </section>
+
+    <section class="category-content release-next-panel" aria-label="Next release">
+      <a class="category-card reveal" href={`/songs/${nextRelease.slug}/`}>
+        <span>NEXT TRACK</span>
+        <h2>{nextRelease.title}</h2>
+        <p>{nextRelease.ko} · {nextRelease.tag}</p>
+      </a>
+    </section>
+  </main>
+</Layout>

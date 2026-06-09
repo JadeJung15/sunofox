@@ -7,6 +7,7 @@ export const artistLinks = {
   melon: 'https://www.melon.com/artist/song.htm?artistId=4881689',
   bugs: 'https://music.bugs.co.kr/artist/14591489',
   flo: 'https://www.music-flo.com/detail/artist/413342628/track?roleType=ALL&sortType=POPULARITY',
+  vibe: 'https://vibe.naver.com/artist/10398991',
   tidal: 'https://tidal.com/artist/73947996/u',
   linktree: 'https://linktr.ee/sunofox',
   soundcloud: 'https://soundcloud.com/sunopogseu'
@@ -20,6 +21,7 @@ export const platformLinks = [
   { label: 'MELON', title: 'Artist Page', href: artistLinks.melon },
   { label: 'BUGS', title: 'Artist Page', href: artistLinks.bugs },
   { label: 'FLO', title: 'Artist Page', href: artistLinks.flo },
+  { label: 'VIBE', title: 'Artist Page', href: artistLinks.vibe },
   { label: 'TIDAL', title: 'Artist Page', href: artistLinks.tidal },
   { label: 'SOUNDCLOUD', title: 'Sketch Archive', href: artistLinks.soundcloud }
 ];
@@ -89,6 +91,7 @@ export const comingSoonPages = {
 
 export const releases = [
   {
+    slug: 'flamebreaker',
     title: 'Flamebreaker',
     ko: '플레임브레이커',
     tag: 'Anime OST / Battle Opening',
@@ -100,6 +103,7 @@ export const releases = [
     links: artistLinks
   },
   {
+    slug: 'flame-of-the-echo',
     title: 'Flame of the Echo',
     ko: '메아리의 불꽃',
     tag: 'Symphonic Rock / Echo Scene',
@@ -111,6 +115,7 @@ export const releases = [
     links: artistLinks
   },
   {
+    slug: 'rewind-of-destiny',
     title: 'Rewind of Destiny',
     ko: '운명의 되감기',
     tag: 'Time Loop / Emotional OST',
@@ -122,6 +127,7 @@ export const releases = [
     links: artistLinks
   },
   {
+    slug: 'starlight-calling',
     title: 'Starlight Calling',
     ko: '별빛의 부름',
     tag: 'Ethereal Pop / Hope Theme',
@@ -133,6 +139,7 @@ export const releases = [
     links: artistLinks
   },
   {
+    slug: 'r3dl1n3',
     title: 'R3DL1N3',
     ko: '레드라인',
     tag: 'Cyber DnB / Chase Scene',
@@ -144,6 +151,7 @@ export const releases = [
     links: artistLinks
   },
   {
+    slug: 'neon-rush',
     title: 'Neon Rush',
     ko: '네온 러시',
     tag: 'Neon City / Speed Battle',
@@ -155,6 +163,7 @@ export const releases = [
     links: artistLinks
   },
   {
+    slug: 'anti-christmas-anti-couple',
     title: 'Anti-Christmas, Anti-Couple',
     ko: '안티 크리스마스, 안티 커플',
     tag: 'Alt Pop / Seasonal Satire',
@@ -166,6 +175,7 @@ export const releases = [
     links: artistLinks
   },
   {
+    slug: 'heavenfall-protocol',
     title: 'Heavenfall Protocol',
     ko: '헤븐폴 프로토콜',
     tag: 'Epic OST / Collapse Scene',
@@ -177,6 +187,7 @@ export const releases = [
     links: artistLinks
   },
   {
+    slug: 'the-devil-walks-tonight',
     title: 'The Devil Walks Tonight',
     ko: '오늘 밤 악마가 걷는다',
     tag: 'Dark Anime OST / Villain Theme',
@@ -276,6 +287,7 @@ export const structuredData = {
     artistLinks.melon,
     artistLinks.bugs,
     artistLinks.flo,
+    artistLinks.vibe,
     artistLinks.tidal,
     artistLinks.soundcloud
   ]

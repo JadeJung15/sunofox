@@ -245,14 +245,21 @@
     return Boolean(user?.approvalGuideSentAt);
   }
 
-  function updateApprovalSentState(row, sent, sentAt) {
+  function updateApprovalSentState(row, sent, sentAt, sentBy) {
     if (!row) return;
     row.dataset.approvalSent = sent ? 'true' : 'false';
     row.dataset.approvalSentAt = sentAt || '';
+    row.dataset.approvalSentBy = sentBy || '';
     const toggle = row.querySelector('[data-approval-sent-toggle]');
     const status = row.querySelector('[data-approval-sent-status]');
+    const meta = row.querySelector('[data-approval-sent-meta]');
+    const metaDate = row.querySelector('[data-approval-sent-date]');
+    const metaBy = row.querySelector('[data-approval-sent-by]');
     if (toggle) toggle.checked = sent;
     if (status) status.textContent = sent ? '전송 완료 저장됨' : '복사 후 전송 체크';
+    if (meta) meta.hidden = !sent;
+    if (metaDate) metaDate.textContent = sent ? formatDate(sentAt) || '저장됨' : '';
+    if (metaBy) metaBy.textContent = sent ? sentBy || '관리자' : '';
   }
 
   function userActionResult(action) {
@@ -546,13 +553,13 @@
       const previewId = `sf-approval-preview-${index}`;
       const requestedAt = formatDate(user.createdAt || user.updatedAt);
       const guideSentAt = formatDate(user.approvalGuideSentAt);
+      const guideSentBy = user.approvalGuideSentBy || '';
       return `
-        <article class="sf-user-row" data-email="${escapeHtml(user.email)}" data-name="${escapeHtml(user.name || '')}" data-approval-sent="${guideSent ? 'true' : 'false'}" data-approval-sent-at="${escapeHtml(user.approvalGuideSentAt || '')}">
+        <article class="sf-user-row" data-email="${escapeHtml(user.email)}" data-name="${escapeHtml(user.name || '')}" data-approval-sent="${guideSent ? 'true' : 'false'}" data-approval-sent-at="${escapeHtml(user.approvalGuideSentAt || '')}" data-approval-sent-by="${escapeHtml(guideSentBy)}">
           <div>
             <strong>${escapeHtml(user.email)}</strong>
             <span>${escapeHtml(user.name || '이름 없음')}</span>
             ${requestedAt ? `<small>신청 ${escapeHtml(requestedAt)}</small>` : ''}
-            ${guideSentAt ? `<small>안내문 전송 ${escapeHtml(guideSentAt)}</small>` : ''}
             <small>${escapeHtml(user.note || '')}</small>
           </div>
           <mark data-status="${escapeHtml(user.status)}">${statusLabel(user.status)}</mark>
@@ -567,6 +574,11 @@
                 <input type="checkbox" data-approval-sent-toggle ${guideSent ? 'checked' : ''}>
                 <span data-approval-sent-status>${guideSent ? '전송 완료 저장됨' : '복사 후 전송 체크'}</span>
               </label>
+              <div class="sf-approval-sent-meta" data-approval-sent-meta ${guideSent ? '' : 'hidden'}>
+                <span>안내문 전송</span>
+                <strong data-approval-sent-date>${escapeHtml(guideSentAt || '저장됨')}</strong>
+                <small data-approval-sent-by>${escapeHtml(guideSentBy || '관리자')}</small>
+              </div>
             ` : ''}
           </div>
           <span class="sf-user-row-feedback" aria-live="polite"></span>
@@ -632,12 +644,12 @@
           });
           const user = result.user || {};
           cachedUsers = cachedUsers.map((item) => item.email === user.email ? user : item);
-          updateApprovalSentState(row, Boolean(user.approvalGuideSentAt), user.approvalGuideSentAt || '');
+          updateApprovalSentState(row, Boolean(user.approvalGuideSentAt), user.approvalGuideSentAt || '', user.approvalGuideSentBy || '');
           setUserRowFeedback(row, 'complete', sent ? '전송 저장됨' : '체크 해제됨');
           setMessage(result.message || (sent ? '승인 안내문 전송 완료 상태를 저장했습니다.' : '승인 안내문 전송 체크를 해제했습니다.'), sent ? 'success' : 'info');
           showAdminToast(result.message || (sent ? '승인 안내문 전송 완료 상태를 저장했습니다.' : '승인 안내문 전송 체크를 해제했습니다.'), sent ? 'success' : 'info', sent ? 'SENT SAVED' : 'CHECK REMOVED');
         } catch (error) {
-          updateApprovalSentState(row, previous, row?.dataset.approvalSentAt || '');
+          updateApprovalSentState(row, previous, row?.dataset.approvalSentAt || '', row?.dataset.approvalSentBy || '');
           setUserRowFeedback(row, 'error', '저장 실패');
           setMessage(error.message, 'error');
           showAdminToast(error.message, 'error');

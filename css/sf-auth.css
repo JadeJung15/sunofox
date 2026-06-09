@@ -3261,6 +3261,15 @@ body {
     gap: 10px;
   }
 
+  .sf-auth-result-next {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+
+  .sf-auth-result-next span {
+    padding: 9px 10px;
+  }
+
   .sf-auth-body:not(.sf-admin-body) .sf-auth-links a,
   .sf-auth-result-actions a {
     border: 1px solid rgba(255, 255, 255, 0.18);
@@ -3551,8 +3560,41 @@ body {
   background: rgba(255, 255, 255, 0.025);
 }
 
+.sf-auth-result-next {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.sf-auth-result-next span {
+  display: grid;
+  gap: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.024);
+  padding: 10px;
+}
+
+.sf-auth-result-next strong {
+  color: #ffffff;
+  font-family: "Roboto Condensed", "Arial Narrow", "Pretendard", sans-serif;
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+}
+
+.sf-auth-result-next small {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
 .sf-auth-result-panel[data-status="approved"] {
   border-color: rgba(134, 239, 172, 0.38);
+}
+
+.sf-auth-result-panel[data-status="approved"] .sf-auth-result-next {
+  display: none;
 }
 
 .sf-admin-empty-state {
@@ -3655,6 +3697,43 @@ body {
   border-color: rgba(134, 239, 172, 0.38);
   background: rgba(34, 197, 94, 0.1);
   color: #d7ffe2;
+}
+
+.sf-approval-sent-meta {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 3px;
+  border: 1px solid rgba(134, 239, 172, 0.26);
+  background:
+    linear-gradient(135deg, rgba(34, 197, 94, 0.12), transparent 55%),
+    rgba(255, 255, 255, 0.022);
+  color: rgba(255, 255, 255, 0.72);
+  padding: 9px 10px;
+}
+
+.sf-approval-sent-meta[hidden] {
+  display: none;
+}
+
+.sf-approval-sent-meta span {
+  color: #86efac;
+  font-family: "Roboto Condensed", "Arial Narrow", "Pretendard", sans-serif;
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.sf-approval-sent-meta strong {
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 950;
+}
+
+.sf-approval-sent-meta small {
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 11px;
+  font-weight: 800;
 }
 
 @keyframes sfAuthFeedbackIn {

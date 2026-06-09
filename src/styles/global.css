@@ -324,20 +324,26 @@ body.menu-open .menu-trigger::before {
   transition: transform 180ms ease, background 180ms ease, width 180ms ease;
 }
 
-.menu-trigger:hover .menu-trigger-lines span:first-child {
+.menu-trigger:hover .menu-trigger-lines span:first-child,
+.menu-trigger:focus-visible .menu-trigger-lines span:first-child {
   transform: translateX(-5px);
 }
 
-.menu-trigger:hover .menu-trigger-lines span:last-child {
+.menu-trigger:hover .menu-trigger-lines span:last-child,
+.menu-trigger:focus-visible .menu-trigger-lines span:last-child {
   transform: translateX(5px);
 }
 
-body.menu-open .menu-trigger-lines span:first-child {
+body.menu-open .menu-trigger .menu-trigger-lines span:first-child,
+body.menu-open .menu-trigger:hover .menu-trigger-lines span:first-child,
+body.menu-open .menu-trigger:focus-visible .menu-trigger-lines span:first-child {
   transform: translateY(4.5px) rotate(28deg);
   background: var(--pink);
 }
 
-body.menu-open .menu-trigger-lines span:last-child {
+body.menu-open .menu-trigger .menu-trigger-lines span:last-child,
+body.menu-open .menu-trigger:hover .menu-trigger-lines span:last-child,
+body.menu-open .menu-trigger:focus-visible .menu-trigger-lines span:last-child {
   transform: translateY(-4.5px) rotate(-28deg);
   background: var(--pink);
 }
@@ -2021,6 +2027,131 @@ body.menu-open .overlay-nav a:nth-child(13) { animation-delay: 240ms; }
 
 .community-comment-message[data-type='error'] {
   color: #ff8aa9;
+}
+
+.community-report-is-open {
+  overflow: hidden;
+}
+
+.community-report-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(10px);
+}
+
+.community-report-modal[hidden] {
+  display: none;
+}
+
+.community-report-card {
+  width: min(100%, 520px);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.025)),
+    #050505;
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.52);
+}
+
+.community-report-card form {
+  display: grid;
+  gap: 18px;
+  padding: clamp(22px, 4vw, 32px);
+}
+
+.community-report-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px 16px;
+  align-items: start;
+}
+
+.community-report-head span {
+  grid-column: 1 / -1;
+  color: var(--pink);
+  font-family: var(--font-condensed);
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.16em;
+}
+
+.community-report-head h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(24px, 4vw, 34px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.community-report-head button {
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.community-report-card label {
+  display: grid;
+  gap: 8px;
+}
+
+.community-report-card label > span {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.community-report-card select,
+.community-report-card textarea {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  font: inherit;
+  padding: 14px;
+  outline: none;
+}
+
+.community-report-card textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.community-report-card select:focus,
+.community-report-card textarea:focus {
+  border-color: var(--pink);
+  box-shadow: 0 0 0 3px rgba(255, 0, 85, 0.18);
+}
+
+.community-report-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.community-report-actions button {
+  min-height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  color: #ffffff;
+  font-family: var(--font-condensed);
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  padding: 0 18px;
+  cursor: pointer;
+}
+
+.community-report-actions button[type='submit'] {
+  border-color: var(--pink);
+  background: var(--pink);
+  color: #ffffff;
 }
 
 .community-detail-page .category-hero {

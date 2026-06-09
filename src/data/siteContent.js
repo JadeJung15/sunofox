@@ -331,21 +331,27 @@ export const communityCategories = [
   },
   {
     key: 'free',
-    label: 'GENERAL POSTS',
+    label: 'FREE TALK',
     title: '일반 게시물',
-    desc: '팬들이 자유롭게 이야기하고 아이디어를 남기는 기본 게시판입니다.'
+    desc: '팬들이 자유롭게 인사하고 감상을 나누는 기본 게시판입니다.'
   },
   {
-    key: 'media',
-    label: 'MEDIA TALK',
-    title: '미디어 이야기',
-    desc: '영상, 쇼츠, 썸네일, 플레이리스트 감상을 나누는 공간입니다.'
+    key: 'request',
+    label: 'TRACK REQUEST',
+    title: '듣고 싶은 곡',
+    desc: '듣고 싶은 장르, 전개, 악기, 애니 장면 아이디어를 제안합니다.'
   },
   {
-    key: 'event',
-    label: 'EVENT',
-    title: '이벤트',
-    desc: '참여형 이벤트, 신청, 팬 활동 안내를 모으는 게시판입니다.'
+    key: 'mood',
+    label: 'MOOD IDEAS',
+    title: '분위기 제안',
+    desc: '새벽, 심해, 전투, 이별처럼 곡의 정서와 배경을 함께 모읍니다.'
+  },
+  {
+    key: 'feedback',
+    label: 'FEEDBACK',
+    title: '감상 후기',
+    desc: '공개된 곡, 영상, 가사, 시리즈에 대한 의견을 남기는 공간입니다.'
   },
   {
     key: 'notice',
@@ -370,7 +376,18 @@ export const communityPosts = [
   {
     id: 'idea-001',
     board: 'free',
-    category: 'GENERAL POSTS',
+    category: 'FREE TALK',
+    title: '처음 방문한 팬입니다. 이런 분위기가 좋아요',
+    excerpt: 'SunoFox 곡 중 밤 도시, 비, 여주인공 서사가 있는 곡들이 특히 좋아서 앞으로도 이런 감성을 기대하고 있습니다.',
+    author: 'Fan Idea',
+    date: '2026.06.09',
+    comments: 0,
+    status: 'SAMPLE'
+  },
+  {
+    id: 'idea-002',
+    board: 'request',
+    category: 'TRACK REQUEST',
     title: '비 오는 도시에서 시작되는 전투 OST가 듣고 싶어요',
     excerpt: '처음에는 조용한 피아노로 시작하고, 후반부에는 Symphonic DnB로 터지는 분위기를 상상하고 있습니다.',
     author: 'Fan Idea',
@@ -379,9 +396,9 @@ export const communityPosts = [
     status: 'SAMPLE'
   },
   {
-    id: 'idea-002',
-    board: 'free',
-    category: 'GENERAL POSTS',
+    id: 'idea-003',
+    board: 'feedback',
+    category: 'FEEDBACK',
     title: '이름없는 시리즈에 어울리는 주인공 설정 제안',
     excerpt: '기억을 잃은 여성 주인공이 밤의 도시에서 자신의 이름을 찾아가는 이야기와 잘 어울릴 것 같습니다.',
     author: 'Fan Idea',
@@ -390,9 +407,9 @@ export const communityPosts = [
     status: 'SAMPLE'
   },
   {
-    id: 'idea-003',
-    board: 'media',
-    category: 'MEDIA TALK',
+    id: 'idea-004',
+    board: 'mood',
+    category: 'MOOD IDEAS',
     title: '몽환적인 심해 분위기의 Ethereal Pop도 좋을 것 같아요',
     excerpt: '심해 시리즈는 낮은 신스, 멀리서 들리는 코러스, 느린 드럼으로 더 깊은 분위기를 만들 수 있을 것 같습니다.',
     author: 'Fan Idea',

@@ -524,6 +524,58 @@ body {
   color: #475569;
 }
 
+.sf-report-detail {
+  border-top: 1px solid #fbcfe8;
+  margin-top: 8px;
+  padding-top: 10px;
+}
+
+.sf-report-detail summary {
+  color: #be185d;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.sf-report-detail dl {
+  display: grid;
+  gap: 8px;
+  margin: 12px 0 0;
+}
+
+.sf-report-detail dl div {
+  display: grid;
+  gap: 4px;
+}
+
+.sf-report-detail dt {
+  color: #9f1239;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.sf-report-detail dd {
+  color: #334155;
+  line-height: 1.55;
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: keep-all;
+}
+
+.sf-report-link {
+  align-items: center;
+  border: 1px solid #f9a8d4;
+  border-radius: 8px;
+  color: #be185d;
+  display: inline-flex;
+  font-size: 13px;
+  font-weight: 900;
+  margin-top: 12px;
+  min-height: 36px;
+  padding: 0 12px;
+  text-decoration: none;
+}
+
 .sf-user-actions,
 .sf-post-admin-actions {
   display: flex;

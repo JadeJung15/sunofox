@@ -78,8 +78,14 @@ const starCount = 28;
       if (menuLabel) menuLabel.textContent = open ? 'CLOSE' : 'MENU';
     }
 
-    menuButton?.addEventListener('click', () => {
+    menuButton?.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
       setMenu(!document.body.classList.contains('menu-open'));
+    });
+
+    overlayMenu?.addEventListener('click', (event) => {
+      if (event.target === overlayMenu) setMenu(false);
     });
 
     document.querySelectorAll('#overlayMenu a').forEach((link) => {

@@ -8,7 +8,7 @@ import {
   verifySession
 } from './auth.js';
 
-const BOARDS = new Set(['notice', 'free', 'media', 'event']);
+const BOARDS = new Set(['notice', 'free', 'request', 'mood', 'feedback', 'media', 'event']);
 const MAX_TITLE_LENGTH = 90;
 const MAX_BODY_LENGTH = 5000;
 const MAX_COMMENT_LENGTH = 1200;
@@ -121,6 +121,7 @@ function adminReport(row) {
     updatedAt: row.updated_at || '',
     resolvedAt: row.resolved_at || null,
     postTitle: row.post_title || row.comment_post_title || '',
+    postBody: row.post_body || '',
     commentBody: row.comment_body || ''
   };
 }
@@ -543,15 +544,16 @@ export async function handleCommunityReportsGet(context) {
   if (search) {
     where.push(`(
       r.reason LIKE ? OR r.detail LIKE ? OR r.reporter_name LIKE ? OR r.reporter_email LIKE ? OR
-      p.title LIKE ? OR cp.title LIKE ? OR c.body LIKE ?
+      p.title LIKE ? OR p.body LIKE ? OR cp.title LIKE ? OR c.body LIKE ?
     )`);
-    params.push(`%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`);
+    params.push(`%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`);
   }
 
   const whereSql = where.length ? `WHERE ${where.join(' AND ')}` : '';
   const { results } = await db.prepare(`
     SELECT r.*,
       p.title AS post_title,
+      p.body AS post_body,
       c.body AS comment_body,
       cp.title AS comment_post_title
     FROM community_reports r
@@ -665,6 +667,7 @@ export async function handleCommunityReportsPatch(context) {
   const row = await db.prepare(`
     SELECT r.*,
       p.title AS post_title,
+      p.body AS post_body,
       c.body AS comment_body,
       cp.title AS comment_post_title
     FROM community_reports r

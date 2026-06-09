@@ -6,16 +6,16 @@
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#070b16",
-  "theme_color": "#070b16",
+  "background_color": "#03030a",
+  "theme_color": "#03030a",
   "icons": [
     {
-      "src": "/assets/sf-studio-icon-192.png",
+      "src": "/assets/sunofox-app-icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/assets/sf-studio-icon-512.png",
+      "src": "/assets/sunofox-app-icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"

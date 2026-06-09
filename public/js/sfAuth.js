@@ -337,7 +337,13 @@
       const targetTitle = report.targetType === 'comment'
         ? (report.postTitle ? `댓글: ${report.postTitle}` : '댓글')
         : (report.postTitle || '게시글');
-      const commentBody = report.commentBody ? `<p>${escapeHtml(compactText(report.commentBody, 140))}</p>` : '';
+      const targetPostId = report.postId || (report.targetType === 'post' ? report.targetId : '');
+      const targetLink = targetPostId
+        ? `/community/post/?id=${encodeURIComponent(targetPostId)}`
+        : '';
+      const targetBody = report.targetType === 'comment'
+        ? report.commentBody
+        : report.postBody;
       return `
         <article class="sf-report-admin-row" data-report-id="${escapeHtml(report.id)}">
           <div class="sf-post-admin-main">
@@ -349,9 +355,34 @@
               <span>${escapeHtml(targetTitle)}</span>
             </div>
             <strong>${escapeHtml(report.reason)}</strong>
-            ${commentBody}
-            ${report.detail ? `<p>${escapeHtml(compactText(report.detail, 180))}</p>` : ''}
+            ${targetBody ? `<p>${escapeHtml(compactText(targetBody, 180))}</p>` : ''}
             <small>${escapeHtml(report.reporterEmail || '')}</small>
+            <details class="sf-report-detail">
+              <summary>신고 상세 확인</summary>
+              <dl>
+                <div>
+                  <dt>신고 대상</dt>
+                  <dd>${escapeHtml(targetTypeLabel(report.targetType))}</dd>
+                </div>
+                <div>
+                  <dt>신고 사유</dt>
+                  <dd>${escapeHtml(report.reason || '사유 없음')}</dd>
+                </div>
+                <div>
+                  <dt>상세 내용</dt>
+                  <dd>${escapeHtml(report.detail || '추가 설명 없음')}</dd>
+                </div>
+                <div>
+                  <dt>원문 요약</dt>
+                  <dd>${escapeHtml(targetBody || '원문을 확인할 수 없습니다.')}</dd>
+                </div>
+                <div>
+                  <dt>신고자</dt>
+                  <dd>${escapeHtml(report.reporterEmail || report.reporterName || 'Fan')}</dd>
+                </div>
+              </dl>
+              ${targetLink ? `<a class="sf-report-link" href="${escapeHtml(targetLink)}" target="_blank" rel="noopener noreferrer">게시글 열기</a>` : ''}
+            </details>
           </div>
           <div class="sf-post-admin-actions">
             <button type="button" data-report-status="reviewing">검토</button>

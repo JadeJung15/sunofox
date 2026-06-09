@@ -1,9 +1,12 @@
 ---
 import SiteChrome from '../components/SiteChrome.astro';
 import Layout from '../layouts/Layout.astro';
-import { artistLinks, structuredData } from '../data/siteContent.js';
+import { artistLinks, media, news, releases, series, structuredData } from '../data/siteContent.js';
 
 const wordmark = 'SUNOFOX'.split('');
+const heroParticles = Array.from({ length: 42 });
+const featuredRelease = releases[0];
+const featuredSeries = series.slice(0, 2);
 ---
 
 <Layout>
@@ -15,6 +18,12 @@ const wordmark = 'SUNOFOX'.split('');
 
   <main class="site-main landing-main">
     <section class="hero-stage hero-stage-landing" aria-labelledby="heroTitle">
+      <div class="hero-particle-layer" aria-hidden="true">
+        {heroParticles.map((_, index) => (
+          <span style={`--particle-index: ${index + 1}`}></span>
+        ))}
+      </div>
+
       <div class="hero-center reveal">
         <p class="hero-kicker">ANIME OST STUDIO</p>
         <h1 id="heroTitle" class="hero-wordmark sign-wordmark" aria-label="SUNOFOX">
@@ -33,6 +42,73 @@ const wordmark = 'SUNOFOX'.split('');
       </div>
 
       <p class="landing-note">SCROLL DOWN</p>
+    </section>
+
+    <section class="home-section home-news-media" aria-labelledby="homeNewsTitle">
+      <div class="home-duo-grid">
+        <article class="home-panel reveal">
+          <div class="home-panel-head">
+            <p class="section-kicker">NEWS</p>
+            <h2 id="homeNewsTitle">NEWS</h2>
+          </div>
+          <div class="home-news-list">
+            {news.map(([date, title, body]) => (
+              <a class="home-news-item" href="/news">
+                <time datetime={date.replaceAll('.', '-')}>{date}</time>
+                <strong>{title}</strong>
+                <span>{body}</span>
+              </a>
+            ))}
+          </div>
+          <a class="main-button home-more-button" href="/news">MORE</a>
+        </article>
+
+        <article class="home-panel reveal">
+          <div class="home-panel-head">
+            <p class="section-kicker">MEDIA</p>
+            <h2>MEDIA</h2>
+          </div>
+          <div class="home-media-list">
+            {media.map((item) => (
+              <a class="home-media-item" href={item.href} target={item.href.startsWith('http') ? '_blank' : undefined} rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
+                <span>{item.label}</span>
+                <strong>{item.title}</strong>
+              </a>
+            ))}
+          </div>
+          <a class="main-button home-more-button" href="/media">MORE</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="home-section home-songs-series" aria-labelledby="homeSongsTitle">
+      <div class="home-feature-grid">
+        <div class="home-feature-heading reveal">
+          <p class="section-kicker">SONGS / NOVELS</p>
+          <h2 id="homeSongsTitle">ARCHIVE vol.1</h2>
+          <p>Each track begins as a scene, a character, and a world.</p>
+          <a class="main-button" href="/songs">SONGS</a>
+        </div>
+
+        <a class="home-feature-release reveal" href="/songs" aria-label={`${featuredRelease.title} 상세 보기`}>
+          <img src={featuredRelease.image} alt={`${featuredRelease.title} album artwork`} loading="lazy" />
+          <div>
+            <span>LATEST RELEASE</span>
+            <strong>{featuredRelease.title}</strong>
+            <p>{featuredRelease.tag}</p>
+          </div>
+        </a>
+
+        <div class="home-series-mini reveal" aria-label="SunoFox series preview">
+          {featuredSeries.map((item) => (
+            <a href="/series">
+              <span>{item.number}</span>
+              <strong>{item.title}</strong>
+              <p>{item.ko}</p>
+            </a>
+          ))}
+        </div>
+      </div>
     </section>
   </main>
 </Layout>

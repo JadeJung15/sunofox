@@ -17,6 +17,11 @@ const youtubeHref = release.youtubeId
   ? `https://www.youtube.com/watch?v=${release.youtubeId}`
   : release.playlistHref || artistLinks.youtubePlaylists;
 const nextRelease = releases[(releaseIndex + 1) % releases.length];
+const detailNotes = [
+  ['STORY', release.story],
+  ['WORLD', release.world],
+  ['LYRIC NOTE', release.lyricNote]
+].filter(([, value]) => Boolean(value));
 ---
 
 <Layout title={`${release.title} | SunoFox Anime OST Studio`} description={`${release.ko} - ${release.desc}`}>
@@ -63,9 +68,21 @@ const nextRelease = releases[(releaseIndex + 1) % releases.length];
           <a class="main-button" href={youtubeHref} target="_blank" rel="noopener noreferrer">YOUTUBE</a>
           <a class="main-button main-button-muted" href={artistLinks.spotify} target="_blank" rel="noopener noreferrer">SPOTIFY</a>
           <a class="main-button main-button-muted" href={artistLinks.melon} target="_blank" rel="noopener noreferrer">MELON</a>
+          <a class="main-button main-button-muted" href={artistLinks.vibe} target="_blank" rel="noopener noreferrer">VIBE</a>
         </div>
       </article>
     </section>
+
+    {detailNotes.length > 0 && (
+      <section class="category-content release-detail-notes" aria-label={`${release.title} story notes`}>
+        {detailNotes.map(([label, body]) => (
+          <article class="release-note-card reveal">
+            <span>{label}</span>
+            <p>{body}</p>
+          </article>
+        ))}
+      </section>
+    )}
 
     <section class="category-content release-next-panel" aria-label="Next release">
       <a class="category-card reveal" href={`/songs/${nextRelease.slug}/`}>

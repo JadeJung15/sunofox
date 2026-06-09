@@ -172,6 +172,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
           author: post.authorName || post.author || 'Fan',
           date: formatDate(post.createdAt || post.date),
           comments: Number(post.commentCount ?? post.comments ?? 0),
+          likes: Number(post.likeCount || 0),
           status: post.pinned ? 'PINNED' : (post.status || 'PUBLISHED')
         };
       }
@@ -218,9 +219,52 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
                 <span>${post.comments} COMMENTS</span>
                 <span>${escapeHtml(post.status).toUpperCase()}</span>
               </div>
+              <div class="community-post-actions">
+                <button type="button" data-community-reaction data-post-id="${escapeHtml(post.id)}" data-value="1">
+                  LIKE <strong>${post.likes}</strong>
+                </button>
+                <button type="button" data-community-comments-toggle data-post-id="${escapeHtml(post.id)}">
+                  COMMENTS
+                </button>
+              </div>
+              <div class="community-comments" data-community-comments="${escapeHtml(post.id)}" hidden>
+                <div class="community-comments-list" data-community-comments-list>
+                  <p>댓글을 불러오는 중입니다.</p>
+                </div>
+                <form class="community-comment-form" data-community-comment-form data-post-id="${escapeHtml(post.id)}">
+                  <textarea name="body" rows="3" maxlength="1200" required placeholder="댓글을 입력해 주세요. 승인된 계정만 작성할 수 있습니다."></textarea>
+                  <button type="submit">COMMENT</button>
+                </form>
+                <p class="community-comment-message" data-community-comment-message role="status" aria-live="polite"></p>
+              </div>
             </div>
           </article>
         `).join('');
+      }
+
+      function renderComments(panel, comments) {
+        const target = panel.querySelector('[data-community-comments-list]');
+        if (!target) return;
+        if (!comments.length) {
+          target.innerHTML = '<p>아직 댓글이 없습니다. 첫 댓글을 남겨 주세요.</p>';
+          return;
+        }
+        target.innerHTML = comments.map((comment) => `
+          <article class="community-comment-row">
+            <strong>${escapeHtml(comment.authorName || 'Fan')}</strong>
+            <time datetime="${escapeHtml(comment.createdAt || '')}">${escapeHtml(formatDate(comment.createdAt))}</time>
+            <p>${escapeHtml(comment.body || '')}</p>
+          </article>
+        `).join('');
+      }
+
+      async function loadComments(postId, panel) {
+        const response = await fetch(`/api/community/comments?postId=${encodeURIComponent(postId)}`);
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok || !data.ok) {
+          throw new Error(data.message || '댓글을 불러오지 못했습니다.');
+        }
+        renderComments(panel, data.comments || []);
       }
 
       async function loadPosts() {
@@ -288,6 +332,109 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
           setFormMessage(`${error.message} 로그인 또는 가입 승인이 필요할 수 있습니다.`, 'error');
         } finally {
           submitButton.disabled = false;
+        }
+      });
+
+      list?.addEventListener('click', async (event) => {
+        const commentsButton = event.target.closest('[data-community-comments-toggle]');
+        const reactionButton = event.target.closest('[data-community-reaction]');
+
+        if (commentsButton) {
+          const postId = commentsButton.dataset.postId;
+          const row = commentsButton.closest('.community-post-main');
+          const panel = row?.querySelector(`[data-community-comments="${CSS.escape(postId)}"]`);
+          if (!postId || !panel) return;
+          const opening = panel.hidden;
+          panel.hidden = !opening;
+          commentsButton.classList.toggle('is-active', opening);
+          if (opening && !panel.dataset.loaded) {
+            try {
+              await loadComments(postId, panel);
+              panel.dataset.loaded = 'true';
+            } catch (error) {
+              panel.querySelector('[data-community-comments-list]').innerHTML = `<p>${escapeHtml(error.message)}</p>`;
+            }
+          }
+          return;
+        }
+
+        if (reactionButton) {
+          const postId = reactionButton.dataset.postId;
+          if (!postId) return;
+          reactionButton.disabled = true;
+          try {
+            const response = await fetch('/api/community/reactions', {
+              method: 'POST',
+              headers: { 'content-type': 'application/json' },
+              body: JSON.stringify({
+                postId,
+                value: Number(reactionButton.dataset.value || 1)
+              })
+            });
+            const data = await response.json().catch(() => ({}));
+            if (!response.ok || !data.ok) {
+              throw new Error(data.message || '추천을 처리하지 못했습니다.');
+            }
+            const countTarget = reactionButton.querySelector('strong');
+            if (countTarget) countTarget.textContent = String(data.post?.likeCount || 0);
+            reactionButton.classList.toggle('is-active', Number(data.activeValue || 0) === 1);
+          } catch (error) {
+            const row = reactionButton.closest('.community-post-main');
+            const panel = row?.querySelector('.community-comments');
+            if (panel) {
+              panel.hidden = false;
+              const msg = panel.querySelector('[data-community-comment-message]');
+              if (msg) {
+                msg.textContent = `${error.message} 로그인 또는 가입 승인이 필요할 수 있습니다.`;
+                msg.dataset.type = 'error';
+              }
+            }
+          } finally {
+            reactionButton.disabled = false;
+          }
+        }
+      });
+
+      list?.addEventListener('submit', async (event) => {
+        const commentForm = event.target.closest('[data-community-comment-form]');
+        if (!commentForm) return;
+        event.preventDefault();
+        const postId = commentForm.dataset.postId;
+        const button = commentForm.querySelector('button[type="submit"]');
+        const messageTarget = commentForm.parentElement?.querySelector('[data-community-comment-message]');
+        button.disabled = true;
+        if (messageTarget) {
+          messageTarget.textContent = '댓글을 등록하는 중입니다.';
+          messageTarget.dataset.type = 'info';
+        }
+
+        try {
+          const data = new FormData(commentForm);
+          const response = await fetch('/api/community/comments', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({
+              postId,
+              body: data.get('body')
+            })
+          });
+          const result = await response.json().catch(() => ({}));
+          if (!response.ok || !result.ok) {
+            throw new Error(result.message || '댓글을 등록하지 못했습니다.');
+          }
+          commentForm.reset();
+          if (messageTarget) {
+            messageTarget.textContent = '댓글이 등록되었습니다.';
+            messageTarget.dataset.type = 'success';
+          }
+          await loadComments(postId, commentForm.closest('.community-comments'));
+        } catch (error) {
+          if (messageTarget) {
+            messageTarget.textContent = `${error.message} 로그인 또는 가입 승인이 필요할 수 있습니다.`;
+            messageTarget.dataset.type = 'error';
+          }
+        } finally {
+          button.disabled = false;
         }
       });
 

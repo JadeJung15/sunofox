@@ -3692,3 +3692,54 @@ body {
     animation: none;
   }
 }
+
+/* Mobile overflow guard for the public auth gate. */
+.sf-auth-body:not(.sf-admin-body) .sf-auth-shell,
+.sf-auth-body:not(.sf-admin-body) .sf-auth-stage,
+.sf-auth-body:not(.sf-admin-body) .sf-auth-copy,
+.sf-auth-body:not(.sf-admin-body) .sf-auth-card,
+.sf-auth-body:not(.sf-admin-body) .sf-auth-form,
+.sf-auth-body:not(.sf-admin-body) .sf-auth-result-panel {
+  min-width: 0;
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-card-head p,
+.sf-auth-body:not(.sf-admin-body) .sf-auth-footnote,
+.sf-auth-body:not(.sf-admin-body) .sf-auth-message-copy span {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 640px) {
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-shell {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .sf-auth-stage {
+    width: 100%;
+    max-width: calc(100vw - 20px);
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-card {
+    width: 100%;
+    max-width: none;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-form input,
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-form textarea,
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-form button {
+    min-width: 0;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-footnote {
+    max-width: 100%;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-copy > p,
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-card-head p,
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-footnote,
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-message-copy span {
+    word-break: normal;
+    overflow-wrap: anywhere;
+  }
+}

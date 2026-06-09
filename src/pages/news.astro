@@ -16,14 +16,14 @@ import { news } from '../data/siteContent.js';
 
     <section class="category-content" aria-label="SunoFox news list">
       <div class="news-list">
-        {news.map(([date, title, body]) => (
-          <article class="news-row reveal">
-            <time datetime={date.replaceAll('.', '-')}>{date}</time>
+        {news.map((item) => (
+          <a class="news-row reveal" href={item.href} aria-label={`${item.title} 게시물 보기`}>
+            <time datetime={item.isoDate}>{item.date}</time>
             <div>
-              <h2>{title}</h2>
-              <p>{body}</p>
+              <h2>{item.title}</h2>
+              <p>{item.body}</p>
             </div>
-          </article>
+          </a>
         ))}
       </div>
     </section>

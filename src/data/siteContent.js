@@ -43,6 +43,7 @@ export const archiveVol1 = {
 export const menuItems = [
   { key: 'home', label: 'HOME', href: '/' },
   { key: 'news', label: 'NEWS', href: '/news' },
+  { key: 'community', label: 'COMMUNITY', href: '/community' },
   { key: 'media', label: 'MEDIA', href: '/media' },
   { key: 'songs', label: 'SONGS / NOVELS', href: '/songs' },
   { key: 'series', label: 'SERIES', href: '/series' },
@@ -251,9 +252,150 @@ export const releases = [
 ];
 
 export const news = [
-  ['2026.06.07', 'Official Website Preview Updated', 'SunoFox 공식 사이트의 홈, 미디어, 시리즈 페이지를 새 구조로 정리했습니다.'],
-  ['2026.02.09', 'ARCHIVE vol.1 Released', '9곡, 약 33분 분량의 첫 정규 아카이브가 주요 음원 플랫폼에 공개되었습니다.'],
-  ['2026.02.09', 'Flamebreaker Available', 'ARCHIVE vol.1의 오프닝 트랙 Flamebreaker를 YouTube와 스트리밍 플랫폼에서 감상할 수 있습니다.']
+  {
+    slug: 'homepage-open',
+    date: '2026.06.09',
+    isoDate: '2026-06-09',
+    title: 'SunoFox Official Website Open',
+    headline: 'SunoFox 공식 홈페이지가 열렸습니다',
+    body: 'SunoFox의 음악, 시리즈, 이야기, 비하인드 기록을 한곳에서 볼 수 있는 공식 홈페이지가 열렸습니다.',
+    href: '/news/homepage-open',
+    content: [
+      '안녕하세요, SunoFox입니다.',
+      '드디어 SunoFox의 음악과 이야기를 한곳에서 볼 수 있는 공식 홈페이지가 오픈되었습니다.',
+      'SunoFox는 감정을 그리는 애니메이션 OST를 만드는 AI Music Project입니다.',
+      'Anime OST, Symphonic DnB, Ethereal Pop 같은 분위기를 바탕으로 하나의 장면, 하나의 캐릭터, 하나의 세계관에서 시작되는 음악을 만들고 있습니다.',
+      '앞으로 홈페이지에는 신곡 소식, 시리즈별 음악, 가사와 이야기, 비하인드 작업 기록 등을 차근차근 정리해 나갈 예정입니다.',
+      '추후에는 팬게시판도 열어 여러분이 듣고 싶은 분위기, 좋아하는 장르, 캐릭터 아이디어, 스토리 방향을 편하게 이야기할 수 있는 커뮤니티 공간도 준비해 보려고 합니다.',
+      'SunoFox는 아직 만들어가는 중인 프로젝트입니다. 앞으로 더 좋은 음악과 이야기로 조금씩 채워 나가겠습니다.',
+      '많이 들러주시고, 의견도 편하게 남겨 주세요. 항상 들어주셔서 감사합니다.'
+    ],
+    examples: [
+      '전투 장면에 어울리는 OST가 듣고 싶어요',
+      '슬픈 엔딩곡 느낌으로 만들어 주세요',
+      '몽환적인 심해 분위기의 곡이 좋아요',
+      '이런 캐릭터에게 어울리는 음악이 궁금해요'
+    ],
+    cta: {
+      label: 'FAN BOARD',
+      href: '/community'
+    }
+  },
+  {
+    slug: 'official-site-preview-updated',
+    date: '2026.06.07',
+    isoDate: '2026-06-07',
+    title: 'Official Website Preview Updated',
+    headline: '공식 사이트 구조 업데이트',
+    body: 'SunoFox 공식 사이트의 홈, 미디어, 시리즈 페이지를 새 구조로 정리했습니다.',
+    href: '/news/official-site-preview-updated',
+    content: [
+      'SunoFox 공식 사이트의 홈, 미디어, 시리즈 페이지를 새 구조로 정리했습니다.',
+      '메인 화면은 공식 아티스트 사이트처럼 간결하게 정리하고, 각 메뉴는 별도 페이지에서 확인할 수 있도록 구성했습니다.'
+    ]
+  },
+  {
+    slug: 'archive-vol-1-released',
+    date: '2026.02.09',
+    isoDate: '2026-02-09',
+    title: 'ARCHIVE vol.1 Released',
+    headline: 'ARCHIVE vol.1 공개',
+    body: '9곡, 약 33분 분량의 첫 정규 아카이브가 주요 음원 플랫폼에 공개되었습니다.',
+    href: '/news/archive-vol-1-released',
+    content: [
+      'ARCHIVE vol.1은 SunoFox의 첫 정규 아카이브입니다.',
+      '판타지 OST, 전투 오프닝, 감성적인 장면 음악을 9곡으로 묶었습니다.'
+    ]
+  },
+  {
+    slug: 'flamebreaker-available',
+    date: '2026.02.09',
+    isoDate: '2026-02-09',
+    title: 'Flamebreaker Available',
+    headline: 'Flamebreaker 감상 가능',
+    body: 'ARCHIVE vol.1의 오프닝 트랙 Flamebreaker를 YouTube와 스트리밍 플랫폼에서 감상할 수 있습니다.',
+    href: '/news/flamebreaker-available',
+    content: [
+      'Flamebreaker는 ARCHIVE vol.1의 첫 인상을 여는 강한 전투형 오프닝 트랙입니다.',
+      'YouTube와 주요 스트리밍 플랫폼에서 감상할 수 있습니다.'
+    ]
+  }
+];
+
+export const communityCategories = [
+  {
+    key: 'all',
+    label: 'ALL',
+    title: '전체 게시물',
+    desc: 'SunoFox 팬들이 남기는 감상, 제안, 아이디어를 한곳에서 봅니다.'
+  },
+  {
+    key: 'mood',
+    label: 'MOOD REQUEST',
+    title: '분위기 요청',
+    desc: '듣고 싶은 장면, 감정, 계절감, 분위기를 제안하는 공간입니다.'
+  },
+  {
+    key: 'genre',
+    label: 'GENRE IDEA',
+    title: '장르 제안',
+    desc: 'Anime OST, DnB, Ethereal Pop 등 원하는 장르 방향을 남깁니다.'
+  },
+  {
+    key: 'world',
+    label: 'WORLD / CHARACTER',
+    title: '세계관 아이디어',
+    desc: '캐릭터, 배경, 스토리, 시리즈 확장 아이디어를 모읍니다.'
+  },
+  {
+    key: 'review',
+    label: 'LISTENING NOTE',
+    title: '감상 후기',
+    desc: '곡을 듣고 떠오른 장면과 감정을 자유롭게 남기는 공간입니다.'
+  }
+];
+
+export const communityPosts = [
+  {
+    id: 'notice-001',
+    category: 'NOTICE',
+    title: '팬게시판 준비 중입니다',
+    excerpt: '정식 작성 기능이 열리기 전까지, 이 페이지는 SunoFox 커뮤니티 방향을 보여주는 안내형 게시판으로 운영됩니다.',
+    author: 'SunoFox Team',
+    date: '2026.06.09',
+    comments: 0,
+    status: 'PINNED'
+  },
+  {
+    id: 'idea-001',
+    category: 'MOOD REQUEST',
+    title: '비 오는 도시에서 시작되는 전투 OST가 듣고 싶어요',
+    excerpt: '처음에는 조용한 피아노로 시작하고, 후반부에는 Symphonic DnB로 터지는 분위기를 상상하고 있습니다.',
+    author: 'Fan Idea',
+    date: '2026.06.09',
+    comments: 0,
+    status: 'SAMPLE'
+  },
+  {
+    id: 'idea-002',
+    category: 'WORLD / CHARACTER',
+    title: '이름없는 시리즈에 어울리는 주인공 설정 제안',
+    excerpt: '기억을 잃은 여성 주인공이 밤의 도시에서 자신의 이름을 찾아가는 이야기와 잘 어울릴 것 같습니다.',
+    author: 'Fan Idea',
+    date: '2026.06.09',
+    comments: 0,
+    status: 'SAMPLE'
+  },
+  {
+    id: 'idea-003',
+    category: 'GENRE IDEA',
+    title: '몽환적인 심해 분위기의 Ethereal Pop도 좋을 것 같아요',
+    excerpt: '심해 시리즈는 낮은 신스, 멀리서 들리는 코러스, 느린 드럼으로 더 깊은 분위기를 만들 수 있을 것 같습니다.',
+    author: 'Fan Idea',
+    date: '2026.06.09',
+    comments: 0,
+    status: 'SAMPLE'
+  }
 ];
 
 export const media = [

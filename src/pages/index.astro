@@ -64,11 +64,11 @@ const featuredSeries = series.slice(0, 2);
             <h2 id="homeNewsTitle">NEWS</h2>
           </div>
           <div class="home-news-list">
-            {news.map(([date, title, body]) => (
-              <a class="home-news-item" href="/news">
-                <time datetime={date.replaceAll('.', '-')}>{date}</time>
-                <strong>{title}</strong>
-                <span>{body}</span>
+            {news.slice(0, 3).map((item) => (
+              <a class="home-news-item" href={item.href}>
+                <time datetime={item.isoDate}>{item.date}</time>
+                <strong>{item.title}</strong>
+                <span>{item.body}</span>
               </a>
             ))}
           </div>

@@ -1,0 +1,73 @@
+---
+import SiteChrome from '../components/SiteChrome.astro';
+import Layout from '../layouts/Layout.astro';
+import { communityCategories, communityPosts } from '../data/siteContent.js';
+---
+
+<Layout
+  title="Community | SunoFox Anime OST Studio"
+  description="SunoFox 팬들이 듣고 싶은 분위기, 장르, 캐릭터 아이디어, 감상 후기를 나눌 수 있는 커뮤니티 준비 공간입니다."
+  canonical="https://sunofox.com/community/"
+>
+  <SiteChrome active="community" />
+
+  <main class="site-main category-page community-page">
+    <section class="category-hero reveal" aria-labelledby="communityTitle">
+      <p class="section-kicker">COMMUNITY</p>
+      <h1 id="communityTitle">FAN BOARD</h1>
+      <p>듣고 싶은 분위기, 장르, 캐릭터 아이디어를 함께 모으는 팬 소통 게시판입니다.</p>
+    </section>
+
+    <section class="category-content" aria-label="SunoFox fan board">
+      <div class="community-status reveal">
+        <span>OPENING SOON</span>
+        <p>현재는 안내형 리스트로 먼저 공개합니다. 정식 작성, 댓글, 승인 기능은 별도 단계에서 안전하게 추가할 예정입니다.</p>
+      </div>
+
+      <div class="community-layout">
+        <aside class="community-categories reveal" aria-label="Fan board categories">
+          {communityCategories.map((item) => (
+            <a href="#communityPosts" class={item.key === 'all' ? 'is-current' : undefined}>
+              <span>{item.label}</span>
+              <strong>{item.title}</strong>
+              <p>{item.desc}</p>
+            </a>
+          ))}
+        </aside>
+
+        <section id="communityPosts" class="community-board reveal" aria-label="Fan board post list">
+          <div class="community-board-head">
+            <span>POST LIST</span>
+            <strong>{communityPosts.length} POSTS</strong>
+          </div>
+
+          <div class="community-post-list">
+            {communityPosts.map((post) => (
+              <article class="community-post-row">
+                <div class="community-post-meta">
+                  <span>{post.category}</span>
+                  <time datetime={post.date.replaceAll('.', '-')}>{post.date}</time>
+                </div>
+                <div class="community-post-main">
+                  <h2>{post.title}</h2>
+                  <p>{post.excerpt}</p>
+                  <div>
+                    <span>{post.author}</span>
+                    <span>{post.comments} COMMENTS</span>
+                    <span>{post.status}</span>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+
+          <div class="community-write-panel" aria-label="Fan board write status">
+            <span>WRITE ACCESS</span>
+            <p>팬 게시글 작성 기능은 스팸 방지, 운영자 승인, 신고/삭제 기준을 정리한 뒤 열겠습니다.</p>
+            <a class="main-button main-button-muted" href="/contact">SEND IDEA</a>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+</Layout>

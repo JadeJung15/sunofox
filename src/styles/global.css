@@ -1812,6 +1812,62 @@ body.menu-open .overlay-nav a:nth-child(13) { animation-delay: 240ms; }
   line-height: 1.7;
 }
 
+.community-empty-card {
+  display: grid;
+  gap: 12px;
+  min-height: 230px;
+  align-content: center;
+  padding: 36px 0;
+}
+
+.community-empty-card span {
+  color: var(--pink);
+  font-family: var(--font-condensed);
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.16em;
+}
+
+.community-empty-card strong {
+  color: #ffffff;
+  font-size: clamp(24px, 3.4vw, 42px);
+  font-weight: 950;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  word-break: keep-all;
+}
+
+.community-empty-card p {
+  max-width: 620px;
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.75;
+  word-break: keep-all;
+}
+
+.community-empty-card a {
+  width: fit-content;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(255, 10, 91, 0.58);
+  color: #ffffff;
+  font-family: var(--font-condensed);
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.14em;
+  padding: 0 16px;
+  text-transform: uppercase;
+  transition: border-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.community-empty-card a:hover,
+.community-empty-card a:focus-visible {
+  border-color: #ffffff;
+  color: var(--pink);
+  transform: translateY(-1px);
+}
+
 .community-post-row {
   display: grid;
   grid-template-columns: 168px 1fr;
@@ -2040,8 +2096,10 @@ body.menu-open .overlay-nav a:nth-child(13) { animation-delay: 240ms; }
   display: grid;
   place-items: center;
   padding: 24px;
-  background: rgba(0, 0, 0, 0.72);
-  backdrop-filter: blur(10px);
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.76), rgba(0, 0, 0, 0.92)),
+    radial-gradient(circle at 100% 0%, rgba(255, 10, 91, 0.15), transparent 20rem);
+  backdrop-filter: blur(6px);
 }
 
 .community-report-modal[hidden] {
@@ -2050,11 +2108,11 @@ body.menu-open .overlay-nav a:nth-child(13) { animation-delay: 240ms; }
 
 .community-report-card {
   width: min(100%, 520px);
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.025)),
+    linear-gradient(145deg, rgba(255, 10, 91, 0.08), transparent 42%),
     #050505;
-  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.52);
+  box-shadow: 0 30px 86px rgba(0, 0, 0, 0.62);
 }
 
 .community-report-card form {
@@ -2066,8 +2124,10 @@ body.menu-open .overlay-nav a:nth-child(13) { animation-delay: 240ms; }
 .community-report-head {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 8px 16px;
+  gap: 10px 16px;
   align-items: start;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 16px;
 }
 
 .community-report-head span {
@@ -2082,9 +2142,11 @@ body.menu-open .overlay-nav a:nth-child(13) { animation-delay: 240ms; }
 .community-report-head h2 {
   margin: 0;
   color: #ffffff;
-  font-size: clamp(24px, 4vw, 34px);
+  font-size: clamp(26px, 4.2vw, 38px);
   line-height: 1.05;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.035em;
+  font-family: var(--font-condensed);
+  text-transform: uppercase;
 }
 
 .community-report-head button {
@@ -2111,8 +2173,8 @@ body.menu-open .overlay-nav a:nth-child(13) { animation-delay: 240ms; }
 .community-report-card select,
 .community-report-card textarea {
   width: 100%;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.035);
   color: #ffffff;
   font: inherit;
   padding: 14px;
@@ -2134,6 +2196,7 @@ body.menu-open .overlay-nav a:nth-child(13) { animation-delay: 240ms; }
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+  padding-top: 2px;
 }
 
 .community-report-actions button {
@@ -2150,7 +2213,7 @@ body.menu-open .overlay-nav a:nth-child(13) { animation-delay: 240ms; }
 
 .community-report-actions button[type='submit'] {
   border-color: var(--pink);
-  background: var(--pink);
+  background: linear-gradient(90deg, #ff0a5b, #ff6c10);
   color: #ffffff;
 }
 

@@ -86,7 +86,13 @@
         <div>
           <span class="sf-auth-kicker">MEMBER REQUESTS</span>
           <h2>가입 신청 관리</h2>
+          <p>신청 메모를 확인한 뒤 승인 여부를 정하고, 승인 계정에는 안내문을 복사해 입장 코드를 전달해 주세요.</p>
         </div>
+      </div>
+      <div class="sf-admin-member-guide" aria-label="가입 승인 운영 순서">
+        <span><strong>01 REVIEW</strong><small>이메일, 이름, 신청 메모 확인</small></span>
+        <span><strong>02 APPROVE</strong><small>승인 후 안내문 미리보기 확인</small></span>
+        <span><strong>03 SEND CODE</strong><small>[입장 코드]를 실제 코드로 바꿔 전달</small></span>
       </div>
       <form id="sf-admin-user-filter" class="sf-admin-filter-form sf-admin-user-filter">
         <label>
@@ -105,6 +111,12 @@
         <button type="submit">필터 적용</button>
         <button type="button" id="sf-admin-user-reset" class="sf-admin-filter-reset">초기화</button>
       </form>
+      <div class="sf-admin-status-tabs" role="group" aria-label="가입 신청 상태 필터">
+        <button type="button" data-user-status-filter="" aria-pressed="true">전체</button>
+        <button type="button" data-user-status-filter="pending" aria-pressed="false">승인 대기</button>
+        <button type="button" data-user-status-filter="approved" aria-pressed="false">승인 완료</button>
+        <button type="button" data-user-status-filter="rejected" aria-pressed="false">거절</button>
+      </div>
       <div class="sf-admin-quick-tools" aria-label="가입 신청 빠른 보기">
         <button type="button" id="sf-admin-user-pending-only" class="sf-admin-chip-button" aria-pressed="false">승인 대기만 보기</button>
         <button type="button" id="sf-admin-user-sort" class="sf-admin-chip-button" data-sort-order="desc" aria-pressed="true">최근 신청 우선</button>

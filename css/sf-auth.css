@@ -2917,6 +2917,16 @@ body {
   display: none;
 }
 
+.sf-auth-result-detail {
+  margin: 0;
+  border-left: 2px solid rgba(255, 10, 91, 0.68);
+  color: rgba(255, 255, 255, 0.66);
+  font-size: 13px;
+  line-height: 1.65;
+  padding-left: 10px;
+  word-break: keep-all;
+}
+
 .sf-admin-empty-state {
   display: grid;
   gap: 12px;
@@ -3056,6 +3066,89 @@ body {
   font-weight: 800;
 }
 
+.sf-admin-member-guide {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.sf-admin-member-guide span {
+  display: grid;
+  gap: 5px;
+  min-height: 74px;
+  align-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background:
+    linear-gradient(135deg, rgba(255, 10, 91, 0.08), transparent 56%),
+    rgba(255, 255, 255, 0.035);
+  padding: 12px;
+}
+
+.sf-admin-member-guide strong {
+  color: #ffffff;
+  font-family: "Roboto Condensed", "Arial Narrow", "Pretendard", sans-serif;
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+}
+
+.sf-admin-member-guide small {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 12px;
+  line-height: 1.45;
+  word-break: keep-all;
+}
+
+.sf-admin-body .sf-user-main,
+.sf-admin-body .sf-user-identity,
+.sf-admin-body .sf-user-meta {
+  display: grid;
+  min-width: 0;
+}
+
+.sf-admin-body .sf-user-main {
+  gap: 10px;
+}
+
+.sf-admin-body .sf-user-identity {
+  gap: 4px;
+}
+
+.sf-admin-body .sf-user-meta {
+  gap: 5px;
+}
+
+.sf-admin-body .sf-user-note {
+  display: -webkit-box;
+  max-width: 62ch;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.sf-admin-body .sf-user-next-action {
+  margin: 0;
+  border-left: 2px solid rgba(255, 10, 91, 0.68);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13px;
+  line-height: 1.55;
+  padding-left: 10px;
+  word-break: keep-all;
+}
+
+.sf-admin-body .sf-approval-guide-preview-head div {
+  display: grid;
+  gap: 4px;
+}
+
+.sf-admin-body .sf-approval-guide-preview-head small {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 12px;
+  line-height: 1.45;
+  word-break: keep-all;
+}
+
 @keyframes sfAuthFeedbackIn {
   from {
     opacity: 0;
@@ -3100,6 +3193,7 @@ body {
 
   .sf-admin-dashboard-meta,
   .sf-admin-jump-nav,
+  .sf-admin-member-guide,
   .sf-admin-body .sf-admin-head-actions,
   .sf-admin-status-tabs,
   .sf-admin-body .sf-admin-key-form,
@@ -3138,6 +3232,17 @@ body {
   .sf-admin-status-tabs button {
     min-height: 38px;
     font-size: 11px;
+  }
+
+  .sf-admin-member-guide span {
+    min-height: auto;
+    padding: 10px;
+  }
+
+  .sf-admin-body .sf-user-next-action,
+  .sf-auth-result-detail {
+    font-size: 12px;
+    line-height: 1.55;
   }
 }
 

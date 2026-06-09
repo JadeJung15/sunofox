@@ -164,6 +164,7 @@
     const resultKicker = document.querySelector('[data-signup-result-kicker]');
     const resultTitle = document.querySelector('[data-signup-result-title]');
     const resultCopy = document.querySelector('[data-signup-result-copy]');
+    const resultDetail = document.querySelector('[data-signup-result-detail]');
 
     function hideSignupResult() {
       if (resultPanel) resultPanel.hidden = true;
@@ -178,6 +179,11 @@
         resultCopy.textContent = isApproved
           ? '이미 승인된 이메일입니다. LOGIN 화면에서 이메일과 입장 코드를 입력해 주세요.'
           : '신청이 접수되었습니다. 승인 안내와 입장 코드를 받은 뒤 로그인해 주세요.';
+      }
+      if (resultDetail) {
+        resultDetail.textContent = isApproved
+          ? '입장 코드는 승인 안내문에서 확인할 수 있습니다. 안내문을 받지 못했다면 사이트 주인에게 다시 문의해 주세요.'
+          : '사이트 주인이 신청 내용을 확인한 뒤 승인 안내문과 입장 코드를 전달합니다. 같은 이메일로 다시 신청하면 현재 상태를 확인할 수 있습니다.';
       }
       resultPanel.dataset.status = isApproved ? 'approved' : 'pending';
       resultPanel.hidden = false;
@@ -243,6 +249,18 @@
 
   function isApprovalGuideSent(user) {
     return Boolean(user?.approvalGuideSentAt);
+  }
+
+  function userNextAction(user) {
+    if (user?.status === 'approved') {
+      return isApprovalGuideSent(user)
+        ? '승인 안내문 전송 완료 상태입니다. 필요하면 재전송 전 미리보기를 확인해 주세요.'
+        : '승인 완료 계정입니다. 안내문을 복사하고 [입장 코드]를 실제 코드로 바꿔 전달해 주세요.';
+    }
+    if (user?.status === 'rejected') {
+      return '거절 상태입니다. 재검토가 필요하면 대기로 되돌린 뒤 다시 처리해 주세요.';
+    }
+    return '승인 대기 상태입니다. 신청 메모와 이메일을 확인한 뒤 승인 또는 거절을 선택해 주세요.';
   }
 
   function updateApprovalSentState(row, sent, sentAt, sentBy) {
@@ -566,13 +584,19 @@
       const requestedAt = formatDate(user.createdAt || user.updatedAt);
       const guideSentAt = formatDate(user.approvalGuideSentAt);
       const guideSentBy = user.approvalGuideSentBy || '';
+      const note = String(user.note || '').trim();
       return `
         <article class="sf-user-row" data-email="${escapeHtml(user.email)}" data-name="${escapeHtml(user.name || '')}" data-approval-sent="${guideSent ? 'true' : 'false'}" data-approval-sent-at="${escapeHtml(user.approvalGuideSentAt || '')}" data-approval-sent-by="${escapeHtml(guideSentBy)}">
-          <div>
-            <strong>${escapeHtml(user.email)}</strong>
-            <span>${escapeHtml(user.name || '이름 없음')}</span>
-            ${requestedAt ? `<small>신청 ${escapeHtml(requestedAt)}</small>` : ''}
-            <small>${escapeHtml(user.note || '')}</small>
+          <div class="sf-user-main">
+            <div class="sf-user-identity">
+              <strong>${escapeHtml(user.email)}</strong>
+              <span>${escapeHtml(user.name || '이름 없음')}</span>
+            </div>
+            <div class="sf-user-meta">
+              ${requestedAt ? `<small>신청 ${escapeHtml(requestedAt)}</small>` : ''}
+              <small class="sf-user-note">${note ? escapeHtml(note) : '신청 메모 없음'}</small>
+            </div>
+            <p class="sf-user-next-action">${escapeHtml(userNextAction(user))}</p>
           </div>
           <mark data-status="${escapeHtml(user.status)}">${statusLabel(user.status)}</mark>
           <div class="sf-user-actions">
@@ -597,7 +621,10 @@
           ${isApproved ? `
             <div class="sf-approval-guide-preview" id="${previewId}" data-approval-preview hidden>
               <div class="sf-approval-guide-preview-head">
-                <strong>승인 안내문 미리보기</strong>
+                <div>
+                  <strong>승인 안내문 미리보기</strong>
+                  <small>[입장 코드]를 실제 코드로 바꾼 뒤 전달해 주세요.</small>
+                </div>
                 <button class="sf-copy-guide-button" type="button" data-copy-approval>미리보기 복사</button>
               </div>
               <pre data-approval-preview-copy></pre>

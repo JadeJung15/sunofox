@@ -2149,3 +2149,330 @@ body {
     opacity: 0.2;
   }
 }
+
+/* Official-site auth refresh: scoped to login/signup only. */
+.sf-auth-body:not(.sf-admin-body) {
+  background:
+    radial-gradient(circle at 18% 18%, rgba(255, 10, 91, 0.16), transparent 26rem),
+    radial-gradient(circle at 80% 16%, rgba(255, 255, 255, 0.055), transparent 20rem),
+    radial-gradient(circle at 74% 84%, rgba(34, 211, 238, 0.055), transparent 24rem),
+    #03030a;
+}
+
+.sf-auth-body:not(.sf-admin-body)::before {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 88px 88px;
+  mask-image: radial-gradient(circle at 52% 38%, #000 0%, transparent 76%);
+  opacity: 0.42;
+}
+
+.sf-auth-body:not(.sf-admin-body)::after {
+  background:
+    linear-gradient(90deg, rgba(255, 10, 91, 0.11), transparent 22%, transparent 78%, rgba(255, 10, 91, 0.08)),
+    repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.026) 0 1px, transparent 1px 7px);
+  opacity: 0.24;
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-shell {
+  min-height: 100svh;
+  padding: clamp(16px, 3vw, 34px);
+}
+
+.sf-auth-stage {
+  isolation: isolate;
+  width: min(100%, 1180px);
+  min-height: min(760px, calc(100svh - clamp(32px, 6vw, 68px)));
+  border-color: rgba(255, 255, 255, 0.105);
+  background:
+    linear-gradient(135deg, rgba(255, 10, 91, 0.07), transparent 31%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.01)),
+    rgba(0, 0, 0, 0.68);
+  gap: clamp(24px, 4vw, 54px);
+  box-shadow: 0 34px 100px rgba(0, 0, 0, 0.64);
+  padding: clamp(22px, 4vw, 48px);
+}
+
+.sf-auth-stage::before {
+  width: min(220px, 30vw);
+  height: 2px;
+  background: #ff0a5b;
+  box-shadow: 0 0 22px rgba(255, 10, 91, 0.5);
+}
+
+.sf-auth-stage::after {
+  opacity: 0.72;
+}
+
+.sf-auth-ambient-word {
+  position: absolute;
+  right: clamp(-18px, -1vw, 0px);
+  bottom: clamp(18px, 4vw, 52px);
+  z-index: -1;
+  color: rgba(255, 255, 255, 0.035);
+  font-family: "Roboto Condensed", Impact, "Arial Narrow", "Pretendard", sans-serif;
+  font-size: clamp(96px, 17vw, 210px);
+  font-weight: 950;
+  letter-spacing: -0.08em;
+  line-height: 0.78;
+  pointer-events: none;
+  text-transform: uppercase;
+  transform: scaleY(1.24);
+  white-space: nowrap;
+}
+
+.sf-auth-stage .sf-auth-brand {
+  align-self: start;
+  color: #ffffff;
+  font-weight: 950;
+  letter-spacing: -0.015em;
+}
+
+.sf-auth-brand-mark {
+  filter:
+    drop-shadow(0 0 14px rgba(255, 10, 91, 0.24))
+    drop-shadow(0 0 1px rgba(255, 255, 255, 0.5));
+}
+
+.sf-auth-copy {
+  gap: clamp(16px, 2.6vw, 28px);
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-kicker {
+  color: #ff0a5b;
+  letter-spacing: 0.2em;
+}
+
+.sf-auth-title {
+  max-width: 680px;
+  font-size: clamp(68px, 8.8vw, 132px);
+  letter-spacing: -0.025em;
+  line-height: 0.9;
+  text-wrap: balance;
+}
+
+.sf-auth-title span {
+  animation: sfAuthWordFlicker 1700ms ease both;
+}
+
+.sf-auth-title span:nth-child(2) {
+  animation-delay: 120ms;
+}
+
+.sf-auth-copy > p {
+  max-width: 460px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: clamp(15px, 1.35vw, 18px);
+}
+
+.sf-auth-route {
+  max-width: 560px;
+}
+
+.sf-auth-route span {
+  min-height: 32px;
+  background: rgba(255, 255, 255, 0.026);
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-card {
+  gap: 16px;
+  border-color: rgba(255, 255, 255, 0.145);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.074), rgba(255, 255, 255, 0.022)),
+    rgba(3, 3, 10, 0.82);
+  box-shadow: 0 24px 74px rgba(0, 0, 0, 0.5);
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-card h2 {
+  font-size: clamp(40px, 5.4vw, 56px);
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-card-head p,
+.sf-auth-body:not(.sf-admin-body) .sf-auth-footnote {
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 14px;
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-form input,
+.sf-auth-body:not(.sf-admin-body) .sf-auth-form textarea {
+  min-height: 52px;
+  border-color: rgba(255, 255, 255, 0.17);
+  background: rgba(255, 255, 255, 0.042);
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-form textarea {
+  min-height: 82px;
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-form input:hover,
+.sf-auth-body:not(.sf-admin-body) .sf-auth-form textarea:hover {
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-form button {
+  min-height: 54px;
+  position: relative;
+  overflow: hidden;
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-form button::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.26), transparent);
+  transform: translateX(-130%);
+  transition: transform 520ms ease;
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-form button:hover::after,
+.sf-auth-body:not(.sf-admin-body) .sf-auth-form button:focus-visible::after {
+  transform: translateX(130%);
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-message {
+  min-height: 48px;
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.sf-auth-result-panel:focus-visible {
+  outline: 2px solid rgba(255, 10, 91, 0.86);
+  outline-offset: 3px;
+}
+
+.sf-auth-bg span {
+  width: 4px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.74);
+  box-shadow:
+    0 0 16px rgba(255, 255, 255, 0.18),
+    0 0 22px rgba(255, 10, 91, 0.28);
+}
+
+@keyframes sfAuthWordFlicker {
+  0%,
+  16%,
+  23% {
+    opacity: 0.18;
+    text-shadow: none;
+  }
+
+  10%,
+  20%,
+  27% {
+    opacity: 0.82;
+  }
+
+  44%,
+  100% {
+    opacity: 1;
+    text-shadow:
+      0 0 1px rgba(255, 255, 255, 0.85),
+      0 0 20px rgba(255, 10, 91, 0.12);
+  }
+}
+
+@media (max-width: 1080px) {
+  .sf-auth-stage {
+    grid-template-columns: minmax(0, 1fr) minmax(330px, 0.86fr);
+    gap: clamp(24px, 4vw, 48px);
+  }
+
+  .sf-auth-title {
+    font-size: clamp(62px, 9.2vw, 108px);
+  }
+}
+
+@media (max-width: 900px) {
+  .sf-auth-stage {
+    min-height: auto;
+    grid-template-areas:
+      "brand"
+      "copy"
+      "card";
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+
+  .sf-auth-ambient-word {
+    right: -12px;
+    bottom: auto;
+    top: 90px;
+    font-size: clamp(82px, 23vw, 150px);
+  }
+
+  .sf-auth-title {
+    font-size: clamp(54px, 14vw, 92px);
+    line-height: 0.9;
+  }
+}
+
+@media (max-width: 560px) {
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-shell {
+    padding: 10px;
+  }
+
+  .sf-auth-stage {
+    min-height: calc(100svh - 20px);
+    padding: 20px 16px;
+    gap: 18px;
+  }
+
+  .sf-auth-stage .sf-auth-brand {
+    font-size: 18px;
+  }
+
+  .sf-auth-title {
+    font-size: clamp(42px, 14.5vw, 60px);
+    letter-spacing: -0.02em;
+    line-height: 0.94;
+    transform: none;
+  }
+
+  .sf-auth-copy > p {
+    font-size: 14px;
+    line-height: 1.58;
+  }
+
+  .sf-auth-route {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .sf-auth-route span {
+    width: fit-content;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-card {
+    gap: 15px;
+    padding: 20px 16px;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-card h2 {
+    font-size: clamp(32px, 11vw, 44px);
+    letter-spacing: -0.035em;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-card-head p,
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-footnote {
+    font-size: 13px;
+    line-height: 1.58;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-form {
+    gap: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sf-auth-title span {
+    animation: none;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-form button::after {
+    display: none;
+  }
+}

@@ -9,7 +9,7 @@
   <link rel="apple-touch-icon" href="/assets/sunofox-mask-icon-192.png">
   <link rel="stylesheet" href="/css/sf-auth.css">
 </head>
-<body class="sf-auth-body" data-auth-page="signup">
+<body class="sf-auth-body sf-auth-signup" data-auth-page="signup">
   <div class="sf-auth-bg" aria-hidden="true">
     <span></span>
     <span></span>
@@ -22,6 +22,7 @@
   </div>
   <main class="sf-auth-shell">
     <section class="sf-auth-stage" aria-labelledby="sf-signup-title">
+      <span class="sf-auth-ambient-word" aria-hidden="true">REQUEST</span>
       <a class="sf-auth-brand" href="/" aria-label="SunoFox home">
         <img src="/assets/sunofox-mask-icon-192.png" alt="" class="sf-auth-brand-mark" width="58" height="58" aria-hidden="true">
         <span>SUNOFOX</span>
@@ -40,7 +41,7 @@
         <div class="sf-auth-card-head">
           <span class="sf-auth-kicker">APPROVAL QUEUE</span>
           <h2>가입 신청</h2>
-          <p>사용하실 이메일과 표시 이름, 간단한 신청 메모를 남겨 주세요.</p>
+          <p>사용하실 이메일, 표시 이름, 간단한 신청 메모를 남겨 주세요.</p>
         </div>
         <form id="sf-signup-form" class="sf-auth-form">
           <label>
@@ -58,7 +59,7 @@
           <button type="submit">SEND REQUEST</button>
         </form>
         <div id="sf-auth-message" class="sf-auth-message" hidden></div>
-        <div class="sf-auth-result-panel" data-signup-result hidden aria-live="polite">
+        <div class="sf-auth-result-panel" data-signup-result hidden aria-live="polite" tabindex="-1">
           <span data-signup-result-kicker>REQUEST SENT</span>
           <strong data-signup-result-title>승인 대기 중입니다.</strong>
           <p data-signup-result-copy>신청이 접수되었습니다. 사이트 주인이 확인 후 승인하면 입장 코드로 로그인할 수 있습니다.</p>

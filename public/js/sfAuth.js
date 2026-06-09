@@ -103,6 +103,7 @@
       resultPanel.dataset.status = isApproved ? 'approved' : 'pending';
       resultPanel.hidden = false;
       resultPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      resultPanel.focus({ preventScroll: true });
     }
 
     form?.addEventListener('submit', async (event) => {

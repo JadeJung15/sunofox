@@ -1,7 +1,4 @@
 /admin/users /admin 302
-/community / 302
-/community/ / 302
-/community.html / 302
 /community-post / 302
 /community-post.html / 302
 /community-post/* / 302

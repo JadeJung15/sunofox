@@ -125,8 +125,9 @@ body.cursor-down .cursor-ring {
 .star-field {
   position: fixed;
   inset: 0;
-  z-index: 1;
+  z-index: 4;
   overflow: hidden;
+  opacity: 0.42;
   pointer-events: none;
 }
 
@@ -137,11 +138,11 @@ body.cursor-down .cursor-ring {
   width: 2px;
   height: 2px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.78);
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.42);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.16);
   opacity: 0;
-  animation: starRise calc(12s + var(--star-index) * 0.17s) linear infinite;
-  animation-delay: calc(var(--star-index) * -0.63s);
+  animation: starRise calc(16s + var(--star-index) * 0.24s) linear infinite;
+  animation-delay: calc(var(--star-index) * -0.78s);
 }
 
 .star-field span:nth-child(3n) {
@@ -175,6 +176,7 @@ body.cursor-down .cursor-ring {
 
 .site-main {
   position: relative;
+  z-index: 3;
   background:
     radial-gradient(circle at 50% 0%, rgba(255, 10, 91, 0.08), transparent 32rem),
     linear-gradient(180deg, #000000 0%, #020205 40%, #000000 100%);
@@ -357,19 +359,9 @@ body.menu-open .overlay-menu {
   font-family: var(--font-condensed);
 }
 
-.overlay-nav-text,
-.overlay-nav-blur {
+.overlay-nav-text {
   display: block;
-}
-
-.overlay-nav-blur {
-  position: absolute;
-  inset: 0 auto auto 0;
-  color: var(--pink);
-  filter: blur(10px);
-  opacity: 0;
-  transform: translateX(10px);
-  transition: opacity 180ms ease, transform 180ms ease;
+  transition: text-shadow 180ms ease;
 }
 
 body.menu-open .overlay-nav a {
@@ -404,11 +396,10 @@ body.menu-open .overlay-nav a:nth-child(12) { transition-delay: 615ms; }
   transition-delay: 0ms;
 }
 
-.overlay-nav a:hover .overlay-nav-blur,
-.overlay-nav a:focus-visible .overlay-nav-blur,
-.overlay-nav a.is-current .overlay-nav-blur {
-  opacity: 0.55;
-  transform: translateX(0);
+.overlay-nav a:hover .overlay-nav-text,
+.overlay-nav a:focus-visible .overlay-nav-text,
+.overlay-nav a.is-current .overlay-nav-text {
+  text-shadow: 0 0 18px rgba(255, 10, 91, 0.36);
 }
 
 .overlay-nav a.is-current {
@@ -493,10 +484,10 @@ body.menu-open .overlay-socials {
   z-index: -2;
   content: "";
   background:
-    radial-gradient(circle at 50% 48%, rgba(255, 10, 91, 0.16), transparent 24rem),
+    radial-gradient(circle at 50% 48%, rgba(255, 10, 91, 0.1), transparent 24rem),
     radial-gradient(circle at 48% 51%, rgba(255, 255, 255, 0.1) 0 1px, transparent 1px 100%);
-  background-size: auto, 88px 88px;
-  opacity: 0.72;
+  background-size: auto, 120px 120px;
+  opacity: 0.36;
 }
 
 .hero-stage::after {
@@ -1264,14 +1255,14 @@ body.menu-open .overlay-socials {
 .reveal.is-visible .glitch-heading::before,
 .reveal.is-visible.glitch-heading::before {
   color: var(--pink);
-  transform: translate(3px, -1px);
+  transform: translate(1px, -1px);
   animation: glitchGhost 580ms steps(2, end) both;
 }
 
 .reveal.is-visible .glitch-heading::after,
 .reveal.is-visible.glitch-heading::after {
   color: #44f2ff;
-  transform: translate(-3px, 1px);
+  transform: translate(-1px, 1px);
   animation: glitchGhost 460ms steps(2, end) both reverse;
 }
 
@@ -1351,23 +1342,23 @@ body.menu-open .overlay-socials {
 
 @keyframes glitchTextIn {
   0% {
-    filter: blur(3px);
+    filter: blur(2px);
     opacity: 0.1;
-    transform: translateY(18px) skewX(-8deg);
+    transform: translateY(14px) skewX(-3deg);
   }
 
   20% {
     filter: blur(0);
     opacity: 1;
-    transform: translateY(0) skewX(6deg);
+    transform: translateY(0) skewX(2deg);
   }
 
   36% {
-    transform: translateX(-4px);
+    transform: translateX(-2px);
   }
 
   48% {
-    transform: translateX(5px);
+    transform: translateX(2px);
   }
 
   62%,
@@ -1381,7 +1372,7 @@ body.menu-open .overlay-socials {
 @keyframes glitchGhost {
   0%,
   56% {
-    opacity: 0.75;
+    opacity: 0.28;
     clip-path: inset(0 0 72% 0);
   }
 

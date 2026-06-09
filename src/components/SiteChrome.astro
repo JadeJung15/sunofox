@@ -2,7 +2,7 @@
 import { artistLinks, menuItems } from '../data/siteContent.js';
 
 const { active = 'home' } = Astro.props;
-const starCount = 46;
+const starCount = 28;
 ---
 
 <div class="custom-cursor" aria-hidden="true">
@@ -45,7 +45,6 @@ const starCount = 46;
           aria-current={item.key === active ? 'page' : undefined}
         >
           <span class="overlay-nav-text">{item.label}</span>
-          <span class="overlay-nav-blur" aria-hidden="true">{item.label}</span>
         </a>
       ))}
     </nav>
@@ -91,7 +90,7 @@ const starCount = 46;
     });
 
     const revealItems = document.querySelectorAll('.reveal');
-    document.querySelectorAll('.hero-wordmark, .category-hero h1, .section-heading h2, .profile-copy h2, .coming-soon-panel h2').forEach((el) => {
+    document.querySelectorAll('.category-hero h1, .section-heading h2, .profile-copy h2, .coming-soon-panel h2').forEach((el) => {
       const label = el.textContent.trim();
       if (label) {
         el.classList.add('glitch-heading');

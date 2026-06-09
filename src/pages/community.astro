@@ -189,6 +189,12 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
         formMessage.dataset.type = type || 'info';
       }
 
+      function getFallbackPosts() {
+        return activeBoard === 'all'
+          ? initialPosts
+          : initialPosts.filter((post) => post.board === activeBoard || String(post.category || '').toLowerCase().includes(activeBoard));
+      }
+
       function renderPosts(posts) {
         if (!list) return;
         const normalized = posts.map(normalizePost);
@@ -229,13 +235,17 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
           if (!response.ok || !data.ok) {
             throw new Error(data.message || '게시글을 불러오지 못했습니다.');
           }
-          renderPosts(data.posts || []);
-          setMessage('', 'success');
+          const serverPosts = data.posts || [];
+          if (serverPosts.length) {
+            renderPosts(serverPosts);
+            setMessage('', 'success');
+            return;
+          }
+
+          renderPosts(getFallbackPosts());
+          setMessage('아직 실제 공개 게시글이 없어 예시 게시글을 표시하고 있습니다. 첫 게시글이 등록되면 이 목록이 자동으로 실제 게시글로 전환됩니다.', 'info');
         } catch (error) {
-          const fallback = activeBoard === 'all'
-            ? initialPosts
-            : initialPosts.filter((post) => post.board === activeBoard || String(post.category || '').toLowerCase().includes(activeBoard));
-          renderPosts(fallback);
+          renderPosts(getFallbackPosts());
           setMessage('현재는 샘플 게시글을 표시하고 있습니다. 정식 저장형 게시판은 서버 설정 완료 후 활성화됩니다.', 'info');
         }
       }

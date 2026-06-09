@@ -189,6 +189,44 @@
     }
   }
 
+  function approvalGuideText(user) {
+    const email = String(user?.email || '').trim();
+    const name = String(user?.name || '').trim();
+    const greeting = name && name !== '이름 없음' ? `${name}님, 안녕하세요.` : '안녕하세요.';
+    return [
+      greeting,
+      '',
+      'SunoFox 가입 승인이 완료되었습니다.',
+      '',
+      '아래 정보로 로그인해 주세요.',
+      '로그인 URL: https://sunofox.com/login',
+      `이메일: ${email}`,
+      '입장 코드: [입장 코드]',
+      '',
+      '로그인 후 팬게시판 글 작성과 SF Studio 접근이 가능합니다.',
+      '감사합니다.'
+    ].join('\n');
+  }
+
+  async function copyTextToClipboard(text) {
+    if (navigator.clipboard?.writeText && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      return;
+    }
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    textarea.setAttribute('readonly', '');
+    textarea.style.position = 'fixed';
+    textarea.style.top = '-9999px';
+    document.body.appendChild(textarea);
+    textarea.select();
+    const copied = document.execCommand('copy');
+    textarea.remove();
+    if (!copied) {
+      throw new Error('클립보드 복사를 지원하지 않는 환경입니다.');
+    }
+  }
+
   function getUserFilter() {
     return {
       status: document.getElementById('sf-admin-user-status')?.value || '',
@@ -319,7 +357,7 @@
       return;
     }
     root.innerHTML = filteredUsers.map((user) => `
-      <article class="sf-user-row" data-email="${escapeHtml(user.email)}">
+      <article class="sf-user-row" data-email="${escapeHtml(user.email)}" data-name="${escapeHtml(user.name || '')}">
         <div>
           <strong>${escapeHtml(user.email)}</strong>
           <span>${escapeHtml(user.name || '이름 없음')}</span>
@@ -330,10 +368,37 @@
           <button type="button" data-action="approve">승인</button>
           <button type="button" data-action="pending">대기</button>
           <button type="button" data-action="reject">거절</button>
+          ${user.status === 'approved' ? '<button class="sf-copy-guide-button" type="button" data-copy-approval>안내문 복사</button>' : ''}
         </div>
         <span class="sf-user-row-feedback" aria-live="polite"></span>
       </article>
     `).join('');
+
+    root.querySelectorAll('button[data-copy-approval]').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const row = button.closest('[data-email]');
+        if (!row) return;
+        button.disabled = true;
+        setUserRowFeedback(row, 'processing', '복사 중');
+        try {
+          await copyTextToClipboard(approvalGuideText({
+            email: row.dataset.email,
+            name: row.dataset.name
+          }));
+          setUserRowFeedback(row, 'complete', '안내문 복사 완료');
+          setMessage(`${row.dataset.email} 승인 안내문을 복사했습니다. [입장 코드]만 실제 코드로 바꿔 전달해 주세요.`, 'success');
+          await wait(900);
+          if (row?.isConnected && row.dataset.actionState === 'complete') {
+            clearUserRowFeedback(row);
+          }
+        } catch (error) {
+          setUserRowFeedback(row, 'error', '복사 실패');
+          setMessage(error.message, 'error');
+        } finally {
+          button.disabled = false;
+        }
+      });
+    });
 
     root.querySelectorAll('button[data-action]').forEach((button) => {
       button.addEventListener('click', async () => {

@@ -32,7 +32,7 @@ const starCount = 28;
   </button>
 </header>
 
-<aside id="overlayMenu" class="overlay-menu" aria-hidden="true">
+<aside id="overlayMenu" class="overlay-menu" role="dialog" aria-modal="true" aria-hidden="true" hidden inert>
   <div class="overlay-menu-inner">
     <nav class="overlay-nav" aria-label="Overlay navigation">
       {menuItems.map((item) => (
@@ -68,14 +68,39 @@ const starCount = 28;
     const menuButton = document.getElementById('menuButton');
     const overlayMenu = document.getElementById('overlayMenu');
     const menuLabel = menuButton?.querySelector('.menu-trigger-label');
+    const overlayLinks = Array.from(document.querySelectorAll('#overlayMenu a'));
 
-    function setMenu(open) {
-      document.body.classList.toggle('menu-open', open);
-      overlayMenu?.classList.toggle('is-open', open);
-      menuButton?.setAttribute('aria-expanded', String(open));
-      menuButton?.setAttribute('aria-label', open ? '전체 메뉴 닫기' : '전체 메뉴 열기');
-      overlayMenu?.setAttribute('aria-hidden', String(!open));
-      if (menuLabel) menuLabel.textContent = open ? 'CLOSE' : 'MENU';
+    if (menuButton?.dataset.siteChromeBound === 'true') return;
+    if (menuButton) menuButton.dataset.siteChromeBound = 'true';
+
+    function setMenu(open, options = {}) {
+      const isOpen = Boolean(open);
+      const { restoreFocus = true, focusFirstLink = true } = options;
+
+      document.body.classList.toggle('menu-open', isOpen);
+      menuButton?.setAttribute('aria-expanded', String(isOpen));
+      menuButton?.setAttribute('aria-label', isOpen ? '전체 메뉴 닫기' : '전체 메뉴 열기');
+      overlayMenu?.setAttribute('aria-hidden', String(!isOpen));
+      overlayMenu?.toggleAttribute('inert', !isOpen);
+      if (menuLabel) menuLabel.textContent = isOpen ? 'CLOSE' : 'MENU';
+
+      if (!overlayMenu) return;
+
+      if (isOpen) {
+        overlayMenu.hidden = false;
+        requestAnimationFrame(() => {
+          overlayMenu.classList.add('is-open');
+          if (focusFirstLink) overlayLinks[0]?.focus({ preventScroll: true });
+        });
+        return;
+      }
+
+      overlayMenu.classList.remove('is-open');
+      window.setTimeout(() => {
+        if (!document.body.classList.contains('menu-open')) overlayMenu.hidden = true;
+      }, 220);
+
+      if (restoreFocus) menuButton?.focus({ preventScroll: true });
     }
 
     menuButton?.addEventListener('click', (event) => {
@@ -88,8 +113,8 @@ const starCount = 28;
       if (event.target === overlayMenu) setMenu(false);
     });
 
-    document.querySelectorAll('#overlayMenu a').forEach((link) => {
-      link.addEventListener('click', () => setMenu(false));
+    overlayLinks.forEach((link) => {
+      link.addEventListener('click', () => setMenu(false, { restoreFocus: false }));
     });
 
     window.addEventListener('keydown', (event) => {

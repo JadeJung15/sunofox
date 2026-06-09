@@ -35,12 +35,13 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
           <div>
             <span data-detail-author></span>
             <span data-detail-comments></span>
-            <span data-detail-status></span>
+            <span class="community-status-chip" data-detail-status></span>
           </div>
           <div class="community-post-actions">
             <button type="button" data-detail-reaction data-value="1">LIKE <strong data-detail-likes>0</strong></button>
             <button type="button" data-detail-report-post>REPORT</button>
           </div>
+          <p class="community-sample-note" data-detail-sample-note hidden>SAMPLE 게시글은 팬게시판 운영 예시입니다. 실제 댓글, 좋아요, 신고는 가입 승인된 계정과 실제 게시글에서 사용할 수 있습니다.</p>
         </div>
       </article>
 
@@ -114,6 +115,7 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
       const commentMessage = document.querySelector('[data-detail-comment-message]');
       const reactionButton = document.querySelector('[data-detail-reaction]');
       const postReportButton = document.querySelector('[data-detail-report-post]');
+      const sampleNote = document.querySelector('[data-detail-sample-note]');
       const detailLoginLinks = [...document.querySelectorAll('[data-detail-login-link]')];
       const reportModal = document.querySelector('[data-community-report-modal]');
       const reportForm = document.querySelector('[data-community-report-form]');
@@ -156,7 +158,8 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
           date: formatDate(post.createdAt || post.date),
           comments: Number(post.commentCount ?? post.comments ?? 0),
           likes: Number(post.likeCount || 0),
-          status: post.pinned ? 'PINNED' : (post.status || 'PUBLISHED')
+          status: post.pinned ? 'PINNED' : (post.status || 'PUBLISHED'),
+          isSample: String(post.status || '').toUpperCase() === 'SAMPLE' || String(post.id || '').startsWith('idea-')
         };
       }
 
@@ -235,8 +238,12 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
         document.querySelector('[data-detail-body]').textContent = normalized.body;
         document.querySelector('[data-detail-author]').textContent = normalized.author;
         document.querySelector('[data-detail-comments]').textContent = `${normalized.comments} COMMENTS`;
-        document.querySelector('[data-detail-status]').textContent = normalized.status.toUpperCase();
+        const statusTarget = document.querySelector('[data-detail-status]');
+        statusTarget.textContent = normalized.status.toUpperCase();
+        statusTarget.classList.toggle('is-sample', normalized.isSample);
+        statusTarget.classList.toggle('is-pinned', normalized.status === 'PINNED');
         document.querySelector('[data-detail-likes]').textContent = String(normalized.likes);
+        if (sampleNote) sampleNote.hidden = !normalized.isSample;
         postRoot.hidden = false;
         commentsPanel.hidden = false;
       }
@@ -258,7 +265,7 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
 
       async function submitReport(targetType, targetId, button) {
         if (!targetId || targetId.startsWith('idea-') || targetId.startsWith('notice-')) {
-          setCommentMessage('예시 게시글은 신고할 수 없습니다.', 'error');
+          setCommentMessage('SAMPLE 게시글은 신고할 수 없습니다. 실제 팬 게시글에서 신고 기능을 사용할 수 있습니다.', 'error');
           return;
         }
 
@@ -286,6 +293,7 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
       async function loadComments() {
         if (!activePostId || activePostId.startsWith('idea-') || activePostId.startsWith('notice-')) {
           renderComments([]);
+          setCommentMessage('SAMPLE 게시글은 댓글 작성이 제한됩니다. 실제 팬 게시글에서 댓글을 남길 수 있습니다.', 'info');
           return;
         }
         const response = await fetch(`/api/community/comments?postId=${encodeURIComponent(activePostId)}`);
@@ -314,14 +322,14 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
             return;
           }
           renderPost(fallback);
-          setMessage('현재 예시 게시글 상세를 표시하고 있습니다.', 'info');
+          setMessage('현재 SAMPLE 안내용 게시글 상세를 표시하고 있습니다.', 'info');
           renderComments([]);
         }
       }
 
       reactionButton?.addEventListener('click', async () => {
         if (!activePostId || activePostId.startsWith('idea-') || activePostId.startsWith('notice-')) {
-          setCommentMessage('예시 게시글에는 좋아요를 남길 수 없습니다.', 'error');
+          setCommentMessage('SAMPLE 게시글에는 좋아요를 남길 수 없습니다. 실제 팬 게시글에서 반응을 남겨 주세요.', 'error');
           return;
         }
         reactionButton.disabled = true;
@@ -355,7 +363,7 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
       commentForm?.addEventListener('submit', async (event) => {
         event.preventDefault();
         if (!activePostId || activePostId.startsWith('idea-') || activePostId.startsWith('notice-')) {
-          setCommentMessage('예시 게시글에는 댓글을 남길 수 없습니다.', 'error');
+          setCommentMessage('SAMPLE 게시글에는 댓글을 남길 수 없습니다. 가입 승인 후 실제 팬 게시글에서 댓글을 남겨 주세요.', 'error');
           return;
         }
         const button = commentForm.querySelector('button[type="submit"]');

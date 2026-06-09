@@ -83,7 +83,10 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
 
         <section id="communityPosts" class="community-board reveal" aria-label="Fan board post list">
           <div class="community-board-head">
-            <span>POST LIST</span>
+            <div>
+              <span>POST LIST</span>
+              <p class="community-board-note">SAMPLE 배지가 붙은 글은 팬게시판 운영 예시입니다. 실제 팬 글은 가입 승인 후 작성되면 같은 목록에 표시됩니다.</p>
+            </div>
             <strong data-community-count>{communityPosts.length} POSTS</strong>
           </div>
 
@@ -102,7 +105,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
                   <div>
                     <span>{post.author}</span>
                     <span>{post.comments} COMMENTS</span>
-                    <span>{post.status}</span>
+                    <span class={`community-status-chip ${post.status === 'SAMPLE' ? 'is-sample' : post.status === 'PINNED' ? 'is-pinned' : ''}`}>{post.status}</span>
                   </div>
                   <div class="community-post-actions">
                     <a href={`/community/post/?id=${encodeURIComponent(post.id)}`}>READ POST</a>
@@ -117,6 +120,11 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
               <span>WRITE POST</span>
               <h2>팬 게시글 작성</h2>
               <p>승인된 계정으로 로그인하면 팬게시판에 글을 남길 수 있습니다. 모바일에서도 짧게 작성할 수 있도록 제목과 핵심 아이디어만 먼저 남겨 주세요.</p>
+            </div>
+
+            <div class="community-auth-note" role="note">
+              <span>APPROVAL REQUIRED</span>
+              <p>작성, 댓글, 좋아요, 신고는 가입 신청 후 사이트 주인 승인을 받은 계정에서 사용할 수 있습니다. 아직 승인 전이면 글을 읽고 아이디어를 정리해 두시면 됩니다.</p>
             </div>
 
             <div class="community-first-post-guide" aria-label="첫 게시글 작성 가이드">
@@ -220,32 +228,32 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
         all: {
           label: 'NO POSTS',
           title: '아직 공개된 팬 게시물이 없습니다.',
-          body: '승인된 계정으로 첫 인사, 감상 후기, 듣고 싶은 장르를 남기면 이 영역에 게시글이 표시됩니다.',
-          action: '첫 게시글 작성'
+          body: '승인된 계정으로 첫 인사, 감상 후기, 듣고 싶은 장르를 남기면 이 영역에 게시글이 표시됩니다. 아직 계정이 없다면 가입 신청부터 진행해 주세요.',
+          action: '작성 안내 보기'
         },
         free: {
           label: 'FREE TALK',
           title: '일반 게시물이 아직 없습니다.',
           body: '처음 방문한 인사, 좋아하는 곡, SunoFox에 바라는 이야기를 편하게 남겨 주세요.',
-          action: '일반 게시물 쓰기'
+          action: '일반 게시물 안내'
         },
         request: {
           label: 'TRACK REQUEST',
           title: '듣고 싶은 곡 제안이 아직 없습니다.',
           body: 'Anime OST, Symphonic DnB, Ethereal Pop처럼 듣고 싶은 장르와 장면을 구체적으로 적어 주세요.',
-          action: '곡 아이디어 제안'
+          action: '곡 아이디어 안내'
         },
         mood: {
           label: 'MOOD IDEAS',
           title: '분위기 제안이 아직 없습니다.',
           body: '비 오는 도시, 심해, 밤하늘, 전투 전 긴장감처럼 곡으로 듣고 싶은 감정을 남길 수 있습니다.',
-          action: '분위기 남기기'
+          action: '분위기 작성 안내'
         },
         feedback: {
           label: 'FEEDBACK',
           title: '감상 후기가 아직 없습니다.',
           body: '공개된 곡, 영상, 가사, 시리즈에 대한 짧은 감상이나 개선 의견을 남겨 주세요.',
-          action: '감상 후기 쓰기'
+          action: '감상 후기 안내'
         },
         notice: {
           label: 'NOTICE',
@@ -289,7 +297,8 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
           date: formatDate(post.createdAt || post.date),
           comments: Number(post.commentCount ?? post.comments ?? 0),
           likes: Number(post.likeCount || 0),
-          status: post.pinned ? 'PINNED' : (post.status || 'PUBLISHED')
+          status: post.pinned ? 'PINNED' : (post.status || 'PUBLISHED'),
+          isSample: String(post.status || '').toUpperCase() === 'SAMPLE' || String(post.id || '').startsWith('idea-')
         };
       }
 
@@ -400,7 +409,10 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
               <span>${escapeHtml(state.label)}</span>
               <strong>${escapeHtml(state.title)}</strong>
               <p>${escapeHtml(state.body)}</p>
-              <a href="#communityWrite">${escapeHtml(state.action)}</a>
+              <div class="community-empty-actions">
+                <a href="#communityWrite">${escapeHtml(state.action)}</a>
+                <a href="/signup">JOIN TO WRITE</a>
+              </div>
             </article>
           `;
           return;
@@ -422,7 +434,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
               <div>
                 <span>${escapeHtml(post.author)}</span>
                 <span>${post.comments} COMMENTS</span>
-                <span>${escapeHtml(post.status).toUpperCase()}</span>
+                <span class="community-status-chip ${post.isSample ? 'is-sample' : post.status === 'PINNED' ? 'is-pinned' : ''}">${escapeHtml(post.status).toUpperCase()}</span>
               </div>
               <div class="community-post-actions">
                 <a href="/community/post/?id=${encodeURIComponent(post.id)}">
@@ -444,7 +456,11 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
                 </div>
                 <form class="community-comment-form" data-community-comment-form data-post-id="${escapeHtml(post.id)}">
                   <textarea name="body" rows="3" maxlength="1200" required placeholder="댓글을 입력해 주세요. 승인된 계정만 작성할 수 있습니다."></textarea>
-                  <button type="submit">COMMENT</button>
+                  <div class="community-comment-actions">
+                    <button type="submit">COMMENT</button>
+                    <a href="/login?next=/community">LOGIN</a>
+                    <a href="/signup">JOIN</a>
+                  </div>
                 </form>
                 <p class="community-comment-message" data-community-comment-message role="status" aria-live="polite"></p>
               </div>
@@ -558,10 +574,10 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
 
           renderPosts(getFallbackPosts());
           const state = emptyStates[activeBoard] || emptyStates.all;
-          setMessage(`${state.title} 현재는 예시 또는 안내 게시글을 표시하고 있습니다.`, 'info');
+          setMessage(`${state.title} 현재는 SAMPLE 배지가 붙은 안내용 예시 게시글을 표시하고 있습니다.`, 'info');
         } catch (error) {
           renderPosts(getFallbackPosts());
-          setMessage('현재는 샘플 게시글을 표시하고 있습니다. 정식 저장형 게시판은 서버 설정 완료 후 활성화됩니다.', 'info');
+          setMessage('현재는 SAMPLE 배지가 붙은 예시 게시글을 표시하고 있습니다. 실제 게시글은 서버 연결 상태가 안정화되면 같은 목록에 표시됩니다.', 'info');
         }
       }
 

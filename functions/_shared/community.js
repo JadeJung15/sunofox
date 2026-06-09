@@ -33,6 +33,8 @@ function cleanText(value, maxLength) {
 }
 
 function getDisplayName(user, email) {
+  const nickname = cleanText(user?.nickname, 30);
+  if (nickname) return nickname;
   const name = cleanText(user?.name, 30);
   if (name) return name;
   return normalizeEmail(email).split('@')[0] || 'fan';

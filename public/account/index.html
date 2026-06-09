@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>SunoFox 계정 설정</title>
+  <link rel="icon" href="/assets/sunofox-app-icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="/assets/sunofox-app-icon-192.png">
+  <link rel="stylesheet" href="/css/sf-auth.css">
+</head>
+<body class="sf-auth-body sf-auth-account" data-auth-page="account">
+  <div class="sf-auth-bg" aria-hidden="true">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+  <main class="sf-auth-shell">
+    <section class="sf-auth-stage" aria-labelledby="sf-account-title">
+      <span class="sf-auth-ambient-word" aria-hidden="true">PROFILE</span>
+      <a class="sf-auth-brand" href="/" aria-label="SunoFox home">
+        <img src="/assets/sunofox-logo-mark.png" alt="" class="sf-auth-brand-mark" width="58" height="58" aria-hidden="true">
+        <span>SUNOFOX</span>
+      </a>
+      <div class="sf-auth-copy">
+        <span class="sf-auth-kicker">MY ACCOUNT</span>
+        <h1 id="sf-account-title" class="sf-auth-title"><span>MEMBER</span><span>PROFILE</span></h1>
+        <p>팬게시판에 표시되는 닉네임과 장착 아이콘을 관리합니다. 아이콘은 80종 중 하나를 선택할 수 있습니다.</p>
+        <div class="sf-auth-route" aria-label="Profile steps">
+          <span>01 NICKNAME</span>
+          <span>02 EQUIP ICON</span>
+          <span>03 COMMUNITY</span>
+        </div>
+      </div>
+      <div class="sf-auth-card sf-account-card">
+        <div class="sf-auth-card-head">
+          <span class="sf-auth-kicker">PROFILE SETTINGS</span>
+          <h2>정보 수정</h2>
+          <p data-account-email>계정 정보를 불러오는 중입니다.</p>
+        </div>
+        <form id="sf-account-form" class="sf-auth-form">
+          <label>
+            <span>닉네임</span>
+            <input id="sf-account-nickname" name="nickname" type="text" autocomplete="nickname" maxlength="24" required placeholder="팬게시판 표시 닉네임">
+          </label>
+          <input id="sf-account-icon-id" name="iconId" type="hidden" value="1">
+          <div class="sf-equipped-icon" aria-live="polite">
+            <span class="sf-user-icon" data-account-current-icon style="--icon-hue: 342">01</span>
+            <div>
+              <strong data-account-icon-label>ICON 01</strong>
+              <small>선택한 아이콘이 팬 프로필에 적용됩니다.</small>
+            </div>
+          </div>
+          <div class="sf-icon-grid" data-icon-grid aria-label="장착 가능한 팬 아이콘 80종"></div>
+          <button type="submit">SAVE PROFILE</button>
+        </form>
+        <div id="sf-auth-message" class="sf-auth-message" hidden></div>
+        <nav class="sf-auth-links">
+          <a href="/">HOME</a>
+          <a href="/community/">COMMUNITY</a>
+          <a href="/login">LOGIN</a>
+        </nav>
+      </div>
+    </section>
+  </main>
+  <script src="/js/sfAuth.js" defer></script>
+</body>
+</html>

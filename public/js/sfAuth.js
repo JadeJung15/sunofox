@@ -43,6 +43,9 @@
       if (original.includes('입장 코드가 올바르지')) {
         return '입장 코드가 일치하지 않습니다. 승인 안내문에 적힌 코드를 다시 확인해 주세요.';
       }
+      if (original.includes('비밀번호가 올바르지')) {
+        return '비밀번호가 일치하지 않습니다. 다시 입력해 주세요.';
+      }
       if (original.includes('가입 신청 후')) {
         return '가입 신청 내역이 아직 없습니다. JOIN REQUEST에서 먼저 신청해 주세요.';
       }
@@ -56,16 +59,16 @@
 
     if (context === 'signup') {
       if (original.includes('이미 승인된')) {
-        return '이미 승인된 이메일입니다. LOGIN 화면에서 이메일과 입장 코드를 입력해 주세요.';
+        return '이미 승인된 이메일입니다. LOGIN 화면에서 이메일과 비밀번호로 로그인해 주세요.';
       }
       if (original.includes('이미 신청된')) {
         return '이미 신청된 이메일입니다. 승인 안내가 도착할 때까지 잠시만 기다려 주세요.';
       }
       if (original.includes('가입 신청이 접수')) {
-        return '신청이 접수되었습니다. 승인 안내와 입장 코드를 받은 뒤 로그인해 주세요.';
+        return '신청이 접수되었습니다. 승인 후 이메일 비밀번호 또는 연결된 소셜 계정으로 로그인해 주세요.';
       }
       if (original.includes('관리자 이메일')) {
-        return '소유자 이메일은 승인 완료 상태입니다. LOGIN 화면에서 입장 코드를 입력해 주세요.';
+        return '소유자 이메일은 승인 완료 상태입니다. LOGIN 화면에서 로그인해 주세요.';
       }
     }
 
@@ -118,6 +121,20 @@
     return params.get('next') || '/';
   }
 
+  function getOAuthStatusMessage() {
+    const status = new URLSearchParams(window.location.search).get('oauth') || '';
+    const messages = {
+      pending: ['소셜 계정 신청이 접수되었습니다. 사이트 주인 승인 후 로그인할 수 있습니다.', 'pending'],
+      'missing-google': ['Google 로그인 환경변수가 아직 설정되지 않았습니다. 관리자에게 Google OAuth 키 설정을 요청해 주세요.', 'error'],
+      'missing-kakao': ['Kakao 로그인 환경변수가 아직 설정되지 않았습니다. 관리자에게 Kakao REST API 키 설정을 요청해 주세요.', 'error'],
+      'state-error': ['소셜 로그인 세션이 만료되었습니다. 다시 시도해 주세요.', 'error'],
+      'google-error': ['Google 로그인 처리 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.', 'error'],
+      'kakao-error': ['Kakao 로그인 처리 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.', 'error'],
+      unsupported: ['지원하지 않는 소셜 로그인 방식입니다.', 'error']
+    };
+    return messages[status] || null;
+  }
+
   async function requestJson(url, options) {
     const response = await fetch(url, {
       ...options,
@@ -136,8 +153,26 @@
     return data;
   }
 
+  function iconHue(iconId) {
+    const id = Number.parseInt(iconId || 1, 10);
+    return (id * 37) % 360;
+  }
+
+  function iconLabel(iconId) {
+    return `ICON ${String(iconId).padStart(2, '0')}`;
+  }
+
+  function iconMarkup(iconId) {
+    const id = Number.parseInt(iconId || 1, 10);
+    return `<span class="sf-user-icon" style="--icon-hue: ${iconHue(id)}">${String(id).padStart(2, '0')}</span>`;
+  }
+
   function bindLogin() {
     const form = document.getElementById('sf-login-form');
+    const oauthStatus = getOAuthStatusMessage();
+    if (oauthStatus) {
+      setMessage(oauthStatus[0], oauthStatus[1]);
+    }
     form?.addEventListener('submit', async (event) => {
       event.preventDefault();
       const button = form.querySelector('button[type="submit"]');
@@ -148,6 +183,7 @@
           method: 'POST',
           body: JSON.stringify({
             email: document.getElementById('sf-login-email')?.value,
+            password: document.getElementById('sf-login-password')?.value,
             code: document.getElementById('sf-login-code')?.value,
             next: getNext()
           })
@@ -180,13 +216,13 @@
       if (resultTitle) resultTitle.textContent = isApproved ? '승인이 완료되었습니다.' : '승인 대기 중입니다.';
       if (resultCopy) {
         resultCopy.textContent = isApproved
-          ? '이미 승인된 이메일입니다. LOGIN 화면에서 이메일과 입장 코드를 입력해 주세요.'
-          : '신청이 접수되었습니다. 승인 안내와 입장 코드를 받은 뒤 로그인해 주세요.';
+          ? '이미 승인된 이메일입니다. LOGIN 화면에서 이메일과 비밀번호로 로그인해 주세요.'
+          : '신청이 접수되었습니다. 승인 후 이메일 비밀번호 또는 연결된 소셜 계정으로 로그인할 수 있습니다.';
       }
       if (resultDetail) {
         resultDetail.textContent = isApproved
-          ? '입장 코드는 승인 안내문에서 확인할 수 있습니다. 안내문을 받지 못했다면 사이트 주인에게 다시 문의해 주세요.'
-          : '사이트 주인이 신청 내용을 확인한 뒤 승인 안내문과 입장 코드를 전달합니다. 같은 이메일로 다시 신청하면 현재 상태를 확인할 수 있습니다.';
+          ? '로그인 후 MY ACCOUNT에서 닉네임과 장착 아이콘을 바꿀 수 있습니다.'
+          : '가입 시 80종 아이콘 중 하나가 랜덤으로 배정됩니다. 로그인 후 MY ACCOUNT에서 닉네임과 장착 아이콘을 바꿀 수 있습니다.';
       }
       resultPanel.dataset.status = isApproved ? 'approved' : 'pending';
       resultPanel.hidden = false;
@@ -205,7 +241,9 @@
           method: 'POST',
           body: JSON.stringify({
             email: document.getElementById('sf-signup-email')?.value,
-            name: document.getElementById('sf-signup-name')?.value,
+            nickname: document.getElementById('sf-signup-nickname')?.value,
+            password: document.getElementById('sf-signup-password')?.value,
+            passwordConfirm: document.getElementById('sf-signup-password-confirm')?.value,
             note: document.getElementById('sf-signup-note')?.value
           })
         });
@@ -215,6 +253,89 @@
         form.reset();
       } catch (error) {
         setMessage(authFriendlyMessage(error.message, 'signup'), error.status === 'pending' ? 'pending' : 'error');
+      } finally {
+        button.disabled = false;
+      }
+    });
+  }
+
+  function renderAccountIcon(iconId) {
+    const current = document.querySelector('[data-account-current-icon]');
+    const label = document.querySelector('[data-account-icon-label]');
+    const hidden = document.getElementById('sf-account-icon-id');
+    const normalized = Math.max(1, Math.min(80, Number.parseInt(iconId || 1, 10)));
+    if (current) {
+      current.textContent = String(normalized).padStart(2, '0');
+      current.style.setProperty('--icon-hue', iconHue(normalized));
+    }
+    if (label) label.textContent = iconLabel(normalized);
+    if (hidden) hidden.value = String(normalized);
+    document.querySelectorAll('[data-icon-option]').forEach((button) => {
+      const active = Number.parseInt(button.dataset.iconOption, 10) === normalized;
+      button.classList.toggle('is-selected', active);
+      button.setAttribute('aria-pressed', String(active));
+    });
+  }
+
+  function renderIconGrid(selectedIconId) {
+    const grid = document.querySelector('[data-icon-grid]');
+    if (!grid) return;
+    grid.innerHTML = Array.from({ length: 80 }, (_, index) => {
+      const id = index + 1;
+      return `
+        <button type="button" class="sf-icon-option" data-icon-option="${id}" aria-pressed="false" aria-label="${iconLabel(id)} 장착">
+          ${iconMarkup(id)}
+        </button>
+      `;
+    }).join('');
+    grid.querySelectorAll('[data-icon-option]').forEach((button) => {
+      button.addEventListener('click', () => {
+        renderAccountIcon(button.dataset.iconOption);
+      });
+    });
+    renderAccountIcon(selectedIconId || 1);
+  }
+
+  async function loadAccount() {
+    const email = document.querySelector('[data-account-email]');
+    try {
+      const data = await requestJson('/api/auth/profile', { method: 'GET' });
+      const user = data.user || {};
+      if (email) {
+        email.textContent = `${user.email || ''} · ${user.status === 'approved' ? '승인 계정' : '승인 대기'}`;
+      }
+      const nickname = document.getElementById('sf-account-nickname');
+      if (nickname) nickname.value = user.nickname || user.name || '';
+      renderIconGrid(user.iconId || 1);
+      setMessage('프로필 정보를 불러왔습니다.', 'success');
+    } catch (error) {
+      setMessage('로그인 후 계정 정보를 수정할 수 있습니다.', 'error');
+      if (email) email.innerHTML = '<a href="/login?next=%2Faccount">로그인하러 가기</a>';
+      renderIconGrid(1);
+    }
+  }
+
+  function bindAccount() {
+    const form = document.getElementById('sf-account-form');
+    loadAccount();
+    form?.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const button = form.querySelector('button[type="submit"]');
+      button.disabled = true;
+      setMessage('프로필을 저장하는 중입니다.', 'info');
+      try {
+        const data = await requestJson('/api/auth/profile', {
+          method: 'PATCH',
+          body: JSON.stringify({
+            nickname: document.getElementById('sf-account-nickname')?.value,
+            iconId: document.getElementById('sf-account-icon-id')?.value
+          })
+        });
+        const user = data.user || {};
+        renderAccountIcon(user.iconId || 1);
+        setMessage('닉네임과 장착 아이콘을 저장했습니다.', 'success');
+      } catch (error) {
+        setMessage(error.message, 'error');
       } finally {
         button.disabled = false;
       }
@@ -345,11 +466,11 @@
       '',
       '로그인 URL: https://sunofox.com/login',
       `이메일: ${email}`,
-      '입장 코드: [입장 코드]',
-      '입장 코드 입력 위치: 로그인 화면의 "입장 코드" 칸',
+      '로그인 방법: 가입 시 설정한 비밀번호 또는 연결한 Google/Kakao 계정',
+      '프로필 설정: https://sunofox.com/account',
       '문의 방법: 로그인이나 승인 안내에 문제가 있으면 이 안내를 받은 채널로 회신해 주세요.',
       '',
-      '입장 코드는 본인만 사용해 주세요.',
+      '계정은 본인만 사용해 주세요.',
       '팬게시판에서는 듣고 싶은 분위기, 장르 아이디어, 감상 후기를 자유롭게 남겨 주세요.',
       '남겨 주신 이야기는 SunoFox 음악과 세계관을 확장하는 참고 의견으로 살펴보겠습니다.',
       '',
@@ -592,8 +713,8 @@
         <article class="sf-user-row" data-email="${escapeHtml(user.email)}" data-name="${escapeHtml(user.name || '')}" data-approval-sent="${guideSent ? 'true' : 'false'}" data-approval-sent-at="${escapeHtml(user.approvalGuideSentAt || '')}" data-approval-sent-by="${escapeHtml(guideSentBy)}">
           <div class="sf-user-main">
             <div class="sf-user-identity">
-              <strong>${escapeHtml(user.email)}</strong>
-              <span>${escapeHtml(user.name || '이름 없음')}</span>
+              <strong>${iconMarkup(user.iconId || 1)} ${escapeHtml(user.email)}</strong>
+              <span>${escapeHtml(user.nickname || user.name || '닉네임 없음')} · ${(user.providers || [user.provider || 'email']).map((provider) => escapeHtml(provider)).join(', ')}</span>
             </div>
             <div class="sf-user-meta">
               ${requestedAt ? `<small>신청 ${escapeHtml(requestedAt)}</small>` : ''}
@@ -626,7 +747,7 @@
               <div class="sf-approval-guide-preview-head">
                 <div>
                   <strong>승인 안내문 미리보기</strong>
-                  <small>[입장 코드]를 실제 코드로 바꾼 뒤 전달해 주세요.</small>
+                  <small>승인 후 이메일 비밀번호 또는 연결된 소셜 계정으로 로그인할 수 있습니다.</small>
                 </div>
                 <button class="sf-copy-guide-button" type="button" data-copy-approval>미리보기 복사</button>
               </div>
@@ -848,6 +969,28 @@
     return action || '처리';
   }
 
+  function postDetailLink(postId) {
+    return postId ? `/community/post/?id=${encodeURIComponent(postId)}` : '/community/';
+  }
+
+  function postActionNeedsConfirm(action) {
+    return ['hide', 'delete', 'publish'].includes(action);
+  }
+
+  function postActionConfirmMessage(action, postTitle) {
+    const title = postTitle || '선택한 게시글';
+    if (action === 'delete') {
+      return `"${title}" 게시글을 삭제 상태로 변경합니다.\n\n삭제 후 일반 팬 목록에는 보이지 않습니다. 원문과 댓글 수를 확인했다면 계속 진행해 주세요.`;
+    }
+    if (action === 'hide') {
+      return `"${title}" 게시글을 숨김 처리합니다.\n\n일반 팬 목록에서 내려가며, 관리자 화면에서는 다시 공개 처리할 수 있습니다.`;
+    }
+    if (action === 'publish') {
+      return `"${title}" 게시글을 다시 공개합니다.\n\n팬게시판에 노출해도 괜찮은 내용인지 확인했다면 계속 진행해 주세요.`;
+    }
+    return `"${title}" 게시글을 ${postActionLabel(action)} 처리합니다.`;
+  }
+
   function postNextAction(post) {
     if (post?.status === 'deleted') return '삭제된 게시글입니다. 필요 시 원문 확인 후 추가 조치가 없는지 점검해 주세요.';
     if (post?.status === 'hidden') return '숨김 상태입니다. 공개 복구가 필요한 글인지 내용과 작성자를 다시 확인해 주세요.';
@@ -899,10 +1042,15 @@
           </div>
           <strong>${escapeHtml(post.title)}</strong>
           <p>${escapeHtml(compactText(post.body, 180))}</p>
+          <div class="sf-admin-review-strip" aria-label="게시글 처리 전 확인">
+            <span>CHECK</span>
+            <small>상세 열기에서 원문과 댓글 수를 확인한 뒤 숨김/삭제를 처리해 주세요.</small>
+          </div>
           <p class="sf-admin-next-action">${escapeHtml(postNextAction(post))}</p>
           <small>${escapeHtml(post.authorEmail || '')}</small>
         </div>
         <div class="sf-post-admin-actions" aria-label="게시글 관리 액션">
+          <a class="sf-admin-detail-link" href="${escapeHtml(postDetailLink(post.id))}" target="_blank" rel="noopener noreferrer">상세 열기</a>
           <button class="${post.status === 'published' ? 'is-warning' : 'is-safe'}" type="button" data-post-action="${post.status === 'published' ? 'hide' : 'publish'}" aria-label="${escapeHtml(post.title)} ${post.status === 'published' ? '숨김 처리' : '공개 처리'}">${post.status === 'published' ? '숨김' : '공개'}</button>
           <button class="is-neutral" type="button" data-post-action="${post.pinned ? 'unpin' : 'pin'}" aria-label="${escapeHtml(post.title)} ${post.pinned ? '고정 해제' : '고정'}">${post.pinned ? '고정 해제' : '고정'}</button>
           <button class="is-danger" type="button" data-post-action="delete" aria-label="${escapeHtml(post.title)} 삭제">삭제</button>
@@ -914,17 +1062,24 @@
       button.addEventListener('click', async () => {
         const row = button.closest('[data-post-id]');
         if (!row) return;
+        const title = row.querySelector('.sf-post-admin-main > strong')?.textContent?.trim() || '선택한 게시글';
+        const action = button.dataset.postAction;
+        if (postActionNeedsConfirm(action) && !window.confirm(postActionConfirmMessage(action, title))) {
+          return;
+        }
         button.disabled = true;
+        setMessage(`${title}: ${postActionLabel(action)} 처리를 진행합니다.`, 'info');
         try {
           await requestJson('/api/community/posts', {
             method: 'PATCH',
             headers: adminHeaders(adminKey),
             body: JSON.stringify({
               id: row.dataset.postId,
-              action: button.dataset.postAction
+              action
             })
           });
-          showAdminToast(`게시글을 ${postActionLabel(button.dataset.postAction)} 처리했습니다.`, 'success', 'POST UPDATED');
+          setMessage(`${title}: ${postActionLabel(action)} 처리가 완료되었습니다.`, 'success');
+          showAdminToast(`게시글을 ${postActionLabel(action)} 처리했습니다.`, 'success', 'POST UPDATED');
           await loadAdminPostsSection(adminKey, adminHeaders(adminKey));
         } catch (error) {
           setMessage(error.message, 'error');
@@ -1440,5 +1595,6 @@
 
   if (page === 'login') bindLogin();
   if (page === 'signup') bindSignup();
+  if (page === 'account') bindAccount();
   if (page === 'admin') bindAdmin();
 }());

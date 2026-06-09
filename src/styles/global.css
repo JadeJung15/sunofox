@@ -4252,6 +4252,19 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
     max-width: none;
   }
 
+  .community-detail-post .community-post-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .community-detail-post .community-post-actions a,
+  .community-detail-post .community-post-actions button {
+    justify-content: center;
+    min-height: 38px;
+    width: 100%;
+  }
+
   .community-detail-comments {
     padding: 16px;
   }

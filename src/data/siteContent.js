@@ -52,6 +52,7 @@ export const menuItems = [
   { key: 'biography', label: 'BIOGRAPHY', href: '/biography' },
   { key: 'goods', label: 'GOODS', href: '/goods' },
   { key: 'contact', label: 'CONTACT', href: '/contact' },
+  { key: 'account', label: 'ACCOUNT', href: '/account', secondary: true },
   { key: 'studio', label: 'STUDIO', href: '/mv-studio', secondary: true }
 ];
 

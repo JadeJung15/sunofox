@@ -39,7 +39,9 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
           </div>
           <div class="community-post-actions">
             <button type="button" data-detail-reaction data-value="1">LIKE <strong data-detail-likes>0</strong></button>
+            <button type="button" data-detail-share>SHARE</button>
             <button type="button" data-detail-report-post>REPORT</button>
+            <a href="/community/">BACK TO LIST</a>
           </div>
           <p class="community-sample-note" data-detail-sample-note hidden>SAMPLE 게시글은 팬게시판 운영 예시입니다. 실제 댓글, 좋아요, 신고는 가입 승인된 계정과 실제 게시글에서 사용할 수 있습니다.</p>
         </div>
@@ -114,6 +116,7 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
       const commentForm = document.querySelector('[data-detail-comment-form]');
       const commentMessage = document.querySelector('[data-detail-comment-message]');
       const reactionButton = document.querySelector('[data-detail-reaction]');
+      const shareButton = document.querySelector('[data-detail-share]');
       const postReportButton = document.querySelector('[data-detail-report-post]');
       const sampleNote = document.querySelector('[data-detail-sample-note]');
       const detailLoginLinks = [...document.querySelectorAll('[data-detail-login-link]')];
@@ -189,6 +192,23 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
           return '커뮤니티 저장소 연결을 확인하는 중입니다. 잠시 후 다시 시도해 주세요.';
         }
         return raw;
+      }
+
+      async function copyCurrentPostLink() {
+        const url = new URL(window.location.href);
+        if (activePostId) url.searchParams.set('id', activePostId);
+        const shareUrl = url.toString();
+        const shareTitle = document.querySelector('[data-detail-title]')?.textContent?.trim() || 'SunoFox Fan Board';
+        if (navigator.share) {
+          await navigator.share({
+            title: shareTitle,
+            text: 'SunoFox 팬게시판 글을 공유합니다.',
+            url: shareUrl
+          });
+          return '공유 창을 열었습니다.';
+        }
+        await navigator.clipboard.writeText(shareUrl);
+        return '게시글 링크를 복사했습니다.';
       }
 
       function communityToastMeta(type, title) {
@@ -424,6 +444,21 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
 
       postReportButton?.addEventListener('click', async () => {
         await submitReport('post', activePostId, postReportButton);
+      });
+
+      shareButton?.addEventListener('click', async () => {
+        shareButton.disabled = true;
+        try {
+          const text = await copyCurrentPostLink();
+          setCommentMessage(text, 'success');
+          showCommunityToast(text, 'success', 'LINK READY');
+        } catch {
+          const text = '공유 링크를 만들지 못했습니다. 주소창의 URL을 직접 복사해 주세요.';
+          setCommentMessage(text, 'error');
+          showCommunityToast(text, 'error');
+        } finally {
+          shareButton.disabled = false;
+        }
       });
 
       commentsList?.addEventListener('click', async (event) => {

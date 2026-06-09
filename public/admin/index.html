@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
   <title>SunoFox 관리자</title>
-  <link rel="icon" href="./assets/sf-studio-icon-192.png">
-  <link rel="stylesheet" href="./css/sf-auth.css">
+  <link rel="icon" href="/assets/sf-studio-icon-192.png">
+  <link rel="stylesheet" href="/css/sf-auth.css">
 </head>
 <body class="sf-auth-body sf-admin-body" data-auth-page="admin">
   <main class="sf-admin-shell">
@@ -35,6 +35,10 @@
         <span>거절 계정</span>
         <strong id="sf-admin-rejected-count">0</strong>
       </article>
+      <article>
+        <span>공개 게시글</span>
+        <strong id="sf-admin-post-count">0</strong>
+      </article>
     </section>
 
     <section class="sf-admin-panel">
@@ -58,7 +62,28 @@
       </div>
       <div id="sf-admin-users" class="sf-admin-users"></div>
     </section>
+
+    <section class="sf-admin-panel">
+      <div class="sf-admin-section-head">
+        <div>
+          <span class="sf-auth-kicker">COMMUNITY POSTS</span>
+          <h2>팬게시판 게시글 관리</h2>
+        </div>
+        <button class="sf-admin-section-button" type="button" data-admin-refresh="community">새로고침</button>
+      </div>
+      <div id="sf-admin-community-posts" class="sf-admin-posts"></div>
+    </section>
+
+    <section class="sf-admin-panel">
+      <div class="sf-admin-section-head">
+        <div>
+          <span class="sf-auth-kicker">COMMUNITY COMMENTS</span>
+          <h2>댓글 관리</h2>
+        </div>
+      </div>
+      <div id="sf-admin-community-comments" class="sf-admin-comments"></div>
+    </section>
   </main>
-  <script src="./js/sfAuth.js" defer></script>
+  <script src="/js/sfAuth.js" defer></script>
 </body>
 </html>

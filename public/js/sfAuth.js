@@ -84,6 +84,25 @@
     return adminKey ? { 'x-admin-key': adminKey } : {};
   }
 
+  function formatDate(value) {
+    if (!value) return '';
+    const parsed = new Date(value);
+    if (Number.isNaN(parsed.getTime())) return String(value);
+    return new Intl.DateTimeFormat('ko-KR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit'
+    }).format(parsed);
+  }
+
+  function compactText(value, maxLength) {
+    const text = String(value || '').replace(/\s+/g, ' ').trim();
+    if (text.length <= maxLength) return text;
+    return `${text.slice(0, maxLength - 1)}…`;
+  }
+
   function renderUsers(users, adminKey) {
     const root = document.getElementById('sf-admin-users');
     if (!root) return;
@@ -155,15 +174,136 @@
     if (rejectedCount) rejectedCount.textContent = String(users.filter((user) => user.status === 'rejected').length);
   }
 
+  function renderCommunityStats(posts) {
+    const postCount = document.getElementById('sf-admin-post-count');
+    if (postCount) postCount.textContent = String(posts.filter((post) => post.status === 'published').length);
+  }
+
+  function renderCommunityPosts(posts, adminKey) {
+    const root = document.getElementById('sf-admin-community-posts');
+    if (!root) return;
+    if (!posts.length) {
+      root.innerHTML = '<p class="sf-empty">관리할 게시글이 없습니다.</p>';
+      return;
+    }
+
+    root.innerHTML = posts.map((post) => `
+      <article class="sf-post-admin-row" data-post-id="${escapeHtml(post.id)}">
+        <div class="sf-post-admin-main">
+          <div class="sf-post-admin-meta">
+            <mark data-status="${escapeHtml(post.status)}">${postStatusLabel(post.status)}</mark>
+            ${post.pinned ? '<mark data-status="pinned">고정</mark>' : ''}
+            <span>${escapeHtml(post.boardName || post.board || '게시판')}</span>
+            <span>${escapeHtml(formatDate(post.createdAt))}</span>
+            <span>${escapeHtml(post.authorName || 'Fan')}</span>
+            <span>댓글 ${Number(post.commentCount || 0)}</span>
+            <span>좋아요 ${Number(post.likeCount || 0)}</span>
+          </div>
+          <strong>${escapeHtml(post.title)}</strong>
+          <p>${escapeHtml(compactText(post.body, 180))}</p>
+          <small>${escapeHtml(post.authorEmail || '')}</small>
+        </div>
+        <div class="sf-post-admin-actions">
+          <button type="button" data-post-action="${post.status === 'published' ? 'hide' : 'publish'}">${post.status === 'published' ? '숨김' : '공개'}</button>
+          <button type="button" data-post-action="${post.pinned ? 'unpin' : 'pin'}">${post.pinned ? '고정 해제' : '고정'}</button>
+          <button type="button" data-post-action="delete">삭제</button>
+        </div>
+      </article>
+    `).join('');
+
+    root.querySelectorAll('button[data-post-action]').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const row = button.closest('[data-post-id]');
+        if (!row) return;
+        button.disabled = true;
+        try {
+          await requestJson('/api/community/posts', {
+            method: 'PATCH',
+            headers: adminHeaders(adminKey),
+            body: JSON.stringify({
+              id: row.dataset.postId,
+              action: button.dataset.postAction
+            })
+          });
+          await loadDashboard(adminKey);
+        } catch (error) {
+          setMessage(error.message, 'error');
+        } finally {
+          button.disabled = false;
+        }
+      });
+    });
+  }
+
+  function renderCommunityComments(comments, adminKey) {
+    const root = document.getElementById('sf-admin-community-comments');
+    if (!root) return;
+    if (!comments.length) {
+      root.innerHTML = '<p class="sf-empty">관리할 댓글이 없습니다.</p>';
+      return;
+    }
+
+    root.innerHTML = comments.map((comment) => `
+      <article class="sf-comment-admin-row" data-comment-id="${escapeHtml(comment.id)}">
+        <div class="sf-post-admin-main">
+          <div class="sf-post-admin-meta">
+            <mark data-status="${escapeHtml(comment.status)}">${postStatusLabel(comment.status)}</mark>
+            <span>${escapeHtml(formatDate(comment.createdAt))}</span>
+            <span>${escapeHtml(comment.authorName || 'Fan')}</span>
+            <span>${escapeHtml(comment.postTitle || '게시글')}</span>
+          </div>
+          <p>${escapeHtml(compactText(comment.body, 180))}</p>
+          <small>${escapeHtml(comment.authorEmail || '')}</small>
+        </div>
+        <div class="sf-post-admin-actions">
+          <button type="button" data-comment-action="${comment.status === 'published' ? 'hide' : 'publish'}">${comment.status === 'published' ? '숨김' : '공개'}</button>
+          <button type="button" data-comment-action="delete">삭제</button>
+        </div>
+      </article>
+    `).join('');
+
+    root.querySelectorAll('button[data-comment-action]').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const row = button.closest('[data-comment-id]');
+        if (!row) return;
+        button.disabled = true;
+        try {
+          await requestJson('/api/community/comments', {
+            method: 'PATCH',
+            headers: adminHeaders(adminKey),
+            body: JSON.stringify({
+              id: row.dataset.commentId,
+              action: button.dataset.commentAction
+            })
+          });
+          await loadDashboard(adminKey);
+        } catch (error) {
+          setMessage(error.message, 'error');
+        } finally {
+          button.disabled = false;
+        }
+      });
+    });
+  }
+
   async function loadDashboard(adminKey) {
     setMessage('관리 데이터를 불러오는 중입니다.', 'info');
     const headers = adminHeaders(adminKey);
-    const usersData = await requestJson('/api/admin/users', { method: 'GET', headers });
+    const [usersData, postsData, commentsData] = await Promise.all([
+      requestJson('/api/admin/users', { method: 'GET', headers }),
+      requestJson('/api/community/posts?admin=1&limit=120', { method: 'GET', headers }),
+      requestJson('/api/community/comments?admin=1', { method: 'GET', headers })
+    ]);
     const users = usersData.users || [];
+    const posts = postsData.posts || [];
+    const comments = commentsData.comments || [];
     setMessage('관리 데이터를 불러왔습니다.', 'success');
     renderStats(users);
+    renderCommunityStats(posts);
     renderAlerts(users);
     renderUsers(users, adminKey);
+    renderCommunityPosts(posts, adminKey);
+    renderCommunityComments(comments, adminKey);
   }
 
   function bindAdmin() {
@@ -180,6 +320,19 @@
       }
     });
 
+    document.querySelectorAll('[data-admin-refresh="community"]').forEach((button) => {
+      button.addEventListener('click', async () => {
+        button.disabled = true;
+        try {
+          await loadDashboard(getAdminKey());
+        } catch (error) {
+          setMessage(error.message, 'error');
+        } finally {
+          button.disabled = false;
+        }
+      });
+    });
+
     loadDashboard('').catch(() => {
       setMessage('소유자 계정으로 로그인했거나 관리자 키가 있으면 가입 신청을 관리할 수 있습니다.', 'info');
     });
@@ -189,6 +342,13 @@
     if (status === 'approved') return '승인';
     if (status === 'rejected') return '거절';
     return '대기';
+  }
+
+  function postStatusLabel(status) {
+    if (status === 'published') return '공개';
+    if (status === 'hidden') return '숨김';
+    if (status === 'deleted') return '삭제';
+    return status || '상태 없음';
   }
 
   function escapeHtml(value) {

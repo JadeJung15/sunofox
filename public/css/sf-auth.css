@@ -276,6 +276,26 @@ body {
   text-decoration: none;
 }
 
+.sf-admin-section-button {
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  color: #111827;
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 900;
+  min-height: 38px;
+  padding: 0 12px;
+}
+
+.sf-admin-section-button:disabled {
+  cursor: wait;
+  opacity: 0.55;
+}
+
 .sf-admin-key-form {
   align-items: end;
   grid-template-columns: minmax(220px, 1fr) auto;
@@ -536,5 +556,10 @@ body {
   .sf-admin-section-head {
     align-items: start;
     display: grid;
+  }
+
+  .sf-admin-section-button {
+    justify-content: center;
+    width: 100%;
   }
 }

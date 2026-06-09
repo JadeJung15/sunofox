@@ -2,6 +2,9 @@
 import SiteChrome from '../components/SiteChrome.astro';
 import Layout from '../layouts/Layout.astro';
 import { communityCategories, communityPosts } from '../data/siteContent.js';
+
+const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c');
+const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].includes(item.key));
 ---
 
 <Layout
@@ -15,51 +18,57 @@ import { communityCategories, communityPosts } from '../data/siteContent.js';
     <section class="category-hero reveal" aria-labelledby="communityTitle">
       <p class="section-kicker">COMMUNITY</p>
       <h1 id="communityTitle">FAN BOARD</h1>
-      <p>듣고 싶은 분위기, 장르, 캐릭터 아이디어를 함께 모으는 팬 소통 게시판입니다.</p>
+      <p>팬들이 감상, 아이디어, 듣고 싶은 분위기를 일반 게시물 리스트로 나누는 소통 공간입니다.</p>
     </section>
 
     <section class="category-content" aria-label="SunoFox fan board">
       <div class="community-status reveal">
-        <span>OPENING SOON</span>
-        <p>현재는 안내형 리스트로 먼저 공개합니다. 정식 작성, 댓글, 승인 기능은 별도 단계에서 안전하게 추가할 예정입니다.</p>
+        <span>OPEN BETA</span>
+        <p>게시글 목록은 누구나 볼 수 있습니다. 작성은 스팸 방지를 위해 가입 신청 후 사이트 주인 승인을 받은 계정부터 이용할 수 있습니다.</p>
       </div>
 
       <div class="community-flow reveal" aria-label="Fan board publishing flow">
         <article>
           <span>01</span>
-          <strong>WRITE</strong>
-          <p>팬이 듣고 싶은 장르, 분위기, 캐릭터 아이디어를 남깁니다.</p>
+          <strong>READ</strong>
+          <p>일반 게시물, 미디어 이야기, 이벤트, 공지를 공개 리스트로 확인합니다.</p>
         </article>
         <article>
           <span>02</span>
-          <strong>REVIEW</strong>
-          <p>스팸과 부적절한 내용을 막기 위해 운영자가 먼저 확인합니다.</p>
+          <strong>JOIN</strong>
+          <p>가입 신청 후 승인된 계정은 팬게시판에 직접 글을 남길 수 있습니다.</p>
         </article>
         <article>
           <span>03</span>
-          <strong>PUBLISH</strong>
-          <p>승인된 게시물만 팬게시판에 공개하고, 좋은 아이디어는 작업 참고로 모읍니다.</p>
+          <strong>TALK</strong>
+          <p>듣고 싶은 장르, 캐릭터 설정, 영상 감상, 작업 아이디어를 함께 모읍니다.</p>
         </article>
       </div>
 
       <div class="community-layout">
         <aside class="community-categories reveal" aria-label="Fan board categories">
           {communityCategories.map((item) => (
-            <a href="#communityPosts" class={item.key === 'all' ? 'is-current' : undefined}>
+            <button
+              type="button"
+              class={item.key === 'all' ? 'is-current' : undefined}
+              data-community-board={item.key}
+            >
               <span>{item.label}</span>
               <strong>{item.title}</strong>
               <p>{item.desc}</p>
-            </a>
+            </button>
           ))}
         </aside>
 
         <section id="communityPosts" class="community-board reveal" aria-label="Fan board post list">
           <div class="community-board-head">
             <span>POST LIST</span>
-            <strong>{communityPosts.length} POSTS</strong>
+            <strong data-community-count>{communityPosts.length} POSTS</strong>
           </div>
 
-          <div class="community-post-list">
+          <div class="community-board-message" data-community-message hidden></div>
+
+          <div class="community-post-list" data-community-list>
             {communityPosts.map((post) => (
               <article class="community-post-row">
                 <div class="community-post-meta">
@@ -80,12 +89,205 @@ import { communityCategories, communityPosts } from '../data/siteContent.js';
           </div>
 
           <div class="community-write-panel" aria-label="Fan board write status">
-            <span>WRITE ACCESS</span>
-            <p>팬 게시글 작성 기능은 스팸 방지, 운영자 승인, 신고/삭제 기준을 정리한 뒤 열겠습니다.</p>
-            <a class="main-button main-button-muted" href="/contact">SEND IDEA</a>
+            <div class="community-write-copy">
+              <span>WRITE POST</span>
+              <h2>일반 게시물 작성</h2>
+              <p>승인된 계정으로 로그인하면 팬게시판에 글을 남길 수 있습니다. 아직 승인 전이면 가입 신청을 먼저 보내 주세요.</p>
+            </div>
+
+            <form class="community-write-form" data-community-form>
+              <label>
+                <span>카테고리</span>
+                <select name="board" required>
+                  {categoryOptions.map((item) => (
+                    <option value={item.key}>{item.title}</option>
+                  ))}
+                </select>
+              </label>
+
+              <label>
+                <span>제목</span>
+                <input name="title" type="text" maxlength="90" required placeholder="예: 비 오는 도시 전투 OST가 듣고 싶어요" />
+              </label>
+
+              <label>
+                <span>내용</span>
+                <textarea name="body" rows="5" maxlength="5000" required placeholder="듣고 싶은 분위기, 장르, 캐릭터 아이디어, 감상 후기를 자유롭게 적어 주세요."></textarea>
+              </label>
+
+              <div class="community-write-actions">
+                <button class="main-button" type="submit">PUBLISH POST</button>
+                <a class="main-button main-button-muted" href="/login?next=/community">LOGIN</a>
+                <a class="main-button main-button-muted" href="/signup">JOIN</a>
+              </div>
+
+              <p class="community-form-message" data-community-form-message role="status" aria-live="polite"></p>
+            </form>
           </div>
         </section>
       </div>
     </section>
   </main>
+
+  <script id="communityInitialPosts" type="application/json" set:html={initialPostsJson}></script>
+  <script is:inline>
+    function initCommunityBoard() {
+      const list = document.querySelector('[data-community-list]');
+      const count = document.querySelector('[data-community-count]');
+      const message = document.querySelector('[data-community-message]');
+      const form = document.querySelector('[data-community-form]');
+      const formMessage = document.querySelector('[data-community-form-message]');
+      const filterButtons = [...document.querySelectorAll('[data-community-board]')];
+      const initialPostsNode = document.getElementById('communityInitialPosts');
+      const initialPosts = JSON.parse(initialPostsNode?.textContent || '[]');
+      let activeBoard = 'all';
+
+      function escapeHtml(value) {
+        return String(value || '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      }
+
+      function formatDate(value) {
+        if (!value) return '';
+        const parsed = new Date(value);
+        if (Number.isNaN(parsed.getTime())) return String(value);
+        return new Intl.DateTimeFormat('ko-KR', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit'
+        }).format(parsed).replace(/\s/g, '');
+      }
+
+      function normalizePost(post) {
+        return {
+          id: post.id || '',
+          board: post.board || '',
+          category: post.boardName || post.category || 'GENERAL',
+          title: post.title || '',
+          excerpt: post.body || post.excerpt || '',
+          author: post.authorName || post.author || 'Fan',
+          date: formatDate(post.createdAt || post.date),
+          comments: Number(post.commentCount ?? post.comments ?? 0),
+          status: post.pinned ? 'PINNED' : (post.status || 'PUBLISHED')
+        };
+      }
+
+      function setMessage(text, type) {
+        if (!message) return;
+        message.hidden = !text;
+        message.textContent = text || '';
+        message.dataset.type = type || 'info';
+      }
+
+      function setFormMessage(text, type) {
+        if (!formMessage) return;
+        formMessage.textContent = text || '';
+        formMessage.dataset.type = type || 'info';
+      }
+
+      function renderPosts(posts) {
+        if (!list) return;
+        const normalized = posts.map(normalizePost);
+        if (count) count.textContent = `${normalized.length} POSTS`;
+        if (!normalized.length) {
+          list.innerHTML = '<p class="community-empty">아직 공개된 게시물이 없습니다.</p>';
+          return;
+        }
+
+        list.innerHTML = normalized.map((post) => `
+          <article class="community-post-row">
+            <div class="community-post-meta">
+              <span>${escapeHtml(post.category)}</span>
+              <time datetime="${escapeHtml(String(post.date).replaceAll('.', '-'))}">${escapeHtml(post.date)}</time>
+            </div>
+            <div class="community-post-main">
+              <h2>${escapeHtml(post.title)}</h2>
+              <p>${escapeHtml(post.excerpt)}</p>
+              <div>
+                <span>${escapeHtml(post.author)}</span>
+                <span>${post.comments} COMMENTS</span>
+                <span>${escapeHtml(post.status).toUpperCase()}</span>
+              </div>
+            </div>
+          </article>
+        `).join('');
+      }
+
+      async function loadPosts() {
+        setMessage('게시글을 불러오는 중입니다.', 'info');
+        try {
+          const params = new URLSearchParams({
+            board: activeBoard,
+            limit: '30'
+          });
+          const response = await fetch(`/api/community/posts?${params.toString()}`);
+          const data = await response.json().catch(() => ({}));
+          if (!response.ok || !data.ok) {
+            throw new Error(data.message || '게시글을 불러오지 못했습니다.');
+          }
+          renderPosts(data.posts || []);
+          setMessage('', 'success');
+        } catch (error) {
+          const fallback = activeBoard === 'all'
+            ? initialPosts
+            : initialPosts.filter((post) => post.board === activeBoard || String(post.category || '').toLowerCase().includes(activeBoard));
+          renderPosts(fallback);
+          setMessage('현재는 샘플 게시글을 표시하고 있습니다. 정식 저장형 게시판은 서버 설정 완료 후 활성화됩니다.', 'info');
+        }
+      }
+
+      filterButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          activeBoard = button.dataset.communityBoard || 'all';
+          filterButtons.forEach((item) => item.classList.toggle('is-current', item === button));
+          loadPosts();
+        });
+      });
+
+      form?.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const submitButton = form.querySelector('button[type="submit"]');
+        submitButton.disabled = true;
+        setFormMessage('게시글을 등록하는 중입니다.', 'info');
+
+        const data = new FormData(form);
+        try {
+          const response = await fetch('/api/community/posts', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({
+              board: data.get('board'),
+              title: data.get('title'),
+              body: data.get('body')
+            })
+          });
+          const result = await response.json().catch(() => ({}));
+          if (!response.ok || !result.ok) {
+            throw new Error(result.message || '게시글을 등록하지 못했습니다.');
+          }
+          form.reset();
+          activeBoard = 'all';
+          filterButtons.forEach((item) => item.classList.toggle('is-current', item.dataset.communityBoard === 'all'));
+          setFormMessage('게시글이 등록되었습니다.', 'success');
+          await loadPosts();
+        } catch (error) {
+          setFormMessage(`${error.message} 로그인 또는 가입 승인이 필요할 수 있습니다.`, 'error');
+        } finally {
+          submitButton.disabled = false;
+        }
+      });
+
+      loadPosts();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initCommunityBoard, { once: true });
+    } else {
+      initCommunityBoard();
+    }
+  </script>
 </Layout>

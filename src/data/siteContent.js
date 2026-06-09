@@ -330,37 +330,38 @@ export const communityCategories = [
     desc: 'SunoFox 팬들이 남기는 감상, 제안, 아이디어를 한곳에서 봅니다.'
   },
   {
-    key: 'mood',
-    label: 'MOOD REQUEST',
-    title: '분위기 요청',
-    desc: '듣고 싶은 장면, 감정, 계절감, 분위기를 제안하는 공간입니다.'
+    key: 'free',
+    label: 'GENERAL POSTS',
+    title: '일반 게시물',
+    desc: '팬들이 자유롭게 이야기하고 아이디어를 남기는 기본 게시판입니다.'
   },
   {
-    key: 'genre',
-    label: 'GENRE IDEA',
-    title: '장르 제안',
-    desc: 'Anime OST, DnB, Ethereal Pop 등 원하는 장르 방향을 남깁니다.'
+    key: 'media',
+    label: 'MEDIA TALK',
+    title: '미디어 이야기',
+    desc: '영상, 쇼츠, 썸네일, 플레이리스트 감상을 나누는 공간입니다.'
   },
   {
-    key: 'world',
-    label: 'WORLD / CHARACTER',
-    title: '세계관 아이디어',
-    desc: '캐릭터, 배경, 스토리, 시리즈 확장 아이디어를 모읍니다.'
+    key: 'event',
+    label: 'EVENT',
+    title: '이벤트',
+    desc: '참여형 이벤트, 신청, 팬 활동 안내를 모으는 게시판입니다.'
   },
   {
-    key: 'review',
-    label: 'LISTENING NOTE',
-    title: '감상 후기',
-    desc: '곡을 듣고 떠오른 장면과 감정을 자유롭게 남기는 공간입니다.'
+    key: 'notice',
+    label: 'NOTICE',
+    title: '공지',
+    desc: '운영자가 고정하는 커뮤니티 공지와 안내를 확인합니다.'
   }
 ];
 
 export const communityPosts = [
   {
     id: 'notice-001',
+    board: 'notice',
     category: 'NOTICE',
-    title: '팬게시판 준비 중입니다',
-    excerpt: '정식 작성 기능이 열리기 전까지, 이 페이지는 SunoFox 커뮤니티 방향을 보여주는 안내형 게시판으로 운영됩니다.',
+    title: '팬 커뮤니티를 베타로 열 준비를 하고 있습니다',
+    excerpt: '일반 게시물은 공개 리스트로 읽을 수 있고, 작성은 가입 승인된 계정부터 순차적으로 열 예정입니다.',
     author: 'SunoFox Team',
     date: '2026.06.09',
     comments: 0,
@@ -368,7 +369,8 @@ export const communityPosts = [
   },
   {
     id: 'idea-001',
-    category: 'MOOD REQUEST',
+    board: 'free',
+    category: 'GENERAL POSTS',
     title: '비 오는 도시에서 시작되는 전투 OST가 듣고 싶어요',
     excerpt: '처음에는 조용한 피아노로 시작하고, 후반부에는 Symphonic DnB로 터지는 분위기를 상상하고 있습니다.',
     author: 'Fan Idea',
@@ -378,7 +380,8 @@ export const communityPosts = [
   },
   {
     id: 'idea-002',
-    category: 'WORLD / CHARACTER',
+    board: 'free',
+    category: 'GENERAL POSTS',
     title: '이름없는 시리즈에 어울리는 주인공 설정 제안',
     excerpt: '기억을 잃은 여성 주인공이 밤의 도시에서 자신의 이름을 찾아가는 이야기와 잘 어울릴 것 같습니다.',
     author: 'Fan Idea',
@@ -388,7 +391,8 @@ export const communityPosts = [
   },
   {
     id: 'idea-003',
-    category: 'GENRE IDEA',
+    board: 'media',
+    category: 'MEDIA TALK',
     title: '몽환적인 심해 분위기의 Ethereal Pop도 좋을 것 같아요',
     excerpt: '심해 시리즈는 낮은 신스, 멀리서 들리는 코러스, 느린 드럼으로 더 깊은 분위기를 만들 수 있을 것 같습니다.',
     author: 'Fan Idea',

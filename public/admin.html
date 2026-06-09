@@ -23,6 +23,11 @@
           <span class="sf-auth-kicker">OWNER APPROVAL</span>
           <h1>SunoFox 관리자</h1>
           <p>가입 신청을 관리합니다. SF Studio와 관리자 기능은 소유자 계정에서만 사용할 수 있습니다.</p>
+          <div class="sf-admin-dashboard-meta" aria-label="관리 범위">
+            <span>Member approval</span>
+            <span>Community review</span>
+            <span>Owner only</span>
+          </div>
         </div>
       </div>
       <div class="sf-admin-head-actions">
@@ -50,11 +55,18 @@
       </article>
     </section>
 
-    <section class="sf-admin-panel">
+    <nav class="sf-admin-jump-nav" aria-label="관리 메뉴">
+      <a href="#admin-members">가입 신청</a>
+      <a href="#admin-posts">게시글</a>
+      <a href="#admin-comments">댓글</a>
+      <a href="#admin-reports">신고</a>
+    </nav>
+
+    <section class="sf-admin-panel" id="admin-access">
       <form id="sf-admin-key-form" class="sf-admin-key-form">
         <label>
           <span>관리자 키</span>
-          <input id="sf-admin-key" type="password" autocomplete="current-password" placeholder="선택 입력">
+          <input id="sf-admin-key" type="password" autocomplete="current-password" placeholder="소유자 세션이면 비워도 됩니다">
         </label>
         <button type="submit">목록 불러오기</button>
       </form>
@@ -62,7 +74,7 @@
       <div id="sf-admin-alerts" class="sf-admin-alerts"></div>
     </section>
 
-    <section class="sf-admin-panel">
+    <section class="sf-admin-panel" id="admin-members">
       <div class="sf-admin-section-head">
         <div>
           <span class="sf-auth-kicker">MEMBER REQUESTS</span>
@@ -95,7 +107,7 @@
       <div id="sf-admin-users" class="sf-admin-users"></div>
     </section>
 
-    <section class="sf-admin-panel">
+    <section class="sf-admin-panel" id="admin-posts">
       <div class="sf-admin-section-head">
         <div>
           <span class="sf-auth-kicker">COMMUNITY POSTS</span>
@@ -135,7 +147,7 @@
       <div id="sf-admin-community-posts" class="sf-admin-posts"></div>
     </section>
 
-    <section class="sf-admin-panel">
+    <section class="sf-admin-panel" id="admin-comments">
       <div class="sf-admin-section-head">
         <div>
           <span class="sf-auth-kicker">COMMUNITY COMMENTS</span>
@@ -163,7 +175,7 @@
       <div id="sf-admin-community-comments" class="sf-admin-comments"></div>
     </section>
 
-    <section class="sf-admin-panel">
+    <section class="sf-admin-panel" id="admin-reports">
       <div class="sf-admin-section-head">
         <div>
           <span class="sf-auth-kicker">COMMUNITY REPORTS</span>

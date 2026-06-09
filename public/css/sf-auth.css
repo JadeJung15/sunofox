@@ -1484,3 +1484,325 @@ body {
     transform: rotate(360deg);
   }
 }
+
+.sf-auth-body:not(.sf-admin-body) {
+  background:
+    radial-gradient(circle at 16% 18%, rgba(255, 10, 91, 0.18), transparent 28rem),
+    radial-gradient(circle at 78% 8%, rgba(255, 10, 91, 0.1), transparent 24rem),
+    radial-gradient(circle at 72% 82%, rgba(34, 211, 238, 0.08), transparent 26rem),
+    #03030a;
+}
+
+.sf-auth-body:not(.sf-admin-body)::after {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  content: "";
+  background:
+    linear-gradient(90deg, rgba(255, 10, 91, 0.12), transparent 18%, transparent 82%, rgba(255, 10, 91, 0.08)),
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: auto, 100% 5px;
+  opacity: 0.36;
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-shell {
+  align-items: center;
+  justify-content: center;
+}
+
+.sf-auth-stage {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: min(100%, 1140px);
+  min-height: min(760px, calc(100svh - 72px));
+  grid-template-areas:
+    "brand brand"
+    "copy card";
+  grid-template-columns: minmax(0, 1.14fr) minmax(360px, 0.78fr);
+  grid-template-rows: auto 1fr;
+  gap: clamp(28px, 5vw, 72px);
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background:
+    linear-gradient(135deg, rgba(255, 10, 91, 0.07), transparent 26%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.012)),
+    rgba(0, 0, 0, 0.64);
+  box-shadow: 0 38px 110px rgba(0, 0, 0, 0.62);
+  overflow: hidden;
+  padding: clamp(24px, 4.8vw, 64px);
+}
+
+.sf-auth-stage::before {
+  position: absolute;
+  top: 0;
+  left: clamp(24px, 4.8vw, 64px);
+  width: min(26vw, 230px);
+  height: 3px;
+  content: "";
+  background: #ff0a5b;
+  box-shadow: 0 0 22px rgba(255, 10, 91, 0.72);
+}
+
+.sf-auth-stage::after {
+  position: absolute;
+  right: -12vw;
+  bottom: -18vw;
+  width: 42vw;
+  aspect-ratio: 1;
+  content: "";
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255, 10, 91, 0.12), transparent 62%);
+  filter: blur(1px);
+  pointer-events: none;
+}
+
+.sf-auth-stage .sf-auth-brand {
+  grid-area: brand;
+  z-index: 1;
+  font-family: "Roboto Condensed", "Arial Narrow", "Pretendard", sans-serif;
+  font-size: clamp(18px, 2vw, 24px);
+  letter-spacing: -0.01em;
+}
+
+.sf-auth-copy {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-area: copy;
+  gap: clamp(18px, 2.8vw, 30px);
+  align-content: center;
+}
+
+.sf-auth-title {
+  display: grid;
+  margin: 0;
+  color: #ffffff;
+  font-family: "Roboto Condensed", Impact, "Arial Narrow", "Pretendard", sans-serif;
+  font-size: clamp(72px, 10vw, 146px);
+  font-weight: 950;
+  letter-spacing: -0.07em;
+  line-height: 0.76;
+  text-transform: uppercase;
+  transform: scaleY(1.16);
+  transform-origin: left center;
+}
+
+.sf-auth-title span {
+  display: block;
+  text-shadow:
+    0 0 1px rgba(255, 255, 255, 0.75),
+    0 0 18px rgba(255, 10, 91, 0.12);
+}
+
+.sf-auth-copy > p {
+  max-width: 520px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: clamp(16px, 1.7vw, 20px);
+  line-height: 1.7;
+  word-break: keep-all;
+}
+
+.sf-auth-route {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.sf-auth-route span {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.76);
+  font-family: "Roboto Condensed", "Arial Narrow", "Pretendard", sans-serif;
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0.14em;
+  padding: 0 12px;
+}
+
+.sf-auth-stage .sf-auth-card {
+  z-index: 1;
+  grid-area: card;
+  width: 100%;
+  max-width: none;
+  align-self: center;
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-card {
+  gap: 18px;
+  border-color: rgba(255, 255, 255, 0.16);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.085), rgba(255, 255, 255, 0.025)),
+    rgba(3, 3, 10, 0.78);
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-card::before {
+  left: 0;
+  width: 84px;
+  height: 3px;
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-card h2 {
+  margin: 0;
+  color: #ffffff;
+  font-family: "Roboto Condensed", "Arial Narrow", "Pretendard", sans-serif;
+  font-size: clamp(38px, 6vw, 58px);
+  font-weight: 950;
+  letter-spacing: -0.045em;
+  line-height: 0.9;
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-card-head p {
+  max-width: 360px;
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-form label {
+  gap: 9px;
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-form input,
+.sf-auth-body:not(.sf-admin-body) .sf-auth-form textarea {
+  border-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.048);
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-form button {
+  margin-top: 2px;
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-footnote {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.58);
+  line-height: 1.6;
+  word-break: keep-all;
+}
+
+.sf-auth-bg span:nth-child(4) {
+  left: 32%;
+  bottom: -18px;
+  animation-delay: -2s;
+  opacity: 0.48;
+}
+
+.sf-auth-bg span:nth-child(5) {
+  left: 45%;
+  bottom: -52px;
+  animation-delay: -6s;
+  opacity: 0.36;
+}
+
+.sf-auth-bg span:nth-child(6) {
+  left: 72%;
+  bottom: -36px;
+  animation-delay: -9s;
+  opacity: 0.52;
+}
+
+.sf-auth-bg span:nth-child(7) {
+  left: 92%;
+  bottom: -48px;
+  animation-delay: -11s;
+  opacity: 0.44;
+}
+
+.sf-auth-bg span:nth-child(8) {
+  left: 6%;
+  bottom: -44px;
+  animation-delay: -7s;
+  opacity: 0.32;
+}
+
+@media (max-width: 900px) {
+  .sf-auth-stage {
+    min-height: auto;
+    grid-template-areas:
+      "brand"
+      "copy"
+      "card";
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .sf-auth-title {
+    font-size: clamp(58px, 16vw, 104px);
+    line-height: 0.82;
+  }
+
+  .sf-auth-copy > p {
+    max-width: 640px;
+  }
+}
+
+@media (max-width: 560px) {
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-shell {
+    align-items: stretch;
+    padding: 12px;
+  }
+
+  .sf-auth-stage {
+    min-height: calc(100svh - 24px);
+    padding: 22px 18px;
+    gap: 20px;
+  }
+
+  .sf-auth-brand-mark {
+    width: 38px;
+    height: 38px;
+  }
+
+  .sf-auth-title {
+    font-size: clamp(46px, 17.5vw, 72px);
+    letter-spacing: -0.055em;
+    line-height: 0.86;
+    transform: scaleY(1.08);
+  }
+
+  .sf-auth-copy {
+    gap: 14px;
+  }
+
+  .sf-auth-copy > p {
+    font-size: 15px;
+    line-height: 1.62;
+  }
+
+  .sf-auth-route {
+    gap: 8px;
+  }
+
+  .sf-auth-route span {
+    min-height: 30px;
+    font-size: 10px;
+    padding: 0 10px;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-card {
+    padding: 22px 18px;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-card h2 {
+    font-size: clamp(34px, 12vw, 46px);
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-links a {
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sf-auth-bg span {
+    animation-duration: 1ms;
+    opacity: 0.2;
+  }
+}

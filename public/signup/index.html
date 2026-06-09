@@ -14,39 +14,56 @@
     <span></span>
     <span></span>
     <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
   </div>
   <main class="sf-auth-shell">
-    <section class="sf-auth-card">
+    <section class="sf-auth-stage" aria-labelledby="sf-signup-title">
       <a class="sf-auth-brand" href="/" aria-label="SunoFox home">
         <img src="/assets/sunofox-mask-icon-192.png" alt="" class="sf-auth-brand-mark" width="58" height="58" aria-hidden="true">
-        <span>SunoFox</span>
+        <span>SUNOFOX</span>
       </a>
-      <div class="sf-auth-card-head">
+      <div class="sf-auth-copy">
         <span class="sf-auth-kicker">MEMBER REQUEST</span>
-        <h1>가입 신청</h1>
-        <p>이메일을 신청하면 사이트 주인이 승인한 뒤 로그인할 수 있습니다.</p>
+        <h1 id="sf-signup-title" class="sf-auth-title"><span>JOIN</span><span>REQUEST</span></h1>
+        <p>팬 커뮤니티 작성과 SF Studio 접근은 승인된 멤버 계정부터 순차적으로 열립니다.</p>
+        <div class="sf-auth-route" aria-label="Approval steps">
+          <span>SUBMIT REQUEST</span>
+          <span>OWNER APPROVAL</span>
+          <span>ENTRY CODE</span>
+        </div>
       </div>
-      <form id="sf-signup-form" class="sf-auth-form">
-        <label>
-          <span>이메일</span>
-          <input id="sf-signup-email" name="email" type="email" autocomplete="email" required placeholder="email@example.com">
-        </label>
-        <label>
-          <span>이름</span>
-          <input id="sf-signup-name" name="name" type="text" autocomplete="name" placeholder="표시 이름">
-        </label>
-        <label>
-          <span>메모</span>
-          <textarea id="sf-signup-note" name="note" rows="3" placeholder="신청 목적을 간단히 적어 주세요."></textarea>
-        </label>
-        <button type="submit">신청하기</button>
-      </form>
-      <div id="sf-auth-message" class="sf-auth-message" hidden></div>
-      <p class="sf-auth-footnote">승인 전에는 로그인이 제한되며, 승인 후 안내받은 입장 코드로 접속합니다.</p>
-      <nav class="sf-auth-links">
-        <a href="/">홈</a>
-        <a href="/login">로그인</a>
-      </nav>
+      <div class="sf-auth-card">
+        <div class="sf-auth-card-head">
+          <span class="sf-auth-kicker">APPROVAL QUEUE</span>
+          <h2>가입 신청</h2>
+          <p>사용하실 이메일과 표시 이름, 간단한 신청 메모를 남겨 주세요.</p>
+        </div>
+        <form id="sf-signup-form" class="sf-auth-form">
+          <label>
+            <span>이메일</span>
+            <input id="sf-signup-email" name="email" type="email" autocomplete="email" required placeholder="email@example.com">
+          </label>
+          <label>
+            <span>이름</span>
+            <input id="sf-signup-name" name="name" type="text" autocomplete="name" placeholder="표시 이름">
+          </label>
+          <label>
+            <span>메모</span>
+            <textarea id="sf-signup-note" name="note" rows="3" placeholder="듣고 싶은 장르, 가입 목적, 활동명을 짧게 적어 주세요."></textarea>
+          </label>
+          <button type="submit">SEND REQUEST</button>
+        </form>
+        <div id="sf-auth-message" class="sf-auth-message" hidden></div>
+        <p class="sf-auth-footnote">승인 전에는 로그인이 제한되며, 승인 후 안내받은 입장 코드로 접속합니다.</p>
+        <nav class="sf-auth-links">
+          <a href="/">HOME</a>
+          <a href="/login">LOGIN</a>
+        </nav>
+      </div>
     </section>
   </main>
   <script src="/js/sfAuth.js" defer></script>

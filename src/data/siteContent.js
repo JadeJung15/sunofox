@@ -51,7 +51,6 @@ export const menuItems = [
   { key: 'profile', label: 'PROFILE', href: '/profile' },
   { key: 'biography', label: 'BIOGRAPHY', href: '/biography' },
   { key: 'goods', label: 'GOODS', href: '/goods' },
-  { key: 'membership', label: 'MEMBERSHIP', href: '/membership' },
   { key: 'contact', label: 'CONTACT', href: '/contact' },
   { key: 'studio', label: 'STUDIO', href: '/mv-studio', secondary: true }
 ];
@@ -83,15 +82,6 @@ export const comingSoonPages = {
     body: 'Album artwork, character visuals, and series marks are being prepared for future goods.',
     status: 'DESIGNING THE FIRST COLLECTION',
     items: ['Album art goods', 'Series logo goods', 'Digital wallpaper']
-  },
-  membership: {
-    key: 'membership',
-    kicker: 'MEMBERSHIP',
-    title: 'MEMBERSHIP',
-    label: 'MEMBERSHIP',
-    body: 'Early listening, behind notes, and member-only updates will be organized here.',
-    status: 'BUILDING THE MEMBER AREA',
-    items: ['Early listening', 'Behind notes', 'Member updates']
   }
 };
 

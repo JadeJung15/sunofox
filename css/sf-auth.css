@@ -3526,6 +3526,72 @@ body {
   border-color: rgba(134, 239, 172, 0.38);
 }
 
+.sf-admin-empty-state {
+  display: grid;
+  gap: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background:
+    linear-gradient(135deg, rgba(255, 10, 91, 0.1), transparent 52%),
+    rgba(255, 255, 255, 0.035);
+  padding: clamp(20px, 4vw, 28px);
+}
+
+.sf-admin-empty-state > span {
+  color: #ff0a5b;
+  font-family: "Roboto Condensed", "Arial Narrow", "Pretendard", sans-serif;
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0.16em;
+}
+
+.sf-admin-empty-state strong {
+  color: #ffffff;
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 950;
+  line-height: 1.14;
+  word-break: keep-all;
+}
+
+.sf-admin-empty-state p {
+  max-width: 680px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 14px;
+  line-height: 1.75;
+  word-break: keep-all;
+}
+
+.sf-admin-empty-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 6px;
+}
+
+.sf-admin-empty-actions a {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.035);
+  color: #ffffff;
+  font-family: "Roboto Condensed", "Arial Narrow", "Pretendard", sans-serif;
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  padding: 0 12px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.sf-admin-empty-actions a:hover,
+.sf-admin-empty-actions a:focus-visible {
+  border-color: rgba(255, 10, 91, 0.72);
+  background: rgba(255, 10, 91, 0.14);
+  transform: translateY(-1px);
+}
+
 @keyframes sfAuthFeedbackIn {
   from {
     opacity: 0;

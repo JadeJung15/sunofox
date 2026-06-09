@@ -32,6 +32,43 @@
     return { icon: 'i', title: 'PROCESSING' };
   }
 
+  function authFriendlyMessage(text, context) {
+    const original = String(text || '').trim();
+    if (!original) return '';
+
+    if (context === 'login') {
+      if (original.includes('입장 코드가 올바르지')) {
+        return '입장 코드가 맞지 않습니다. 승인 안내문에 적힌 코드를 다시 확인해 주세요.';
+      }
+      if (original.includes('가입 신청 후')) {
+        return '아직 가입 신청이 확인되지 않았습니다. JOIN REQUEST에서 먼저 신청해 주세요.';
+      }
+      if (original.includes('승인 대기')) {
+        return '가입 신청은 접수되어 있고 아직 승인 대기 중입니다. 승인 안내를 받은 뒤 로그인해 주세요.';
+      }
+      if (original.includes('승인되지 않은')) {
+        return '현재 승인되지 않은 계정입니다. 이메일을 확인하거나 사이트 주인에게 문의해 주세요.';
+      }
+    }
+
+    if (context === 'signup') {
+      if (original.includes('이미 승인된')) {
+        return '이미 승인된 이메일입니다. 로그인 화면에서 이메일과 입장 코드를 입력해 주세요.';
+      }
+      if (original.includes('이미 신청된')) {
+        return '이미 신청된 이메일입니다. 승인 안내를 받을 때까지 잠시만 기다려 주세요.';
+      }
+      if (original.includes('가입 신청이 접수')) {
+        return '가입 신청이 접수되었습니다. 승인 전에도 커뮤니티 글은 읽을 수 있고, 승인 후 글 작성과 SF Studio가 열립니다.';
+      }
+      if (original.includes('관리자 이메일')) {
+        return '소유자 이메일은 자동 승인되었습니다. 로그인 화면에서 입장 코드를 입력해 주세요.';
+      }
+    }
+
+    return original;
+  }
+
   function showAdminToast(text, type, title) {
     if (page !== 'admin') return;
     let toast = document.getElementById('sf-admin-toast');
@@ -114,7 +151,7 @@
         });
         window.location.assign(data.next || '/');
       } catch (error) {
-        setMessage(error.message, error.status === 'pending' ? 'pending' : 'error');
+        setMessage(authFriendlyMessage(error.message, 'login'), error.status === 'pending' ? 'pending' : 'error');
       } finally {
         button.disabled = false;
       }
@@ -140,7 +177,7 @@
       if (resultCopy) {
         resultCopy.textContent = isApproved
           ? '이미 승인된 이메일입니다. 로그인 화면에서 이메일과 입장 코드를 입력해 주세요.'
-          : '신청이 접수되었습니다. 사이트 주인이 확인 후 승인하면 입장 코드로 로그인할 수 있습니다.';
+          : '신청이 접수되었습니다. 커뮤니티는 읽을 수 있고, 글 작성과 SF Studio는 승인 후 입장 코드로 열립니다.';
       }
       resultPanel.dataset.status = isApproved ? 'approved' : 'pending';
       resultPanel.hidden = false;
@@ -164,11 +201,11 @@
           })
         });
         const messageType = data.status === 'approved' ? 'success' : data.status === 'pending' ? 'pending' : 'info';
-        setMessage(data.message || '가입 신청이 접수되었습니다.', messageType);
+        setMessage(authFriendlyMessage(data.message || '가입 신청이 접수되었습니다.', 'signup'), messageType);
         showSignupResult(data);
         form.reset();
       } catch (error) {
-        setMessage(error.message, error.status === 'pending' ? 'pending' : 'error');
+        setMessage(authFriendlyMessage(error.message, 'signup'), error.status === 'pending' ? 'pending' : 'error');
       } finally {
         button.disabled = false;
       }
@@ -472,11 +509,21 @@
     const filteredUsers = filterUsers(users);
     updateUserFilterSummary(users.length, filteredUsers.length);
     if (!users.length) {
-      root.innerHTML = '<p class="sf-empty">가입 신청이 없습니다.</p>';
+      root.innerHTML = adminEmptyState(
+        '가입 신청이 아직 없습니다.',
+        '새 팬이 신청하면 이 영역에서 승인, 대기 전환, 거절, 승인 안내문 복사를 바로 처리할 수 있습니다.',
+        [
+          { href: '/signup', label: '신청 화면 확인' },
+          { href: '/community/', label: '커뮤니티 확인' }
+        ]
+      );
       return;
     }
     if (!filteredUsers.length) {
-      root.innerHTML = '<p class="sf-empty">조건에 맞는 가입 신청이 없습니다.</p>';
+      root.innerHTML = adminEmptyState(
+        '조건에 맞는 가입 신청이 없습니다.',
+        '검색어 또는 상태 필터를 바꾸면 다른 신청 내역을 확인할 수 있습니다. 승인 대기만 보기 상태도 함께 확인해 주세요.'
+      );
       return;
     }
     root.innerHTML = filteredUsers.map((user, index) => {
@@ -589,6 +636,22 @@
         }
       });
     });
+  }
+
+  function adminEmptyState(title, copy, actions = []) {
+    const actionMarkup = actions.length
+      ? `<div class="sf-admin-empty-actions">${actions.map((action) => `
+          <a href="${escapeHtml(action.href)}">${escapeHtml(action.label)}</a>
+        `).join('')}</div>`
+      : '';
+    return `
+      <div class="sf-admin-empty-state">
+        <span>NO REQUESTS</span>
+        <strong>${escapeHtml(title)}</strong>
+        <p>${escapeHtml(copy)}</p>
+        ${actionMarkup}
+      </div>
+    `;
   }
 
   function renderAlerts(users) {

@@ -651,6 +651,23 @@ body {
   grid-template-columns: minmax(150px, 0.6fr) minmax(150px, 0.6fr) minmax(220px, 1fr) auto;
 }
 
+.sf-admin-user-filter {
+  grid-template-columns: minmax(150px, 0.45fr) minmax(220px, 1fr) auto auto;
+}
+
+.sf-admin-filter-form button.sf-admin-filter-reset {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #111827;
+}
+
+.sf-admin-filter-summary {
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 800;
+  margin: -4px 0 0;
+}
+
 .sf-admin-users {
   display: grid;
   gap: 10px;
@@ -1200,6 +1217,10 @@ body {
   box-shadow: 0 0 0 3px rgba(255, 10, 91, 0.14);
 }
 
+.sf-admin-body .sf-admin-filter-summary {
+  color: rgba(255, 255, 255, 0.58);
+}
+
 .sf-admin-body .sf-admin-key-form button,
 .sf-admin-body .sf-admin-post-form button,
 .sf-admin-body .sf-admin-filter-form button,
@@ -1227,6 +1248,12 @@ body {
 .sf-admin-body .sf-post-admin-actions button:nth-child(2) {
   border-color: rgba(255, 255, 255, 0.22);
   background: rgba(255, 255, 255, 0.1);
+}
+
+.sf-admin-body .sf-admin-filter-form button.sf-admin-filter-reset {
+  border-color: rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.075);
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .sf-admin-body .sf-user-actions button:nth-child(3),

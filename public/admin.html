@@ -69,6 +69,24 @@
           <h2>가입 신청 관리</h2>
         </div>
       </div>
+      <form id="sf-admin-user-filter" class="sf-admin-filter-form sf-admin-user-filter">
+        <label>
+          <span>상태</span>
+          <select id="sf-admin-user-status">
+            <option value="">전체</option>
+            <option value="pending">대기</option>
+            <option value="approved">승인</option>
+            <option value="rejected">거절</option>
+          </select>
+        </label>
+        <label>
+          <span>검색</span>
+          <input id="sf-admin-user-query" type="search" placeholder="이메일, 이름, 메모">
+        </label>
+        <button type="submit">필터 적용</button>
+        <button type="button" id="sf-admin-user-reset" class="sf-admin-filter-reset">초기화</button>
+      </form>
+      <p id="sf-admin-user-filter-summary" class="sf-admin-filter-summary">목록을 불러오면 필터를 사용할 수 있습니다.</p>
       <div id="sf-admin-users" class="sf-admin-users"></div>
     </section>
 

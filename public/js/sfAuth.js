@@ -1,6 +1,7 @@
 (function () {
   const page = document.body?.dataset.authPage;
   const message = document.getElementById('sf-auth-message');
+  let cachedUsers = [];
 
   function setMessage(text, type) {
     if (!message) return;
@@ -162,6 +163,45 @@
     }
   }
 
+  function getUserFilter() {
+    return {
+      status: document.getElementById('sf-admin-user-status')?.value || '',
+      query: document.getElementById('sf-admin-user-query')?.value.trim().toLowerCase() || ''
+    };
+  }
+
+  function filterUsers(users) {
+    const filter = getUserFilter();
+    return users.filter((user) => {
+      if (filter.status && user.status !== filter.status) {
+        return false;
+      }
+      if (!filter.query) {
+        return true;
+      }
+      const haystack = [
+        user.email,
+        user.name,
+        user.note,
+        statusLabel(user.status)
+      ].map((value) => String(value || '').toLowerCase()).join(' ');
+      return haystack.includes(filter.query);
+    });
+  }
+
+  function updateUserFilterSummary(totalCount, filteredCount) {
+    const summary = document.getElementById('sf-admin-user-filter-summary');
+    if (!summary) return;
+    const filter = getUserFilter();
+    if (!totalCount) {
+      summary.textContent = '가입 신청이 아직 없습니다.';
+      return;
+    }
+    const statusText = filter.status ? `${statusLabel(filter.status)} 상태` : '전체 상태';
+    const queryText = filter.query ? `, 검색어 "${filter.query}"` : '';
+    summary.textContent = `${statusText}${queryText}: ${filteredCount} / ${totalCount}건 표시`;
+  }
+
   function getCommunityPostQuery() {
     const params = new URLSearchParams({
       admin: '1',
@@ -204,11 +244,17 @@
   function renderUsers(users, adminKey) {
     const root = document.getElementById('sf-admin-users');
     if (!root) return;
+    const filteredUsers = filterUsers(users);
+    updateUserFilterSummary(users.length, filteredUsers.length);
     if (!users.length) {
       root.innerHTML = '<p class="sf-empty">가입 신청이 없습니다.</p>';
       return;
     }
-    root.innerHTML = users.map((user) => `
+    if (!filteredUsers.length) {
+      root.innerHTML = '<p class="sf-empty">조건에 맞는 가입 신청이 없습니다.</p>';
+      return;
+    }
+    root.innerHTML = filteredUsers.map((user) => `
       <article class="sf-user-row" data-email="${escapeHtml(user.email)}">
         <div>
           <strong>${escapeHtml(user.email)}</strong>
@@ -513,6 +559,7 @@
     const posts = postsData.posts || [];
     const comments = commentsData.comments || [];
     const reports = reportsData.reports || [];
+    cachedUsers = users;
     setMessage('관리 데이터를 불러왔습니다.', 'success');
     renderStats(users);
     renderCommunityStats(posts);
@@ -525,6 +572,8 @@
 
   function bindAdmin() {
     const form = document.getElementById('sf-admin-key-form');
+    const userFilterForm = document.getElementById('sf-admin-user-filter');
+    const userFilterReset = document.getElementById('sf-admin-user-reset');
     const filterForm = document.getElementById('sf-admin-community-filter');
     const commentFilterForm = document.getElementById('sf-admin-comment-filter');
     const reportFilterForm = document.getElementById('sf-admin-report-filter');
@@ -538,6 +587,27 @@
       } catch (error) {
         setMessage(error.message, 'error');
       }
+    });
+
+    userFilterForm?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      renderUsers(cachedUsers, getAdminKey());
+    });
+
+    userFilterForm?.addEventListener('input', () => {
+      renderUsers(cachedUsers, getAdminKey());
+    });
+
+    userFilterForm?.addEventListener('change', () => {
+      renderUsers(cachedUsers, getAdminKey());
+    });
+
+    userFilterReset?.addEventListener('click', () => {
+      const statusInput = document.getElementById('sf-admin-user-status');
+      const queryInput = document.getElementById('sf-admin-user-query');
+      if (statusInput) statusInput.value = '';
+      if (queryInput) queryInput.value = '';
+      renderUsers(cachedUsers, getAdminKey());
     });
 
     document.querySelectorAll('[data-admin-refresh="community"]').forEach((button) => {

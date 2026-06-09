@@ -19,6 +19,10 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
       <p class="section-kicker">COMMUNITY</p>
       <h1 id="communityTitle">FAN BOARD</h1>
       <p>팬들이 감상, 아이디어, 듣고 싶은 분위기를 일반 게시물 리스트로 나누는 소통 공간입니다.</p>
+      <div class="community-hero-actions" aria-label="Fan board quick actions">
+        <a class="main-button" href="#communityPosts">BROWSE POSTS</a>
+        <a class="main-button main-button-muted" href="/login?next=/community">LOGIN TO WRITE</a>
+      </div>
     </section>
 
     <section class="category-content" aria-label="SunoFox fan board">
@@ -93,12 +97,15 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
                   <time datetime={post.date.replaceAll('.', '-')}>{post.date}</time>
                 </div>
                 <div class="community-post-main">
-                  <h2>{post.title}</h2>
+                  <h2><a href={`/community/post/?id=${encodeURIComponent(post.id)}`}>{post.title}</a></h2>
                   <p>{post.excerpt}</p>
                   <div>
                     <span>{post.author}</span>
                     <span>{post.comments} COMMENTS</span>
                     <span>{post.status}</span>
+                  </div>
+                  <div class="community-post-actions">
+                    <a href={`/community/post/?id=${encodeURIComponent(post.id)}`}>READ POST</a>
                   </div>
                 </div>
               </article>
@@ -406,7 +413,11 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
               <time datetime="${escapeHtml(String(post.date).replaceAll('.', '-'))}">${escapeHtml(post.date)}</time>
             </div>
             <div class="community-post-main">
-              <h2>${escapeHtml(post.title)}</h2>
+              <h2>
+                <a href="/community/post/?id=${encodeURIComponent(post.id)}">
+                  ${escapeHtml(post.title)}
+                </a>
+              </h2>
               <p>${escapeHtml(post.excerpt)}</p>
               <div>
                 <span>${escapeHtml(post.author)}</span>
@@ -415,7 +426,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
               </div>
               <div class="community-post-actions">
                 <a href="/community/post/?id=${encodeURIComponent(post.id)}">
-                  DETAIL
+                  READ POST
                 </a>
                 <button type="button" data-community-reaction data-post-id="${escapeHtml(post.id)}" data-value="1">
                   LIKE <strong>${post.likes}</strong>

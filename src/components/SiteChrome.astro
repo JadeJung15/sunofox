@@ -2,12 +2,21 @@
 import { artistLinks, menuItems } from '../data/siteContent.js';
 
 const { active = 'home' } = Astro.props;
+const starCount = 46;
 ---
 
 <div class="custom-cursor" aria-hidden="true">
   <span class="cursor-dot"></span>
   <span class="cursor-ring"></span>
 </div>
+
+<div class="star-field" aria-hidden="true">
+  {Array.from({ length: starCount }).map((_, index) => (
+    <span style={`--star-index: ${index + 1}`}></span>
+  ))}
+</div>
+
+<p class="mobile-vertical-mark" aria-hidden="true">ANIME OST STUDIO</p>
 
 <header class="site-header" aria-label="SunoFox header">
   <a class:list={['site-logo', active === 'home' && 'is-current']} href="/" aria-label="SunoFox home">
@@ -35,7 +44,8 @@ const { active = 'home' } = Astro.props;
           href={item.href}
           aria-current={item.key === active ? 'page' : undefined}
         >
-          {item.label}
+          <span class="overlay-nav-text">{item.label}</span>
+          <span class="overlay-nav-blur" aria-hidden="true">{item.label}</span>
         </a>
       ))}
     </nav>
@@ -81,6 +91,14 @@ const { active = 'home' } = Astro.props;
     });
 
     const revealItems = document.querySelectorAll('.reveal');
+    document.querySelectorAll('.hero-wordmark, .category-hero h1, .section-heading h2, .profile-copy h2, .coming-soon-panel h2').forEach((el) => {
+      const label = el.textContent.trim();
+      if (label) {
+        el.classList.add('glitch-heading');
+        el.setAttribute('data-glitch', label);
+      }
+    });
+
     revealItems.forEach((el, index) => {
       el.style.setProperty('--reveal-delay', `${Math.min(index % 6, 5) * 70}ms`);
     });

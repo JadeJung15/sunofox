@@ -3073,7 +3073,15 @@ body {
   margin-top: 12px;
 }
 
-.sf-admin-member-guide span {
+.sf-admin-moderation-guide {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.sf-admin-member-guide span,
+.sf-admin-moderation-guide span {
   display: grid;
   gap: 5px;
   min-height: 74px;
@@ -3085,7 +3093,14 @@ body {
   padding: 12px;
 }
 
-.sf-admin-member-guide strong {
+.sf-admin-moderation-guide span {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.05), transparent 58%),
+    rgba(255, 255, 255, 0.024);
+}
+
+.sf-admin-member-guide strong,
+.sf-admin-moderation-guide strong {
   color: #ffffff;
   font-family: "Roboto Condensed", "Arial Narrow", "Pretendard", sans-serif;
   font-size: 12px;
@@ -3093,7 +3108,8 @@ body {
   letter-spacing: 0.12em;
 }
 
-.sf-admin-member-guide small {
+.sf-admin-member-guide small,
+.sf-admin-moderation-guide small {
   color: rgba(255, 255, 255, 0.62);
   font-size: 12px;
   line-height: 1.45;
@@ -3135,6 +3151,25 @@ body {
   line-height: 1.55;
   padding-left: 10px;
   word-break: keep-all;
+}
+
+.sf-admin-body .sf-admin-next-action {
+  max-width: 760px;
+  margin: 0;
+  border-left: 2px solid rgba(255, 10, 91, 0.58);
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 13px;
+  line-height: 1.55;
+  padding-left: 10px;
+  word-break: keep-all;
+}
+
+.sf-admin-body .sf-post-admin-main > strong {
+  letter-spacing: -0.01em;
+}
+
+.sf-admin-body .sf-post-admin-main small {
+  overflow-wrap: anywhere;
 }
 
 .sf-admin-body .sf-approval-guide-preview-head div {
@@ -3194,6 +3229,7 @@ body {
   .sf-admin-dashboard-meta,
   .sf-admin-jump-nav,
   .sf-admin-member-guide,
+  .sf-admin-moderation-guide,
   .sf-admin-body .sf-admin-head-actions,
   .sf-admin-status-tabs,
   .sf-admin-body .sf-admin-key-form,
@@ -3234,12 +3270,14 @@ body {
     font-size: 11px;
   }
 
-  .sf-admin-member-guide span {
+  .sf-admin-member-guide span,
+  .sf-admin-moderation-guide span {
     min-height: auto;
     padding: 10px;
   }
 
   .sf-admin-body .sf-user-next-action,
+  .sf-admin-body .sf-admin-next-action,
   .sf-auth-result-detail {
     font-size: 12px;
     line-height: 1.55;

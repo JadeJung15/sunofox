@@ -801,6 +801,26 @@
     return action || '처리';
   }
 
+  function postNextAction(post) {
+    if (post?.status === 'deleted') return '삭제된 게시글입니다. 필요 시 원문 확인 후 추가 조치가 없는지 점검해 주세요.';
+    if (post?.status === 'hidden') return '숨김 상태입니다. 공개 복구가 필요한 글인지 내용과 작성자를 다시 확인해 주세요.';
+    if (post?.pinned) return '상단 고정 게시글입니다. 공지성 유지가 필요한지 주기적으로 확인해 주세요.';
+    return '공개 상태입니다. 톤이 맞지 않으면 숨김 처리하고, 중요한 글이면 고정할 수 있습니다.';
+  }
+
+  function commentNextAction(comment) {
+    if (comment?.status === 'deleted') return '삭제된 댓글입니다. 같은 작성자의 반복 패턴이 있는지 확인해 주세요.';
+    if (comment?.status === 'hidden') return '숨김 상태입니다. 맥락 확인 후 공개 복구 또는 삭제를 결정해 주세요.';
+    return '공개 댓글입니다. 연결된 게시글 맥락과 표현 수위를 함께 확인해 주세요.';
+  }
+
+  function reportNextAction(report) {
+    if (report?.status === 'resolved') return '처리 완료 신고입니다. 대상 글/댓글 상태가 의도대로 정리됐는지 확인해 주세요.';
+    if (report?.status === 'dismissed') return '기각된 신고입니다. 같은 사유가 반복 접수되는지 추적해 주세요.';
+    if (report?.status === 'reviewing') return '검토 중 신고입니다. 대상 원문을 열어보고 처리 또는 기각으로 마무리해 주세요.';
+    return '새 신고입니다. 신고 사유와 대상 원문을 확인한 뒤 검토 상태로 전환해 주세요.';
+  }
+
   function renderCommunityPosts(posts, adminKey) {
     const root = document.getElementById('sf-admin-community-posts');
     if (!root) return;
@@ -832,12 +852,13 @@
           </div>
           <strong>${escapeHtml(post.title)}</strong>
           <p>${escapeHtml(compactText(post.body, 180))}</p>
+          <p class="sf-admin-next-action">${escapeHtml(postNextAction(post))}</p>
           <small>${escapeHtml(post.authorEmail || '')}</small>
         </div>
-        <div class="sf-post-admin-actions">
-          <button class="${post.status === 'published' ? 'is-warning' : 'is-safe'}" type="button" data-post-action="${post.status === 'published' ? 'hide' : 'publish'}">${post.status === 'published' ? '숨김' : '공개'}</button>
-          <button class="is-neutral" type="button" data-post-action="${post.pinned ? 'unpin' : 'pin'}">${post.pinned ? '고정 해제' : '고정'}</button>
-          <button class="is-danger" type="button" data-post-action="delete">삭제</button>
+        <div class="sf-post-admin-actions" aria-label="게시글 관리 액션">
+          <button class="${post.status === 'published' ? 'is-warning' : 'is-safe'}" type="button" data-post-action="${post.status === 'published' ? 'hide' : 'publish'}" aria-label="${escapeHtml(post.title)} ${post.status === 'published' ? '숨김 처리' : '공개 처리'}">${post.status === 'published' ? '숨김' : '공개'}</button>
+          <button class="is-neutral" type="button" data-post-action="${post.pinned ? 'unpin' : 'pin'}" aria-label="${escapeHtml(post.title)} ${post.pinned ? '고정 해제' : '고정'}">${post.pinned ? '고정 해제' : '고정'}</button>
+          <button class="is-danger" type="button" data-post-action="delete" aria-label="${escapeHtml(post.title)} 삭제">삭제</button>
         </div>
       </article>
     `).join('');
@@ -893,12 +914,14 @@
             <span>${escapeHtml(comment.authorName || 'Fan')}</span>
             <span>${escapeHtml(comment.postTitle || '게시글')}</span>
           </div>
+          <strong>댓글 원문</strong>
           <p>${escapeHtml(compactText(comment.body, 180))}</p>
+          <p class="sf-admin-next-action">${escapeHtml(commentNextAction(comment))}</p>
           <small>${escapeHtml(comment.authorEmail || '')}</small>
         </div>
-        <div class="sf-post-admin-actions">
-          <button class="${comment.status === 'published' ? 'is-warning' : 'is-safe'}" type="button" data-comment-action="${comment.status === 'published' ? 'hide' : 'publish'}">${comment.status === 'published' ? '숨김' : '공개'}</button>
-          <button class="is-danger" type="button" data-comment-action="delete">삭제</button>
+        <div class="sf-post-admin-actions" aria-label="댓글 관리 액션">
+          <button class="${comment.status === 'published' ? 'is-warning' : 'is-safe'}" type="button" data-comment-action="${comment.status === 'published' ? 'hide' : 'publish'}" aria-label="댓글 ${comment.status === 'published' ? '숨김 처리' : '공개 처리'}">${comment.status === 'published' ? '숨김' : '공개'}</button>
+          <button class="is-danger" type="button" data-comment-action="delete" aria-label="댓글 삭제">삭제</button>
         </div>
       </article>
     `).join('');
@@ -968,6 +991,7 @@
             </div>
             <strong>${escapeHtml(report.reason)}</strong>
             ${targetBody ? `<p>${escapeHtml(compactText(targetBody, 180))}</p>` : ''}
+            <p class="sf-admin-next-action">${escapeHtml(reportNextAction(report))}</p>
             <small>${escapeHtml(report.reporterEmail || '')}</small>
             <details class="sf-report-detail">
               <summary>신고 상세 확인</summary>
@@ -996,10 +1020,10 @@
               ${targetLink ? `<a class="sf-report-link" href="${escapeHtml(targetLink)}" target="_blank" rel="noopener noreferrer">게시글 열기</a>` : ''}
             </details>
           </div>
-          <div class="sf-post-admin-actions">
-            <button class="is-warning" type="button" data-report-status="reviewing">검토</button>
-            <button class="is-safe" type="button" data-report-status="resolved">처리</button>
-            <button class="is-neutral" type="button" data-report-status="dismissed">기각</button>
+          <div class="sf-post-admin-actions" aria-label="신고 관리 액션">
+            <button class="is-warning" type="button" data-report-status="reviewing" aria-label="신고 검토 상태로 변경">검토</button>
+            <button class="is-safe" type="button" data-report-status="resolved" aria-label="신고 처리 상태로 변경">처리</button>
+            <button class="is-neutral" type="button" data-report-status="dismissed" aria-label="신고 기각 상태로 변경">기각</button>
           </div>
         </article>
       `;

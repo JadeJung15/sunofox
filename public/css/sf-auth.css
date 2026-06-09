@@ -666,6 +666,20 @@ body {
   vertical-align: middle;
 }
 
+.sf-admin-author {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+}
+
+.sf-admin-author .sf-user-icon {
+  width: 26px;
+  height: 26px;
+  flex-basis: 26px;
+  font-size: 8px;
+}
+
 .sf-icon-grid {
   display: grid;
   max-height: min(360px, 42vh);

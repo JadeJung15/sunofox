@@ -2139,6 +2139,43 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   letter-spacing: 0.12em;
 }
 
+.community-post-main div span.community-author,
+.community-author {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+}
+
+.community-author-icon {
+  --icon-hue: 342;
+  display: inline-grid;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  place-items: center;
+  border: 1px solid hsla(var(--icon-hue), 92%, 68%, 0.58);
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 34% 28%, rgba(255, 255, 255, 0.72), transparent 0.24rem),
+    radial-gradient(circle at 66% 28%, rgba(255, 255, 255, 0.72), transparent 0.24rem),
+    linear-gradient(135deg, hsla(var(--icon-hue), 92%, 58%, 0.95), hsla(calc(var(--icon-hue) + 58), 92%, 44%, 0.62)),
+    #03030a;
+  box-shadow: 0 0 16px hsla(var(--icon-hue), 92%, 56%, 0.2);
+  color: #ffffff;
+  font-family: var(--font-condensed);
+  font-size: 9px;
+  font-weight: 950;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+.community-comment-row strong .community-author {
+  color: #ffffff;
+  font: inherit;
+  letter-spacing: inherit;
+}
+
 .community-post-main div span.community-status-chip,
 .community-status-chip {
   border-color: rgba(255, 255, 255, 0.2);

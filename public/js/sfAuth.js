@@ -1036,7 +1036,7 @@
             ${post.pinned ? '<mark data-status="pinned">고정</mark>' : ''}
             <span>${escapeHtml(post.boardName || post.board || '게시판')}</span>
             <span>${escapeHtml(formatDate(post.createdAt))}</span>
-            <span>${escapeHtml(post.authorName || 'Fan')}</span>
+            <span class="sf-admin-author">${iconMarkup(post.authorIconId || 1)} ${escapeHtml(post.authorName || 'Fan')}</span>
             <span>댓글 ${Number(post.commentCount || 0)}</span>
             <span>좋아요 ${Number(post.likeCount || 0)}</span>
           </div>
@@ -1113,7 +1113,7 @@
           <div class="sf-post-admin-meta">
             <mark data-status="${escapeHtml(comment.status)}">${postStatusLabel(comment.status)}</mark>
             <span>${escapeHtml(formatDate(comment.createdAt))}</span>
-            <span>${escapeHtml(comment.authorName || 'Fan')}</span>
+            <span class="sf-admin-author">${iconMarkup(comment.authorIconId || 1)} ${escapeHtml(comment.authorName || 'Fan')}</span>
             <span>${escapeHtml(comment.postTitle || '게시글')}</span>
           </div>
           <strong>댓글 원문</strong>

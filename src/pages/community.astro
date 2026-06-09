@@ -73,7 +73,10 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
                   <h2><a href={`/community/post/?id=${encodeURIComponent(post.id)}`}>{post.title}</a></h2>
                   <p>{post.excerpt}</p>
                   <div>
-                    <span>{post.author}</span>
+                    <span class="community-author">
+                      <span class="community-author-icon" style={`--icon-hue: ${((post.authorIconId || 1) * 37) % 360}`}>{String(post.authorIconId || 1).padStart(2, '0')}</span>
+                      <span>{post.author}</span>
+                    </span>
                     <span>{post.comments} COMMENTS</span>
                     <span class={`community-status-chip ${post.status === 'SAMPLE' ? 'is-sample' : post.status === 'PINNED' ? 'is-pinned' : ''}`}>{post.status}</span>
                   </div>
@@ -309,6 +312,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
           title: post.title || '',
           excerpt: post.body || post.excerpt || '',
           author: post.authorName || post.author || 'Fan',
+          authorIconId: Math.max(1, Math.min(80, Number.parseInt(post.authorIconId || post.iconId || 1, 10))),
           date: formatDate(post.createdAt || post.date),
           comments: Number(post.commentCount ?? post.comments ?? 0),
           likes: Number(post.likeCount || 0),
@@ -342,6 +346,20 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
           return '커뮤니티 저장소 연결을 확인하는 중입니다. 잠시 후 다시 시도해 주세요.';
         }
         return raw;
+      }
+
+      function iconHue(iconId) {
+        return (Number.parseInt(iconId || 1, 10) * 37) % 360;
+      }
+
+      function authorIconMarkup(iconId, label) {
+        const id = Math.max(1, Math.min(80, Number.parseInt(iconId || 1, 10)));
+        return `
+          <span class="community-author">
+            <span class="community-author-icon" style="--icon-hue: ${iconHue(id)}" aria-hidden="true">${String(id).padStart(2, '0')}</span>
+            <span>${escapeHtml(label || 'Fan')}</span>
+          </span>
+        `;
       }
 
       function communityToastMeta(type, title) {
@@ -520,7 +538,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
               </h2>
               <p>${escapeHtml(post.excerpt)}</p>
               <div>
-                <span>${escapeHtml(post.author)}</span>
+                ${authorIconMarkup(post.authorIconId, post.author)}
                 <span>${post.comments} COMMENTS</span>
                 <span class="community-status-chip ${post.isSample ? 'is-sample' : post.status === 'PINNED' ? 'is-pinned' : ''}">${escapeHtml(post.status).toUpperCase()}</span>
               </div>
@@ -566,7 +584,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
         }
         target.innerHTML = comments.map((comment) => `
           <article class="community-comment-row">
-            <strong>${escapeHtml(comment.authorName || 'Fan')}</strong>
+            <strong>${authorIconMarkup(comment.authorIconId || 1, comment.authorName || 'Fan')}</strong>
             <time datetime="${escapeHtml(comment.createdAt || '')}">${escapeHtml(formatDate(comment.createdAt))}</time>
             <p>${escapeHtml(comment.body || '')}</p>
             <button type="button" data-community-report-comment data-comment-id="${escapeHtml(comment.id)}">REPORT</button>

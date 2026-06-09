@@ -4,6 +4,7 @@ import {
   json,
   kvListPrefix,
   normalizeEmail,
+  normalizeUserIconId,
   requireAdminAccess,
   verifySession
 } from './auth.js';
@@ -60,7 +61,17 @@ function normalizeBoard(value) {
   return board === 'all' || BOARDS.has(board) ? board : 'all';
 }
 
-function publicPost(row) {
+async function resolveAuthorIconId(env, email, cache) {
+  const normalized = normalizeEmail(email);
+  if (!normalized) return 1;
+  if (cache?.has(normalized)) return cache.get(normalized);
+  const user = await getUser(env, normalized).catch(() => null);
+  const iconId = normalizeUserIconId(user?.iconId || 1);
+  cache?.set(normalized, iconId);
+  return iconId;
+}
+
+async function publicPost(env, row, cache) {
   return {
     id: row.id,
     board: row.board_slug || 'free',
@@ -68,6 +79,7 @@ function publicPost(row) {
     title: row.title || '',
     body: row.body || '',
     authorName: row.author_name || 'fan',
+    authorIconId: await resolveAuthorIconId(env, row.author_email, cache),
     createdAt: row.created_at || '',
     updatedAt: row.updated_at || '',
     pinned: Boolean(row.pinned),
@@ -79,29 +91,30 @@ function publicPost(row) {
   };
 }
 
-function adminPost(row) {
+async function adminPost(env, row, cache) {
   return {
-    ...publicPost(row),
+    ...(await publicPost(env, row, cache)),
     authorEmail: row.author_email || '',
     deletedAt: row.deleted_at || null
   };
 }
 
-function publicComment(row) {
+async function publicComment(env, row, cache) {
   return {
     id: row.id,
     postId: row.post_id,
     body: row.body || '',
     authorName: row.author_name || 'fan',
+    authorIconId: await resolveAuthorIconId(env, row.author_email, cache),
     createdAt: row.created_at || '',
     updatedAt: row.updated_at || '',
     status: row.status || 'published'
   };
 }
 
-function adminComment(row) {
+async function adminComment(env, row, cache) {
   return {
-    ...publicComment(row),
+    ...(await publicComment(env, row, cache)),
     authorEmail: row.author_email || '',
     postTitle: row.post_title || '',
     deletedAt: row.deleted_at || null
@@ -228,7 +241,7 @@ export async function handleCommunityPostsGet(context) {
     }
     const row = await getPostRow(context.env, id, { admin });
     if (!row) return json({ ok: false, message: '게시글을 찾을 수 없습니다.' }, { status: 404 });
-    return json({ ok: true, post: admin ? adminPost(row) : publicPost(row) });
+    return json({ ok: true, post: admin ? await adminPost(context.env, row) : await publicPost(context.env, row) });
   }
 
   const board = normalizeBoard(url.searchParams.get('board'));
@@ -274,10 +287,11 @@ export async function handleCommunityPostsGet(context) {
     LIMIT ? OFFSET ?
   `).bind(...params, limit, offset).all();
 
+  const iconCache = new Map();
   return json({
     ok: true,
     boards: await getBoards(context.env),
-    posts: (results || []).map(admin ? adminPost : publicPost),
+    posts: await Promise.all((results || []).map((row) => admin ? adminPost(context.env, row, iconCache) : publicPost(context.env, row, iconCache))),
     page,
     limit,
     total: Number(countRow?.total || 0)
@@ -316,7 +330,7 @@ export async function handleCommunityPostsPost(context) {
   `).bind(id, board, title, content, actor.email, actor.authorName, pinned ? 1 : 0, now, now).run();
 
   const row = await getPostRow(context.env, id, { admin: false });
-  return json({ ok: true, post: publicPost(row) }, { status: 201 });
+  return json({ ok: true, post: await publicPost(context.env, row) }, { status: 201 });
 }
 
 export async function handleCommunityPostsPatch(context) {
@@ -356,7 +370,7 @@ export async function handleCommunityPostsPatch(context) {
   }
 
   const updated = await getPostRow(context.env, id, { admin: true });
-  return json({ ok: true, post: adminPost(updated) });
+  return json({ ok: true, post: await adminPost(context.env, updated) });
 }
 
 export async function handleCommunityCommentsGet(context) {
@@ -396,7 +410,8 @@ export async function handleCommunityCommentsGet(context) {
       ORDER BY c.created_at DESC
       LIMIT ?
     `).bind(...params, limit).all();
-    return json({ ok: true, comments: (results || []).map(adminComment) });
+    const iconCache = new Map();
+    return json({ ok: true, comments: await Promise.all((results || []).map((row) => adminComment(context.env, row, iconCache))) });
   }
 
   const postId = String(url.searchParams.get('postId') || '').trim();
@@ -407,7 +422,8 @@ export async function handleCommunityCommentsGet(context) {
     WHERE post_id = ? AND status = 'published'
     ORDER BY created_at ASC
   `).bind(postId).all();
-  return json({ ok: true, comments: (results || []).map(publicComment) });
+  const iconCache = new Map();
+  return json({ ok: true, comments: await Promise.all((results || []).map((row) => publicComment(context.env, row, iconCache))) });
 }
 
 export async function handleCommunityCommentsPost(context) {
@@ -435,7 +451,7 @@ export async function handleCommunityCommentsPost(context) {
   `).bind(id, postId, content, actor.email, actor.authorName, now, now).run();
 
   const row = await db.prepare('SELECT * FROM comments WHERE id = ?').bind(id).first();
-  return json({ ok: true, comment: publicComment(row) }, { status: 201 });
+  return json({ ok: true, comment: await publicComment(context.env, row) }, { status: 201 });
 }
 
 export async function handleCommunityCommentsPatch(context) {
@@ -469,7 +485,7 @@ export async function handleCommunityCommentsPatch(context) {
   }
 
   const row = await db.prepare('SELECT c.*, p.title AS post_title FROM comments c LEFT JOIN posts p ON p.id = c.post_id WHERE c.id = ?').bind(id).first();
-  return json({ ok: true, comment: adminComment(row) });
+  return json({ ok: true, comment: await adminComment(context.env, row) });
 }
 
 export async function handleCommunityReactionPost(context) {
@@ -513,7 +529,7 @@ export async function handleCommunityReactionPost(context) {
   }
 
   const updated = await getPostRow(context.env, postId, { admin: false });
-  return json({ ok: true, activeValue, post: publicPost(updated) });
+  return json({ ok: true, activeValue, post: await publicPost(context.env, updated) });
 }
 
 export async function handleCommunityReportsGet(context) {

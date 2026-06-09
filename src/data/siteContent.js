@@ -6,6 +6,8 @@ export const artistLinks = {
   spotify: 'https://open.spotify.com/artist/5fzr4xqw1e0c5cI8dVj11D',
   appleMusic: 'https://music.apple.com/kr/artist/%EC%88%98%EB%85%B8%ED%8F%AD%EC%8A%A4/1874158480',
   melon: 'https://www.melon.com/artist/song.htm?artistId=4881689',
+  kakaoMusic: 'kakaomusic://app/v11/store/artist?artist_id=14591489&title=%EC%88%98%EB%85%B8%ED%8F%AD%EC%8A%A4',
+  kakaoMusicWeb: 'https://music.kakao.com/share',
   bugs: 'https://music.bugs.co.kr/artist/14591489',
   flo: 'https://www.music-flo.com/detail/artist/413342628/track?roleType=ALL&sortType=POPULARITY',
   vibe: 'https://vibe.naver.com/artist/10398991',
@@ -21,6 +23,7 @@ export const platformLinks = [
   { label: 'SPOTIFY', title: 'Artist Page', href: artistLinks.spotify },
   { label: 'APPLE MUSIC', title: 'Artist Page', href: artistLinks.appleMusic },
   { label: 'MELON', title: 'Artist Page', href: artistLinks.melon },
+  { label: 'KAKAOMUSIC', title: 'Open in App', href: artistLinks.kakaoMusic },
   { label: 'BUGS', title: 'Artist Page', href: artistLinks.bugs },
   { label: 'FLO', title: 'Artist Page', href: artistLinks.flo },
   { label: 'VIBE', title: 'Artist Page', href: artistLinks.vibe },
@@ -278,6 +281,11 @@ export const media = [
     label: 'KOREA',
     title: 'Melon',
     href: artistLinks.melon
+  },
+  {
+    label: 'KOREA',
+    title: 'KakaoMusic',
+    href: artistLinks.kakaoMusic
   },
   {
     label: 'KOREA',

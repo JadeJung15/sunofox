@@ -2,7 +2,9 @@
 const { release } = Astro.props;
 const youtubeHref = release.youtubeId
   ? `https://www.youtube.com/watch?v=${release.youtubeId}`
-  : release.links.youtube;
+  : release.playlistHref || release.links.youtubePlaylists || release.links.youtube;
+const youtubeLabel = release.youtubeId ? 'YouTube' : 'Playlist';
+const trackKey = release.title.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
 ---
 
 <article class="release-card reveal">
@@ -24,9 +26,9 @@ const youtubeHref = release.youtubeId
   </div>
 
   <div class="release-actions" aria-label={`${release.title} platform links`}>
-    <a href={youtubeHref} target="_blank" rel="noopener noreferrer">YouTube</a>
-    <a href={release.links.spotify} target="_blank" rel="noopener noreferrer">Spotify</a>
-    <a href={release.links.melon} target="_blank" rel="noopener noreferrer">Melon</a>
-    <a href={release.links.appleMusic} target="_blank" rel="noopener noreferrer">Apple</a>
+    <a href={youtubeHref} target="_blank" rel="noopener noreferrer" data-track={`release_${trackKey}_youtube`}>{youtubeLabel}</a>
+    <a href={release.links.spotify} target="_blank" rel="noopener noreferrer" data-track={`release_${trackKey}_spotify`}>Spotify</a>
+    <a href={release.links.melon} target="_blank" rel="noopener noreferrer" data-track={`release_${trackKey}_melon`}>Melon</a>
+    <a href={release.links.appleMusic} target="_blank" rel="noopener noreferrer" data-track={`release_${trackKey}_apple`}>Apple</a>
   </div>
 </article>

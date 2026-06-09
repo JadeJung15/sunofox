@@ -22,6 +22,18 @@ const { page } = Astro.props;
         <p>{page.status}</p>
         <a class="micro-button" href="/">HOME</a>
       </div>
+
+      {page.items?.length > 0 && (
+        <div class="coming-soon-grid" aria-label={`${page.title} planned items`}>
+          {page.items.map((item, index) => (
+            <article class="coming-soon-card reveal">
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <strong>{item}</strong>
+              <p>준비가 완료되면 이 페이지에서 공식 업데이트로 공개됩니다.</p>
+            </article>
+          ))}
+        </div>
+      )}
     </section>
   </main>
 </Layout>

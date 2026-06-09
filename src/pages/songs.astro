@@ -2,7 +2,7 @@
 import ReleaseCard from '../components/ReleaseCard.astro';
 import SiteChrome from '../components/SiteChrome.astro';
 import Layout from '../layouts/Layout.astro';
-import { releases } from '../data/siteContent.js';
+import { artistLinks, releases } from '../data/siteContent.js';
 ---
 
 <Layout title="Songs / Novels | SunoFox Anime OST Studio">
@@ -19,6 +19,17 @@ import { releases } from '../data/siteContent.js';
     </section>
 
     <section class="category-content" aria-label="SunoFox release archive">
+      <div class="archive-toolbar reveal">
+        <div>
+          <span>9 TRACKS</span>
+          <strong>ARCHIVE vol.1</strong>
+          <p>이미지는 로컬 WebP 앨범아트 기준이며, YouTube ID가 없는 곡은 재생목록으로 연결됩니다.</p>
+        </div>
+        <a class="main-button" href={artistLinks.youtubePlaylists} target="_blank" rel="noopener noreferrer" data-track="songs_youtube_playlist">
+          PLAYLIST
+        </a>
+      </div>
+
       <div class="release-grid">
         {releases.map((release) => <ReleaseCard release={release} />)}
       </div>

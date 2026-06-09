@@ -4,7 +4,8 @@
     "build": "astro build && node scripts/version-auth-assets.mjs",
     "preview": "astro preview",
     "pages:dev": "npm run build && wrangler pages dev dist --compatibility-date=2026-06-07",
-    "deploy:preview": "npm run build && wrangler pages deploy dist --project-name sf-studio --branch astro-redesign"
+    "deploy:preview": "npm run build && wrangler pages deploy dist --project-name sf-studio --branch astro-redesign",
+    "deploy:production": "npm run build && wrangler pages deploy dist --project-name sf-studio --branch main"
   },
   "dependencies": {
     "@astrojs/sitemap": "latest",

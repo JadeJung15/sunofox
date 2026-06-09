@@ -60,36 +60,36 @@ export const comingSoonPages = {
     key: 'live',
     kicker: 'LIVE',
     title: 'LIVE',
-    label: '공연 / 라이브',
-    body: 'SunoFox의 라이브형 영상, 공개 일정, 온라인 프리미어 정보를 정리할 공간입니다.',
-    status: '라이브 콘텐츠 기획 중',
+    label: 'LIVE ARCHIVE',
+    body: 'Online premieres, listening sessions, and visual live updates will be collected here.',
+    status: 'PREPARING THE FIRST LIVE FILE',
     items: ['Online premiere schedule', 'Live session video', 'Setlist archive']
   },
   biography: {
     key: 'biography',
     kicker: 'BIOGRAPHY',
     title: 'BIOGRAPHY',
-    label: '창작 연보',
-    body: 'SunoFox 프로젝트의 시작, 시리즈별 세계관, 제작 방향을 시간순으로 정리할 예정입니다.',
-    status: '프로젝트 히스토리 준비 중',
+    label: 'PROJECT TIMELINE',
+    body: 'The origin of SunoFox, series notes, and production direction will be arranged as a timeline.',
+    status: 'EDITING THE PROJECT HISTORY',
     items: ['Project timeline', 'Series origin notes', 'Production direction']
   },
   goods: {
     key: 'goods',
     kicker: 'GOODS',
     title: 'GOODS',
-    label: '공식 굿즈',
-    body: '앨범 아트, 캐릭터 비주얼, 시리즈 로고를 활용한 굿즈 페이지를 준비하고 있습니다.',
-    status: '공식 상품 준비 중',
+    label: 'OFFICIAL GOODS',
+    body: 'Album artwork, character visuals, and series marks are being prepared for future goods.',
+    status: 'DESIGNING THE FIRST COLLECTION',
     items: ['Album art goods', 'Series logo goods', 'Digital wallpaper']
   },
   membership: {
     key: 'membership',
     kicker: 'MEMBERSHIP',
     title: 'MEMBERSHIP',
-    label: '팬 멤버십',
-    body: '신곡 선공개, 비하인드, 제작 노트, 팬 전용 업데이트를 모을 멤버십 공간입니다.',
-    status: '멤버십 구조 준비 중',
+    label: 'MEMBERSHIP',
+    body: 'Early listening, behind notes, and member-only updates will be organized here.',
+    status: 'BUILDING THE MEMBER AREA',
     items: ['Early listening', 'Behind notes', 'Member updates']
   }
 };

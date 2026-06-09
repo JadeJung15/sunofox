@@ -94,7 +94,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
 
           <div class="community-post-list" data-community-list>
             {communityPosts.map((post) => (
-              <article class="community-post-row">
+              <article class="community-post-row" data-post-id={post.id}>
                 <div class="community-post-meta">
                   <span>{post.category}</span>
                   <time datetime={post.date.replaceAll('.', '-')}>{post.date}</time>
@@ -171,6 +171,16 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
 
               <p class="community-form-message" data-community-form-message role="status" aria-live="polite"></p>
             </form>
+
+            <div class="community-published-panel" data-community-published-panel hidden>
+              <span>POST PUBLISHED</span>
+              <h3 data-community-published-title>게시글이 등록되었습니다.</h3>
+              <p>방금 작성한 글이 게시판 목록에 반영되었습니다. 상세 화면에서 댓글과 반응을 확인할 수 있습니다.</p>
+              <div class="community-published-actions">
+                <a href="/community/" data-community-published-link>방금 쓴 글 보기</a>
+                <a href="#communityPosts">목록에서 확인</a>
+              </div>
+            </div>
           </div>
         </section>
       </div>
@@ -217,6 +227,9 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
       const message = document.querySelector('[data-community-message]');
       const form = document.querySelector('[data-community-form]');
       const formMessage = document.querySelector('[data-community-form-message]');
+      const publishedPanel = document.querySelector('[data-community-published-panel]');
+      const publishedTitle = document.querySelector('[data-community-published-title]');
+      const publishedLink = document.querySelector('[data-community-published-link]');
       const filterButtons = [...document.querySelectorAll('[data-community-board]')];
       const initialPostsNode = document.getElementById('communityInitialPosts');
       const reportModal = document.querySelector('[data-community-report-modal]');
@@ -265,6 +278,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
       let activeBoard = getBoardFromUrl();
       let pendingReport = null;
       let reportReturnFocus = null;
+      let recentPostId = '';
 
       function escapeHtml(value) {
         return String(value || '')
@@ -313,6 +327,17 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
         if (!formMessage) return;
         formMessage.textContent = text || '';
         formMessage.dataset.type = type || 'info';
+      }
+
+      function setPublishedPanel(post) {
+        if (!publishedPanel) return;
+        if (!post?.id) {
+          publishedPanel.hidden = true;
+          return;
+        }
+        if (publishedTitle) publishedTitle.textContent = post.title || '게시글이 등록되었습니다.';
+        if (publishedLink) publishedLink.href = `/community/post/?id=${encodeURIComponent(post.id)}`;
+        publishedPanel.hidden = false;
       }
 
       function closeReportModal(result) {
@@ -419,10 +444,11 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
         }
 
         list.innerHTML = normalized.map((post) => `
-          <article class="community-post-row">
+          <article class="community-post-row ${post.id === recentPostId ? 'is-new' : ''}" data-post-id="${escapeHtml(post.id)}">
             <div class="community-post-meta">
               <span>${escapeHtml(post.category)}</span>
               <time datetime="${escapeHtml(String(post.date).replaceAll('.', '-'))}">${escapeHtml(post.date)}</time>
+              ${post.id === recentPostId ? '<span class="community-new-chip">NEW</span>' : ''}
             </div>
             <div class="community-post-main">
               <h2>
@@ -595,6 +621,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
         const submitButton = form.querySelector('button[type="submit"]');
         submitButton.disabled = true;
         setFormMessage('게시글을 등록하는 중입니다.', 'info');
+        setPublishedPanel(null);
 
         const data = new FormData(form);
         try {
@@ -611,12 +638,21 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
           if (!response.ok || !result.ok) {
             throw new Error(result.message || '게시글을 등록하지 못했습니다.');
           }
+          const createdPost = result.post || {};
+          recentPostId = createdPost.id || '';
           form.reset();
-          activeBoard = 'all';
+          activeBoard = createdPost.board || String(data.get('board') || 'all');
           syncFilterButtons();
           updateBoardUrl(activeBoard);
-          setFormMessage('게시글이 등록되었습니다.', 'success');
+          setFormMessage('게시글이 등록되었습니다. 목록에서 방금 쓴 글을 강조 표시했습니다.', 'success');
+          setPublishedPanel(createdPost);
           await loadPosts();
+          const createdRow = recentPostId ? list?.querySelector(`[data-post-id="${CSS.escape(recentPostId)}"]`) : null;
+          if (createdRow) {
+            createdRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          } else if (publishedPanel) {
+            publishedPanel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
         } catch (error) {
           setFormMessage(`${error.message} 로그인 또는 가입 승인이 필요할 수 있습니다.`, 'error');
         } finally {

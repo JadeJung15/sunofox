@@ -206,12 +206,30 @@
 
   function userActionResult(action) {
     if (action === 'approve') {
-      return { status: 'approved', statusLabel: '승인', feedback: '승인 완료' };
+      return {
+        status: 'approved',
+        statusLabel: '승인',
+        feedback: '승인 완료',
+        toastTitle: 'MEMBER APPROVED',
+        message: '가입 신청을 승인했습니다. 안내문 복사 버튼으로 입장 코드를 전달해 주세요.'
+      };
     }
     if (action === 'reject') {
-      return { status: 'rejected', statusLabel: '거절', feedback: '거절 완료' };
+      return {
+        status: 'rejected',
+        statusLabel: '거절',
+        feedback: '거절 완료',
+        toastTitle: 'MEMBER REJECTED',
+        message: '가입 신청을 거절 상태로 변경했습니다.'
+      };
     }
-    return { status: 'pending', statusLabel: '대기', feedback: '대기 전환' };
+    return {
+      status: 'pending',
+      statusLabel: '대기',
+      feedback: '대기 전환',
+      toastTitle: 'MEMBER PENDING',
+      message: '가입 신청을 대기 상태로 되돌렸습니다.'
+    };
   }
 
   function setUserRowFeedback(row, state, text) {
@@ -240,14 +258,19 @@
       greeting,
       '',
       'SunoFox 공식 사이트 가입 신청이 승인되었습니다.',
+      '기다려 주셔서 감사합니다.',
       '',
-      '아래 정보로 로그인하시면 팬게시판과 SF Studio를 이용하실 수 있습니다.',
+      '이제 아래 정보로 로그인하시면 팬게시판에 글과 댓글을 남길 수 있고, SF Studio 작업실도 이용하실 수 있습니다.',
+      '',
       '로그인 URL: https://sunofox.com/login',
       `이메일: ${email}`,
       '입장 코드: [입장 코드]',
       '',
-      '입장 코드는 외부에 공유하지 말고 본인만 사용해 주세요.',
-      '앞으로 SunoFox 음악과 이야기로 자주 뵙겠습니다. 감사합니다.'
+      '입장 코드는 본인만 사용해 주세요.',
+      '팬게시판에서는 듣고 싶은 분위기, 장르 아이디어, 감상 후기를 자유롭게 남겨 주시면 됩니다.',
+      '',
+      '앞으로 SunoFox 음악과 이야기로 자주 뵙겠습니다.',
+      '감사합니다.'
     ].join('\n');
   }
 
@@ -507,8 +530,8 @@
         try {
           await copyTextToClipboard(approvalGuideText(approvalGuideUserFromRow(row)));
           setUserRowFeedback(row, 'complete', '안내문 복사 완료');
-          setMessage(`${row.dataset.email} 승인 안내문을 복사했습니다. [입장 코드]만 실제 코드로 바꿔 전달해 주세요.`, 'success');
-          showAdminToast('승인 안내문을 복사했습니다. 입장 코드만 실제 코드로 바꿔 전달해 주세요.', 'success', 'COPY READY');
+          setMessage(`${row.dataset.email} 승인 안내문을 복사했습니다. [입장 코드]만 실제 코드로 바꿔 보내 주세요.`, 'success');
+          showAdminToast('승인 안내문을 복사했습니다. [입장 코드]만 실제 코드로 바꿔 보내 주세요.', 'success', 'COPY READY');
           await wait(900);
           if (row?.isConnected && row.dataset.actionState === 'complete') {
             clearUserRowFeedback(row);
@@ -547,9 +570,9 @@
             statusMark.textContent = result.statusLabel;
           }
           setUserRowFeedback(row, 'complete', result.feedback);
-          setMessage(`${row?.dataset.email || '가입 신청'} 상태를 ${result.statusLabel}로 변경했습니다.`, 'success');
-          showAdminToast(`${row?.dataset.email || '가입 신청'} 상태를 ${result.statusLabel}로 변경했습니다.`, 'success', 'MEMBER UPDATED');
-          await wait(520);
+          setMessage(`${row?.dataset.email || '가입 신청'}: ${result.message}`, 'success');
+          showAdminToast(result.message, 'success', result.toastTitle);
+          await wait(button.dataset.action === 'approve' ? 850 : 620);
           await loadDashboard(adminKey);
         } catch (error) {
           setUserRowFeedback(row, 'error', '처리 실패');

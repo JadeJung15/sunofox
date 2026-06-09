@@ -206,7 +206,7 @@ body.cursor-down .cursor-ring {
   gap: 12px;
   font-size: 22px;
   font-weight: 900;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.02em;
   transition: color 160ms ease, transform 160ms ease;
 }
 
@@ -348,8 +348,8 @@ body.menu-open .overlay-menu {
   color: #ffffff;
   font-size: clamp(30px, 5.4vw, 64px);
   font-weight: 950;
-  line-height: 0.9;
-  letter-spacing: -0.08em;
+  line-height: 0.96;
+  letter-spacing: -0.035em;
   opacity: 0;
   transform: translateY(18px);
   transition:
@@ -386,7 +386,7 @@ body.menu-open .overlay-nav a:nth-child(12) { transition-delay: 615ms; }
   margin-top: 10px;
   color: var(--muted);
   font-size: clamp(22px, 3.8vw, 42px);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.015em;
 }
 
 .overlay-nav a:hover,
@@ -520,8 +520,8 @@ body.menu-open .overlay-socials {
   color: var(--pink);
   font-size: clamp(76px, 20vw, 270px);
   font-weight: 950;
-  line-height: 0.78;
-  letter-spacing: -0.12em;
+  line-height: 0.86;
+  letter-spacing: -0.055em;
   text-transform: uppercase;
   font-family: var(--font-condensed);
   animation: heroWordmark 940ms cubic-bezier(0.22, 1, 0.36, 1) 120ms both;
@@ -534,7 +534,7 @@ body.menu-open .overlay-socials {
   font-size: clamp(20px, 2.7vw, 36px);
   font-weight: 800;
   line-height: 1.22;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.015em;
 }
 
 .hero-tagline span {
@@ -682,8 +682,8 @@ body.menu-open .overlay-socials {
   font-family: var(--font-condensed);
   font-size: clamp(62px, 11vw, 154px);
   font-weight: 950;
-  letter-spacing: -0.08em;
-  line-height: 0.84;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
   text-transform: uppercase;
 }
 
@@ -749,8 +749,8 @@ body.menu-open .overlay-socials {
   font-family: var(--font-condensed);
   font-size: clamp(34px, 4vw, 56px);
   font-weight: 950;
-  letter-spacing: -0.06em;
-  line-height: 0.9;
+  letter-spacing: -0.03em;
+  line-height: 0.96;
   text-transform: uppercase;
 }
 
@@ -792,8 +792,8 @@ body.menu-open .overlay-socials {
   font-family: var(--font-condensed);
   font-size: clamp(38px, 6vw, 82px);
   font-weight: 950;
-  letter-spacing: -0.07em;
-  line-height: 0.92;
+  letter-spacing: -0.035em;
+  line-height: 0.98;
 }
 
 .coming-soon-panel p {
@@ -834,8 +834,8 @@ body.menu-open .overlay-socials {
   color: #ffffff;
   font-size: clamp(44px, 7vw, 96px);
   font-weight: 950;
-  line-height: 0.86;
-  letter-spacing: -0.08em;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
   text-transform: uppercase;
   font-family: var(--font-condensed);
 }
@@ -879,7 +879,7 @@ body.menu-open .overlay-socials {
   color: #ffffff;
   font-size: clamp(22px, 2.4vw, 34px);
   font-weight: 900;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.02em;
 }
 
 .news-row p {
@@ -930,7 +930,7 @@ body.menu-open .overlay-socials {
   color: #ffffff;
   font-size: clamp(22px, 3vw, 36px);
   font-weight: 950;
-  letter-spacing: -0.06em;
+  letter-spacing: -0.03em;
   font-family: var(--font-condensed);
 }
 
@@ -1013,8 +1013,8 @@ body.menu-open .overlay-socials {
   color: #ffffff;
   font-size: clamp(24px, 2.3vw, 34px);
   font-weight: 950;
-  line-height: 0.95;
-  letter-spacing: -0.07em;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
   min-height: 66px;
   font-family: var(--font-condensed);
 }
@@ -1101,8 +1101,8 @@ body.menu-open .overlay-socials {
   color: #ffffff;
   font-size: clamp(34px, 3vw, 50px);
   font-weight: 950;
-  letter-spacing: -0.055em;
-  line-height: 0.92;
+  letter-spacing: -0.02em;
+  line-height: 0.98;
   max-width: 100%;
   overflow-wrap: normal;
   white-space: nowrap;
@@ -1502,7 +1502,7 @@ body.menu-open .overlay-socials {
 
   .overlay-nav a {
     font-size: clamp(31px, 9.8vw, 54px);
-    line-height: 0.88;
+    line-height: 0.96;
   }
 
   .overlay-nav a.overlay-nav-secondary {

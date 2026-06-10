@@ -28,7 +28,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
     <section class="category-content" aria-label="SunoFox fan board">
       <div class="community-status reveal">
         <span>OPEN BETA</span>
-        <p>일반 게시물 리스트는 누구나 볼 수 있습니다. 작성은 스팸 방지를 위해 가입 신청 후 사이트 주인 승인을 받은 계정부터 이용할 수 있습니다.</p>
+        <p>일반 게시물 리스트는 누구나 볼 수 있습니다. 작성, 댓글, 좋아요, 신고는 회원가입 후 로그인한 계정에서 이용할 수 있습니다.</p>
         <div class="community-status-actions">
           <a class="main-button" href="/community/?board=free#communityPosts">GENERAL POSTS</a>
           <a class="main-button main-button-muted" href="/signup">JOIN</a>
@@ -55,7 +55,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
           <div class="community-board-head">
             <div>
               <span>POST LIST</span>
-              <p class="community-board-note">SAMPLE 배지가 붙은 글은 팬게시판 운영 예시입니다. 실제 팬 글은 가입 승인 후 작성되면 같은 목록에 표시됩니다.</p>
+              <p class="community-board-note">SAMPLE 배지가 붙은 글은 팬게시판 운영 예시입니다. 실제 팬 글은 로그인한 회원이 작성하면 같은 목록에 표시됩니다.</p>
             </div>
             <strong data-community-count>{communityPosts.length} POSTS</strong>
           </div>
@@ -92,12 +92,12 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
             <div class="community-write-copy">
               <span>WRITE POST</span>
               <h2>팬 게시글 작성</h2>
-              <p>승인된 계정으로 로그인하면 팬게시판에 글을 남길 수 있습니다. 모바일에서도 짧게 작성할 수 있도록 제목과 핵심 아이디어만 먼저 남겨 주세요.</p>
+              <p>회원가입 후 로그인하면 팬게시판에 글을 남길 수 있습니다. 모바일에서도 짧게 작성할 수 있도록 제목과 핵심 아이디어만 먼저 남겨 주세요.</p>
             </div>
 
             <div class="community-auth-note" role="note">
-              <span>APPROVAL REQUIRED</span>
-              <p>작성, 댓글, 좋아요, 신고는 가입 신청 후 사이트 주인 승인을 받은 계정에서 사용할 수 있습니다. 아직 승인 전이면 글을 읽고 아이디어를 정리해 두시면 됩니다.</p>
+              <span>LOGIN REQUIRED</span>
+              <p>작성, 댓글, 좋아요, 신고는 로그인한 회원에게 열립니다. 아직 계정이 없다면 JOIN에서 바로 가입한 뒤 이용해 주세요.</p>
             </div>
 
             <div class="community-first-post-guide" aria-label="첫 게시글 작성 가이드">
@@ -167,7 +167,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
         <article>
           <span>02</span>
           <strong>JOIN</strong>
-          <p>가입 신청 후 승인된 계정은 팬게시판에 직접 글을 남길 수 있습니다.</p>
+          <p>회원가입 후 로그인하면 팬게시판에 직접 글을 남길 수 있습니다.</p>
         </article>
         <article>
           <span>03</span>
@@ -244,7 +244,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
         all: {
           label: 'NO POSTS',
           title: '아직 공개된 팬 게시물이 없습니다.',
-          body: '승인된 계정으로 첫 인사, 감상 후기, 듣고 싶은 장르를 남기면 이 영역에 게시글이 표시됩니다. 아직 계정이 없다면 가입 신청부터 진행해 주세요.',
+          body: '로그인한 회원이 첫 인사, 감상 후기, 듣고 싶은 장르를 남기면 이 영역에 게시글이 표시됩니다. 아직 계정이 없다면 JOIN에서 바로 가입해 주세요.',
           action: '작성 안내 보기'
         },
         free: {
@@ -337,10 +337,10 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
       function getCommunityActionError(error, fallback = '요청을 처리하지 못했습니다.') {
         const raw = String(error?.message || fallback).trim();
         if (/로그인/.test(raw)) {
-          return '로그인이 필요합니다. 가입 승인 후 로그인하면 글 작성, 댓글, 좋아요를 사용할 수 있습니다.';
+          return '로그인이 필요합니다. 회원가입 후 로그인하면 글 작성, 댓글, 좋아요를 사용할 수 있습니다.';
         }
         if (/승인/.test(raw)) {
-          return '가입 신청 승인 후 사용할 수 있습니다. 승인 전에는 게시글 읽기만 가능합니다.';
+          return '로그인한 회원만 사용할 수 있습니다. 계정이 제한된 경우 사이트 주인에게 문의해 주세요.';
         }
         if (/데이터베이스|연결/.test(raw)) {
           return '커뮤니티 저장소 연결을 확인하는 중입니다. 잠시 후 다시 시도해 주세요.';
@@ -561,7 +561,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
                   <p>댓글을 불러오는 중입니다.</p>
                 </div>
                 <form class="community-comment-form" data-community-comment-form data-post-id="${escapeHtml(post.id)}">
-                  <textarea name="body" rows="3" maxlength="1200" required placeholder="댓글을 입력해 주세요. 승인된 계정만 작성할 수 있습니다."></textarea>
+                  <textarea name="body" rows="3" maxlength="1200" required placeholder="댓글을 입력해 주세요. 로그인한 회원만 작성할 수 있습니다."></textarea>
                   <div class="community-comment-actions">
                     <button type="submit">COMMENT</button>
                     <a href="/login?next=/community">LOGIN</a>

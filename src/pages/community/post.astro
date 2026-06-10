@@ -43,7 +43,7 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
             <button type="button" data-detail-report-post>REPORT</button>
             <a href="/community/">BACK TO LIST</a>
           </div>
-          <p class="community-sample-note" data-detail-sample-note hidden>SAMPLE 게시글은 팬게시판 운영 예시입니다. 실제 댓글, 좋아요, 신고는 가입 승인된 계정과 실제 게시글에서 사용할 수 있습니다.</p>
+          <p class="community-sample-note" data-detail-sample-note hidden>SAMPLE 게시글은 팬게시판 운영 예시입니다. 실제 댓글, 좋아요, 신고는 로그인한 회원과 실제 게시글에서 사용할 수 있습니다.</p>
         </div>
       </article>
 
@@ -53,13 +53,13 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
             <span>COMMENTS</span>
             <h2>팬들의 의견</h2>
           </div>
-          <p>승인된 계정으로 로그인하면 게시글에 댓글을 남길 수 있습니다.</p>
+          <p>회원가입 후 로그인하면 게시글에 댓글을 남길 수 있습니다.</p>
         </div>
         <div class="community-comments-list" data-detail-comments-list>
           <p>댓글을 불러오는 중입니다.</p>
         </div>
         <form class="community-comment-form" data-detail-comment-form>
-          <textarea name="body" rows="3" maxlength="1200" required placeholder="댓글을 입력해 주세요. 승인된 계정만 작성할 수 있습니다."></textarea>
+          <textarea name="body" rows="3" maxlength="1200" required placeholder="댓글을 입력해 주세요. 로그인한 회원만 작성할 수 있습니다."></textarea>
           <div class="community-comment-actions">
             <button type="submit">COMMENT</button>
             <a href="/login?next=/community/post/" data-detail-login-link>LOGIN</a>
@@ -184,10 +184,10 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
       function getCommunityActionError(error, fallback = '요청을 처리하지 못했습니다.') {
         const raw = String(error?.message || fallback).trim();
         if (/로그인/.test(raw)) {
-          return '로그인이 필요합니다. 가입 승인 후 로그인하면 댓글, 좋아요, 신고를 사용할 수 있습니다.';
+          return '로그인이 필요합니다. 회원가입 후 로그인하면 댓글, 좋아요, 신고를 사용할 수 있습니다.';
         }
         if (/승인/.test(raw)) {
-          return '가입 신청 승인 후 사용할 수 있습니다. 승인 전에는 게시글 읽기만 가능합니다.';
+          return '로그인한 회원만 사용할 수 있습니다. 계정이 제한된 경우 사이트 주인에게 문의해 주세요.';
         }
         if (/데이터베이스|연결/.test(raw)) {
           return '커뮤니티 저장소 연결을 확인하는 중입니다. 잠시 후 다시 시도해 주세요.';
@@ -485,7 +485,7 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
       commentForm?.addEventListener('submit', async (event) => {
         event.preventDefault();
         if (!activePostId || activePostId.startsWith('idea-') || activePostId.startsWith('notice-')) {
-          const text = 'SAMPLE 게시글에는 댓글을 남길 수 없습니다. 가입 승인 후 실제 팬 게시글에서 댓글을 남겨 주세요.';
+          const text = 'SAMPLE 게시글에는 댓글을 남길 수 없습니다. 로그인 후 실제 팬 게시글에서 댓글을 남겨 주세요.';
           setCommentMessage(text, 'error');
           showCommunityToast(text, 'error');
           return;

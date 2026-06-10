@@ -40,8 +40,8 @@
     if (!original) return '';
 
     if (context === 'login') {
-      if (original.includes('입장 코드가 올바르지')) {
-        return '입장 코드가 일치하지 않습니다. 안내받은 코드를 다시 확인해 주세요.';
+      if (original.includes('입장 코드가 올바르지') || original.includes('소유자 코드가 올바르지')) {
+        return '소유자 코드가 일치하지 않습니다. 안내받은 코드를 다시 확인해 주세요.';
       }
       if (original.includes('비밀번호가 올바르지')) {
         return '비밀번호가 일치하지 않습니다. 다시 입력해 주세요.';
@@ -313,8 +313,8 @@
       if (loginState) loginState.hidden = true;
       setMessage('프로필 정보를 불러왔습니다.', 'success');
     } catch (error) {
-      setMessage('로그인 후 계정 정보를 수정할 수 있습니다.', 'error');
-      if (email) email.innerHTML = '<a href="/login?next=%2Faccount">로그인하러 가기</a>';
+      if (message) message.hidden = true;
+      if (email) email.textContent = '로그인 후 계정 정보를 수정할 수 있습니다.';
       if (form) form.hidden = true;
       if (loginState) loginState.hidden = false;
     }
@@ -383,13 +383,13 @@
   function userNextAction(user) {
     if (user?.status === 'approved') {
       return isApprovalGuideSent(user)
-        ? '승인 안내문 전송 완료 상태입니다. 필요하면 재전송 전 미리보기를 확인해 주세요.'
-        : '승인 완료 계정입니다. 안내문을 복사하고 [입장 코드]를 실제 코드로 바꿔 전달해 주세요.';
+        ? '로그인 안내문 전송 완료 상태입니다. 필요하면 재전송 전 미리보기를 확인해 주세요.'
+        : '활성 회원입니다. 필요하면 로그인 안내문을 복사해 전달해 주세요.';
     }
     if (user?.status === 'rejected') {
-      return '거절 상태입니다. 재검토가 필요하면 대기로 되돌린 뒤 다시 처리해 주세요.';
+      return '이용 제한 상태입니다. 재검토가 필요하면 대기로 되돌린 뒤 다시 처리해 주세요.';
     }
-    return '승인 대기 상태입니다. 신청 메모와 이메일을 확인한 뒤 승인 또는 거절을 선택해 주세요.';
+    return '대기 상태입니다. 기존 레거시 계정이면 활성 또는 제한 상태로 정리해 주세요.';
   }
 
   function updateApprovalSentState(row, sent, sentAt, sentBy) {
@@ -413,19 +413,19 @@
     if (action === 'approve') {
       return {
         status: 'approved',
-        statusLabel: '승인',
-        feedback: '승인 완료',
-        toastTitle: 'MEMBER APPROVED',
-        message: '가입 신청을 승인했습니다. 안내문 복사 버튼으로 입장 코드를 전달해 주세요.'
+        statusLabel: '활성',
+        feedback: '활성 완료',
+        toastTitle: 'MEMBER ACTIVE',
+        message: '회원 계정을 활성 상태로 변경했습니다.'
       };
     }
     if (action === 'reject') {
       return {
         status: 'rejected',
-        statusLabel: '거절',
-        feedback: '거절 완료',
-        toastTitle: 'MEMBER REJECTED',
-        message: '가입 신청을 거절 상태로 변경했습니다.'
+        statusLabel: '제한',
+        feedback: '제한 완료',
+        toastTitle: 'MEMBER LIMITED',
+        message: '회원 계정을 이용 제한 상태로 변경했습니다.'
       };
     }
     return {
@@ -433,7 +433,7 @@
       statusLabel: '대기',
       feedback: '대기 전환',
       toastTitle: 'MEMBER PENDING',
-      message: '가입 신청을 대기 상태로 되돌렸습니다.'
+      message: '회원 계정을 대기 상태로 되돌렸습니다.'
     };
   }
 
@@ -460,20 +460,20 @@
     const name = String(user?.name || '').trim();
     const greeting = name && name !== '이름 없음' ? `${name}님, 안녕하세요.` : '안녕하세요.';
     return [
-      '[SunoFox 가입 승인 안내]',
+      '[SunoFox 회원 로그인 안내]',
       '',
       greeting,
       '',
-      'SunoFox 공식 사이트 가입 신청이 승인되었습니다.',
-      '기다려 주셔서 감사합니다.',
+      'SunoFox 공식 사이트 회원가입이 완료되었습니다.',
+      '로그인 후 팬게시판과 계정 정보 수정을 이용할 수 있습니다.',
       '',
-      '아래 정보로 로그인하시면 팬게시판에 글과 댓글을 남길 수 있습니다. SF Studio 작업실은 사이트 관리자 전용입니다.',
+      '아래 정보로 로그인하시면 팬게시판에 글과 댓글을 남길 수 있습니다. SF Studio 작업실은 사이트 소유자 전용입니다.',
       '',
       '로그인 URL: https://sunofox.com/login',
       `이메일: ${email}`,
       '로그인 방법: 가입 시 설정한 비밀번호 또는 연결한 Google/Kakao 계정',
       '프로필 설정: https://sunofox.com/account',
-      '문의 방법: 로그인이나 승인 안내에 문제가 있으면 이 안내를 받은 채널로 회신해 주세요.',
+      '문의 방법: 로그인이나 계정 이용에 문제가 있으면 이 안내를 받은 채널로 회신해 주세요.',
       '',
       '계정은 본인만 사용해 주세요.',
       '팬게시판에서는 듣고 싶은 분위기, 장르 아이디어, 감상 후기를 자유롭게 남겨 주세요.',
@@ -567,7 +567,7 @@
       const sortOrder = sortButton.dataset.sortOrder === 'asc' ? 'asc' : 'desc';
       sortButton.classList.toggle('is-active', sortOrder === 'desc');
       sortButton.setAttribute('aria-pressed', String(sortOrder === 'desc'));
-      sortButton.textContent = sortOrder === 'asc' ? '오래된 신청 우선' : '최근 신청 우선';
+      sortButton.textContent = sortOrder === 'asc' ? '오래된 가입 우선' : '최근 가입 우선';
     }
   }
 
@@ -596,12 +596,12 @@
     if (!summary) return;
     const filter = getUserFilter();
     if (!totalCount) {
-      summary.textContent = '가입 신청이 아직 없습니다.';
+      summary.textContent = '회원 계정이 아직 없습니다.';
       return;
     }
     const statusText = filter.status ? `${statusLabel(filter.status)} 상태` : '전체 상태';
     const queryText = filter.query ? `, 검색어 "${filter.query}"` : '';
-    const sortText = filter.sortOrder === 'asc' ? '오래된 신청 우선' : '최근 신청 우선';
+    const sortText = filter.sortOrder === 'asc' ? '오래된 가입 우선' : '최근 가입 우선';
     summary.textContent = `${statusText}${queryText}: ${filteredCount} / ${totalCount}건 표시 · ${sortText}`;
   }
 
@@ -690,10 +690,10 @@
     updateUserFilterSummary(users.length, filteredUsers.length);
     if (!users.length) {
       root.innerHTML = adminEmptyState(
-        '가입 신청이 아직 없습니다.',
-        '새 팬이 신청하면 이 영역에서 승인, 대기 전환, 거절, 승인 안내문 복사를 바로 처리할 수 있습니다.',
+        '회원 계정이 아직 없습니다.',
+        '새 팬이 가입하면 이 영역에서 활성, 대기, 제한 상태와 로그인 안내문을 관리할 수 있습니다.',
         [
-          { href: '/signup', label: '신청 화면 확인' },
+          { href: '/signup', label: '회원가입 화면 확인' },
           { href: '/community/', label: '커뮤니티 확인' }
         ]
       );
@@ -701,8 +701,8 @@
     }
     if (!filteredUsers.length) {
       root.innerHTML = adminEmptyState(
-        '조건에 맞는 가입 신청이 없습니다.',
-        '검색어 또는 상태 필터를 바꾸면 다른 신청 내역을 확인할 수 있습니다. 승인 대기만 보기 상태도 함께 확인해 주세요.'
+        '조건에 맞는 회원 계정이 없습니다.',
+        '검색어 또는 상태 필터를 바꾸면 다른 회원 내역을 확인할 수 있습니다. 대기 계정만 보기 상태도 함께 확인해 주세요.'
       );
       return;
     }
@@ -723,15 +723,15 @@
             </div>
             <div class="sf-user-meta">
               ${requestedAt ? `<small>신청 ${escapeHtml(requestedAt)}</small>` : ''}
-              <small class="sf-user-note">${note ? escapeHtml(note) : '신청 메모 없음'}</small>
+              <small class="sf-user-note">${note ? escapeHtml(note) : '가입 메모 없음'}</small>
             </div>
             <p class="sf-user-next-action">${escapeHtml(userNextAction(user))}</p>
           </div>
           <mark data-status="${escapeHtml(user.status)}">${statusLabel(user.status)}</mark>
           <div class="sf-user-actions">
-          <button class="is-safe" type="button" data-action="approve">승인</button>
+          <button class="is-safe" type="button" data-action="approve">활성</button>
           <button class="is-neutral" type="button" data-action="pending">대기</button>
-          <button class="is-danger" type="button" data-action="reject">거절</button>
+          <button class="is-danger" type="button" data-action="reject">제한</button>
             ${isApproved ? `
               <button class="sf-preview-guide-button" type="button" data-preview-approval aria-expanded="false" aria-controls="${previewId}">안내문 미리보기</button>
               <button class="sf-copy-guide-button" type="button" data-copy-approval>안내문 복사</button>
@@ -751,8 +751,8 @@
             <div class="sf-approval-guide-preview" id="${previewId}" data-approval-preview hidden>
               <div class="sf-approval-guide-preview-head">
                 <div>
-                  <strong>승인 안내문 미리보기</strong>
-                  <small>승인 후 이메일 비밀번호 또는 연결된 소셜 계정으로 로그인할 수 있습니다.</small>
+                  <strong>로그인 안내문 미리보기</strong>
+                  <small>이메일 비밀번호 또는 연결된 소셜 계정으로 로그인할 수 있습니다.</small>
                 </div>
                 <button class="sf-copy-guide-button" type="button" data-copy-approval>미리보기 복사</button>
               </div>
@@ -778,8 +778,8 @@
         try {
           await copyTextToClipboard(approvalGuideText(approvalGuideUserFromRow(row)));
           setUserRowFeedback(row, 'complete', '복사 완료 · 전송 후 체크');
-          setMessage(`${row.dataset.email} 승인 안내문을 복사했습니다. [입장 코드]만 실제 코드로 바꿔 보내 주세요.`, 'success');
-          showAdminToast('승인 안내문을 복사했습니다. 전송까지 마치면 행의 체크박스를 눌러 표시해 주세요.', 'success', 'COPY READY');
+          setMessage(`${row.dataset.email} 로그인 안내문을 복사했습니다.`, 'success');
+          showAdminToast('로그인 안내문을 복사했습니다. 전송까지 마치면 행의 체크박스를 눌러 표시해 주세요.', 'success', 'COPY READY');
           await wait(900);
           if (row?.isConnected && row.dataset.actionState === 'complete') {
             clearUserRowFeedback(row);
@@ -814,8 +814,8 @@
           cachedUsers = cachedUsers.map((item) => item.email === user.email ? user : item);
           updateApprovalSentState(row, Boolean(user.approvalGuideSentAt), user.approvalGuideSentAt || '', user.approvalGuideSentBy || '');
           setUserRowFeedback(row, 'complete', sent ? '전송 저장됨' : '체크 해제됨');
-          setMessage(result.message || (sent ? '승인 안내문 전송 완료 상태를 저장했습니다.' : '승인 안내문 전송 체크를 해제했습니다.'), sent ? 'success' : 'info');
-          showAdminToast(result.message || (sent ? '승인 안내문 전송 완료 상태를 저장했습니다.' : '승인 안내문 전송 체크를 해제했습니다.'), sent ? 'success' : 'info', sent ? 'SENT SAVED' : 'CHECK REMOVED');
+          setMessage(result.message || (sent ? '로그인 안내문 전송 완료 상태를 저장했습니다.' : '로그인 안내문 전송 체크를 해제했습니다.'), sent ? 'success' : 'info');
+          showAdminToast(result.message || (sent ? '로그인 안내문 전송 완료 상태를 저장했습니다.' : '로그인 안내문 전송 체크를 해제했습니다.'), sent ? 'success' : 'info', sent ? 'SENT SAVED' : 'CHECK REMOVED');
         } catch (error) {
           updateApprovalSentState(row, previous, row?.dataset.approvalSentAt || '', row?.dataset.approvalSentBy || '');
           setUserRowFeedback(row, 'error', '저장 실패');
@@ -854,7 +854,7 @@
             statusMark.textContent = result.statusLabel;
           }
           setUserRowFeedback(row, 'complete', result.feedback);
-          setMessage(`${row?.dataset.email || '가입 신청'}: ${result.message}`, 'success');
+          setMessage(`${row?.dataset.email || '회원 계정'}: ${result.message}`, 'success');
           showAdminToast(result.message, 'success', result.toastTitle);
           await wait(button.dataset.action === 'approve' ? 850 : 620);
           await loadAdminUsersSection(adminKey, adminHeaders(adminKey));
@@ -926,13 +926,13 @@
   function renderAlertsLoading() {
     const root = document.getElementById('sf-admin-alerts');
     if (!root) return;
-    root.innerHTML = '<p class="sf-admin-alert is-loading">가입 신청 데이터를 불러오는 중입니다.</p>';
+    root.innerHTML = '<p class="sf-admin-alert is-loading">회원 데이터를 불러오는 중입니다.</p>';
   }
 
   function renderAlertsError(error) {
     const root = document.getElementById('sf-admin-alerts');
     if (!root) return;
-    root.innerHTML = `<p class="sf-admin-alert is-error">${escapeHtml(error?.message || '가입 신청 데이터를 불러오지 못했습니다.')}</p>`;
+    root.innerHTML = `<p class="sf-admin-alert is-error">${escapeHtml(error?.message || '회원 데이터를 불러오지 못했습니다.')}</p>`;
   }
 
   function renderAlerts(users) {
@@ -940,12 +940,12 @@
     if (!root) return;
     const pending = users.filter((user) => user.status === 'pending');
     if (!pending.length) {
-      root.innerHTML = '<p class="sf-admin-alert is-clear">새 가입 신청이 없습니다.</p>';
+      root.innerHTML = '<p class="sf-admin-alert is-clear">새 회원 계정이 없습니다.</p>';
       return;
     }
     root.innerHTML = `
       <div class="sf-admin-alert">
-        <strong>새 가입 신청 ${pending.length}건</strong>
+        <strong>대기 계정 ${pending.length}건</strong>
         <span>${pending.slice(0, 3).map((user) => escapeHtml(user.email)).join(', ')}${pending.length > 3 ? ' 외' : ''}</span>
       </div>
     `;
@@ -1026,7 +1026,7 @@
         '팬게시판에 새 글이 올라오면 공개, 숨김, 고정, 삭제 처리를 이 영역에서 바로 관리할 수 있습니다.',
         [
           { href: '/community/', label: '게시판 열기' },
-          { href: '/signup', label: '가입 신청 화면' }
+          { href: '/signup', label: '회원가입 화면' }
         ],
         'NO POSTS'
       );
@@ -1266,12 +1266,12 @@
     setAdminSummaryText('sf-admin-pending-count', '...');
     setAdminSummaryText('sf-admin-approved-count', '...');
     setAdminSummaryText('sf-admin-rejected-count', '...');
-    setAdminSummaryText('sf-admin-user-filter-summary', '가입 신청 데이터를 불러오는 중입니다.');
+    setAdminSummaryText('sf-admin-user-filter-summary', '회원 데이터를 불러오는 중입니다.');
     renderAlertsLoading();
     renderAdminLoading(
       'sf-admin-users',
-      '가입 신청을 불러오는 중입니다.',
-      '승인, 대기, 거절 상태를 먼저 가져옵니다.',
+      '회원 목록을 불러오는 중입니다.',
+      '활성, 대기, 제한 상태를 먼저 가져옵니다.',
       'MEMBERS'
     );
     try {
@@ -1281,20 +1281,20 @@
       renderStats(users);
       renderAlerts(users);
       renderUsers(users, adminKey);
-      return { ok: true, label: '가입 신청', count: users.length };
+      return { ok: true, label: '회원', count: users.length };
     } catch (error) {
       setAdminSummaryText('sf-admin-pending-count', '-');
       setAdminSummaryText('sf-admin-approved-count', '-');
       setAdminSummaryText('sf-admin-rejected-count', '-');
-      setAdminSummaryText('sf-admin-user-filter-summary', '가입 신청 데이터를 불러오지 못했습니다.');
+      setAdminSummaryText('sf-admin-user-filter-summary', '회원 데이터를 불러오지 못했습니다.');
       renderAlertsError(error);
       renderAdminError(
         'sf-admin-users',
-        '가입 신청을 불러오지 못했습니다.',
+        '회원 목록을 불러오지 못했습니다.',
         error,
         [{ href: '/login?next=%2Fadmin', label: '다시 로그인' }]
       );
-      return { ok: false, label: '가입 신청', message: error.message };
+      return { ok: false, label: '회원', message: error.message };
     }
   }
 
@@ -1558,13 +1558,13 @@
     });
 
     loadDashboard('').catch(() => {
-      setMessage('소유자 계정으로 로그인했거나 관리자 키가 있으면 가입 신청을 관리할 수 있습니다.', 'info');
+      setMessage('소유자 계정으로 로그인했거나 관리자 키가 있으면 회원 상태를 관리할 수 있습니다.', 'info');
     });
   }
 
   function statusLabel(status) {
-    if (status === 'approved') return '승인';
-    if (status === 'rejected') return '거절';
+    if (status === 'approved') return '활성';
+    if (status === 'rejected') return '제한';
     return '대기';
   }
 

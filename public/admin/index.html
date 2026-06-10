@@ -20,11 +20,11 @@
       <div class="sf-admin-title">
         <img src="/assets/sunofox-app-icon-192.png" alt="" width="54" height="54" aria-hidden="true">
         <div>
-          <span class="sf-auth-kicker">OWNER APPROVAL</span>
+          <span class="sf-auth-kicker">OWNER CONSOLE</span>
           <h1>Owner Console</h1>
-          <p>가입 신청 승인, 팬게시판 검토, 신고 처리를 한 화면에서 관리하는 소유자 전용 콘솔입니다.</p>
+          <p>회원 상태, 팬게시판 검토, 신고 처리를 한 화면에서 관리하는 소유자 전용 콘솔입니다.</p>
           <div class="sf-admin-dashboard-meta" aria-label="관리 범위">
-            <span>01 Member approval</span>
+            <span>01 Member status</span>
             <span>02 Community review</span>
             <span>03 Owner only</span>
           </div>
@@ -38,15 +38,15 @@
 
     <section class="sf-admin-summary" aria-label="관리 요약">
       <article>
-        <span>대기 신청</span>
+        <span>대기 계정</span>
         <strong id="sf-admin-pending-count">0</strong>
       </article>
       <article>
-        <span>승인 계정</span>
+        <span>활성 계정</span>
         <strong id="sf-admin-approved-count">0</strong>
       </article>
       <article>
-        <span>거절 계정</span>
+        <span>제한 계정</span>
         <strong id="sf-admin-rejected-count">0</strong>
       </article>
       <article>
@@ -56,7 +56,7 @@
     </section>
 
     <nav class="sf-admin-jump-nav" aria-label="관리 메뉴">
-      <a href="#admin-members">가입 신청</a>
+      <a href="#admin-members">회원</a>
       <a href="#admin-posts">게시글</a>
       <a href="#admin-comments">댓글</a>
       <a href="#admin-reports">신고</a>
@@ -84,16 +84,16 @@
     <section class="sf-admin-panel" id="admin-members">
       <div class="sf-admin-section-head">
         <div>
-          <span class="sf-auth-kicker">MEMBER REQUESTS</span>
-          <h2>가입 신청 관리</h2>
-          <p>신청 메모를 확인한 뒤 승인 여부를 정하고, 승인 계정에는 안내문을 복사해 입장 코드를 전달해 주세요.</p>
+          <span class="sf-auth-kicker">MEMBER STATUS</span>
+          <h2>회원 관리</h2>
+          <p>회원 프로필, 가입 메모, 로그인 제공자를 확인하고 필요 시 활성 또는 제한 상태로 정리합니다.</p>
         </div>
-        <button class="sf-admin-section-button" type="button" data-admin-refresh="users">가입 신청 새로고침</button>
+        <button class="sf-admin-section-button" type="button" data-admin-refresh="users">회원 새로고침</button>
       </div>
-      <div class="sf-admin-member-guide" aria-label="가입 승인 운영 순서">
+      <div class="sf-admin-member-guide" aria-label="회원 관리 운영 순서">
         <span><strong>01 REVIEW</strong><small>이메일, 이름, 신청 메모 확인</small></span>
-        <span><strong>02 APPROVE</strong><small>승인 후 안내문 미리보기 확인</small></span>
-        <span><strong>03 SEND CODE</strong><small>[입장 코드]를 실제 코드로 바꿔 전달</small></span>
+        <span><strong>02 STATUS</strong><small>활성, 대기, 제한 상태 확인</small></span>
+        <span><strong>03 SUPPORT</strong><small>필요 시 로그인 안내문 복사</small></span>
       </div>
       <form id="sf-admin-user-filter" class="sf-admin-filter-form sf-admin-user-filter">
         <label>
@@ -101,8 +101,8 @@
           <select id="sf-admin-user-status">
             <option value="">전체</option>
             <option value="pending">대기</option>
-            <option value="approved">승인</option>
-            <option value="rejected">거절</option>
+            <option value="approved">활성</option>
+            <option value="rejected">제한</option>
           </select>
         </label>
         <label>
@@ -112,18 +112,18 @@
         <button type="submit">필터 적용</button>
         <button type="button" id="sf-admin-user-reset" class="sf-admin-filter-reset">초기화</button>
       </form>
-      <div class="sf-admin-status-tabs" role="group" aria-label="가입 신청 상태 필터">
+      <div class="sf-admin-status-tabs" role="group" aria-label="회원 상태 필터">
         <button type="button" data-user-status-filter="" aria-pressed="true">전체</button>
-        <button type="button" data-user-status-filter="pending" aria-pressed="false">승인 대기</button>
-        <button type="button" data-user-status-filter="approved" aria-pressed="false">승인 완료</button>
-        <button type="button" data-user-status-filter="rejected" aria-pressed="false">거절</button>
+        <button type="button" data-user-status-filter="pending" aria-pressed="false">대기</button>
+        <button type="button" data-user-status-filter="approved" aria-pressed="false">활성</button>
+        <button type="button" data-user-status-filter="rejected" aria-pressed="false">제한</button>
       </div>
-      <div class="sf-admin-quick-tools" aria-label="가입 신청 빠른 보기">
-        <button type="button" id="sf-admin-user-pending-only" class="sf-admin-chip-button" aria-pressed="false">승인 대기만 보기</button>
+      <div class="sf-admin-quick-tools" aria-label="회원 빠른 보기">
+        <button type="button" id="sf-admin-user-pending-only" class="sf-admin-chip-button" aria-pressed="false">대기 계정만 보기</button>
         <button type="button" id="sf-admin-user-sort" class="sf-admin-chip-button" data-sort-order="desc" aria-pressed="true">최근 신청 우선</button>
       </div>
       <p id="sf-admin-user-filter-summary" class="sf-admin-filter-summary">목록을 불러오면 필터를 사용할 수 있습니다.</p>
-      <p class="sf-admin-copy-note">승인된 계정에는 안내문 복사 버튼이 표시됩니다. 복사 문구의 [입장 코드]는 실제 코드로 바꿔서 전달해 주세요.</p>
+      <p class="sf-admin-copy-note">활성 계정에는 로그인 안내문 복사 버튼이 표시됩니다. SF Studio는 소유자 계정만 접근할 수 있습니다.</p>
       <div id="sf-admin-users" class="sf-admin-users"></div>
     </section>
 

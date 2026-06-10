@@ -39,7 +39,7 @@ export async function onRequestPost(context) {
   const now = new Date().toISOString();
   if (action === 'guide-sent' || action === 'guide-unsent') {
     if (user.status !== 'approved') {
-      return json({ ok: false, message: '승인된 계정만 안내문 전송 상태를 저장할 수 있습니다.' }, { status: 400 });
+      return json({ ok: false, message: '활성 계정만 안내문 전송 상태를 저장할 수 있습니다.' }, { status: 400 });
     }
     await saveUser(context.env, {
       ...user,
@@ -51,8 +51,8 @@ export async function onRequestPost(context) {
       ok: true,
       user: await getUser(context.env, email),
       message: action === 'guide-sent'
-        ? '승인 안내문 전송 완료 상태를 저장했습니다.'
-        : '승인 안내문 전송 체크를 해제했습니다.'
+        ? '로그인 안내문 전송 완료 상태를 저장했습니다.'
+        : '로그인 안내문 전송 체크를 해제했습니다.'
     });
   }
 

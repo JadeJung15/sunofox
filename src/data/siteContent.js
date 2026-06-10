@@ -358,7 +358,7 @@ export const communityPosts = [
     board: 'notice',
     category: 'NOTICE',
     title: '팬 커뮤니티를 베타로 열 준비를 하고 있습니다',
-    excerpt: '일반 게시물은 공개 리스트로 읽을 수 있고, 작성은 가입 승인된 계정부터 순차적으로 열 예정입니다.',
+    excerpt: '일반 게시물은 공개 리스트로 읽을 수 있고, 작성은 로그인한 회원부터 이용할 수 있습니다.',
     author: 'SunoFox Team',
     date: '2026.06.09',
     comments: 0,

@@ -27,7 +27,7 @@ export async function onRequestPost(context) {
   const adminEmail = getAdminEmail(context.env);
 
   if (!email || (!password && !code)) {
-    return json({ ok: false, message: '이메일과 비밀번호를 입력해 주세요. 기존 계정은 입장 코드도 사용할 수 있습니다.' }, { status: 400 });
+    return json({ ok: false, message: '이메일과 비밀번호를 입력해 주세요. 소유자 계정은 소유자 코드도 사용할 수 있습니다.' }, { status: 400 });
   }
 
   let user = await getUser(context.env, email);
@@ -78,7 +78,7 @@ export async function onRequestPost(context) {
   if (!passwordMatched && !codeMatched) {
     return json({
       ok: false,
-      message: user.password ? '비밀번호가 올바르지 않습니다.' : '입장 코드가 올바르지 않습니다.'
+      message: user.password ? '비밀번호가 올바르지 않습니다.' : '소유자 코드가 올바르지 않습니다.'
     }, { status: 401 });
   }
 

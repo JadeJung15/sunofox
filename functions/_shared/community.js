@@ -150,7 +150,7 @@ async function requireApprovedUser(request, env) {
   const email = normalizeEmail(session.email);
   const user = await getUser(env, email);
   if (!user || user.status !== 'approved') {
-    return { error: json({ ok: false, message: '승인된 계정만 이용할 수 있습니다.' }, { status: 403 }) };
+    return { error: json({ ok: false, message: '로그인한 회원만 이용할 수 있습니다.' }, { status: 403 }) };
   }
 
   return { email, user, authorName: getDisplayName(user, email) };

@@ -37,6 +37,10 @@ export async function onRequestPost(context) {
   const now = new Date().toISOString();
   const existing = await getUser(context.env, email);
   if (existing) {
+    if (existing.status === 'rejected') {
+      return json({ ok: false, status: 'rejected', message: '이메일 계정 이용이 제한되어 있습니다.' }, { status: 403 });
+    }
+    const status = 'approved';
     if (!existing.password) {
       await saveUser(context.env, {
         ...existing,
@@ -46,20 +50,31 @@ export async function onRequestPost(context) {
         provider: existing.provider || 'email',
         providers: Array.from(new Set([...(existing.providers || []), 'email'])),
         password: await hashPassword(password),
+        status,
+        approvedAt: status === 'approved' ? existing.approvedAt || now : existing.approvedAt || null,
+        approvedBy: status === 'approved' ? existing.approvedBy || 'self-service' : existing.approvedBy || null,
+        updatedAt: now
+      });
+    } else if (existing.status !== status) {
+      await saveUser(context.env, {
+        ...existing,
+        status,
+        approvedAt: status === 'approved' ? existing.approvedAt || now : existing.approvedAt || null,
+        approvedBy: status === 'approved' ? existing.approvedBy || 'self-service' : existing.approvedBy || null,
         updatedAt: now
       });
     }
     return json({
       ok: true,
-      status: existing.status,
-      message: existing.status === 'approved'
-        ? '이미 승인된 이메일입니다. 비밀번호로 로그인해 주세요.'
-        : '이미 신청된 이메일입니다. 승인 상태를 기다려 주세요.'
+      status,
+      message: status === 'approved'
+        ? '회원가입이 완료되었습니다. 이메일 비밀번호로 로그인해 주세요.'
+        : '이메일 계정 이용이 제한되어 있습니다.'
     });
   }
 
   const adminEmail = getAdminEmail(context.env);
-  const status = email === adminEmail ? 'approved' : 'pending';
+  const status = 'approved';
   await saveUser(context.env, {
     email,
     name,
@@ -72,15 +87,13 @@ export async function onRequestPost(context) {
     status,
     createdAt: now,
     updatedAt: now,
-    approvedAt: status === 'approved' ? now : null,
-    approvedBy: status === 'approved' ? 'system' : null
+    approvedAt: now,
+    approvedBy: email === adminEmail ? 'system' : 'self-service'
   });
 
   return json({
     ok: true,
     status,
-    message: status === 'approved'
-      ? '관리자 이메일은 자동 승인되었습니다. 로그인해 주세요.'
-      : '가입 신청이 접수되었습니다. 승인 후 이메일 비밀번호 또는 연결된 소셜 계정으로 로그인할 수 있습니다.'
+    message: '회원가입이 완료되었습니다. 로그인 후 닉네임과 아이콘을 언제든 수정할 수 있습니다.'
   });
 }

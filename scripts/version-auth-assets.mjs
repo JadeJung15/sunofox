@@ -22,6 +22,8 @@ const assets = [
 const htmlFiles = [
   'admin.html',
   'admin/index.html',
+  'account.html',
+  'account/index.html',
   'login.html',
   'login/index.html',
   'signup.html',

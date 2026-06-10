@@ -27,10 +27,10 @@
       return { icon: '✓', title: text?.includes('불러왔') ? 'DATA READY' : 'ACCESS READY' };
     }
     if (type === 'pending') {
-      return { icon: '…', title: 'APPROVAL PENDING' };
+      return { icon: '…', title: 'ACCOUNT CHECK' };
     }
     if (type === 'error') {
-      return { icon: '!', title: text?.includes('대기') || text?.includes('승인') ? 'APPROVAL CHECK' : 'CHECK REQUIRED' };
+      return { icon: '!', title: text?.includes('제한') ? 'ACCOUNT CHECK' : 'CHECK REQUIRED' };
     }
     return { icon: 'i', title: 'PROCESSING' };
   }
@@ -41,34 +41,31 @@
 
     if (context === 'login') {
       if (original.includes('입장 코드가 올바르지')) {
-        return '입장 코드가 일치하지 않습니다. 승인 안내문에 적힌 코드를 다시 확인해 주세요.';
+        return '입장 코드가 일치하지 않습니다. 안내받은 코드를 다시 확인해 주세요.';
       }
       if (original.includes('비밀번호가 올바르지')) {
         return '비밀번호가 일치하지 않습니다. 다시 입력해 주세요.';
       }
       if (original.includes('가입 신청 후')) {
-        return '가입 신청 내역이 아직 없습니다. JOIN REQUEST에서 먼저 신청해 주세요.';
+        return '회원가입 내역이 아직 없습니다. JOIN 화면에서 먼저 가입해 주세요.';
       }
-      if (original.includes('승인 대기')) {
-        return '가입 신청은 접수되어 있습니다. 승인 안내와 입장 코드를 받은 뒤 로그인해 주세요.';
+      if (original.includes('회원가입 후')) {
+        return '회원가입 후 바로 로그인할 수 있습니다. JOIN 화면에서 먼저 가입해 주세요.';
       }
-      if (original.includes('승인되지 않은')) {
-        return '아직 승인되지 않은 계정입니다. 이메일을 확인하거나 사이트 주인에게 승인 상태를 문의해 주세요.';
+      if (original.includes('이용이 제한')) {
+        return '이 계정은 이용이 제한되어 있습니다. 사이트 주인에게 문의해 주세요.';
       }
     }
 
     if (context === 'signup') {
-      if (original.includes('이미 승인된')) {
-        return '이미 승인된 이메일입니다. LOGIN 화면에서 이메일과 비밀번호로 로그인해 주세요.';
+      if (original.includes('회원가입이 완료')) {
+        return '회원가입이 완료되었습니다. LOGIN 화면에서 로그인한 뒤 닉네임과 아이콘을 수정할 수 있습니다.';
       }
-      if (original.includes('이미 신청된')) {
-        return '이미 신청된 이메일입니다. 승인 안내가 도착할 때까지 잠시만 기다려 주세요.';
+      if (original.includes('이미')) {
+        return '이미 등록된 이메일입니다. LOGIN 화면에서 이메일과 비밀번호로 로그인해 주세요.';
       }
-      if (original.includes('가입 신청이 접수')) {
-        return '신청이 접수되었습니다. 승인 후 이메일 비밀번호 또는 연결된 소셜 계정으로 로그인해 주세요.';
-      }
-      if (original.includes('관리자 이메일')) {
-        return '소유자 이메일은 승인 완료 상태입니다. LOGIN 화면에서 로그인해 주세요.';
+      if (original.includes('이용이 제한')) {
+        return '이 이메일은 이용이 제한되어 있습니다. 사이트 주인에게 문의해 주세요.';
       }
     }
 
@@ -124,7 +121,8 @@
   function getOAuthStatusMessage() {
     const status = new URLSearchParams(window.location.search).get('oauth') || '';
     const messages = {
-      pending: ['소셜 계정 신청이 접수되었습니다. 사이트 주인 승인 후 로그인할 수 있습니다.', 'pending'],
+      rejected: ['이 소셜 계정은 이용이 제한되어 있습니다. 사이트 주인에게 문의해 주세요.', 'error'],
+      'status-error': ['소셜 계정 상태를 확인하지 못했습니다. 잠시 후 다시 시도해 주세요.', 'error'],
       'missing-google': ['Google 로그인 환경변수가 아직 설정되지 않았습니다. 관리자에게 Google OAuth 키 설정을 요청해 주세요.', 'error'],
       'missing-kakao': ['Kakao 로그인 환경변수가 아직 설정되지 않았습니다. 관리자에게 Kakao REST API 키 설정을 요청해 주세요.', 'error'],
       'state-error': ['소셜 로그인 세션이 만료되었습니다. 다시 시도해 주세요.', 'error'],
@@ -212,17 +210,17 @@
     function showSignupResult(data) {
       if (!resultPanel) return;
       const isApproved = data?.status === 'approved';
-      if (resultKicker) resultKicker.textContent = isApproved ? 'ACCESS READY' : 'REQUEST SENT';
-      if (resultTitle) resultTitle.textContent = isApproved ? '승인이 완료되었습니다.' : '승인 대기 중입니다.';
+      if (resultKicker) resultKicker.textContent = isApproved ? 'ACCOUNT READY' : 'ACCOUNT CHECK';
+      if (resultTitle) resultTitle.textContent = isApproved ? '회원가입이 완료되었습니다.' : '계정 상태를 확인해 주세요.';
       if (resultCopy) {
         resultCopy.textContent = isApproved
-          ? '이미 승인된 이메일입니다. LOGIN 화면에서 이메일과 비밀번호로 로그인해 주세요.'
-          : '신청이 접수되었습니다. 승인 후 이메일 비밀번호 또는 연결된 소셜 계정으로 로그인할 수 있습니다.';
+          ? 'LOGIN 화면에서 이메일과 비밀번호로 로그인해 주세요.'
+          : '이메일 계정 상태를 확인해 주세요.';
       }
       if (resultDetail) {
         resultDetail.textContent = isApproved
           ? '로그인 후 MY ACCOUNT에서 닉네임과 장착 아이콘을 바꿀 수 있습니다.'
-          : '가입 시 80종 아이콘 중 하나가 랜덤으로 배정됩니다. 로그인 후 MY ACCOUNT에서 닉네임과 장착 아이콘을 바꿀 수 있습니다.';
+          : '계정 이용이 제한된 경우 사이트 주인에게 문의해 주세요.';
       }
       resultPanel.dataset.status = isApproved ? 'approved' : 'pending';
       resultPanel.hidden = false;
@@ -234,7 +232,7 @@
       event.preventDefault();
       const button = form.querySelector('button[type="submit"]');
       button.disabled = true;
-      setMessage('가입 신청을 접수 중입니다.', 'info');
+      setMessage('회원가입을 처리 중입니다.', 'info');
       hideSignupResult();
       try {
         const data = await requestJson('/api/auth/signup', {
@@ -248,7 +246,7 @@
           })
         });
         const messageType = data.status === 'approved' ? 'success' : data.status === 'pending' ? 'pending' : 'info';
-        setMessage(authFriendlyMessage(data.message || '가입 신청이 접수되었습니다.', 'signup'), messageType);
+        setMessage(authFriendlyMessage(data.message || '회원가입이 완료되었습니다.', 'signup'), messageType);
         showSignupResult(data);
         form.reset();
       } catch (error) {
@@ -298,20 +296,27 @@
 
   async function loadAccount() {
     const email = document.querySelector('[data-account-email]');
+    const form = document.getElementById('sf-account-form');
+    const loginState = document.querySelector('[data-account-login-state]');
+    if (form) form.hidden = true;
+    if (loginState) loginState.hidden = true;
     try {
       const data = await requestJson('/api/auth/profile', { method: 'GET' });
       const user = data.user || {};
       if (email) {
-        email.textContent = `${user.email || ''} · ${user.status === 'approved' ? '승인 계정' : '승인 대기'}`;
+        email.textContent = `${user.email || ''} · 로그인 계정`;
       }
       const nickname = document.getElementById('sf-account-nickname');
       if (nickname) nickname.value = user.nickname || user.name || '';
       renderIconGrid(user.iconId || 1);
+      if (form) form.hidden = false;
+      if (loginState) loginState.hidden = true;
       setMessage('프로필 정보를 불러왔습니다.', 'success');
     } catch (error) {
       setMessage('로그인 후 계정 정보를 수정할 수 있습니다.', 'error');
       if (email) email.innerHTML = '<a href="/login?next=%2Faccount">로그인하러 가기</a>';
-      renderIconGrid(1);
+      if (form) form.hidden = true;
+      if (loginState) loginState.hidden = false;
     }
   }
 

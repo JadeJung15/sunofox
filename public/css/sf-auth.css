@@ -2514,6 +2514,7 @@ body {
 }
 
 .sf-auth-title span {
+  display: block;
   animation: sfAuthWordFlicker 1550ms ease both;
   text-shadow:
     0 0 1px rgba(255, 255, 255, 0.84),
@@ -3776,6 +3777,17 @@ body {
     gap: 12px;
   }
 
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-copy,
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-copy > p {
+    width: min(100%, calc(100vw - 48px));
+    max-width: calc(100vw - 48px);
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-copy > p {
+    font-size: 12px;
+    line-height: 1.58;
+  }
+
   .sf-auth-body:not(.sf-admin-body) .sf-auth-route {
     gap: 5px;
   }
@@ -3824,4 +3836,74 @@ body {
   .sf-icon-option {
     min-height: 46px;
   }
+}
+
+/* Final auth UX refinements: self-service signup, logged-in profile editing, app-like brand mark. */
+.sf-auth-brand-mark {
+  background: rgba(255, 255, 255, 0.04);
+  object-fit: cover;
+}
+
+.sf-account-login-state {
+  display: grid;
+  gap: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.035);
+  padding: 18px;
+}
+
+.sf-account-login-state[hidden] {
+  display: none;
+}
+
+.sf-auth-form[hidden] {
+  display: none !important;
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-copy > p {
+  max-width: 100%;
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: anywhere;
+}
+
+.sf-account-login-state strong {
+  color: #ffffff;
+  font-family: "Roboto Condensed", "Arial Narrow", "Pretendard", sans-serif;
+  font-size: 18px;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+}
+
+.sf-account-login-state p {
+  margin: 0;
+}
+
+.sf-account-login-state a {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  border: 1px solid #ff0a5b;
+  color: #ffffff;
+  font-family: "Roboto Condensed", "Arial Narrow", "Pretendard", sans-serif;
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.14em;
+  padding: 0 16px;
+  text-decoration: none;
+}
+
+.sf-icon-option {
+  background: rgba(255, 255, 255, 0.028);
+}
+
+.sf-icon-option:hover,
+.sf-icon-option:focus-visible {
+  background: rgba(255, 10, 91, 0.08);
+}
+
+.sf-icon-option.is-selected {
+  background: rgba(255, 10, 91, 0.16);
 }

@@ -150,7 +150,7 @@ async function upsertOAuthUser(env, profile) {
     ...(existing?.providerIds || {}),
     [profile.provider]: profile.providerId
   };
-  const status = existing?.status || (email === adminEmail ? 'approved' : 'pending');
+  const status = existing?.status === 'rejected' ? 'rejected' : 'approved';
   const nickname = normalizeNickname(existing?.nickname || profile.nickname || profile.name, email);
   const user = {
     ...(existing || {}),
@@ -166,8 +166,10 @@ async function upsertOAuthUser(env, profile) {
     status,
     createdAt: existing?.createdAt || now,
     updatedAt: now,
-    approvedAt: existing?.approvedAt || (status === 'approved' ? now : null),
-    approvedBy: existing?.approvedBy || (status === 'approved' ? 'system' : null)
+    approvedAt: status === 'approved' ? existing?.approvedAt || now : existing?.approvedAt || null,
+    approvedBy: status === 'approved'
+      ? existing?.approvedBy || (email === adminEmail ? 'system' : 'self-service')
+      : existing?.approvedBy || null
   };
   await saveUser(env, user);
   return user;
@@ -197,7 +199,7 @@ export async function handleOAuthCallback(context, provider) {
     const profile = await fetchOAuthProfile(config, token.access_token);
     const user = await upsertOAuthUser(context.env, profile);
     if (user.status !== 'approved') {
-      const target = loginRedirect(context.request, 'pending');
+      const target = loginRedirect(context.request, user.status === 'rejected' ? 'rejected' : 'status-error');
       baseHeaders.set('location', target.toString());
       return new Response(null, { status: 302, headers: baseHeaders });
     }

@@ -27,7 +27,7 @@ export async function onRequestPost(context) {
   const adminEmail = getAdminEmail(context.env);
 
   if (!email || (!password && !code)) {
-    return json({ ok: false, message: '이메일과 비밀번호를 입력해 주세요. 기존 승인 계정은 입장 코드도 사용할 수 있습니다.' }, { status: 400 });
+    return json({ ok: false, message: '이메일과 비밀번호를 입력해 주세요. 기존 계정은 입장 코드도 사용할 수 있습니다.' }, { status: 400 });
   }
 
   let user = await getUser(context.env, email);
@@ -51,14 +51,25 @@ export async function onRequestPost(context) {
   }
 
   if (!user) {
-    return json({ ok: false, message: '가입 신청 후 승인을 받아 주세요.' }, { status: 403 });
+    return json({ ok: false, message: '회원가입 후 로그인해 주세요.' }, { status: 403 });
+  }
+
+  if (user.status === 'pending') {
+    user = {
+      ...user,
+      status: 'approved',
+      approvedAt: user.approvedAt || now,
+      approvedBy: user.approvedBy || 'self-service',
+      updatedAt: now
+    };
+    await saveUser(context.env, user);
   }
 
   if (user.status !== 'approved') {
     return json({
       ok: false,
       status: user.status,
-      message: user.status === 'rejected' ? '승인되지 않은 이메일입니다.' : '아직 승인 대기 중입니다.'
+      message: user.status === 'rejected' ? '이메일 계정 이용이 제한되어 있습니다.' : '계정 상태를 확인해 주세요.'
     }, { status: 403 });
   }
 

@@ -21,7 +21,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
       <p>팬들이 감상, 아이디어, 듣고 싶은 분위기를 일반 게시물 리스트로 나누는 소통 공간입니다.</p>
       <div class="community-hero-actions" aria-label="Fan board quick actions">
         <a class="main-button" href="#communityPosts">BROWSE POSTS</a>
-        <a class="main-button main-button-muted" href="/login?next=/community">LOGIN TO WRITE</a>
+        <a class="main-button main-button-muted" href="/login?next=/community%23communityWrite">LOGIN TO WRITE</a>
       </div>
     </section>
 
@@ -95,7 +95,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
               <p>회원가입 후 로그인하면 팬게시판에 글을 남길 수 있습니다. 모바일에서도 짧게 작성할 수 있도록 제목과 핵심 아이디어만 먼저 남겨 주세요.</p>
             </div>
 
-            <div class="community-auth-note" role="note">
+            <div class="community-auth-note" data-community-auth-note role="note">
               <span>LOGIN REQUIRED</span>
               <p>작성, 댓글, 좋아요, 신고는 로그인한 회원에게 열립니다. 아직 계정이 없다면 JOIN에서 바로 가입한 뒤 이용해 주세요.</p>
             </div>
@@ -111,7 +111,17 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
               <p>예: 비 오는 도시에서 시작해 후반부에 Symphonic DnB로 터지는 전투 OST가 듣고 싶어요.</p>
             </div>
 
-            <form class="community-write-form" data-community-form>
+            <div class="community-login-panel" data-community-login-panel>
+              <span>MEMBER ACCESS</span>
+              <h3>로그인 후 팬게시글을 작성할 수 있습니다.</h3>
+              <p>게시글 작성, 댓글, 좋아요, 신고는 로그인한 회원에게만 열립니다. 계정이 없다면 먼저 가입한 뒤 닉네임과 팬 아이콘을 설정해 주세요.</p>
+              <div class="community-login-actions">
+                <a class="main-button" href="/login?next=/community%23communityWrite">LOGIN</a>
+                <a class="main-button main-button-muted" href="/signup">JOIN</a>
+              </div>
+            </div>
+
+            <form class="community-write-form" data-community-form hidden>
               <label>
                 <span>카테고리</span>
                 <select name="board" required>
@@ -138,7 +148,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
 
               <div class="community-write-actions">
                 <button class="main-button" type="submit">PUBLISH POST</button>
-                <a class="main-button main-button-muted" href="/login?next=/community">LOGIN</a>
+                <a class="main-button main-button-muted" href="/login?next=/community%23communityWrite">LOGIN</a>
                 <a class="main-button main-button-muted" href="/signup">JOIN</a>
               </div>
 
@@ -230,6 +240,8 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
       const message = document.querySelector('[data-community-message]');
       const form = document.querySelector('[data-community-form]');
       const formMessage = document.querySelector('[data-community-form-message]');
+      const authNote = document.querySelector('[data-community-auth-note]');
+      const loginPanel = document.querySelector('[data-community-login-panel]');
       const publishedPanel = document.querySelector('[data-community-published-panel]');
       const publishedTitle = document.querySelector('[data-community-published-title]');
       const publishedLink = document.querySelector('[data-community-published-link]');
@@ -332,6 +344,27 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
         if (!formMessage) return;
         formMessage.textContent = text || '';
         formMessage.dataset.type = type || 'info';
+      }
+
+      function setWriteAccessState(hasAccess) {
+        if (authNote) authNote.hidden = hasAccess;
+        if (loginPanel) loginPanel.hidden = hasAccess;
+        if (form) form.hidden = !hasAccess;
+        if (!hasAccess) {
+          setFormMessage('', 'info');
+          setPublishedPanel(null);
+        }
+      }
+
+      async function syncCommunityWriteAccess() {
+        setWriteAccessState(false);
+        try {
+          const response = await fetch('/api/auth/me', { cache: 'no-store' });
+          const data = await response.json().catch(() => ({}));
+          setWriteAccessState(Boolean(response.ok && data.ok && data.user?.email));
+        } catch (error) {
+          setWriteAccessState(false);
+        }
       }
 
       function getCommunityActionError(error, fallback = '요청을 처리하지 못했습니다.') {
@@ -883,6 +916,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
       });
 
       syncFilterButtons();
+      syncCommunityWriteAccess();
       loadPosts();
     }
 

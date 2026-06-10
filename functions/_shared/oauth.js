@@ -54,6 +54,23 @@ function providerConfig(provider, env) {
   return null;
 }
 
+export function getOAuthProviderStatus(env) {
+  const google = providerConfig('google', env);
+  const kakao = providerConfig('kakao', env);
+  return {
+    google: {
+      label: 'Google',
+      configured: Boolean(google?.clientId && google?.clientSecret),
+      required: ['SF_GOOGLE_CLIENT_ID', 'SF_GOOGLE_CLIENT_SECRET']
+    },
+    kakao: {
+      label: 'Kakao',
+      configured: Boolean(kakao?.clientId),
+      required: ['SF_KAKAO_REST_API_KEY']
+    }
+  };
+}
+
 export async function startOAuth(context, provider) {
   const config = providerConfig(provider, context.env);
   if (!config) {

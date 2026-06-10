@@ -123,14 +123,87 @@
     const messages = {
       rejected: ['이 소셜 계정은 이용이 제한되어 있습니다. 사이트 주인에게 문의해 주세요.', 'error'],
       'status-error': ['소셜 계정 상태를 확인하지 못했습니다. 잠시 후 다시 시도해 주세요.', 'error'],
-      'missing-google': ['Google 로그인 환경변수가 아직 설정되지 않았습니다. 관리자에게 Google OAuth 키 설정을 요청해 주세요.', 'error'],
-      'missing-kakao': ['Kakao 로그인 환경변수가 아직 설정되지 않았습니다. 관리자에게 Kakao REST API 키 설정을 요청해 주세요.', 'error'],
+      'missing-google': ['Google 로그인이 아직 준비 중입니다. 지금은 이메일로 로그인해 주세요.', 'info'],
+      'missing-kakao': ['Kakao 로그인이 아직 준비 중입니다. 지금은 이메일로 로그인해 주세요.', 'info'],
       'state-error': ['소셜 로그인 세션이 만료되었습니다. 다시 시도해 주세요.', 'error'],
       'google-error': ['Google 로그인 처리 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.', 'error'],
       'kakao-error': ['Kakao 로그인 처리 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.', 'error'],
       unsupported: ['지원하지 않는 소셜 로그인 방식입니다.', 'error']
     };
     return messages[status] || null;
+  }
+
+  function ensureOAuthStatusNote(root) {
+    if (!root) return null;
+    let note = root.nextElementSibling;
+    if (!note?.classList?.contains('sf-social-status-note')) {
+      note = document.createElement('p');
+      note.className = 'sf-social-status-note';
+      note.setAttribute('role', 'status');
+      note.setAttribute('aria-live', 'polite');
+      root.insertAdjacentElement('afterend', note);
+    }
+    return note;
+  }
+
+  function setOAuthButtonState(button, provider, configured) {
+    if (!button) return;
+    const label = provider === 'google' ? 'Google' : 'Kakao';
+    if (!button.dataset.oauthHref) {
+      button.dataset.oauthHref = button.getAttribute('href') || '';
+    }
+    if (!button.dataset.oauthOriginalText) {
+      button.dataset.oauthOriginalText = button.textContent;
+    }
+    button.classList.toggle('is-disabled', !configured);
+    button.setAttribute('aria-disabled', String(!configured));
+    if (configured) {
+      button.href = button.dataset.oauthHref;
+      button.textContent = button.dataset.oauthOriginalText;
+      return;
+    }
+    button.removeAttribute('href');
+    button.textContent = `${label} 준비 중`;
+  }
+
+  async function updateOAuthProviderStatus() {
+    const buttons = [...document.querySelectorAll('[data-oauth-provider]')];
+    if (!buttons.length) return;
+    const root = buttons[0].closest('.sf-social-auth');
+    const note = ensureOAuthStatusNote(root);
+    buttons.forEach((button) => {
+      button.addEventListener('click', (event) => {
+        if (button.getAttribute('aria-disabled') === 'true') {
+          event.preventDefault();
+          setMessage('소셜 로그인은 설정 준비 중입니다. 이메일 회원가입 또는 이메일 로그인을 이용해 주세요.', 'info');
+        }
+      });
+    });
+    try {
+      const data = await requestJson('/api/auth/oauth/status', { method: 'GET' });
+      const providers = data.providers || {};
+      const missing = [];
+      buttons.forEach((button) => {
+        const provider = button.dataset.oauthProvider;
+        const configured = Boolean(providers[provider]?.configured);
+        setOAuthButtonState(button, provider, configured);
+        if (!configured) missing.push(providers[provider]?.label || provider);
+      });
+      if (note) {
+        if (missing.length) {
+          note.hidden = false;
+          note.textContent = '소셜 로그인은 준비 중입니다. 이메일 방식은 바로 이용할 수 있습니다.';
+        } else {
+          note.hidden = true;
+          note.textContent = '';
+        }
+      }
+    } catch {
+      if (note) {
+        note.hidden = false;
+        note.textContent = '소셜 로그인 설정 상태를 확인하지 못했습니다. 이메일 방식은 바로 이용할 수 있습니다.';
+      }
+    }
   }
 
   async function requestJson(url, options) {
@@ -167,6 +240,7 @@
 
   function bindLogin() {
     const form = document.getElementById('sf-login-form');
+    updateOAuthProviderStatus();
     const oauthStatus = getOAuthStatusMessage();
     if (oauthStatus) {
       setMessage(oauthStatus[0], oauthStatus[1]);
@@ -197,6 +271,7 @@
 
   function bindSignup() {
     const form = document.getElementById('sf-signup-form');
+    updateOAuthProviderStatus();
     const resultPanel = document.querySelector('[data-signup-result]');
     const resultKicker = document.querySelector('[data-signup-result-kicker]');
     const resultTitle = document.querySelector('[data-signup-result-title]');

@@ -1209,6 +1209,48 @@
     };
   }
 
+  function adminRowKey(row) {
+    if (!row) return null;
+    if (row.classList.contains('sf-post-admin-row')) return { type: 'post', id: row.dataset.postId || '' };
+    if (row.classList.contains('sf-comment-admin-row')) return { type: 'comment', id: row.dataset.commentId || '' };
+    if (row.classList.contains('sf-report-admin-row')) return { type: 'report', id: row.dataset.reportId || '' };
+    return null;
+  }
+
+  function findAdminRowByKey(key) {
+    if (!key?.id) return null;
+    const selector = {
+      post: '.sf-post-admin-row',
+      comment: '.sf-comment-admin-row',
+      report: '.sf-report-admin-row'
+    }[key.type];
+    const idKey = {
+      post: 'postId',
+      comment: 'commentId',
+      report: 'reportId'
+    }[key.type];
+    if (!selector || !idKey) return null;
+    return Array.from(document.querySelectorAll(selector)).find((row) => row.dataset[idKey] === key.id) || null;
+  }
+
+  function captureAdminScrollPosition(row) {
+    const key = adminRowKey(row);
+    const top = row?.getBoundingClientRect?.().top ?? null;
+    const scrollX = window.scrollX || 0;
+    const scrollY = window.scrollY || 0;
+    return () => {
+      window.requestAnimationFrame(() => {
+        const nextRow = findAdminRowByKey(key);
+        if (nextRow && top !== null) {
+          const delta = nextRow.getBoundingClientRect().top - top;
+          window.scrollBy({ left: 0, top: delta, behavior: 'auto' });
+          return;
+        }
+        window.scrollTo({ left: scrollX, top: scrollY, behavior: 'auto' });
+      });
+    };
+  }
+
   function renderAdminLoading(rootId, title, copy, kicker) {
     const root = document.getElementById(rootId);
     if (!root) return;
@@ -1477,6 +1519,7 @@
           return;
         }
         const restoreButton = setAdminActionBusy(button, `${postActionLabel(action)} 중...`);
+        const restoreScroll = captureAdminScrollPosition(row);
         setMessage(`${title}: ${postActionLabel(action)} 처리를 진행합니다.`, 'info');
         try {
           await requestJson('/api/community/posts', {
@@ -1491,6 +1534,7 @@
           showAdminToast(`게시글을 ${postActionLabel(action)} 처리했습니다.`, 'success', 'POST UPDATED');
           refreshAdminAlerts();
           await loadAdminPostsSection(adminKey, adminHeaders(adminKey));
+          restoreScroll();
         } catch (error) {
           setMessage(error.message, 'error');
           showAdminToast(error.message, 'error');
@@ -1553,6 +1597,7 @@
         if (!row) return;
         const action = button.dataset.commentAction;
         const restoreButton = setAdminActionBusy(button, `${postActionLabel(action)} 중...`);
+        const restoreScroll = captureAdminScrollPosition(row);
         setMessage(`댓글 ${postActionLabel(action)} 처리를 진행합니다.`, 'info');
         try {
           await requestJson('/api/community/comments', {
@@ -1566,6 +1611,7 @@
           showAdminToast(`댓글을 ${postActionLabel(action)} 처리했습니다.`, 'success', 'COMMENT UPDATED');
           refreshAdminAlerts();
           await loadAdminCommentsSection(adminKey, adminHeaders(adminKey));
+          restoreScroll();
         } catch (error) {
           setMessage(error.message, 'error');
           showAdminToast(error.message, 'error');
@@ -1664,6 +1710,7 @@
         if (!row) return;
         const status = button.dataset.reportStatus;
         const restoreButton = setAdminActionBusy(button, `${reportStatusLabel(status)} 중...`);
+        const restoreScroll = captureAdminScrollPosition(row);
         setMessage(`신고 상태를 ${reportStatusLabel(status)}로 변경합니다.`, 'info');
         try {
           const response = await requestJson('/api/community/reports', {
@@ -1677,6 +1724,7 @@
           updateCachedReportForAlert(row.dataset.reportId, response.report || { status });
           showAdminToast(`신고 상태를 ${reportStatusLabel(status)}로 변경했습니다.`, 'success', 'REPORT UPDATED');
           await loadAdminReportsSection(adminKey, adminHeaders(adminKey));
+          restoreScroll();
         } catch (error) {
           setMessage(error.message, 'error');
           showAdminToast(error.message, 'error');

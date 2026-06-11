@@ -6,6 +6,7 @@
   let cachedComments = [];
   let cachedReports = [];
   let adminToastTimer = 0;
+  let adminSyncState = {};
 
   function setMessage(text, type) {
     if (!message) return;
@@ -1202,6 +1203,42 @@
     if (target) target.textContent = text;
   }
 
+  function formatAdminSyncTime(date = new Date()) {
+    return date.toLocaleTimeString('ko-KR', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+  }
+
+  function updateAdminSyncStatus(section, state = 'success') {
+    const target = document.getElementById('sf-admin-sync-status');
+    if (!target) return;
+    const labels = {
+      users: '회원',
+      posts: '게시글',
+      comments: '댓글',
+      reports: '신고',
+      oauth: '소셜 로그인',
+      dashboard: '전체'
+    };
+    const label = labels[section] || '관리 데이터';
+    adminSyncState = {
+      ...adminSyncState,
+      [section]: {
+        label,
+        state,
+        time: formatAdminSyncTime()
+      }
+    };
+    const latest = adminSyncState[section];
+    const failures = Object.values(adminSyncState).filter((item) => item.state === 'error').length;
+    target.dataset.state = failures ? 'warn' : state;
+    target.textContent = failures
+      ? `마지막 동기화: ${latest.label} ${latest.time} · 확인 필요 ${failures}개`
+      : `마지막 동기화: ${latest.label} ${latest.time}`;
+  }
+
   function renderAlertsLoading() {
     const root = document.getElementById('sf-admin-alerts');
     if (!root) return;
@@ -1632,6 +1669,7 @@
       renderStats(users);
       refreshAdminAlerts();
       renderUsers(users, adminKey);
+      updateAdminSyncStatus('users');
       return { ok: true, label: '회원', count: users.length };
     } catch (error) {
       setAdminSummaryText('sf-admin-pending-count', '-');
@@ -1639,6 +1677,7 @@
       setAdminSummaryText('sf-admin-rejected-count', '-');
       setAdminSummaryText('sf-admin-user-filter-summary', '회원 데이터를 불러오지 못했습니다.');
       renderAlertsError(error);
+      updateAdminSyncStatus('users', 'error');
       renderAdminError(
         'sf-admin-users',
         '회원 목록을 불러오지 못했습니다.',
@@ -1664,10 +1703,12 @@
       cachedPosts = posts;
       renderCommunityStats(posts);
       renderCommunityPosts(posts, adminKey);
+      updateAdminSyncStatus('posts');
       return { ok: true, label: '게시글', count: posts.length };
     } catch (error) {
       setAdminSummaryText('sf-admin-post-count', '-');
       setAdminSummaryText('sf-admin-community-filter-summary', '게시글 데이터를 불러오지 못했습니다.');
+      updateAdminSyncStatus('posts', 'error');
       renderAdminError(
         'sf-admin-community-posts',
         '게시글을 불러오지 못했습니다.',
@@ -1691,9 +1732,11 @@
       const comments = commentsData.comments || [];
       cachedComments = comments;
       renderCommunityComments(comments, adminKey);
+      updateAdminSyncStatus('comments');
       return { ok: true, label: '댓글', count: comments.length };
     } catch (error) {
       setAdminSummaryText('sf-admin-comment-filter-summary', '댓글 데이터를 불러오지 못했습니다.');
+      updateAdminSyncStatus('comments', 'error');
       renderAdminError(
         'sf-admin-community-comments',
         '댓글을 불러오지 못했습니다.',
@@ -1718,9 +1761,11 @@
       cachedReports = reports;
       refreshAdminAlerts();
       renderCommunityReports(reports, adminKey);
+      updateAdminSyncStatus('reports');
       return { ok: true, label: '신고', count: reports.length };
     } catch (error) {
       setAdminSummaryText('sf-admin-report-filter-summary', '신고 데이터를 불러오지 못했습니다.');
+      updateAdminSyncStatus('reports', 'error');
       renderAdminError(
         'sf-admin-community-reports',
         '신고를 불러오지 못했습니다.',
@@ -1795,9 +1840,11 @@
     try {
       const data = await requestJson('/api/auth/oauth/status', { method: 'GET' });
       renderAdminOAuthStatus(data);
+      updateAdminSyncStatus('oauth');
       return { ok: true, label: '소셜 로그인', count: 1 };
     } catch (error) {
       renderAdminOAuthError(error);
+      updateAdminSyncStatus('oauth', 'error');
       return { ok: false, label: '소셜 로그인', message: error.message };
     }
   }
@@ -1816,6 +1863,7 @@
       setMessage(`${failed.map((result) => result.label).join(', ')} 데이터를 불러오지 못했습니다. 나머지 섹션은 계속 사용할 수 있습니다.`, 'error');
       return results;
     }
+    updateAdminSyncStatus('dashboard');
     setMessage('관리 데이터를 불러왔습니다.', 'success');
     return results;
   }

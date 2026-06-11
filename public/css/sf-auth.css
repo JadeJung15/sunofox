@@ -3970,6 +3970,58 @@ body {
   padding: 18px;
 }
 
+.sf-linked-login-methods {
+  display: grid;
+  gap: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015)),
+    rgba(0, 0, 0, 0.24);
+  border-radius: 12px;
+  margin-bottom: 16px;
+  padding: 14px;
+}
+
+.sf-linked-login-methods[hidden] {
+  display: none;
+}
+
+.sf-linked-login-methods > span {
+  color: rgba(255, 255, 255, 0.58);
+  font-family: "Roboto Condensed", "Arial Narrow", "Pretendard", sans-serif;
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 0.18em;
+}
+
+.sf-linked-login-methods > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sf-linked-provider {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+  font-family: "Roboto Condensed", "Arial Narrow", "Pretendard", sans-serif;
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  padding: 0 12px;
+  text-transform: uppercase;
+}
+
+.sf-linked-provider[data-primary="true"] {
+  border-color: rgba(255, 10, 91, 0.68);
+  color: #ffffff;
+  box-shadow: 0 0 18px rgba(255, 10, 91, 0.12);
+}
+
 .sf-account-login-state[hidden] {
   display: none;
 }

@@ -427,18 +427,63 @@
     renderAccountIcon(selectedIconId || 1);
   }
 
+  const providerLabels = {
+    email: 'Email',
+    google: 'Google',
+    kakao: 'Kakao'
+  };
+
+  function accountProviders(user) {
+    const values = [
+      ...(Array.isArray(user?.providers) ? user.providers : []),
+      user?.provider
+    ];
+    return [...new Set(values.map((provider) => String(provider || '').toLowerCase()).filter(Boolean))];
+  }
+
+  function isInternalOAuthEmail(email) {
+    return /@oauth\.sunofox\.local$/i.test(String(email || ''));
+  }
+
+  function renderAccountProviders(user) {
+    const wrapper = document.querySelector('[data-account-providers]');
+    const list = document.querySelector('[data-account-provider-list]');
+    if (!wrapper || !list) return;
+    const providers = accountProviders(user);
+    const primaryProvider = String(user?.provider || providers[0] || 'email').toLowerCase();
+    if (!providers.length) {
+      wrapper.hidden = true;
+      list.innerHTML = '';
+      return;
+    }
+    list.innerHTML = providers.map((provider) => {
+      const label = providerLabels[provider] || provider;
+      const primary = provider === primaryProvider ? ' data-primary="true"' : '';
+      return `<span class="sf-linked-provider is-${escapeHtml(provider)}"${primary}>${escapeHtml(label)}</span>`;
+    }).join('');
+    wrapper.hidden = false;
+  }
+
   async function loadAccount() {
     const email = document.querySelector('[data-account-email]');
     const form = document.getElementById('sf-account-form');
     const loginState = document.querySelector('[data-account-login-state]');
+    const providers = document.querySelector('[data-account-providers]');
     if (form) form.hidden = true;
     if (loginState) loginState.hidden = true;
+    if (providers) providers.hidden = true;
     try {
       const data = await requestJson('/api/auth/profile', { method: 'GET' });
       const user = data.user || {};
       if (email) {
-        email.textContent = `${user.email || ''} · 로그인 계정`;
+        const linkedProviders = accountProviders(user);
+        const primaryProvider = String(user.provider || linkedProviders[0] || 'email').toLowerCase();
+        const primaryLabel = providerLabels[primaryProvider] || '회원';
+        email.textContent = user.email && !isInternalOAuthEmail(user.email)
+          ? `${user.email} · 로그인 계정`
+          : `${primaryLabel} 로그인 계정`;
       }
+      renderAccountProviders(user);
       const nickname = document.getElementById('sf-account-nickname');
       if (nickname) nickname.value = user.nickname || user.name || '';
       renderIconGrid(user.iconId || 1);
@@ -450,6 +495,7 @@
       if (email) email.textContent = '로그인 후 계정 정보를 수정할 수 있습니다.';
       if (form) form.hidden = true;
       if (loginState) loginState.hidden = false;
+      if (providers) providers.hidden = true;
     }
   }
 

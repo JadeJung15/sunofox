@@ -46,9 +46,10 @@
         <div class="sf-auth-card-head">
           <span class="sf-auth-kicker">PROFILE START</span>
           <h2>회원가입</h2>
-          <p>이메일 계정으로 가입하거나 Kakao 계정으로 연결할 수 있습니다. 로그인 후 닉네임과 팬 배지를 언제든 수정할 수 있습니다.</p>
+          <p>이메일 계정으로 가입하거나 Google/Kakao 계정으로 연결할 수 있습니다. 로그인 후 닉네임과 팬 배지를 언제든 수정할 수 있습니다.</p>
         </div>
-        <div class="sf-social-auth" aria-label="Kakao 가입">
+        <div class="sf-social-auth" aria-label="소셜 가입">
+          <a class="sf-social-button is-google" href="/api/auth/oauth/start?provider=google" data-oauth-provider="google">Google로 가입/로그인</a>
           <a class="sf-social-button is-kakao" href="/api/auth/oauth/start?provider=kakao" data-oauth-provider="kakao">Kakao로 가입/로그인</a>
         </div>
         <div class="sf-auth-divider"><span>OR EMAIL SIGNUP</span></div>
@@ -96,7 +97,7 @@
             <a href="/login">LOGIN</a>
           </div>
         </div>
-        <p class="sf-auth-footnote">Kakao 계정은 첫 로그인 후 MY ACCOUNT에서 닉네임과 팬 배지를 확인해 주세요.</p>
+        <p class="sf-auth-footnote">소셜 계정은 첫 로그인 후 MY ACCOUNT에서 닉네임과 팬 배지를 확인해 주세요.</p>
         <nav class="sf-auth-links">
           <a href="/">HOME</a>
           <a href="/login">LOGIN</a>

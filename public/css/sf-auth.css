@@ -559,6 +559,12 @@ body {
   letter-spacing: 0;
 }
 
+.sf-social-button.is-google::before {
+  content: "G";
+  background: #ffffff;
+  color: #111827;
+}
+
 .sf-social-button.is-kakao::before {
   content: "K";
   background: #fee500;

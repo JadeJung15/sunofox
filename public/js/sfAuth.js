@@ -1089,6 +1089,7 @@
           });
           const user = result.user || {};
           cachedUsers = cachedUsers.map((item) => item.email === user.email ? user : item);
+          refreshAdminAlerts();
           updateApprovalSentState(row, Boolean(user.approvalGuideSentAt), user.approvalGuideSentAt || '', user.approvalGuideSentBy || '');
           setUserRowFeedback(row, 'complete', sent ? '전송 저장됨' : '체크 해제됨');
           setMessage(result.message || (sent ? '로그인 안내문 전송 완료 상태를 저장했습니다.' : '로그인 안내문 전송 체크를 해제했습니다.'), sent ? 'success' : 'info');
@@ -1117,7 +1118,7 @@
         });
         setUserRowFeedback(row, 'processing', '처리 중');
         try {
-          await requestJson('/api/admin/users', {
+          const response = await requestJson('/api/admin/users', {
             method: 'POST',
             headers: adminHeaders(adminKey),
             body: JSON.stringify({
@@ -1125,6 +1126,7 @@
               action: button.dataset.action
             })
           });
+          updateCachedUserForAlert(row.dataset.email, response.user || { status: result.status });
           const statusMark = row?.querySelector('mark[data-status]');
           if (statusMark) {
             statusMark.dataset.status = result.status;
@@ -1210,6 +1212,31 @@
     const root = document.getElementById('sf-admin-alerts');
     if (!root) return;
     root.innerHTML = `<p class="sf-admin-alert is-error">${escapeHtml(error?.message || '회원 데이터를 불러오지 못했습니다.')}</p>`;
+  }
+
+  function refreshAdminAlerts() {
+    renderAlerts(cachedUsers, cachedReports);
+  }
+
+  function updateCachedUserForAlert(email, updates = {}) {
+    const targetEmail = String(email || '').trim();
+    if (!targetEmail) return;
+    cachedUsers = cachedUsers.map((user) => {
+      if (user.email !== targetEmail) return user;
+      return { ...user, ...updates };
+    });
+    renderStats(cachedUsers);
+    refreshAdminAlerts();
+  }
+
+  function updateCachedReportForAlert(id, updates = {}) {
+    const targetId = String(id || '').trim();
+    if (!targetId) return;
+    cachedReports = cachedReports.map((report) => {
+      if (String(report.id || '') !== targetId) return report;
+      return { ...report, ...updates };
+    });
+    refreshAdminAlerts();
   }
 
   function renderAlerts(users = cachedUsers, reports = cachedReports) {
@@ -1392,6 +1419,7 @@
           });
           setMessage(`${title}: ${postActionLabel(action)} 처리가 완료되었습니다.`, 'success');
           showAdminToast(`게시글을 ${postActionLabel(action)} 처리했습니다.`, 'success', 'POST UPDATED');
+          refreshAdminAlerts();
           await loadAdminPostsSection(adminKey, adminHeaders(adminKey));
         } catch (error) {
           setMessage(error.message, 'error');
@@ -1464,6 +1492,7 @@
             })
           });
           showAdminToast(`댓글을 ${postActionLabel(button.dataset.commentAction)} 처리했습니다.`, 'success', 'COMMENT UPDATED');
+          refreshAdminAlerts();
           await loadAdminCommentsSection(adminKey, adminHeaders(adminKey));
         } catch (error) {
           setMessage(error.message, 'error');
@@ -1563,7 +1592,7 @@
         if (!row) return;
         button.disabled = true;
         try {
-          await requestJson('/api/community/reports', {
+          const response = await requestJson('/api/community/reports', {
             method: 'PATCH',
             headers: adminHeaders(adminKey),
             body: JSON.stringify({
@@ -1571,6 +1600,7 @@
               status: button.dataset.reportStatus
             })
           });
+          updateCachedReportForAlert(row.dataset.reportId, response.report || { status: button.dataset.reportStatus });
           showAdminToast(`신고 상태를 ${reportStatusLabel(button.dataset.reportStatus)}로 변경했습니다.`, 'success', 'REPORT UPDATED');
           await loadAdminReportsSection(adminKey, adminHeaders(adminKey));
         } catch (error) {
@@ -1600,7 +1630,7 @@
       const users = usersData.users || [];
       cachedUsers = users;
       renderStats(users);
-      renderAlerts(users, cachedReports);
+      refreshAdminAlerts();
       renderUsers(users, adminKey);
       return { ok: true, label: '회원', count: users.length };
     } catch (error) {
@@ -1686,7 +1716,7 @@
       const reportsData = await requestJson(`/api/community/reports?${getCommunityReportQuery()}`, { method: 'GET', headers });
       const reports = reportsData.reports || [];
       cachedReports = reports;
-      renderAlerts(cachedUsers, reports);
+      refreshAdminAlerts();
       renderCommunityReports(reports, adminKey);
       return { ok: true, label: '신고', count: reports.length };
     } catch (error) {

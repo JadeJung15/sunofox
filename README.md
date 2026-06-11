@@ -94,6 +94,13 @@ Invoke-RestMethod https://sunofox.com/api/auth/oauth/status | ConvertTo-Json -De
 
 Expected Kakao field after enabling the flag: `"emailScopeRequested": true`.
 
+Or run the local checker:
+
+```powershell
+.\scripts\check-oauth-status.ps1
+.\scripts\check-oauth-status.ps1 -ExpectKakaoEmailScope
+```
+
 The OAuth handler preserves existing Kakao users by matching the Kakao provider ID first. If a nickname-only Kakao account later receives a real email address, the account key and community references are migrated to the real email instead of creating a duplicate user.
 
 ## Deployment Boundary

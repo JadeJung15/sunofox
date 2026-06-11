@@ -2484,6 +2484,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
     linear-gradient(145deg, rgba(255, 10, 91, 0.08), transparent 42%),
     #050505;
   box-shadow: 0 30px 86px rgba(0, 0, 0, 0.62);
+  overflow: hidden;
 }
 
 .community-report-card form {
@@ -2525,9 +2526,19 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   height: 38px;
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 999px;
-  background: transparent;
+  background: rgba(255, 255, 255, 0.035);
   color: #ffffff;
   cursor: pointer;
+  font-size: 20px;
+  line-height: 1;
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.community-report-head button:hover,
+.community-report-head button:focus-visible {
+  border-color: rgba(255, 10, 91, 0.66);
+  background: rgba(255, 10, 91, 0.12);
+  transform: rotate(6deg);
 }
 
 .community-report-card label {
@@ -2550,6 +2561,11 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font: inherit;
   padding: 14px;
   outline: none;
+}
+
+.community-report-card select {
+  min-height: 48px;
+  color-scheme: dark;
 }
 
 .community-report-card textarea {
@@ -2580,6 +2596,14 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   letter-spacing: 0.12em;
   padding: 0 18px;
   cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.community-report-actions button:hover,
+.community-report-actions button:focus-visible {
+  border-color: rgba(255, 255, 255, 0.42);
+  background: rgba(255, 255, 255, 0.065);
+  transform: translateY(-1px);
 }
 
 .community-report-actions button[type='submit'] {
@@ -4705,6 +4729,20 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
     overflow: auto;
     padding: 18px;
   }
+
+  .community-report-card form {
+    gap: 14px;
+    padding: 0;
+  }
+
+  .community-report-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .community-report-actions button {
+    width: 100%;
+  }
 }
 
 @media (max-width: 430px) {
@@ -4762,6 +4800,20 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   .community-report-card select,
   .community-report-card textarea {
     padding: 12px;
+  }
+
+  .community-report-head {
+    grid-template-columns: minmax(0, 1fr) 42px;
+    gap: 8px 12px;
+  }
+
+  .community-report-head h2 {
+    font-size: clamp(25px, 9vw, 34px);
+  }
+
+  .community-report-head button {
+    width: 42px;
+    height: 42px;
   }
 }
 

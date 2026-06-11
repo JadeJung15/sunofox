@@ -43,7 +43,7 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
             <button type="button" data-detail-report-post>REPORT</button>
             <a href="/community/">BACK TO LIST</a>
           </div>
-          <p class="community-sample-note" data-detail-sample-note hidden>SAMPLE 게시글은 팬게시판 운영 예시입니다. 실제 댓글, 좋아요, 신고는 로그인한 회원과 실제 게시글에서 사용할 수 있습니다.</p>
+          <p class="community-sample-note" data-detail-sample-note hidden>안내용 게시글입니다. 댓글, 좋아요, 신고는 실제 팬 게시글에서 사용할 수 있습니다.</p>
         </div>
       </article>
 
@@ -68,7 +68,7 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
           </div>
         </div>
         <form class="community-comment-form" data-detail-comment-form hidden>
-          <textarea name="body" rows="3" maxlength="1200" required placeholder="댓글을 입력해 주세요. 로그인한 회원만 작성할 수 있습니다."></textarea>
+          <textarea name="body" rows="3" maxlength="1200" required placeholder="감상, 듣고 싶은 분위기, 장르 아이디어를 편하게 남겨 주세요."></textarea>
           <div class="community-comment-actions">
             <button type="submit">COMMENT</button>
             <a href="/login?next=/community/post/" data-detail-login-link>LOGIN</a>
@@ -85,13 +85,13 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
       <form data-community-report-form>
         <div class="community-report-head">
           <span>REPORT</span>
-          <h2 id="communityReportTitle">신고 사유 선택</h2>
+          <h2 id="communityReportTitle">신고 내용 확인</h2>
           <button type="button" data-community-report-close aria-label="신고 창 닫기">×</button>
         </div>
         <label>
           <span>신고 사유</span>
           <select name="reason" required>
-            <option value="">선택해 주세요</option>
+            <option value="">사유를 선택해 주세요</option>
             <option value="스팸 또는 광고">스팸 또는 광고</option>
             <option value="욕설 또는 비방">욕설 또는 비방</option>
             <option value="개인정보 노출">개인정보 노출</option>
@@ -102,7 +102,7 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
         </label>
         <label>
           <span>상세 내용</span>
-          <textarea name="detail" rows="4" maxlength="1000" placeholder="운영자가 확인할 수 있도록 필요한 내용만 간단히 적어 주세요."></textarea>
+          <textarea name="detail" rows="4" maxlength="1000" placeholder="운영자가 확인할 수 있도록 필요한 내용만 간단히 남겨 주세요."></textarea>
         </label>
         <div class="community-report-actions">
           <button type="button" data-community-report-cancel>취소</button>
@@ -211,13 +211,13 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
       function getCommunityActionError(error, fallback = '요청을 처리하지 못했습니다.') {
         const raw = String(error?.message || fallback).trim();
         if (/로그인/.test(raw)) {
-          return '로그인이 필요합니다. 회원가입 후 로그인하면 댓글, 좋아요, 신고를 사용할 수 있습니다.';
+          return '로그인이 필요합니다. 가입 후 로그인하면 댓글, 좋아요, 신고 기능을 사용할 수 있습니다.';
         }
         if (/승인/.test(raw)) {
-          return '로그인한 회원만 사용할 수 있습니다. 계정이 제한된 경우 사이트 주인에게 문의해 주세요.';
+          return '현재 계정으로는 사용할 수 없습니다. 계정 상태를 확인하거나 다시 로그인해 주세요.';
         }
         if (/데이터베이스|연결/.test(raw)) {
-          return '커뮤니티 저장소 연결을 확인하는 중입니다. 잠시 후 다시 시도해 주세요.';
+          return '커뮤니티 저장소 연결이 불안정합니다. 잠시 후 다시 시도해 주세요.';
         }
         return raw;
       }
@@ -257,7 +257,7 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
         if (title) return { icon: type === 'error' ? '!' : type === 'info' ? 'i' : '✓', title };
         if (type === 'error') return { icon: '!', title: 'CHECK REQUIRED' };
         if (type === 'info') return { icon: 'i', title: 'NOTICE' };
-        return { icon: '✓', title: 'COMMENT READY' };
+        return { icon: '✓', title: 'DONE' };
       }
 
       function showCommunityToast(text, type, title) {
@@ -389,7 +389,7 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
 
       async function submitReport(targetType, targetId, button) {
         if (!targetId || targetId.startsWith('idea-') || targetId.startsWith('notice-')) {
-          const text = 'SAMPLE 게시글은 신고할 수 없습니다. 실제 팬 게시글에서 신고 기능을 사용할 수 있습니다.';
+          const text = '안내용 게시글은 신고할 수 없습니다. 실제 팬 게시글에서 신고 기능을 사용할 수 있습니다.';
           setCommentMessage(text, 'error');
           showCommunityToast(text, 'error');
           return;
@@ -399,7 +399,7 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
         if (!report) return;
 
         if (button) button.disabled = true;
-        setCommentMessage('신고를 접수하는 중입니다.', 'info');
+        setCommentMessage('신고 내용을 접수하는 중입니다.', 'info');
         try {
           const response = await fetch('/api/community/reports', {
             method: 'POST',
@@ -408,7 +408,7 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
           });
           const data = await response.json().catch(() => ({}));
           if (!response.ok || !data.ok) throw new Error(data.message || '신고를 접수하지 못했습니다.');
-          const text = data.duplicate ? '이미 신고가 접수되어 있습니다.' : '신고가 접수되었습니다. 운영자가 확인하겠습니다.';
+          const text = data.duplicate ? '이미 접수된 신고입니다. 운영자가 확인 중입니다.' : '신고가 접수되었습니다. 운영자가 확인하겠습니다.';
           setCommentMessage(text, 'success');
           showCommunityToast(text, 'success', data.duplicate ? 'REPORT EXISTS' : 'REPORT RECEIVED');
         } catch (error) {
@@ -423,7 +423,7 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
       async function loadComments() {
         if (!activePostId || activePostId.startsWith('idea-') || activePostId.startsWith('notice-')) {
           renderComments([]);
-          setCommentMessage('SAMPLE 게시글은 댓글 작성이 제한됩니다. 실제 팬 게시글에서 댓글을 남길 수 있습니다.', 'info');
+          setCommentMessage('안내용 게시글은 댓글 작성이 제한됩니다. 실제 팬 게시글에서 댓글을 남길 수 있습니다.', 'info');
           return;
         }
         const response = await fetch(`/api/community/comments?postId=${encodeURIComponent(activePostId)}`);
@@ -452,14 +452,14 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
             return;
           }
           renderPost(fallback);
-          setMessage('현재 SAMPLE 안내용 게시글 상세를 표시하고 있습니다.', 'info');
+          setMessage('현재 안내용 게시글 상세를 표시하고 있습니다.', 'info');
           renderComments([]);
         }
       }
 
       reactionButton?.addEventListener('click', async () => {
         if (!activePostId || activePostId.startsWith('idea-') || activePostId.startsWith('notice-')) {
-          const text = 'SAMPLE 게시글에는 좋아요를 남길 수 없습니다. 실제 팬 게시글에서 반응을 남겨 주세요.';
+          const text = '안내용 게시글에는 좋아요를 남길 수 없습니다. 실제 팬 게시글에서 반응을 남겨 주세요.';
           setCommentMessage(text, 'error');
           showCommunityToast(text, 'error');
           return;
@@ -495,7 +495,7 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
           setCommentMessage(text, 'success');
           showCommunityToast(text, 'success', 'LINK READY');
         } catch {
-          const text = '공유 링크를 만들지 못했습니다. 주소창의 URL을 직접 복사해 주세요.';
+          const text = '공유 링크를 만들지 못했습니다. 주소창의 URL을 복사해 주세요.';
           setCommentMessage(text, 'error');
           showCommunityToast(text, 'error');
         } finally {
@@ -512,7 +512,7 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
       commentForm?.addEventListener('submit', async (event) => {
         event.preventDefault();
         if (!activePostId || activePostId.startsWith('idea-') || activePostId.startsWith('notice-')) {
-          const text = 'SAMPLE 게시글에는 댓글을 남길 수 없습니다. 로그인 후 실제 팬 게시글에서 댓글을 남겨 주세요.';
+          const text = '안내용 게시글에는 댓글을 남길 수 없습니다. 실제 팬 게시글에서 댓글을 남겨 주세요.';
           setCommentMessage(text, 'error');
           showCommunityToast(text, 'error');
           return;
@@ -530,8 +530,8 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
           const data = await response.json().catch(() => ({}));
           if (!response.ok || !data.ok) throw new Error(data.message || '댓글을 등록하지 못했습니다.');
           commentForm.reset();
-          setCommentMessage('댓글 등록 완료.', 'success');
-          showCommunityToast('댓글 등록 완료. 게시글 아래에서 확인할 수 있습니다.', 'success', 'COMMENT READY');
+          setCommentMessage('댓글이 등록되었습니다.', 'success');
+          showCommunityToast('댓글이 등록되었습니다. 게시글 아래에서 확인할 수 있습니다.', 'success', 'COMMENT READY');
           await loadComments();
         } catch (error) {
           const text = getCommunityActionError(error, '댓글을 등록하지 못했습니다.');

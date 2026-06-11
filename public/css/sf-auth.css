@@ -3598,8 +3598,22 @@ body {
 .sf-admin-body .sf-user-actions button,
 .sf-admin-body .sf-post-admin-actions button {
   min-height: 42px;
+  min-width: 78px;
   border-radius: 0;
   transition: transform 160ms ease, border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+
+.sf-admin-body .sf-post-admin-actions button:disabled,
+.sf-admin-body .sf-post-admin-actions button[data-busy="true"] {
+  cursor: wait;
+  opacity: 0.78;
+  transform: none;
+}
+
+.sf-admin-body .sf-post-admin-actions button[data-busy="true"] {
+  border-color: rgba(255, 255, 255, 0.38);
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
 }
 
 .sf-admin-body .sf-admin-key-form button:hover,

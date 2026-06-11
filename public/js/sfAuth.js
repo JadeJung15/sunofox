@@ -1185,6 +1185,21 @@
     return adminEmptyState(title, copy, actions, 'LOAD FAILED');
   }
 
+  function setAdminActionBusy(button, label = '처리 중...') {
+    if (!button) return () => {};
+    const originalText = button.textContent;
+    button.disabled = true;
+    button.dataset.busy = 'true';
+    button.setAttribute('aria-busy', 'true');
+    button.textContent = label;
+    return () => {
+      button.disabled = false;
+      delete button.dataset.busy;
+      button.removeAttribute('aria-busy');
+      button.textContent = originalText;
+    };
+  }
+
   function renderAdminLoading(rootId, title, copy, kicker) {
     const root = document.getElementById(rootId);
     if (!root) return;
@@ -1452,7 +1467,7 @@
         if (postActionNeedsConfirm(action) && !window.confirm(postActionConfirmMessage(action, title))) {
           return;
         }
-        button.disabled = true;
+        const restoreButton = setAdminActionBusy(button, `${postActionLabel(action)} 중...`);
         setMessage(`${title}: ${postActionLabel(action)} 처리를 진행합니다.`, 'info');
         try {
           await requestJson('/api/community/posts', {
@@ -1471,7 +1486,7 @@
           setMessage(error.message, 'error');
           showAdminToast(error.message, 'error');
         } finally {
-          button.disabled = false;
+          restoreButton();
         }
       });
     });
@@ -1527,24 +1542,26 @@
       button.addEventListener('click', async () => {
         const row = button.closest('[data-comment-id]');
         if (!row) return;
-        button.disabled = true;
+        const action = button.dataset.commentAction;
+        const restoreButton = setAdminActionBusy(button, `${postActionLabel(action)} 중...`);
+        setMessage(`댓글 ${postActionLabel(action)} 처리를 진행합니다.`, 'info');
         try {
           await requestJson('/api/community/comments', {
             method: 'PATCH',
             headers: adminHeaders(adminKey),
             body: JSON.stringify({
               id: row.dataset.commentId,
-              action: button.dataset.commentAction
+              action
             })
           });
-          showAdminToast(`댓글을 ${postActionLabel(button.dataset.commentAction)} 처리했습니다.`, 'success', 'COMMENT UPDATED');
+          showAdminToast(`댓글을 ${postActionLabel(action)} 처리했습니다.`, 'success', 'COMMENT UPDATED');
           refreshAdminAlerts();
           await loadAdminCommentsSection(adminKey, adminHeaders(adminKey));
         } catch (error) {
           setMessage(error.message, 'error');
           showAdminToast(error.message, 'error');
         } finally {
-          button.disabled = false;
+          restoreButton();
         }
       });
     });
@@ -1636,24 +1653,26 @@
       button.addEventListener('click', async () => {
         const row = button.closest('[data-report-id]');
         if (!row) return;
-        button.disabled = true;
+        const status = button.dataset.reportStatus;
+        const restoreButton = setAdminActionBusy(button, `${reportStatusLabel(status)} 중...`);
+        setMessage(`신고 상태를 ${reportStatusLabel(status)}로 변경합니다.`, 'info');
         try {
           const response = await requestJson('/api/community/reports', {
             method: 'PATCH',
             headers: adminHeaders(adminKey),
             body: JSON.stringify({
               id: row.dataset.reportId,
-              status: button.dataset.reportStatus
+              status
             })
           });
-          updateCachedReportForAlert(row.dataset.reportId, response.report || { status: button.dataset.reportStatus });
-          showAdminToast(`신고 상태를 ${reportStatusLabel(button.dataset.reportStatus)}로 변경했습니다.`, 'success', 'REPORT UPDATED');
+          updateCachedReportForAlert(row.dataset.reportId, response.report || { status });
+          showAdminToast(`신고 상태를 ${reportStatusLabel(status)}로 변경했습니다.`, 'success', 'REPORT UPDATED');
           await loadAdminReportsSection(adminKey, adminHeaders(adminKey));
         } catch (error) {
           setMessage(error.message, 'error');
           showAdminToast(error.message, 'error');
         } finally {
-          button.disabled = false;
+          restoreButton();
         }
       });
     });

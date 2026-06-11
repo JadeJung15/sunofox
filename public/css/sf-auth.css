@@ -4490,3 +4490,119 @@ body {
     font-size: 8px;
   }
 }
+
+/* Final polish: keep auth pages compact on mobile and align admin badges. */
+.sf-auth-body:not(.sf-admin-body) .sf-auth-card,
+.sf-auth-body:not(.sf-admin-body) .sf-auth-form input,
+.sf-auth-body:not(.sf-admin-body) .sf-auth-form textarea,
+.sf-auth-body:not(.sf-admin-body) .sf-auth-form button,
+.sf-auth-body:not(.sf-admin-body) .sf-auth-links a,
+.sf-auth-body:not(.sf-admin-body) .sf-auth-message {
+  box-sizing: border-box;
+}
+
+.sf-admin-body .sf-user-row mark,
+.sf-admin-body .sf-post-admin-meta mark {
+  align-items: center;
+  display: inline-flex;
+  min-height: 24px;
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.045);
+  font-family: "Roboto Condensed", "Arial Narrow", "Pretendard", sans-serif;
+  font-size: 11px;
+  font-weight: 950;
+  justify-content: center;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  padding: 0 10px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.sf-admin-body .sf-user-row mark[data-status="approved"],
+.sf-admin-body .sf-post-admin-meta mark[data-status="published"],
+.sf-admin-body .sf-post-admin-meta mark[data-status="resolved"] {
+  background: rgba(34, 197, 94, 0.11);
+  border-color: rgba(134, 239, 172, 0.5);
+}
+
+.sf-admin-body .sf-user-row mark[data-status="rejected"],
+.sf-admin-body .sf-post-admin-meta mark[data-status="deleted"],
+.sf-admin-body .sf-post-admin-meta mark[data-status="dismissed"] {
+  background: rgba(255, 10, 91, 0.11);
+  border-color: rgba(255, 143, 177, 0.48);
+}
+
+.sf-admin-body .sf-user-row mark[data-status="pending"],
+.sf-admin-body .sf-post-admin-meta mark[data-status="open"] {
+  background: rgba(251, 191, 36, 0.11);
+  border-color: rgba(253, 230, 138, 0.46);
+}
+
+.sf-admin-body .sf-post-admin-meta mark[data-status="hidden"],
+.sf-admin-body .sf-post-admin-meta mark[data-status="reviewing"],
+.sf-admin-body .sf-post-admin-meta mark[data-status="pinned"] {
+  background: rgba(147, 197, 253, 0.1);
+  border-color: rgba(147, 197, 253, 0.42);
+}
+
+.sf-admin-body .sf-admin-author {
+  align-items: center;
+  display: inline-flex;
+  gap: 6px;
+  min-width: 0;
+}
+
+.sf-admin-body .sf-admin-author .sf-user-icon {
+  width: 22px;
+  height: 22px;
+  flex-basis: 22px;
+  border-radius: 7px;
+}
+
+@media (max-width: 720px) {
+  .sf-admin-body .sf-post-admin-meta {
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .sf-admin-body .sf-post-admin-actions {
+    width: 100%;
+  }
+
+  .sf-admin-body .sf-post-admin-actions a,
+  .sf-admin-body .sf-post-admin-actions button {
+    min-height: 42px;
+  }
+}
+
+@media (max-width: 390px) {
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-shell {
+    padding: 8px;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-stage {
+    padding: 12px 10px;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-title {
+    font-size: clamp(33px, 10vw, 44px);
+    letter-spacing: -0.012em;
+  }
+
+  .sf-auth-signup:not(.sf-admin-body) .sf-auth-title {
+    font-size: clamp(31px, 9.4vw, 42px);
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-card {
+    padding: 13px 10px;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-form {
+    gap: 9px;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-links {
+    gap: 7px;
+  }
+}

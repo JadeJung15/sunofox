@@ -464,6 +464,21 @@
     wrapper.hidden = false;
   }
 
+  function renderAdminProviderBadges(user) {
+    const providers = accountProviders(user);
+    const primaryProvider = String(user?.provider || providers[0] || 'email').toLowerCase();
+    const badges = providers.length ? providers : ['email'];
+    return `
+      <span class="sf-admin-provider-list" aria-label="로그인 제공자">
+        ${badges.map((provider) => {
+          const label = providerLabels[provider] || provider;
+          const primary = provider === primaryProvider ? ' data-primary="true"' : '';
+          return `<span class="sf-admin-provider is-${escapeHtml(provider)}"${primary}>${escapeHtml(label)}</span>`;
+        }).join('')}
+      </span>
+    `;
+  }
+
   async function loadAccount() {
     const email = document.querySelector('[data-account-email]');
     const form = document.getElementById('sf-account-form');
@@ -898,7 +913,10 @@
           <div class="sf-user-main">
             <div class="sf-user-identity">
               <strong>${iconMarkup(user.iconId || 1)} ${escapeHtml(user.email)}</strong>
-              <span>${escapeHtml(user.nickname || user.name || '닉네임 없음')} · ${(user.providers || [user.provider || 'email']).map((provider) => escapeHtml(provider)).join(', ')}</span>
+              <span class="sf-user-subline">
+                <span>${escapeHtml(user.nickname || user.name || '닉네임 없음')}</span>
+                ${renderAdminProviderBadges(user)}
+              </span>
             </div>
             <div class="sf-user-meta">
               ${requestedAt ? `<small>신청 ${escapeHtml(requestedAt)}</small>` : ''}

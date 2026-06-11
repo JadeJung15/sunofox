@@ -1239,6 +1239,59 @@ body {
   color: #0f172a;
 }
 
+.sf-user-subline {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  line-height: 1.45;
+}
+
+.sf-admin-provider-list {
+  align-items: center;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.sf-user-row .sf-admin-provider {
+  align-items: center;
+  border: 1px solid #cbd5e1;
+  border-radius: 999px;
+  color: #475569;
+  display: inline-flex;
+  font-family: "Rajdhani", "Pretendard", sans-serif;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  min-height: 24px;
+  padding: 0 9px;
+  text-transform: uppercase;
+}
+
+.sf-user-row .sf-admin-provider.is-google {
+  background: #ffffff;
+  border-color: #bfdbfe;
+  color: #1d4ed8;
+}
+
+.sf-user-row .sf-admin-provider.is-kakao {
+  background: #fff7cc;
+  border-color: #fde047;
+  color: #713f12;
+}
+
+.sf-user-row .sf-admin-provider.is-email {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #334155;
+}
+
+.sf-user-row .sf-admin-provider[data-primary="true"] {
+  box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.06);
+}
+
 .sf-user-row span,
 .sf-user-row small {
   color: #64748b;
@@ -1742,6 +1795,34 @@ body {
 .sf-admin-body .sf-post-admin-meta {
   color: rgba(255, 255, 255, 0.62);
   word-break: keep-all;
+}
+
+.sf-admin-body .sf-user-row .sf-admin-provider {
+  background: rgba(255, 255, 255, 0.055);
+  border-color: rgba(255, 255, 255, 0.22);
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.sf-admin-body .sf-user-row .sf-admin-provider.is-google {
+  background: rgba(66, 133, 244, 0.16);
+  border-color: rgba(147, 197, 253, 0.55);
+  color: #bfdbfe;
+}
+
+.sf-admin-body .sf-user-row .sf-admin-provider.is-kakao {
+  background: rgba(254, 229, 0, 0.15);
+  border-color: rgba(253, 224, 71, 0.55);
+  color: #fde68a;
+}
+
+.sf-admin-body .sf-user-row .sf-admin-provider.is-email {
+  background: rgba(255, 255, 255, 0.055);
+  border-color: rgba(255, 255, 255, 0.22);
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.sf-admin-body .sf-user-row .sf-admin-provider[data-primary="true"] {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.055);
 }
 
 .sf-admin-body .sf-admin-head-actions a,

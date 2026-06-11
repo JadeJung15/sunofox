@@ -816,6 +816,12 @@
     const summary = document.getElementById(summaryId);
     if (!summary || !feedback) return;
     summary.textContent = `${summary.textContent} · ${feedback}`;
+    summary.dataset.feedback = 'true';
+    window.setTimeout(() => {
+      if (summary.dataset.feedback === 'true') {
+        delete summary.dataset.feedback;
+      }
+    }, 1600);
   }
 
   function updateCommunityPostFilterSummary(count) {

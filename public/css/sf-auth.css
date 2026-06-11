@@ -1009,10 +1009,21 @@ body {
 }
 
 .sf-admin-filter-summary {
+  border: 1px solid transparent;
+  border-radius: 8px;
   color: #64748b;
   font-size: 13px;
   font-weight: 800;
   margin: -4px 0 0;
+  padding: 8px 10px;
+  transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease, color 180ms ease;
+}
+
+.sf-admin-filter-summary[data-feedback="true"] {
+  background: #ecfdf5;
+  border-color: #bbf7d0;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.12);
+  color: #047857;
 }
 
 .sf-admin-copy-note {
@@ -2015,6 +2026,13 @@ body {
 
 .sf-admin-body .sf-admin-filter-summary {
   color: rgba(255, 255, 255, 0.58);
+}
+
+.sf-admin-body .sf-admin-filter-summary[data-feedback="true"] {
+  border-color: rgba(255, 10, 91, 0.42);
+  background: rgba(255, 10, 91, 0.1);
+  box-shadow: 0 0 0 3px rgba(255, 10, 91, 0.08);
+  color: rgba(255, 255, 255, 0.88);
 }
 
 .sf-admin-body .sf-admin-filter-form {
@@ -4220,6 +4238,10 @@ body {
   .sf-admin-loading-state::before,
   .sf-admin-body .sf-admin-alert.is-loading {
     animation: none;
+  }
+
+  .sf-admin-filter-summary {
+    transition: none;
   }
 }
 

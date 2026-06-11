@@ -358,7 +358,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
         });
         if (!hasAccess) {
           setFormMessage('', 'info');
-          setPublishedPanel(null);
+          if (!recentPostId) setPublishedPanel(null);
         }
       }
 

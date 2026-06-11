@@ -4228,3 +4228,118 @@ body {
     font-size: 8px;
   }
 }
+
+/* Mobile auth final pass: keep login/join/account screens calm on 390-430px devices. */
+@media (max-width: 430px) {
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-shell {
+    padding: 8px;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-stage {
+    gap: 10px;
+    padding: 14px 11px;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-title {
+    font-size: clamp(31px, 10.4vw, 40px);
+    letter-spacing: -0.012em;
+    line-height: 0.98;
+  }
+
+  .sf-auth-signup:not(.sf-admin-body) .sf-auth-title {
+    font-size: clamp(30px, 9.7vw, 38px);
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-route,
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-status-list {
+    display: none;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-copy {
+    gap: 8px;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-copy,
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-copy > p {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-card {
+    gap: 10px;
+    padding: 13px 11px;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-card h2 {
+    font-size: clamp(26px, 8vw, 32px);
+    line-height: 1.04;
+  }
+
+  .sf-social-auth {
+    gap: 8px;
+  }
+
+  .sf-social-button {
+    min-height: 44px;
+    font-size: 11px;
+    letter-spacing: 0.09em;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-form label {
+    gap: 6px;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-form input,
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-form textarea,
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-form button {
+    min-height: 43px;
+    font-size: 14px;
+  }
+
+  .sf-equipped-icon {
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .sf-equipped-icon .sf-user-icon {
+    width: 42px;
+    height: 42px;
+    flex-basis: 42px;
+  }
+
+  .sf-equipped-icon strong {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+  }
+
+  .sf-equipped-icon small {
+    font-size: 11px;
+    line-height: 1.42;
+  }
+
+  .sf-account-card .sf-icon-grid {
+    max-height: 238px;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-form .sf-icon-option {
+    min-height: 74px;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-form .sf-icon-option .sf-user-icon {
+    width: 32px;
+    height: 32px;
+    flex-basis: 32px;
+    border-radius: 11px;
+  }
+}
+
+@media (max-width: 370px) {
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-title {
+    font-size: clamp(28px, 9.7vw, 34px);
+  }
+
+  .sf-account-card .sf-icon-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-height: 252px;
+  }
+}

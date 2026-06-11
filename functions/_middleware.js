@@ -39,6 +39,16 @@ function adminOnlyResponse() {
   });
 }
 
+function googleVerificationResponse() {
+  return new Response('google-site-verification: google847c58fe0967b558.html', {
+    status: 200,
+    headers: {
+      'content-type': 'text/html; charset=utf-8',
+      'cache-control': 'public, max-age=0, must-revalidate'
+    }
+  });
+}
+
 async function studioResponse(context) {
   if (!context.env.ASSETS?.fetch) {
     return context.next();
@@ -65,6 +75,10 @@ export async function onRequest(context) {
     url.protocol = 'https:';
     url.hostname = 'sunofox.com';
     return Response.redirect(url.toString(), 301);
+  }
+
+  if (url.pathname === '/google847c58fe0967b558.html') {
+    return googleVerificationResponse();
   }
 
   const isProtectedAdminPath = url.pathname === '/admin' ||

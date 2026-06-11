@@ -103,6 +103,13 @@ Or run the local checker:
 .\scripts\check-oauth-status.ps1 -ExpectKakaoEmailScope
 ```
 
+Admin console OAuth panel static check:
+
+```powershell
+npm run build
+npm run check:admin-oauth
+```
+
 The OAuth handler preserves existing Kakao users by matching the Kakao provider ID first. If a nickname-only Kakao account later receives a real email address, the account key and community references are migrated to the real email instead of creating a duplicate user.
 
 ## Deployment Boundary

@@ -2,6 +2,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build && node scripts/version-auth-assets.mjs",
+    "check:admin-oauth": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-admin-oauth-panel.ps1",
     "preview": "astro preview",
     "pages:dev": "npm run build && wrangler pages dev dist --compatibility-date=2026-06-07",
     "deploy:preview": "npm run build && wrangler pages deploy dist --project-name sf-studio --branch astro-redesign",

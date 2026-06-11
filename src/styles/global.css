@@ -4591,6 +4591,180 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   }
 }
 
+/* Final community mobile polish: remove horizontal drag and stabilize forms. */
+.community-page *,
+.community-report-modal * {
+  box-sizing: border-box;
+}
+
+.community-post-main,
+.community-comments,
+.community-write-panel,
+.community-report-card {
+  min-width: 0;
+}
+
+.community-post-main h2,
+.community-detail-post .community-post-main h2,
+.community-comment-head h2,
+.community-write-copy h2 {
+  text-wrap: balance;
+}
+
+@media (max-width: 640px) {
+  .community-layout {
+    overflow: visible;
+  }
+
+  .community-categories {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    margin: 0;
+    overflow: visible;
+    padding: 0;
+    scroll-snap-type: none;
+  }
+
+  .community-categories a,
+  .community-categories button {
+    min-height: 86px;
+    flex: initial;
+    padding: 13px;
+  }
+
+  .community-categories strong {
+    font-size: 15px;
+  }
+
+  .community-post-row {
+    gap: 12px;
+    padding: 20px 0;
+  }
+
+  .community-post-meta,
+  .community-post-main div {
+    gap: 7px;
+  }
+
+  .community-post-main div span {
+    align-items: center;
+    display: inline-flex;
+    width: auto;
+    max-width: 100%;
+    min-height: 30px;
+  }
+
+  .community-post-main div span.community-author {
+    width: 100%;
+  }
+
+  .community-post-actions,
+  .community-comment-actions,
+  .community-write-actions,
+  .community-published-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .community-post-actions a,
+  .community-post-actions button,
+  .community-comment-row button,
+  .community-comment-form button,
+  .community-comment-actions a,
+  .community-write-actions .main-button,
+  .community-published-actions a {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  .community-comments {
+    border-left: 0;
+    border-top: 1px solid rgba(255, 10, 91, 0.28);
+    padding: 16px 0 0;
+  }
+
+  .community-comment-row {
+    grid-template-columns: 1fr;
+    padding: 13px;
+  }
+
+  .community-comment-row time {
+    margin-top: -2px;
+  }
+
+  .community-comment-form textarea,
+  .community-write-form textarea {
+    min-height: 128px;
+  }
+
+  .community-report-card {
+    width: min(100%, calc(100vw - 24px));
+    max-height: calc(100svh - 24px);
+    overflow: auto;
+    padding: 18px;
+  }
+}
+
+@media (max-width: 430px) {
+  .community-categories {
+    grid-template-columns: 1fr;
+  }
+
+  .community-categories a,
+  .community-categories button {
+    min-height: 76px;
+  }
+
+  .community-board-head,
+  .community-detail-shell,
+  .community-write-panel,
+  .community-empty-card {
+    gap: 12px;
+  }
+
+  .community-detail-post,
+  .community-detail-comments,
+  .community-write-panel,
+  .community-login-panel,
+  .community-auth-note,
+  .community-first-post-guide,
+  .community-published-panel {
+    padding: 14px;
+  }
+
+  .community-post-main h2 {
+    font-size: clamp(21px, 7vw, 28px);
+  }
+
+  .community-detail-post .community-post-main h2 {
+    font-size: clamp(27px, 9vw, 38px);
+  }
+
+  .community-comment-head h2 {
+    font-size: clamp(27px, 9vw, 38px);
+  }
+
+  .community-post-main p,
+  .community-comment-row p,
+  .community-comment-login-panel p,
+  .community-write-panel p,
+  .community-write-note {
+    font-size: 13px;
+    line-height: 1.72;
+  }
+
+  .community-write-form input,
+  .community-write-form select,
+  .community-write-form textarea,
+  .community-comment-form textarea,
+  .community-report-card select,
+  .community-report-card textarea {
+    padding: 12px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

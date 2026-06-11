@@ -1088,6 +1088,20 @@ body {
   padding: 12px 14px;
 }
 
+.sf-admin-alert a {
+  color: inherit;
+  font-size: 12px;
+  font-weight: 900;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.sf-admin-alert.is-report {
+  background: #fff1f2;
+  border-color: #fda4af;
+  color: #be123c;
+}
+
 .sf-admin-alert.is-clear {
   background: #f8fafc;
   border-color: #e2e8f0;
@@ -2201,6 +2215,18 @@ body {
   border-radius: 0;
   background: rgba(255, 10, 91, 0.1);
   color: #ffe1ea;
+}
+
+.sf-admin-body .sf-admin-alert a {
+  color: #ffffff;
+}
+
+.sf-admin-body .sf-admin-alert.is-report {
+  border-color: rgba(255, 10, 91, 0.52);
+  background:
+    linear-gradient(135deg, rgba(255, 10, 91, 0.18), transparent 58%),
+    rgba(0, 0, 0, 0.38);
+  color: #ffd5e2;
 }
 
 .sf-admin-body .sf-admin-alert.is-clear {

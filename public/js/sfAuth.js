@@ -1212,20 +1212,45 @@
     root.innerHTML = `<p class="sf-admin-alert is-error">${escapeHtml(error?.message || '회원 데이터를 불러오지 못했습니다.')}</p>`;
   }
 
-  function renderAlerts(users) {
+  function renderAlerts(users = cachedUsers, reports = cachedReports) {
     const root = document.getElementById('sf-admin-alerts');
     if (!root) return;
     const pending = users.filter((user) => user.status === 'pending');
-    if (!pending.length) {
-      root.innerHTML = '<p class="sf-admin-alert is-clear">새 회원 계정이 없습니다.</p>';
+    const activeReports = reports.filter((report) => ['open', 'reviewing'].includes(report.status));
+    const alertItems = [];
+
+    if (pending.length) {
+      alertItems.push(`
+        <div class="sf-admin-alert">
+          <strong>대기 계정 ${pending.length}건</strong>
+          <span>${pending.slice(0, 3).map((user) => escapeHtml(user.email)).join(', ')}${pending.length > 3 ? ' 외' : ''}</span>
+          <a href="#admin-members">회원 관리로 이동</a>
+        </div>
+      `);
+    }
+
+    if (activeReports.length) {
+      const openCount = activeReports.filter((report) => report.status === 'open').length;
+      const reviewingCount = activeReports.filter((report) => report.status === 'reviewing').length;
+      const targets = activeReports.slice(0, 3).map((report) => {
+        const target = report.targetType === 'comment' ? '댓글' : '게시글';
+        const title = report.postTitle || report.reason || '신고 대상';
+        return `${target}: ${title}`;
+      });
+      alertItems.push(`
+        <div class="sf-admin-alert is-report">
+          <strong>처리 대기 신고 ${activeReports.length}건</strong>
+          <span>신규 ${openCount}건 · 검토 ${reviewingCount}건 · ${targets.map(escapeHtml).join(', ')}${activeReports.length > 3 ? ' 외' : ''}</span>
+          <a href="#admin-reports">신고 관리로 이동</a>
+        </div>
+      `);
+    }
+
+    if (!alertItems.length) {
+      root.innerHTML = '<p class="sf-admin-alert is-clear">새 회원 계정과 처리 대기 신고가 없습니다.</p>';
       return;
     }
-    root.innerHTML = `
-      <div class="sf-admin-alert">
-        <strong>대기 계정 ${pending.length}건</strong>
-        <span>${pending.slice(0, 3).map((user) => escapeHtml(user.email)).join(', ')}${pending.length > 3 ? ' 외' : ''}</span>
-      </div>
-    `;
+    root.innerHTML = alertItems.join('');
   }
 
   function renderStats(users) {
@@ -1575,7 +1600,7 @@
       const users = usersData.users || [];
       cachedUsers = users;
       renderStats(users);
-      renderAlerts(users);
+      renderAlerts(users, cachedReports);
       renderUsers(users, adminKey);
       return { ok: true, label: '회원', count: users.length };
     } catch (error) {
@@ -1661,6 +1686,7 @@
       const reportsData = await requestJson(`/api/community/reports?${getCommunityReportQuery()}`, { method: 'GET', headers });
       const reports = reportsData.reports || [];
       cachedReports = reports;
+      renderAlerts(cachedUsers, reports);
       renderCommunityReports(reports, adminKey);
       return { ok: true, label: '신고', count: reports.length };
     } catch (error) {

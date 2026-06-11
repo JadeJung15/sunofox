@@ -1449,6 +1449,98 @@ body {
   word-break: keep-all;
 }
 
+.sf-admin-list-stack {
+  display: grid;
+  gap: 12px;
+}
+
+.sf-admin-moderation-overview {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(360px, 1fr);
+  gap: 12px;
+  align-items: stretch;
+  margin-bottom: 14px;
+}
+
+.sf-admin-moderation-overview-copy,
+.sf-admin-metric-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #f8fafc;
+  padding: 14px;
+}
+
+.sf-admin-moderation-overview-copy {
+  display: grid;
+  gap: 6px;
+  align-content: center;
+}
+
+.sf-admin-moderation-overview-copy span,
+.sf-admin-metric-card small {
+  color: #be185d;
+  font-family: "Roboto Condensed", "Arial Narrow", "Pretendard", sans-serif;
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.sf-admin-moderation-overview-copy strong {
+  color: #0f172a;
+  font-size: clamp(20px, 2.5vw, 28px);
+  font-weight: 950;
+  line-height: 1.12;
+  word-break: keep-all;
+}
+
+.sf-admin-moderation-overview-copy p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.65;
+  word-break: keep-all;
+}
+
+.sf-admin-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.sf-admin-metric-card {
+  display: grid;
+  gap: 5px;
+  min-height: 92px;
+  align-content: center;
+}
+
+.sf-admin-metric-card strong {
+  color: #0f172a;
+  font-size: 28px;
+  font-weight: 950;
+  line-height: 1;
+}
+
+.sf-admin-metric-card em {
+  color: #64748b;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 1.35;
+  word-break: keep-all;
+}
+
+.sf-admin-metric-card.is-warn {
+  border-color: #facc15;
+  background: #fefce8;
+}
+
+.sf-admin-metric-card.is-danger {
+  border-color: #fda4af;
+  background: #fff1f2;
+}
+
 .sf-post-admin-meta {
   align-items: center;
   display: flex;
@@ -2375,6 +2467,44 @@ body {
   color: rgba(255, 255, 255, 0.66);
 }
 
+.sf-admin-body .sf-admin-moderation-overview-copy,
+.sf-admin-body .sf-admin-metric-card {
+  border-color: rgba(255, 255, 255, 0.12);
+  border-radius: 0;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.055), transparent 58%),
+    rgba(255, 255, 255, 0.028);
+}
+
+.sf-admin-body .sf-admin-moderation-overview-copy span,
+.sf-admin-body .sf-admin-metric-card small {
+  color: #ff8fb1;
+}
+
+.sf-admin-body .sf-admin-moderation-overview-copy strong,
+.sf-admin-body .sf-admin-metric-card strong {
+  color: #ffffff;
+}
+
+.sf-admin-body .sf-admin-moderation-overview-copy p,
+.sf-admin-body .sf-admin-metric-card em {
+  color: rgba(255, 255, 255, 0.64);
+}
+
+.sf-admin-body .sf-admin-metric-card.is-warn {
+  border-color: rgba(255, 209, 102, 0.36);
+  background:
+    linear-gradient(135deg, rgba(255, 209, 102, 0.1), transparent 58%),
+    rgba(255, 255, 255, 0.026);
+}
+
+.sf-admin-body .sf-admin-metric-card.is-danger {
+  border-color: rgba(255, 10, 91, 0.42);
+  background:
+    linear-gradient(135deg, rgba(255, 10, 91, 0.14), transparent 58%),
+    rgba(255, 255, 255, 0.026);
+}
+
 .sf-admin-body .sf-post-admin-actions .sf-admin-detail-link {
   border-color: rgba(255, 255, 255, 0.18);
   border-radius: 0;
@@ -2402,6 +2532,14 @@ body {
   .sf-admin-body .sf-admin-community-filter-form,
   .sf-admin-body .sf-admin-comment-filter-form,
   .sf-admin-body .sf-admin-report-filter-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sf-admin-moderation-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .sf-admin-metric-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -3948,6 +4086,14 @@ body {
   .sf-admin-status-tabs {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 7px;
+  }
+
+  .sf-admin-metric-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sf-admin-metric-card {
+    min-height: auto;
   }
 
   .sf-admin-status-tabs button {

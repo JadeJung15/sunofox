@@ -837,6 +837,86 @@
     ]);
   }
 
+  function countBy(items, predicate) {
+    return items.filter(predicate).length;
+  }
+
+  function adminMetricCard(label, value, copy, tone = '') {
+    return `
+      <span class="sf-admin-metric-card ${tone ? `is-${escapeHtml(tone)}` : ''}">
+        <small>${escapeHtml(label)}</small>
+        <strong>${escapeHtml(value)}</strong>
+        <em>${escapeHtml(copy)}</em>
+      </span>
+    `;
+  }
+
+  function adminModerationOverview(type, items) {
+    const list = Array.isArray(items) ? items : [];
+    let title = '운영 요약';
+    let copy = '목록을 검토하고 필요한 항목만 처리해 주세요.';
+    let metrics = '';
+
+    if (type === 'posts') {
+      const hidden = countBy(list, (post) => post.status === 'hidden');
+      const deleted = countBy(list, (post) => post.status === 'deleted');
+      const pinned = countBy(list, (post) => Boolean(post.pinned));
+      const reviewCount = hidden + deleted;
+      title = reviewCount ? `확인 필요한 게시글 ${reviewCount}건` : '게시글 상태가 안정적입니다';
+      copy = reviewCount
+        ? '숨김/삭제 글은 원문과 작성자를 확인하고, 공개 복구가 필요하면 상세를 먼저 열어 주세요.'
+        : '공개 글과 고정 글 위주로 톤을 확인하면 됩니다.';
+      metrics = [
+        adminMetricCard('PUBLIC', countBy(list, (post) => post.status === 'published'), '팬 목록 노출'),
+        adminMetricCard('HIDDEN', hidden, '숨김 처리됨', hidden ? 'warn' : ''),
+        adminMetricCard('PINNED', pinned, '상단 고정'),
+        adminMetricCard('DELETED', deleted, '삭제 상태', deleted ? 'danger' : '')
+      ].join('');
+    } else if (type === 'comments') {
+      const hidden = countBy(list, (comment) => comment.status === 'hidden');
+      const deleted = countBy(list, (comment) => comment.status === 'deleted');
+      const publicCount = countBy(list, (comment) => comment.status === 'published');
+      title = hidden || deleted ? `확인 필요한 댓글 ${hidden + deleted}건` : '댓글 상태가 안정적입니다';
+      copy = hidden || deleted
+        ? '숨김/삭제 댓글은 연결된 게시글 맥락을 확인한 뒤 반복 패턴 여부를 판단해 주세요.'
+        : '공개 댓글의 표현 수위와 게시글 맥락만 빠르게 확인하면 됩니다.';
+      metrics = [
+        adminMetricCard('PUBLIC', publicCount, '공개 댓글'),
+        adminMetricCard('HIDDEN', hidden, '숨김 처리됨', hidden ? 'warn' : ''),
+        adminMetricCard('DELETED', deleted, '삭제 상태', deleted ? 'danger' : '')
+      ].join('');
+    } else if (type === 'reports') {
+      const open = countBy(list, (report) => report.status === 'open');
+      const reviewing = countBy(list, (report) => report.status === 'reviewing');
+      const resolved = countBy(list, (report) => report.status === 'resolved');
+      const dismissed = countBy(list, (report) => report.status === 'dismissed');
+      const active = open + reviewing;
+      title = active ? `처리 대기 신고 ${active}건` : '열린 신고가 없습니다';
+      copy = active
+        ? '대기/검토 신고는 대상 원문을 열어 확인하고 처리 또는 기각으로 마무리해 주세요.'
+        : '처리 완료/기각 내역은 반복 신고 패턴이 있는지 필요할 때만 확인하면 됩니다.';
+      metrics = [
+        adminMetricCard('OPEN', open, '신규 신고', open ? 'danger' : ''),
+        adminMetricCard('REVIEWING', reviewing, '검토 중', reviewing ? 'warn' : ''),
+        adminMetricCard('RESOLVED', resolved, '처리 완료'),
+        adminMetricCard('DISMISSED', dismissed, '기각')
+      ].join('');
+    }
+
+    return `
+      <div class="sf-admin-moderation-overview" aria-label="운영 요약">
+        <div class="sf-admin-moderation-overview-copy">
+          <span>OPERATIONS</span>
+          <strong>${escapeHtml(title)}</strong>
+          <p>${escapeHtml(copy)}</p>
+        </div>
+        <div class="sf-admin-metric-grid">
+          ${metrics}
+        </div>
+      </div>
+    `;
+  }
+
   function getCommunityPostQuery() {
     const params = new URLSearchParams({
       admin: '1',
@@ -1230,8 +1310,11 @@
       return;
     }
 
-    root.innerHTML = posts.map((post) => `
-      <article class="sf-post-admin-row" data-post-id="${escapeHtml(post.id)}">
+    root.innerHTML = `
+      ${adminModerationOverview('posts', posts)}
+      <div class="sf-admin-list-stack">
+        ${posts.map((post) => `
+      <article class="sf-post-admin-row" data-post-id="${escapeHtml(post.id)}" data-status="${escapeHtml(post.status || '')}">
         <div class="sf-post-admin-main">
           <div class="sf-post-admin-meta">
             <mark data-status="${escapeHtml(post.status)}">${postStatusLabel(post.status)}</mark>
@@ -1258,7 +1341,9 @@
           <button class="is-danger" type="button" data-post-action="delete" aria-label="${escapeHtml(post.title)} 삭제">삭제</button>
         </div>
       </article>
-    `).join('');
+    `).join('')}
+      </div>
+    `;
 
     root.querySelectorAll('button[data-post-action]').forEach((button) => {
       button.addEventListener('click', async () => {
@@ -1309,8 +1394,13 @@
       return;
     }
 
-    root.innerHTML = comments.map((comment) => `
-      <article class="sf-comment-admin-row" data-comment-id="${escapeHtml(comment.id)}">
+    root.innerHTML = `
+      ${adminModerationOverview('comments', comments)}
+      <div class="sf-admin-list-stack">
+        ${comments.map((comment) => {
+      const postLink = postDetailLink(comment.postId || comment.post_id || '');
+      return `
+      <article class="sf-comment-admin-row" data-comment-id="${escapeHtml(comment.id)}" data-status="${escapeHtml(comment.status || '')}">
         <div class="sf-post-admin-main">
           <div class="sf-post-admin-meta">
             <mark data-status="${escapeHtml(comment.status)}">${postStatusLabel(comment.status)}</mark>
@@ -1324,11 +1414,15 @@
           <small>${escapeHtml(comment.authorEmail || '')}</small>
         </div>
         <div class="sf-post-admin-actions" aria-label="댓글 관리 액션">
+          ${comment.postId || comment.post_id ? `<a class="sf-admin-detail-link" href="${escapeHtml(postLink)}" target="_blank" rel="noopener noreferrer">게시글 열기</a>` : ''}
           <button class="${comment.status === 'published' ? 'is-warning' : 'is-safe'}" type="button" data-comment-action="${comment.status === 'published' ? 'hide' : 'publish'}" aria-label="댓글 ${comment.status === 'published' ? '숨김 처리' : '공개 처리'}">${comment.status === 'published' ? '숨김' : '공개'}</button>
           <button class="is-danger" type="button" data-comment-action="delete" aria-label="댓글 삭제">삭제</button>
         </div>
       </article>
-    `).join('');
+    `;
+    }).join('')}
+      </div>
+    `;
 
     root.querySelectorAll('button[data-comment-action]').forEach((button) => {
       button.addEventListener('click', async () => {
@@ -1372,7 +1466,10 @@
       return;
     }
 
-    root.innerHTML = reports.map((report) => {
+    root.innerHTML = `
+      ${adminModerationOverview('reports', reports)}
+      <div class="sf-admin-list-stack">
+        ${reports.map((report) => {
       const targetTitle = report.targetType === 'comment'
         ? (report.postTitle ? `댓글: ${report.postTitle}` : '댓글')
         : (report.postTitle || '게시글');
@@ -1384,7 +1481,7 @@
         ? report.commentBody
         : report.postBody;
       return `
-        <article class="sf-report-admin-row" data-report-id="${escapeHtml(report.id)}">
+        <article class="sf-report-admin-row" data-report-id="${escapeHtml(report.id)}" data-status="${escapeHtml(report.status || '')}">
           <div class="sf-post-admin-main">
             <div class="sf-post-admin-meta">
               <mark data-status="${escapeHtml(report.status)}">${reportStatusLabel(report.status)}</mark>
@@ -1431,7 +1528,9 @@
           </div>
         </article>
       `;
-    }).join('');
+    }).join('')}
+      </div>
+    `;
 
     root.querySelectorAll('button[data-report-status]').forEach((button) => {
       button.addEventListener('click', async () => {

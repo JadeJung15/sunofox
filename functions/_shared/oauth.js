@@ -48,7 +48,7 @@ function providerConfig(provider, env) {
       authUrl: 'https://kauth.kakao.com/oauth/authorize',
       tokenUrl: 'https://kauth.kakao.com/oauth/token',
       userInfoUrl: 'https://kapi.kakao.com/v2/user/me',
-      scope: 'account_email profile_nickname'
+      scope: 'profile_nickname'
     };
   }
   return null;
@@ -155,7 +155,13 @@ async function fetchOAuthProfile(config, accessToken) {
 }
 
 async function upsertOAuthUser(env, profile) {
-  const email = normalizeEmail(profile.email);
+  const email = normalizeEmail(
+    profile.email || (
+      profile.provider === 'kakao' && profile.providerId
+        ? `kakao-${profile.providerId}@oauth.sunofox.local`
+        : ''
+    )
+  );
   if (!email) {
     throw new Error('OAuth email permission is required');
   }

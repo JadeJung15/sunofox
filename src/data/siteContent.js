@@ -318,19 +318,19 @@ export const communityCategories = [
     key: 'all',
     label: 'ALL',
     title: '전체 게시물',
-    desc: 'SunoFox 팬들이 남기는 감상, 제안, 아이디어를 한곳에서 봅니다.'
+    desc: 'SunoFox 팬들이 남긴 감상, 제안, 운영 공지를 한곳에서 확인합니다.'
   },
   {
     key: 'free',
     label: 'FREE TALK',
     title: '일반 게시물',
-    desc: '팬들이 자유롭게 인사하고 감상을 나누는 기본 게시판입니다.'
+    desc: '처음 방문한 인사, 짧은 감상, 자유로운 이야기를 남기는 기본 게시판입니다.'
   },
   {
     key: 'request',
     label: 'TRACK REQUEST',
     title: '듣고 싶은 곡',
-    desc: '듣고 싶은 장르, 전개, 악기, 애니 장면 아이디어를 제안합니다.'
+    desc: '듣고 싶은 장르, 전개, 악기, 애니메이션 장면 아이디어를 제안합니다.'
   },
   {
     key: 'mood',
@@ -342,7 +342,7 @@ export const communityCategories = [
     key: 'feedback',
     label: 'FEEDBACK',
     title: '감상 후기',
-    desc: '공개된 곡, 영상, 가사, 시리즈에 대한 의견을 남기는 공간입니다.'
+    desc: '공개된 곡, 영상, 가사, 시리즈에 대한 감상과 개선 의견을 남깁니다.'
   },
   {
     key: 'notice',
@@ -357,8 +357,8 @@ export const communityPosts = [
     id: 'notice-001',
     board: 'notice',
     category: 'NOTICE',
-    title: '팬 커뮤니티를 베타로 열 준비를 하고 있습니다',
-    excerpt: '일반 게시물은 공개 리스트로 읽을 수 있고, 작성은 로그인한 회원부터 이용할 수 있습니다.',
+    title: '팬게시판 이용 안내: 듣고 싶은 장면과 분위기를 남겨 주세요',
+    excerpt: '음악으로 듣고 싶은 장면, 캐릭터, 장르, 감상 후기를 편하게 남겨 주세요. 작성과 댓글은 로그인한 회원부터 이용할 수 있습니다.',
     author: 'SunoFox Team',
     date: '2026.06.09',
     comments: 0,

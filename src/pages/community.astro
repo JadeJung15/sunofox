@@ -9,7 +9,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
 
 <Layout
   title="Community | SunoFox Anime OST Studio"
-  description="SunoFox 팬들이 듣고 싶은 분위기, 장르, 캐릭터 아이디어, 감상 후기를 나눌 수 있는 커뮤니티 준비 공간입니다."
+  description="SunoFox 팬들이 듣고 싶은 분위기, 장르, 캐릭터 아이디어, 감상 후기를 나누는 팬게시판입니다."
   canonical="https://sunofox.com/community/"
 >
   <SiteChrome active="community" />
@@ -18,7 +18,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
     <section class="category-hero reveal" aria-labelledby="communityTitle">
       <p class="section-kicker">COMMUNITY</p>
       <h1 id="communityTitle">FAN BOARD</h1>
-      <p>팬들이 감상, 아이디어, 듣고 싶은 분위기를 일반 게시물 리스트로 나누는 소통 공간입니다.</p>
+      <p>듣고 싶은 장면, 곡의 분위기, 캐릭터 아이디어, 감상 후기를 편하게 남기는 팬 소통 공간입니다.</p>
       <div class="community-hero-actions" aria-label="Fan board quick actions">
         <a class="main-button" href="#communityPosts">BROWSE POSTS</a>
         <a class="main-button main-button-muted" href="/login?next=/community%23communityWrite">LOGIN TO WRITE</a>
@@ -28,7 +28,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
     <section class="category-content" aria-label="SunoFox fan board">
       <div class="community-status reveal">
         <span>OPEN BETA</span>
-        <p>일반 게시물 리스트는 누구나 볼 수 있습니다. 작성, 댓글, 좋아요, 신고는 회원가입 후 로그인한 계정에서 이용할 수 있습니다.</p>
+        <p>게시물은 누구나 읽을 수 있습니다. 작성, 댓글, 좋아요, 신고는 가입 후 로그인한 계정에서 이용할 수 있습니다.</p>
         <div class="community-status-actions">
           <a class="main-button" href="/community/?board=free#communityPosts">GENERAL POSTS</a>
           <a class="main-button main-button-muted" href="/signup">JOIN</a>
@@ -55,7 +55,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
           <div class="community-board-head">
             <div>
               <span>POST LIST</span>
-              <p class="community-board-note">SAMPLE 배지가 붙은 글은 팬게시판 운영 예시입니다. 실제 팬 글은 로그인한 회원이 작성하면 같은 목록에 표시됩니다.</p>
+              <p class="community-board-note">GUIDE 배지가 붙은 글은 작성 예시입니다. 로그인한 회원이 남긴 실제 팬 글은 같은 목록에 표시됩니다.</p>
             </div>
             <strong data-community-count>{communityPosts.length} POSTS</strong>
           </div>
@@ -78,7 +78,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
                       <span>{post.author}</span>
                     </span>
                     <span>{post.comments} COMMENTS</span>
-                    <span class={`community-status-chip ${post.status === 'SAMPLE' ? 'is-sample' : post.status === 'PINNED' ? 'is-pinned' : ''}`}>{post.status}</span>
+                    <span class={`community-status-chip ${post.status === 'SAMPLE' ? 'is-sample' : post.status === 'PINNED' ? 'is-pinned' : ''}`}>{post.status === 'SAMPLE' ? 'GUIDE' : post.status}</span>
                   </div>
                   <div class="community-post-actions">
                     <a href={`/community/post/?id=${encodeURIComponent(post.id)}`}>READ POST</a>
@@ -92,29 +92,29 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
             <div class="community-write-copy">
               <span>WRITE POST</span>
               <h2>팬 게시글 작성</h2>
-              <p>회원가입 후 로그인하면 팬게시판에 글을 남길 수 있습니다. 모바일에서도 짧게 작성할 수 있도록 제목과 핵심 아이디어만 먼저 남겨 주세요.</p>
+              <p>가입 후 로그인하면 팬게시판에 글을 남길 수 있습니다. 긴 글이 아니어도 괜찮습니다. 듣고 싶은 장면과 분위기만 짧게 남겨 주세요.</p>
             </div>
 
             <div class="community-auth-note" data-community-auth-note role="note">
               <span>LOGIN REQUIRED</span>
-              <p>작성, 댓글, 좋아요, 신고는 로그인한 회원에게 열립니다. 아직 계정이 없다면 JOIN에서 바로 가입한 뒤 이용해 주세요.</p>
+              <p>작성, 댓글, 좋아요, 신고는 로그인한 회원에게 열립니다. 계정이 없다면 JOIN에서 가입 후 닉네임과 팬 아이콘을 설정해 주세요.</p>
             </div>
 
             <div class="community-first-post-guide" aria-label="첫 게시글 작성 가이드">
-              <strong>첫 글로 이런 이야기를 남겨 주세요</strong>
+              <strong>처음 남기기 좋은 이야기</strong>
               <div>
                 <span>듣고 싶은 장르</span>
                 <span>캐릭터 아이디어</span>
                 <span>장면 분위기</span>
                 <span>곡 감상 후기</span>
               </div>
-              <p>예: 비 오는 도시에서 시작해 후반부에 Symphonic DnB로 터지는 전투 OST가 듣고 싶어요.</p>
+              <p>예: 비 오는 도시에서 조용한 피아노로 시작해 후반부에 Symphonic DnB로 터지는 전투 OST가 듣고 싶어요.</p>
             </div>
 
             <div class="community-login-panel" data-community-login-panel>
               <span>MEMBER ACCESS</span>
               <h3>로그인 후 팬게시글을 작성할 수 있습니다.</h3>
-              <p>게시글 작성, 댓글, 좋아요, 신고는 로그인한 회원에게만 열립니다. 계정이 없다면 먼저 가입한 뒤 닉네임과 팬 아이콘을 설정해 주세요.</p>
+              <p>로그인하면 게시글 작성, 댓글, 좋아요, 신고 기능을 사용할 수 있습니다. 가입 후에는 계정 화면에서 닉네임과 팬 아이콘을 언제든 수정할 수 있습니다.</p>
               <div class="community-login-actions">
                 <a class="main-button" href="/login?next=/community%23communityWrite">LOGIN</a>
                 <a class="main-button main-button-muted" href="/signup">JOIN</a>
@@ -144,7 +144,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
                 <small>예: 시작은 조용한 피아노, 후반은 Symphonic DnB로 터지는 장면이 좋아요.</small>
               </label>
 
-              <p class="community-write-note">게시 후 문제가 있는 글은 운영자가 숨김 또는 삭제 처리할 수 있습니다.</p>
+              <p class="community-write-note">서로 편하게 이야기할 수 있도록 광고, 비방, 개인정보가 포함된 글은 숨김 또는 삭제될 수 있습니다.</p>
 
               <div class="community-write-actions">
                 <button class="main-button" type="submit">PUBLISH POST</button>
@@ -177,7 +177,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
         <article>
           <span>02</span>
           <strong>JOIN</strong>
-          <p>회원가입 후 로그인하면 팬게시판에 직접 글을 남길 수 있습니다.</p>
+          <p>가입 후 로그인하면 팬게시판에 직접 글을 남길 수 있습니다.</p>
         </article>
         <article>
           <span>03</span>
@@ -205,13 +205,13 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
       <form data-community-report-form>
         <div class="community-report-head">
           <span>REPORT</span>
-          <h2 id="communityReportTitle">신고 사유 선택</h2>
+          <h2 id="communityReportTitle">신고 내용 확인</h2>
           <button type="button" data-community-report-close aria-label="신고 창 닫기">×</button>
         </div>
         <label>
           <span>신고 사유</span>
           <select name="reason" required>
-            <option value="">선택해 주세요</option>
+            <option value="">사유를 선택해 주세요</option>
             <option value="스팸 또는 광고">스팸 또는 광고</option>
             <option value="욕설 또는 비방">욕설 또는 비방</option>
             <option value="개인정보 노출">개인정보 노출</option>
@@ -222,7 +222,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
         </label>
         <label>
           <span>상세 내용</span>
-          <textarea name="detail" rows="4" maxlength="1000" placeholder="운영자가 확인할 수 있도록 필요한 내용만 간단히 적어 주세요."></textarea>
+          <textarea name="detail" rows="4" maxlength="1000" placeholder="운영자가 확인할 수 있도록 필요한 내용만 간단히 남겨 주세요."></textarea>
         </label>
         <div class="community-report-actions">
           <button type="button" data-community-report-cancel>취소</button>
@@ -317,6 +317,8 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
       }
 
       function normalizePost(post) {
+        const status = post.pinned ? 'PINNED' : (post.status || 'PUBLISHED');
+        const isSample = String(post.status || '').toUpperCase() === 'SAMPLE' || String(post.id || '').startsWith('idea-');
         return {
           id: post.id || '',
           board: post.board || '',
@@ -328,8 +330,9 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
           date: formatDate(post.createdAt || post.date),
           comments: Number(post.commentCount ?? post.comments ?? 0),
           likes: Number(post.likeCount || 0),
-          status: post.pinned ? 'PINNED' : (post.status || 'PUBLISHED'),
-          isSample: String(post.status || '').toUpperCase() === 'SAMPLE' || String(post.id || '').startsWith('idea-')
+          status,
+          statusLabel: isSample ? 'GUIDE' : status,
+          isSample
         };
       }
 
@@ -376,13 +379,13 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
       function getCommunityActionError(error, fallback = '요청을 처리하지 못했습니다.') {
         const raw = String(error?.message || fallback).trim();
         if (/로그인/.test(raw)) {
-          return '로그인이 필요합니다. 회원가입 후 로그인하면 글 작성, 댓글, 좋아요를 사용할 수 있습니다.';
+          return '로그인이 필요합니다. 가입 후 로그인하면 글 작성, 댓글, 좋아요를 사용할 수 있습니다.';
         }
         if (/승인/.test(raw)) {
-          return '로그인한 회원만 사용할 수 있습니다. 계정이 제한된 경우 사이트 주인에게 문의해 주세요.';
+          return '현재 계정으로는 사용할 수 없습니다. 계정 상태를 확인하거나 다시 로그인해 주세요.';
         }
         if (/데이터베이스|연결/.test(raw)) {
-          return '커뮤니티 저장소 연결을 확인하는 중입니다. 잠시 후 다시 시도해 주세요.';
+          return '커뮤니티 저장소 연결이 불안정합니다. 잠시 후 다시 시도해 주세요.';
         }
         return raw;
       }
@@ -579,7 +582,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
               <div>
                 ${authorIconMarkup(post.authorIconId, post.author)}
                 <span>${post.comments} COMMENTS</span>
-                <span class="community-status-chip ${post.isSample ? 'is-sample' : post.status === 'PINNED' ? 'is-pinned' : ''}">${escapeHtml(post.status).toUpperCase()}</span>
+                <span class="community-status-chip ${post.isSample ? 'is-sample' : post.status === 'PINNED' ? 'is-pinned' : ''}">${escapeHtml(post.statusLabel).toUpperCase()}</span>
               </div>
               <div class="community-post-actions">
                 <a href="/community/post/?id=${encodeURIComponent(post.id)}">
@@ -602,14 +605,14 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
                 <div class="community-comment-login-panel" data-community-comment-login-panel>
                   <span>LOGIN REQUIRED</span>
                   <strong>로그인 후 댓글을 남길 수 있습니다.</strong>
-                  <p>회원가입 후 로그인하면 팬게시판 글에 댓글, 좋아요, 신고 기능을 사용할 수 있습니다.</p>
+                  <p>가입 후 로그인하면 팬게시판 글에 댓글, 좋아요, 신고 기능을 사용할 수 있습니다.</p>
                   <div class="community-comment-actions">
                     <a href="/login?next=/community">LOGIN</a>
                     <a href="/signup">JOIN</a>
                   </div>
                 </div>
                 <form class="community-comment-form" data-community-comment-form data-post-id="${escapeHtml(post.id)}" hidden>
-                  <textarea name="body" rows="3" maxlength="1200" required placeholder="댓글을 입력해 주세요. 로그인한 회원만 작성할 수 있습니다."></textarea>
+                  <textarea name="body" rows="3" maxlength="1200" required placeholder="감상, 듣고 싶은 분위기, 장르 아이디어를 편하게 남겨 주세요."></textarea>
                   <div class="community-comment-actions">
                     <button type="submit">COMMENT</button>
                     <a href="/login?next=/community">LOGIN</a>
@@ -643,7 +646,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
 
       async function submitReport({ targetType, targetId, messageTarget, button }) {
         if (!targetId || targetId.startsWith('idea-') || targetId.startsWith('notice-')) {
-          const text = '예시 게시글은 신고할 수 없습니다.';
+          const text = '안내용 게시글은 신고할 수 없습니다. 실제 팬 게시글에서 신고 기능을 사용할 수 있습니다.';
           if (messageTarget) {
             messageTarget.textContent = text;
             messageTarget.dataset.type = 'error';
@@ -659,10 +662,10 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
 
         if (button) button.disabled = true;
         if (messageTarget) {
-          messageTarget.textContent = '신고를 접수하는 중입니다.';
+          messageTarget.textContent = '신고 내용을 접수하는 중입니다.';
           messageTarget.dataset.type = 'info';
         } else {
-          setMessage('신고를 접수하는 중입니다.', 'info');
+          setMessage('신고 내용을 접수하는 중입니다.', 'info');
         }
 
         try {
@@ -680,7 +683,7 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
           if (!response.ok || !result.ok) {
             throw new Error(result.message || '신고를 접수하지 못했습니다.');
           }
-          const text = result.duplicate ? '이미 신고가 접수되어 있습니다.' : '신고가 접수되었습니다. 운영자가 확인하겠습니다.';
+          const text = result.duplicate ? '이미 접수된 신고입니다. 운영자가 확인 중입니다.' : '신고가 접수되었습니다. 운영자가 확인하겠습니다.';
           if (messageTarget) {
             messageTarget.textContent = text;
             messageTarget.dataset.type = 'success';
@@ -732,10 +735,10 @@ const categoryOptions = communityCategories.filter((item) => !['all', 'notice'].
 
           renderPosts(getFallbackPosts());
           const state = emptyStates[activeBoard] || emptyStates.all;
-          setMessage(`${state.title} 현재는 SAMPLE 배지가 붙은 안내용 예시 게시글을 표시하고 있습니다.`, 'info');
+          setMessage(`${state.title} 현재는 GUIDE 배지가 붙은 안내용 게시글을 표시하고 있습니다.`, 'info');
         } catch (error) {
           renderPosts(getFallbackPosts());
-          setMessage('현재는 SAMPLE 배지가 붙은 예시 게시글을 표시하고 있습니다. 실제 게시글은 서버 연결 상태가 안정화되면 같은 목록에 표시됩니다.', 'info');
+          setMessage('현재는 GUIDE 배지가 붙은 안내용 게시글을 표시하고 있습니다. 실제 팬 글도 같은 목록에 표시됩니다.', 'info');
         }
       }
 

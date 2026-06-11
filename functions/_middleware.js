@@ -23,8 +23,9 @@ function adminOnlyResponse() {
     <main>
       <section>
         <h1>관리자 전용 페이지입니다</h1>
-        <p>SF Studio는 사이트 관리자만 사용할 수 있습니다. 공개 홈으로 이동해 주세요.</p>
+        <p>Owner Console은 사이트 소유자 계정만 사용할 수 있습니다. 현재 로그인 계정이 소유자가 아니라면 Google에서 소유자 계정으로 다시 로그인해 주세요.</p>
         <div>
+          <a href="/api/auth/oauth/start?provider=google">소유자 Google로 로그인</a>
           <a href="/">홈으로 이동</a>
         </div>
       </section>

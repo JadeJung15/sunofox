@@ -1558,6 +1558,77 @@
     }
   }
 
+  function renderAdminOAuthStatus(data) {
+    const root = document.getElementById('sf-admin-oauth-status');
+    if (!root) return;
+    const providers = data?.providers || {};
+    const google = providers.google || {};
+    const kakao = providers.kakao || {};
+    const kakaoEmailScopeRequested = Boolean(kakao.emailScopeRequested);
+    const rows = [
+      {
+        label: 'Google',
+        value: google.configured ? '연결됨' : '준비 중',
+        state: google.configured ? 'is-ready' : 'is-warn',
+        copy: google.configured
+          ? 'Google 로그인 버튼을 사용할 수 있습니다.'
+          : 'Google OAuth client 설정을 확인해 주세요.'
+      },
+      {
+        label: 'Kakao',
+        value: kakao.configured ? '연결됨' : '준비 중',
+        state: kakao.configured ? 'is-ready' : 'is-warn',
+        copy: kakao.configured
+          ? 'Kakao 로그인 버튼을 사용할 수 있습니다.'
+          : 'Kakao REST API key 설정을 확인해 주세요.'
+      },
+      {
+        label: 'Kakao email scope',
+        value: kakaoEmailScopeRequested ? '요청 중' : '꺼짐',
+        state: kakaoEmailScopeRequested ? 'is-ready' : 'is-muted',
+        copy: kakaoEmailScopeRequested
+          ? '사이트가 account_email scope를 요청합니다. Kakao 동의항목 설정도 함께 확인해 주세요.'
+          : '현재 Kakao 계정 이메일은 요청하지 않습니다. Kakao Developers에서 account_email 권한을 연 뒤 켜세요.'
+      }
+    ];
+    root.innerHTML = `
+      <div class="sf-admin-oauth-grid">
+        ${rows.map((row) => `
+          <article class="sf-admin-oauth-card ${row.state}">
+            <span>${escapeHtml(row.label)}</span>
+            <strong>${escapeHtml(row.value)}</strong>
+            <p>${escapeHtml(row.copy)}</p>
+          </article>
+        `).join('')}
+      </div>
+      <p class="sf-admin-oauth-note">Kakao 콘솔에서 <code>account_email</code>이 권한 없음이면 이메일 scope를 켜지 마세요.</p>
+    `;
+  }
+
+  function renderAdminOAuthError(error) {
+    const root = document.getElementById('sf-admin-oauth-status');
+    if (!root) return;
+    root.innerHTML = adminSectionErrorState(
+      '소셜 로그인 상태를 확인하지 못했습니다.',
+      error?.message || '잠시 후 다시 시도해 주세요.',
+      [{ href: '/login/', label: '로그인 화면 확인' }]
+    );
+  }
+
+  async function loadAdminOAuthStatus() {
+    const root = document.getElementById('sf-admin-oauth-status');
+    if (!root) return { ok: true, label: '소셜 로그인', count: 0 };
+    root.innerHTML = '<p class="sf-admin-alert is-loading">소셜 로그인 상태를 확인하는 중입니다.</p>';
+    try {
+      const data = await requestJson('/api/auth/oauth/status', { method: 'GET' });
+      renderAdminOAuthStatus(data);
+      return { ok: true, label: '소셜 로그인', count: 1 };
+    } catch (error) {
+      renderAdminOAuthError(error);
+      return { ok: false, label: '소셜 로그인', message: error.message };
+    }
+  }
+
   async function loadDashboard(adminKey) {
     setMessage('관리 데이터를 섹션별로 불러오는 중입니다.', 'info');
     const headers = adminHeaders(adminKey);
@@ -1680,7 +1751,8 @@
         button.disabled = true;
         try {
           const target = button.dataset.adminRefresh || '';
-          if (target === 'users') await reloadUsers();
+          if (target === 'oauth') await loadAdminOAuthStatus();
+          else if (target === 'users') await reloadUsers();
           else if (target === 'posts') await reloadPosts();
           else if (target === 'comments') await reloadComments();
           else if (target === 'reports') await reloadReports();
@@ -1739,6 +1811,7 @@
     loadDashboard('').catch(() => {
       setMessage('소유자 계정으로 로그인했거나 관리자 키가 있으면 회원 상태를 관리할 수 있습니다.', 'info');
     });
+    loadAdminOAuthStatus().catch(() => {});
   }
 
   function statusLabel(status) {

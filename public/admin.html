@@ -56,6 +56,7 @@
     </section>
 
     <nav class="sf-admin-jump-nav" aria-label="관리 메뉴">
+      <a href="#admin-oauth">로그인</a>
       <a href="#admin-members">회원</a>
       <a href="#admin-posts">게시글</a>
       <a href="#admin-comments">댓글</a>
@@ -79,6 +80,20 @@
       </form>
       <div id="sf-auth-message" class="sf-auth-message" hidden></div>
       <div id="sf-admin-alerts" class="sf-admin-alerts"></div>
+    </section>
+
+    <section class="sf-admin-panel" id="admin-oauth">
+      <div class="sf-admin-section-head">
+        <div>
+          <span class="sf-auth-kicker">LOGIN PROVIDERS</span>
+          <h2>소셜 로그인 상태</h2>
+          <p>Google/Kakao 로그인 설정과 Kakao 이메일 scope 요청 상태를 확인합니다. 비밀값은 표시하지 않습니다.</p>
+        </div>
+        <button class="sf-admin-section-button" type="button" data-admin-refresh="oauth">상태 새로고침</button>
+      </div>
+      <div id="sf-admin-oauth-status" class="sf-admin-oauth-status" role="status" aria-live="polite">
+        <p>소셜 로그인 상태를 확인하는 중입니다.</p>
+      </div>
     </section>
 
     <section class="sf-admin-panel" id="admin-members">

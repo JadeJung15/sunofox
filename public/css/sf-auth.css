@@ -3503,6 +3503,29 @@ body {
   color: #ffe7ad;
 }
 
+.sf-admin-section-sync {
+  display: inline-flex;
+  width: fit-content;
+  margin: 9px 0 0;
+  border-left: 2px solid rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.52);
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0.02em;
+  line-height: 1.35;
+  padding-left: 9px;
+}
+
+.sf-admin-section-sync[data-state="success"] {
+  border-left-color: rgba(134, 239, 172, 0.56);
+  color: rgba(202, 255, 217, 0.86);
+}
+
+.sf-admin-section-sync[data-state="error"] {
+  border-left-color: rgba(255, 209, 102, 0.68);
+  color: #ffe7ad;
+}
+
 .sf-admin-body .sf-admin-head-actions {
   position: relative;
   z-index: 1;

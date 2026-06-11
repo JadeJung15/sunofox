@@ -1213,7 +1213,8 @@
 
   function updateAdminSyncStatus(section, state = 'success') {
     const target = document.getElementById('sf-admin-sync-status');
-    if (!target) return;
+    const sectionTarget = document.getElementById(`sf-admin-sync-${section}`);
+    if (!target && !sectionTarget) return;
     const labels = {
       users: '회원',
       posts: '게시글',
@@ -1233,10 +1234,18 @@
     };
     const latest = adminSyncState[section];
     const failures = Object.values(adminSyncState).filter((item) => item.state === 'error').length;
-    target.dataset.state = failures ? 'warn' : state;
-    target.textContent = failures
-      ? `마지막 동기화: ${latest.label} ${latest.time} · 확인 필요 ${failures}개`
-      : `마지막 동기화: ${latest.label} ${latest.time}`;
+    if (target) {
+      target.dataset.state = failures ? 'warn' : state;
+      target.textContent = failures
+        ? `마지막 동기화: ${latest.label} ${latest.time} · 확인 필요 ${failures}개`
+        : `마지막 동기화: ${latest.label} ${latest.time}`;
+    }
+    if (sectionTarget) {
+      sectionTarget.dataset.state = state;
+      sectionTarget.textContent = state === 'error'
+        ? `동기화 실패: ${latest.time}`
+        : `최근 동기화: ${latest.time}`;
+    }
   }
 
   function renderAlertsLoading() {

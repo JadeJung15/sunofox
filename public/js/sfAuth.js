@@ -412,7 +412,10 @@
       return `
         <button type="button" class="sf-icon-option" data-icon-option="${id}" aria-pressed="false" aria-label="${escapeHtml(meta.label)} 팬 배지 선택">
           ${iconMarkup(id)}
-          <span class="sf-icon-option-name">${escapeHtml(meta.code)}</span>
+          <span class="sf-icon-option-copy">
+            <span class="sf-icon-option-no">${String(id).padStart(2, '0')}</span>
+            <span class="sf-icon-option-name">${escapeHtml(meta.code)} ${escapeHtml(meta.tier)}</span>
+          </span>
         </button>
       `;
     }).join('');

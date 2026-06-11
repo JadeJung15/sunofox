@@ -4057,3 +4057,174 @@ body {
   font-weight: 950;
   letter-spacing: 0.08em;
 }
+
+/* Account badge selector polish: compact, readable, and consistent with the dark official-site tone. */
+.sf-badge-picker-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 16px;
+}
+
+.sf-badge-picker-head div {
+  display: grid;
+  gap: 4px;
+}
+
+.sf-badge-picker-head strong,
+.sf-badge-picker-head small {
+  color: #ffffff;
+  font-family: "Roboto Condensed", "Arial Narrow", "Pretendard", sans-serif;
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.sf-badge-picker-head span {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 12px;
+  line-height: 1.55;
+  word-break: keep-all;
+}
+
+.sf-badge-picker-head small {
+  color: #ff0a5b;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+}
+
+.sf-account-card .sf-icon-grid {
+  grid-template-columns: repeat(auto-fit, minmax(76px, 1fr));
+  gap: 10px;
+  max-height: min(340px, 42vh);
+  border-color: rgba(255, 255, 255, 0.13);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.012)),
+    rgba(0, 0, 0, 0.38);
+  border-radius: 12px;
+  padding: 10px;
+  scrollbar-width: thin;
+}
+
+.sf-account-card .sf-icon-grid::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sf-account-card .sf-icon-grid::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.sf-account-card .sf-icon-grid::-webkit-scrollbar-thumb {
+  background: rgba(255, 10, 91, 0.72);
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-form .sf-icon-option {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 7px;
+  min-height: 96px;
+  border-radius: 12px;
+  padding: 10px 6px 12px;
+  overflow: hidden;
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-form .sf-icon-option::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 8%, hsla(var(--icon-hue, 342), 88%, 56%, 0.18), transparent 48%);
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-form .sf-icon-option:hover::before,
+.sf-auth-body:not(.sf-admin-body) .sf-auth-form .sf-icon-option:focus-visible::before,
+.sf-auth-body:not(.sf-admin-body) .sf-auth-form .sf-icon-option.is-selected::before {
+  opacity: 1;
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-form .sf-icon-option .sf-user-icon,
+.sf-auth-body:not(.sf-admin-body) .sf-auth-form .sf-icon-option-copy {
+  position: relative;
+  z-index: 1;
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-form .sf-icon-option .sf-user-icon {
+  width: 44px;
+  height: 44px;
+  flex-basis: 44px;
+  border-radius: 14px;
+}
+
+.sf-icon-option-copy {
+  display: grid;
+  gap: 3px;
+  justify-items: center;
+  min-width: 0;
+}
+
+.sf-icon-option-no {
+  color: #ff0a5b;
+  font-family: "Roboto Condensed", "Arial Narrow", "Pretendard", sans-serif;
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 0.1em;
+}
+
+.sf-icon-option-name {
+  max-width: 100%;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  line-height: 1.1;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-form .sf-icon-option.is-selected::after {
+  top: 6px;
+  right: 7px;
+  bottom: auto;
+  left: auto;
+  width: auto;
+  color: #ffffff;
+  font-size: 7px;
+}
+
+@media (max-width: 430px) {
+  .sf-badge-picker-head {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 14px;
+  }
+
+  .sf-account-card .sf-icon-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    max-height: 280px;
+    padding: 8px;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-form .sf-icon-option {
+    min-height: 82px;
+    padding: 8px 4px 10px;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-form .sf-icon-option .sf-user-icon {
+    width: 36px;
+    height: 36px;
+    flex-basis: 36px;
+  }
+
+  .sf-icon-option-name {
+    font-size: 8px;
+  }
+}

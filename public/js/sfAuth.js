@@ -59,7 +59,7 @@
 
     if (context === 'signup') {
       if (original.includes('회원가입이 완료')) {
-        return '회원가입이 완료되었습니다. LOGIN 화면에서 로그인한 뒤 닉네임과 아이콘을 수정할 수 있습니다.';
+        return '회원가입이 완료되었습니다. LOGIN 화면에서 로그인한 뒤 닉네임과 팬 배지를 수정할 수 있습니다.';
       }
       if (original.includes('이미')) {
         return '이미 등록된 이메일입니다. LOGIN 화면에서 이메일과 비밀번호로 로그인해 주세요.';
@@ -123,10 +123,8 @@
     const messages = {
       rejected: ['이 소셜 계정은 이용이 제한되어 있습니다. 사이트 주인에게 문의해 주세요.', 'error'],
       'status-error': ['소셜 계정 상태를 확인하지 못했습니다. 잠시 후 다시 시도해 주세요.', 'error'],
-      'missing-google': ['Google 로그인이 아직 준비 중입니다. 지금은 이메일로 로그인해 주세요.', 'info'],
       'missing-kakao': ['Kakao 로그인이 아직 준비 중입니다. 지금은 이메일로 로그인해 주세요.', 'info'],
       'state-error': ['소셜 로그인 세션이 만료되었습니다. 다시 시도해 주세요.', 'error'],
-      'google-error': ['Google 로그인 처리 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.', 'error'],
       'kakao-error': ['Kakao 로그인 처리 중 문제가 발생했습니다. 잠시 후 다시 시도해 주세요.', 'error'],
       unsupported: ['지원하지 않는 소셜 로그인 방식입니다.', 'error']
     };
@@ -148,7 +146,7 @@
 
   function setOAuthButtonState(button, provider, configured) {
     if (!button) return;
-    const label = provider === 'google' ? 'Google' : 'Kakao';
+    const label = provider === 'kakao' ? 'Kakao' : 'Social';
     if (!button.dataset.oauthHref) {
       button.dataset.oauthHref = button.getAttribute('href') || '';
     }
@@ -192,7 +190,7 @@
       if (note) {
         if (missing.length) {
           note.hidden = false;
-          note.textContent = '소셜 로그인은 준비 중입니다. 이메일 방식은 바로 이용할 수 있습니다.';
+          note.textContent = 'Kakao 로그인은 준비 중입니다. 이메일 방식은 바로 이용할 수 있습니다.';
         } else {
           note.hidden = true;
           note.textContent = '';
@@ -201,7 +199,7 @@
     } catch {
       if (note) {
         note.hidden = false;
-        note.textContent = '소셜 로그인 설정 상태를 확인하지 못했습니다. 이메일 방식은 바로 이용할 수 있습니다.';
+        note.textContent = 'Kakao 로그인 설정 상태를 확인하지 못했습니다. 이메일 방식은 바로 이용할 수 있습니다.';
       }
     }
   }
@@ -224,18 +222,69 @@
     return data;
   }
 
+  const iconThemes = [
+    ['SF', 'Suno Core', 342],
+    ['NV', 'Night Verse', 262],
+    ['AW', 'Awakening', 28],
+    ['PR', 'Prayer', 314],
+    ['MM', 'Memory', 205],
+    ['AB', 'Abyss', 226],
+    ['NM', 'Nameless', 18],
+    ['LX', 'Lunar X', 284],
+    ['EP', 'Ethereal Pop', 176],
+    ['DN', 'Drum Nova', 198],
+    ['OS', 'OST Frame', 44],
+    ['CT', 'City Trace', 220],
+    ['HL', 'Halo Line', 52],
+    ['RC', 'Rain Code', 192],
+    ['VR', 'Velvet Rain', 328],
+    ['SK', 'Skyline', 212],
+    ['BL', 'Bloom Light', 138],
+    ['MN', 'Moon Note', 246],
+    ['RX', 'Remix', 304],
+    ['FT', 'Final Take', 12]
+  ];
+
+  const iconTiers = ['I', 'II', 'III', 'IV'];
+
+  function normalizeIconId(iconId) {
+    return Math.max(1, Math.min(80, Number.parseInt(iconId || 1, 10) || 1));
+  }
+
+  function iconMeta(iconId) {
+    const id = normalizeIconId(iconId);
+    const theme = iconThemes[(id - 1) % iconThemes.length];
+    const tierIndex = Math.floor((id - 1) / iconThemes.length);
+    const tier = iconTiers[tierIndex] || String(tierIndex + 1);
+    const hue = (theme[2] + tierIndex * 14) % 360;
+    return {
+      id,
+      code: theme[0],
+      name: theme[1],
+      tier,
+      hue,
+      label: `${theme[1]} ${tier}`
+    };
+  }
+
   function iconHue(iconId) {
-    const id = Number.parseInt(iconId || 1, 10);
-    return (id * 37) % 360;
+    return iconMeta(iconId).hue;
   }
 
   function iconLabel(iconId) {
-    return `ICON ${String(iconId).padStart(2, '0')}`;
+    return iconMeta(iconId).label;
+  }
+
+  function iconInnerMarkup(meta) {
+    return `
+      <span class="sf-user-icon-code">${escapeHtml(meta.code)}</span>
+      <span class="sf-user-icon-tier">${escapeHtml(meta.tier)}</span>
+    `;
   }
 
   function iconMarkup(iconId) {
-    const id = Number.parseInt(iconId || 1, 10);
-    return `<span class="sf-user-icon" style="--icon-hue: ${iconHue(id)}">${String(id).padStart(2, '0')}</span>`;
+    const meta = iconMeta(iconId);
+    return `<span class="sf-user-icon" style="--icon-hue: ${meta.hue}" aria-label="${escapeHtml(meta.label)}">${iconInnerMarkup(meta)}</span>`;
   }
 
   function bindLogin() {
@@ -294,7 +343,7 @@
       }
       if (resultDetail) {
         resultDetail.textContent = isApproved
-          ? '로그인 후 MY ACCOUNT에서 닉네임과 장착 아이콘을 바꿀 수 있습니다.'
+          ? '로그인 후 MY ACCOUNT에서 닉네임과 팬 배지를 바꿀 수 있습니다.'
           : '계정 이용이 제한된 경우 사이트 주인에게 문의해 주세요.';
       }
       resultPanel.dataset.status = isApproved ? 'approved' : 'pending';
@@ -336,12 +385,14 @@
     const current = document.querySelector('[data-account-current-icon]');
     const label = document.querySelector('[data-account-icon-label]');
     const hidden = document.getElementById('sf-account-icon-id');
-    const normalized = Math.max(1, Math.min(80, Number.parseInt(iconId || 1, 10)));
+    const normalized = normalizeIconId(iconId);
+    const meta = iconMeta(normalized);
     if (current) {
-      current.textContent = String(normalized).padStart(2, '0');
-      current.style.setProperty('--icon-hue', iconHue(normalized));
+      current.innerHTML = iconInnerMarkup(meta);
+      current.style.setProperty('--icon-hue', meta.hue);
+      current.setAttribute('aria-label', meta.label);
     }
-    if (label) label.textContent = iconLabel(normalized);
+    if (label) label.textContent = `FAN BADGE ${String(normalized).padStart(2, '0')} · ${meta.label}`;
     if (hidden) hidden.value = String(normalized);
     document.querySelectorAll('[data-icon-option]').forEach((button) => {
       const active = Number.parseInt(button.dataset.iconOption, 10) === normalized;
@@ -355,9 +406,11 @@
     if (!grid) return;
     grid.innerHTML = Array.from({ length: 80 }, (_, index) => {
       const id = index + 1;
+      const meta = iconMeta(id);
       return `
-        <button type="button" class="sf-icon-option" data-icon-option="${id}" aria-pressed="false" aria-label="${iconLabel(id)} 장착">
+        <button type="button" class="sf-icon-option" data-icon-option="${id}" aria-pressed="false" aria-label="${escapeHtml(meta.label)} 팬 배지 선택">
           ${iconMarkup(id)}
+          <span class="sf-icon-option-name">${escapeHtml(meta.code)}</span>
         </button>
       `;
     }).join('');
@@ -413,7 +466,7 @@
         });
         const user = data.user || {};
         renderAccountIcon(user.iconId || 1);
-        setMessage('닉네임과 장착 아이콘을 저장했습니다.', 'success');
+        setMessage('닉네임과 팬 배지를 저장했습니다.', 'success');
       } catch (error) {
         setMessage(error.message, 'error');
       } finally {
@@ -546,7 +599,7 @@
       '',
       '로그인 URL: https://sunofox.com/login',
       `이메일: ${email}`,
-      '로그인 방법: 가입 시 설정한 비밀번호 또는 연결한 Google/Kakao 계정',
+      '로그인 방법: 가입 시 설정한 비밀번호 또는 연결한 Kakao 계정',
       '프로필 설정: https://sunofox.com/account',
       '문의 방법: 로그인이나 계정 이용에 문제가 있으면 이 안내를 받은 채널로 회신해 주세요.',
       '',

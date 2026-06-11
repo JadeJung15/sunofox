@@ -4,7 +4,6 @@ import {
   createSessionCookie,
   getAdminEmail,
   getUser,
-  json,
   normalizeEmail,
   normalizeNickname,
   randomUserIconId,
@@ -27,18 +26,6 @@ function loginRedirect(request, reason) {
 }
 
 function providerConfig(provider, env) {
-  if (provider === 'google') {
-    return {
-      provider,
-      label: 'Google',
-      clientId: String(env.SF_GOOGLE_CLIENT_ID || '').trim(),
-      clientSecret: String(env.SF_GOOGLE_CLIENT_SECRET || '').trim(),
-      authUrl: 'https://accounts.google.com/o/oauth2/v2/auth',
-      tokenUrl: 'https://oauth2.googleapis.com/token',
-      userInfoUrl: 'https://openidconnect.googleapis.com/v1/userinfo',
-      scope: 'openid email profile'
-    };
-  }
   if (provider === 'kakao') {
     return {
       provider,
@@ -55,14 +42,8 @@ function providerConfig(provider, env) {
 }
 
 export function getOAuthProviderStatus(env) {
-  const google = providerConfig('google', env);
   const kakao = providerConfig('kakao', env);
   return {
-    google: {
-      label: 'Google',
-      configured: Boolean(google?.clientId && google?.clientSecret),
-      required: ['SF_GOOGLE_CLIENT_ID', 'SF_GOOGLE_CLIENT_SECRET']
-    },
     kakao: {
       label: 'Kakao',
       configured: Boolean(kakao?.clientId),
@@ -74,9 +55,9 @@ export function getOAuthProviderStatus(env) {
 export async function startOAuth(context, provider) {
   const config = providerConfig(provider, context.env);
   if (!config) {
-    return json({ ok: false, message: '지원하지 않는 로그인 방식입니다.' }, { status: 400 });
+    return Response.redirect(loginRedirect(context.request, 'unsupported').toString(), 302);
   }
-  if (!config.clientId || (provider === 'google' && !config.clientSecret)) {
+  if (!config.clientId) {
     return Response.redirect(loginRedirect(context.request, `missing-${provider}`).toString(), 302);
   }
 
@@ -89,11 +70,6 @@ export async function startOAuth(context, provider) {
   authUrl.searchParams.set('response_type', 'code');
   authUrl.searchParams.set('scope', config.scope);
   authUrl.searchParams.set('state', state);
-  if (provider === 'google') {
-    authUrl.searchParams.set('access_type', 'online');
-    authUrl.searchParams.set('prompt', 'select_account');
-  }
-
   const stateCookie = await createOAuthStateCookie(context.request, context.env, state);
   const headers = new Headers({ location: authUrl.toString() });
   headers.append('set-cookie', stateCookie);
@@ -129,17 +105,6 @@ async function fetchOAuthProfile(config, accessToken) {
   const data = await response.json().catch(() => ({}));
   if (!response.ok) {
     throw new Error(data.msg || data.error_description || data.error || 'OAuth profile fetch failed');
-  }
-
-  if (config.provider === 'google') {
-    return {
-      provider: 'google',
-      providerId: String(data.sub || ''),
-      email: normalizeEmail(data.email),
-      name: String(data.name || ''),
-      nickname: String(data.given_name || data.name || ''),
-      avatarUrl: String(data.picture || '')
-    };
   }
 
   const account = data.kakao_account || {};
@@ -236,7 +201,7 @@ export async function handleOAuthCallback(context, provider) {
     baseHeaders.set('location', target.toString());
     return new Response(null, { status: 302, headers: baseHeaders });
   } catch {
-    const target = loginRedirect(context.request, provider === 'kakao' ? 'kakao-error' : 'google-error');
+    const target = loginRedirect(context.request, 'kakao-error');
     baseHeaders.set('location', target.toString());
     return new Response(null, { status: 302, headers: baseHeaders });
   }

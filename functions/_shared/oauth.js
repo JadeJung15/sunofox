@@ -4,6 +4,8 @@ import {
   createSessionCookie,
   getAdminEmail,
   getUser,
+  kvDelete,
+  kvListUsers,
   normalizeEmail,
   normalizeNickname,
   randomUserIconId,
@@ -23,6 +25,18 @@ function loginRedirect(request, reason) {
   const url = new URL('/login', new URL(request.url).origin);
   if (reason) url.searchParams.set('oauth', reason);
   return url;
+}
+
+function isEnabled(value) {
+  return ['1', 'true', 'yes', 'on', 'enabled'].includes(String(value || '').trim().toLowerCase());
+}
+
+function kakaoScope(env) {
+  const scopes = ['profile_nickname'];
+  if (isEnabled(env.SF_KAKAO_EMAIL_SCOPE)) {
+    scopes.push('account_email');
+  }
+  return scopes.join(' ');
 }
 
 function providerConfig(provider, env) {
@@ -47,7 +61,7 @@ function providerConfig(provider, env) {
       authUrl: 'https://kauth.kakao.com/oauth/authorize',
       tokenUrl: 'https://kauth.kakao.com/oauth/token',
       userInfoUrl: 'https://kapi.kakao.com/v2/user/me',
-      scope: 'profile_nickname'
+      scope: kakaoScope(env)
     };
   }
   return null;
@@ -152,20 +166,80 @@ async function fetchOAuthProfile(config, accessToken) {
   };
 }
 
+async function findUserByProviderId(env, provider, providerId) {
+  if (!provider || !providerId) return null;
+  const users = await kvListUsers(env).catch(() => []);
+  return users.find((user) => String(user?.providerIds?.[provider] || '') === String(providerId)) || null;
+}
+
+async function migrateCommunityEmailReferences(env, fromEmail, toEmail) {
+  const previous = normalizeEmail(fromEmail);
+  const next = normalizeEmail(toEmail);
+  if (!env.SF_COMMUNITY_DB || !previous || !next || previous === next) return;
+
+  const db = env.SF_COMMUNITY_DB;
+  const statements = [
+    ['UPDATE posts SET author_email = ? WHERE author_email = ?', [next, previous]],
+    ['UPDATE comments SET author_email = ? WHERE author_email = ?', [next, previous]],
+    [
+      `INSERT OR IGNORE INTO post_reactions (post_id, actor_email, value, created_at, updated_at)
+       SELECT post_id, ?, value, created_at, updated_at FROM post_reactions WHERE actor_email = ?`,
+      [next, previous]
+    ],
+    ['DELETE FROM post_reactions WHERE actor_email = ?', [previous]],
+    [
+      `UPDATE community_reports
+       SET reporter_email = ?
+       WHERE reporter_email = ?
+         AND NOT EXISTS (
+           SELECT 1 FROM community_reports existing
+           WHERE existing.target_type = community_reports.target_type
+             AND existing.target_id = community_reports.target_id
+             AND existing.reporter_email = ?
+         )`,
+      [next, previous, next]
+    ],
+    ['DELETE FROM community_reports WHERE reporter_email = ?', [previous]]
+  ];
+
+  for (const [sql, params] of statements) {
+    await db.prepare(sql).bind(...params).run().catch(() => {});
+  }
+}
+
+function mergeOAuthExistingUsers(primary, secondary) {
+  if (!secondary) return primary || null;
+  if (!primary) return secondary || null;
+  return {
+    ...secondary,
+    ...primary,
+    providers: [...new Set([...(secondary.providers || []), ...(primary.providers || [])])],
+    providerIds: {
+      ...(secondary.providerIds || {}),
+      ...(primary.providerIds || {})
+    },
+    createdAt: primary.createdAt || secondary.createdAt,
+    note: primary.note || secondary.note || '',
+    iconId: primary.iconId || secondary.iconId,
+    avatarUrl: primary.avatarUrl || secondary.avatarUrl || ''
+  };
+}
+
 async function upsertOAuthUser(env, profile) {
-  const email = normalizeEmail(
-    profile.email || (
-      profile.provider === 'kakao' && profile.providerId
-        ? `kakao-${profile.providerId}@oauth.sunofox.local`
-        : ''
-    )
-  );
+  const profileEmail = normalizeEmail(profile.email);
+  const fallbackEmail = !profileEmail && profile.provider === 'kakao' && profile.providerId
+    ? normalizeEmail(`kakao-${profile.providerId}@oauth.sunofox.local`)
+    : '';
+  const email = profileEmail || fallbackEmail;
   if (!email) {
     throw new Error('OAuth email permission is required');
   }
   const now = new Date().toISOString();
   const adminEmail = getAdminEmail(env);
-  const existing = await getUser(env, email);
+  const existingByEmail = await getUser(env, email);
+  const existingByProvider = await findUserByProviderId(env, profile.provider, profile.providerId);
+  const existing = mergeOAuthExistingUsers(existingByProvider || existingByEmail, existingByProvider && existingByEmail ? existingByEmail : null);
+  const previousEmail = normalizeEmail(existing?.email);
   const providers = new Set([...(existing?.providers || []), profile.provider]);
   const providerIds = {
     ...(existing?.providerIds || {}),
@@ -193,6 +267,10 @@ async function upsertOAuthUser(env, profile) {
       : existing?.approvedBy || null
   };
   await saveUser(env, user);
+  if (previousEmail && previousEmail !== email) {
+    await migrateCommunityEmailReferences(env, previousEmail, email);
+    await kvDelete(env, `user:${previousEmail}`);
+  }
   return user;
 }
 

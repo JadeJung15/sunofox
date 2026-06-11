@@ -69,6 +69,25 @@ npx wrangler pages secret put SF_STUDIO_LOGIN_CODE --project-name sf-studio
 Bind the KV namespace as `SF_STUDIO_AUTH` through `wrangler.jsonc` or the Cloudflare Pages project settings. `SF_STUDIO_ADMIN_EMAIL` is configured in `wrangler.jsonc` as `jadejung15@gmail.com`.
 `SF_STUDIO_ADMIN_KEY` is optional emergency access; the owner email session can manage approvals without it.
 
+### Social Login Notes
+
+Google and Kakao login are available on `/login` and `/signup`.
+
+Kakao currently works with nickname-only consent. To collect Kakao account email later:
+
+1. In Kakao Developers, convert app `SunoFox` (`1483472`) to a personal developer Biz app.
+2. Set the Kakao Login consent item `account_email` to required or optional.
+3. Enable the site-side email scope only after the Kakao consent item is available:
+
+```powershell
+npx wrangler pages secret put SF_KAKAO_EMAIL_SCOPE --project-name sf-studio
+# value: true
+npm run build
+npx wrangler pages deploy dist --project-name sf-studio --branch main
+```
+
+The OAuth handler preserves existing Kakao users by matching the Kakao provider ID first. If a nickname-only Kakao account later receives a real email address, the account key and community references are migrated to the real email instead of creating a duplicate user.
+
 ## Deployment Boundary
 
 Do not deploy without an explicit deployment request.

@@ -2360,6 +2360,16 @@ body {
   background: rgba(255, 255, 255, 0.035);
 }
 
+.sf-admin-body .sf-post-admin-row[data-busy="true"],
+.sf-admin-body .sf-comment-admin-row[data-busy="true"],
+.sf-admin-body .sf-report-admin-row[data-busy="true"] {
+  border-color: rgba(34, 211, 238, 0.34);
+  background:
+    linear-gradient(90deg, rgba(34, 211, 238, 0.12), transparent 46%),
+    rgba(255, 255, 255, 0.052);
+  box-shadow: inset 3px 0 0 rgba(34, 211, 238, 0.62);
+}
+
 .sf-admin-body .sf-user-row {
   grid-template-columns: minmax(0, 1fr) auto minmax(280px, auto);
 }

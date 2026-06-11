@@ -1187,16 +1187,25 @@
 
   function setAdminActionBusy(button, label = '처리 중...') {
     if (!button) return () => {};
+    const row = button.closest('.sf-post-admin-row, .sf-comment-admin-row, .sf-report-admin-row');
     const originalText = button.textContent;
     button.disabled = true;
     button.dataset.busy = 'true';
     button.setAttribute('aria-busy', 'true');
     button.textContent = label;
+    if (row) {
+      row.dataset.busy = 'true';
+      row.setAttribute('aria-busy', 'true');
+    }
     return () => {
       button.disabled = false;
       delete button.dataset.busy;
       button.removeAttribute('aria-busy');
       button.textContent = originalText;
+      if (row) {
+        delete row.dataset.busy;
+        row.removeAttribute('aria-busy');
+      }
     };
   }
 

@@ -79,6 +79,8 @@ Kakao currently works with nickname-only consent. To collect Kakao account email
 2. Set the Kakao Login consent item `account_email` to required or optional.
 3. Enable the site-side email scope only after the Kakao consent item is available:
 
+Detailed checklist: `docs/kakao-email-migration-checklist.md`
+
 ```powershell
 npx wrangler pages secret put SF_KAKAO_EMAIL_SCOPE --project-name sf-studio
 # value: true

@@ -86,6 +86,14 @@ npm run build
 npx wrangler pages deploy dist --project-name sf-studio --branch main
 ```
 
+You can confirm the production flag state without exposing secret values:
+
+```powershell
+Invoke-RestMethod https://sunofox.com/api/auth/oauth/status | ConvertTo-Json -Depth 5
+```
+
+Expected Kakao field after enabling the flag: `"emailScopeRequested": true`.
+
 The OAuth handler preserves existing Kakao users by matching the Kakao provider ID first. If a nickname-only Kakao account later receives a real email address, the account key and community references are migrated to the real email instead of creating a duplicate user.
 
 ## Deployment Boundary

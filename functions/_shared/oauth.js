@@ -79,6 +79,7 @@ export function getOAuthProviderStatus(env) {
     kakao: {
       label: 'Kakao',
       configured: Boolean(kakao?.clientId),
+      emailScopeRequested: isEnabled(env.SF_KAKAO_EMAIL_SCOPE),
       required: ['SF_KAKAO_REST_API_KEY']
     }
   };

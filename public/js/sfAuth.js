@@ -812,6 +812,12 @@
     summary.textContent = `${conditions || '전체 조건'}: ${count}건 표시`;
   }
 
+  function appendAdminResultFeedback(summaryId, feedback) {
+    const summary = document.getElementById(summaryId);
+    if (!summary || !feedback) return;
+    summary.textContent = `${summary.textContent} · ${feedback}`;
+  }
+
   function updateCommunityPostFilterSummary(count) {
     const query = document.getElementById('sf-admin-community-query')?.value.trim() || '';
     updateAdminResultSummary('sf-admin-community-filter-summary', count, [
@@ -1534,6 +1540,7 @@
           showAdminToast(`게시글을 ${postActionLabel(action)} 처리했습니다.`, 'success', 'POST UPDATED');
           refreshAdminAlerts();
           await loadAdminPostsSection(adminKey, adminHeaders(adminKey));
+          appendAdminResultFeedback('sf-admin-community-filter-summary', `방금 ${postActionLabel(action)} 처리됨`);
           restoreScroll();
         } catch (error) {
           setMessage(error.message, 'error');
@@ -1611,6 +1618,7 @@
           showAdminToast(`댓글을 ${postActionLabel(action)} 처리했습니다.`, 'success', 'COMMENT UPDATED');
           refreshAdminAlerts();
           await loadAdminCommentsSection(adminKey, adminHeaders(adminKey));
+          appendAdminResultFeedback('sf-admin-comment-filter-summary', `방금 ${postActionLabel(action)} 처리됨`);
           restoreScroll();
         } catch (error) {
           setMessage(error.message, 'error');
@@ -1724,6 +1732,7 @@
           updateCachedReportForAlert(row.dataset.reportId, response.report || { status });
           showAdminToast(`신고 상태를 ${reportStatusLabel(status)}로 변경했습니다.`, 'success', 'REPORT UPDATED');
           await loadAdminReportsSection(adminKey, adminHeaders(adminKey));
+          appendAdminResultFeedback('sf-admin-report-filter-summary', `방금 ${reportStatusLabel(status)} 상태로 변경됨`);
           restoreScroll();
         } catch (error) {
           setMessage(error.message, 'error');

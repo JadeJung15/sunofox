@@ -8,7 +8,6 @@ import {
   kvListUsers,
   normalizeEmail,
   normalizeNickname,
-  randomUserIconId,
   saveUser,
   safeRedirectPath,
   verifyOAuthState
@@ -221,7 +220,6 @@ function mergeOAuthExistingUsers(primary, secondary) {
     },
     createdAt: primary.createdAt || secondary.createdAt,
     note: primary.note || secondary.note || '',
-    iconId: primary.iconId || secondary.iconId,
     avatarUrl: primary.avatarUrl || secondary.avatarUrl || ''
   };
 }
@@ -254,7 +252,6 @@ async function upsertOAuthUser(env, profile) {
     name: existing?.name || profile.name || nickname,
     nickname,
     note: existing?.note || '',
-    iconId: existing?.iconId || randomUserIconId(),
     provider: existing?.provider || profile.provider,
     providers: [...providers],
     providerIds,

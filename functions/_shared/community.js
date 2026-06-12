@@ -4,7 +4,6 @@ import {
   json,
   kvListPrefix,
   normalizeEmail,
-  normalizeUserIconId,
   requireAdminAccess,
   verifySession
 } from './auth.js';
@@ -61,16 +60,6 @@ function normalizeBoard(value) {
   return board === 'all' || BOARDS.has(board) ? board : 'all';
 }
 
-async function resolveAuthorIconId(env, email, cache) {
-  const normalized = normalizeEmail(email);
-  if (!normalized) return 1;
-  if (cache?.has(normalized)) return cache.get(normalized);
-  const user = await getUser(env, normalized).catch(() => null);
-  const iconId = normalizeUserIconId(user?.iconId || 1);
-  cache?.set(normalized, iconId);
-  return iconId;
-}
-
 async function publicPost(env, row, cache) {
   return {
     id: row.id,
@@ -79,7 +68,6 @@ async function publicPost(env, row, cache) {
     title: row.title || '',
     body: row.body || '',
     authorName: row.author_name || 'fan',
-    authorIconId: await resolveAuthorIconId(env, row.author_email, cache),
     createdAt: row.created_at || '',
     updatedAt: row.updated_at || '',
     pinned: Boolean(row.pinned),
@@ -105,7 +93,6 @@ async function publicComment(env, row, cache) {
     postId: row.post_id,
     body: row.body || '',
     authorName: row.author_name || 'fan',
-    authorIconId: await resolveAuthorIconId(env, row.author_email, cache),
     createdAt: row.created_at || '',
     updatedAt: row.updated_at || '',
     status: row.status || 'published'

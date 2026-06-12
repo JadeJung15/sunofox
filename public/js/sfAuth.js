@@ -60,7 +60,7 @@
 
     if (context === 'signup') {
       if (original.includes('회원가입이 완료')) {
-        return '회원가입이 완료되었습니다. LOGIN 화면에서 로그인한 뒤 닉네임과 팬 배지를 수정할 수 있습니다.';
+        return '회원가입이 완료되었습니다. LOGIN 화면에서 로그인한 뒤 닉네임을 수정할 수 있습니다.';
       }
       if (original.includes('이미')) {
         return '이미 등록된 이메일입니다. LOGIN 화면에서 이메일과 비밀번호로 로그인해 주세요.';
@@ -225,69 +225,24 @@
     return data;
   }
 
-  const iconThemes = [
-    ['SF', 'Suno Core', 342],
-    ['NV', 'Night Verse', 262],
-    ['AW', 'Awakening', 28],
-    ['PR', 'Prayer', 314],
-    ['MM', 'Memory', 205],
-    ['AB', 'Abyss', 226],
-    ['NM', 'Nameless', 18],
-    ['LX', 'Lunar X', 284],
-    ['EP', 'Ethereal Pop', 176],
-    ['DN', 'Drum Nova', 198],
-    ['OS', 'OST Frame', 44],
-    ['CT', 'City Trace', 220],
-    ['HL', 'Halo Line', 52],
-    ['RC', 'Rain Code', 192],
-    ['VR', 'Velvet Rain', 328],
-    ['SK', 'Skyline', 212],
-    ['BL', 'Bloom Light', 138],
-    ['MN', 'Moon Note', 246],
-    ['RX', 'Remix', 304],
-    ['FT', 'Final Take', 12]
-  ];
-
-  const iconTiers = ['I', 'II', 'III', 'IV'];
-
-  function normalizeIconId(iconId) {
-    return Math.max(1, Math.min(80, Number.parseInt(iconId || 1, 10) || 1));
+  async function logout() {
+    try {
+      await fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'same-origin'
+      });
+    } finally {
+      window.location.assign('/login?loggedOut=1');
+    }
   }
 
-  function iconMeta(iconId) {
-    const id = normalizeIconId(iconId);
-    const theme = iconThemes[(id - 1) % iconThemes.length];
-    const tierIndex = Math.floor((id - 1) / iconThemes.length);
-    const tier = iconTiers[tierIndex] || String(tierIndex + 1);
-    const hue = (theme[2] + tierIndex * 14) % 360;
-    return {
-      id,
-      code: theme[0],
-      name: theme[1],
-      tier,
-      hue,
-      label: `${theme[1]} ${tier}`
-    };
-  }
-
-  function iconHue(iconId) {
-    return iconMeta(iconId).hue;
-  }
-
-  function iconLabel(iconId) {
-    return iconMeta(iconId).label;
-  }
-
-  function iconInnerMarkup(meta) {
-    return `
-      <span class="sf-user-icon-code">${escapeHtml(meta.code)}</span>
-      <span class="sf-user-icon-tier">${escapeHtml(meta.tier)}</span>
-    `;
-  }
-
-  function iconMarkup(iconId) {
-    const meta = iconMeta(iconId);
-    return `<span class="sf-user-icon" style="--icon-hue: ${meta.hue}" aria-label="${escapeHtml(meta.label)}">${iconInnerMarkup(meta)}</span>`;
+  function bindLogoutButtons() {
+    document.querySelectorAll('[data-auth-logout]').forEach((button) => {
+      button.addEventListener('click', async () => {
+        button.disabled = true;
+        await logout();
+      });
+    });
   }
 
   function bindLogin() {
@@ -346,7 +301,7 @@
       }
       if (resultDetail) {
         resultDetail.textContent = isApproved
-          ? '로그인 후 MY ACCOUNT에서 닉네임과 팬 배지를 바꿀 수 있습니다.'
+          ? '로그인 후 MY ACCOUNT에서 팬게시판에 표시될 닉네임을 바꿀 수 있습니다.'
           : '계정 이용이 제한된 경우 사이트 주인에게 문의해 주세요.';
       }
       resultPanel.dataset.status = isApproved ? 'approved' : 'pending';
@@ -382,50 +337,6 @@
         button.disabled = false;
       }
     });
-  }
-
-  function renderAccountIcon(iconId) {
-    const current = document.querySelector('[data-account-current-icon]');
-    const label = document.querySelector('[data-account-icon-label]');
-    const hidden = document.getElementById('sf-account-icon-id');
-    const normalized = normalizeIconId(iconId);
-    const meta = iconMeta(normalized);
-    if (current) {
-      current.innerHTML = iconInnerMarkup(meta);
-      current.style.setProperty('--icon-hue', meta.hue);
-      current.setAttribute('aria-label', meta.label);
-    }
-    if (label) label.textContent = `FAN BADGE ${String(normalized).padStart(2, '0')} · ${meta.label}`;
-    if (hidden) hidden.value = String(normalized);
-    document.querySelectorAll('[data-icon-option]').forEach((button) => {
-      const active = Number.parseInt(button.dataset.iconOption, 10) === normalized;
-      button.classList.toggle('is-selected', active);
-      button.setAttribute('aria-pressed', String(active));
-    });
-  }
-
-  function renderIconGrid(selectedIconId) {
-    const grid = document.querySelector('[data-icon-grid]');
-    if (!grid) return;
-    grid.innerHTML = Array.from({ length: 80 }, (_, index) => {
-      const id = index + 1;
-      const meta = iconMeta(id);
-      return `
-        <button type="button" class="sf-icon-option" data-icon-option="${id}" aria-pressed="false" aria-label="${escapeHtml(meta.label)} 팬 배지 선택">
-          ${iconMarkup(id)}
-          <span class="sf-icon-option-copy">
-            <span class="sf-icon-option-no">${String(id).padStart(2, '0')}</span>
-            <span class="sf-icon-option-name">${escapeHtml(meta.code)} ${escapeHtml(meta.tier)}</span>
-          </span>
-        </button>
-      `;
-    }).join('');
-    grid.querySelectorAll('[data-icon-option]').forEach((button) => {
-      button.addEventListener('click', () => {
-        renderAccountIcon(button.dataset.iconOption);
-      });
-    });
-    renderAccountIcon(selectedIconId || 1);
   }
 
   const providerLabels = {
@@ -502,7 +413,6 @@
       renderAccountProviders(user);
       const nickname = document.getElementById('sf-account-nickname');
       if (nickname) nickname.value = user.nickname || user.name || '';
-      renderIconGrid(user.iconId || 1);
       if (form) form.hidden = false;
       if (loginState) loginState.hidden = true;
       setMessage('프로필 정보를 불러왔습니다.', 'success');
@@ -524,16 +434,13 @@
       button.disabled = true;
       setMessage('프로필을 저장하는 중입니다.', 'info');
       try {
-        const data = await requestJson('/api/auth/profile', {
+        await requestJson('/api/auth/profile', {
           method: 'PATCH',
           body: JSON.stringify({
-            nickname: document.getElementById('sf-account-nickname')?.value,
-            iconId: document.getElementById('sf-account-icon-id')?.value
+            nickname: document.getElementById('sf-account-nickname')?.value
           })
         });
-        const user = data.user || {};
-        renderAccountIcon(user.iconId || 1);
-        setMessage('닉네임과 팬 배지를 저장했습니다.', 'success');
+        setMessage('닉네임을 저장했습니다.', 'success');
       } catch (error) {
         setMessage(error.message, 'error');
       } finally {
@@ -1005,7 +912,7 @@
         <article class="sf-user-row" data-email="${escapeHtml(user.email)}" data-name="${escapeHtml(user.name || '')}" data-approval-sent="${guideSent ? 'true' : 'false'}" data-approval-sent-at="${escapeHtml(user.approvalGuideSentAt || '')}" data-approval-sent-by="${escapeHtml(guideSentBy)}">
           <div class="sf-user-main">
             <div class="sf-user-identity">
-              <strong>${iconMarkup(user.iconId || 1)} ${escapeHtml(user.email)}</strong>
+              <strong>${escapeHtml(user.email)}</strong>
               <span class="sf-user-subline">
                 <span>${escapeHtml(user.nickname || user.name || '닉네임 없음')}</span>
                 ${renderAdminProviderBadges(user)}
@@ -1497,7 +1404,7 @@
             ${post.pinned ? '<mark data-status="pinned">고정</mark>' : ''}
             <span>${escapeHtml(post.boardName || post.board || '게시판')}</span>
             <span>${escapeHtml(formatDate(post.createdAt))}</span>
-            <span class="sf-admin-author">${iconMarkup(post.authorIconId || 1)} ${escapeHtml(post.authorName || 'Fan')}</span>
+            <span class="sf-admin-author">${escapeHtml(post.authorName || 'Fan')}</span>
             <span>댓글 ${Number(post.commentCount || 0)}</span>
             <span>좋아요 ${Number(post.likeCount || 0)}</span>
           </div>
@@ -1585,7 +1492,7 @@
           <div class="sf-post-admin-meta">
             <mark data-status="${escapeHtml(comment.status)}">${postStatusLabel(comment.status)}</mark>
             <span>${escapeHtml(formatDate(comment.createdAt))}</span>
-            <span class="sf-admin-author">${iconMarkup(comment.authorIconId || 1)} ${escapeHtml(comment.authorName || 'Fan')}</span>
+            <span class="sf-admin-author">${escapeHtml(comment.authorName || 'Fan')}</span>
             <span>${escapeHtml(comment.postTitle || '게시글')}</span>
           </div>
           <strong>댓글 원문</strong>
@@ -2171,6 +2078,7 @@
       .replace(/'/g, '&#039;');
   }
 
+  bindLogoutButtons();
   if (page === 'login') bindLogin();
   if (page === 'signup') bindSignup();
   if (page === 'account') bindAccount();

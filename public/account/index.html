@@ -30,10 +30,10 @@
       <div class="sf-auth-copy">
         <span class="sf-auth-kicker">MY ACCOUNT</span>
         <h1 id="sf-account-title" class="sf-auth-title"><span>MEMBER</span><span>PROFILE</span></h1>
-        <p>로그인 후 닉네임과 팬 배지를 수정할 수 있습니다.</p>
+        <p>로그인 후 팬게시판에 표시될 닉네임을 수정할 수 있습니다.</p>
         <div class="sf-auth-route" aria-label="Profile steps">
-          <span>01 NICKNAME</span>
-          <span>02 FAN BADGE</span>
+          <span>01 LOGIN</span>
+          <span>02 NICKNAME</span>
           <span>03 COMMUNITY</span>
         </div>
       </div>
@@ -57,32 +57,13 @@
             <span>닉네임</span>
             <input id="sf-account-nickname" name="nickname" type="text" autocomplete="nickname" maxlength="24" required placeholder="팬게시판 표시 닉네임">
           </label>
-          <input id="sf-account-icon-id" name="iconId" type="hidden" value="1">
-          <div class="sf-equipped-icon" aria-live="polite">
-            <span class="sf-user-icon" data-account-current-icon style="--icon-hue: 342" aria-label="Suno Core I">
-              <span class="sf-user-icon-code">SF</span>
-              <span class="sf-user-icon-tier">I</span>
-            </span>
-            <div>
-              <strong data-account-icon-label>FAN BADGE 01 · Suno Core I</strong>
-              <small>선택한 팬 배지가 커뮤니티 프로필에 적용됩니다.</small>
-            </div>
-          </div>
-          <div class="sf-badge-picker-head">
-            <div>
-              <strong>팬 배지 선택</strong>
-              <span>80종 중 원하는 배지를 장착할 수 있습니다.</span>
-            </div>
-            <small>SCROLL</small>
-          </div>
-          <div class="sf-icon-grid" data-icon-grid aria-label="장착 가능한 팬 배지 80종"></div>
           <button type="submit">SAVE PROFILE</button>
         </form>
         <div id="sf-auth-message" class="sf-auth-message" hidden></div>
         <nav class="sf-auth-links">
           <a href="/">HOME</a>
           <a href="/community/">COMMUNITY</a>
-          <a href="/login">LOGIN</a>
+          <button type="button" data-auth-logout>LOGOUT</button>
         </nav>
       </div>
     </section>

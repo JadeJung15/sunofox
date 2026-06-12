@@ -2,7 +2,6 @@ import {
   getUser,
   json,
   normalizeNickname,
-  normalizeUserIconId,
   publicUser,
   saveUser,
   verifySession
@@ -38,12 +37,10 @@ export async function onRequestPatch(context) {
   }
 
   const nickname = normalizeNickname(body.nickname, resolved.user.email);
-  const iconId = normalizeUserIconId(body.iconId || resolved.user.iconId || 1);
   const updated = {
     ...resolved.user,
     nickname,
     name: resolved.user.name || nickname,
-    iconId,
     updatedAt: new Date().toISOString()
   };
   await saveUser(context.env, updated);

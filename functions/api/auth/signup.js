@@ -5,7 +5,6 @@ import {
   json,
   normalizeEmail,
   normalizeNickname,
-  randomUserIconId,
   saveUser,
   validatePassword
 } from '../../_shared/auth.js';
@@ -46,7 +45,6 @@ export async function onRequestPost(context) {
         ...existing,
         name: existing.name || name,
         nickname: existing.nickname || nickname,
-        iconId: existing.iconId || randomUserIconId(),
         provider: existing.provider || 'email',
         providers: Array.from(new Set([...(existing.providers || []), 'email'])),
         password: await hashPassword(password),
@@ -80,7 +78,6 @@ export async function onRequestPost(context) {
     name,
     nickname,
     note,
-    iconId: randomUserIconId(),
     provider: 'email',
     providers: ['email'],
     password: await hashPassword(password),
@@ -94,6 +91,6 @@ export async function onRequestPost(context) {
   return json({
     ok: true,
     status,
-    message: '회원가입이 완료되었습니다. 로그인 후 닉네임과 아이콘을 언제든 수정할 수 있습니다.'
+    message: '회원가입이 완료되었습니다. 로그인 후 닉네임을 언제든 수정할 수 있습니다.'
   });
 }

@@ -6,7 +6,6 @@ import {
   json,
   normalizeEmail,
   normalizeNickname,
-  randomUserIconId,
   safeRedirectPath,
   saveUser,
   verifyPassword
@@ -38,7 +37,6 @@ export async function onRequestPost(context) {
       name: 'Owner',
       nickname: 'Owner',
       note: '',
-      iconId: randomUserIconId(),
       provider: 'email',
       providers: ['email'],
       status: 'approved',
@@ -82,11 +80,10 @@ export async function onRequestPost(context) {
     }, { status: 401 });
   }
 
-  if (!user.nickname || !user.iconId || !user.provider) {
+  if (!user.nickname || !user.provider) {
     user = {
       ...user,
       nickname: normalizeNickname(user.nickname || user.name, email),
-      iconId: user.iconId || randomUserIconId(),
       provider: user.provider || 'email',
       providers: Array.isArray(user.providers) && user.providers.length ? user.providers : ['email'],
       updatedAt: now

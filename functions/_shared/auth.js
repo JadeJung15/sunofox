@@ -3,7 +3,6 @@ const OAUTH_STATE_COOKIE = 'sf_oauth_state';
 const SESSION_TTL_SECONDS = 60 * 60 * 24 * 7;
 const OAUTH_STATE_TTL_SECONDS = 60 * 10;
 const PASSWORD_ITERATIONS = 100000;
-const USER_ICON_COUNT = 80;
 const AUTH_KV_FALLBACK = '__sfStudioAuthMemoryStore';
 
 export const ADMIN_EMAIL = 'jadejung15@gmail.com';
@@ -30,21 +29,6 @@ export function normalizeNickname(value, fallback = '') {
     return fallbackText.split('@')[0].slice(0, 24) || 'fan';
   }
   return fallbackText.slice(0, 24) || 'fan';
-}
-
-export function normalizeUserIconId(value) {
-  const parsed = Number.parseInt(value, 10);
-  if (!Number.isFinite(parsed)) return 1;
-  return Math.max(1, Math.min(USER_ICON_COUNT, parsed));
-}
-
-export function randomUserIconId() {
-  if (crypto?.getRandomValues) {
-    const bytes = new Uint32Array(1);
-    crypto.getRandomValues(bytes);
-    return (bytes[0] % USER_ICON_COUNT) + 1;
-  }
-  return Math.floor(Math.random() * USER_ICON_COUNT) + 1;
 }
 
 export function json(data, init = {}) {
@@ -166,7 +150,6 @@ export function publicUser(user, extra = {}) {
     email: normalizeEmail(user?.email),
     name: String(user?.name || ''),
     nickname: normalizeNickname(user?.nickname || user?.name || '', user?.email || ''),
-    iconId: normalizeUserIconId(user?.iconId || 1),
     status: user?.status || 'pending',
     provider: user?.provider || 'email',
     providers: Array.isArray(user?.providers) ? user.providers : [user?.provider || 'email'],

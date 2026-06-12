@@ -171,7 +171,6 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
           title: post.title || '',
           body: post.body || post.excerpt || '',
           author: post.authorName || post.author || 'Fan',
-          authorIconId: Math.max(1, Math.min(80, Number.parseInt(post.authorIconId || post.iconId || 1, 10))),
           date: formatDate(post.createdAt || post.date),
           comments: Number(post.commentCount ?? post.comments ?? 0),
           likes: Number(post.likeCount || 0),
@@ -225,15 +224,9 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
         return raw;
       }
 
-      function iconHue(iconId) {
-        return (Number.parseInt(iconId || 1, 10) * 37) % 360;
-      }
-
-      function authorIconMarkup(iconId, label) {
-        const id = Math.max(1, Math.min(80, Number.parseInt(iconId || 1, 10)));
+      function authorMarkup(label) {
         return `
           <span class="community-author">
-            <span class="community-author-icon" style="--icon-hue: ${iconHue(id)}" aria-hidden="true">${String(id).padStart(2, '0')}</span>
             <span>${escapeHtml(label || 'Fan')}</span>
           </span>
         `;
@@ -363,7 +356,7 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
         document.querySelector('[data-detail-date]').textContent = normalized.date;
         document.querySelector('[data-detail-title]').textContent = normalized.title;
         document.querySelector('[data-detail-body]').textContent = normalized.body;
-        document.querySelector('[data-detail-author]').innerHTML = authorIconMarkup(normalized.authorIconId, normalized.author);
+        document.querySelector('[data-detail-author]').innerHTML = authorMarkup(normalized.author);
         document.querySelector('[data-detail-comments]').textContent = `${normalized.comments} COMMENTS`;
         const statusTarget = document.querySelector('[data-detail-status]');
         statusTarget.textContent = normalized.statusLabel.toUpperCase();
@@ -382,7 +375,7 @@ const initialPostsJson = JSON.stringify(communityPosts).replace(/</g, '\\u003c')
         }
         commentsList.innerHTML = comments.map((comment) => `
           <article class="community-comment-row">
-            <strong>${authorIconMarkup(comment.authorIconId || 1, comment.authorName || 'Fan')}</strong>
+            <strong>${authorMarkup(comment.authorName || 'Fan')}</strong>
             <time datetime="${escapeHtml(comment.createdAt || '')}">${escapeHtml(formatDate(comment.createdAt))}</time>
             <p>${escapeHtml(comment.body || '')}</p>
             <button type="button" data-detail-report-comment data-comment-id="${escapeHtml(comment.id)}">REPORT</button>

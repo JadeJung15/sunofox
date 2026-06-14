@@ -140,7 +140,7 @@ export const nextNovelEpisode = novelEpisodes.find((episode) => !episode.href) |
 export const menuItems = [
   { key: 'home', label: 'HOME', href: '/' },
   { key: 'profile', label: 'ABOUT', href: '/profile' },
-  { key: 'novels', label: 'NOVEL', href: '/novels' },
+  { key: 'novels', label: '소설 목록', href: '/novels' },
   { key: 'studio', label: 'STUDIO', href: '/mv-studio' }
 ];
 
@@ -396,8 +396,7 @@ export const sunofoxProfile = {
         { label: '대표 OST', value: '울어야 할 장면에서 웃은 악녀 OST' }
       ],
       links: [
-        { label: '작품 정보', href: '/novels/' },
-        { label: `${latestNovelEpisode.label} 읽기`, href: latestNovelEpisode.href },
+        { label: '소설 목록 보기', href: '/novels/' },
         { label: 'OST 감상', href: artistLinks.featuredOst }
       ]
     }

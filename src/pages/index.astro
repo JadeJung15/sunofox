@@ -12,6 +12,7 @@ import {
 const wordmark = 'SUNOFOX'.split('');
 const heroParticles = Array.from({ length: 42 });
 const featuredOstHref = artistLinks.featuredOst;
+const novelListCta = '소설 목록 보기';
 ---
 
 <Layout
@@ -61,7 +62,7 @@ const featuredOstHref = artistLinks.featuredOst;
       </div>
 
       <div class="hero-side-actions" aria-label="SunoFox quick actions">
-        <a class="main-button" href="/novels/">소설 보러가기</a>
+        <a class="main-button" href="/novels/">{novelListCta}</a>
         <a class="main-button main-button-muted" href={featuredOstHref} target="_blank" rel="noopener noreferrer">OST 감상</a>
         <a class="main-button main-button-muted" href={musicArchive.href}>Music Archive</a>
         <a class="main-button main-button-muted" href="/mv-studio">STUDIO</a>
@@ -87,7 +88,7 @@ const featuredOstHref = artistLinks.featuredOst;
         <h2 id="homeFeatureTitle">{novelProject.title}</h2>
         <p>{novelProject.summary}</p>
         <div class="home-feature-actions">
-          <a class="main-button" href="/novels/">소설 보러가기</a>
+          <a class="main-button" href="/novels/">{novelListCta}</a>
           <a class="main-button main-button-muted" href={featuredOstHref} target="_blank" rel="noopener noreferrer">OST 감상</a>
           <a class="main-button main-button-muted" href={musicArchive.href}>Music Archive</a>
         </div>
@@ -114,7 +115,7 @@ const featuredOstHref = artistLinks.featuredOst;
         <div class="home-feature-actions">
           <a class="main-button" href={featuredStoryOst.href} target="_blank" rel="noopener noreferrer">OST 감상</a>
           <a class="main-button main-button-muted" href="/music/">음악 아카이브</a>
-          <a class="main-button main-button-muted" href="/novels/">소설 보러가기</a>
+          <a class="main-button main-button-muted" href="/novels/">{novelListCta}</a>
         </div>
       </div>
     </section>
@@ -131,7 +132,7 @@ const featuredOstHref = artistLinks.featuredOst;
         <p class="section-kicker">02 · NOVEL</p>
         <h2>{novelProject.title}</h2>
         <p>공개된 회차를 한 곳에서 확인하고 원하는 화부터 이어 읽을 수 있습니다.</p>
-        <a class="main-button" href="/novels/">회차 목록</a>
+        <a class="main-button" href="/novels/">{novelListCta}</a>
       </article>
 
       <article class="novel-platform-panel home-studio-link reveal">

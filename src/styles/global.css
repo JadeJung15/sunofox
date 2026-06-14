@@ -3374,8 +3374,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   }
 
   .landing-note {
-    bottom: 22px;
-    font-size: 11px;
+    display: none;
   }
 
   .hero-side-actions {

@@ -15,6 +15,7 @@ import {
 
 const currentEpisode = latestNovelEpisode;
 const upcomingEpisode = nextNovelEpisode;
+const novelListCta = '소설 목록 보기';
 ---
 
 <Layout
@@ -57,7 +58,7 @@ const upcomingEpisode = nextNovelEpisode;
         </dl>
 
         <div class="novel-platform-actions">
-          <a class="main-button" href={currentEpisode.href}>{currentEpisode.cta}</a>
+          <a class="main-button" href="#episodes">{novelListCta}</a>
           <a class="main-button main-button-muted" href={artistLinks.featuredOst} target="_blank" rel="noopener noreferrer">OST 감상</a>
           <a class="main-button main-button-muted" href={musicArchive.href}>음악 아카이브</a>
           <a class="main-button main-button-muted" href="/mv-studio">STUDIO</a>

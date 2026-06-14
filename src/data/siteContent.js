@@ -13,497 +13,698 @@ export const artistLinks = {
   vibe: 'https://vibe.naver.com/artist/10398991',
   tidal: 'https://tidal.com/artist/73947996/u',
   linktree: 'https://linktr.ee/sunofox',
-  soundcloud: 'https://soundcloud.com/sunopogseu'
+  soundcloud: 'https://soundcloud.com/sunopogseu',
+  featuredOst: 'https://youtu.be/u_OwBr3Cstk?si=Vs1Y6xQ1jpSfmm53'
 };
 
-export const platformLinks = [
-  { label: 'YOUTUBE', title: 'Official Channel', href: artistLinks.youtube },
-  { label: 'YOUTUBE MUSIC', title: 'Topic Channel', href: artistLinks.youtubeMusic },
-  { label: 'PLAYLISTS', title: 'YouTube Playlists', href: artistLinks.youtubePlaylists },
-  { label: 'SPOTIFY', title: 'Artist Page', href: artistLinks.spotify },
-  { label: 'APPLE MUSIC', title: 'Artist Page', href: artistLinks.appleMusic },
-  { label: 'MELON', title: 'Artist Page', href: artistLinks.melon },
-  { label: 'KAKAOMUSIC', title: 'Open in App', href: artistLinks.kakaoMusic },
-  { label: 'BUGS', title: 'Artist Page', href: artistLinks.bugs },
-  { label: 'FLO', title: 'Artist Page', href: artistLinks.flo },
-  { label: 'VIBE', title: 'Artist Page', href: artistLinks.vibe },
-  { label: 'TIDAL', title: 'Artist Page', href: artistLinks.tidal },
-  { label: 'SOUNDCLOUD', title: 'Sketch Archive', href: artistLinks.soundcloud }
+export const featuredStoryOst = {
+  date: '2026.06.14',
+  title: '웹소설 OST｜악녀는 첫 장에서 웃었다',
+  englishTitle: 'The Villainess Smiled on Page One',
+  type: 'Web Novel OST',
+  href: artistLinks.featuredOst,
+  youtubeHref: 'https://www.youtube.com/watch?v=u_OwBr3Cstk',
+  videoId: 'u_OwBr3Cstk',
+  thumbnail: 'https://i.ytimg.com/vi/u_OwBr3Cstk/hqdefault.jpg',
+  thumbnailAlt: '웹소설 악녀는 첫 장에서 웃었다 OST 유튜브 썸네일',
+  publishedAt: '2026-06-14T08:00:11+00:00',
+  summary:
+    '첫 장에서 몰락해야 했던 악녀 아델라인이 예정된 비극을 깨고 자신의 운명을 빼앗기 시작하는 순간을 담은 대표 OST입니다.'
+};
+
+export const novelProject = {
+  title: '악녀는 첫 장에서 웃었다',
+  englishTitle: 'The Villainess Smiled on Page One',
+  genre: '로맨스 판타지',
+  type: '웹소설',
+  author: 'SunoFox',
+  publisher: 'SF Studio',
+  coverImage: '/assets/novels/villainess-page-one-cover.jpg',
+  coverAlt: '검은 드레스를 입은 악녀 아델라인이 달빛이 비치는 황실 침실에서 찢어진 성녀의 베일을 내려다보는 웹소설 커버',
+  coverWidth: 1086,
+  coverHeight: 1448,
+  tagline: '첫 장에서 죽어야 했던 악녀가, 첫 장에서 웃었다.',
+  summary:
+    '원작 첫 장에서 몰락해야 했던 악녀 아델라인이 자신을 죽이려는 이야기의 흐름을 깨고, 예정된 결말을 빼앗기 시작하는 로맨스 판타지입니다.',
+  shortSummary:
+    '몰락해야 했던 악녀 아델라인이 성녀의 베일 사건을 뒤집고 공개 재판을 요구하며 원작의 첫 장을 깨뜨립니다.',
+  musicToNovel:
+    'SunoFox 음악에서 시작한 감정선을 웹소설 연재로 확장합니다.',
+  ost: featuredStoryOst,
+  systemLine: 'The story has detected an error.',
+  keywords: ['악녀 빙의', '원작 붕괴', '공개 재판', '성녀의 베일', '시스템 오류'],
+  infoRows: [
+    { label: '작가', value: 'SunoFox' },
+    { label: '장르', value: '로맨스 판타지' },
+    { label: '연재', value: '비정기 연재' },
+    { label: '이용가', value: '전체 이용가' }
+  ]
+};
+
+export const novelEpisodes = [
+  {
+    number: '01',
+    title: '첫 장에서 웃은 악녀',
+    status: '1화 공개',
+    label: '1화',
+    hook: '침대에 묶인 채 깨어난 아델라인은 성녀의 찢어진 베일이 자신을 몰락시키기 위한 물증임을 깨닫습니다.',
+    update: '첫 장에서 몰락해야 했던 악녀가 공개 재판을 요구하며 원작의 흐름을 깨는 첫 화입니다.',
+    href: '/novels/episode-001/',
+    cta: '첫 화 보기',
+    publishedAt: '2026.06.14',
+    isoDate: '2026-06-14',
+    readTime: '약 12분',
+    isFree: true
+  },
+  {
+    number: '02',
+    title: '멈춘 시계의 이름',
+    status: '2화 공개',
+    label: '2화',
+    hook: '황궁의 모든 시계가 멈춘 뒤, 아델라인은 에단 블랙이라는 이름이 이 세계의 오류와 연결되어 있음을 추적합니다.',
+    update: '공개 재판의 첫 증인으로 언급된 에단 블랙을 중심으로 황태자와 성녀가 숨긴 균열을 따라가는 다음 화입니다.',
+    href: '/novels/episode-002/',
+    cta: '2화 읽기',
+    publishedAt: '2026.06.14',
+    isoDate: '2026-06-14',
+    readTime: '약 11분',
+    isFree: true
+  },
+  {
+    number: '03',
+    title: '재판장의 증인',
+    status: '3화 공개',
+    label: '3화',
+    hook: '공개 재판이 열리기 전, 마레나를 보호하려는 아델라인 앞에 에단 블랙의 이름을 지운 진짜 손이 드러나기 시작합니다.',
+    update: '멈춘 시계가 다시 움직인 뒤, 재판장에 세워질 증인을 둘러싸고 황실과 신전의 침묵이 충돌하는 다음 화입니다.',
+    href: '/novels/episode-003/',
+    cta: '3화 읽기',
+    publishedAt: '2026.06.14',
+    isoDate: '2026-06-14',
+    readTime: '약 12분',
+    isFree: true
+  },
+  {
+    number: '04',
+    title: '검은 잉크의 계약서',
+    status: '4화 공개',
+    label: '4화',
+    hook: '재판장에서 드러난 검은 잉크의 흔적은 에단 블랙이 단순한 증인이 아니라, 원작 바깥에서 거래된 계약의 당사자였음을 암시합니다.',
+    update: '증언을 막으려는 신전과 기록을 되살리려는 아델라인이 검은 잉크로 봉인된 계약서를 두고 충돌하는 다음 화입니다.',
+    href: '/novels/episode-004/',
+    cta: '4화 읽기',
+    publishedAt: '2026.06.14',
+    isoDate: '2026-06-14',
+    readTime: '약 12분',
+    isFree: true
+  },
+  {
+    number: '05',
+    title: '에단 블랙의 첫 증언',
+    status: '5화 준비중',
+    label: '5화',
+    hook: '검은 잉크의 계약서가 공개된 뒤, 에단 블랙은 자신이 원작의 인물이 아니라 원작을 거래한 사람이라고 증언합니다.',
+    update: '재판장의 판세를 뒤집은 계약서 이후, 에단 블랙이 처음으로 모습을 드러내며 아델라인에게 원작 바깥의 진실을 건네는 다음 화입니다.',
+    href: null,
+    cta: '공개 예정',
+    publishedAt: '공개 예정',
+    readTime: '준비중',
+    isFree: false
+  }
 ];
 
-export const archiveVol1 = {
-  title: 'ARCHIVE vol.1',
-  releaseDate: '2026.02.09',
-  tracks: 9,
-  duration: '33 MIN',
-  type: '정규 앨범',
-  summary: 'SunoFox의 첫 정규 아카이브. 판타지 OST, 전투 오프닝, 감성적인 장면 음악을 9곡으로 묶었습니다.'
-};
+export const publishedNovelEpisodes = novelEpisodes.filter((episode) => episode.href);
+export const latestNovelEpisode = publishedNovelEpisodes[publishedNovelEpisodes.length - 1] || novelEpisodes[0];
+export const nextNovelEpisode = novelEpisodes.find((episode) => !episode.href) || null;
 
 export const menuItems = [
   { key: 'home', label: 'HOME', href: '/' },
-  { key: 'news', label: 'NEWS', href: '/news' },
-  { key: 'community', label: 'COMMUNITY', href: '/community' },
-  { key: 'media', label: 'MEDIA', href: '/media' },
-  { key: 'songs', label: 'SONGS / NOVELS', href: '/songs' },
-  { key: 'series', label: 'SERIES', href: '/series' },
-  { key: 'live', label: 'LIVE', href: '/live' },
-  { key: 'profile', label: 'PROFILE', href: '/profile' },
-  { key: 'biography', label: 'BIOGRAPHY', href: '/biography' },
-  { key: 'goods', label: 'GOODS', href: '/goods' },
-  { key: 'contact', label: 'CONTACT', href: '/contact' },
-  { key: 'account', label: 'ACCOUNT', href: '/account', secondary: true },
-  { key: 'studio', label: 'STUDIO', href: '/mv-studio', secondary: true }
+  { key: 'profile', label: 'ABOUT', href: '/profile' },
+  { key: 'novels', label: 'NOVEL', href: '/novels' },
+  { key: 'studio', label: 'STUDIO', href: '/mv-studio' }
 ];
 
-export const comingSoonPages = {
-  live: {
-    key: 'live',
-    kicker: 'LIVE',
-    title: 'LIVE',
-    label: 'LIVE ARCHIVE',
-    body: 'Online premieres, listening sessions, and visual live updates will be collected here.',
-    status: 'PREPARING THE FIRST LIVE FILE',
-    items: ['Online premiere schedule', 'Live session video', 'Setlist archive']
-  },
-  biography: {
-    key: 'biography',
-    kicker: 'BIOGRAPHY',
-    title: 'BIOGRAPHY',
-    label: 'PROJECT TIMELINE',
-    body: 'The origin of SunoFox, series notes, and production direction will be arranged as a timeline.',
-    status: 'EDITING THE PROJECT HISTORY',
-    items: ['Project timeline', 'Series origin notes', 'Production direction']
-  },
-  goods: {
-    key: 'goods',
-    kicker: 'GOODS',
-    title: 'GOODS',
-    label: 'OFFICIAL GOODS',
-    body: 'Album artwork, character visuals, and series marks are being prepared for future goods.',
-    status: 'DESIGNING THE FIRST COLLECTION',
-    items: ['Album art goods', 'Series logo goods', 'Digital wallpaper']
-  }
+export const archiveAlbum = {
+  title: 'ARCHIVE vol.1',
+  artist: 'SunoFox / 수노폭스',
+  href: '/music/archive-vol-1/',
+  externalHref: 'https://www.genie.co.kr/detail/albumInfo?axnm=87219242',
+  bugsHref: artistLinks.bugs,
+  releaseDate: '2026.02.09',
+  isoDate: '2026-02-09',
+  type: '정규 앨범',
+  genre: '뉴에이지 / 뉴에이지',
+  distributor: 'mixtape.so',
+  agency: 'SNFX',
+  direction: '오리지널 트랙 아카이브',
+  image: '/assets/sunofox-app-icon-512.png',
+  imageAlt: 'SunoFox 로고를 활용한 ARCHIVE vol.1 상세 페이지 대표 이미지',
+  summary:
+    'SunoFox가 제작해온 오리지널 트랙을 기록의 형태로 정리한 첫 정규 아카이브입니다.',
+  intro: [
+    'ARCHIVE vol.1은 하나의 완결된 이야기보다 제작 시점마다 남은 감정과 사운드의 흔적을 보존하는 앨범입니다.',
+    '수록곡은 애니메이션 OST, 게임 사운드트랙, 전자 음악의 질감을 오가며 SunoFox 특유의 장면 중심 감정선을 남깁니다.',
+    '웹소설로 확장되는 현재 구조에서는 음악이 먼저 장면을 만들고, 그 장면이 캐릭터와 사건으로 이어지는 출발점 역할을 합니다.'
+  ],
+  facts: [
+    { label: '발매일', value: '2026.02.09' },
+    { label: '형태', value: '정규 앨범' },
+    { label: '수록', value: '9곡' },
+    { label: '장르', value: '뉴에이지 / 뉴에이지' },
+    { label: '기획사', value: 'SNFX' },
+    { label: '발매사', value: 'mixtape.so' }
+  ],
+  tracks: [
+    { position: '01', title: 'Flamebreaker' },
+    { position: '02', title: 'Flame of the Echo' },
+    { position: '03', title: 'Rewind of Destiny' },
+    { position: '04', title: 'Starlight Calling' },
+    { position: '05', title: 'R3DL1N3' },
+    { position: '06', title: 'Neon Rush' },
+    { position: '07', title: 'Anti-Christmas, Anti-Couple' },
+    { position: '08', title: 'Heavenfall Protocol' },
+    { position: '09', title: 'The Devil Walks Tonight' }
+  ],
+  links: [
+    { label: 'Genie Album', href: 'https://www.genie.co.kr/detail/albumInfo?axnm=87219242' },
+    { label: 'Bugs Artist', href: artistLinks.bugs }
+  ]
 };
 
-export const releases = [
-  {
-    slug: 'flamebreaker',
-    title: 'Flamebreaker',
-    ko: '플레임브레이커',
-    tag: 'Anime OST / Battle Opening',
-    desc: 'ARCHIVE vol.1의 첫 인상을 여는 강한 전투형 오프닝 트랙입니다.',
-    story: '불길에 둘러싸인 도시 가장자리에서 주인공이 처음으로 도망치기를 멈추고 맞서는 장면을 그립니다.',
-    world: '기도 시리즈의 전장. 붕괴한 신전, 검은 재, 붉은 빛의 결계가 남아 있는 판타지 도시를 배경으로 합니다.',
-    lyricNote: '가사는 두려움을 없애는 이야기가 아니라, 떨리는 상태 그대로 앞으로 나아가겠다는 선언에 가깝게 해석했습니다.',
-    image: '/assets/releases/archive-vol-1/flamebreaker.webp',
-    duration: 'PT3M46S',
-    durationLabel: '3:46',
-    youtubeId: 'RPg5y7WbvRo',
-    seriesId: 'prayer',
-    playlistHref: artistLinks.youtubePlaylists,
-    links: artistLinks
-  },
-  {
-    slug: 'flame-of-the-echo',
-    title: 'Flame of the Echo',
-    ko: '메아리의 불꽃',
-    tag: 'Symphonic Rock / Echo Scene',
-    desc: '되살아나는 불꽃과 반복되는 기억을 그리는 시네마틱 록 테마입니다.',
-    story: '꺼진 줄 알았던 불씨가 과거의 목소리처럼 다시 울리고, 주인공이 잊었던 약속을 따라 돌아가는 이야기입니다.',
-    world: '기억 시리즈의 폐허. 불꽃은 실제 화염이면서 동시에 사라진 사람들의 흔적으로 작동합니다.',
-    lyricNote: '반복되는 후렴은 같은 장소로 되돌아오는 감정의 메아리처럼 배치하고, 결말은 완전한 회복보다 재점화에 둡니다.',
-    image: '/assets/releases/archive-vol-1/flame-of-the-echo.webp',
-    duration: 'PT3M39S',
-    durationLabel: '3:39',
-    youtubeId: '',
-    seriesId: 'memory',
-    playlistHref: artistLinks.youtubePlaylists,
-    links: artistLinks
-  },
-  {
-    slug: 'rewind-of-destiny',
-    title: 'Rewind of Destiny',
-    ko: '운명의 되감기',
-    tag: 'Time Loop / Emotional OST',
-    desc: '되감기는 운명과 다시 선택해야 하는 장면을 위한 감정형 OST입니다.',
-    story: '실패한 하루가 몇 번이고 되감기는 동안, 주인공은 정답이 아니라 감당해야 할 선택을 찾아갑니다.',
-    world: '기억 시리즈의 시간 루프 공간. 시계, 역광, 끊어진 필름 같은 장치가 장면을 반복시킵니다.',
-    lyricNote: '가사 노트는 후회보다 선택의 피로감에 초점을 둡니다. 같은 문장도 반복될수록 더 무거워지는 구조를 상정했습니다.',
-    image: '/assets/releases/archive-vol-1/rewind-of-destiny.webp',
-    duration: 'PT4M26S',
-    durationLabel: '4:26',
-    youtubeId: '',
-    seriesId: 'memory',
-    playlistHref: artistLinks.youtubePlaylists,
-    links: artistLinks
-  },
-  {
-    slug: 'starlight-calling',
-    title: 'Starlight Calling',
-    ko: '별빛의 부름',
-    tag: 'Ethereal Pop / Hope Theme',
-    desc: '어두운 도시 위로 도착하는 신호와 희망을 담은 에테리얼 팝 트랙입니다.',
-    story: '불 꺼진 옥상에서 별빛 신호를 기다리던 주인공이 처음으로 자신의 이름을 부르는 목소리를 듣습니다.',
-    world: '이름없는 시리즈의 야간 도시. 간판은 흐릿하고, 별빛과 무선 신호가 캐릭터의 길잡이가 됩니다.',
-    lyricNote: '희망을 직접 말하기보다 멀리서 오는 호출, 작은 빛, 다시 켜지는 숨으로 감정을 표현하는 방향입니다.',
-    image: '/assets/releases/archive-vol-1/starlight-calling.webp',
-    duration: 'PT4M34S',
-    durationLabel: '4:34',
-    youtubeId: '',
-    seriesId: 'nameless',
-    playlistHref: artistLinks.youtubePlaylists,
-    links: artistLinks
-  },
-  {
-    slug: 'r3dl1n3',
-    title: 'R3DL1N3',
-    ko: '레드라인',
-    tag: 'Cyber DnB / Chase Scene',
-    desc: '한계선 위를 질주하는 추격 장면을 위한 사이버 DnB 테마입니다.',
-    story: '도시의 금지 구역을 가르는 붉은 선을 넘어, 주인공이 추격자와 시스템을 동시에 따돌리는 장면입니다.',
-    world: '심해 시리즈의 사이버 심층부. 네온 도로, 데이터 터널, 수면 아래 도시 같은 차가운 공간을 사용합니다.',
-    lyricNote: '문장보다 리듬이 먼저 달리는 곡으로, 가사 노트는 제한선, 경고음, 숨 가쁜 판단을 중심에 둡니다.',
-    image: '/assets/releases/archive-vol-1/r3dl1n3.webp',
-    duration: 'PT3M23S',
-    durationLabel: '3:23',
-    youtubeId: '',
-    seriesId: 'deep-sea',
-    playlistHref: artistLinks.youtubePlaylists,
-    links: artistLinks
-  },
-  {
-    slug: 'neon-rush',
-    title: 'Neon Rush',
-    ko: '네온 러시',
-    tag: 'Neon City / Speed Battle',
-    desc: '네온이 번지는 밤거리와 속도감 있는 액션 장면을 그리는 트랙입니다.',
-    story: '비가 내린 뒤 번지는 네온 거리에서 주인공이 자신의 흔적을 지우며 다음 장면으로 돌진합니다.',
-    world: '이름없는 시리즈의 도심 추격 공간. 색은 화려하지만 인물의 감정은 차갑고 빠르게 흘러갑니다.',
-    lyricNote: '가사는 도착보다 질주에 가깝습니다. 멈추면 무너질 것 같은 압박과 순간적인 해방감을 함께 둡니다.',
-    image: '/assets/releases/archive-vol-1/neon-rush.webp',
-    duration: 'PT3M23S',
-    durationLabel: '3:23',
-    youtubeId: '',
-    seriesId: 'nameless',
-    playlistHref: artistLinks.youtubePlaylists,
-    links: artistLinks
-  },
-  {
-    slug: 'anti-christmas-anti-couple',
-    title: 'Anti-Christmas, Anti-Couple',
-    ko: '안티 크리스마스, 안티 커플',
-    tag: 'Alt Pop / Seasonal Satire',
-    desc: '축제의 반짝임 뒤에 남겨진 외로움을 비틀어 표현한 시즌형 트랙입니다.',
-    story: '모두가 축제 속에 있는 밤, 주인공은 장식된 거리를 지나며 혼자라는 감정을 농담처럼 밀어냅니다.',
-    world: '이름없는 시리즈의 시즌 에피소드. 화려한 조명, 과장된 광고, 빈 광장이 대비를 만듭니다.',
-    lyricNote: '냉소적인 제목과 달리 핵심은 사랑의 부정이 아니라 외로움을 들키지 않으려는 방어 반응입니다.',
-    image: '/assets/releases/archive-vol-1/anti-christmas-anti-couple.webp',
-    duration: 'PT2M32S',
-    durationLabel: '2:32',
-    youtubeId: '',
-    seriesId: 'nameless',
-    playlistHref: artistLinks.youtubePlaylists,
-    links: artistLinks
-  },
-  {
-    slug: 'heavenfall-protocol',
-    title: 'Heavenfall Protocol',
-    ko: '헤븐폴 프로토콜',
-    tag: 'Epic OST / Collapse Scene',
-    desc: '하늘에서 무너지는 시스템과 마지막 방어선을 그리는 에픽 테마입니다.',
-    story: '하늘의 방어 시스템이 추락하는 순간, 주인공은 마지막 프로토콜을 실행할지 스스로 선택해야 합니다.',
-    world: '기도 시리즈의 종말 직전 하늘 도시. 천사적 이미지와 기계적 명령 체계가 충돌하는 공간입니다.',
-    lyricNote: '구원과 명령 사이의 간극을 다룹니다. 기도처럼 시작하지만 끝에서는 누군가의 결단으로 바뀌는 흐름입니다.',
-    image: '/assets/releases/archive-vol-1/heavenfall-protocol.webp',
-    duration: 'PT3M48S',
-    durationLabel: '3:48',
-    youtubeId: '',
-    seriesId: 'prayer',
-    playlistHref: artistLinks.youtubePlaylists,
-    links: artistLinks
-  },
-  {
-    slug: 'the-devil-walks-tonight',
-    title: 'The Devil Walks Tonight',
-    ko: '오늘 밤 악마가 걷는다',
-    tag: 'Dark Anime OST / Villain Theme',
-    desc: '도시의 어둠 속에서 등장하는 빌런의 발자국을 따라가는 다크 OST입니다.',
-    story: '밤이 깊어질수록 도시의 규칙이 뒤집히고, 주인공은 악마라 불리는 존재의 발자국을 따라 진실에 접근합니다.',
-    world: '심해 시리즈의 어두운 도시. 골목, 지하 계단, 젖은 아스팔트, 붉은 경고등이 빌런의 존재감을 만듭니다.',
-    lyricNote: '악역을 단순한 공포가 아니라 유혹과 진실의 안내자로 다룹니다. 낮은 톤의 문장과 긴 여백을 상정했습니다.',
-    image: '/assets/releases/archive-vol-1/the-devil-walks-tonight.webp',
-    duration: 'PT3M32S',
-    durationLabel: '3:32',
-    youtubeId: '',
-    seriesId: 'deep-sea',
-    playlistHref: artistLinks.youtubePlaylists,
-    links: artistLinks
-  }
-];
-
-export const news = [
-  {
-    slug: 'homepage-open',
-    date: '2026.06.09',
-    isoDate: '2026-06-09',
-    title: 'SunoFox Official Website Open',
-    headline: 'SunoFox 공식 홈페이지가 열렸습니다',
-    body: 'SunoFox의 음악, 시리즈, 이야기, 비하인드 기록을 한곳에서 볼 수 있는 공식 홈페이지가 열렸습니다.',
-    href: '/news/homepage-open',
-    content: [
-      '안녕하세요, SunoFox입니다.',
-      '드디어 SunoFox의 음악과 이야기를 한곳에서 볼 수 있는 공식 홈페이지가 오픈되었습니다.',
-      'SunoFox는 감정을 그리는 애니메이션 OST를 만드는 AI Music Project입니다.',
-      'Anime OST, Symphonic DnB, Ethereal Pop 같은 분위기를 바탕으로 하나의 장면, 하나의 캐릭터, 하나의 세계관에서 시작되는 음악을 만들고 있습니다.',
-      '앞으로 홈페이지에는 신곡 소식, 시리즈별 음악, 가사와 이야기, 비하인드 작업 기록 등을 차근차근 정리해 나갈 예정입니다.',
-      '팬게시판에서는 여러분이 듣고 싶은 분위기, 좋아하는 장르, 캐릭터 아이디어, 스토리 방향을 일반 게시물 리스트로 편하게 나눌 수 있습니다.',
-      'SunoFox는 아직 만들어가는 중인 프로젝트입니다. 앞으로 더 좋은 음악과 이야기로 조금씩 채워 나가겠습니다.',
-      '많이 들러주시고, 의견도 편하게 남겨 주세요. 항상 들어주셔서 감사합니다.'
-    ],
-    examples: [
-      '전투 장면에 어울리는 OST가 듣고 싶어요',
-      '슬픈 엔딩곡 느낌으로 만들어 주세요',
-      '몽환적인 심해 분위기의 곡이 좋아요',
-      '이런 캐릭터에게 어울리는 음악이 궁금해요'
-    ],
-    cta: {
-      label: 'FAN BOARD',
-      href: '/community'
+export const musicArchive = {
+  title: 'SunoFox Music Archive',
+  href: '/music/',
+  researchDate: '2026.06.14',
+  summary:
+    '수노폭스가 공개한 앨범, 유튜브 OST, 웹소설 OST를 필모그래피처럼 이어 보는 음악 기록 페이지입니다.',
+  facts: [
+    { label: '채널', value: 'SunoFox Anime OST Studio' },
+    { label: '규모', value: '구독자 약 4.17K명 · 영상 130편대' },
+    { label: '누적 조회', value: '90만+ 회 공개 스냅샷 기준' },
+    { label: '업로드', value: '수 · 일 17:15 KST' },
+    { label: '장르', value: 'Anime OST, J-Pop Rock, Game Soundtrack' },
+    { label: '정책', value: '오리지널 기획·작사·디렉팅 중심' }
+  ],
+  flow: [
+    {
+      step: '01',
+      title: 'Music',
+      text: '애니메이션 OST와 게임 사운드트랙 감성의 오리지널 음악을 먼저 공개합니다.'
+    },
+    {
+      step: '02',
+      title: 'Scene',
+      text: '곡의 정서와 제목을 장면, 캐릭터, 사건의 방향으로 정리합니다.'
+    },
+    {
+      step: '03',
+      title: 'Novel',
+      text: '선별된 감정선을 웹소설과 OST 패키지로 확장합니다.'
     }
-  },
-  {
-    slug: 'official-site-preview-updated',
-    date: '2026.06.07',
-    isoDate: '2026-06-07',
-    title: 'Official Website Preview Updated',
-    headline: '공식 사이트 구조 업데이트',
-    body: 'SunoFox 공식 사이트의 홈, 미디어, 시리즈 페이지를 새 구조로 정리했습니다.',
-    href: '/news/official-site-preview-updated',
-    content: [
-      'SunoFox 공식 사이트의 홈, 미디어, 시리즈 페이지를 새 구조로 정리했습니다.',
-      '메인 화면은 공식 아티스트 사이트처럼 간결하게 정리하고, 각 메뉴는 별도 페이지에서 확인할 수 있도록 구성했습니다.'
-    ]
-  },
-  {
-    slug: 'archive-vol-1-released',
-    date: '2026.02.09',
-    isoDate: '2026-02-09',
-    title: 'ARCHIVE vol.1 Released',
-    headline: 'ARCHIVE vol.1 공개',
-    body: '9곡, 약 33분 분량의 첫 정규 아카이브가 주요 음원 플랫폼에 공개되었습니다.',
-    href: '/news/archive-vol-1-released',
-    content: [
-      'ARCHIVE vol.1은 SunoFox의 첫 정규 아카이브입니다.',
-      '판타지 OST, 전투 오프닝, 감성적인 장면 음악을 9곡으로 묶었습니다.'
-    ]
-  },
-  {
-    slug: 'flamebreaker-available',
-    date: '2026.02.09',
-    isoDate: '2026-02-09',
-    title: 'Flamebreaker Available',
-    headline: 'Flamebreaker 감상 가능',
-    body: 'ARCHIVE vol.1의 오프닝 트랙 Flamebreaker를 YouTube와 스트리밍 플랫폼에서 감상할 수 있습니다.',
-    href: '/news/flamebreaker-available',
-    content: [
-      'Flamebreaker는 ARCHIVE vol.1의 첫 인상을 여는 강한 전투형 오프닝 트랙입니다.',
-      'YouTube와 주요 스트리밍 플랫폼에서 감상할 수 있습니다.'
-    ]
-  }
-];
+  ],
+  releases: [archiveAlbum],
+  videos: [
+    {
+      date: '2026.06.14',
+      title: featuredStoryOst.title,
+      meta: featuredStoryOst.englishTitle,
+      type: featuredStoryOst.type,
+      href: featuredStoryOst.youtubeHref,
+      videoId: featuredStoryOst.videoId,
+      thumbnail: featuredStoryOst.thumbnail,
+      thumbnailAlt: featuredStoryOst.thumbnailAlt,
+      publishedAt: featuredStoryOst.publishedAt
+    },
+    {
+      date: '2026.06.11',
+      title: 'SunoFox Anime OST Radio Live',
+      meta: '89곡 전체 플레이리스트 · 공개곡 + 비공개곡 포함',
+      type: 'Live Archive',
+      href: 'https://www.youtube.com/watch?v=AtijgVi5NFU',
+      videoId: 'AtijgVi5NFU',
+      thumbnail: 'https://i.ytimg.com/vi/AtijgVi5NFU/hqdefault.jpg',
+      thumbnailAlt: 'SunoFox Anime OST Radio Live 유튜브 썸네일',
+      publishedAt: '2026-06-10T21:00:45+00:00'
+    },
+    {
+      date: '2026.06.10',
+      title: '별의 심연 Anime OP',
+      meta: '明けない空を越えて — Beyond the Unbroken Dawn',
+      type: 'Anime OP',
+      href: 'https://www.youtube.com/watch?v=jCtym0WLKms',
+      videoId: 'jCtym0WLKms',
+      thumbnail: 'https://i.ytimg.com/vi/jCtym0WLKms/hqdefault.jpg',
+      thumbnailAlt: '별의 심연 Anime OP 유튜브 썸네일',
+      publishedAt: '2026-06-10T08:15:34+00:00'
+    },
+    {
+      date: '2026.06.07',
+      title: '覚醒 Anime OST',
+      meta: '名もなき覚醒 — Nameless Awakening',
+      type: 'Anime OST',
+      href: 'https://www.youtube.com/watch?v=5LNUxXm28CY',
+      videoId: '5LNUxXm28CY',
+      thumbnail: 'https://i.ytimg.com/vi/5LNUxXm28CY/hqdefault.jpg',
+      thumbnailAlt: '覚醒 Anime OST 유튜브 썸네일',
+      publishedAt: '2026-06-07T08:15:14+00:00'
+    },
+    {
+      date: '2026.06.03',
+      title: '도망친 왕녀는 오늘도 살아남는다',
+      meta: 'Runaway Princess Still Alive',
+      type: 'Isekai Anime OP',
+      href: 'https://www.youtube.com/watch?v=8LgtlhxlG9I',
+      videoId: '8LgtlhxlG9I',
+      thumbnail: 'https://i.ytimg.com/vi/8LgtlhxlG9I/hqdefault.jpg',
+      thumbnailAlt: '도망친 왕녀는 오늘도 살아남는다 유튜브 썸네일',
+      publishedAt: '2026-06-03T08:00:31+00:00'
+    },
+    {
+      date: '2026.05.31',
+      title: '말 안 하면 끝이야',
+      meta: 'If We Don’t Say It',
+      type: 'Anime OST',
+      href: 'https://www.youtube.com/watch?v=_DebZ1_3lpQ',
+      videoId: '_DebZ1_3lpQ',
+      thumbnail: 'https://i.ytimg.com/vi/_DebZ1_3lpQ/hqdefault.jpg',
+      thumbnailAlt: '말 안 하면 끝이야 유튜브 썸네일',
+      publishedAt: '2026-05-31T08:15:04+00:00'
+    },
+    {
+      date: '2026.05.24',
+      title: '검은 새벽의 왕녀',
+      meta: 'Princess of the Black Dawn',
+      type: 'Dark Fantasy OST',
+      href: 'https://www.youtube.com/watch?v=JZY3Lew_ZD8',
+      videoId: 'JZY3Lew_ZD8',
+      thumbnail: 'https://i.ytimg.com/vi/JZY3Lew_ZD8/hqdefault.jpg',
+      thumbnailAlt: '검은 새벽의 왕녀 유튜브 썸네일',
+      publishedAt: '2026-05-24T08:15:00+00:00'
+    }
+  ],
+  sources: [
+    { label: 'YouTube Channel', href: artistLinks.youtube },
+    { label: 'YouTube Latest Feed', href: 'https://www.youtube.com/feeds/videos.xml?channel_id=UC8M-2aXbknDT3tDcN1PMvuQ' },
+    { label: 'Playboard Snapshot', href: 'https://playboard.co/en/channel/UC8M-2aXbknDT3tDcN1PMvuQ' },
+    { label: 'Genie Album', href: archiveAlbum.externalHref },
+    { label: 'Bugs Artist', href: archiveAlbum.bugsHref }
+  ]
+};
 
-export const communityCategories = [
-  {
-    key: 'all',
-    label: 'ALL',
-    title: '전체 게시물',
-    desc: 'SunoFox 팬들이 남긴 감상, 제안, 운영 공지를 한곳에서 확인합니다.'
-  },
-  {
-    key: 'free',
-    label: 'FREE TALK',
-    title: '일반 게시물',
-    desc: '처음 방문한 인사, 짧은 감상, 자유로운 이야기를 남기는 기본 게시판입니다.'
-  },
-  {
-    key: 'request',
-    label: 'TRACK REQUEST',
-    title: '듣고 싶은 곡',
-    desc: '듣고 싶은 장르, 전개, 악기, 애니메이션 장면 아이디어를 제안합니다.'
-  },
-  {
-    key: 'mood',
-    label: 'MOOD IDEAS',
-    title: '분위기 제안',
-    desc: '새벽, 심해, 전투, 이별처럼 곡의 정서와 배경을 함께 모읍니다.'
-  },
-  {
-    key: 'feedback',
-    label: 'FEEDBACK',
-    title: '감상 후기',
-    desc: '공개된 곡, 영상, 가사, 시리즈에 대한 감상과 개선 의견을 남깁니다.'
-  },
-  {
-    key: 'notice',
-    label: 'NOTICE',
-    title: '공지',
-    desc: '운영자가 고정하는 커뮤니티 공지와 안내를 확인합니다.'
-  }
-];
+export const sunofoxProfile = {
+  researchDate: '2026.06.14',
+  tabs: [
+    {
+      id: 'youtube',
+      label: 'YouTube',
+      kicker: 'CHANNEL',
+      title: 'SunoFox Anime OST Studio',
+      summary:
+        '유튜브 채널은 애니메이션 감성의 오리지널 음악을 공개하는 중심 채널입니다. 공개 채널 소개 기준으로 매주 수요일과 일요일 17:15(KST)에 새 이야기와 선율을 정기적으로 공개하는 운영 흐름을 사용합니다.',
+      facts: [
+        { label: '채널명', value: 'SunoFox / 수노폭스' },
+        { label: '핸들', value: '@SunoFox' },
+        { label: '규모', value: '구독자 약 4.17K명 · 영상 130편대' },
+        { label: '누적 조회', value: '90만+ 회 공개 스냅샷 기준' },
+        { label: '업로드', value: '수 · 일 17:15 KST' },
+        { label: '카테고리', value: 'Music · South Korea' }
+      ],
+      videos: musicArchive.videos.slice(0, 4).map((video) => ({
+        ...video,
+        stats: video.type
+      })),
+      links: [
+        { label: 'YouTube Channel', href: artistLinks.youtube },
+        { label: 'Playlists', href: artistLinks.youtubePlaylists }
+      ]
+    },
+    {
+      id: 'discography',
+      label: 'Discography',
+      kicker: 'ARCHIVE',
+      title: 'ARCHIVE vol.1',
+      summary:
+        `${archiveAlbum.releaseDate} 공개된 정규 앨범입니다. 공개 음원 플랫폼 정보 기준으로 SunoFox가 제작한 오리지널 트랙을 감정과 사운드의 기록으로 정리한 아카이브 프로젝트입니다.`,
+      facts: [
+        { label: '발매일', value: archiveAlbum.releaseDate },
+        { label: '형태', value: archiveAlbum.type },
+        { label: '수록', value: `${archiveAlbum.tracks.length}곡` },
+        { label: '기획/발매', value: `${archiveAlbum.agency} / ${archiveAlbum.distributor}` },
+        { label: '방향', value: archiveAlbum.direction }
+      ],
+      tracks: archiveAlbum.tracks.map((track) => track.title),
+      links: [
+        { label: 'Music Archive', href: musicArchive.href },
+        { label: 'Album Detail', href: archiveAlbum.href },
+        ...archiveAlbum.links
+      ]
+    },
+    {
+      id: 'platforms',
+      label: 'Platforms',
+      kicker: 'STREAMING',
+      title: '국내외 음악 플랫폼 연결',
+      summary:
+        '수노폭스는 유튜브와 주요 음원 플랫폼을 함께 사용합니다. 웹소설로 확장된 현재 구조에서는 OST 감상, 작품 정보, Studio 제작 흐름을 한 곳에서 이어 보도록 연결합니다.',
+      facts: [
+        { label: '국내', value: 'Melon, Bugs, FLO, VIBE, KakaoMusic' },
+        { label: '글로벌', value: 'YouTube Music, Spotify, Apple Music, TIDAL, SoundCloud' },
+        { label: '공식 링크 허브', value: 'linktr.ee/sunofox' },
+        { label: '웹사이트', value: 'sunofox.com' }
+      ],
+      links: [
+        { label: 'Linktree', href: artistLinks.linktree },
+        { label: 'Spotify', href: artistLinks.spotify },
+        { label: 'Apple Music', href: artistLinks.appleMusic },
+        { label: 'Melon', href: artistLinks.melon },
+        { label: 'FLO', href: artistLinks.flo },
+        { label: 'VIBE', href: artistLinks.vibe },
+        { label: 'TIDAL', href: artistLinks.tidal }
+      ]
+    },
+    {
+      id: 'story',
+      label: 'Story IP',
+      kicker: 'MUSIC TO NOVEL',
+      title: '음악에서 웹소설로 확장',
+      summary:
+        'SunoFox의 현재 사이트 구조는 음악 채널에서 출발한 감정선을 웹소설, OST, Studio 제작 흐름으로 연결합니다. 첫 웹소설 프로젝트는 《악녀는 첫 장에서 웃었다》입니다.',
+      facts: [
+        { label: '첫 작품', value: novelProject.title },
+        { label: '장르', value: novelProject.genre },
+        { label: '현재 상태', value: `${latestNovelEpisode.label} 공개` },
+        { label: '대표 OST', value: '울어야 할 장면에서 웃은 악녀 OST' }
+      ],
+      links: [
+        { label: '작품 정보', href: '/novels/' },
+        { label: `${latestNovelEpisode.label} 읽기`, href: latestNovelEpisode.href },
+        { label: 'OST 감상', href: artistLinks.featuredOst }
+      ]
+    }
+  ],
+  sources: [
+    { label: 'YouTube @SunoFox', href: artistLinks.youtube },
+    { label: 'YouTube Latest Feed', href: 'https://www.youtube.com/feeds/videos.xml?channel_id=UC8M-2aXbknDT3tDcN1PMvuQ' },
+    { label: 'Playboard Channel Snapshot', href: 'https://playboard.co/en/channel/UC8M-2aXbknDT3tDcN1PMvuQ' },
+    { label: 'Genie ARCHIVE vol.1', href: 'https://www.genie.co.kr/detail/albumInfo?axnm=87219242' },
+    { label: 'Bugs Artist Profile', href: artistLinks.bugs }
+  ]
+};
 
-export const communityPosts = [
-  {
-    id: 'notice-001',
-    board: 'notice',
-    category: 'NOTICE',
-    title: '팬게시판 이용 안내: 듣고 싶은 장면과 분위기를 남겨 주세요',
-    excerpt: '음악으로 듣고 싶은 장면, 캐릭터, 장르, 감상 후기를 편하게 남겨 주세요. 작성과 댓글은 로그인한 회원부터 이용할 수 있습니다.',
-    author: 'SunoFox Team',
-    date: '2026.06.09',
-    comments: 0,
-    status: 'PINNED'
-  },
-  {
-    id: 'idea-001',
-    board: 'free',
-    category: 'FREE TALK',
-    title: '처음 방문한 팬입니다. 이런 분위기가 좋아요',
-    excerpt: 'SunoFox 곡 중 밤 도시, 비, 여주인공 서사가 있는 곡들이 특히 좋아서 앞으로도 이런 감성을 기대하고 있습니다.',
-    author: 'Fan Idea',
-    date: '2026.06.09',
-    comments: 0,
-    status: 'SAMPLE'
-  },
-  {
-    id: 'idea-002',
-    board: 'request',
-    category: 'TRACK REQUEST',
-    title: '비 오는 도시에서 시작되는 전투 OST가 듣고 싶어요',
-    excerpt: '처음에는 조용한 피아노로 시작하고, 후반부에는 Symphonic DnB로 터지는 분위기를 상상하고 있습니다.',
-    author: 'Fan Idea',
-    date: '2026.06.09',
-    comments: 0,
-    status: 'SAMPLE'
-  },
-  {
-    id: 'idea-003',
-    board: 'feedback',
-    category: 'FEEDBACK',
-    title: '이름없는 시리즈에 어울리는 주인공 설정 제안',
-    excerpt: '기억을 잃은 여성 주인공이 밤의 도시에서 자신의 이름을 찾아가는 이야기와 잘 어울릴 것 같습니다.',
-    author: 'Fan Idea',
-    date: '2026.06.09',
-    comments: 0,
-    status: 'SAMPLE'
-  },
-  {
-    id: 'idea-004',
-    board: 'mood',
-    category: 'MOOD IDEAS',
-    title: '몽환적인 심해 분위기의 Ethereal Pop도 좋을 것 같아요',
-    excerpt: '심해 시리즈는 낮은 신스, 멀리서 들리는 코러스, 느린 드럼으로 더 깊은 분위기를 만들 수 있을 것 같습니다.',
-    author: 'Fan Idea',
-    date: '2026.06.09',
-    comments: 0,
-    status: 'SAMPLE'
-  }
-];
+const siteUrl = 'https://sunofox.com';
+const novelUrl = `${siteUrl}/novels/`;
+const novelCoverUrl = `${siteUrl}${novelProject.coverImage}`;
+const musicArchiveUrl = `${siteUrl}${musicArchive.href}`;
+const archiveUrl = `${siteUrl}${archiveAlbum.href}`;
+const archiveImageUrl = `${siteUrl}${archiveAlbum.image}`;
+const archiveTracks = archiveAlbum.tracks;
+const youtubeProfile = sunofoxProfile.tabs.find((tab) => tab.id === 'youtube');
+const latestVideos = youtubeProfile?.videos || [];
+const getEpisodeUrl = (episode) => `${siteUrl}${episode.href}`;
+const publishedEpisodeParts = publishedNovelEpisodes.map((episode) => ({ '@id': `${getEpisodeUrl(episode)}#episode` }));
 
-export const media = [
-  {
-    label: 'LATEST VIDEO',
-    title: 'Flamebreaker',
-    href: `https://www.youtube.com/watch?v=${releases[0].youtubeId}`
-  },
-  {
-    label: 'PLAYLISTS',
-    title: 'YouTube Playlist Hub',
-    href: artistLinks.youtubePlaylists
-  },
-  {
-    label: 'TOPIC',
-    title: 'YouTube Music',
-    href: artistLinks.youtubeMusic
-  },
-  {
-    label: 'ARTIST PAGE',
-    title: 'Spotify',
-    href: artistLinks.spotify
-  },
-  {
-    label: 'KOREA',
-    title: 'Melon',
-    href: artistLinks.melon
-  },
-  {
-    label: 'KOREA',
-    title: 'KakaoMusic',
-    href: artistLinks.kakaoMusic
-  },
-  {
-    label: 'KOREA',
-    title: 'Bugs',
-    href: artistLinks.bugs
-  }
-];
+export function createEpisodeStructuredData(episode = novelEpisodes[0]) {
+  const episodeUrl = getEpisodeUrl(episode);
 
-export const series = [
-  {
-    id: 'prayer',
-    number: '01',
-    title: 'PRAYER',
-    ko: '기도 시리즈',
-    desc: '간절한 소원, 조용한 의식, 구원을 향한 마음을 담은 사운드트랙.',
-    note: '전투 전의 고요함, 끝까지 붙잡는 소원, 구원의 순간을 중심으로 구성합니다.',
-    playlistHref: artistLinks.youtubePlaylists
-  },
-  {
-    id: 'memory',
-    number: '02',
-    title: 'MEMORY',
-    ko: '기억 시리즈',
-    desc: '사라진 장면, 되돌아오는 감정, 잊히지 않는 과거를 따라가는 이야기.',
-    note: '돌아갈 수 없는 장면과 다시 떠오르는 감정을 시네마틱하게 연결합니다.',
-    playlistHref: artistLinks.youtubePlaylists
-  },
-  {
-    id: 'deep-sea',
-    number: '03',
-    title: 'ABYSS',
-    ko: '심해 시리즈',
-    desc: '깊은 바다 아래로 가라앉는 빛처럼 고요하고 어두운 내면의 세계.',
-    note: '심해, 폐허, 어둠 속 독백처럼 깊이 가라앉는 장면을 다룹니다.',
-    playlistHref: artistLinks.youtubePlaylists
-  },
-  {
-    id: 'nameless',
-    number: '04',
-    title: 'NAMELESS',
-    ko: '이름없는 시리즈',
-    desc: '아직 이름 붙이지 못한 감정, 완성되지 않은 캐릭터, 말하지 못한 시작의 기록.',
-    note: '이름이 정해지기 전의 캐릭터, 미완성의 감정, 첫 장면의 공기를 모읍니다.',
-    playlistHref: artistLinks.youtubePlaylists
-  }
-];
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    '@id': `${episodeUrl}#episode`,
+    headline: `${Number(episode.number)}화. ${episode.title}`,
+    url: episodeUrl,
+    image: novelCoverUrl,
+    description: episode.hook,
+    datePublished: episode.isoDate,
+    inLanguage: 'ko-KR',
+    isPartOf: { '@id': `${novelUrl}#series` },
+    author: {
+      '@type': 'Organization',
+      name: novelProject.author,
+      url: `${siteUrl}/`
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: novelProject.publisher,
+      url: `${siteUrl}/`
+    }
+  };
+}
 
 export const structuredData = {
   '@context': 'https://schema.org',
-  '@type': 'MusicGroup',
-  name: 'SunoFox',
-  url: 'https://sunofox.com/',
-  description: '감정을 그리는 애니메이션 사운드트랙. Suno AI와 Human Curation으로 완성하는 Anime OST Studio.',
-  genre: ['Anime OST', 'AI Music', 'Symphonic DnB', 'Ethereal Pop'],
-  sameAs: [
-    artistLinks.youtube,
-    artistLinks.youtubeMusic,
-    artistLinks.spotify,
-    artistLinks.appleMusic,
-    artistLinks.melon,
-    artistLinks.bugs,
-    artistLinks.flo,
-    artistLinks.vibe,
-    artistLinks.tidal,
-    artistLinks.soundcloud
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${siteUrl}/#organization`,
+      name: 'SunoFox',
+      url: `${siteUrl}/`,
+      logo: `${siteUrl}/assets/sunofox-app-icon-512.png`,
+      sameAs: [
+        artistLinks.youtube,
+        artistLinks.youtubeMusic,
+        artistLinks.spotify,
+        artistLinks.appleMusic,
+        artistLinks.melon,
+        artistLinks.bugs,
+        artistLinks.flo,
+        artistLinks.vibe,
+        artistLinks.tidal,
+        artistLinks.soundcloud
+      ]
+    },
+    {
+      '@type': 'MusicGroup',
+      '@id': `${siteUrl}/#music-group`,
+      name: 'SunoFox',
+      alternateName: '수노폭스',
+      url: `${siteUrl}/profile/`,
+      genre: ['Anime OST', 'Game Soundtrack', 'AI Music', 'Original Vocal OST'],
+      sameAs: [
+        artistLinks.youtube,
+        artistLinks.youtubeMusic,
+        artistLinks.spotify,
+        artistLinks.appleMusic,
+        artistLinks.melon,
+        artistLinks.bugs,
+        artistLinks.flo,
+        artistLinks.vibe,
+        artistLinks.tidal,
+        artistLinks.soundcloud
+      ],
+      album: { '@id': `${archiveUrl}#album` }
+    },
+    {
+      '@type': 'MusicAlbum',
+      '@id': `${archiveUrl}#album`,
+      name: archiveAlbum.title,
+      url: archiveUrl,
+      sameAs: [archiveAlbum.externalHref, archiveAlbum.bugsHref],
+      image: archiveImageUrl,
+      description: archiveAlbum.summary,
+      datePublished: archiveAlbum.isoDate,
+      byArtist: { '@id': `${siteUrl}/#music-group` },
+      numTracks: archiveTracks.length,
+      track: archiveTracks.map((track, index) => ({
+        '@type': 'MusicRecording',
+        position: index + 1,
+        name: track.title,
+        byArtist: { '@id': `${siteUrl}/#music-group` }
+      }))
+    },
+    {
+      '@type': 'CollectionPage',
+      '@id': `${musicArchiveUrl}#collection`,
+      name: musicArchive.title,
+      url: musicArchiveUrl,
+      description: musicArchive.summary,
+      inLanguage: 'ko-KR',
+      isPartOf: { '@id': `${siteUrl}/#website` },
+      publisher: { '@id': `${siteUrl}/#organization` },
+      mainEntity: {
+        '@type': 'ItemList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            item: { '@id': `${archiveUrl}#album` }
+          },
+          ...musicArchive.videos.slice(0, 6).map((video, index) => ({
+            '@type': 'ListItem',
+            position: index + 2,
+            item: { '@id': `${siteUrl}/profile/#video-${video.videoId}` }
+          }))
+        ]
+      }
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${siteUrl}/#website`,
+      name: 'SunoFox',
+      url: `${siteUrl}/`,
+      inLanguage: 'ko-KR',
+      publisher: { '@id': `${siteUrl}/#organization` }
+    },
+    {
+      '@type': 'CreativeWorkSeries',
+      '@id': `${novelUrl}#series`,
+      name: novelProject.title,
+      alternateName: novelProject.englishTitle,
+      url: novelUrl,
+      image: novelCoverUrl,
+      description: novelProject.shortSummary,
+      genre: [novelProject.genre, 'Music to Novel'],
+      inLanguage: 'ko-KR',
+      publisher: { '@id': `${siteUrl}/#organization` },
+      hasPart: publishedEpisodeParts
+    },
+    ...latestVideos.map((video) => ({
+      '@type': 'VideoObject',
+      '@id': `${siteUrl}/profile/#video-${video.videoId}`,
+      name: video.title,
+      description: `${video.meta} · ${video.stats}`,
+      url: video.href,
+      contentUrl: video.href,
+      embedUrl: `https://www.youtube.com/embed/${video.videoId}`,
+      thumbnailUrl: [video.thumbnail || `https://i.ytimg.com/vi/${video.videoId}/hqdefault.jpg`],
+      uploadDate: video.publishedAt,
+      inLanguage: 'ko-KR',
+      isPartOf: { '@id': `${siteUrl}/#website` },
+      creator: { '@id': `${siteUrl}/#music-group` },
+      publisher: { '@id': `${siteUrl}/#organization` }
+    }))
   ]
 };
+
+export const archiveAlbumStructuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'MusicAlbum',
+      '@id': `${archiveUrl}#album`,
+      name: archiveAlbum.title,
+      url: archiveUrl,
+      sameAs: [archiveAlbum.externalHref, archiveAlbum.bugsHref],
+      image: archiveImageUrl,
+      description: archiveAlbum.summary,
+      genre: archiveAlbum.genre,
+      datePublished: archiveAlbum.isoDate,
+      byArtist: {
+        '@type': 'MusicGroup',
+        '@id': `${siteUrl}/#music-group`,
+        name: 'SunoFox',
+        alternateName: '수노폭스',
+        url: `${siteUrl}/profile/`
+      },
+      numTracks: archiveAlbum.tracks.length,
+      track: archiveAlbum.tracks.map((track, index) => ({
+        '@type': 'MusicRecording',
+        position: index + 1,
+        name: track.title,
+        byArtist: { '@id': `${siteUrl}/#music-group` }
+      }))
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${archiveUrl}#breadcrumb`,
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Home',
+          item: `${siteUrl}/`
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'Music Archive',
+          item: musicArchiveUrl
+        },
+        {
+          '@type': 'ListItem',
+          position: 3,
+          name: archiveAlbum.title,
+          item: archiveUrl
+        }
+      ]
+    }
+  ]
+};
+
+export const musicArchiveStructuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'CollectionPage',
+      '@id': `${musicArchiveUrl}#collection`,
+      name: musicArchive.title,
+      url: musicArchiveUrl,
+      description: musicArchive.summary,
+      inLanguage: 'ko-KR',
+      about: { '@id': `${siteUrl}/#music-group` },
+      isPartOf: { '@id': `${siteUrl}/#website` },
+      publisher: { '@id': `${siteUrl}/#organization` },
+      mainEntity: {
+        '@type': 'ItemList',
+        numberOfItems: musicArchive.releases.length + musicArchive.videos.length,
+        itemListElement: [
+          ...musicArchive.releases.map((release, index) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            name: release.title,
+            url: `${siteUrl}${release.href}`
+          })),
+          ...musicArchive.videos.map((video, index) => ({
+            '@type': 'ListItem',
+            position: musicArchive.releases.length + index + 1,
+            name: video.title,
+            url: video.href
+          }))
+        ]
+      }
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${musicArchiveUrl}#breadcrumb`,
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Home',
+          item: `${siteUrl}/`
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'Music Archive',
+          item: musicArchiveUrl
+        }
+      ]
+    }
+  ]
+};
+
+export const novelStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'CreativeWorkSeries',
+  '@id': `${novelUrl}#series`,
+  name: novelProject.title,
+  alternateName: novelProject.englishTitle,
+  url: novelUrl,
+  image: novelCoverUrl,
+  description: novelProject.summary,
+  genre: novelProject.genre,
+  inLanguage: 'ko-KR',
+  author: {
+    '@type': 'Organization',
+    name: novelProject.author,
+    url: `${siteUrl}/`
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: novelProject.publisher,
+    url: `${siteUrl}/`
+  },
+  hasPart: publishedEpisodeParts
+};
+
+export const episodeStructuredData = createEpisodeStructuredData(novelEpisodes[0]);

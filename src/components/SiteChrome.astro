@@ -1,5 +1,5 @@
 ---
-import { artistLinks, menuItems } from '../data/siteContent.js';
+import { menuItems } from '../data/siteContent.js';
 
 const { active = 'home' } = Astro.props;
 const starCount = 28;
@@ -16,7 +16,7 @@ const starCount = 28;
   ))}
 </div>
 
-<p class="mobile-vertical-mark" aria-hidden="true">ANIME OST STUDIO</p>
+<p class="mobile-vertical-mark" aria-hidden="true">SUNOFOX</p>
 
 <header class="site-header" aria-label="SunoFox header">
   <a class:list={['site-logo', active === 'home' && 'is-current']} href="/" aria-label="SunoFox home">
@@ -48,13 +48,6 @@ const starCount = 28;
         </a>
       ))}
     </nav>
-
-    <div class="overlay-socials" aria-label="SunoFox external links">
-      <a href={artistLinks.youtube} target="_blank" rel="noopener noreferrer">YOUTUBE</a>
-      <a href={artistLinks.spotify} target="_blank" rel="noopener noreferrer">SPOTIFY</a>
-      <a href={artistLinks.melon} target="_blank" rel="noopener noreferrer">MELON</a>
-      <a href={artistLinks.soundcloud} target="_blank" rel="noopener noreferrer">SOUNDCLOUD</a>
-    </div>
   </div>
 </aside>
 
@@ -122,7 +115,7 @@ const starCount = 28;
     });
 
     const revealItems = document.querySelectorAll('.reveal');
-    document.querySelectorAll('.category-hero h1, .section-heading h2, .profile-copy h2, .coming-soon-panel h2').forEach((el) => {
+    document.querySelectorAll('.category-hero h1, .profile-copy h2').forEach((el) => {
       const label = el.textContent.trim();
       if (label) {
         el.classList.add('glitch-heading');
@@ -134,17 +127,29 @@ const starCount = 28;
       el.style.setProperty('--reveal-delay', `${Math.min(index % 6, 5) * 70}ms`);
     });
 
+    const showRevealItem = (el) => {
+      el.classList.add('is-visible');
+    };
+
+    const showAllRevealItems = () => {
+      revealItems.forEach(showRevealItem);
+    };
+
     if ('IntersectionObserver' in window) {
       document.body.classList.add('reveal-ready');
       const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) entry.target.classList.add('is-visible');
+          if (entry.isIntersecting) {
+            showRevealItem(entry.target);
+            revealObserver.unobserve(entry.target);
+          }
         });
       }, { threshold: 0.12 });
 
       revealItems.forEach((el) => revealObserver.observe(el));
+      window.setTimeout(showAllRevealItems, 1800);
     } else {
-      revealItems.forEach((el) => el.classList.add('is-visible'));
+      showAllRevealItems();
     }
 
     if (supportsFinePointer && allowsMotion && cursorRoot && cursorDot && cursorRing) {
@@ -176,7 +181,7 @@ const starCount = 28;
       window.addEventListener('pointerenter', () => cursorRoot.classList.add('is-visible'));
 
       document.addEventListener('pointerover', (event) => {
-        const target = event.target.closest('a, button, input, textarea, .release-card, .media-card, .series-card, .category-card');
+        const target = event.target.closest('a, button, input, textarea');
         document.body.classList.toggle('cursor-hover', Boolean(target));
       });
 

@@ -1342,9 +1342,12 @@
 
   function setupPwaInstallPrompt() {
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sf-studio-sw.js').catch((error) => {
-        console.warn('[SF Studio] service worker registration failed', error);
-      });
+      navigator.serviceWorker
+        .register('/sf-studio-sw.js?v=20260614-music-to-novel', { updateViaCache: 'none' })
+        .then((registration) => registration.update().catch(() => {}))
+        .catch((error) => {
+          console.warn('[SF Studio] service worker registration failed', error);
+        });
     }
     els.installApp?.addEventListener('click', async () => {
       if (!deferredPwaInstallPrompt) return;

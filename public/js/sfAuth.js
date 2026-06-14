@@ -2,9 +2,6 @@
   const page = document.body?.dataset.authPage;
   const message = document.getElementById('sf-auth-message');
   let cachedUsers = [];
-  let cachedPosts = [];
-  let cachedComments = [];
-  let cachedReports = [];
   let adminToastTimer = 0;
   let adminSyncState = {};
 
@@ -301,7 +298,7 @@
       }
       if (resultDetail) {
         resultDetail.textContent = isApproved
-          ? '로그인 후 MY ACCOUNT에서 팬게시판에 표시될 닉네임을 바꿀 수 있습니다.'
+          ? '로그인 후 MY ACCOUNT에서 표시 닉네임을 바꿀 수 있습니다.'
           : '계정 이용이 제한된 경우 사이트 주인에게 문의해 주세요.';
       }
       resultPanel.dataset.status = isApproved ? 'approved' : 'pending';
@@ -567,9 +564,9 @@
       greeting,
       '',
       'SunoFox 공식 사이트 회원가입이 완료되었습니다.',
-      '로그인 후 팬게시판과 계정 정보 수정을 이용할 수 있습니다.',
+      '로그인 후 계정 정보 확인과 승인된 스튜디오 입장 안내를 이용할 수 있습니다.',
       '',
-      '아래 정보로 로그인하시면 팬게시판에 글과 댓글을 남길 수 있습니다. SF Studio 작업실은 사이트 소유자 전용입니다.',
+      '아래 정보로 로그인하시면 웹소설 업데이트와 계정 상태를 확인할 수 있습니다. SF Studio 작업실은 사이트 소유자 승인 기준으로 운영됩니다.',
       '',
       '로그인 URL: https://sunofox.com/login',
       `이메일: ${email}`,
@@ -578,7 +575,7 @@
       '문의 방법: 로그인이나 계정 이용에 문제가 있으면 이 안내를 받은 채널로 회신해 주세요.',
       '',
       '계정은 본인만 사용해 주세요.',
-      '팬게시판에서는 듣고 싶은 분위기, 장르 아이디어, 감상 후기를 자유롭게 남겨 주세요.',
+      '작품과 OST 관련 문의는 이 안내를 받은 채널로 회신해 주세요.',
       '남겨 주신 이야기는 SunoFox 음악과 세계관을 확장하는 참고 의견으로 살펴보겠습니다.',
       '',
       '앞으로 SunoFox 음악과 이야기로 자주 뵙겠습니다.',
@@ -731,151 +728,6 @@
     }, 1600);
   }
 
-  function updateCommunityPostFilterSummary(count) {
-    const query = document.getElementById('sf-admin-community-query')?.value.trim() || '';
-    updateAdminResultSummary('sf-admin-community-filter-summary', count, [
-      selectedOptionText('sf-admin-community-board') || '전체 게시판',
-      selectedOptionText('sf-admin-community-status') || '삭제 제외 전체',
-      query ? `검색어 "${query}"` : ''
-    ]);
-  }
-
-  function updateCommunityCommentFilterSummary(count) {
-    const query = document.getElementById('sf-admin-comment-query')?.value.trim() || '';
-    updateAdminResultSummary('sf-admin-comment-filter-summary', count, [
-      selectedOptionText('sf-admin-comment-status') || '삭제 제외 전체',
-      query ? `검색어 "${query}"` : ''
-    ]);
-  }
-
-  function updateCommunityReportFilterSummary(count) {
-    const query = document.getElementById('sf-admin-report-query')?.value.trim() || '';
-    updateAdminResultSummary('sf-admin-report-filter-summary', count, [
-      selectedOptionText('sf-admin-report-status') || '기각 제외 전체',
-      selectedOptionText('sf-admin-report-target') || '전체 대상',
-      query ? `검색어 "${query}"` : ''
-    ]);
-  }
-
-  function countBy(items, predicate) {
-    return items.filter(predicate).length;
-  }
-
-  function adminMetricCard(label, value, copy, tone = '') {
-    return `
-      <span class="sf-admin-metric-card ${tone ? `is-${escapeHtml(tone)}` : ''}">
-        <small>${escapeHtml(label)}</small>
-        <strong>${escapeHtml(value)}</strong>
-        <em>${escapeHtml(copy)}</em>
-      </span>
-    `;
-  }
-
-  function adminModerationOverview(type, items) {
-    const list = Array.isArray(items) ? items : [];
-    let title = '운영 요약';
-    let copy = '목록을 검토하고 필요한 항목만 처리해 주세요.';
-    let metrics = '';
-
-    if (type === 'posts') {
-      const hidden = countBy(list, (post) => post.status === 'hidden');
-      const deleted = countBy(list, (post) => post.status === 'deleted');
-      const pinned = countBy(list, (post) => Boolean(post.pinned));
-      const reviewCount = hidden + deleted;
-      title = reviewCount ? `확인 필요한 게시글 ${reviewCount}건` : '게시글 상태가 안정적입니다';
-      copy = reviewCount
-        ? '숨김/삭제 글은 원문과 작성자를 확인하고, 공개 복구가 필요하면 상세를 먼저 열어 주세요.'
-        : '공개 글과 고정 글 위주로 톤을 확인하면 됩니다.';
-      metrics = [
-        adminMetricCard('PUBLIC', countBy(list, (post) => post.status === 'published'), '팬 목록 노출'),
-        adminMetricCard('HIDDEN', hidden, '숨김 처리됨', hidden ? 'warn' : ''),
-        adminMetricCard('PINNED', pinned, '상단 고정'),
-        adminMetricCard('DELETED', deleted, '삭제 상태', deleted ? 'danger' : '')
-      ].join('');
-    } else if (type === 'comments') {
-      const hidden = countBy(list, (comment) => comment.status === 'hidden');
-      const deleted = countBy(list, (comment) => comment.status === 'deleted');
-      const publicCount = countBy(list, (comment) => comment.status === 'published');
-      title = hidden || deleted ? `확인 필요한 댓글 ${hidden + deleted}건` : '댓글 상태가 안정적입니다';
-      copy = hidden || deleted
-        ? '숨김/삭제 댓글은 연결된 게시글 맥락을 확인한 뒤 반복 패턴 여부를 판단해 주세요.'
-        : '공개 댓글의 표현 수위와 게시글 맥락만 빠르게 확인하면 됩니다.';
-      metrics = [
-        adminMetricCard('PUBLIC', publicCount, '공개 댓글'),
-        adminMetricCard('HIDDEN', hidden, '숨김 처리됨', hidden ? 'warn' : ''),
-        adminMetricCard('DELETED', deleted, '삭제 상태', deleted ? 'danger' : '')
-      ].join('');
-    } else if (type === 'reports') {
-      const open = countBy(list, (report) => report.status === 'open');
-      const reviewing = countBy(list, (report) => report.status === 'reviewing');
-      const resolved = countBy(list, (report) => report.status === 'resolved');
-      const dismissed = countBy(list, (report) => report.status === 'dismissed');
-      const active = open + reviewing;
-      title = active ? `처리 대기 신고 ${active}건` : '열린 신고가 없습니다';
-      copy = active
-        ? '대기/검토 신고는 대상 원문을 열어 확인하고 처리 또는 기각으로 마무리해 주세요.'
-        : '처리 완료/기각 내역은 반복 신고 패턴이 있는지 필요할 때만 확인하면 됩니다.';
-      metrics = [
-        adminMetricCard('OPEN', open, '신규 신고', open ? 'danger' : ''),
-        adminMetricCard('REVIEWING', reviewing, '검토 중', reviewing ? 'warn' : ''),
-        adminMetricCard('RESOLVED', resolved, '처리 완료'),
-        adminMetricCard('DISMISSED', dismissed, '기각')
-      ].join('');
-    }
-
-    return `
-      <div class="sf-admin-moderation-overview" aria-label="운영 요약">
-        <div class="sf-admin-moderation-overview-copy">
-          <span>OPERATIONS</span>
-          <strong>${escapeHtml(title)}</strong>
-          <p>${escapeHtml(copy)}</p>
-        </div>
-        <div class="sf-admin-metric-grid">
-          ${metrics}
-        </div>
-      </div>
-    `;
-  }
-
-  function getCommunityPostQuery() {
-    const params = new URLSearchParams({
-      admin: '1',
-      limit: '120'
-    });
-    const board = document.getElementById('sf-admin-community-board')?.value || 'all';
-    const status = document.getElementById('sf-admin-community-status')?.value || '';
-    const query = document.getElementById('sf-admin-community-query')?.value.trim() || '';
-    params.set('board', board);
-    if (status) params.set('status', status);
-    if (query) params.set('q', query);
-    return params.toString();
-  }
-
-  function getCommunityCommentQuery() {
-    const params = new URLSearchParams({
-      admin: '1',
-      limit: '120'
-    });
-    const status = document.getElementById('sf-admin-comment-status')?.value || '';
-    const query = document.getElementById('sf-admin-comment-query')?.value.trim() || '';
-    if (status) params.set('status', status);
-    if (query) params.set('q', query);
-    return params.toString();
-  }
-
-  function getCommunityReportQuery() {
-    const params = new URLSearchParams({
-      limit: '120'
-    });
-    const status = document.getElementById('sf-admin-report-status')?.value || '';
-    const targetType = document.getElementById('sf-admin-report-target')?.value || '';
-    const query = document.getElementById('sf-admin-report-query')?.value.trim() || '';
-    if (status) params.set('status', status);
-    if (targetType) params.set('targetType', targetType);
-    if (query) params.set('q', query);
-    return params.toString();
-  }
-
   function renderUsers(users, adminKey) {
     const root = document.getElementById('sf-admin-users');
     if (!root) return;
@@ -888,7 +740,7 @@
         '새 팬이 가입하면 이 영역에서 활성, 대기, 제한 상태와 로그인 안내문을 관리할 수 있습니다.',
         [
           { href: '/signup', label: '회원가입 화면 확인' },
-          { href: '/community/', label: '커뮤니티 확인' }
+          { href: '/novels/', label: '웹소설 화면 확인' }
         ]
       );
       return;
@@ -1246,7 +1098,7 @@
   }
 
   function refreshAdminAlerts() {
-    renderAlerts(cachedUsers, cachedReports);
+    renderAlerts(cachedUsers);
   }
 
   function updateCachedUserForAlert(email, updates = {}) {
@@ -1260,21 +1112,10 @@
     refreshAdminAlerts();
   }
 
-  function updateCachedReportForAlert(id, updates = {}) {
-    const targetId = String(id || '').trim();
-    if (!targetId) return;
-    cachedReports = cachedReports.map((report) => {
-      if (String(report.id || '') !== targetId) return report;
-      return { ...report, ...updates };
-    });
-    refreshAdminAlerts();
-  }
-
-  function renderAlerts(users = cachedUsers, reports = cachedReports) {
+  function renderAlerts(users = cachedUsers) {
     const root = document.getElementById('sf-admin-alerts');
     if (!root) return;
     const pending = users.filter((user) => user.status === 'pending');
-    const activeReports = reports.filter((report) => ['open', 'reviewing'].includes(report.status));
     const alertItems = [];
 
     if (pending.length) {
@@ -1287,25 +1128,8 @@
       `);
     }
 
-    if (activeReports.length) {
-      const openCount = activeReports.filter((report) => report.status === 'open').length;
-      const reviewingCount = activeReports.filter((report) => report.status === 'reviewing').length;
-      const targets = activeReports.slice(0, 3).map((report) => {
-        const target = report.targetType === 'comment' ? '댓글' : '게시글';
-        const title = report.postTitle || report.reason || '신고 대상';
-        return `${target}: ${title}`;
-      });
-      alertItems.push(`
-        <div class="sf-admin-alert is-report">
-          <strong>처리 대기 신고 ${activeReports.length}건</strong>
-          <span>신규 ${openCount}건 · 검토 ${reviewingCount}건 · ${targets.map(escapeHtml).join(', ')}${activeReports.length > 3 ? ' 외' : ''}</span>
-          <a href="#admin-reports">신고 관리로 이동</a>
-        </div>
-      `);
-    }
-
     if (!alertItems.length) {
-      root.innerHTML = '<p class="sf-admin-alert is-clear">새 회원 계정과 처리 대기 신고가 없습니다.</p>';
+      root.innerHTML = '<p class="sf-admin-alert is-clear">새 회원 계정 알림이 없습니다.</p>';
       return;
     }
     root.innerHTML = alertItems.join('');
@@ -1318,343 +1142,6 @@
     if (pendingCount) pendingCount.textContent = String(users.filter((user) => user.status === 'pending').length);
     if (approvedCount) approvedCount.textContent = String(users.filter((user) => user.status === 'approved').length);
     if (rejectedCount) rejectedCount.textContent = String(users.filter((user) => user.status === 'rejected').length);
-  }
-
-  function renderCommunityStats(posts) {
-    const postCount = document.getElementById('sf-admin-post-count');
-    if (postCount) postCount.textContent = String(posts.filter((post) => post.status === 'published').length);
-  }
-
-  function postActionLabel(action) {
-    if (action === 'publish') return '공개';
-    if (action === 'hide') return '숨김';
-    if (action === 'pin') return '고정';
-    if (action === 'unpin') return '고정 해제';
-    if (action === 'delete') return '삭제';
-    return action || '처리';
-  }
-
-  function postDetailLink(postId) {
-    return postId ? `/community/post/?id=${encodeURIComponent(postId)}` : '/community/';
-  }
-
-  function postActionNeedsConfirm(action) {
-    return ['hide', 'delete', 'publish'].includes(action);
-  }
-
-  function postActionConfirmMessage(action, postTitle) {
-    const title = postTitle || '선택한 게시글';
-    if (action === 'delete') {
-      return `"${title}" 게시글을 삭제 상태로 변경합니다.\n\n삭제 후 일반 팬 목록에는 보이지 않습니다. 원문과 댓글 수를 확인했다면 계속 진행해 주세요.`;
-    }
-    if (action === 'hide') {
-      return `"${title}" 게시글을 숨김 처리합니다.\n\n일반 팬 목록에서 내려가며, 관리자 화면에서는 다시 공개 처리할 수 있습니다.`;
-    }
-    if (action === 'publish') {
-      return `"${title}" 게시글을 다시 공개합니다.\n\n팬게시판에 노출해도 괜찮은 내용인지 확인했다면 계속 진행해 주세요.`;
-    }
-    return `"${title}" 게시글을 ${postActionLabel(action)} 처리합니다.`;
-  }
-
-  function postNextAction(post) {
-    if (post?.status === 'deleted') return '삭제된 게시글입니다. 필요 시 원문 확인 후 추가 조치가 없는지 점검해 주세요.';
-    if (post?.status === 'hidden') return '숨김 상태입니다. 공개 복구가 필요한 글인지 내용과 작성자를 다시 확인해 주세요.';
-    if (post?.pinned) return '상단 고정 게시글입니다. 공지성 유지가 필요한지 주기적으로 확인해 주세요.';
-    return '공개 상태입니다. 톤이 맞지 않으면 숨김 처리하고, 중요한 글이면 고정할 수 있습니다.';
-  }
-
-  function commentNextAction(comment) {
-    if (comment?.status === 'deleted') return '삭제된 댓글입니다. 같은 작성자의 반복 패턴이 있는지 확인해 주세요.';
-    if (comment?.status === 'hidden') return '숨김 상태입니다. 맥락 확인 후 공개 복구 또는 삭제를 결정해 주세요.';
-    return '공개 댓글입니다. 연결된 게시글 맥락과 표현 수위를 함께 확인해 주세요.';
-  }
-
-  function reportNextAction(report) {
-    if (report?.status === 'resolved') return '처리 완료 신고입니다. 대상 글/댓글 상태가 의도대로 정리됐는지 확인해 주세요.';
-    if (report?.status === 'dismissed') return '기각된 신고입니다. 같은 사유가 반복 접수되는지 추적해 주세요.';
-    if (report?.status === 'reviewing') return '검토 중 신고입니다. 대상 원문을 열어보고 처리 또는 기각으로 마무리해 주세요.';
-    return '새 신고입니다. 신고 사유와 대상 원문을 확인한 뒤 검토 상태로 전환해 주세요.';
-  }
-
-  function renderCommunityPosts(posts, adminKey) {
-    const root = document.getElementById('sf-admin-community-posts');
-    if (!root) return;
-    updateCommunityPostFilterSummary(posts.length);
-    if (!posts.length) {
-      root.innerHTML = adminEmptyState(
-        '관리할 게시글이 없습니다.',
-        '팬게시판에 새 글이 올라오면 공개, 숨김, 고정, 삭제 처리를 이 영역에서 바로 관리할 수 있습니다.',
-        [
-          { href: '/community/', label: '게시판 열기' },
-          { href: '/signup', label: '회원가입 화면' }
-        ],
-        'NO POSTS'
-      );
-      return;
-    }
-
-    root.innerHTML = `
-      ${adminModerationOverview('posts', posts)}
-      <div class="sf-admin-list-stack">
-        ${posts.map((post) => `
-      <article class="sf-post-admin-row" data-post-id="${escapeHtml(post.id)}" data-status="${escapeHtml(post.status || '')}">
-        <div class="sf-post-admin-main">
-          <div class="sf-post-admin-meta">
-            <mark data-status="${escapeHtml(post.status)}">${postStatusLabel(post.status)}</mark>
-            ${post.pinned ? '<mark data-status="pinned">고정</mark>' : ''}
-            <span>${escapeHtml(post.boardName || post.board || '게시판')}</span>
-            <span>${escapeHtml(formatDate(post.createdAt))}</span>
-            <span class="sf-admin-author">${escapeHtml(post.authorName || 'Fan')}</span>
-            <span>댓글 ${Number(post.commentCount || 0)}</span>
-            <span>좋아요 ${Number(post.likeCount || 0)}</span>
-          </div>
-          <strong>${escapeHtml(post.title)}</strong>
-          <p>${escapeHtml(compactText(post.body, 180))}</p>
-          <div class="sf-admin-review-strip" aria-label="게시글 처리 전 확인">
-            <span>CHECK</span>
-            <small>상세 열기에서 원문과 댓글 수를 확인한 뒤 숨김/삭제를 처리해 주세요.</small>
-          </div>
-          <p class="sf-admin-next-action">${escapeHtml(postNextAction(post))}</p>
-          <small>${escapeHtml(post.authorEmail || '')}</small>
-        </div>
-        <div class="sf-post-admin-actions" aria-label="게시글 관리 액션">
-          <a class="sf-admin-detail-link" href="${escapeHtml(postDetailLink(post.id))}" target="_blank" rel="noopener noreferrer">상세 열기</a>
-          <button class="${post.status === 'published' ? 'is-warning' : 'is-safe'}" type="button" data-post-action="${post.status === 'published' ? 'hide' : 'publish'}" aria-label="${escapeHtml(post.title)} ${post.status === 'published' ? '숨김 처리' : '공개 처리'}">${post.status === 'published' ? '숨김' : '공개'}</button>
-          <button class="is-neutral" type="button" data-post-action="${post.pinned ? 'unpin' : 'pin'}" aria-label="${escapeHtml(post.title)} ${post.pinned ? '고정 해제' : '고정'}">${post.pinned ? '고정 해제' : '고정'}</button>
-          <button class="is-danger" type="button" data-post-action="delete" aria-label="${escapeHtml(post.title)} 삭제">삭제</button>
-        </div>
-      </article>
-    `).join('')}
-      </div>
-    `;
-
-    root.querySelectorAll('button[data-post-action]').forEach((button) => {
-      button.addEventListener('click', async () => {
-        const row = button.closest('[data-post-id]');
-        if (!row) return;
-        const title = row.querySelector('.sf-post-admin-main > strong')?.textContent?.trim() || '선택한 게시글';
-        const action = button.dataset.postAction;
-        if (postActionNeedsConfirm(action) && !window.confirm(postActionConfirmMessage(action, title))) {
-          return;
-        }
-        const restoreButton = setAdminActionBusy(button, `${postActionLabel(action)} 중...`);
-        const restoreScroll = captureAdminScrollPosition(row);
-        setMessage(`${title}: ${postActionLabel(action)} 처리를 진행합니다.`, 'info');
-        try {
-          await requestJson('/api/community/posts', {
-            method: 'PATCH',
-            headers: adminHeaders(adminKey),
-            body: JSON.stringify({
-              id: row.dataset.postId,
-              action
-            })
-          });
-          setMessage(`${title}: ${postActionLabel(action)} 처리가 완료되었습니다.`, 'success');
-          showAdminToast(`게시글을 ${postActionLabel(action)} 처리했습니다.`, 'success', 'POST UPDATED');
-          refreshAdminAlerts();
-          await loadAdminPostsSection(adminKey, adminHeaders(adminKey));
-          appendAdminResultFeedback('sf-admin-community-filter-summary', `방금 ${postActionLabel(action)} 처리됨`);
-          restoreScroll();
-        } catch (error) {
-          setMessage(error.message, 'error');
-          showAdminToast(error.message, 'error');
-        } finally {
-          restoreButton();
-        }
-      });
-    });
-  }
-
-  function renderCommunityComments(comments, adminKey) {
-    const root = document.getElementById('sf-admin-community-comments');
-    if (!root) return;
-    updateCommunityCommentFilterSummary(comments.length);
-    if (!comments.length) {
-      root.innerHTML = adminEmptyState(
-        '관리할 댓글이 없습니다.',
-        '새 댓글이 등록되면 댓글 원문, 작성자, 연결된 게시글을 확인하고 공개/숨김/삭제를 처리할 수 있습니다.',
-        [
-          { href: '/community/', label: '커뮤니티 확인' }
-        ],
-        'NO COMMENTS'
-      );
-      return;
-    }
-
-    root.innerHTML = `
-      ${adminModerationOverview('comments', comments)}
-      <div class="sf-admin-list-stack">
-        ${comments.map((comment) => {
-      const postLink = postDetailLink(comment.postId || comment.post_id || '');
-      return `
-      <article class="sf-comment-admin-row" data-comment-id="${escapeHtml(comment.id)}" data-status="${escapeHtml(comment.status || '')}">
-        <div class="sf-post-admin-main">
-          <div class="sf-post-admin-meta">
-            <mark data-status="${escapeHtml(comment.status)}">${postStatusLabel(comment.status)}</mark>
-            <span>${escapeHtml(formatDate(comment.createdAt))}</span>
-            <span class="sf-admin-author">${escapeHtml(comment.authorName || 'Fan')}</span>
-            <span>${escapeHtml(comment.postTitle || '게시글')}</span>
-          </div>
-          <strong>댓글 원문</strong>
-          <p>${escapeHtml(compactText(comment.body, 180))}</p>
-          <p class="sf-admin-next-action">${escapeHtml(commentNextAction(comment))}</p>
-          <small>${escapeHtml(comment.authorEmail || '')}</small>
-        </div>
-        <div class="sf-post-admin-actions" aria-label="댓글 관리 액션">
-          ${comment.postId || comment.post_id ? `<a class="sf-admin-detail-link" href="${escapeHtml(postLink)}" target="_blank" rel="noopener noreferrer">게시글 열기</a>` : ''}
-          <button class="${comment.status === 'published' ? 'is-warning' : 'is-safe'}" type="button" data-comment-action="${comment.status === 'published' ? 'hide' : 'publish'}" aria-label="댓글 ${comment.status === 'published' ? '숨김 처리' : '공개 처리'}">${comment.status === 'published' ? '숨김' : '공개'}</button>
-          <button class="is-danger" type="button" data-comment-action="delete" aria-label="댓글 삭제">삭제</button>
-        </div>
-      </article>
-    `;
-    }).join('')}
-      </div>
-    `;
-
-    root.querySelectorAll('button[data-comment-action]').forEach((button) => {
-      button.addEventListener('click', async () => {
-        const row = button.closest('[data-comment-id]');
-        if (!row) return;
-        const action = button.dataset.commentAction;
-        const restoreButton = setAdminActionBusy(button, `${postActionLabel(action)} 중...`);
-        const restoreScroll = captureAdminScrollPosition(row);
-        setMessage(`댓글 ${postActionLabel(action)} 처리를 진행합니다.`, 'info');
-        try {
-          await requestJson('/api/community/comments', {
-            method: 'PATCH',
-            headers: adminHeaders(adminKey),
-            body: JSON.stringify({
-              id: row.dataset.commentId,
-              action
-            })
-          });
-          showAdminToast(`댓글을 ${postActionLabel(action)} 처리했습니다.`, 'success', 'COMMENT UPDATED');
-          refreshAdminAlerts();
-          await loadAdminCommentsSection(adminKey, adminHeaders(adminKey));
-          appendAdminResultFeedback('sf-admin-comment-filter-summary', `방금 ${postActionLabel(action)} 처리됨`);
-          restoreScroll();
-        } catch (error) {
-          setMessage(error.message, 'error');
-          showAdminToast(error.message, 'error');
-        } finally {
-          restoreButton();
-        }
-      });
-    });
-  }
-
-  function renderCommunityReports(reports, adminKey) {
-    const root = document.getElementById('sf-admin-community-reports');
-    if (!root) return;
-    updateCommunityReportFilterSummary(reports.length);
-    if (!reports.length) {
-      root.innerHTML = adminEmptyState(
-        '처리할 신고가 없습니다.',
-        '신고가 접수되면 대상 글/댓글, 신고 사유, 상세 내용을 확인하고 검토/처리/기각 상태로 관리할 수 있습니다.',
-        [
-          { href: '/community/', label: '게시판 보기' }
-        ],
-        'NO REPORTS'
-      );
-      return;
-    }
-
-    root.innerHTML = `
-      ${adminModerationOverview('reports', reports)}
-      <div class="sf-admin-list-stack">
-        ${reports.map((report) => {
-      const targetTitle = report.targetType === 'comment'
-        ? (report.postTitle ? `댓글: ${report.postTitle}` : '댓글')
-        : (report.postTitle || '게시글');
-      const targetPostId = report.postId || (report.targetType === 'post' ? report.targetId : '');
-      const targetLink = targetPostId
-        ? `/community/post/?id=${encodeURIComponent(targetPostId)}`
-        : '';
-      const targetBody = report.targetType === 'comment'
-        ? report.commentBody
-        : report.postBody;
-      return `
-        <article class="sf-report-admin-row" data-report-id="${escapeHtml(report.id)}" data-status="${escapeHtml(report.status || '')}">
-          <div class="sf-post-admin-main">
-            <div class="sf-post-admin-meta">
-              <mark data-status="${escapeHtml(report.status)}">${reportStatusLabel(report.status)}</mark>
-              <span>${targetTypeLabel(report.targetType)}</span>
-              <span>${escapeHtml(formatDate(report.createdAt))}</span>
-              <span>${escapeHtml(report.reporterName || 'Fan')}</span>
-              <span>${escapeHtml(targetTitle)}</span>
-            </div>
-            <strong>${escapeHtml(report.reason)}</strong>
-            ${targetBody ? `<p>${escapeHtml(compactText(targetBody, 180))}</p>` : ''}
-            <p class="sf-admin-next-action">${escapeHtml(reportNextAction(report))}</p>
-            <small>${escapeHtml(report.reporterEmail || '')}</small>
-            <details class="sf-report-detail">
-              <summary>신고 상세 확인</summary>
-              <dl>
-                <div>
-                  <dt>신고 대상</dt>
-                  <dd>${escapeHtml(targetTypeLabel(report.targetType))}</dd>
-                </div>
-                <div>
-                  <dt>신고 사유</dt>
-                  <dd>${escapeHtml(report.reason || '사유 없음')}</dd>
-                </div>
-                <div>
-                  <dt>상세 내용</dt>
-                  <dd>${escapeHtml(report.detail || '추가 설명 없음')}</dd>
-                </div>
-                <div>
-                  <dt>원문 요약</dt>
-                  <dd>${escapeHtml(targetBody || '원문을 확인할 수 없습니다.')}</dd>
-                </div>
-                <div>
-                  <dt>신고자</dt>
-                  <dd>${escapeHtml(report.reporterEmail || report.reporterName || 'Fan')}</dd>
-                </div>
-              </dl>
-              ${targetLink ? `<a class="sf-report-link" href="${escapeHtml(targetLink)}" target="_blank" rel="noopener noreferrer">게시글 열기</a>` : ''}
-            </details>
-          </div>
-          <div class="sf-post-admin-actions" aria-label="신고 관리 액션">
-            <button class="is-warning" type="button" data-report-status="reviewing" aria-label="신고 검토 상태로 변경">검토</button>
-            <button class="is-safe" type="button" data-report-status="resolved" aria-label="신고 처리 상태로 변경">처리</button>
-            <button class="is-neutral" type="button" data-report-status="dismissed" aria-label="신고 기각 상태로 변경">기각</button>
-          </div>
-        </article>
-      `;
-    }).join('')}
-      </div>
-    `;
-
-    root.querySelectorAll('button[data-report-status]').forEach((button) => {
-      button.addEventListener('click', async () => {
-        const row = button.closest('[data-report-id]');
-        if (!row) return;
-        const status = button.dataset.reportStatus;
-        const restoreButton = setAdminActionBusy(button, `${reportStatusLabel(status)} 중...`);
-        const restoreScroll = captureAdminScrollPosition(row);
-        setMessage(`신고 상태를 ${reportStatusLabel(status)}로 변경합니다.`, 'info');
-        try {
-          const response = await requestJson('/api/community/reports', {
-            method: 'PATCH',
-            headers: adminHeaders(adminKey),
-            body: JSON.stringify({
-              id: row.dataset.reportId,
-              status
-            })
-          });
-          updateCachedReportForAlert(row.dataset.reportId, response.report || { status });
-          showAdminToast(`신고 상태를 ${reportStatusLabel(status)}로 변경했습니다.`, 'success', 'REPORT UPDATED');
-          await loadAdminReportsSection(adminKey, adminHeaders(adminKey));
-          appendAdminResultFeedback('sf-admin-report-filter-summary', `방금 ${reportStatusLabel(status)} 상태로 변경됨`);
-          restoreScroll();
-        } catch (error) {
-          setMessage(error.message, 'error');
-          showAdminToast(error.message, 'error');
-        } finally {
-          restoreButton();
-        }
-      });
-    });
   }
 
   async function loadAdminUsersSection(adminKey, headers) {
@@ -1692,94 +1179,6 @@
         [{ href: '/login?next=%2Fadmin', label: '다시 로그인' }]
       );
       return { ok: false, label: '회원', message: error.message };
-    }
-  }
-
-  async function loadAdminPostsSection(adminKey, headers) {
-    setAdminSummaryText('sf-admin-post-count', '...');
-    setAdminSummaryText('sf-admin-community-filter-summary', '게시글 데이터를 불러오는 중입니다.');
-    renderAdminLoading(
-      'sf-admin-community-posts',
-      '게시글을 불러오는 중입니다.',
-      '게시글 데이터가 도착하면 댓글과 신고를 기다리지 않고 바로 표시합니다.',
-      'POSTS'
-    );
-    try {
-      const postsData = await requestJson(`/api/community/posts?${getCommunityPostQuery()}`, { method: 'GET', headers });
-      const posts = postsData.posts || [];
-      cachedPosts = posts;
-      renderCommunityStats(posts);
-      renderCommunityPosts(posts, adminKey);
-      updateAdminSyncStatus('posts');
-      return { ok: true, label: '게시글', count: posts.length };
-    } catch (error) {
-      setAdminSummaryText('sf-admin-post-count', '-');
-      setAdminSummaryText('sf-admin-community-filter-summary', '게시글 데이터를 불러오지 못했습니다.');
-      updateAdminSyncStatus('posts', 'error');
-      renderAdminError(
-        'sf-admin-community-posts',
-        '게시글을 불러오지 못했습니다.',
-        error,
-        [{ href: '/community/', label: '게시판 열기' }]
-      );
-      return { ok: false, label: '게시글', message: error.message };
-    }
-  }
-
-  async function loadAdminCommentsSection(adminKey, headers) {
-    setAdminSummaryText('sf-admin-comment-filter-summary', '댓글 데이터를 불러오는 중입니다.');
-    renderAdminLoading(
-      'sf-admin-community-comments',
-      '댓글을 불러오는 중입니다.',
-      '댓글 목록은 게시글, 신고와 별도로 준비되는 즉시 표시됩니다.',
-      'COMMENTS'
-    );
-    try {
-      const commentsData = await requestJson(`/api/community/comments?${getCommunityCommentQuery()}`, { method: 'GET', headers });
-      const comments = commentsData.comments || [];
-      cachedComments = comments;
-      renderCommunityComments(comments, adminKey);
-      updateAdminSyncStatus('comments');
-      return { ok: true, label: '댓글', count: comments.length };
-    } catch (error) {
-      setAdminSummaryText('sf-admin-comment-filter-summary', '댓글 데이터를 불러오지 못했습니다.');
-      updateAdminSyncStatus('comments', 'error');
-      renderAdminError(
-        'sf-admin-community-comments',
-        '댓글을 불러오지 못했습니다.',
-        error,
-        [{ href: '/community/', label: '커뮤니티 확인' }]
-      );
-      return { ok: false, label: '댓글', message: error.message };
-    }
-  }
-
-  async function loadAdminReportsSection(adminKey, headers) {
-    setAdminSummaryText('sf-admin-report-filter-summary', '신고 데이터를 불러오는 중입니다.');
-    renderAdminLoading(
-      'sf-admin-community-reports',
-      '신고를 불러오는 중입니다.',
-      '신고 데이터는 다른 섹션과 분리해서 준비되는 즉시 표시됩니다.',
-      'REPORTS'
-    );
-    try {
-      const reportsData = await requestJson(`/api/community/reports?${getCommunityReportQuery()}`, { method: 'GET', headers });
-      const reports = reportsData.reports || [];
-      cachedReports = reports;
-      refreshAdminAlerts();
-      renderCommunityReports(reports, adminKey);
-      updateAdminSyncStatus('reports');
-      return { ok: true, label: '신고', count: reports.length };
-    } catch (error) {
-      setAdminSummaryText('sf-admin-report-filter-summary', '신고 데이터를 불러오지 못했습니다.');
-      updateAdminSyncStatus('reports', 'error');
-      renderAdminError(
-        'sf-admin-community-reports',
-        '신고를 불러오지 못했습니다.',
-        error,
-        [{ href: '/community/', label: '게시판 보기' }]
-      );
-      return { ok: false, label: '신고', message: error.message };
     }
   }
 
@@ -1860,10 +1259,7 @@
     setMessage('관리 데이터를 섹션별로 불러오는 중입니다.', 'info');
     const headers = adminHeaders(adminKey);
     const results = await Promise.all([
-      loadAdminUsersSection(adminKey, headers),
-      loadAdminPostsSection(adminKey, headers),
-      loadAdminCommentsSection(adminKey, headers),
-      loadAdminReportsSection(adminKey, headers)
+      loadAdminUsersSection(adminKey, headers)
     ]);
     const failed = results.filter((result) => !result.ok);
     if (failed.length) {
@@ -1882,12 +1278,6 @@
     const userPendingOnly = document.getElementById('sf-admin-user-pending-only');
     const userSort = document.getElementById('sf-admin-user-sort');
     const userStatusTabs = document.querySelectorAll('[data-user-status-filter]');
-    const filterForm = document.getElementById('sf-admin-community-filter');
-    const filterReset = document.getElementById('sf-admin-community-reset');
-    const commentFilterForm = document.getElementById('sf-admin-comment-filter');
-    const commentFilterReset = document.getElementById('sf-admin-comment-reset');
-    const reportFilterForm = document.getElementById('sf-admin-report-filter');
-    const reportFilterReset = document.getElementById('sf-admin-report-reset');
     const input = document.getElementById('sf-admin-key');
     const getAdminKey = () => input?.value.trim() || '';
     const headers = () => adminHeaders(getAdminKey());
@@ -1898,28 +1288,6 @@
         setMessage(error.message, 'error');
       }
     };
-    const reloadPosts = async () => {
-      try {
-        await loadAdminPostsSection(getAdminKey(), headers());
-      } catch (error) {
-        setMessage(error.message, 'error');
-      }
-    };
-    const reloadComments = async () => {
-      try {
-        await loadAdminCommentsSection(getAdminKey(), headers());
-      } catch (error) {
-        setMessage(error.message, 'error');
-      }
-    };
-    const reloadReports = async () => {
-      try {
-        await loadAdminReportsSection(getAdminKey(), headers());
-      } catch (error) {
-        setMessage(error.message, 'error');
-      }
-    };
-
     form?.addEventListener('submit', async (event) => {
       event.preventDefault();
       try {
@@ -1981,9 +1349,6 @@
           const target = button.dataset.adminRefresh || '';
           if (target === 'oauth') await loadAdminOAuthStatus();
           else if (target === 'users') await reloadUsers();
-          else if (target === 'posts') await reloadPosts();
-          else if (target === 'comments') await reloadComments();
-          else if (target === 'reports') await reloadReports();
           else await loadDashboard(getAdminKey());
         } catch (error) {
           setMessage(error.message, 'error');
@@ -1991,49 +1356,6 @@
           button.disabled = false;
         }
       });
-    });
-
-    filterForm?.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      await reloadPosts();
-    });
-
-    filterReset?.addEventListener('click', async () => {
-      const boardInput = document.getElementById('sf-admin-community-board');
-      const statusInput = document.getElementById('sf-admin-community-status');
-      const queryInput = document.getElementById('sf-admin-community-query');
-      if (boardInput) boardInput.value = 'all';
-      if (statusInput) statusInput.value = '';
-      if (queryInput) queryInput.value = '';
-      await reloadPosts();
-    });
-
-    commentFilterForm?.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      await reloadComments();
-    });
-
-    commentFilterReset?.addEventListener('click', async () => {
-      const statusInput = document.getElementById('sf-admin-comment-status');
-      const queryInput = document.getElementById('sf-admin-comment-query');
-      if (statusInput) statusInput.value = '';
-      if (queryInput) queryInput.value = '';
-      await reloadComments();
-    });
-
-    reportFilterForm?.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      await reloadReports();
-    });
-
-    reportFilterReset?.addEventListener('click', async () => {
-      const statusInput = document.getElementById('sf-admin-report-status');
-      const targetInput = document.getElementById('sf-admin-report-target');
-      const queryInput = document.getElementById('sf-admin-report-query');
-      if (statusInput) statusInput.value = '';
-      if (targetInput) targetInput.value = '';
-      if (queryInput) queryInput.value = '';
-      await reloadReports();
     });
 
     loadDashboard('').catch(() => {
@@ -2046,27 +1368,6 @@
     if (status === 'approved') return '활성';
     if (status === 'rejected') return '제한';
     return '대기';
-  }
-
-  function postStatusLabel(status) {
-    if (status === 'published') return '공개';
-    if (status === 'hidden') return '숨김';
-    if (status === 'deleted') return '삭제';
-    return status || '상태 없음';
-  }
-
-  function reportStatusLabel(status) {
-    if (status === 'open') return '대기';
-    if (status === 'reviewing') return '검토';
-    if (status === 'resolved') return '처리';
-    if (status === 'dismissed') return '기각';
-    return status || '상태 없음';
-  }
-
-  function targetTypeLabel(targetType) {
-    if (targetType === 'post') return '게시글';
-    if (targetType === 'comment') return '댓글';
-    return targetType || '대상 없음';
   }
 
   function escapeHtml(value) {

@@ -1,0 +1,114 @@
+---
+import SiteChrome from '../components/SiteChrome.astro';
+import Layout from './Layout.astro';
+import {
+  artistLinks,
+  createEpisodeStructuredData,
+  featuredStoryOst,
+  musicArchive,
+  novelEpisodes,
+  novelProject
+} from '../data/siteContent.js';
+
+const { frontmatter } = Astro.props;
+
+const {
+  title = '1화',
+  subtitle = '',
+  description = '',
+  canonical = 'https://sunofox.com/novels/',
+  episodeLabel = 'EPISODE 01',
+  publishedAt = '',
+  readTime = '',
+  seriesTitle = '악녀는 첫 장에서 웃었다',
+  backHref = '/novels/',
+  backLabel = 'NOVEL',
+  previousHref = '',
+  previousLabel = '이전 화',
+  nextHref = '',
+  nextLabel = '다음 화'
+} = frontmatter;
+
+const currentEpisode = novelEpisodes.find((episode) => episode.href && canonical.endsWith(episode.href)) || novelEpisodes[0];
+const currentEpisodeIndex = novelEpisodes.findIndex((episode) => episode === currentEpisode);
+const followingEpisode = currentEpisodeIndex >= 0 ? novelEpisodes[currentEpisodeIndex + 1] : null;
+const nextDisabledText = followingEpisode
+  ? `${followingEpisode.label} 준비중 · ${followingEpisode.title}`
+  : '다음 화 준비중';
+const episodeJsonLd = createEpisodeStructuredData(currentEpisode);
+---
+
+<Layout
+  title={`${title} | SunoFox`}
+  description={description}
+  canonical={canonical}
+  image={`https://sunofox.com${novelProject.coverImage}`}
+  imageAlt={novelProject.coverAlt}
+  type="article"
+  jsonLd={episodeJsonLd}
+>
+  <SiteChrome active="novels" />
+
+  <main class="site-main novel-reader-page">
+    <nav class="novel-reader-topbar" aria-label="Episode quick navigation">
+      <a href={backHref}>{seriesTitle}</a>
+      <span>{episodeLabel}</span>
+      <a href={artistLinks.featuredOst} target="_blank" rel="noopener noreferrer">OST</a>
+    </nav>
+
+    <article class="novel-reader" aria-labelledby="episodeTitle">
+      <header class="novel-reader-header reveal">
+        <a class="micro-button micro-button-muted novel-reader-back" href={backHref}>{backLabel}</a>
+        <p class="section-kicker">{episodeLabel}</p>
+        <h1 id="episodeTitle">{title}</h1>
+        {subtitle && <p class="novel-reader-subtitle">{subtitle}</p>}
+        <div class="novel-reader-meta">
+          {publishedAt && <span>{publishedAt}</span>}
+          {readTime && <span>{readTime}</span>}
+          <span>WEB NOVEL</span>
+        </div>
+      </header>
+
+      <section class="novel-reader-body" aria-label={`${title} 본문`}>
+        <slot />
+      </section>
+
+      <section class="novel-reader-ost reveal" aria-labelledby="episodeOstTitle">
+        <a class="novel-reader-ost-thumb" href={featuredStoryOst.href} target="_blank" rel="noopener noreferrer" aria-label={`${featuredStoryOst.title} 감상하기`}>
+          <img
+            src={featuredStoryOst.thumbnail}
+            alt={featuredStoryOst.thumbnailAlt}
+            width="480"
+            height="360"
+            loading="lazy"
+            decoding="async"
+          />
+          <span>{featuredStoryOst.type}</span>
+        </a>
+
+        <div class="novel-reader-ost-copy">
+          <p class="section-kicker">EPISODE OST</p>
+          <h2 id="episodeOstTitle">{featuredStoryOst.title}</h2>
+          <p>{featuredStoryOst.summary}</p>
+        </div>
+
+        <div class="novel-reader-ost-actions" aria-label="Episode OST links">
+          <a class="main-button" href={featuredStoryOst.href} target="_blank" rel="noopener noreferrer">OST 감상</a>
+          <a class="main-button main-button-muted" href={musicArchive.href}>Music Archive</a>
+          <a class="main-button main-button-muted" href={backHref}>작품 정보</a>
+        </div>
+      </section>
+
+      <nav class="novel-reader-actions reveal" aria-label="Episode navigation">
+        {previousHref && <a class="main-button main-button-muted" href={previousHref}>{previousLabel}</a>}
+        <a class="main-button main-button-muted" href={backHref}>목록으로</a>
+        <a class="main-button main-button-muted" href={artistLinks.featuredOst} target="_blank" rel="noopener noreferrer">OST 감상</a>
+        {nextHref ? (
+          <a class="main-button" href={nextHref}>{nextLabel}</a>
+        ) : (
+          <span class="main-button novel-next-disabled" aria-disabled="true">{nextDisabledText}</span>
+        )}
+      </nav>
+    </article>
+  </main>
+</Layout>

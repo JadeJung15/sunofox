@@ -1,0 +1,163 @@
+---
+import SiteChrome from '../components/SiteChrome.astro';
+import Layout from '../layouts/Layout.astro';
+import {
+  artistLinks,
+  featuredStoryOst,
+  latestNovelEpisode,
+  musicArchive,
+  nextNovelEpisode,
+  novelEpisodes,
+  novelProject,
+  publishedNovelEpisodes,
+  novelStructuredData
+} from '../data/siteContent.js';
+
+const currentEpisode = latestNovelEpisode;
+const upcomingEpisode = nextNovelEpisode;
+---
+
+<Layout
+  title={`${novelProject.title} | SunoFox`}
+  description={novelProject.shortSummary}
+  canonical="https://sunofox.com/novels/"
+  image={`https://sunofox.com${novelProject.coverImage}`}
+  imageAlt={novelProject.coverAlt}
+  jsonLd={novelStructuredData}
+>
+  <SiteChrome active="novels" />
+
+  <main class="site-main novel-detail-page">
+    <section class="novel-detail-hero reveal" aria-labelledby="novelsTitle">
+      <div class="novel-detail-cover">
+        <img
+          src={novelProject.coverImage}
+          alt={novelProject.coverAlt}
+          width={novelProject.coverWidth}
+          height={novelProject.coverHeight}
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+        />
+      </div>
+
+      <div class="novel-detail-copy">
+        <p class="section-kicker">{novelProject.type}</p>
+        <h1 id="novelsTitle">{novelProject.title}</h1>
+        <p class="novel-platform-en">{novelProject.englishTitle}</p>
+        <p class="novel-detail-summary">{novelProject.summary}</p>
+
+        <dl class="novel-info-list">
+          {novelProject.infoRows.map((item) => (
+            <div>
+              <dt>{item.label}</dt>
+              <dd>{item.value}</dd>
+            </div>
+          ))}
+        </dl>
+
+        <div class="novel-platform-actions">
+          <a class="main-button" href={currentEpisode.href}>{currentEpisode.cta}</a>
+          <a class="main-button main-button-muted" href={artistLinks.featuredOst} target="_blank" rel="noopener noreferrer">OST 감상</a>
+          <a class="main-button main-button-muted" href={musicArchive.href}>음악 아카이브</a>
+          <a class="main-button main-button-muted" href="/mv-studio">STUDIO</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="novel-release-strip reveal" aria-label="최신 공개와 다음 화 예고">
+      <a class="novel-release-card is-live" href={currentEpisode.href}>
+        <span>LATEST</span>
+        <strong>{currentEpisode.label}. {currentEpisode.title}</strong>
+        <p>{currentEpisode.update}</p>
+        <em>{currentEpisode.publishedAt} · {currentEpisode.readTime}</em>
+      </a>
+
+      {upcomingEpisode && (
+        <article class="novel-release-card is-next" aria-disabled="true">
+          <span>NEXT</span>
+          <strong>{upcomingEpisode.label}. {upcomingEpisode.title}</strong>
+          <p>{upcomingEpisode.update}</p>
+          <em>{upcomingEpisode.status}</em>
+        </article>
+      )}
+    </section>
+
+    <section class="novel-detail-tabs reveal" aria-label="작품 탭">
+      <a href="#episodes">회차</a>
+      <a href="#about">정보</a>
+      <a href="#ost">OST</a>
+      <a href="#keywords">키워드</a>
+    </section>
+
+    <section id="episodes" class="novel-episode-list reveal" aria-labelledby="episodeListTitle">
+      <div class="novel-section-head">
+        <p class="section-kicker">EPISODES</p>
+        <h2 id="episodeListTitle">회차 목록</h2>
+        <span>{publishedNovelEpisodes.length}화 공개 · 총 {novelEpisodes.length}화</span>
+      </div>
+
+      <div class="novel-episode-rows">
+        {novelEpisodes.map((episode) => (
+          episode.href ? (
+            <a class="novel-episode-row" href={episode.href}>
+              <span>{episode.number}</span>
+              <div>
+                <strong>{episode.title}</strong>
+                <p>{episode.hook}</p>
+              </div>
+              <em>{episode.publishedAt}</em>
+              <b>{episode.isFree ? '무료' : '공개 예정'}</b>
+            </a>
+          ) : (
+            <article class="novel-episode-row is-upcoming" aria-disabled="true">
+              <span>{episode.number}</span>
+              <div>
+                <strong>{episode.title}</strong>
+                <p>{episode.hook}</p>
+              </div>
+              <em>{episode.publishedAt}</em>
+              <b>{episode.status}</b>
+            </article>
+          )
+        ))}
+      </div>
+    </section>
+
+    <section id="about" class="novel-detail-info reveal" aria-label="작품 정보">
+      <div>
+        <p class="section-kicker">ABOUT</p>
+        <h2>원작의 첫 장을 깨는 악녀</h2>
+      </div>
+      <p>{novelProject.shortSummary}</p>
+      <blockquote>{novelProject.systemLine}</blockquote>
+    </section>
+
+    <section id="ost" class="novel-ost-panel reveal" aria-label="작품 OST">
+      <a class="novel-ost-thumb" href={featuredStoryOst.href} target="_blank" rel="noopener noreferrer" aria-label={`${featuredStoryOst.title} 감상하기`}>
+        <img
+          src={featuredStoryOst.thumbnail}
+          alt={featuredStoryOst.thumbnailAlt}
+          width="480"
+          height="360"
+          loading="lazy"
+          decoding="async"
+        />
+        <span>{featuredStoryOst.type}</span>
+      </a>
+      <div>
+        <p class="section-kicker">OST</p>
+        <h2>{featuredStoryOst.title}</h2>
+      </div>
+      <p>{featuredStoryOst.summary}</p>
+      <div class="novel-ost-actions">
+        <a class="main-button" href={artistLinks.featuredOst} target="_blank" rel="noopener noreferrer">OST 감상하기</a>
+        <a class="main-button main-button-muted" href={musicArchive.href}>음악 아카이브</a>
+      </div>
+    </section>
+
+    <section id="keywords" class="novel-keyword-row novel-keyword-section reveal" aria-label="작품 키워드">
+      {novelProject.keywords.map((keyword) => <span>{keyword}</span>)}
+    </section>
+  </main>
+</Layout>

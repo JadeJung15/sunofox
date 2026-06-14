@@ -1,0 +1,85 @@
+---
+import SiteChrome from '../../components/SiteChrome.astro';
+import Layout from '../../layouts/Layout.astro';
+import { archiveAlbum, archiveAlbumStructuredData } from '../../data/siteContent.js';
+---
+
+<Layout
+  title={`${archiveAlbum.title} | SunoFox`}
+  description={archiveAlbum.summary}
+  canonical="https://sunofox.com/music/archive-vol-1/"
+  image={`https://sunofox.com${archiveAlbum.image}`}
+  imageAlt={archiveAlbum.imageAlt}
+  jsonLd={archiveAlbumStructuredData}
+>
+  <SiteChrome active="profile" />
+
+  <main class="site-main album-detail-page">
+    <section class="album-detail-hero reveal" aria-labelledby="albumTitle">
+      <a class="album-back-link" href="/music/">Music Archive</a>
+
+      <div class="album-cover-mark" aria-hidden="true">
+        <img src={archiveAlbum.image} alt="" width="512" height="512" loading="eager" decoding="async" />
+        <span>ARCHIVE</span>
+        <strong>VOL.1</strong>
+      </div>
+
+      <div class="album-detail-copy">
+        <p class="section-kicker">DISCOGRAPHY</p>
+        <h1 id="albumTitle">{archiveAlbum.title}</h1>
+        <p class="album-detail-summary">{archiveAlbum.summary}</p>
+
+        <dl class="album-meta-grid">
+          {archiveAlbum.facts.map((fact) => (
+            <div>
+              <dt>{fact.label}</dt>
+              <dd>{fact.value}</dd>
+            </div>
+          ))}
+        </dl>
+
+        <div class="album-detail-actions">
+          {archiveAlbum.links.map((link) => (
+            <a class="main-button main-button-muted" href={link.href} target="_blank" rel="noopener noreferrer">{link.label}</a>
+          ))}
+          <a class="main-button main-button-muted" href="/music/">Archive Home</a>
+          <a class="main-button" href="/novels/">Music to Novel</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="album-note-section reveal" aria-labelledby="albumNoteTitle">
+      <div>
+        <p class="section-kicker">ALBUM NOTE</p>
+        <h2 id="albumNoteTitle">기록으로 남긴 사운드</h2>
+      </div>
+      <div class="album-note-copy">
+        {archiveAlbum.intro.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+    </section>
+
+    <section class="album-track-section reveal" aria-labelledby="albumTracksTitle">
+      <div class="novel-section-head">
+        <p class="section-kicker">TRACKS</p>
+        <h2 id="albumTracksTitle">수록곡</h2>
+        <span>{archiveAlbum.tracks.length} tracks</span>
+      </div>
+
+      <ol class="album-track-grid">
+        {archiveAlbum.tracks.map((track) => (
+          <li>
+            <span>{track.position}</span>
+            <strong>{track.title}</strong>
+            <em>{archiveAlbum.artist}</em>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="album-source-panel reveal" aria-label="Album sources">
+      <span>Source</span>
+      <a href={archiveAlbum.externalHref} target="_blank" rel="noopener noreferrer">Genie album page</a>
+      <a href={archiveAlbum.bugsHref} target="_blank" rel="noopener noreferrer">Bugs artist tracks</a>
+    </section>
+  </main>
+</Layout>

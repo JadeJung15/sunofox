@@ -1,34 +1,132 @@
 ---
 import SiteChrome from '../components/SiteChrome.astro';
 import Layout from '../layouts/Layout.astro';
+import { artistLinks, novelProject, structuredData, sunofoxProfile } from '../data/siteContent.js';
 ---
 
-<Layout title="Profile | SunoFox Anime OST Studio">
+<Layout
+  title="SunoFox 소개 | Music to Novel"
+  description="SunoFox는 음악에서 시작한 감정과 장면을 웹소설, OST, Studio 제작 흐름으로 확장하는 IP 스튜디오입니다."
+  canonical="https://sunofox.com/profile/"
+  image={`https://sunofox.com${novelProject.coverImage}`}
+  imageAlt={novelProject.coverAlt}
+  jsonLd={structuredData}
+>
   <SiteChrome active="profile" />
 
-  <main class="site-main category-page">
-    <section class="category-hero reveal" aria-labelledby="profileTitle">
-      <p class="section-kicker">PROFILE</p>
+  <main class="site-main category-page about-page">
+    <section class="category-hero" aria-labelledby="profileTitle">
+      <p class="section-kicker">ABOUT</p>
       <h1 id="profileTitle">SunoFox</h1>
-      <p>감정을 그리는 애니메이션 사운드트랙. Suno AI와 Human Curation으로 완성하는 Anime OST Studio입니다.</p>
+      <p>SunoFox는 음악에서 시작한 감정과 장면을 웹소설, OST, 영상 제작 흐름으로 확장하는 IP 스튜디오입니다.</p>
     </section>
 
-    <section class="category-content profile-layout" aria-label="SunoFox profile">
-      <article class="category-card reveal">
-        <span>01</span>
-        <h2>Scene First</h2>
-        <p>곡을 만들기 전에 장면, 캐릭터, 감정선, 세계관을 먼저 정합니다.</p>
-      </article>
-      <article class="category-card reveal">
-        <span>02</span>
-        <h2>AI Draft</h2>
-        <p>Suno AI로 여러 음악 방향을 실험하고, 장면에 맞는 가능성을 좁힙니다.</p>
-      </article>
-      <article class="category-card reveal">
-        <span>03</span>
-        <h2>Human Curation</h2>
-        <p>사람의 기준으로 분위기, 가사, 구조, 공개 순서를 큐레이션합니다.</p>
-      </article>
+    <section class="category-content about-compact" aria-label="SunoFox profile">
+      <p class="about-lead">
+        먼저 음악으로 장면을 만들고, 그 감정을 캐릭터와 사건으로 옮겨 웹소설로 연재합니다.
+      </p>
+
+      <div class="about-route-grid" aria-label="SunoFox operating routes">
+        <a href="/novels/">
+          <span>01</span>
+          <strong>웹소설</strong>
+          <p>첫 작품 《{novelProject.title}》의 작품 정보와 회차를 공개합니다.</p>
+        </a>
+        <a href={artistLinks.featuredOst} target="_blank" rel="noopener noreferrer">
+          <span>02</span>
+          <strong>OST</strong>
+          <p>소설 장면의 감정 원천이 되는 SunoFox 음악을 함께 들을 수 있습니다.</p>
+        </a>
+        <a href="/mv-studio">
+          <span>03</span>
+          <strong>Studio</strong>
+          <p>웹소설, OST, 영상 패키징을 이어 붙이는 제작 공간입니다.</p>
+        </a>
+      </div>
+
+      <ul class="about-line-list">
+        <li>현재 공개 범위는 소개, 웹소설, Studio 중심입니다.</li>
+        <li>OST는 작품의 분위기를 먼저 들려주는 진입점으로 연결합니다.</li>
+        <li>공개 전인 회차와 확장 콘텐츠는 준비 상태가 확정된 뒤만 안내합니다.</li>
+      </ul>
+    </section>
+
+    <section class="profile-detail-section reveal" aria-labelledby="profileDetailTitle">
+      <div class="profile-detail-head">
+        <p class="section-kicker">PUBLIC FILE</p>
+        <h2 id="profileDetailTitle">SunoFox Detail</h2>
+        <p>공개 웹, 유튜브 채널, 음원 플랫폼에서 확인한 수노폭스 정보를 필모그래피처럼 정리했습니다.</p>
+        <span>확인 기준 {sunofoxProfile.researchDate}</span>
+      </div>
+
+      <nav class="profile-detail-tabs" aria-label="SunoFox detail tabs">
+        {sunofoxProfile.tabs.map((tab) => (
+          <a href={`#${tab.id}`}>{tab.label}</a>
+        ))}
+      </nav>
+
+      <div class="profile-detail-panels">
+        {sunofoxProfile.tabs.map((tab) => (
+          <article id={tab.id} class="profile-detail-panel">
+            <div class="profile-detail-panel-copy">
+              <p class="section-kicker">{tab.kicker}</p>
+              <h3>{tab.title}</h3>
+              <p>{tab.summary}</p>
+            </div>
+
+            <dl class="profile-fact-grid">
+              {tab.facts.map((fact) => (
+                <div>
+                  <dt>{fact.label}</dt>
+                  <dd>{fact.value}</dd>
+                </div>
+              ))}
+            </dl>
+
+            {tab.tracks && (
+              <ol class="profile-track-list" aria-label={`${tab.title} track list`}>
+                {tab.tracks.map((track) => <li>{track}</li>)}
+              </ol>
+            )}
+
+            {tab.videos && (
+              <div class="profile-video-list" aria-label={`${tab.title} latest videos`}>
+                <p class="profile-section-label">Latest videos</p>
+                <ol>
+                  {tab.videos.map((video) => (
+                    <li>
+                      <a href={video.href} target="_blank" rel="noopener noreferrer">
+                        <span>{video.date}</span>
+                        <strong>{video.title}</strong>
+                        <p>{video.meta}</p>
+                        <em>{video.stats}</em>
+                      </a>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            )}
+
+            <div class="profile-source-actions" aria-label={`${tab.label} links`}>
+              {tab.links.map((link) => (
+                <a class="main-button main-button-muted" href={link.href} target={link.href.startsWith('http') ? '_blank' : undefined} rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
+                  {link.label}
+                </a>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div class="profile-source-strip" aria-label="SunoFox public sources">
+        <span>Sources</span>
+        {sunofoxProfile.sources.map((source) => (
+          <a href={source.href} target="_blank" rel="noopener noreferrer">{source.label}</a>
+        ))}
+      </div>
+      <p class="profile-source-note">
+        채널 구독자, 조회수, 영상 수처럼 변동되는 지표는 공개 조회 시점 기준입니다.
+      </p>
     </section>
   </main>
 </Layout>

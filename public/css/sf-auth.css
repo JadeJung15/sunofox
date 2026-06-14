@@ -779,10 +779,6 @@ body {
   grid-template-columns: minmax(150px, 0.45fr) minmax(220px, 1fr) auto auto;
 }
 
-.sf-admin-community-filter-form {
-  grid-template-columns: minmax(150px, 0.55fr) minmax(150px, 0.55fr) minmax(220px, 1fr) auto auto;
-}
-
 .sf-admin-comment-filter-form {
   grid-template-columns: minmax(150px, 0.55fr) minmax(220px, 1fr) auto auto;
 }
@@ -2402,7 +2398,6 @@ body {
 
   .sf-admin-body .sf-admin-filter-form,
   .sf-admin-body .sf-admin-user-filter,
-  .sf-admin-body .sf-admin-community-filter-form,
   .sf-admin-body .sf-admin-comment-filter-form,
   .sf-admin-body .sf-admin-report-filter-form {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -3994,7 +3989,6 @@ body {
   .sf-admin-body .sf-admin-oauth-grid,
   .sf-admin-body .sf-admin-filter-form,
   .sf-admin-body .sf-admin-user-filter,
-  .sf-admin-body .sf-admin-community-filter-form,
   .sf-admin-body .sf-admin-comment-filter-form,
   .sf-admin-body .sf-admin-report-filter-form {
     display: grid;

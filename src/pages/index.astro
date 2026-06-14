@@ -12,7 +12,7 @@ import {
 const wordmark = 'SUNOFOX'.split('');
 const heroParticles = Array.from({ length: 42 });
 const featuredOstHref = artistLinks.featuredOst;
-const novelListCta = '소설 목록 보기';
+const novelListCta = '소설 보러가기';
 ---
 
 <Layout
@@ -57,7 +57,7 @@ const novelListCta = '소설 목록 보기';
         <div class="home-hero-meta" aria-label="SunoFox current status">
           <span>WEB NOVEL</span>
           <span>{novelProject.genre}</span>
-          <span>EPISODE LIST</span>
+          <span>NOVEL LIST</span>
         </div>
       </div>
 
@@ -69,30 +69,6 @@ const novelListCta = '소설 목록 보기';
       </div>
 
       <p class="landing-note">SCROLL DOWN</p>
-    </section>
-
-    <section class="home-feature-showcase reveal" aria-labelledby="homeFeatureTitle">
-      <a class="home-cover-link" href="/novels/" aria-label={`${novelProject.title} 작품 정보 보기`}>
-        <img
-          src={novelProject.coverImage}
-          alt={novelProject.coverAlt}
-          width={novelProject.coverWidth}
-          height={novelProject.coverHeight}
-          loading="eager"
-          decoding="async"
-        />
-      </a>
-
-      <div class="home-feature-copy">
-        <p class="section-kicker">WEB NOVEL</p>
-        <h2 id="homeFeatureTitle">{novelProject.title}</h2>
-        <p>{novelProject.summary}</p>
-        <div class="home-feature-actions">
-          <a class="main-button" href="/novels/">{novelListCta}</a>
-          <a class="main-button main-button-muted" href={featuredOstHref} target="_blank" rel="noopener noreferrer">OST 감상</a>
-          <a class="main-button main-button-muted" href={musicArchive.href}>Music Archive</a>
-        </div>
-      </div>
     </section>
 
     <section class="home-ost-showcase reveal" aria-labelledby="homeOstTitle">
@@ -121,26 +97,26 @@ const novelListCta = '소설 목록 보기';
     </section>
 
     <section class="novel-platform-grid home-core-grid" aria-label="SunoFox core links">
-      <a class="novel-platform-panel home-ost-link reveal" href={featuredOstHref} target="_blank" rel="noopener noreferrer" aria-label="Music to Novel OST 감상하기">
-        <p class="section-kicker">01 · OST</p>
-        <h2>Music First</h2>
-        <p>SunoFox는 음악에서 시작한 감정을 캐릭터와 장면으로 확장해 웹소설로 연재합니다.</p>
-        <span class="main-button main-button-muted">OST 감상하기</span>
+      <a class="novel-platform-panel home-core-link home-novel-link reveal" href="/novels/" aria-label="웹소설 회차 목록 보러가기">
+        <p class="section-kicker">01 · WEB NOVEL</p>
+        <h2>{novelListCta}</h2>
+        <p>회차 목록으로 바로 이동해 공개된 에피소드를 선택해 읽습니다.</p>
+        <span class="main-button">회차 목록 열기</span>
       </a>
 
-      <article class="novel-platform-panel home-novel-link reveal">
-        <p class="section-kicker">02 · NOVEL</p>
-        <h2>{novelProject.title}</h2>
-        <p>공개된 회차를 한 곳에서 확인하고 원하는 화부터 이어 읽을 수 있습니다.</p>
-        <a class="main-button" href="/novels/">{novelListCta}</a>
-      </article>
+      <a class="novel-platform-panel home-core-link home-ost-link reveal" href={featuredOstHref} target="_blank" rel="noopener noreferrer" aria-label="Music to Novel OST 감상하기">
+        <p class="section-kicker">02 · OST</p>
+        <h2>OST 감상하기</h2>
+        <p>SunoFox 음악에서 시작된 감정선을 작품 OST로 이어서 감상합니다.</p>
+        <span class="main-button main-button-muted">YouTube 열기</span>
+      </a>
 
-      <article class="novel-platform-panel home-studio-link reveal">
+      <a class="novel-platform-panel home-core-link home-studio-link reveal" href="/mv-studio" aria-label="SF Studio 열기">
         <p class="section-kicker">03 · STUDIO</p>
-        <h2>SF Studio</h2>
+        <h2>Studio 입장</h2>
         <p>{novelProject.musicToNovel}</p>
-        <a class="main-button main-button-muted" href="/mv-studio">STUDIO</a>
-      </article>
+        <span class="main-button main-button-muted">STUDIO</span>
+      </a>
     </section>
   </main>
 </Layout>

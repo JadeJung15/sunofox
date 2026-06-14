@@ -4,17 +4,13 @@ import Layout from '../layouts/Layout.astro';
 import {
   artistLinks,
   featuredStoryOst,
-  latestNovelEpisode,
   musicArchive,
-  nextNovelEpisode,
   novelEpisodes,
   novelProject,
   publishedNovelEpisodes,
   novelStructuredData
 } from '../data/siteContent.js';
 
-const currentEpisode = latestNovelEpisode;
-const upcomingEpisode = nextNovelEpisode;
 const novelListCta = '소설 목록 보기';
 ---
 
@@ -66,26 +62,8 @@ const novelListCta = '소설 목록 보기';
       </div>
     </section>
 
-    <section class="novel-release-strip reveal" aria-label="최신 공개와 다음 화 예고">
-      <a class="novel-release-card is-live" href={currentEpisode.href}>
-        <span>LATEST</span>
-        <strong>{currentEpisode.label}. {currentEpisode.title}</strong>
-        <p>{currentEpisode.update}</p>
-        <em>{currentEpisode.publishedAt} · {currentEpisode.readTime}</em>
-      </a>
-
-      {upcomingEpisode && (
-        <article class="novel-release-card is-next" aria-disabled="true">
-          <span>NEXT</span>
-          <strong>{upcomingEpisode.label}. {upcomingEpisode.title}</strong>
-          <p>{upcomingEpisode.update}</p>
-          <em>{upcomingEpisode.status}</em>
-        </article>
-      )}
-    </section>
-
     <section class="novel-detail-tabs reveal" aria-label="작품 탭">
-      <a href="#episodes">회차</a>
+      <a href="#episodes">소설 목록</a>
       <a href="#about">정보</a>
       <a href="#ost">OST</a>
       <a href="#keywords">키워드</a>
@@ -94,7 +72,7 @@ const novelListCta = '소설 목록 보기';
     <section id="episodes" class="novel-episode-list reveal" aria-labelledby="episodeListTitle">
       <div class="novel-section-head">
         <p class="section-kicker">EPISODES</p>
-        <h2 id="episodeListTitle">회차 목록</h2>
+        <h2 id="episodeListTitle">소설 목록</h2>
         <span>{publishedNovelEpisodes.length}화 공개 · 총 {novelEpisodes.length}화</span>
       </div>
 

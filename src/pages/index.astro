@@ -12,7 +12,7 @@ import {
 const wordmark = 'SUNOFOX'.split('');
 const heroParticles = Array.from({ length: 42 });
 const featuredOstHref = artistLinks.featuredOst;
-const novelListCta = '소설 보러가기';
+const novelListCta = '소설 목록 보기';
 ---
 
 <Layout
@@ -99,9 +99,9 @@ const novelListCta = '소설 보러가기';
     <section class="novel-platform-grid home-core-grid" aria-label="SunoFox core links">
       <a class="novel-platform-panel home-core-link home-novel-link reveal" href="/novels/" aria-label="웹소설 회차 목록 보러가기">
         <p class="section-kicker">01 · WEB NOVEL</p>
-        <h2>{novelListCta}</h2>
-        <p>회차 목록으로 바로 이동해 공개된 에피소드를 선택해 읽습니다.</p>
-        <span class="main-button">회차 목록 열기</span>
+        <h2>소설 목록</h2>
+        <p>공개된 회차를 한 화면에서 확인하고 바로 읽습니다.</p>
+        <span class="main-button">보러가기</span>
       </a>
 
       <a class="novel-platform-panel home-core-link home-ost-link reveal" href={featuredOstHref} target="_blank" rel="noopener noreferrer" aria-label="Music to Novel OST 감상하기">

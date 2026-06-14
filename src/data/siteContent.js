@@ -140,7 +140,7 @@ export const nextNovelEpisode = novelEpisodes.find((episode) => !episode.href) |
 export const menuItems = [
   { key: 'home', label: 'HOME', href: '/' },
   { key: 'profile', label: 'ABOUT', href: '/profile' },
-  { key: 'novels', label: '소설 보러가기', href: '/novels' },
+  { key: 'novels', label: '소설 목록 보기', href: '/novels' },
   { key: 'studio', label: 'STUDIO', href: '/mv-studio' }
 ];
 

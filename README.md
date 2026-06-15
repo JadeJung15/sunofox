@@ -80,6 +80,7 @@ OST와 YouTube 연결은 `src/data/siteContent.js`의 `artistLinks`, `featuredSt
 |---|---|---|
 | `npm run dev` | `astro dev` | 로컬 개발 서버 |
 | `npm run build` | `astro build && node scripts/version-auth-assets.mjs` | 정적 빌드와 auth asset versioning |
+| `npm run check:public-routes` | `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-public-routes.ps1` | `dist` 기준 공개 라우트 핵심 문자열 확인 |
 | `npm run preview` | `astro preview` | 빌드 결과 미리보기 |
 | `npm run pages:dev` | `npm run build && wrangler pages dev dist --compatibility-date=2026-06-07` | Cloudflare Pages 로컬 검증 |
 | `npm run deploy:preview` | `npm run build && wrangler pages deploy dist --project-name sf-studio --branch astro-redesign` | preview 배포 |
@@ -96,13 +97,14 @@ production 반영 전 기본 순서입니다.
 1. `git status -sb`
 2. `git log --oneline -5`
 3. `npm run build`
-4. 주요 로컬/빌드 산출물 확인
-5. `git add ...`
-6. `git commit -m "..."`
-7. `git push origin main`
-8. `npx wrangler pages deploy dist --project-name sf-studio --branch main`
-9. `npx wrangler pages deployment list --project-name sf-studio`
-10. 운영 URL HTTP 200 확인
+4. `npm run check:public-routes`
+5. 주요 로컬/빌드 산출물 확인
+6. `git add ...`
+7. `git commit -m "..."`
+8. `git push origin main`
+9. `npx wrangler pages deploy dist --project-name sf-studio --branch main`
+10. `npx wrangler pages deployment list --project-name sf-studio`
+11. 운영 URL HTTP 200과 핵심 문자열 확인
 
 배포 후 최소 확인 URL:
 

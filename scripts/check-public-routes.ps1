@@ -28,7 +28,7 @@ $routes = @(
     Name = "music"
     Path = "/music/"
     File = "music/index.html"
-    Must = @("Music Archive", "https://sunofox.com/music/")
+    Must = @("Music Archive", "YouTube / MV 영상 허브", "https://sunofox.com/music/")
   },
   @{
     Name = "album"

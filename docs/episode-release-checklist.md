@@ -48,11 +48,13 @@ npm run build
 npm run check
 ```
 
-`npm run check`는 아래 세 검증을 순서대로 실행합니다.
+`npm run check`는 아래 검증을 순서대로 실행합니다.
 
 `check:content`는 `siteContent.js`의 회차 데이터와 각 에피소드 frontmatter의 제목, canonical, 공개일, 읽는 시간, 이전/다음 링크를 비교합니다.
 
 `check:dist`는 공개 빌드 산출물의 내부 링크와 이미지/asset 경로가 실제 `dist` 안에 존재하는지 확인합니다. `/mv-studio`, `/login`, `/signup`, `/admin`, `/account` 계열 운영 HTML은 별도 승인 영역이라 제외합니다.
+
+`check:seo`는 공개 HTML의 title, description, canonical, OG/Twitter card, Article/Breadcrumb/CollectionPage 등 JSON-LD 기본 타입을 확인합니다.
 
 `check:public-routes`는 현재 공개된 1~6화 상세 페이지, article publish meta, Breadcrumb JSON-LD, sitemap-index, legacy sitemap, sitemap, robots까지 함께 확인합니다.
 

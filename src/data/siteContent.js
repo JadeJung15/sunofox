@@ -8,11 +8,18 @@ import {
   novelProject,
   publishedNovelEpisodes
 } from './novelContent.js';
-import { plannedContentHubs, siteUpdates, updateCategories } from './updatesContent.js';
+import {
+  categorizedSiteUpdates,
+  pinnedUpdateNotice,
+  plannedContentHubs,
+  siteUpdates,
+  updateCategories
+} from './updatesContent.js';
 
 export {
   archiveAlbum,
   artistLinks,
+  categorizedSiteUpdates,
   featuredStoryOst,
   latestNovelEpisode,
   menuItems,
@@ -20,6 +27,7 @@ export {
   nextNovelEpisode,
   novelEpisodes,
   novelProject,
+  pinnedUpdateNotice,
   plannedContentHubs,
   publishedNovelEpisodes,
   siteUpdates,

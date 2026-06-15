@@ -63,7 +63,13 @@ function assertLink(label, href, { allowEmpty = false } = {}) {
 }
 
 const siteContentModule = await import(`${pathToFileURL(siteContentPath).href}?mtime=${Date.now()}`);
-const { plannedContentHubs, siteUpdates, updateCategories } = siteContentModule;
+const {
+  categorizedSiteUpdates,
+  pinnedUpdateNotice,
+  plannedContentHubs,
+  siteUpdates,
+  updateCategories
+} = siteContentModule;
 
 const categoryKeys = updateCategories.map((category) => category.key);
 const hubKeys = plannedContentHubs.map((hub) => hub.key);
@@ -91,7 +97,24 @@ assertArray('updateCategories', updateCategories, { min: 6 }).forEach((category,
   }
 
   assertLink(`${label} href`, category.href);
+
+  if (category.count > 0 && category.href !== `#updates-category-${category.key}`) {
+    fail(`${label} href: active category must point to its category log anchor`);
+  }
 });
+
+if (!pinnedUpdateNotice || typeof pinnedUpdateNotice !== 'object') {
+  fail('pinnedUpdateNotice must be defined');
+} else {
+  for (const field of ['kicker', 'title', 'summary', 'status']) {
+    assertPresent(`pinnedUpdateNotice ${field}`, pinnedUpdateNotice[field]);
+  }
+
+  assertArray('pinnedUpdateNotice links', pinnedUpdateNotice.links, { min: 1 }).forEach((link, linkIndex) => {
+    assertPresent(`pinnedUpdateNotice links[${linkIndex}] label`, link.label);
+    assertLink(`pinnedUpdateNotice links[${linkIndex}] href`, link.href);
+  });
+}
 
 assertArray('plannedContentHubs', plannedContentHubs, { min: 6 }).forEach((hub, index) => {
   const label = `plannedContentHubs[${index}]`;
@@ -129,6 +152,35 @@ assertArray('siteUpdates', siteUpdates, { min: 1 }).forEach((item, index) => {
     assertLink(`${label} links[${linkIndex}] href`, link.href);
   });
 });
+
+const activeCategoryKeys = updateCategories
+  .filter((category) => category.count > 0)
+  .map((category) => category.key);
+const categorizedKeys = assertArray('categorizedSiteUpdates', categorizedSiteUpdates, { min: 1 })
+  .map((category) => category.key);
+
+assertUnique('categorizedSiteUpdates key', categorizedKeys);
+
+for (const key of activeCategoryKeys) {
+  if (!categorizedKeys.includes(key)) {
+    fail(`categorizedSiteUpdates: missing active category "${key}"`);
+  }
+}
+
+for (const category of categorizedSiteUpdates || []) {
+  const expectedUpdates = siteUpdates.filter((item) => item.areas?.includes(category.key));
+  const label = `categorizedSiteUpdates ${category.key}`;
+
+  if (!categoryKeys.includes(category.key)) {
+    fail(`${label}: unknown category key`);
+  }
+
+  assertArray(`${label} updates`, category.updates, { min: 1 });
+
+  if ((category.updates || []).length !== expectedUpdates.length) {
+    fail(`${label}: expected ${expectedUpdates.length} update(s), got ${(category.updates || []).length}`);
+  }
+}
 
 if (errors.length > 0) {
   console.error('Updates content check failed:');

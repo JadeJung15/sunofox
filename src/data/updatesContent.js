@@ -62,33 +62,46 @@ export const siteUpdates = [
   }
 ];
 
+export const pinnedUpdateNotice = {
+  kicker: 'PINNED NOTICE',
+  title: '1~6화 미니시즌 완결 공개',
+  summary:
+    '《악녀는 첫 장에서 웃었다》는 현재 1~6화 미니시즌 완결 상태입니다. 처음 방문한 독자는 1화부터 정주행하거나 완결화에서 첫 장의 결말을 확인할 수 있습니다.',
+  status: '공개 중',
+  links: [
+    { label: '1화부터 정주행', href: '/novels/episode-001/' },
+    { label: '완결화 보기', href: '/novels/episode-006/' },
+    { label: '소설 목록', href: '/novels/' }
+  ]
+};
+
 const updateCategoryDefinitions = [
   {
     key: 'notice',
     label: '공지/운영',
     summary: '사이트 운영 기준, 공개 체크리스트, 배포 검증처럼 독자가 알아야 할 공식 운영 변경을 모읍니다.',
-    href: '#updates-log',
-    cta: '기록 보기'
+    href: '#updates-category-notice',
+    cta: '공지 기록'
   },
   {
     key: 'novel',
     label: '웹소설',
     summary: '《악녀는 첫 장에서 웃었다》 공개 회차, 최신화 표시, 작품 정보 변경을 따라갑니다.',
-    href: '/novels/',
-    cta: '소설 보기'
+    href: '#updates-category-novel',
+    cta: '소설 기록'
   },
   {
     key: 'music',
     label: 'Music/MV',
     summary: '대표 OST, 음악 아카이브, YouTube/MV 허브 진입점과 연결 상태를 정리합니다.',
-    href: '/music/',
-    cta: '음악 보기'
+    href: '#updates-category-music',
+    cta: '음악 기록'
   },
   {
     key: 'site',
     label: '사이트 개선',
     summary: 'SEO, 공유 메타, 모바일 가독성, 라우트 검증 같은 공식 사이트 품질 개선을 기록합니다.',
-    href: '#updates-log',
+    href: '#updates-category-site',
     cta: '개선 기록'
   },
   {
@@ -116,6 +129,13 @@ export const updateCategories = updateCategoryDefinitions.map((category) => {
     countLabel: count > 0 ? `${count}건` : '준비중'
   };
 });
+
+export const categorizedSiteUpdates = updateCategories
+  .map((category) => ({
+    ...category,
+    updates: siteUpdates.filter((item) => item.areas?.includes(category.key))
+  }))
+  .filter((category) => category.updates.length > 0);
 
 export const plannedContentHubs = [
   {

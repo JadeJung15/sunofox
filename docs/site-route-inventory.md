@@ -31,7 +31,7 @@ Last verified: 2026-06-16
 | `/music/` | Music Archive / YouTube-MV 허브 | `src/pages/music/index.astro` | 200, 대표 OST, 앨범, 영상 허브 |
 | `/music/archive-vol-1/` | ARCHIVE vol.1 앨범 상세 | `src/pages/music/archive-vol-1.astro` | 200, 트랙/앨범 정보 |
 | `/profile/` | SunoFox 소개/필모그래피 | `src/pages/profile.astro` | 200, YouTube/Music/Novel 탭 |
-| `/updates/` | 공식 업데이트 로그 | `src/pages/updates.astro` | 200, 카테고리 허브, 최근 업데이트 |
+| `/updates/` | 공식 업데이트 로그 | `src/pages/updates.astro` | 200, 고정 공지, 카테고리 허브, 카테고리별 기록, 최근 업데이트 |
 | `/privacy/` | 개인정보 처리방침 | `src/pages/privacy.astro` | 200 |
 | `/terms/` | 이용약관 | `src/pages/terms.astro` | 200 |
 | `/robots.txt` | robots | `src/pages/robots.txt.ts` | 200, sitemap-index 연결, 보호 경로 Disallow |
@@ -84,7 +84,7 @@ npm run check
 |---|---|
 | `check:content` | `novelContent.js`와 미니시즌 상태, 1~6화 frontmatter/본문/shareTags 일치 |
 | `check:music` | 대표 OST, YouTube/MV 영상 목록, 앨범 트랙 순서, 영상 ID와 썸네일 URL 일치 |
-| `check:updates` | Updates 카테고리, 공식 허브 상태, 대기 링크 사유, 업데이트 링크 |
+| `check:updates` | Updates 고정 공지, 카테고리별 기록, 공식 허브 상태, 대기 링크 사유, 업데이트 링크 |
 | `check:dist` | 빌드 산출물의 내부 링크, 이미지, asset 존재 |
 | `check:seo` | title, description, canonical, OG/Twitter, JSON-LD |
 | `check:a11y` | lang, viewport, h1, alt, 링크/버튼 이름, 새 탭 rel |
@@ -120,6 +120,6 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-public-routes.
 | 웹소설 연재 허브 | 1~6화 미니시즌 완결 상태 공개 | 7화 추가 구조 또는 시즌2 티저 결정 |
 | OST/음악 아카이브 | 대표 OST, ARCHIVE vol.1, 영상 허브 운영 | 신규 OST 추가 시 `storyOsts`와 회차 `ostKey` 연결 |
 | 세계관/캐릭터 | `/novels/`에 요약 섹션 운영 | 캐릭터 상세 탭 또는 별도 섹션 확장 |
-| 공지/업데이트 | `/updates/` 카테고리 허브와 공식 허브 상태판 운영 | 공지 유형별 필터 또는 고정 공지 추가 |
+| 공지/업데이트 | `/updates/` 고정 공지, 카테고리별 기록, 공식 허브 상태판 운영 | 공지 유형별 필터 또는 공개 일정 슬롯 추가 |
 | 굿즈샵 | 미운영 | 사용자 확인 후 외부 링크만 추가 |
 | 팬 커뮤니티 | 미운영 | 사용자 확인 후 커뮤니티 진입점 정책 결정 |

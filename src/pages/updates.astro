@@ -1,7 +1,15 @@
 ---
 import SiteChrome from '../components/SiteChrome.astro';
 import Layout from '../layouts/Layout.astro';
-import { novelProject, plannedContentHubs, siteUpdates, siteUpdatesStructuredData, updateCategories } from '../data/siteContent.js';
+import {
+  categorizedSiteUpdates,
+  novelProject,
+  pinnedUpdateNotice,
+  plannedContentHubs,
+  siteUpdates,
+  siteUpdatesStructuredData,
+  updateCategories
+} from '../data/siteContent.js';
 ---
 
 <Layout
@@ -21,6 +29,20 @@ import { novelProject, plannedContentHubs, siteUpdates, siteUpdatesStructuredDat
       <p class="section-kicker">UPDATES</p>
       <h1 id="updatesTitle">SunoFox Updates</h1>
       <p>웹소설 공개, OST 연결, 음악 아카이브, 사이트 운영 개선 이력을 한 곳에 기록합니다.</p>
+    </section>
+
+    <section class="updates-pinned-section reveal" aria-labelledby="updatesPinnedTitle">
+      <div>
+        <p class="section-kicker">{pinnedUpdateNotice.kicker}</p>
+        <h2 id="updatesPinnedTitle">{pinnedUpdateNotice.title}</h2>
+        <p>{pinnedUpdateNotice.summary}</p>
+      </div>
+      <span>{pinnedUpdateNotice.status}</span>
+      <div class="updates-pinned-actions">
+        {pinnedUpdateNotice.links.map((link) => (
+          <a class="micro-button micro-button-muted" href={link.href}>{link.label}</a>
+        ))}
+      </div>
     </section>
 
     <section class="updates-hub-section reveal" aria-labelledby="updatesHubTitle">
@@ -95,6 +117,33 @@ import { novelProject, plannedContentHubs, siteUpdates, siteUpdatesStructuredDat
           </li>
         ))}
       </ol>
+    </section>
+
+    <section class="updates-category-section reveal" aria-labelledby="updatesCategoryTitle">
+      <div class="novel-section-head">
+        <p class="section-kicker">CATEGORY LOG</p>
+        <h2 id="updatesCategoryTitle">카테고리별 기록</h2>
+        <span>{categorizedSiteUpdates.length}개 활성 분류</span>
+      </div>
+
+      <div class="updates-category-grid">
+        {categorizedSiteUpdates.map((category) => (
+          <article id={`updates-category-${category.key}`}>
+            <div class="updates-category-head">
+              <span>{category.label}</span>
+              <strong>{category.countLabel}</strong>
+            </div>
+            <ol>
+              {category.updates.map((item) => (
+                <li>
+                  <time datetime={item.date.replaceAll('.', '-')}>{item.date}</time>
+                  <a href={item.links[0]?.href || '#updates-log'}>{item.title}</a>
+                </li>
+              ))}
+            </ol>
+          </article>
+        ))}
+      </div>
     </section>
   </main>
 </Layout>

@@ -22,12 +22,12 @@ Last verified: 2026-06-16
 |---|---|---|---|
 | `/` | SunoFox 메인 | `src/pages/index.astro` | 200, 소설/Music/Studio CTA |
 | `/novels/` | 웹소설 작품/회차 목록 | `src/pages/novels.astro` | 200, 1~6화 목록, 미니시즌 완결 상태, 최신화 표시 |
-| `/novels/episode-001/` | 1화 상세 | `src/pages/novels/episode-001.md` | 200, Article/Breadcrumb meta |
-| `/novels/episode-002/` | 2화 상세 | `src/pages/novels/episode-002.md` | 200, 이전/다음 링크 |
-| `/novels/episode-003/` | 3화 상세 | `src/pages/novels/episode-003.md` | 200, 이전/다음 링크 |
-| `/novels/episode-004/` | 4화 상세 | `src/pages/novels/episode-004.md` | 200, 이전/다음 링크 |
-| `/novels/episode-005/` | 5화 상세 | `src/pages/novels/episode-005.md` | 200, 이전/다음 링크 |
-| `/novels/episode-006/` | 6화 상세 | `src/pages/novels/episode-006.md` | 200, 최신화 배지 |
+| `/novels/episode-001/` | 1화 상세 | `src/pages/novels/episode-001.md` | 200, Article/Breadcrumb meta, 본문/전체 회차/OST 내부 이동 |
+| `/novels/episode-002/` | 2화 상세 | `src/pages/novels/episode-002.md` | 200, 이전/다음 링크, 본문/전체 회차/OST 내부 이동 |
+| `/novels/episode-003/` | 3화 상세 | `src/pages/novels/episode-003.md` | 200, 이전/다음 링크, 본문/전체 회차/OST 내부 이동 |
+| `/novels/episode-004/` | 4화 상세 | `src/pages/novels/episode-004.md` | 200, 이전/다음 링크, 본문/전체 회차/OST 내부 이동 |
+| `/novels/episode-005/` | 5화 상세 | `src/pages/novels/episode-005.md` | 200, 이전/다음 링크, 본문/전체 회차/OST 내부 이동 |
+| `/novels/episode-006/` | 6화 상세 | `src/pages/novels/episode-006.md` | 200, 최신화 배지, 본문/전체 회차/OST 내부 이동 |
 | `/music/` | Music Archive / YouTube-MV 허브 | `src/pages/music/index.astro` | 200, 대표 OST, 앨범, 영상 허브 |
 | `/music/archive-vol-1/` | ARCHIVE vol.1 앨범 상세 | `src/pages/music/archive-vol-1.astro` | 200, 트랙/앨범 정보 |
 | `/profile/` | SunoFox 소개/필모그래피 | `src/pages/profile.astro` | 200, 공식 허브 스냅샷, YouTube/Music/Novel 탭 |

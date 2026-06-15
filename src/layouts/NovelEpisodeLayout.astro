@@ -65,6 +65,10 @@ const episodeRailItems = publishedEpisodes.map((episode) => ({
   ...episode,
   isCurrent: episode.href === currentEpisode.href
 }));
+const episodeProgressPercent = publishedEpisodes.length > 0
+  ? Math.round((episodePosition / publishedEpisodes.length) * 100)
+  : 0;
+const episodeProgressStyle = `--episode-progress: ${episodeProgressPercent}%`;
 ---
 
 <Layout
@@ -114,6 +118,30 @@ const episodeRailItems = publishedEpisodes.map((episode) => ({
           ))}
         </dl>
 
+        <div class="novel-reader-progress" aria-label={`${novelProject.season.label} 회차 진행`}>
+          <div>
+            <span>{novelProject.season.label}</span>
+            <strong>{episodePosition}/{publishedEpisodes.length}</strong>
+          </div>
+          <span
+            class="novel-reader-progress-bar"
+            role="progressbar"
+            aria-label={`${currentEpisode.label} 진행 위치`}
+            aria-valuemin="1"
+            aria-valuemax={publishedEpisodes.length}
+            aria-valuenow={episodePosition}
+            style={episodeProgressStyle}
+          >
+            <i aria-hidden="true"></i>
+          </span>
+        </div>
+
+        <nav class="novel-reader-quicklinks" aria-label="회차 내부 이동">
+          <a href="#episodeBody">본문 읽기</a>
+          <a href="#episodeIndex">전체 회차</a>
+          <a href="#episodeOst">회차 OST</a>
+        </nav>
+
         <nav class="novel-reader-jumpbar" aria-label="회차 빠른 이동">
           {resolvedPreviousHref ? (
             <a href={resolvedPreviousHref}>
@@ -144,11 +172,11 @@ const episodeRailItems = publishedEpisodes.map((episode) => ({
         </nav>
       </header>
 
-      <section class="novel-reader-body" aria-label={`${title} 본문`}>
+      <section id="episodeBody" class="novel-reader-body" aria-label={`${title} 본문`}>
         <slot />
       </section>
 
-      <section class="novel-reader-index reveal" aria-labelledby="episodeIndexTitle">
+      <section id="episodeIndex" class="novel-reader-index reveal" aria-labelledby="episodeIndexTitle">
         <div>
           <p class="section-kicker">EPISODE INDEX</p>
           <h2 id="episodeIndexTitle">전체 회차</h2>
@@ -167,7 +195,7 @@ const episodeRailItems = publishedEpisodes.map((episode) => ({
         </nav>
       </section>
 
-      <section class="novel-reader-ost reveal" aria-labelledby="episodeOstTitle">
+      <section id="episodeOst" class="novel-reader-ost reveal" aria-labelledby="episodeOstTitle">
         <a class="novel-reader-ost-thumb" href={currentEpisodeOst.href} target="_blank" rel="noopener noreferrer" aria-label={`${currentEpisodeOst.title} 감상하기`}>
           <img
             src={currentEpisodeOst.thumbnail}

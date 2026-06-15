@@ -22,37 +22,37 @@ $routes = @(
     Name = "episode-001"
     Path = "/novels/episode-001/"
     File = "novels/episode-001/index.html"
-    Must = @("EPISODE 01", "novel-reader-summary", "novel-reader-jumpbar", "novel-reader-index", "novel-reader-actions", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-001/")
+    Must = @("EPISODE 01", "novel-reader-summary", "novel-reader-progress", "novel-reader-quicklinks", "episodeBody", "episodeIndex", "episodeOst", "novel-reader-jumpbar", "novel-reader-index", "novel-reader-actions", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-001/")
   },
   @{
     Name = "episode-002"
     Path = "/novels/episode-002/"
     File = "novels/episode-002/index.html"
-    Must = @("EPISODE 02", "novel-reader-summary", "novel-reader-jumpbar", "novel-reader-index", "novel-reader-actions", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-002/")
+    Must = @("EPISODE 02", "novel-reader-summary", "novel-reader-progress", "novel-reader-quicklinks", "episodeBody", "episodeIndex", "episodeOst", "novel-reader-jumpbar", "novel-reader-index", "novel-reader-actions", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-002/")
   },
   @{
     Name = "episode-003"
     Path = "/novels/episode-003/"
     File = "novels/episode-003/index.html"
-    Must = @("EPISODE 03", "novel-reader-summary", "novel-reader-jumpbar", "novel-reader-index", "novel-reader-actions", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-003/")
+    Must = @("EPISODE 03", "novel-reader-summary", "novel-reader-progress", "novel-reader-quicklinks", "episodeBody", "episodeIndex", "episodeOst", "novel-reader-jumpbar", "novel-reader-index", "novel-reader-actions", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-003/")
   },
   @{
     Name = "episode-004"
     Path = "/novels/episode-004/"
     File = "novels/episode-004/index.html"
-    Must = @("EPISODE 04", "novel-reader-summary", "novel-reader-jumpbar", "novel-reader-index", "novel-reader-actions", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-004/")
+    Must = @("EPISODE 04", "novel-reader-summary", "novel-reader-progress", "novel-reader-quicklinks", "episodeBody", "episodeIndex", "episodeOst", "novel-reader-jumpbar", "novel-reader-index", "novel-reader-actions", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-004/")
   },
   @{
     Name = "episode-005"
     Path = "/novels/episode-005/"
     File = "novels/episode-005/index.html"
-    Must = @("EPISODE 05", "novel-reader-summary", "novel-reader-jumpbar", "novel-reader-index", "novel-reader-actions", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-005/")
+    Must = @("EPISODE 05", "novel-reader-summary", "novel-reader-progress", "novel-reader-quicklinks", "episodeBody", "episodeIndex", "episodeOst", "novel-reader-jumpbar", "novel-reader-index", "novel-reader-actions", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-005/")
   },
   @{
     Name = "episode-006"
     Path = "/novels/episode-006/"
     File = "novels/episode-006/index.html"
-    Must = @("EPISODE 06", "novel-reader-summary", "novel-reader-jumpbar", "novel-reader-index", "novel-reader-actions", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-006/")
+    Must = @("EPISODE 06", "novel-reader-summary", "novel-reader-progress", "novel-reader-quicklinks", "episodeBody", "episodeIndex", "episodeOst", "novel-reader-jumpbar", "novel-reader-index", "novel-reader-actions", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-006/")
   },
   @{
     Name = "music"

@@ -2,6 +2,18 @@ export const siteUpdates = [
   {
     date: '2026.06.16',
     type: 'Novel',
+    title: '에피소드 상세 독서 이동 개선',
+    summary:
+      '각 회차 상세 상단에 본문, 전체 회차, 회차 OST로 바로 이동하는 내부 링크와 회차 진행 표시를 추가해 모바일 독자가 읽기 흐름을 더 쉽게 잡을 수 있게 했습니다.',
+    areas: ['novel', 'site'],
+    links: [
+      { label: '최신화 보기', href: '/novels/episode-006/' },
+      { label: '소설 목록', href: '/novels/' }
+    ]
+  },
+  {
+    date: '2026.06.16',
+    type: 'Novel',
     title: '세계관과 주요 인물 빠른 이동 개선',
     summary:
       '소설 허브에서 세계관 포인트와 주요 인물 카드로 바로 이동할 수 있는 앵커를 추가해 작품 정보를 더 빠르게 훑을 수 있게 했습니다.',

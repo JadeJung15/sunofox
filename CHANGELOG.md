@@ -7,6 +7,7 @@
 - 공식 업데이트 로그 라우트 `/updates/`를 추가하고 footer/overlay menu 진입점을 연결했습니다.
 - 업데이트 로그용 CollectionPage JSON-LD와 모바일 목록 스타일을 추가했습니다.
 - `npm run check:public-routes`를 추가해 공개 라우트가 홈 fallback 200으로 오인되지 않도록 핵심 문자열을 검증합니다.
+- 공개 페이지의 일부 영어 CTA와 보조 라벨을 한글 중심 문구로 정리했습니다.
 - 공통 OG/Twitter 공유 메타에 대표 이미지 크기 정보를 추가했습니다.
 - 에피소드 상세 페이지에 `article:published_time`과 `article:modified_time` meta를 추가했습니다.
 - `/music/` 및 앨범 상세 페이지의 메뉴 active 상태와 앨범 이미지 alt를 보강했습니다.

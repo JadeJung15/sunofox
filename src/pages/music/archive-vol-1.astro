@@ -18,7 +18,7 @@ import { archiveAlbum, archiveAlbumStructuredData } from '../../data/siteContent
 
   <main class="site-main album-detail-page">
     <section class="album-detail-hero reveal" aria-labelledby="albumTitle">
-      <a class="album-back-link" href="/music/">Music Archive</a>
+      <a class="album-back-link" href="/music/">음악 아카이브</a>
 
       <div class="album-cover-mark" aria-hidden="true">
         <img src={archiveAlbum.image} alt={archiveAlbum.imageAlt} width="512" height="512" loading="eager" decoding="async" />
@@ -27,7 +27,7 @@ import { archiveAlbum, archiveAlbumStructuredData } from '../../data/siteContent
       </div>
 
       <div class="album-detail-copy">
-        <p class="section-kicker">DISCOGRAPHY</p>
+        <p class="section-kicker">앨범 기록</p>
         <h1 id="albumTitle">{archiveAlbum.title}</h1>
         <p class="album-detail-summary">{archiveAlbum.summary}</p>
 
@@ -44,8 +44,8 @@ import { archiveAlbum, archiveAlbumStructuredData } from '../../data/siteContent
           {archiveAlbum.links.map((link) => (
             <a class="main-button main-button-muted" href={link.href} target="_blank" rel="noopener noreferrer">{link.label}</a>
           ))}
-          <a class="main-button main-button-muted" href="/music/">Archive Home</a>
-          <a class="main-button" href="/novels/">Music to Novel</a>
+          <a class="main-button main-button-muted" href="/music/">아카이브 홈</a>
+          <a class="main-button" href="/novels/">웹소설 보기</a>
         </div>
       </div>
     </section>
@@ -79,7 +79,7 @@ import { archiveAlbum, archiveAlbumStructuredData } from '../../data/siteContent
     </section>
 
     <section class="album-source-panel reveal" aria-label="Album sources">
-      <span>Source</span>
+      <span>출처</span>
       <a href={archiveAlbum.externalHref} target="_blank" rel="noopener noreferrer">Genie album page</a>
       <a href={archiveAlbum.bugsHref} target="_blank" rel="noopener noreferrer">Bugs artist tracks</a>
     </section>

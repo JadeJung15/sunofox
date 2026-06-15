@@ -55,7 +55,7 @@ import { artistLinks, novelProject, structuredData, sunofoxProfile } from '../da
 
     <section class="profile-detail-section reveal" aria-labelledby="profileDetailTitle">
       <div class="profile-detail-head">
-        <p class="section-kicker">PUBLIC FILE</p>
+        <p class="section-kicker">공개 정보</p>
         <h2 id="profileDetailTitle">SunoFox Detail</h2>
         <p>공개 웹, 유튜브 채널, 음원 플랫폼에서 확인한 수노폭스 정보를 필모그래피처럼 정리했습니다.</p>
         <span>확인 기준 {sunofoxProfile.researchDate}</span>
@@ -93,7 +93,7 @@ import { artistLinks, novelProject, structuredData, sunofoxProfile } from '../da
 
             {tab.videos && (
               <div class="profile-video-list" aria-label={`${tab.title} latest videos`}>
-                <p class="profile-section-label">Latest videos</p>
+                <p class="profile-section-label">최근 영상</p>
                 <ol>
                   {tab.videos.map((video) => (
                     <li>
@@ -121,7 +121,7 @@ import { artistLinks, novelProject, structuredData, sunofoxProfile } from '../da
       </div>
 
       <div class="profile-source-strip" aria-label="SunoFox public sources">
-        <span>Sources</span>
+        <span>출처</span>
         {sunofoxProfile.sources.map((source) => (
           <a href={source.href} target="_blank" rel="noopener noreferrer">{source.label}</a>
         ))}

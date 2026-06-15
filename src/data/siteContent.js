@@ -203,8 +203,8 @@ export const archiveAlbum = {
     { position: '09', title: 'The Devil Walks Tonight' }
   ],
   links: [
-    { label: 'Genie Album', href: 'https://www.genie.co.kr/detail/albumInfo?axnm=87219242' },
-    { label: 'Bugs Artist', href: artistLinks.bugs }
+    { label: 'Genie 앨범', href: 'https://www.genie.co.kr/detail/albumInfo?axnm=87219242' },
+    { label: 'Bugs 아티스트', href: artistLinks.bugs }
   ]
 };
 
@@ -320,11 +320,11 @@ export const musicArchive = {
     }
   ],
   sources: [
-    { label: 'YouTube Channel', href: artistLinks.youtube },
-    { label: 'YouTube Latest Feed', href: 'https://www.youtube.com/feeds/videos.xml?channel_id=UC8M-2aXbknDT3tDcN1PMvuQ' },
-    { label: 'Playboard Snapshot', href: 'https://playboard.co/en/channel/UC8M-2aXbknDT3tDcN1PMvuQ' },
-    { label: 'Genie Album', href: archiveAlbum.externalHref },
-    { label: 'Bugs Artist', href: archiveAlbum.bugsHref }
+    { label: 'YouTube 채널', href: artistLinks.youtube },
+    { label: 'YouTube 최신 피드', href: 'https://www.youtube.com/feeds/videos.xml?channel_id=UC8M-2aXbknDT3tDcN1PMvuQ' },
+    { label: 'Playboard 스냅샷', href: 'https://playboard.co/en/channel/UC8M-2aXbknDT3tDcN1PMvuQ' },
+    { label: 'Genie 앨범', href: archiveAlbum.externalHref },
+    { label: 'Bugs 아티스트', href: archiveAlbum.bugsHref }
   ]
 };
 
@@ -351,8 +351,8 @@ export const sunofoxProfile = {
         stats: video.type
       })),
       links: [
-        { label: 'YouTube Channel', href: artistLinks.youtube },
-        { label: 'Playlists', href: artistLinks.youtubePlaylists }
+        { label: 'YouTube 채널', href: artistLinks.youtube },
+        { label: '재생목록', href: artistLinks.youtubePlaylists }
       ]
     },
     {
@@ -371,8 +371,8 @@ export const sunofoxProfile = {
       ],
       tracks: archiveAlbum.tracks.map((track) => track.title),
       links: [
-        { label: 'Music Archive', href: musicArchive.href },
-        { label: 'Album Detail', href: archiveAlbum.href },
+        { label: '음악 아카이브', href: musicArchive.href },
+        { label: '앨범 상세', href: archiveAlbum.href },
         ...archiveAlbum.links
       ]
     },
@@ -423,7 +423,7 @@ export const sunofoxProfile = {
     { label: 'YouTube Latest Feed', href: 'https://www.youtube.com/feeds/videos.xml?channel_id=UC8M-2aXbknDT3tDcN1PMvuQ' },
     { label: 'Playboard Channel Snapshot', href: 'https://playboard.co/en/channel/UC8M-2aXbknDT3tDcN1PMvuQ' },
     { label: 'Genie ARCHIVE vol.1', href: 'https://www.genie.co.kr/detail/albumInfo?axnm=87219242' },
-    { label: 'Bugs Artist Profile', href: artistLinks.bugs }
+    { label: 'Bugs 아티스트 프로필', href: artistLinks.bugs }
   ]
 };
 
@@ -433,10 +433,10 @@ export const siteUpdates = [
     type: 'Site',
     title: '공식 사이트 운영 문서와 Music 진입점 정리',
     summary:
-      'README를 현재 운영 구조 기준으로 갱신하고, 홈과 메뉴에서 Music Archive로 들어가는 동선을 명확히 정리했습니다.',
+      'README를 현재 운영 구조 기준으로 갱신하고, 홈과 메뉴에서 음악 아카이브로 들어가는 동선을 명확히 정리했습니다.',
     links: [
-      { label: 'Music Archive', href: '/music/' },
-      { label: 'Release Checklist', href: 'https://github.com/JadeJung15/sunofox/blob/main/docs/episode-release-checklist.md' }
+      { label: '음악 아카이브', href: '/music/' },
+      { label: '공개 체크리스트', href: 'https://github.com/JadeJung15/sunofox/blob/main/docs/episode-release-checklist.md' }
     ]
   },
   {
@@ -455,7 +455,7 @@ export const siteUpdates = [
     type: 'SEO',
     title: '공유 메타와 음악 페이지 접근성 보강',
     summary:
-      'OG 이미지 크기, 에피소드 article meta, 앨범 이미지 alt, Music Archive 메뉴 상태를 보강했습니다.',
+      'OG 이미지 크기, 에피소드 article meta, 앨범 이미지 alt, 음악 아카이브 메뉴 상태를 보강했습니다.',
     links: [
       { label: '대표 작품', href: '/novels/' },
       { label: '앨범 상세', href: '/music/archive-vol-1/' }

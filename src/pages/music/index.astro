@@ -31,8 +31,8 @@ const currentEpisode = latestNovelEpisode;
       <a class="album-back-link" href="/profile/#discography">SunoFox Detail</a>
 
       <div class="music-archive-copy">
-        <p class="section-kicker">FILMOGRAPHY</p>
-        <h1 id="musicArchiveTitle">Music Archive</h1>
+        <p class="section-kicker">기록</p>
+        <h1 id="musicArchiveTitle">음악 아카이브</h1>
         <p>{musicArchive.summary}</p>
         <span>확인 기준 {musicArchive.researchDate}</span>
         <div class="music-archive-actions" aria-label="Music archive quick actions">
@@ -83,7 +83,7 @@ const currentEpisode = latestNovelEpisode;
         />
       </a>
       <div class="music-featured-copy">
-        <p class="section-kicker">FEATURED OST</p>
+        <p class="section-kicker">대표 OST</p>
         <h2 id="musicFeaturedOstTitle">{featuredStoryOst.title}</h2>
         <p>{featuredStoryOst.summary}</p>
         <div class="music-story-actions">
@@ -96,7 +96,7 @@ const currentEpisode = latestNovelEpisode;
 
     <section class="music-release-section reveal" aria-labelledby="musicReleaseTitle">
       <div class="novel-section-head">
-        <p class="section-kicker">DISCOGRAPHY</p>
+        <p class="section-kicker">앨범 기록</p>
         <h2 id="musicReleaseTitle">공개 앨범</h2>
         <span>{musicArchive.releases.length} release</span>
       </div>
@@ -191,7 +191,7 @@ const currentEpisode = latestNovelEpisode;
     </section>
 
     <section class="album-source-panel reveal" aria-label="Music archive sources">
-      <span>Sources</span>
+      <span>출처</span>
       {musicArchive.sources.map((source) => (
         <a href={source.href} target="_blank" rel="noopener noreferrer">{source.label}</a>
       ))}

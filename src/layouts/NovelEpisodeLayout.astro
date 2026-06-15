@@ -32,8 +32,13 @@ const {
 
 const currentEpisode = novelEpisodes.find((episode) => episode.href && canonical.endsWith(episode.href)) || novelEpisodes[0];
 const currentEpisodeIndex = novelEpisodes.findIndex((episode) => episode === currentEpisode);
+const previousEpisode = currentEpisodeIndex > 0 ? novelEpisodes[currentEpisodeIndex - 1] : null;
 const followingEpisode = currentEpisodeIndex >= 0 ? novelEpisodes[currentEpisodeIndex + 1] : null;
 const isLatestEpisode = currentEpisode.href === latestNovelEpisode.href;
+const resolvedPreviousHref = previousHref || previousEpisode?.href || '';
+const resolvedPreviousLabel = previousEpisode ? `${previousEpisode.label} · ${previousEpisode.title}` : previousLabel;
+const resolvedNextHref = nextHref || followingEpisode?.href || '';
+const resolvedNextLabel = followingEpisode ? `${followingEpisode.label} · ${followingEpisode.title}` : nextLabel;
 const nextDisabledText = followingEpisode
   ? `${followingEpisode.label} 준비중 · ${followingEpisode.title}`
   : '다음 화 준비중';
@@ -74,6 +79,35 @@ const episodeJsonLd = createEpisodeStructuredData(currentEpisode);
           <span>WEB NOVEL</span>
           {isLatestEpisode && <span class="reader-latest-badge">최신화</span>}
         </div>
+
+        <nav class="novel-reader-jumpbar" aria-label="회차 빠른 이동">
+          {resolvedPreviousHref ? (
+            <a href={resolvedPreviousHref}>
+              <span>이전</span>
+              <strong>{resolvedPreviousLabel}</strong>
+            </a>
+          ) : (
+            <span aria-disabled="true">
+              <span>이전</span>
+              <strong>첫 화입니다</strong>
+            </span>
+          )}
+          <a href={backHref}>
+            <span>목록</span>
+            <strong>소설 목록</strong>
+          </a>
+          {resolvedNextHref ? (
+            <a href={resolvedNextHref}>
+              <span>다음</span>
+              <strong>{resolvedNextLabel}</strong>
+            </a>
+          ) : (
+            <span aria-disabled="true">
+              <span>다음</span>
+              <strong>{nextDisabledText}</strong>
+            </span>
+          )}
+        </nav>
       </header>
 
       <section class="novel-reader-body" aria-label={`${title} 본문`}>
@@ -107,11 +141,11 @@ const episodeJsonLd = createEpisodeStructuredData(currentEpisode);
       </section>
 
       <nav class="novel-reader-actions reveal" aria-label="Episode navigation">
-        {previousHref && <a class="main-button main-button-muted" href={previousHref}>{previousLabel}</a>}
+        {resolvedPreviousHref && <a class="main-button main-button-muted" href={resolvedPreviousHref}>{resolvedPreviousLabel}</a>}
         <a class="main-button main-button-muted" href={backHref}>목록으로</a>
         <a class="main-button main-button-muted" href={artistLinks.featuredOst} target="_blank" rel="noopener noreferrer">OST 감상</a>
-        {nextHref ? (
-          <a class="main-button" href={nextHref}>{nextLabel}</a>
+        {resolvedNextHref ? (
+          <a class="main-button" href={resolvedNextHref}>{resolvedNextLabel}</a>
         ) : (
           <span class="main-button novel-next-disabled" aria-disabled="true">{nextDisabledText}</span>
         )}

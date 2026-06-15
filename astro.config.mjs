@@ -11,7 +11,8 @@ const hiddenPublicPrefixes = [
   '/contact',
   '/live',
   '/biography',
-  '/goods'
+  '/goods',
+  '/404'
 ];
 
 export default defineConfig({

@@ -61,7 +61,7 @@ npm run check
 
 `check:a11y`는 공개 HTML의 lang, viewport, h1, 이미지 alt, 링크/버튼 접근 가능한 이름, 새 탭 링크 rel 값을 확인합니다.
 
-`check:public-routes`는 현재 공개된 1~6화 상세 페이지, article publish meta, Breadcrumb JSON-LD, sitemap-index, legacy sitemap, sitemap, robots까지 함께 확인합니다.
+`check:public-routes`는 현재 공개된 1~6화 상세 페이지, article publish meta, Breadcrumb JSON-LD, custom 404, sitemap-index, legacy sitemap, sitemap, robots까지 함께 확인합니다.
 
 빌드 후 최소 확인 URL:
 
@@ -86,6 +86,7 @@ https://sunofox.com/novels/
 https://sunofox.com/novels/episode-00N/
 https://sunofox.com/music/
 https://sunofox.com/profile/
+https://sunofox.com/__sunofox_not_found_probe__/
 https://sunofox.com/sitemap.xml
 https://sunofox.com/sitemap-0.xml
 https://sunofox.com/robots.txt

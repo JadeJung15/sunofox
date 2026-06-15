@@ -34,6 +34,7 @@ Last verified: 2026-06-16
 | `/updates/` | 공식 업데이트 로그 | `src/pages/updates.astro` | 200, 고정 공지, 카테고리 허브, 카테고리별 기록, 최근 업데이트 |
 | `/privacy/` | 개인정보 처리방침 | `src/pages/privacy.astro` | 200 |
 | `/terms/` | 이용약관 | `src/pages/terms.astro` | 200 |
+| `/404.html` | custom 404 fallback | `src/pages/404.astro` | 없는 URL이 404 상태와 안내 CTA를 반환 |
 | `/robots.txt` | robots | `src/pages/robots.txt.ts` | 200, sitemap-index 연결, 보호 경로 Disallow |
 | `/sitemap-index.xml` | sitemap index | `@astrojs/sitemap` | 200, `sitemap-0.xml` 연결 |
 | `/sitemap.xml` | legacy sitemap index | `src/pages/sitemap.xml.ts` | 200, `sitemap-0.xml` 연결 |
@@ -89,7 +90,7 @@ npm run check
 | `check:dist` | 빌드 산출물의 내부 링크, 이미지, asset 존재 |
 | `check:seo` | title, description, canonical, OG/Twitter, JSON-LD |
 | `check:a11y` | lang, viewport, h1, alt, 링크/버튼 이름, 새 탭 rel |
-| `check:public-routes` | 공개 URL 200, 핵심 문자열, sitemap, robots 보호 경로 Disallow |
+| `check:public-routes` | 공개 URL 200, custom 404 상태, 핵심 문자열, sitemap, robots 보호 경로 Disallow |
 
 ## Post Deploy Verification
 
@@ -103,6 +104,7 @@ https://sunofox.com/music/
 https://sunofox.com/music/archive-vol-1/
 https://sunofox.com/profile/
 https://sunofox.com/updates/
+https://sunofox.com/__sunofox_not_found_probe__/
 https://sunofox.com/sitemap-0.xml
 https://sunofox.com/robots.txt
 ```
@@ -122,6 +124,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-public-routes.
 | OST/음악 아카이브 | 대표 OST, ARCHIVE vol.1, 영상 허브 운영 | 신규 OST 추가 시 `storyOsts`와 회차 `ostKey` 연결 |
 | 세계관/캐릭터 | `/novels/`에 요약 섹션 운영 | 캐릭터 상세 탭 또는 별도 섹션 확장 |
 | 공지/업데이트 | `/updates/` 고정 공지, 카테고리별 기록, 공식 허브 상태판 운영 | 공지 유형별 필터 또는 공개 일정 슬롯 추가 |
+| 404/오류 안내 | custom 404 페이지 운영 | 검색 유입이 많은 깨진 URL이 생기면 관련 허브로 안내 문구 보강 |
 | 프로필/필모그래피 | `/profile/` 공식 허브 스냅샷과 공개 정보 탭 운영 | 변동 지표 최신화 또는 작품별 상세 필모그래피 확장 |
 | 굿즈샵 | 미운영 | 사용자 확인 후 외부 링크만 추가 |
 | 팬 커뮤니티 | 미운영 | 사용자 확인 후 커뮤니티 진입점 정책 결정 |

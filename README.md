@@ -36,6 +36,7 @@ SunoFox 공식 사이트는 음악에서 시작한 감정과 장면을 웹소설
 | `/updates/` | 공식 업데이트 로그 | `src/pages/updates.astro` |
 | `/privacy/` | 개인정보 처리방침 | `src/pages/privacy.astro` |
 | `/terms/` | 이용약관 | `src/pages/terms.astro` |
+| `/404.html` | custom 404 fallback | `src/pages/404.astro` |
 | `/robots.txt` | robots | `src/pages/robots.txt.ts` |
 | `/sitemap-index.xml`, `/sitemap-0.xml` | sitemap | `@astrojs/sitemap` |
 | `/sitemap.xml` | legacy sitemap 호환 XML | `src/pages/sitemap.xml.ts` |
@@ -100,8 +101,8 @@ OST와 YouTube 연결은 `src/data/artistContent.js`의 `artistLinks`, `featured
 | `npm run lint` | `npm run build && npm run check:seo && npm run check:a11y` | standalone 공유 메타/접근성 정적 점검 |
 | `npm run test` | `npm run build && npm run check` | standalone 배포 전 전체 검증 |
 | `npm run check` | `npm run check:content && npm run check:music && npm run check:dist && npm run check:seo && npm run check:a11y && npm run check:public-routes` | 배포 전 콘텐츠/음악 데이터/asset/SEO/접근성/공개 라우트 통합 검증 |
-| `npm run check:public-routes` | `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-public-routes.ps1` | `dist` 기준 공개 라우트, 1~6화 핵심 문자열, robots 보호 경로 정책 확인 |
-| `npm run check:production` | `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-public-routes.ps1 -BaseUrl https://sunofox.com` | 배포 후 운영 도메인 공개 라우트 검증 |
+| `npm run check:public-routes` | `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-public-routes.ps1` | `dist` 기준 공개 라우트, custom 404, 1~6화 핵심 문자열, robots 보호 경로 정책 확인 |
+| `npm run check:production` | `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-public-routes.ps1 -BaseUrl https://sunofox.com` | 배포 후 운영 도메인 공개 라우트와 404 상태 검증 |
 | `npm run check:content` | `node scripts/check-content-consistency.mjs` | 웹소설 목록 데이터와 에피소드 frontmatter 일치 확인 |
 | `npm run check:music` | `node scripts/check-music-content.mjs` | OST, YouTube/MV, 앨범 트랙 데이터 일치 확인 |
 | `npm run check:dist` | `node scripts/check-dist-integrity.mjs` | 공개 `dist` 내부 링크와 이미지/asset 경로 존재 확인 |
@@ -140,7 +141,7 @@ production 반영 전 기본 순서입니다.
 `check:dist`는 빌드된 공개 HTML/CSS/manifest의 내부 링크, 이미지, asset 경로가 `dist` 안에 실제 존재하는지 확인합니다. 보호/운영 HTML인 `/mv-studio`, `/login`, `/signup`, `/admin`, `/account` 계열은 구조 변경 승인 범위와 분리해 제외합니다.
 `check:seo`는 홈, 작품 목록, 1~6화 상세, Music Archive, 앨범 상세, Profile, Updates의 title, description, canonical, OG/Twitter card, JSON-LD 기본 타입을 확인합니다.
 `check:a11y`는 공개 HTML의 lang, viewport, h1, 이미지 alt, 링크/버튼 접근 가능한 이름, 새 탭 링크 rel 값을 확인합니다.
-`check:public-routes`는 홈, 작품 목록, 1~6화 상세, Music Archive, 앨범 상세, Profile, Updates, sitemap-index, legacy sitemap, sitemap, robots의 sitemap 연결과 보호 경로 Disallow 정책을 확인합니다.
+`check:public-routes`는 홈, 작품 목록, 1~6화 상세, Music Archive, 앨범 상세, Profile, Updates, custom 404, sitemap-index, legacy sitemap, sitemap, robots의 sitemap 연결과 보호 경로 Disallow 정책을 확인합니다. 운영 URL 모드에서는 존재하지 않는 probe URL이 홈 fallback 200이 아니라 404로 응답하는지도 확인합니다.
 작품 목록과 에피소드 상세는 Breadcrumb JSON-LD, 에피소드는 article publish meta도 함께 검증합니다.
 모바일 검증 시 공개 CTA, 작품 탭, footer 링크는 44px 안팎의 터치 영역을 유지해야 합니다.
 
@@ -154,6 +155,7 @@ https://sunofox.com/music/
 https://sunofox.com/music/archive-vol-1/
 https://sunofox.com/profile/
 https://sunofox.com/updates/
+https://sunofox.com/__sunofox_not_found_probe__/
 https://sunofox.com/sitemap.xml
 https://sunofox.com/sitemap-0.xml
 https://sunofox.com/robots.txt

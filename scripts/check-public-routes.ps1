@@ -79,6 +79,13 @@ $routes = @(
     Must = @("SunoFox Updates", "updates-pinned-section", "updates-pinned-actions", "updates-hub-section", "updates-hub-grid", "updates-category-notice", "updates-category-section", "updates-category-grid", "content-roadmap", "updates-roadmap-section", "updates-roadmap-card", "updates-roadmap-visibility", "updates-roadmap-next", "updates-roadmap-disabled", "updates-log-section", "updates-log-list", "/novels/", "/music/", "https://sunofox.com/updates/")
   },
   @{
+    Name = "not-found"
+    Path = "/__sunofox_not_found_probe__/"
+    File = "404.html"
+    ExpectedStatus = 404
+    Must = @("페이지를 찾을 수 없습니다", "not-found-panel", "not-found-actions", "/novels/", "/music/", "noindex, follow")
+  },
+  @{
     Name = "sitemap-index"
     Path = "/sitemap-index.xml"
     File = "sitemap-index.xml"
@@ -104,6 +111,56 @@ $routes = @(
   }
 )
 
+function Get-ExpectedStatus {
+  param(
+    [hashtable]$Route
+  )
+
+  if ([string]::IsNullOrWhiteSpace($BaseUrl) -eq $false -and $Route.ContainsKey("ExpectedStatus")) {
+    return [int]$Route["ExpectedStatus"]
+  }
+
+  return 200
+}
+
+function Read-HttpErrorContent {
+  param(
+    $Response
+  )
+
+  if ($null -eq $Response) {
+    return ""
+  }
+
+  if ($Response -is [System.Net.Http.HttpResponseMessage]) {
+    return $Response.Content.ReadAsStringAsync().GetAwaiter().GetResult()
+  }
+
+  $stream = $Response.GetResponseStream()
+  if ($null -eq $stream) {
+    return ""
+  }
+
+  $reader = New-Object System.IO.StreamReader($stream, [System.Text.Encoding]::UTF8)
+  try {
+    return $reader.ReadToEnd()
+  } finally {
+    $reader.Dispose()
+  }
+}
+
+function Get-HttpStatusCode {
+  param(
+    $Response
+  )
+
+  if ($null -eq $Response -or $null -eq $Response.StatusCode) {
+    return 0
+  }
+
+  return [int]$Response.StatusCode
+}
+
 function Get-RouteContent {
   param(
     [hashtable]$Route
@@ -111,11 +168,26 @@ function Get-RouteContent {
 
   if ([string]::IsNullOrWhiteSpace($BaseUrl) -eq $false) {
     $base = ([string]$BaseUrl).Trim().TrimEnd([char]"/")
-    $response = Invoke-WebRequest -Uri "$base$($Route['Path'])" -TimeoutSec 30 -UseBasicParsing
+    $source = "$base$($Route['Path'])"
+
+    try {
+      $response = Invoke-WebRequest -Uri $source -TimeoutSec 30 -UseBasicParsing
+    } catch {
+      if ($null -eq $_.Exception.Response) {
+        throw
+      }
+
+      return @{
+        Status = Get-HttpStatusCode -Response $_.Exception.Response
+        Content = Read-HttpErrorContent -Response $_.Exception.Response
+        Source = $source
+      }
+    }
+
     return @{
       Status = [int]$response.StatusCode
       Content = $response.Content
-      Source = "$base$($Route['Path'])"
+      Source = $source
     }
   }
 
@@ -138,6 +210,7 @@ function Get-RouteContent {
 $results = foreach ($route in $routes) {
   try {
     $payload = Get-RouteContent -Route $route
+    $expectedStatus = Get-ExpectedStatus -Route $route
     $missing = @()
 
     foreach ($needle in $route["Must"]) {
@@ -150,7 +223,7 @@ $results = foreach ($route in $routes) {
       Name = $route["Name"]
       Path = $route["Path"]
       Status = $payload.Status
-      Pass = ($payload.Status -eq 200 -and $missing.Count -eq 0)
+      Pass = ($payload.Status -eq $expectedStatus -and $missing.Count -eq 0)
       Missing = ($missing -join " | ")
       Source = $payload.Source
     }

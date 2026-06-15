@@ -13,6 +13,7 @@ const {
   type = 'website',
   publishedTime = '',
   modifiedTime = '',
+  robots = 'index, follow',
   keywords = '',
   articleSection = '',
   articleTags = [],
@@ -41,7 +42,7 @@ const imageType = image.match(/\.jpe?g($|\?)/i)
     <meta name="description" content={description} />
     <meta name="author" content={author} />
     {keywordContent && <meta name="keywords" content={keywordContent} />}
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={robots} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content={type} />

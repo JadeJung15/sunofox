@@ -1819,6 +1819,18 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   transform: translateX(6px);
 }
 
+.novel-episode-row.is-latest {
+  border-color: rgba(255, 10, 91, 0.34);
+  background: linear-gradient(90deg, rgba(255, 10, 91, 0.08), transparent 72%);
+}
+
+.novel-episode-row.is-latest b,
+.reader-latest-badge {
+  border-color: rgba(255, 10, 91, 0.62);
+  background: rgba(255, 10, 91, 0.14);
+  color: #ffffff;
+}
+
 .novel-episode-row.is-upcoming {
   color: var(--muted);
   opacity: 0.72;
@@ -1861,6 +1873,35 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-size: 14px;
   line-height: 1.65;
   word-break: keep-all;
+}
+
+.novel-episode-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+  color: var(--subtle);
+  font-family: var(--font-condensed);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.novel-episode-meta span {
+  display: inline-flex;
+  min-height: 26px;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.026);
+  padding: 0 9px;
+}
+
+.novel-episode-row.is-latest .novel-episode-meta span:last-child {
+  border-color: rgba(255, 10, 91, 0.52);
+  background: rgba(255, 10, 91, 0.12);
+  color: rgba(255, 255, 255, 0.86);
 }
 
 .novel-detail-info {
@@ -3816,6 +3857,17 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
 
   .novel-episode-row p {
     font-size: 13px;
+  }
+
+  .novel-episode-meta {
+    gap: 6px;
+    margin-top: 10px;
+    font-size: 10px;
+  }
+
+  .novel-episode-meta span {
+    min-height: 24px;
+    padding: 0 8px;
   }
 
   .novel-detail-info {

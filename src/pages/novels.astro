@@ -4,6 +4,7 @@ import Layout from '../layouts/Layout.astro';
 import {
   artistLinks,
   featuredStoryOst,
+  latestNovelEpisode,
   musicArchive,
   novelEpisodes,
   novelProject,
@@ -12,6 +13,7 @@ import {
 } from '../data/siteContent.js';
 
 const novelListCta = '소설 보러가기';
+const latestEpisodeTitle = `${latestNovelEpisode.label} · ${latestNovelEpisode.title}`;
 ---
 
 <Layout
@@ -73,20 +75,25 @@ const novelListCta = '소설 보러가기';
       <div class="novel-section-head">
         <p class="section-kicker">EPISODES</p>
         <h2 id="episodeListTitle">소설 목록</h2>
-        <span>{publishedNovelEpisodes.length}화 공개 · 총 {novelEpisodes.length}화</span>
+        <span>{publishedNovelEpisodes.length}화 공개 · 최신 {latestEpisodeTitle}</span>
       </div>
 
       <div class="novel-episode-rows">
         {novelEpisodes.map((episode) => (
           episode.href ? (
-            <a class="novel-episode-row" href={episode.href}>
+            <a class:list={['novel-episode-row', episode === latestNovelEpisode && 'is-latest']} href={episode.href}>
               <span>{episode.number}</span>
               <div>
                 <strong>{episode.title}</strong>
                 <p>{episode.hook}</p>
+                <small class="novel-episode-meta">
+                  <span>{episode.status}</span>
+                  {episode.readTime && <span>{episode.readTime}</span>}
+                  {episode === latestNovelEpisode && <span>최신화</span>}
+                </small>
               </div>
               <em>{episode.publishedAt}</em>
-              <b>{episode.isFree ? '무료' : '공개 예정'}</b>
+              <b>{episode === latestNovelEpisode ? '최신화' : episode.isFree ? '무료' : '공개 예정'}</b>
             </a>
           ) : (
             <article class="novel-episode-row is-upcoming" aria-disabled="true">
@@ -94,6 +101,10 @@ const novelListCta = '소설 보러가기';
               <div>
                 <strong>{episode.title}</strong>
                 <p>{episode.hook}</p>
+                <small class="novel-episode-meta">
+                  <span>{episode.status}</span>
+                  {episode.readTime && <span>{episode.readTime}</span>}
+                </small>
               </div>
               <em>{episode.publishedAt}</em>
               <b>{episode.status}</b>

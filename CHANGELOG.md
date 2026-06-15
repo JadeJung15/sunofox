@@ -4,6 +4,7 @@
 
 ### Improved
 
+- `/music/` YouTube/MV 카드의 긴 영상 제목, 메타, 타입 라벨이 좁은 화면에서 넘치지 않도록 텍스트 줄바꿈 방어를 보강했습니다.
 - `npm run check:music`을 추가해 대표 OST, YouTube/MV 영상 목록, 앨범 트랙 순서, 영상 ID와 썸네일 URL 일치를 배포 전 검증합니다.
 - `check:content`가 `/novels/` 읽는 흐름 데이터의 구간 형식, 공개 회차 포함 여부, 구간 첫 화 링크를 검증하도록 보강했습니다.
 - `npm run check:production`을 추가해 Cloudflare Pages 배포 후 운영 도메인의 공개 라우트를 같은 검증 스크립트로 확인할 수 있게 했습니다.

@@ -3222,6 +3222,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
 
 .music-video-feature {
   display: grid;
+  min-width: 0;
   min-height: 100%;
   align-content: start;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -3264,6 +3265,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-size: clamp(22px, 2.8vw, 34px);
   font-weight: 950;
   line-height: 1.18;
+  overflow-wrap: anywhere;
   word-break: keep-all;
 }
 
@@ -3273,11 +3275,13 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-size: 14px;
   font-weight: 700;
   line-height: 1.55;
+  overflow-wrap: anywhere;
 }
 
 .music-video-feature em {
   display: inline-flex;
-  width: max-content;
+  width: fit-content;
+  max-width: 100%;
   margin-top: 16px;
   color: var(--pink);
   font-family: var(--font-condensed);
@@ -3285,6 +3289,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-style: normal;
   font-weight: 950;
   letter-spacing: 0.12em;
+  overflow-wrap: anywhere;
   text-transform: uppercase;
 }
 
@@ -3351,6 +3356,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
 
 .music-video-grid a {
   display: grid;
+  min-width: 0;
   min-height: 202px;
   align-content: start;
   border: 1px solid rgba(255, 255, 255, 0.11);
@@ -3389,6 +3395,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-size: 18px;
   font-weight: 900;
   line-height: 1.42;
+  overflow-wrap: anywhere;
   word-break: keep-all;
 }
 
@@ -3398,10 +3405,12 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-size: 14px;
   font-weight: 650;
   line-height: 1.55;
+  overflow-wrap: anywhere;
 }
 
 .music-video-grid em {
   display: block;
+  max-width: 100%;
   margin-top: 14px;
   color: var(--pink);
   font-family: var(--font-condensed);
@@ -3409,6 +3418,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-style: normal;
   font-weight: 950;
   letter-spacing: 0.12em;
+  overflow-wrap: anywhere;
   text-transform: uppercase;
 }
 

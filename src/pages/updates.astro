@@ -1,7 +1,7 @@
 ---
 import SiteChrome from '../components/SiteChrome.astro';
 import Layout from '../layouts/Layout.astro';
-import { novelProject, siteUpdates, siteUpdatesStructuredData } from '../data/siteContent.js';
+import { novelProject, siteUpdates, siteUpdatesStructuredData, updateCategories } from '../data/siteContent.js';
 ---
 
 <Layout
@@ -23,7 +23,26 @@ import { novelProject, siteUpdates, siteUpdatesStructuredData } from '../data/si
       <p>웹소설 공개, OST 연결, 음악 아카이브, 사이트 운영 개선 이력을 한 곳에 기록합니다.</p>
     </section>
 
-    <section class="updates-log-section reveal" aria-labelledby="updatesLogTitle">
+    <section class="updates-hub-section reveal" aria-labelledby="updatesHubTitle">
+      <div class="novel-section-head">
+        <p class="section-kicker">NOTICE HUB</p>
+        <h2 id="updatesHubTitle">운영 카테고리</h2>
+        <span>{updateCategories.length}개 분류</span>
+      </div>
+
+      <div class="updates-hub-grid">
+        {updateCategories.map((category) => (
+          <article>
+            <span>{category.label}</span>
+            <strong>{category.countLabel}</strong>
+            <p>{category.summary}</p>
+            <a class="micro-button micro-button-muted" href={category.href}>{category.cta}</a>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section id="updates-log" class="updates-log-section reveal" aria-labelledby="updatesLogTitle">
       <div class="novel-section-head">
         <p class="section-kicker">공식 기록</p>
         <h2 id="updatesLogTitle">최근 업데이트</h2>

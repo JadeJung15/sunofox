@@ -8,7 +8,7 @@ import {
   novelProject,
   publishedNovelEpisodes
 } from './novelContent.js';
-import { siteUpdates } from './updatesContent.js';
+import { siteUpdates, updateCategories } from './updatesContent.js';
 
 export {
   archiveAlbum,
@@ -21,7 +21,8 @@ export {
   novelEpisodes,
   novelProject,
   publishedNovelEpisodes,
-  siteUpdates
+  siteUpdates,
+  updateCategories
 };
 
 export const sunofoxProfile = {

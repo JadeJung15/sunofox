@@ -76,7 +76,7 @@ $routes = @(
     Name = "updates"
     Path = "/updates/"
     File = "updates/index.html"
-    Must = @("SunoFox Updates", "https://sunofox.com/updates/")
+    Must = @("SunoFox Updates", "updates-hub-section", "updates-hub-grid", "updates-log-section", "updates-log-list", "/novels/", "/music/", "https://sunofox.com/updates/")
   },
   @{
     Name = "sitemap-index"

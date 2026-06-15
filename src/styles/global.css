@@ -3079,6 +3079,81 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   color: #ffffff;
 }
 
+.updates-log-section {
+  width: min(1120px, calc(100% - 40px));
+  margin: 0 auto 92px;
+}
+
+.updates-log-list {
+  display: grid;
+  gap: 0;
+  padding: 0;
+  margin: 24px 0 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.updates-log-list li {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.24fr) minmax(0, 1fr);
+  gap: clamp(18px, 3vw, 42px);
+  border-bottom: 1px solid var(--line);
+  padding: clamp(22px, 4vw, 38px) 0;
+}
+
+.updates-log-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: start;
+  gap: 8px;
+}
+
+.updates-log-meta time,
+.updates-log-meta span {
+  display: inline-flex;
+  min-height: 30px;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.035);
+  padding: 0 10px;
+  color: var(--subtle);
+  font-family: var(--font-condensed);
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.updates-log-meta span {
+  border-color: rgba(255, 10, 91, 0.48);
+  color: #ffffff;
+}
+
+.updates-log-copy h3 {
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(24px, 3vw, 42px);
+  font-weight: 950;
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+}
+
+.updates-log-copy p {
+  max-width: 760px;
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.78;
+  word-break: keep-all;
+}
+
+.updates-log-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
 .profile-copy h2 {
   margin: 8px 0 0;
   color: #ffffff;
@@ -4061,6 +4136,25 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   .profile-track-list {
     columns: 1;
     font-size: 19px;
+  }
+
+  .updates-log-section {
+    width: calc(100% - 32px);
+    margin-bottom: 72px;
+  }
+
+  .updates-log-list li {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 24px 0;
+  }
+
+  .updates-log-copy h3 {
+    font-size: clamp(26px, 8vw, 38px);
+  }
+
+  .updates-log-copy p {
+    font-size: 14px;
   }
 
   .profile-video-list ol {

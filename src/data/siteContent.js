@@ -157,6 +157,7 @@ export const menuItems = [
   { key: 'profile', label: 'ABOUT', href: '/profile' },
   { key: 'novels', label: '소설 보러가기', href: '/novels/' },
   { key: 'music', label: 'MUSIC', href: '/music/' },
+  { key: 'updates', label: 'UPDATES', href: '/updates/', secondary: true },
   { key: 'studio', label: 'STUDIO', href: '/mv-studio' }
 ];
 
@@ -426,8 +427,45 @@ export const sunofoxProfile = {
   ]
 };
 
+export const siteUpdates = [
+  {
+    date: '2026.06.15',
+    type: 'Site',
+    title: '공식 사이트 운영 문서와 Music 진입점 정리',
+    summary:
+      'README를 현재 운영 구조 기준으로 갱신하고, 홈과 메뉴에서 Music Archive로 들어가는 동선을 명확히 정리했습니다.',
+    links: [
+      { label: 'Music Archive', href: '/music/' },
+      { label: 'Release Checklist', href: 'https://github.com/JadeJung15/sunofox/blob/main/docs/episode-release-checklist.md' }
+    ]
+  },
+  {
+    date: '2026.06.15',
+    type: 'Novel',
+    title: '1~6화 공개와 최신화 표시 개선',
+    summary:
+      '《악녀는 첫 장에서 웃었다》 1~6화를 공개하고, 작품 목록에서 최신화와 읽기 시간 정보를 더 잘 볼 수 있도록 정리했습니다.',
+    links: [
+      { label: '소설 목록', href: '/novels/' },
+      { label: '6화 읽기', href: '/novels/episode-006/' }
+    ]
+  },
+  {
+    date: '2026.06.15',
+    type: 'SEO',
+    title: '공유 메타와 음악 페이지 접근성 보강',
+    summary:
+      'OG 이미지 크기, 에피소드 article meta, 앨범 이미지 alt, Music Archive 메뉴 상태를 보강했습니다.',
+    links: [
+      { label: '대표 작품', href: '/novels/' },
+      { label: '앨범 상세', href: '/music/archive-vol-1/' }
+    ]
+  }
+];
+
 const siteUrl = 'https://sunofox.com';
 const novelUrl = `${siteUrl}/novels/`;
+const updatesUrl = `${siteUrl}/updates/`;
 const novelCoverUrl = `${siteUrl}${novelProject.coverImage}`;
 const musicArchiveUrl = `${siteUrl}${musicArchive.href}`;
 const archiveUrl = `${siteUrl}${archiveAlbum.href}`;
@@ -720,6 +758,28 @@ export const novelStructuredData = {
     url: `${siteUrl}/`
   },
   hasPart: publishedEpisodeParts
+};
+
+export const siteUpdatesStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  '@id': `${updatesUrl}#updates`,
+  name: 'SunoFox Updates',
+  url: updatesUrl,
+  description: 'SunoFox 공식 사이트의 웹소설, OST, Music Archive, 운영 개선 이력을 정리한 업데이트 로그입니다.',
+  inLanguage: 'ko-KR',
+  isPartOf: { '@id': `${siteUrl}/#website` },
+  publisher: { '@id': `${siteUrl}/#organization` },
+  mainEntity: {
+    '@type': 'ItemList',
+    numberOfItems: siteUpdates.length,
+    itemListElement: siteUpdates.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.title,
+      description: item.summary
+    }))
+  }
 };
 
 export const episodeStructuredData = createEpisodeStructuredData(novelEpisodes[0]);

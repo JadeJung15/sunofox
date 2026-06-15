@@ -33,6 +33,7 @@ SunoFox 공식 사이트는 음악에서 시작한 감정과 장면을 웹소설
 | `/music/` | Music Archive | `src/pages/music/index.astro` |
 | `/music/archive-vol-1/` | ARCHIVE vol.1 앨범 상세 | `src/pages/music/archive-vol-1.astro` |
 | `/profile/` | SunoFox 소개/필모그래피 | `src/pages/profile.astro` |
+| `/updates/` | 공식 업데이트 로그 | `src/pages/updates.astro` |
 | `/privacy/` | 개인정보 처리방침 | `src/pages/privacy.astro` |
 | `/terms/` | 이용약관 | `src/pages/terms.astro` |
 | `/robots.txt` | robots | `src/pages/robots.txt.ts` |
@@ -112,6 +113,7 @@ https://sunofox.com/novels/episode-006/
 https://sunofox.com/music/
 https://sunofox.com/music/archive-vol-1/
 https://sunofox.com/profile/
+https://sunofox.com/updates/
 https://sunofox.com/sitemap-0.xml
 https://sunofox.com/robots.txt
 ```

@@ -15,6 +15,16 @@ import {
 const novelListCta = '소설 보러가기';
 const latestEpisodeTitle = `${latestNovelEpisode.label} · ${latestNovelEpisode.title}`;
 const firstNovelEpisode = publishedNovelEpisodes[0];
+const totalReadMinutes = publishedNovelEpisodes.reduce((sum, episode) => {
+  const minutes = Number(episode.readTime?.match(/\d+/)?.[0] || 0);
+  return sum + minutes;
+}, 0);
+const novelListSummaryItems = [
+  { label: '공개 회차', value: `${publishedNovelEpisodes.length}화` },
+  { label: '예상 읽기', value: `약 ${totalReadMinutes}분` },
+  { label: '최신 공개', value: latestNovelEpisode.publishedAt },
+  { label: '현재 상태', value: `${latestNovelEpisode.label}까지 공개` }
+];
 ---
 
 <Layout
@@ -95,6 +105,15 @@ const firstNovelEpisode = publishedNovelEpisodes[0];
           <a class="micro-button micro-button-muted" href={musicArchive.href}>MUSIC</a>
         </div>
       </div>
+
+      <dl class="novel-list-summary" aria-label="소설 공개 요약">
+        {novelListSummaryItems.map((item) => (
+          <div>
+            <dt>{item.label}</dt>
+            <dd>{item.value}</dd>
+          </div>
+        ))}
+      </dl>
 
       <div class="novel-episode-rows">
         {novelEpisodes.map((episode) => (

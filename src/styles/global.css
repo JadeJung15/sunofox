@@ -1919,6 +1919,36 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   gap: 8px;
 }
 
+.novel-list-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  margin: 0 0 10px;
+  border-bottom: 1px solid var(--line);
+}
+
+.novel-list-summary div {
+  min-width: 0;
+  padding: 14px 18px 14px 0;
+}
+
+.novel-list-summary dt {
+  color: var(--subtle);
+  font-family: var(--font-condensed);
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+}
+
+.novel-list-summary dd {
+  margin: 8px 0 0;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 850;
+  line-height: 1.45;
+  word-break: keep-all;
+}
+
 .novel-episode-row {
   display: grid;
   grid-template-columns: 54px minmax(0, 1fr) auto auto;
@@ -4397,6 +4427,10 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
     width: 100%;
     min-width: 0;
     padding-inline: 8px;
+  }
+
+  .novel-list-summary {
+    grid-template-columns: 1fr;
   }
 
   .novel-episode-rows {

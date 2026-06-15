@@ -61,7 +61,7 @@ Last verified: 2026-06-16
 | 회차 본문 | `src/pages/novels/episode-00N.md` | frontmatter, 이전/다음 링크, 본문 |
 | 대표 OST/외부 링크 | `src/data/artistContent.js` | YouTube/음원 링크, `storyOsts`, 썸네일 alt |
 | Music Archive | `src/data/musicContent.js` | 앨범, 영상 허브, 외부 소스 |
-| 업데이트 로그 | `src/data/updatesContent.js` | 카테고리, 링크, 최근 변경 |
+| 업데이트 로그 | `src/data/updatesContent.js` | 카테고리, 허브 공개 상태, 링크, 최근 변경 |
 | JSON-LD/SEO 데이터 | `src/data/siteContent.js` | Organization, CreativeWorkSeries, Article, Breadcrumb |
 | 공통 meta/layout | `src/layouts/Layout.astro` | title, description, canonical, OG/Twitter |
 | 에피소드 레이아웃 | `src/layouts/NovelEpisodeLayout.astro` | 본문, OST, 이전/다음/목록 CTA |
@@ -83,6 +83,8 @@ npm run check
 | check | 확인 범위 |
 |---|---|
 | `check:content` | `novelContent.js`와 1~6화 frontmatter/본문/shareTags 일치 |
+| `check:music` | 대표 OST, YouTube/MV 영상 목록, 앨범 트랙 순서, 영상 ID와 썸네일 URL 일치 |
+| `check:updates` | Updates 카테고리, 공식 허브 상태, 대기 링크 사유, 업데이트 링크 |
 | `check:dist` | 빌드 산출물의 내부 링크, 이미지, asset 존재 |
 | `check:seo` | title, description, canonical, OG/Twitter, JSON-LD |
 | `check:a11y` | lang, viewport, h1, alt, 링크/버튼 이름, 새 탭 rel |
@@ -118,6 +120,6 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-public-routes.
 | 웹소설 연재 허브 | 1~6화 공개 | 7화 추가 구조 또는 시즌2 티저 결정 |
 | OST/음악 아카이브 | 대표 OST, ARCHIVE vol.1, 영상 허브 운영 | 신규 OST 추가 시 `storyOsts`와 회차 `ostKey` 연결 |
 | 세계관/캐릭터 | `/novels/`에 요약 섹션 운영 | 캐릭터 상세 탭 또는 별도 섹션 확장 |
-| 공지/업데이트 | `/updates/` 카테고리 허브 운영 | 공지 유형별 필터 또는 고정 공지 추가 |
+| 공지/업데이트 | `/updates/` 카테고리 허브와 공식 허브 상태판 운영 | 공지 유형별 필터 또는 고정 공지 추가 |
 | 굿즈샵 | 미운영 | 사용자 확인 후 외부 링크만 추가 |
 | 팬 커뮤니티 | 미운영 | 사용자 확인 후 커뮤니티 진입점 정책 결정 |

@@ -55,6 +55,8 @@ import { novelProject, plannedContentHubs, siteUpdates, siteUpdatesStructuredDat
             <span>{hub.status}</span>
             <strong>{hub.label}</strong>
             <p>{hub.summary}</p>
+            <small class="updates-roadmap-visibility">{hub.visibility}</small>
+            <p class="updates-roadmap-next">{hub.nextAction}</p>
             {hub.href ? (
               <a class="micro-button micro-button-muted" href={hub.href}>{hub.cta}</a>
             ) : (

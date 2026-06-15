@@ -1,6 +1,18 @@
 export const siteUpdates = [
   {
     date: '2026.06.16',
+    type: 'Content',
+    title: '회차별 OST 매핑 구조 정리',
+    summary:
+      '웹소설 회차마다 OST 키를 연결할 수 있도록 데이터 구조를 정리해, 새 회차나 새 YouTube OST가 생겼을 때 상세 페이지에 바로 연결할 수 있게 했습니다.',
+    areas: ['notice', 'novel', 'music', 'site'],
+    links: [
+      { label: '소설 목록', href: '/novels/' },
+      { label: '대표 OST', href: '/music/' }
+    ]
+  },
+  {
+    date: '2026.06.16',
     type: 'Roadmap',
     title: '공식 콘텐츠 허브 확장 상태 정리',
     summary:
@@ -71,6 +83,27 @@ const updateCategoryDefinitions = [
     summary: '대표 OST, 음악 아카이브, YouTube/MV 허브 진입점과 연결 상태를 정리합니다.',
     href: '/music/',
     cta: '음악 보기'
+  },
+  {
+    key: 'site',
+    label: '사이트 개선',
+    summary: 'SEO, 공유 메타, 모바일 가독성, 라우트 검증 같은 공식 사이트 품질 개선을 기록합니다.',
+    href: '#updates-log',
+    cta: '개선 기록'
+  },
+  {
+    key: 'commerce',
+    label: '굿즈',
+    summary: '공식 판매 URL, 상품 범위, 결제/배송 정책이 확정된 뒤 공개할 굿즈샵 연결 상태를 관리합니다.',
+    href: '#content-roadmap',
+    cta: '준비 상태'
+  },
+  {
+    key: 'community',
+    label: '팬 커뮤니티',
+    summary: '운영 플랫폼, 공지 기준, moderation 정책 확정 전까지 커뮤니티 진입점 공개를 보류합니다.',
+    href: '#content-roadmap',
+    cta: '준비 상태'
   }
 ];
 
@@ -86,37 +119,62 @@ export const updateCategories = updateCategoryDefinitions.map((category) => {
 
 export const plannedContentHubs = [
   {
+    key: 'novel',
     label: '웹소설 연재',
     status: '운영 중',
     summary: '《악녀는 첫 장에서 웃었다》 1~6화와 작품 정보, 세계관, 주요 인물을 공개 중입니다.',
+    nextAction: '다음 공개 회차나 시즌2 방향이 정해지면 회차 데이터와 상세 페이지를 추가합니다.',
+    visibility: '공개',
     href: '/novels/',
     cta: '소설 보기'
   },
   {
+    key: 'music',
     label: 'Music / MV',
     status: '운영 중',
     summary: '대표 OST, ARCHIVE vol.1, YouTube/MV 큐레이션을 음악 아카이브에서 연결합니다.',
+    nextAction: '새 OST가 공개되면 storyOsts와 회차 ostKey를 연결합니다.',
+    visibility: '공개',
     href: '/music/',
     cta: '음악 보기'
   },
   {
+    key: 'world',
     label: '세계관 / 인물',
     status: '확장 중',
     summary: '작품별 세계관과 캐릭터 소개는 현재 소설 허브 안에서 관리하고, 작품 증가 시 독립 섹션으로 분리합니다.',
+    nextAction: '작품이 늘어나면 작품별 세계관/캐릭터 섹션을 독립 허브로 분리합니다.',
+    visibility: '부분 공개',
     href: '/novels/#world',
     cta: '세계관 보기'
   },
   {
+    key: 'notice',
+    label: '공지사항',
+    status: '운영 중',
+    summary: '사이트 개선, 공개 회차, 음악 연결, 운영 기준 변경을 Updates에서 공식 기록으로 관리합니다.',
+    nextAction: '고정 공지나 공개 일정이 생기면 상단 공지 형태로 분리합니다.',
+    visibility: '공개',
+    href: '/updates/#updates-log',
+    cta: '공지 보기'
+  },
+  {
+    key: 'commerce',
     label: '굿즈샵',
     status: '준비 중',
     summary: '공식 판매 URL, 상품 범위, 결제/배송 정책이 확정된 뒤 깨지지 않는 외부 링크로 연결합니다.',
+    nextAction: '판매 URL, 상품 범위, 결제/배송 고지 확정이 필요합니다.',
+    visibility: '링크 비공개',
     href: '',
     cta: 'URL 확정 대기'
   },
   {
+    key: 'community',
     label: '팬 커뮤니티',
     status: '준비 중',
     summary: '운영 플랫폼, 공지 기준, moderation 정책을 확정한 뒤 공식 커뮤니티 진입점을 공개합니다.',
+    nextAction: '공식 플랫폼과 운영 기준 확정 후 링크를 공개합니다.',
+    visibility: '링크 비공개',
     href: '',
     cta: '운영 기준 대기'
   }

@@ -4,6 +4,7 @@
 
 ### Improved
 
+- `npm run check:content`를 추가해 웹소설 목록 데이터와 에피소드 frontmatter 불일치를 배포 전에 확인합니다.
 - `/novels/`와 1~6화 에피소드 상세에 Breadcrumb JSON-LD를 보강했습니다.
 - 공개 라우트 검증 스크립트가 sitemap-index, 에피소드 article meta, Breadcrumb JSON-LD를 함께 확인하도록 확장했습니다.
 - 모바일 공개 CTA, 작품 탭, footer 링크의 터치 영역 기준을 보강했습니다.

@@ -84,6 +84,7 @@ OST와 YouTube 연결은 `src/data/siteContent.js`의 `artistLinks`, `featuredSt
 | `npm run dev` | `astro dev` | 로컬 개발 서버 |
 | `npm run build` | `astro build && node scripts/version-auth-assets.mjs` | 정적 빌드와 auth asset versioning |
 | `npm run check:public-routes` | `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-public-routes.ps1` | `dist` 기준 공개 라우트와 1~6화 핵심 문자열 확인 |
+| `npm run check:content` | `node scripts/check-content-consistency.mjs` | 웹소설 목록 데이터와 에피소드 frontmatter 일치 확인 |
 | `npm run preview` | `astro preview` | 빌드 결과 미리보기 |
 | `npm run pages:dev` | `npm run build && wrangler pages dev dist --compatibility-date=2026-06-07` | Cloudflare Pages 로컬 검증 |
 | `npm run deploy:preview` | `npm run build && wrangler pages deploy dist --project-name sf-studio --branch astro-redesign` | preview 배포 |
@@ -100,15 +101,17 @@ production 반영 전 기본 순서입니다.
 1. `git status -sb`
 2. `git log --oneline -5`
 3. `npm run build`
-4. `npm run check:public-routes`
-5. 주요 로컬/빌드 산출물 확인
-6. `git add ...`
-7. `git commit -m "..."`
-8. `git push origin main`
-9. `npx wrangler pages deploy dist --project-name sf-studio --branch main`
-10. `npx wrangler pages deployment list --project-name sf-studio`
-11. 운영 URL HTTP 200과 핵심 문자열 확인
+4. `npm run check:content`
+5. `npm run check:public-routes`
+6. 주요 로컬/빌드 산출물 확인
+7. `git add ...`
+8. `git commit -m "..."`
+9. `git push origin main`
+10. `npx wrangler pages deploy dist --project-name sf-studio --branch main`
+11. `npx wrangler pages deployment list --project-name sf-studio`
+12. 운영 URL HTTP 200과 핵심 문자열 확인
 
+`check:content`는 `src/data/siteContent.js`의 `novelEpisodes`와 `src/pages/novels/episode-00N.md` frontmatter의 title, canonical, publishedAt, readTime, 이전/다음 링크를 비교합니다.
 `check:public-routes`는 홈, 작품 목록, 1~6화 상세, Music Archive, 앨범 상세, Profile, Updates, sitemap-index, sitemap, robots를 확인합니다.
 작품 목록과 에피소드 상세는 Breadcrumb JSON-LD, 에피소드는 article publish meta도 함께 검증합니다.
 모바일 검증 시 공개 CTA, 작품 탭, footer 링크는 44px 안팎의 터치 영역을 유지해야 합니다.

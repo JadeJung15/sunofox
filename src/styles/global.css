@@ -1120,6 +1120,37 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   letter-spacing: 0.16em;
 }
 
+.novel-reader-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  margin: 24px 0 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.novel-reader-summary div {
+  min-width: 0;
+  padding: 14px 16px 14px 0;
+}
+
+.novel-reader-summary dt {
+  color: var(--subtle);
+  font-family: var(--font-condensed);
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+}
+
+.novel-reader-summary dd {
+  margin: 8px 0 0;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 850;
+  line-height: 1.45;
+  word-break: keep-all;
+}
+
 .novel-reader-body {
   max-width: 720px;
   margin: 0 auto;
@@ -4580,6 +4611,10 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   .novel-reader-subtitle {
     font-size: 15px;
     line-height: 1.65;
+  }
+
+  .novel-reader-summary {
+    grid-template-columns: 1fr;
   }
 
   .novel-reader-body {

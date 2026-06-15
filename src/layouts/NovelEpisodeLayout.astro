@@ -32,6 +32,9 @@ const {
 
 const currentEpisode = novelEpisodes.find((episode) => episode.href && canonical.endsWith(episode.href)) || novelEpisodes[0];
 const currentEpisodeIndex = novelEpisodes.findIndex((episode) => episode === currentEpisode);
+const publishedEpisodes = novelEpisodes.filter((episode) => episode.href);
+const currentPublishedIndex = publishedEpisodes.findIndex((episode) => episode === currentEpisode);
+const episodePosition = currentPublishedIndex >= 0 ? currentPublishedIndex + 1 : currentEpisodeIndex + 1;
 const previousEpisode = currentEpisodeIndex > 0 ? novelEpisodes[currentEpisodeIndex - 1] : null;
 const followingEpisode = currentEpisodeIndex >= 0 ? novelEpisodes[currentEpisodeIndex + 1] : null;
 const isLatestEpisode = currentEpisode.href === latestNovelEpisode.href;
@@ -51,6 +54,12 @@ const episodeMetaKeywords = Array.from(new Set([
   ...(currentEpisode.shareTags || [])
 ]));
 const episodeJsonLd = createEpisodeStructuredData(currentEpisode);
+const episodeSummaryItems = [
+  { label: '회차 위치', value: `${episodePosition}/${publishedEpisodes.length}` },
+  { label: '공개일', value: publishedAt || currentEpisode.publishedAt },
+  { label: '읽기 시간', value: readTime || currentEpisode.readTime },
+  { label: '키워드', value: (currentEpisode.shareTags || []).join(' · ') }
+].filter((item) => item.value);
 ---
 
 <Layout
@@ -90,6 +99,15 @@ const episodeJsonLd = createEpisodeStructuredData(currentEpisode);
           <span>WEB NOVEL</span>
           {isLatestEpisode && <span class="reader-latest-badge">최신화</span>}
         </div>
+
+        <dl class="novel-reader-summary" aria-label="회차 읽기 요약">
+          {episodeSummaryItems.map((item) => (
+            <div>
+              <dt>{item.label}</dt>
+              <dd>{item.value}</dd>
+            </div>
+          ))}
+        </dl>
 
         <nav class="novel-reader-jumpbar" aria-label="회차 빠른 이동">
           {resolvedPreviousHref ? (

@@ -53,6 +53,37 @@ import { artistLinks, novelProject, structuredData, sunofoxProfile } from '../da
       </ul>
     </section>
 
+    <section class="profile-snapshot-section reveal" aria-labelledby="profileSnapshotTitle">
+      <div class="profile-snapshot-head">
+        <p class="section-kicker">OFFICIAL HUBS</p>
+        <h2 id="profileSnapshotTitle">현재 공개 흐름</h2>
+        <p>독자가 바로 들어갈 수 있는 SunoFox의 공개 콘텐츠 허브만 모았습니다.</p>
+      </div>
+
+      <div class="profile-snapshot-grid">
+        {sunofoxProfile.highlights.map((item) => (
+          <a
+            class="profile-snapshot-card"
+            href={item.href}
+            target={item.href.startsWith('http') ? '_blank' : undefined}
+            rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+          >
+            <span>{item.label}</span>
+            <strong>{item.title}</strong>
+            <small>{item.status}</small>
+            <p>{item.summary}</p>
+            <em>{item.cta}</em>
+          </a>
+        ))}
+      </div>
+
+      <div class="profile-current-actions" aria-label="SunoFox quick links">
+        {sunofoxProfile.quickActions.map((action) => (
+          <a class="micro-button micro-button-muted" href={action.href}>{action.label}</a>
+        ))}
+      </div>
+    </section>
+
     <section class="profile-detail-section reveal" aria-labelledby="profileDetailTitle">
       <div class="profile-detail-head">
         <p class="section-kicker">공개 정보</p>

@@ -30,7 +30,7 @@ Last verified: 2026-06-16
 | `/novels/episode-006/` | 6화 상세 | `src/pages/novels/episode-006.md` | 200, 최신화 배지 |
 | `/music/` | Music Archive / YouTube-MV 허브 | `src/pages/music/index.astro` | 200, 대표 OST, 앨범, 영상 허브 |
 | `/music/archive-vol-1/` | ARCHIVE vol.1 앨범 상세 | `src/pages/music/archive-vol-1.astro` | 200, 트랙/앨범 정보 |
-| `/profile/` | SunoFox 소개/필모그래피 | `src/pages/profile.astro` | 200, YouTube/Music/Novel 탭 |
+| `/profile/` | SunoFox 소개/필모그래피 | `src/pages/profile.astro` | 200, 공식 허브 스냅샷, YouTube/Music/Novel 탭 |
 | `/updates/` | 공식 업데이트 로그 | `src/pages/updates.astro` | 200, 고정 공지, 카테고리 허브, 카테고리별 기록, 최근 업데이트 |
 | `/privacy/` | 개인정보 처리방침 | `src/pages/privacy.astro` | 200 |
 | `/terms/` | 이용약관 | `src/pages/terms.astro` | 200 |
@@ -62,6 +62,7 @@ Last verified: 2026-06-16
 | 대표 OST/외부 링크 | `src/data/artistContent.js` | YouTube/음원 링크, `storyOsts`, 썸네일 alt |
 | Music Archive | `src/data/musicContent.js` | 앨범, 영상 허브, 외부 소스 |
 | 업데이트 로그 | `src/data/updatesContent.js` | 카테고리, 허브 공개 상태, 링크, 최근 변경 |
+| SunoFox 프로필 | `src/data/siteContent.js` | 필모그래피 탭, 공식 허브 스냅샷, 공개 출처 |
 | JSON-LD/SEO 데이터 | `src/data/siteContent.js` | Organization, CreativeWorkSeries, Article, Breadcrumb |
 | 공통 meta/layout | `src/layouts/Layout.astro` | title, description, canonical, OG/Twitter |
 | 에피소드 레이아웃 | `src/layouts/NovelEpisodeLayout.astro` | 본문, OST, 이전/다음/목록 CTA |
@@ -121,5 +122,6 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-public-routes.
 | OST/음악 아카이브 | 대표 OST, ARCHIVE vol.1, 영상 허브 운영 | 신규 OST 추가 시 `storyOsts`와 회차 `ostKey` 연결 |
 | 세계관/캐릭터 | `/novels/`에 요약 섹션 운영 | 캐릭터 상세 탭 또는 별도 섹션 확장 |
 | 공지/업데이트 | `/updates/` 고정 공지, 카테고리별 기록, 공식 허브 상태판 운영 | 공지 유형별 필터 또는 공개 일정 슬롯 추가 |
+| 프로필/필모그래피 | `/profile/` 공식 허브 스냅샷과 공개 정보 탭 운영 | 변동 지표 최신화 또는 작품별 상세 필모그래피 확장 |
 | 굿즈샵 | 미운영 | 사용자 확인 후 외부 링크만 추가 |
 | 팬 커뮤니티 | 미운영 | 사용자 확인 후 커뮤니티 진입점 정책 결정 |

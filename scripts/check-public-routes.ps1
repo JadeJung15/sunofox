@@ -70,7 +70,7 @@ $routes = @(
     Name = "profile"
     Path = "/profile/"
     File = "profile/index.html"
-    Must = @("SunoFox Detail", "https://sunofox.com/profile/")
+    Must = @("SunoFox Detail", "profile-snapshot-section", "profile-snapshot-card", "profile-current-actions", "/novels/", "/music/", "/updates/", "https://sunofox.com/profile/")
   },
   @{
     Name = "updates"

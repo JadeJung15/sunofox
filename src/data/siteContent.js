@@ -42,6 +42,50 @@ export function getEpisodeOst(episode = novelEpisodes[0]) {
 
 export const sunofoxProfile = {
   researchDate: '2026.06.14',
+  highlights: [
+    {
+      key: 'novel',
+      label: 'Story IP',
+      status: '1~6화 미니시즌 완결',
+      title: novelProject.title,
+      summary: '음악에서 시작한 장면을 로맨스 판타지 웹소설로 확장한 첫 공개 작품입니다.',
+      href: '/novels/',
+      cta: '소설 보기'
+    },
+    {
+      key: 'music',
+      label: 'Music Archive',
+      status: `${archiveAlbum.releaseDate} 공개`,
+      title: archiveAlbum.title,
+      summary: 'SunoFox의 오리지널 트랙과 대표 OST를 한 곳에서 이어 보는 음악 아카이브입니다.',
+      href: musicArchive.href,
+      cta: '음악 보기'
+    },
+    {
+      key: 'video',
+      label: 'YouTube / MV',
+      status: `${musicArchive.videos.length}개 영상 큐레이션`,
+      title: 'Anime OST Studio',
+      summary: 'YouTube 채널과 MV/Shorts로 확장되는 공개 영상 흐름을 음악 허브에서 연결합니다.',
+      href: artistLinks.youtube,
+      cta: 'YouTube'
+    },
+    {
+      key: 'studio',
+      label: 'Studio',
+      status: '제작 공간',
+      title: 'SF Studio',
+      summary: '웹소설, OST, 영상 패키징을 이어 붙이는 내부 제작 흐름의 진입점입니다.',
+      href: '/mv-studio',
+      cta: 'Studio'
+    }
+  ],
+  quickActions: [
+    { label: '소설 정주행', href: novelProject.season.startHref },
+    { label: '완결화 보기', href: novelProject.season.finalHref },
+    { label: 'Music Archive', href: musicArchive.href },
+    { label: 'Updates', href: '/updates/' }
+  ],
   tabs: [
     {
       id: 'youtube',

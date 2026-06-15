@@ -61,6 +61,7 @@ SunoFox 공식 사이트는 음악에서 시작한 감정과 장면을 웹소설
 | 에피소드 레이아웃 | `src/layouts/NovelEpisodeLayout.astro` | 본문, OST, 이전/다음/목록 이동 |
 | 헤더/메뉴 | `src/components/SiteChrome.astro` | 고정 헤더와 오버레이 메뉴 |
 | 사이트 데이터 집계 | `src/data/siteContent.js` | 에피소드 목록, OST, 음악 아카이브, JSON-LD 및 하위 데이터 re-export |
+| 아티스트/OST 링크 데이터 | `src/data/artistContent.js` | YouTube, 음원 플랫폼, 대표 웹소설 OST 링크 |
 | 메뉴 데이터 | `src/data/navigationContent.js` | 공개 overlay menu 항목 |
 | 업데이트 데이터 | `src/data/updatesContent.js` | `/updates/` 공식 업데이트 로그 항목 |
 | 전역 스타일 | `src/styles/global.css` | 모든 공개 페이지 UI |
@@ -75,7 +76,7 @@ SunoFox 공식 사이트는 음악에서 시작한 감정과 장면을 웹소설
 1. 회차 목록/카드/메타: `src/data/siteContent.js`의 `novelEpisodes`
 2. 실제 본문: `src/pages/novels/episode-00N.md`
 
-OST와 YouTube 연결은 `src/data/siteContent.js`의 `artistLinks`, `featuredStoryOst`, `musicArchive`, `sunofoxProfile`에서 관리합니다.
+OST와 YouTube 연결은 `src/data/artistContent.js`의 `artistLinks`, `featuredStoryOst`와 `src/data/siteContent.js`의 `musicArchive`, `sunofoxProfile`에서 관리합니다.
 메뉴 항목은 `src/data/navigationContent.js`, 업데이트 로그 항목은 `src/data/updatesContent.js`에서 관리하고 `siteContent.js`가 기존 import 호환을 위해 다시 export합니다.
 
 작품 목록과 에피소드 상세의 JSON-LD는 `src/data/siteContent.js`에서 생성합니다.

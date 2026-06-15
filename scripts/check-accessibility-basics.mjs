@@ -127,6 +127,14 @@ for (const filePath of files) {
     fail(`${sitePath}: missing h1`);
   }
 
+  if (!/<a\b[^>]*class=["'][^"']*\bskip-link\b[^"']*["'][^>]*href=["']#main-content["'][^>]*>/i.test(html)) {
+    fail(`${sitePath}: missing skip link to #main-content`);
+  }
+
+  if (!/<main\b[^>]*id=["']main-content["'][^>]*>/i.test(html)) {
+    fail(`${sitePath}: missing main id="main-content" target`);
+  }
+
   for (const match of html.matchAll(/<img\b[\s\S]*?>/gi)) {
     const tag = match[0];
     const attrs = parseAttributes(tag);

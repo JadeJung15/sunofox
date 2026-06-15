@@ -328,7 +328,7 @@ previousLabel: 이전 화
 
 허공에 문장이 떠올랐다.
 
-Evidence route is unstable.
+Evidence route is unstable. (증거 경로가 불안정합니다.)
 
 좋아.
 
@@ -436,7 +436,7 @@ Evidence route is unstable.
 
 허공에 붉은 문장이 번졌다.
 
-Critical route damage detected.
+Critical route damage detected. (치명적인 경로 손상이 감지되었습니다.)
 
 나는 그것을 보며 숨을 들이마셨다.
 
@@ -536,7 +536,7 @@ Critical route damage detected.
 
 허공에 문장이 떠올랐다.
 
-Unsigned variable remains active.
+Unsigned variable remains active. (서명되지 않은 변수가 아직 활성 상태입니다.)
 
 나는 웃었다.
 
@@ -638,11 +638,11 @@ Unsigned variable remains active.
 
 허공의 붉은 문장이 다시 흔들렸다.
 
-Critical route damage detected.
+Critical route damage detected. (치명적인 경로 손상이 감지되었습니다.)
 
 그 아래에 새로운 문장이 이어졌다.
 
-External witness has entered the trial.
+External witness has entered the trial. (외부 증인이 재판에 입장했습니다.)
 
 나는 그 문장을 보며 생각했다.
 

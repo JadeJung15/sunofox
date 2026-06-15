@@ -193,7 +193,7 @@ nextLabel: 다음 화
 
 내 눈앞에 문장이 떠올랐다.
 
-Witness protection is not in the original route.
+Witness protection is not in the original route. (증인 보호는 원작 경로에 없습니다.)
 
 나는 속으로 대답했다.
 
@@ -623,7 +623,7 @@ Witness protection is not in the original route.
 
 허공에 문장이 떠올랐다.
 
-Original authority balance has collapsed.
+Original authority balance has collapsed. (원작 권한의 균형이 무너졌습니다.)
 
 나는 그 문장을 보고 아주 작게 웃었다.
 
@@ -763,7 +763,7 @@ Original authority balance has collapsed.
 
 그때 허공의 문장이 마지막으로 떠올랐다.
 
-Trial route has opened.
+Trial route has opened. (재판 경로가 열렸습니다.)
 
 나는 그 문장을 보고 말했다.
 

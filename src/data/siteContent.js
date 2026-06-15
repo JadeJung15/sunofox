@@ -51,7 +51,7 @@ export const novelProject = {
   musicToNovel:
     'SunoFox 음악에서 시작한 감정선을 웹소설 연재로 확장합니다.',
   ost: featuredStoryOst,
-  systemLine: 'The story has detected an error.',
+  systemLine: 'The story has detected an error. (이야기가 오류를 감지했습니다.)',
   keywords: ['악녀 빙의', '원작 붕괴', '공개 재판', '성녀의 베일', '시스템 오류'],
   infoRows: [
     { label: '작가', value: 'SunoFox' },
@@ -140,7 +140,7 @@ export const nextNovelEpisode = novelEpisodes.find((episode) => !episode.href) |
 export const menuItems = [
   { key: 'home', label: 'HOME', href: '/' },
   { key: 'profile', label: 'ABOUT', href: '/profile' },
-  { key: 'novels', label: '소설 목록 보기', href: '/novels' },
+  { key: 'novels', label: '소설 보러가기', href: '/novels/' },
   { key: 'studio', label: 'STUDIO', href: '/mv-studio' }
 ];
 

@@ -848,6 +848,20 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   color: var(--muted);
 }
 
+.main-button-primary {
+  border-color: var(--pink);
+  background: var(--pink);
+  color: #ffffff;
+  box-shadow: 0 0 26px rgba(255, 10, 91, 0.22);
+}
+
+.main-button-primary:hover,
+.main-button-primary:focus-visible {
+  border-color: #ffffff;
+  background: #ffffff;
+  color: #000000;
+}
+
 .main-button:disabled,
 .main-button[aria-disabled='true'] {
   cursor: default;
@@ -1389,6 +1403,47 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
 
 .home-core-grid {
   margin: 22px auto 96px;
+}
+
+.home-novel-entry {
+  position: relative;
+  z-index: 8;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: clamp(20px, 4vw, 48px);
+  width: min(1120px, calc(100% - 40px));
+  margin: -46px auto 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: rgba(0, 0, 0, 0.72);
+  padding: clamp(24px, 3.6vw, 42px) 0;
+}
+
+.home-novel-entry h2 {
+  max-width: 760px;
+  margin: 10px 0 0;
+  color: #ffffff;
+  font-family: var(--font-condensed);
+  font-size: clamp(42px, 6.4vw, 92px);
+  font-weight: 950;
+  letter-spacing: 0;
+  line-height: 0.96;
+  word-break: keep-all;
+}
+
+.home-novel-entry p:not(.section-kicker) {
+  max-width: 620px;
+  margin: 22px 0 0;
+  color: rgba(255, 255, 255, 0.74);
+  font-size: clamp(15px, 1.5vw, 18px);
+  font-weight: 650;
+  line-height: 1.76;
+  word-break: keep-all;
+}
+
+.home-novel-entry .main-button {
+  min-width: 152px;
 }
 
 .home-feature-showcase {
@@ -3393,6 +3448,10 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
     min-width: 0;
   }
 
+  .hero-side-actions .main-button-primary {
+    grid-column: 1 / -1;
+  }
+
   .main-button {
     min-width: 118px;
     min-height: 42px;
@@ -3501,6 +3560,29 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   }
 
   .home-feature-actions .main-button {
+    width: 100%;
+  }
+
+  .home-novel-entry {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    width: min(100% - 32px, 1120px);
+    margin-top: -22px;
+    padding: 24px 0 28px;
+  }
+
+  .home-novel-entry h2 {
+    font-size: clamp(38px, 12vw, 58px);
+    line-height: 1;
+  }
+
+  .home-novel-entry p:not(.section-kicker) {
+    margin-top: 18px;
+    font-size: 15px;
+    line-height: 1.72;
+  }
+
+  .home-novel-entry .main-button {
     width: 100%;
   }
 

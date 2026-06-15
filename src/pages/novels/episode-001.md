@@ -646,7 +646,7 @@ nextLabel: 다음 화
 
 허공에 문장이 떠올랐다.
 
-The story has detected an error.
+The story has detected an error. (이야기가 오류를 감지했습니다.)
 
 나는 그 문장을 올려다보았다.
 

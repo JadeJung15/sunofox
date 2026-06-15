@@ -183,11 +183,11 @@ nextLabel: 다음 화
 
 내 눈앞에 다시 문장이 떠올랐다.
 
-The story has detected an error.
+The story has detected an error. (이야기가 오류를 감지했습니다.)
 
 그 아래에 새로운 문장이 이어졌다.
 
-Correction target: Adelaine Rose Berg.
+Correction target: Adelaine Rose Berg. (보정 대상: 아델라인 로제 베르크.)
 
 나는 눈을 가늘게 떴다.
 
@@ -407,11 +407,11 @@ Correction target: Adelaine Rose Berg.
 
 허공의 문장이 다시 번졌다.
 
-Correction failed.
+Correction failed. (보정에 실패했습니다.)
 
 그리고 마지막 줄.
 
-Next correction will begin at the trial.
+Next correction will begin at the trial. (다음 보정은 재판에서 시작됩니다.)
 
 재판.
 

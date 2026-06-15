@@ -135,6 +135,10 @@ const archiveTracks = archiveAlbum.tracks;
 const youtubeProfile = sunofoxProfile.tabs.find((tab) => tab.id === 'youtube');
 const latestVideos = youtubeProfile?.videos || [];
 const getEpisodeUrl = (episode) => `${siteUrl}${episode.href}`;
+const getEpisodeKeywords = (episode) => Array.from(new Set([
+  ...novelProject.keywords,
+  ...(episode.shareTags || [])
+]));
 const publishedEpisodeParts = publishedNovelEpisodes.map((episode) => ({ '@id': `${getEpisodeUrl(episode)}#episode` }));
 
 const createBreadcrumbList = (id, items) => ({
@@ -167,7 +171,7 @@ export function createEpisodeStructuredData(episode = novelEpisodes[0]) {
         dateModified: episode.isoDate,
         inLanguage: 'ko-KR',
         articleSection: novelProject.genre,
-        keywords: novelProject.keywords,
+        keywords: getEpisodeKeywords(episode),
         position: Number(episode.number),
         isPartOf: { '@id': `${novelUrl}#series` },
         author: {

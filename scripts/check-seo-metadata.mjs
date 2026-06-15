@@ -52,6 +52,18 @@ function parseHead(html) {
   };
 }
 
+function collectMetaContents(html, keyName) {
+  const values = [];
+
+  for (const match of html.matchAll(/<meta\s+[^>]*>/gi)) {
+    const attrs = parseAttributes(match[0]);
+    const key = attrs.name || attrs.property;
+    if (key === keyName && attrs.content) values.push(attrs.content);
+  }
+
+  return values;
+}
+
 function parseFrontmatter(markdown) {
   const match = markdown.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
   if (!match) return {};
@@ -230,7 +242,9 @@ for (const episode of publishedNovelEpisodes) {
     title: `${frontmatter.title} | SunoFox`,
     descriptionIncludes: frontmatter.description?.slice(0, 20) || episode.title,
     jsonLdTypes: ['Article', 'BreadcrumbList'],
-    articlePublishedAt: episode.isoDate
+    articlePublishedAt: episode.isoDate,
+    episodeTitle: episode.title,
+    shareTags: episode.shareTags || []
   });
 }
 
@@ -272,9 +286,29 @@ for (const route of routes) {
   }
 
   if (route.articlePublishedAt) {
+    const articleTags = collectMetaContents(html, 'article:tag');
+
     assertEqual(`${route.name} og:type`, meta['og:type'], 'article');
     assertEqual(`${route.name} article:published_time`, meta['article:published_time'], route.articlePublishedAt);
     assertEqual(`${route.name} article:modified_time`, meta['article:modified_time'], route.articlePublishedAt);
+    assertEqual(`${route.name} article:section`, meta['article:section'], novelProject.genre);
+    assertPresent(`${route.name} meta keywords`, meta.keywords);
+
+    for (const expectedKeyword of [novelProject.title, novelProject.genre, route.episodeTitle]) {
+      if (!meta.keywords.includes(expectedKeyword)) {
+        fail(`${route.name} meta keywords: expected to include "${expectedKeyword}"`);
+      }
+    }
+
+    if (articleTags.length === 0) {
+      fail(`${route.name} article:tag: missing`);
+    }
+
+    for (const expectedTag of route.shareTags) {
+      if (!articleTags.includes(expectedTag)) {
+        fail(`${route.name} article:tag: expected to include "${expectedTag}"`);
+      }
+    }
 
     const article = collectJsonLdByType(jsonLdObjects, 'Article')[0];
     assertPresent(`${route.name} Article JSON-LD`, article);
@@ -285,6 +319,12 @@ for (const route of routes) {
 
     if (!Array.isArray(article?.keywords) || article.keywords.length === 0) {
       fail(`${route.name} Article keywords: missing`);
+    }
+
+    for (const expectedTag of route.shareTags) {
+      if (!article?.keywords?.includes(expectedTag)) {
+        fail(`${route.name} Article keywords: expected to include "${expectedTag}"`);
+      }
     }
 
     if (!article?.publisher?.logo?.url?.startsWith(`${siteUrl}/`)) {

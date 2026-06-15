@@ -42,6 +42,14 @@ const resolvedNextLabel = followingEpisode ? `${followingEpisode.label} · ${fol
 const nextDisabledText = followingEpisode
   ? `${followingEpisode.label} 준비중 · ${followingEpisode.title}`
   : '다음 화 준비중';
+const episodeMetaKeywords = Array.from(new Set([
+  novelProject.title,
+  novelProject.genre,
+  currentEpisode.label,
+  currentEpisode.title,
+  ...novelProject.keywords,
+  ...(currentEpisode.shareTags || [])
+]));
 const episodeJsonLd = createEpisodeStructuredData(currentEpisode);
 ---
 
@@ -56,6 +64,9 @@ const episodeJsonLd = createEpisodeStructuredData(currentEpisode);
   type="article"
   publishedTime={currentEpisode.isoDate}
   modifiedTime={currentEpisode.isoDate}
+  keywords={episodeMetaKeywords}
+  articleSection={novelProject.genre}
+  articleTags={episodeMetaKeywords}
   jsonLd={episodeJsonLd}
 >
   <SiteChrome active="novels" />

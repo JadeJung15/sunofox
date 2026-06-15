@@ -113,6 +113,9 @@ const firstNovelEpisode = publishedNovelEpisodes[0];
                   {episode.readTime && <span>{episode.readTime}</span>}
                   {episode === latestNovelEpisode && <span>최신화</span>}
                 </small>
+                <span class="novel-episode-tags" aria-label={`${episode.label} 키워드`}>
+                  {episode.shareTags.map((tag) => <i>{tag}</i>)}
+                </span>
               </div>
               <em>{episode.publishedAt}</em>
               <b>{episode === latestNovelEpisode ? '최신화' : episode.isFree ? '무료' : '공개 예정'}</b>
@@ -127,6 +130,11 @@ const firstNovelEpisode = publishedNovelEpisodes[0];
                   <span>{episode.status}</span>
                   {episode.readTime && <span>{episode.readTime}</span>}
                 </small>
+                {episode.shareTags && (
+                  <span class="novel-episode-tags" aria-label={`${episode.label} 키워드`}>
+                    {episode.shareTags.map((tag) => <i>{tag}</i>)}
+                  </span>
+                )}
               </div>
               <em>{episode.publishedAt}</em>
               <b>{episode.status}</b>

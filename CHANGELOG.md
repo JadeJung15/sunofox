@@ -4,6 +4,7 @@
 
 ### Improved
 
+- `/novels/` 회차 목록에 회차별 공유 태그를 노출해 최신화와 주요 사건 키워드를 더 빠르게 스캔할 수 있게 했습니다.
 - `robots.txt` 생성 소스와 루트 참고 파일의 sitemap 기준을 `sitemap-index.xml`로 맞추고, 보호 경로 Disallow 검증을 공개 라우트 체크에 추가했습니다.
 - `/sitemap.xml` legacy 호환 XML 라우트를 추가해 sitemap 요청이 HTML fallback으로 오인되지 않도록 정리했습니다.
 - 공개 라우트 검증 스크립트가 `/sitemap.xml`도 XML sitemap index로 확인하도록 보강했습니다.

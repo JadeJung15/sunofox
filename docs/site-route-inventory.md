@@ -21,7 +21,7 @@ Last verified: 2026-06-16
 | Route | 용도 | 소스 | 배포 후 확인 |
 |---|---|---|---|
 | `/` | SunoFox 메인 | `src/pages/index.astro` | 200, 소설/Music/Studio CTA |
-| `/novels/` | 웹소설 작품/회차 목록 | `src/pages/novels.astro` | 200, 1~6화 목록, 최신화 표시 |
+| `/novels/` | 웹소설 작품/회차 목록 | `src/pages/novels.astro` | 200, 1~6화 목록, 미니시즌 완결 상태, 최신화 표시 |
 | `/novels/episode-001/` | 1화 상세 | `src/pages/novels/episode-001.md` | 200, Article/Breadcrumb meta |
 | `/novels/episode-002/` | 2화 상세 | `src/pages/novels/episode-002.md` | 200, 이전/다음 링크 |
 | `/novels/episode-003/` | 3화 상세 | `src/pages/novels/episode-003.md` | 200, 이전/다음 링크 |
@@ -82,7 +82,7 @@ npm run check
 
 | check | 확인 범위 |
 |---|---|
-| `check:content` | `novelContent.js`와 1~6화 frontmatter/본문/shareTags 일치 |
+| `check:content` | `novelContent.js`와 미니시즌 상태, 1~6화 frontmatter/본문/shareTags 일치 |
 | `check:music` | 대표 OST, YouTube/MV 영상 목록, 앨범 트랙 순서, 영상 ID와 썸네일 URL 일치 |
 | `check:updates` | Updates 카테고리, 공식 허브 상태, 대기 링크 사유, 업데이트 링크 |
 | `check:dist` | 빌드 산출물의 내부 링크, 이미지, asset 존재 |
@@ -117,7 +117,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-public-routes.
 
 | 기능 | 현재 상태 | 다음 작업 |
 |---|---|---|
-| 웹소설 연재 허브 | 1~6화 공개 | 7화 추가 구조 또는 시즌2 티저 결정 |
+| 웹소설 연재 허브 | 1~6화 미니시즌 완결 상태 공개 | 7화 추가 구조 또는 시즌2 티저 결정 |
 | OST/음악 아카이브 | 대표 OST, ARCHIVE vol.1, 영상 허브 운영 | 신규 OST 추가 시 `storyOsts`와 회차 `ostKey` 연결 |
 | 세계관/캐릭터 | `/novels/`에 요약 섹션 운영 | 캐릭터 상세 탭 또는 별도 섹션 확장 |
 | 공지/업데이트 | `/updates/` 카테고리 허브와 공식 허브 상태판 운영 | 공지 유형별 필터 또는 고정 공지 추가 |

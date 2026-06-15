@@ -23,6 +23,17 @@ export const novelProject = {
   ost: featuredStoryOst,
   systemLine: 'The story has detected an error. (이야기가 오류를 감지했습니다.)',
   keywords: ['악녀 빙의', '원작 붕괴', '공개 재판', '성녀의 베일', '시스템 오류'],
+  season: {
+    label: '미니시즌 1',
+    status: '완결',
+    title: '첫 장의 사건 완결',
+    summary:
+      '1~6화는 성녀의 베일 사건, 공개 재판, 사교회 반격까지 한 호흡으로 닫히는 첫 미니시즌입니다. 빠른 전개로 완결 감각을 먼저 보여주고, 후속 시즌은 새 사건으로 확장할 수 있게 남겨 둡니다.',
+    completedAt: '2026.06.15',
+    startHref: '/novels/episode-001/',
+    finalHref: '/novels/episode-006/',
+    nextPlan: '후속 시즌 또는 7화는 새 사건, 새 무대, 새 로맨스 긴장으로 시작하는 방향을 권장합니다.'
+  },
   infoRows: [
     { label: '작가', value: 'SunoFox' },
     { label: '장르', value: '로맨스 판타지' },

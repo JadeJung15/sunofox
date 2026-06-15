@@ -4,6 +4,7 @@
 
 ### Improved
 
+- `/novels/`에 1~6화 미니시즌 완결 상태와 정주행 CTA를 추가하고, 에피소드 상세 요약에도 시즌 상태를 표시하도록 정리했습니다.
 - `/updates/`를 공식 콘텐츠 허브 상태판으로 보강해 공지, 사이트 개선, 굿즈샵, 팬 커뮤니티의 공개/대기 조건을 더 명확히 표시하고 `check:updates` 검증을 추가했습니다.
 - 웹소설 회차에 `ostKey`를 추가하고 에피소드 상세의 OST 블록이 해당 키를 통해 표시되도록 정리해, 7화 이후 회차별 OST/YouTube 매핑을 쉽게 확장할 수 있게 했습니다.
 - 전체 공개 페이지의 Open Graph/Twitter 공유 메타를 보강하고, `check:seo`가 site name, locale, Twitter URL, secure image, article updated time을 함께 검증하도록 강화했습니다.

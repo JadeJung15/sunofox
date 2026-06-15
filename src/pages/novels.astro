@@ -25,6 +25,12 @@ const novelListSummaryItems = [
   { label: '최신 공개', value: latestNovelEpisode.publishedAt },
   { label: '현재 상태', value: `${latestNovelEpisode.label}까지 공개` }
 ];
+const seasonStatus = novelProject.season;
+const seasonStatusItems = [
+  { label: '구성', value: `${seasonStatus.label} · ${publishedNovelEpisodes.length}화` },
+  { label: '상태', value: seasonStatus.status },
+  { label: '완결일', value: seasonStatus.completedAt }
+];
 ---
 
 <Layout
@@ -114,6 +120,26 @@ const novelListSummaryItems = [
           </div>
         ))}
       </dl>
+
+      <section class="novel-season-status" aria-labelledby="seasonStatusTitle">
+        <div class="novel-season-copy">
+          <p class="section-kicker">MINI SEASON</p>
+          <h3 id="seasonStatusTitle">{seasonStatus.title}</h3>
+          <p>{seasonStatus.summary}</p>
+        </div>
+        <dl class="novel-season-facts" aria-label="미니시즌 상태">
+          {seasonStatusItems.map((item) => (
+            <div>
+              <dt>{item.label}</dt>
+              <dd>{item.value}</dd>
+            </div>
+          ))}
+        </dl>
+        <div class="novel-season-actions">
+          <a class="micro-button" href={seasonStatus.startHref}>1화부터 정주행</a>
+          <a class="micro-button micro-button-muted" href={seasonStatus.finalHref}>완결화 보기</a>
+        </div>
+      </section>
 
       <section class="novel-reading-path" aria-labelledby="readingPathTitle">
         <div class="novel-reading-path-head">

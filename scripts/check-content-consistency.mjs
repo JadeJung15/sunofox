@@ -143,6 +143,36 @@ const expectedFileSet = new Set(expectedFiles);
 const publishedHrefSet = new Set(publishedEpisodes.map((episode) => episode.href));
 const publishedNumberSet = new Set(publishedEpisodes.map((episode) => Number(episode.number)));
 
+if (!novelProject.season || typeof novelProject.season !== 'object') {
+  fail('novelProject.season must be defined');
+} else {
+  const season = novelProject.season;
+  const requiredSeasonFields = [
+    'label',
+    'status',
+    'title',
+    'summary',
+    'completedAt',
+    'startHref',
+    'finalHref',
+    'nextPlan'
+  ];
+
+  requiredSeasonFields.forEach((field) => assertPresent(`novelProject.season ${field}`, season[field]));
+  assertPattern('novelProject.season completedAt', season.completedAt, /^\d{4}\.\d{2}\.\d{2}$/);
+
+  if (!publishedHrefSet.has(season.startHref)) {
+    fail(`novelProject.season startHref: must point to a published episode (${season.startHref || '(empty)'})`);
+  }
+
+  if (!publishedHrefSet.has(season.finalHref)) {
+    fail(`novelProject.season finalHref: must point to a published episode (${season.finalHref || '(empty)'})`);
+  }
+
+  assertEqual('novelProject.season startHref', season.startHref, publishedEpisodes.at(0)?.href || '');
+  assertEqual('novelProject.season finalHref', season.finalHref, publishedEpisodes.at(-1)?.href || '');
+}
+
 for (const file of expectedFiles) {
   if (!file) {
     fail('published episode href must match /novels/episode-000/ pattern');

@@ -56,6 +56,7 @@ const episodeMetaKeywords = Array.from(new Set([
 const episodeJsonLd = createEpisodeStructuredData(currentEpisode);
 const episodeSummaryItems = [
   { label: '회차 위치', value: `${episodePosition}/${publishedEpisodes.length}` },
+  { label: '시즌', value: `${novelProject.season.label} · ${novelProject.season.status}` },
   { label: '공개일', value: publishedAt || currentEpisode.publishedAt },
   { label: '읽기 시간', value: readTime || currentEpisode.readTime },
   { label: '키워드', value: (currentEpisode.shareTags || []).join(' · ') }

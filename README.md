@@ -101,6 +101,7 @@ OST와 YouTube 연결은 `src/data/artistContent.js`의 `artistLinks`, `featured
 | `npm run test` | `npm run build && npm run check` | standalone 배포 전 전체 검증 |
 | `npm run check` | `npm run check:content && npm run check:dist && npm run check:seo && npm run check:a11y && npm run check:public-routes` | 배포 전 콘텐츠/asset/SEO/접근성/공개 라우트 통합 검증 |
 | `npm run check:public-routes` | `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-public-routes.ps1` | `dist` 기준 공개 라우트, 1~6화 핵심 문자열, robots 보호 경로 정책 확인 |
+| `npm run check:production` | `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-public-routes.ps1 -BaseUrl https://sunofox.com` | 배포 후 운영 도메인 공개 라우트 검증 |
 | `npm run check:content` | `node scripts/check-content-consistency.mjs` | 웹소설 목록 데이터와 에피소드 frontmatter 일치 확인 |
 | `npm run check:dist` | `node scripts/check-dist-integrity.mjs` | 공개 `dist` 내부 링크와 이미지/asset 경로 존재 확인 |
 | `npm run check:seo` | `node scripts/check-seo-metadata.mjs` | 공개 HTML의 title, description, canonical, OG/Twitter, JSON-LD 확인 |
@@ -130,7 +131,8 @@ production 반영 전 기본 순서입니다.
 10. `git push origin main`
 11. `npx wrangler pages deploy dist --project-name sf-studio --branch main`
 12. `npx wrangler pages deployment list --project-name sf-studio`
-13. 운영 URL HTTP 200과 핵심 문자열 확인
+13. `npm run check:production`
+14. 운영 URL HTTP 200과 핵심 문자열 확인
 
 `check:content`는 `src/data/siteContent.js`의 `novelEpisodes`와 `src/pages/novels/episode-00N.md` frontmatter의 title, canonical, publishedAt, readTime, 이전/다음 링크, 공유 태그를 비교합니다.
 `check:dist`는 빌드된 공개 HTML/CSS/manifest의 내부 링크, 이미지, asset 경로가 `dist` 안에 실제 존재하는지 확인합니다. 보호/운영 HTML인 `/mv-studio`, `/login`, `/signup`, `/admin`, `/account` 계열은 구조 변경 승인 범위와 분리해 제외합니다.

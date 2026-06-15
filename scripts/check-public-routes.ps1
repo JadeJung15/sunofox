@@ -100,7 +100,7 @@ $routes = @(
     Name = "robots"
     Path = "/robots.txt"
     File = "robots.txt"
-    Must = @("https://sunofox.com/sitemap-index.xml")
+    Must = @("Allow: /", "Disallow: /admin", "Disallow: /api/", "Disallow: /login", "Disallow: /mv-studio", "Disallow: /signup", "https://sunofox.com/sitemap-index.xml")
   }
 )
 

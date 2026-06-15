@@ -7,4 +7,4 @@ Disallow: /login
 Disallow: /mv-studio
 Disallow: /signup
 
-Sitemap: https://sunofox.com/sitemap.xml
+Sitemap: https://sunofox.com/sitemap-index.xml

@@ -1,11 +1,22 @@
 import type { APIRoute } from 'astro';
 
+const disallowPaths = [
+  '/admin',
+  '/api/',
+  '/community-post',
+  '/login',
+  '/mv-studio',
+  '/signup'
+];
+
 export const GET: APIRoute = ({ site }) => {
   const base = site ?? new URL('https://sunofox.com');
   const sitemap = new URL('sitemap-index.xml', base);
+  const disallowRules = disallowPaths.map((path) => `Disallow: ${path}`).join('\n');
 
   return new Response(`User-agent: *
 Allow: /
+${disallowRules}
 
 Sitemap: ${sitemap.href}
 `, {

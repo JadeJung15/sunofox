@@ -34,7 +34,7 @@ Last verified: 2026-06-16
 | `/updates/` | 공식 업데이트 로그 | `src/pages/updates.astro` | 200, 카테고리 허브, 최근 업데이트 |
 | `/privacy/` | 개인정보 처리방침 | `src/pages/privacy.astro` | 200 |
 | `/terms/` | 이용약관 | `src/pages/terms.astro` | 200 |
-| `/robots.txt` | robots | `src/pages/robots.txt.ts` | 200, sitemap-index 연결 |
+| `/robots.txt` | robots | `src/pages/robots.txt.ts` | 200, sitemap-index 연결, 보호 경로 Disallow |
 | `/sitemap-index.xml` | sitemap index | `@astrojs/sitemap` | 200, `sitemap-0.xml` 연결 |
 | `/sitemap.xml` | legacy sitemap index | `src/pages/sitemap.xml.ts` | 200, `sitemap-0.xml` 연결 |
 | `/sitemap-0.xml` | public route sitemap | `@astrojs/sitemap` | 200, 공개 URL 포함 |
@@ -86,7 +86,7 @@ npm run check
 | `check:dist` | 빌드 산출물의 내부 링크, 이미지, asset 존재 |
 | `check:seo` | title, description, canonical, OG/Twitter, JSON-LD |
 | `check:a11y` | lang, viewport, h1, alt, 링크/버튼 이름, 새 탭 rel |
-| `check:public-routes` | 공개 URL 200과 핵심 문자열 |
+| `check:public-routes` | 공개 URL 200, 핵심 문자열, sitemap, robots 보호 경로 Disallow |
 
 ## Post Deploy Verification
 

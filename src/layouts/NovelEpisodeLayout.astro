@@ -60,6 +60,10 @@ const episodeSummaryItems = [
   { label: '읽기 시간', value: readTime || currentEpisode.readTime },
   { label: '키워드', value: (currentEpisode.shareTags || []).join(' · ') }
 ].filter((item) => item.value);
+const episodeRailItems = publishedEpisodes.map((episode) => ({
+  ...episode,
+  isCurrent: episode.href === currentEpisode.href
+}));
 ---
 
 <Layout
@@ -141,6 +145,25 @@ const episodeSummaryItems = [
 
       <section class="novel-reader-body" aria-label={`${title} 본문`}>
         <slot />
+      </section>
+
+      <section class="novel-reader-index reveal" aria-labelledby="episodeIndexTitle">
+        <div>
+          <p class="section-kicker">EPISODE INDEX</p>
+          <h2 id="episodeIndexTitle">전체 회차</h2>
+        </div>
+        <nav class="novel-reader-index-links" aria-label="전체 회차 이동">
+          {episodeRailItems.map((episode) => (
+            <a
+              class:list={[episode.isCurrent && 'is-current']}
+              href={episode.href}
+              aria-current={episode.isCurrent ? 'page' : undefined}
+            >
+              <span>{episode.label}</span>
+              <strong>{episode.title}</strong>
+            </a>
+          ))}
+        </nav>
       </section>
 
       <section class="novel-reader-ost reveal" aria-labelledby="episodeOstTitle">

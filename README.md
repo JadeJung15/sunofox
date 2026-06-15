@@ -80,7 +80,7 @@ OST와 YouTube 연결은 `src/data/siteContent.js`의 `artistLinks`, `featuredSt
 |---|---|---|
 | `npm run dev` | `astro dev` | 로컬 개발 서버 |
 | `npm run build` | `astro build && node scripts/version-auth-assets.mjs` | 정적 빌드와 auth asset versioning |
-| `npm run check:public-routes` | `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-public-routes.ps1` | `dist` 기준 공개 라우트 핵심 문자열 확인 |
+| `npm run check:public-routes` | `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-public-routes.ps1` | `dist` 기준 공개 라우트와 1~6화 핵심 문자열 확인 |
 | `npm run preview` | `astro preview` | 빌드 결과 미리보기 |
 | `npm run pages:dev` | `npm run build && wrangler pages dev dist --compatibility-date=2026-06-07` | Cloudflare Pages 로컬 검증 |
 | `npm run deploy:preview` | `npm run build && wrangler pages deploy dist --project-name sf-studio --branch astro-redesign` | preview 배포 |
@@ -105,6 +105,9 @@ production 반영 전 기본 순서입니다.
 9. `npx wrangler pages deploy dist --project-name sf-studio --branch main`
 10. `npx wrangler pages deployment list --project-name sf-studio`
 11. 운영 URL HTTP 200과 핵심 문자열 확인
+
+`check:public-routes`는 홈, 작품 목록, 1~6화 상세, Music Archive, 앨범 상세, Profile, Updates, sitemap, robots를 확인합니다.
+모바일 검증 시 공개 CTA, 작품 탭, footer 링크는 44px 안팎의 터치 영역을 유지해야 합니다.
 
 배포 후 최소 확인 URL:
 

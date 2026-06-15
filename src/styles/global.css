@@ -240,6 +240,7 @@ body.cursor-down .cursor-ring {
 
 .site-logo {
   display: inline-flex;
+  min-height: 44px;
   align-items: center;
   font-size: 22px;
   font-weight: 900;
@@ -3416,6 +3417,12 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   line-height: 1.55;
 }
 
+.site-footer a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+}
+
 .site-footer a:hover {
   color: var(--pink);
 }
@@ -3782,7 +3789,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
 
   .main-button {
     min-width: 118px;
-    min-height: 42px;
+    min-height: 44px;
     font-size: 11px;
   }
 
@@ -4124,6 +4131,8 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
 
   .novel-detail-tabs a {
     flex: 0 0 auto;
+    min-height: 44px;
+    padding-inline: 14px;
   }
 
   .novel-section-head {

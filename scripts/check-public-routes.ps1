@@ -19,6 +19,36 @@ $routes = @(
     Must = @("EPISODES", "novel-world-section", "novel-character-section", "https://sunofox.com/novels/")
   },
   @{
+    Name = "episode-001"
+    Path = "/novels/episode-001/"
+    File = "novels/episode-001/index.html"
+    Must = @("EPISODE 01", "https://sunofox.com/novels/episode-001/")
+  },
+  @{
+    Name = "episode-002"
+    Path = "/novels/episode-002/"
+    File = "novels/episode-002/index.html"
+    Must = @("EPISODE 02", "https://sunofox.com/novels/episode-002/")
+  },
+  @{
+    Name = "episode-003"
+    Path = "/novels/episode-003/"
+    File = "novels/episode-003/index.html"
+    Must = @("EPISODE 03", "https://sunofox.com/novels/episode-003/")
+  },
+  @{
+    Name = "episode-004"
+    Path = "/novels/episode-004/"
+    File = "novels/episode-004/index.html"
+    Must = @("EPISODE 04", "https://sunofox.com/novels/episode-004/")
+  },
+  @{
+    Name = "episode-005"
+    Path = "/novels/episode-005/"
+    File = "novels/episode-005/index.html"
+    Must = @("EPISODE 05", "https://sunofox.com/novels/episode-005/")
+  },
+  @{
     Name = "episode-006"
     Path = "/novels/episode-006/"
     File = "novels/episode-006/index.html"

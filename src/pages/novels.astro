@@ -115,6 +115,22 @@ const novelListSummaryItems = [
         ))}
       </dl>
 
+      <section class="novel-reading-path" aria-labelledby="readingPathTitle">
+        <div class="novel-reading-path-head">
+          <p class="section-kicker">READING PATH</p>
+          <h3 id="readingPathTitle">읽는 흐름</h3>
+        </div>
+        <div class="novel-reading-grid">
+          {novelProject.readingPath.map((path) => (
+            <a class="novel-reading-card" href={path.href} aria-label={`${path.range} ${path.title}부터 읽기`}>
+              <span>{path.range}</span>
+              <strong>{path.title}</strong>
+              <p>{path.text}</p>
+            </a>
+          ))}
+        </div>
+      </section>
+
       <div class="novel-episode-rows">
         {novelEpisodes.map((episode) => (
           episode.href ? (

@@ -27,6 +27,26 @@ export const novelProject = {
     { label: '연재', value: '비정기 연재' },
     { label: '이용가', value: '전체 이용가' }
   ],
+  readingPath: [
+    {
+      range: '1~2화',
+      title: '빙의와 오류',
+      text: '아델라인이 첫 장의 몰락을 거부하고 에단 블랙이라는 오류의 이름을 붙잡습니다.',
+      href: '/novels/episode-001/'
+    },
+    {
+      range: '3~4화',
+      title: '재판과 증거',
+      text: '공개 재판에서 베일 사건의 증거를 뒤집고, 구속 대신 다음 무대를 얻습니다.',
+      href: '/novels/episode-003/'
+    },
+    {
+      range: '5~6화',
+      title: '사교회와 반격',
+      text: '검은 드레스와 사교계 여론전을 무기로 첫 장의 결말을 아델라인의 승리로 닫습니다.',
+      href: '/novels/episode-005/'
+    }
+  ],
   world: {
     title: '원작의 첫 장이 법처럼 작동하는 황실',
     summary:

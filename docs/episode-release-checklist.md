@@ -54,7 +54,7 @@ npm run check:public-routes
 
 `check:dist`는 공개 빌드 산출물의 내부 링크와 이미지/asset 경로가 실제 `dist` 안에 존재하는지 확인합니다. `/mv-studio`, `/login`, `/signup`, `/admin`, `/account` 계열 운영 HTML은 별도 승인 영역이라 제외합니다.
 
-`check:public-routes`는 현재 공개된 1~6화 상세 페이지, article publish meta, Breadcrumb JSON-LD, sitemap-index, sitemap, robots까지 함께 확인합니다.
+`check:public-routes`는 현재 공개된 1~6화 상세 페이지, article publish meta, Breadcrumb JSON-LD, sitemap-index, legacy sitemap, sitemap, robots까지 함께 확인합니다.
 
 빌드 후 최소 확인 URL:
 
@@ -79,6 +79,7 @@ https://sunofox.com/novels/
 https://sunofox.com/novels/episode-00N/
 https://sunofox.com/music/
 https://sunofox.com/profile/
+https://sunofox.com/sitemap.xml
 https://sunofox.com/sitemap-0.xml
 https://sunofox.com/robots.txt
 ```

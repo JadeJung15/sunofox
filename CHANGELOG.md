@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-06-16
+
+### Improved
+
+- `/sitemap.xml` legacy 호환 XML 라우트를 추가해 sitemap 요청이 HTML fallback으로 오인되지 않도록 정리했습니다.
+- 공개 라우트 검증 스크립트가 `/sitemap.xml`도 XML sitemap index로 확인하도록 보강했습니다.
+
 ## 2026-06-15
 
 ### Improved

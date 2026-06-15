@@ -38,6 +38,7 @@ SunoFox 공식 사이트는 음악에서 시작한 감정과 장면을 웹소설
 | `/terms/` | 이용약관 | `src/pages/terms.astro` |
 | `/robots.txt` | robots | `src/pages/robots.txt.ts` |
 | `/sitemap-index.xml`, `/sitemap-0.xml` | sitemap | `@astrojs/sitemap` |
+| `/sitemap.xml` | legacy sitemap 호환 XML | `src/pages/sitemap.xml.ts` |
 
 ## Protected / Operational Routes
 
@@ -115,7 +116,7 @@ production 반영 전 기본 순서입니다.
 
 `check:content`는 `src/data/siteContent.js`의 `novelEpisodes`와 `src/pages/novels/episode-00N.md` frontmatter의 title, canonical, publishedAt, readTime, 이전/다음 링크를 비교합니다.
 `check:dist`는 빌드된 공개 HTML/CSS/manifest의 내부 링크, 이미지, asset 경로가 `dist` 안에 실제 존재하는지 확인합니다. 보호/운영 HTML인 `/mv-studio`, `/login`, `/signup`, `/admin`, `/account` 계열은 구조 변경 승인 범위와 분리해 제외합니다.
-`check:public-routes`는 홈, 작품 목록, 1~6화 상세, Music Archive, 앨범 상세, Profile, Updates, sitemap-index, sitemap, robots를 확인합니다.
+`check:public-routes`는 홈, 작품 목록, 1~6화 상세, Music Archive, 앨범 상세, Profile, Updates, sitemap-index, legacy sitemap, sitemap, robots를 확인합니다.
 작품 목록과 에피소드 상세는 Breadcrumb JSON-LD, 에피소드는 article publish meta도 함께 검증합니다.
 모바일 검증 시 공개 CTA, 작품 탭, footer 링크는 44px 안팎의 터치 영역을 유지해야 합니다.
 
@@ -129,6 +130,7 @@ https://sunofox.com/music/
 https://sunofox.com/music/archive-vol-1/
 https://sunofox.com/profile/
 https://sunofox.com/updates/
+https://sunofox.com/sitemap.xml
 https://sunofox.com/sitemap-0.xml
 https://sunofox.com/robots.txt
 ```

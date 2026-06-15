@@ -85,6 +85,12 @@ $routes = @(
     Must = @("https://sunofox.com/sitemap-0.xml")
   },
   @{
+    Name = "sitemap-legacy"
+    Path = "/sitemap.xml"
+    File = "sitemap.xml"
+    Must = @("<sitemapindex", "https://sunofox.com/sitemap-0.xml")
+  },
+  @{
     Name = "sitemap"
     Path = "/sitemap-0.xml"
     File = "sitemap-0.xml"

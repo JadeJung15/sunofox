@@ -58,7 +58,7 @@ $routes = @(
     Name = "music"
     Path = "/music/"
     File = "music/index.html"
-    Must = @("Music Archive", "music-archive-actions", "music-featured-ost-section", "music-release-card", "music-video-hub", "music-video-grid", "music-story-section", "https://www.youtube.com/@sunofox", "https://www.youtube.com/@sunofox/playlists", "https://www.youtube.com/watch?v=u_OwBr3Cstk", "/novels/episode-006/", "https://sunofox.com/music/")
+    Must = @("Music Archive", "music-archive-actions", "music-featured-ost-section", "music-release-card", "music-video-hub", "music-video-summary", "music-video-grid", "music-story-section", "https://www.youtube.com/@sunofox", "https://www.youtube.com/@sunofox/playlists", "https://www.youtube.com/watch?v=u_OwBr3Cstk", "/novels/episode-006/", "https://sunofox.com/music/")
   },
   @{
     Name = "album"

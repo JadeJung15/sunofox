@@ -13,6 +13,15 @@ import {
 
 const currentEpisode = latestNovelEpisode;
 const featuredVideo = musicArchive.videos[0];
+const videoTypes = Array.from(new Set(musicArchive.videos.map((video) => video.type))).slice(0, 4);
+const latestVideoDate = musicArchive.videos[0]?.date || musicArchive.researchDate;
+const oldestVideoDate = musicArchive.videos.at(-1)?.date || latestVideoDate;
+const videoSummaryItems = [
+  { label: '영상 수', value: `${musicArchive.videos.length}편` },
+  { label: '최근 공개', value: latestVideoDate },
+  { label: '대표 분류', value: videoTypes.join(' · ') },
+  { label: '기록 범위', value: `${oldestVideoDate} - ${latestVideoDate}` }
+];
 ---
 
 <Layout
@@ -186,6 +195,15 @@ const featuredVideo = musicArchive.videos[0];
           </div>
         </div>
       </div>
+
+      <dl class="music-video-summary" aria-label="YouTube and MV summary">
+        {videoSummaryItems.map((item) => (
+          <div>
+            <dt>{item.label}</dt>
+            <dd>{item.value}</dd>
+          </div>
+        ))}
+      </dl>
 
       <ol class="music-video-grid">
         {musicArchive.videos.map((video) => (

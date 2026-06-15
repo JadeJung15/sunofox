@@ -130,7 +130,7 @@ production 반영 전 기본 순서입니다.
 12. `npx wrangler pages deployment list --project-name sf-studio`
 13. 운영 URL HTTP 200과 핵심 문자열 확인
 
-`check:content`는 `src/data/siteContent.js`의 `novelEpisodes`와 `src/pages/novels/episode-00N.md` frontmatter의 title, canonical, publishedAt, readTime, 이전/다음 링크를 비교합니다.
+`check:content`는 `src/data/siteContent.js`의 `novelEpisodes`와 `src/pages/novels/episode-00N.md` frontmatter의 title, canonical, publishedAt, readTime, 이전/다음 링크, 공유 태그를 비교합니다.
 `check:dist`는 빌드된 공개 HTML/CSS/manifest의 내부 링크, 이미지, asset 경로가 `dist` 안에 실제 존재하는지 확인합니다. 보호/운영 HTML인 `/mv-studio`, `/login`, `/signup`, `/admin`, `/account` 계열은 구조 변경 승인 범위와 분리해 제외합니다.
 `check:seo`는 홈, 작품 목록, 1~6화 상세, Music Archive, 앨범 상세, Profile, Updates의 title, description, canonical, OG/Twitter card, JSON-LD 기본 타입을 확인합니다.
 `check:a11y`는 공개 HTML의 lang, viewport, h1, 이미지 alt, 링크/버튼 접근 가능한 이름, 새 탭 링크 rel 값을 확인합니다.

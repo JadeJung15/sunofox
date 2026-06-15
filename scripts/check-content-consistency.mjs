@@ -37,6 +37,28 @@ function assertPattern(label, value, pattern) {
   }
 }
 
+function assertStringArray(label, value, { min = 1 } = {}) {
+  if (!Array.isArray(value)) {
+    fail(`${label}: must be an array`);
+    return [];
+  }
+
+  if (value.length < min) {
+    fail(`${label}: must contain at least ${min} item(s)`);
+  }
+
+  const normalized = value.map((item) => String(item || '').trim());
+  const seen = new Set();
+
+  normalized.forEach((item, index) => {
+    if (!item) fail(`${label}[${index}]: must not be empty`);
+    if (seen.has(item)) fail(`${label}: duplicate value "${item}"`);
+    seen.add(item);
+  });
+
+  return normalized.filter(Boolean);
+}
+
 function parseFrontmatter(markdown, fileName) {
   const match = markdown.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
   if (!match) {
@@ -144,6 +166,13 @@ for (const [index, episode] of publishedEpisodes.entries()) {
 
   if (episode.isFree !== true) {
     fail(`${label}: published episode must set isFree to true`);
+  }
+
+  const shareTags = assertStringArray(`${label} shareTags`, episode.shareTags, { min: 3 });
+  const projectKeywordSet = new Set(novelProject.keywords || []);
+  const hasEpisodeSpecificTag = shareTags.some((tag) => !projectKeywordSet.has(tag));
+  if (!hasEpisodeSpecificTag) {
+    fail(`${label} shareTags: must include at least one episode-specific tag`);
   }
 
   const markdownPath = path.join(episodeDir, fileName);

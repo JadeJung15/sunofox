@@ -23,6 +23,7 @@
 - `docs/site-route-inventory.md`를 추가해 공개/보호 라우트, 콘텐츠 데이터 위치, 배포 후 확인 URL을 운영 문서로 분리했습니다.
 - 에피소드 상세 상단에 이전/목록/다음 빠른 이동을 추가하고, 모바일 회차 목록의 터치 영역과 카드형 여백을 보강했습니다.
 - 에피소드별 공유 태그를 데이터화하고 `meta keywords`, `article:section`, `article:tag`, Article JSON-LD 키워드 검증을 보강했습니다.
+- `check:content`가 공개 회차별 `shareTags` 배열, 중복, 빈 값, 회차 고유 태그 누락을 검증하도록 보강했습니다.
 
 ## 2026-06-15
 

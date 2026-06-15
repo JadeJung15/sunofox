@@ -57,7 +57,7 @@ Last verified: 2026-06-16
 | 콘텐츠 | 파일 | 신규 추가 시 확인 |
 |---|---|---|
 | 공개 메뉴 | `src/data/navigationContent.js` | overlay menu 라벨, active 상태 |
-| 웹소설 작품 정보 | `src/data/novelContent.js` | 작품 요약, 세계관, 인물, 회차 목록 |
+| 웹소설 작품 정보 | `src/data/novelContent.js` | 작품 요약, 세계관, 인물, 회차 목록, 회차별 공유 태그 |
 | 회차 본문 | `src/pages/novels/episode-00N.md` | frontmatter, 이전/다음 링크, 본문 |
 | 대표 OST/외부 링크 | `src/data/artistContent.js` | YouTube/음원 링크, 썸네일 alt |
 | Music Archive | `src/data/musicContent.js` | 앨범, 영상 허브, 외부 소스 |
@@ -82,7 +82,7 @@ npm run check
 
 | check | 확인 범위 |
 |---|---|
-| `check:content` | `novelContent.js`와 1~6화 frontmatter/본문 일치 |
+| `check:content` | `novelContent.js`와 1~6화 frontmatter/본문/shareTags 일치 |
 | `check:dist` | 빌드 산출물의 내부 링크, 이미지, asset 존재 |
 | `check:seo` | title, description, canonical, OG/Twitter, JSON-LD |
 | `check:a11y` | lang, viewport, h1, alt, 링크/버튼 이름, 새 탭 rel |

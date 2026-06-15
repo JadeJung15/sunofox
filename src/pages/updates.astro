@@ -1,7 +1,7 @@
 ---
 import SiteChrome from '../components/SiteChrome.astro';
 import Layout from '../layouts/Layout.astro';
-import { novelProject, siteUpdates, siteUpdatesStructuredData, updateCategories } from '../data/siteContent.js';
+import { novelProject, plannedContentHubs, siteUpdates, siteUpdatesStructuredData, updateCategories } from '../data/siteContent.js';
 ---
 
 <Layout
@@ -37,6 +37,29 @@ import { novelProject, siteUpdates, siteUpdatesStructuredData, updateCategories 
             <strong>{category.countLabel}</strong>
             <p>{category.summary}</p>
             <a class="micro-button micro-button-muted" href={category.href}>{category.cta}</a>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section id="content-roadmap" class="updates-roadmap-section reveal" aria-labelledby="contentRoadmapTitle">
+      <div class="novel-section-head">
+        <p class="section-kicker">CONTENT HUBS</p>
+        <h2 id="contentRoadmapTitle">확장 현황</h2>
+        <span>{plannedContentHubs.length}개 허브</span>
+      </div>
+
+      <div class="updates-roadmap-grid">
+        {plannedContentHubs.map((hub) => (
+          <article class:list={['updates-roadmap-card', !hub.href && 'is-waiting']}>
+            <span>{hub.status}</span>
+            <strong>{hub.label}</strong>
+            <p>{hub.summary}</p>
+            {hub.href ? (
+              <a class="micro-button micro-button-muted" href={hub.href}>{hub.cta}</a>
+            ) : (
+              <span class="micro-button micro-button-muted updates-roadmap-disabled" aria-disabled="true">{hub.cta}</span>
+            )}
           </article>
         ))}
       </div>

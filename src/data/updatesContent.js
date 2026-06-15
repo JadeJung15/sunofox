@@ -1,5 +1,18 @@
 export const siteUpdates = [
   {
+    date: '2026.06.16',
+    type: 'Roadmap',
+    title: '공식 콘텐츠 허브 확장 상태 정리',
+    summary:
+      '웹소설, Music/MV, 세계관, 굿즈샵, 팬 커뮤니티의 공개 상태를 Updates에서 한눈에 확인할 수 있도록 준비 현황을 정리했습니다.',
+    areas: ['notice', 'novel', 'music', 'site'],
+    links: [
+      { label: '확장 현황', href: '/updates/#content-roadmap' },
+      { label: '소설 허브', href: '/novels/' },
+      { label: '음악 허브', href: '/music/' }
+    ]
+  },
+  {
     date: '2026.06.15',
     type: 'Site',
     title: '공식 사이트 운영 문서와 Music 진입점 정리',
@@ -70,3 +83,41 @@ export const updateCategories = updateCategoryDefinitions.map((category) => {
     countLabel: count > 0 ? `${count}건` : '준비중'
   };
 });
+
+export const plannedContentHubs = [
+  {
+    label: '웹소설 연재',
+    status: '운영 중',
+    summary: '《악녀는 첫 장에서 웃었다》 1~6화와 작품 정보, 세계관, 주요 인물을 공개 중입니다.',
+    href: '/novels/',
+    cta: '소설 보기'
+  },
+  {
+    label: 'Music / MV',
+    status: '운영 중',
+    summary: '대표 OST, ARCHIVE vol.1, YouTube/MV 큐레이션을 음악 아카이브에서 연결합니다.',
+    href: '/music/',
+    cta: '음악 보기'
+  },
+  {
+    label: '세계관 / 인물',
+    status: '확장 중',
+    summary: '작품별 세계관과 캐릭터 소개는 현재 소설 허브 안에서 관리하고, 작품 증가 시 독립 섹션으로 분리합니다.',
+    href: '/novels/#world',
+    cta: '세계관 보기'
+  },
+  {
+    label: '굿즈샵',
+    status: '준비 중',
+    summary: '공식 판매 URL, 상품 범위, 결제/배송 정책이 확정된 뒤 깨지지 않는 외부 링크로 연결합니다.',
+    href: '',
+    cta: 'URL 확정 대기'
+  },
+  {
+    label: '팬 커뮤니티',
+    status: '준비 중',
+    summary: '운영 플랫폼, 공지 기준, moderation 정책을 확정한 뒤 공식 커뮤니티 진입점을 공개합니다.',
+    href: '',
+    cta: '운영 기준 대기'
+  }
+];

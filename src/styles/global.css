@@ -3560,6 +3560,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
 }
 
 .updates-hub-section,
+.updates-roadmap-section,
 .updates-log-section {
   width: min(1120px, calc(100% - 40px));
   margin: 0 auto 92px;
@@ -3612,6 +3613,67 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
 
 .updates-hub-grid .micro-button {
   margin-top: 22px;
+}
+
+.updates-roadmap-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.updates-roadmap-card {
+  display: flex;
+  min-height: 260px;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(180deg, rgba(255, 10, 91, 0.055), transparent 42%),
+    rgba(255, 255, 255, 0.025);
+  padding: 20px;
+}
+
+.updates-roadmap-card.is-waiting {
+  background: rgba(255, 255, 255, 0.018);
+}
+
+.updates-roadmap-card > span:first-child {
+  width: fit-content;
+  min-height: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 6px 9px 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-family: var(--font-condensed);
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+}
+
+.updates-roadmap-card strong {
+  display: block;
+  margin-top: 24px;
+  color: #ffffff;
+  font-size: clamp(22px, 2.8vw, 34px);
+  font-weight: 950;
+  line-height: 1.04;
+}
+
+.updates-roadmap-card p {
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.68;
+  word-break: keep-all;
+}
+
+.updates-roadmap-card .micro-button {
+  width: fit-content;
+  margin-top: auto;
+  padding-inline: 10px;
+}
+
+.updates-roadmap-disabled {
+  opacity: 0.54;
 }
 
 .updates-log-list {
@@ -4783,16 +4845,19 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   }
 
   .updates-hub-section,
+  .updates-roadmap-section,
   .updates-log-section {
     width: calc(100% - 32px);
     margin-bottom: 72px;
   }
 
-  .updates-hub-grid {
+  .updates-hub-grid,
+  .updates-roadmap-grid {
     grid-template-columns: 1fr;
   }
 
-  .updates-hub-grid article {
+  .updates-hub-grid article,
+  .updates-roadmap-card {
     min-height: auto;
   }
 

@@ -8,7 +8,7 @@ import {
   novelProject,
   publishedNovelEpisodes
 } from './novelContent.js';
-import { siteUpdates, updateCategories } from './updatesContent.js';
+import { plannedContentHubs, siteUpdates, updateCategories } from './updatesContent.js';
 
 export {
   archiveAlbum,
@@ -20,6 +20,7 @@ export {
   nextNovelEpisode,
   novelEpisodes,
   novelProject,
+  plannedContentHubs,
   publishedNovelEpisodes,
   siteUpdates,
   updateCategories

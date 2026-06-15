@@ -89,6 +89,21 @@ function episodeFileNameFromHref(href) {
   return match ? `${match[1]}.md` : '';
 }
 
+function episodeNumberFromHref(href) {
+  const match = href?.match(/\/novels\/episode-(\d{3})\/$/);
+  return match ? Number(match[1]) : null;
+}
+
+function parseReadingPathRange(range) {
+  const match = String(range || '').trim().match(/^(\d+)~(\d+)화$/);
+  if (!match) return null;
+
+  return {
+    start: Number(match[1]),
+    end: Number(match[2])
+  };
+}
+
 function previousPublishedEpisode(episodes, index) {
   for (let cursor = index - 1; cursor >= 0; cursor -= 1) {
     if (episodes[cursor].href) return episodes[cursor];
@@ -119,6 +134,8 @@ const episodeFiles = files.filter((file) => /^episode-\d{3}\.md$/.test(file)).so
 const publishedEpisodes = novelEpisodes.filter((episode) => episode.href);
 const expectedFiles = publishedEpisodes.map((episode) => episodeFileNameFromHref(episode.href));
 const expectedFileSet = new Set(expectedFiles);
+const publishedHrefSet = new Set(publishedEpisodes.map((episode) => episode.href));
+const publishedNumberSet = new Set(publishedEpisodes.map((episode) => Number(episode.number)));
 
 for (const file of expectedFiles) {
   if (!file) {
@@ -131,6 +148,64 @@ for (const file of expectedFiles) {
 for (const file of episodeFiles) {
   if (!expectedFileSet.has(file)) {
     warn(`${file}: markdown file exists but is not listed as a published episode`);
+  }
+}
+
+if (!Array.isArray(novelProject.readingPath) || novelProject.readingPath.length === 0) {
+  fail('novelProject.readingPath must be a non-empty array');
+} else {
+  const seenReadingHrefs = new Set();
+  const coveredReadingNumbers = new Map();
+
+  novelProject.readingPath.forEach((item, index) => {
+    const label = `novelProject.readingPath[${index}]`;
+
+    for (const field of ['range', 'title', 'text', 'href']) {
+      assertPresent(`${label} ${field}`, item[field]);
+    }
+
+    if (!publishedHrefSet.has(item.href)) {
+      fail(`${label} href: must point to a published episode (${item.href || '(empty)'})`);
+    }
+
+    if (seenReadingHrefs.has(item.href)) {
+      fail(`${label} href: duplicate reading path target "${item.href}"`);
+    }
+    seenReadingHrefs.add(item.href);
+
+    const range = parseReadingPathRange(item.range);
+    if (!range) {
+      fail(`${label} range: must use "1~2화" format`);
+      return;
+    }
+
+    if (range.start > range.end) {
+      fail(`${label} range: start must be less than or equal to end`);
+    }
+
+    const hrefNumber = episodeNumberFromHref(item.href);
+    if (hrefNumber !== range.start) {
+      fail(`${label} href: must point to the first episode in range ${item.range}`);
+    }
+
+    for (let number = range.start; number <= range.end; number += 1) {
+      if (coveredReadingNumbers.has(number)) {
+        fail(`${label} range: episode ${number} is covered more than once`);
+      }
+      coveredReadingNumbers.set(number, label);
+    }
+  });
+
+  for (const episodeNumber of publishedNumberSet) {
+    if (!coveredReadingNumbers.has(episodeNumber)) {
+      fail(`novelProject.readingPath: published episode ${episodeNumber} is not covered`);
+    }
+  }
+
+  for (const coveredNumber of coveredReadingNumbers.keys()) {
+    if (!publishedNumberSet.has(coveredNumber)) {
+      fail(`novelProject.readingPath: range covers unpublished episode ${coveredNumber}`);
+    }
   }
 }
 

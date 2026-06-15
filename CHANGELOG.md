@@ -4,6 +4,7 @@
 
 ### Improved
 
+- `check:content`가 `/novels/` 읽는 흐름 데이터의 구간 형식, 공개 회차 포함 여부, 구간 첫 화 링크를 검증하도록 보강했습니다.
 - `npm run check:production`을 추가해 Cloudflare Pages 배포 후 운영 도메인의 공개 라우트를 같은 검증 스크립트로 확인할 수 있게 했습니다.
 - `npm run lint`와 `npm run test`를 추가해 공유 메타/접근성 점검과 배포 전 전체 검증을 표준 npm 명령으로 실행할 수 있게 했습니다.
 - 에피소드 상세에 전체 회차 레일을 추가해 최신화에서도 다른 회차로 바로 이동할 수 있게 했습니다.

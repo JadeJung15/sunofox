@@ -1684,6 +1684,8 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
 .novel-release-strip,
 .novel-episode-list,
 .novel-detail-info,
+.novel-world-section,
+.novel-character-section,
 .novel-ost-panel,
 .novel-keyword-section {
   width: min(1120px, 100%);
@@ -1927,6 +1929,77 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-size: clamp(24px, 3vw, 42px);
   font-weight: 950;
   line-height: 1.08;
+}
+
+.novel-world-section,
+.novel-character-section {
+  border-bottom: 1px solid var(--line);
+  padding: 34px 0;
+}
+
+.novel-world-summary {
+  max-width: 860px;
+  margin: 0 0 22px;
+  color: var(--muted);
+  font-size: 16px;
+  font-weight: 650;
+  line-height: 1.82;
+  word-break: keep-all;
+}
+
+.novel-world-grid,
+.novel-character-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.novel-world-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.novel-character-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.novel-world-grid article,
+.novel-character-grid article {
+  min-height: 210px;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  background: rgba(255, 255, 255, 0.025);
+  padding: 20px;
+}
+
+.novel-world-grid span,
+.novel-character-grid span {
+  color: var(--pink);
+  font-family: var(--font-condensed);
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.novel-world-grid strong,
+.novel-character-grid h3 {
+  display: block;
+  margin: 34px 0 0;
+  color: #ffffff;
+  font-family: var(--font-condensed);
+  font-size: clamp(24px, 3vw, 38px);
+  font-weight: 950;
+  letter-spacing: 0;
+  line-height: 1.04;
+  word-break: keep-all;
+}
+
+.novel-world-grid p,
+.novel-character-grid p {
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.68;
+  word-break: keep-all;
 }
 
 .novel-ost-panel {
@@ -3947,7 +4020,9 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   .novel-platform-hero,
   .novel-detail-hero,
   .novel-platform-grid,
-  .novel-detail-info {
+  .novel-detail-info,
+  .novel-world-grid,
+  .novel-character-grid {
     grid-template-columns: 1fr;
   }
 
@@ -4087,6 +4162,27 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   .novel-detail-info {
     gap: 16px;
     padding: 28px 0;
+  }
+
+  .novel-world-section,
+  .novel-character-section {
+    padding: 28px 0;
+  }
+
+  .novel-world-summary {
+    font-size: 14px;
+    line-height: 1.76;
+  }
+
+  .novel-world-grid article,
+  .novel-character-grid article {
+    min-height: auto;
+  }
+
+  .novel-world-grid strong,
+  .novel-character-grid h3 {
+    margin-top: 26px;
+    font-size: clamp(28px, 9vw, 40px);
   }
 
   .novel-detail-info blockquote {

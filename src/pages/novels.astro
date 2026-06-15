@@ -69,6 +69,8 @@ const latestEpisodeTitle = `${latestNovelEpisode.label} · ${latestNovelEpisode.
     <section class="novel-detail-tabs reveal" aria-label="작품 탭">
       <a href="#episodes">소설 목록</a>
       <a href="#about">정보</a>
+      <a href="#world">세계관</a>
+      <a href="#characters">인물</a>
       <a href="#ost">OST</a>
       <a href="#keywords">키워드</a>
     </section>
@@ -123,6 +125,41 @@ const latestEpisodeTitle = `${latestNovelEpisode.label} · ${latestNovelEpisode.
       </div>
       <p>{novelProject.shortSummary}</p>
       <blockquote>{novelProject.systemLine}</blockquote>
+    </section>
+
+    <section id="world" class="novel-world-section reveal" aria-labelledby="novelWorldTitle">
+      <div class="novel-section-head">
+        <p class="section-kicker">세계관</p>
+        <h2 id="novelWorldTitle">{novelProject.world.title}</h2>
+        <span>{novelProject.world.pillars.length}개 포인트</span>
+      </div>
+      <p class="novel-world-summary">{novelProject.world.summary}</p>
+      <div class="novel-world-grid">
+        {novelProject.world.pillars.map((item) => (
+          <article>
+            <span>{item.label}</span>
+            <strong>{item.title}</strong>
+            <p>{item.text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section id="characters" class="novel-character-section reveal" aria-labelledby="novelCharacterTitle">
+      <div class="novel-section-head">
+        <p class="section-kicker">주요 인물</p>
+        <h2 id="novelCharacterTitle">첫 장을 흔드는 사람들</h2>
+        <span>{novelProject.characters.length}명</span>
+      </div>
+      <div class="novel-character-grid">
+        {novelProject.characters.map((character) => (
+          <article>
+            <span>{character.role}</span>
+            <h3>{character.name}</h3>
+            <p>{character.text}</p>
+          </article>
+        ))}
+      </div>
     </section>
 
     <section id="ost" class="novel-ost-panel reveal" aria-label="작품 OST">

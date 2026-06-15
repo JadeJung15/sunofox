@@ -16,7 +16,7 @@ $routes = @(
     Name = "novels"
     Path = "/novels/"
     File = "novels/index.html"
-    Must = @("EPISODES", "https://sunofox.com/novels/")
+    Must = @("EPISODES", "novel-world-section", "novel-character-section", "https://sunofox.com/novels/")
   },
   @{
     Name = "episode-006"

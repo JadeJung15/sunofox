@@ -10,6 +10,7 @@
 - `npm run check:seo`를 추가해 공개 HTML의 title, description, canonical, OG/Twitter card, JSON-LD 기본 타입을 배포 전에 점검합니다.
 - `npm run check:a11y`를 추가해 공개 HTML의 lang, viewport, h1, 이미지 alt, 링크/버튼 접근 가능한 이름을 배포 전에 점검합니다.
 - `siteContent.js`에서 메뉴 데이터와 업데이트 로그 데이터를 분리하고 기존 import 호환을 유지했습니다.
+- `package.json`에 ESM 타입을 명시해 콘텐츠/SEO 검증 스크립트 실행 시 발생하던 Node 모듈 타입 경고를 제거했습니다.
 
 ## 2026-06-15
 

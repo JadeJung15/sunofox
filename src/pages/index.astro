@@ -2,7 +2,6 @@
 import SiteChrome from '../components/SiteChrome.astro';
 import Layout from '../layouts/Layout.astro';
 import {
-  artistLinks,
   featuredStoryOst,
   novelProject,
   structuredData
@@ -10,7 +9,6 @@ import {
 
 const wordmark = 'SUNOFOX'.split('');
 const heroParticles = Array.from({ length: 42 });
-const featuredOstHref = artistLinks.featuredOst;
 const novelListCta = '소설 보러가기';
 ---
 
@@ -62,7 +60,7 @@ const novelListCta = '소설 보러가기';
 
       <div class="hero-side-actions" aria-label="SunoFox quick actions">
         <a class="main-button main-button-primary" href="/novels/" aria-label="소설 회차 목록으로 이동">{novelListCta}</a>
-        <a class="main-button main-button-muted" href={featuredOstHref} target="_blank" rel="noopener noreferrer">OST 감상</a>
+        <a class="main-button main-button-muted" href="/music/">MUSIC</a>
         <a class="main-button main-button-muted" href="/mv-studio">STUDIO</a>
       </div>
     </section>

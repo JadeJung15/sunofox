@@ -1,153 +1,153 @@
-# SunoFox Fan Page
+# SunoFox Official Site
 
-SunoFox 팬페이지와 관리자 전용 SF Studio를 함께 운영하는 Cloudflare Pages 사이트입니다.
+SunoFox 공식 사이트는 음악에서 시작한 감정과 장면을 웹소설, OST, Music Archive, Studio 제작 흐름으로 확장하는 Cloudflare Pages 기반 정적 사이트입니다.
 
-- 정본 도메인: `https://sunofox.com`
-- 메인 홈: `/`
-- 팬 게시판: `/community`
-- 새 소식: `/news`
-- 영상 아카이브: `/archive`
-- 팬 이벤트: `/events`
-- SF Studio route: `/mv-studio` 관리자 전용
-- Cloudflare Pages 프로젝트명: `sf-studio`
-- 접근 제어: 팬 게시글 작성은 승인 계정, SF Studio는 관리자 이메일만 허용
-- 커뮤니티 저장소: Cloudflare D1 `sf_community`
-- 관리자 계정: `jadejung15@gmail.com`
-- 브릿지 확장: `SF 미디어 브릿지` v1.5.17
+## Current Production
 
-## Local Preview
+| 항목 | 내용 |
+|---|---|
+| 정본 도메인 | `https://sunofox.com` |
+| GitHub repo | `JadeJung15/sunofox` |
+| 기본 브랜치 | `main` |
+| 프레임워크 | Astro static site + Tailwind/Vite |
+| 패키지 매니저 | npm |
+| Cloudflare Pages 프로젝트 | `sf-studio` |
+| 빌드 출력 | `dist` |
+| 공개 사이트 방향 | 웹소설 연재 허브, OST/음악 아카이브, SunoFox 소개, Studio 진입 |
+| 접근 모델 | 공개 사이트 + SF Studio 자체 승인/로그인 |
 
-Cloudflare Pages routing behavior:
+## Public Routes
 
-```powershell
-npx wrangler pages dev . --port 4173 --compatibility-date=2026-06-07
+아래 URL은 운영 URL로 유지해야 합니다.
+
+| Route | 용도 | 소스 |
+|---|---|---|
+| `/` | SunoFox 메인 | `src/pages/index.astro` |
+| `/novels/` | 웹소설 작품/회차 목록 | `src/pages/novels.astro` |
+| `/novels/episode-001/` | 1화 | `src/pages/novels/episode-001.md` |
+| `/novels/episode-002/` | 2화 | `src/pages/novels/episode-002.md` |
+| `/novels/episode-003/` | 3화 | `src/pages/novels/episode-003.md` |
+| `/novels/episode-004/` | 4화 | `src/pages/novels/episode-004.md` |
+| `/novels/episode-005/` | 5화 | `src/pages/novels/episode-005.md` |
+| `/novels/episode-006/` | 6화 | `src/pages/novels/episode-006.md` |
+| `/music/` | Music Archive | `src/pages/music/index.astro` |
+| `/music/archive-vol-1/` | ARCHIVE vol.1 앨범 상세 | `src/pages/music/archive-vol-1.astro` |
+| `/profile/` | SunoFox 소개/필모그래피 | `src/pages/profile.astro` |
+| `/privacy/` | 개인정보 처리방침 | `src/pages/privacy.astro` |
+| `/terms/` | 이용약관 | `src/pages/terms.astro` |
+| `/robots.txt` | robots | `src/pages/robots.txt.ts` |
+| `/sitemap-index.xml`, `/sitemap-0.xml` | sitemap | `@astrojs/sitemap` |
+
+## Protected / Operational Routes
+
+아래 영역은 별도 승인 없이 구조를 변경하지 않습니다.
+
+| Route | 용도 | 주의 |
+|---|---|---|
+| `/mv-studio` | 관리자 전용 제작 공간 | 구조 변경 금지, noindex 유지 |
+| `/login` | 자체 로그인 | 인증 구조 변경 금지 |
+| `/signup` | 입장 신청 | 인증 구조 변경 금지 |
+| `/admin` | 승인/관리 화면 | 관리자 기능 변경 금지 |
+| `/api/auth/*` | 인증 API | 대규모 변경 금지 |
+| `/api/community/*` | 레거시 커뮤니티 API | 삭제/DB 변경 금지 |
+
+## Core Files
+
+| 구분 | 경로 | 설명 |
+|---|---|---|
+| 공통 레이아웃 | `src/layouts/Layout.astro` | title, description, canonical, OG, Twitter card, footer |
+| 에피소드 레이아웃 | `src/layouts/NovelEpisodeLayout.astro` | 본문, OST, 이전/다음/목록 이동 |
+| 헤더/메뉴 | `src/components/SiteChrome.astro` | 고정 헤더와 오버레이 메뉴 |
+| 사이트 데이터 | `src/data/siteContent.js` | 메뉴, 에피소드 목록, OST, 음악 아카이브, JSON-LD |
+| 전역 스타일 | `src/styles/global.css` | 모든 공개 페이지 UI |
+| 정적 assets | `public/assets/` | 커버, 아이콘, 앨범 이미지 |
+| Cloudflare 설정 | `wrangler.jsonc` | Pages output, KV/D1 binding, vars |
+| headers/redirects | `_headers`, `_redirects`, `public/_headers`, `public/_redirects` | Cloudflare Pages 헤더/리다이렉트 |
+
+## Content Model
+
+웹소설은 현재 두 곳을 함께 갱신합니다.
+
+1. 회차 목록/카드/메타: `src/data/siteContent.js`의 `novelEpisodes`
+2. 실제 본문: `src/pages/novels/episode-00N.md`
+
+OST와 YouTube 연결은 `src/data/siteContent.js`의 `artistLinks`, `featuredStoryOst`, `musicArchive`, `sunofoxProfile`에서 관리합니다.
+
+## Scripts
+
+| script | command | 용도 |
+|---|---|---|
+| `npm run dev` | `astro dev` | 로컬 개발 서버 |
+| `npm run build` | `astro build && node scripts/version-auth-assets.mjs` | 정적 빌드와 auth asset versioning |
+| `npm run preview` | `astro preview` | 빌드 결과 미리보기 |
+| `npm run pages:dev` | `npm run build && wrangler pages dev dist --compatibility-date=2026-06-07` | Cloudflare Pages 로컬 검증 |
+| `npm run deploy:preview` | `npm run build && wrangler pages deploy dist --project-name sf-studio --branch astro-redesign` | preview 배포 |
+| `npm run deploy:production` | `npm run build && wrangler pages deploy dist --project-name sf-studio --branch main` | production 배포 |
+| `npm run check:admin-oauth` | PowerShell checker | 관리자 OAuth 패널 정적 확인 |
+| `npm run check:admin-feedback` | PowerShell checker | 관리자 피드백 요약 확인 |
+
+`lint`와 `test` script는 아직 없습니다.
+
+## Deployment Checklist
+
+production 반영 전 기본 순서입니다.
+
+1. `git status -sb`
+2. `git log --oneline -5`
+3. `npm run build`
+4. 주요 로컬/빌드 산출물 확인
+5. `git add ...`
+6. `git commit -m "..."`
+7. `git push origin main`
+8. `npx wrangler pages deploy dist --project-name sf-studio --branch main`
+9. `npx wrangler pages deployment list --project-name sf-studio`
+10. 운영 URL HTTP 200 확인
+
+배포 후 최소 확인 URL:
+
+```text
+https://sunofox.com/
+https://sunofox.com/novels/
+https://sunofox.com/novels/episode-006/
+https://sunofox.com/music/
+https://sunofox.com/music/archive-vol-1/
+https://sunofox.com/profile/
+https://sunofox.com/sitemap-0.xml
+https://sunofox.com/robots.txt
 ```
 
-Then check:
+## Boundaries
 
-- `http://localhost:4173/`
-- `http://localhost:4173/community`
-- `http://localhost:4173/mv-studio`
-- `http://localhost:4173/mv-studio/storyboard`
-- `http://localhost:4173/mv-studio/import`
-- `http://localhost:4173/mv-studio/help`
-- `http://localhost:4173/mv-studio/showcase`
-- `http://localhost:4173/mv-studio.html`
-- `http://localhost:4173/extensions/sf-midjourney-bridge-v1.5.17.zip`
-- `http://localhost:4173/login`
-- `http://localhost:4173/signup`
-- `http://localhost:4173/admin`
+승인 없이 진행 가능한 작업:
 
-## Authentication
+- README/문서 최신화
+- 공개 라우트 문구/CTA 개선
+- `/music/`, `/novels/`, 에피소드 페이지 접근성 개선
+- SEO/meta/alt/JSON-LD 보강
+- 모바일 레이아웃 소규모 개선
+- 에피소드 추가 체크리스트 작성
+- build, commit, push, Cloudflare Pages production 배포 확인
 
-Cloudflare Access is intentionally disabled for this project. The site uses Cloudflare Pages Functions for first-party approval flow:
+별도 승인 필요한 작업:
 
-- `/signup`: email signup request
-- `/login`: approved email + studio entry code login
-- `/community`: public fan board with approved-account posting
-- `/community-post?id=...`: public post detail and comments
-- `/news`, `/archive`, `/events`: public fan page category pages
-- `/mv-studio`: admin-only creator workspace
-- `/admin`: admin-only owner approval screen
-- `/api/auth/*`: signup, login, logout, session check
-- `/api/community/posts`: list, detail, create, and admin-manage fan posts
-- `/api/community/comments`: list, create, and admin-manage comments
-- `/api/community/reactions`: approved-account recommend/downvote
-- `/api/posts`: compatibility endpoint for post list/create/admin actions
-- `/api/admin/users`: list and approve/reject users with pending-request alert support
-
-Required Cloudflare bindings/secrets before production deployment:
-
-```powershell
-npx wrangler kv namespace create SF_STUDIO_AUTH
-npx wrangler d1 create sf_community
-npx wrangler d1 migrations apply sf_community --remote
-npx wrangler pages secret put SF_STUDIO_SESSION_SECRET --project-name sf-studio
-npx wrangler pages secret put SF_STUDIO_LOGIN_CODE --project-name sf-studio
-```
-
-Bind the KV namespace as `SF_STUDIO_AUTH` through `wrangler.jsonc` or the Cloudflare Pages project settings. `SF_STUDIO_ADMIN_EMAIL` is configured in `wrangler.jsonc` as `jadejung15@gmail.com`.
-`SF_STUDIO_ADMIN_KEY` is optional emergency access; the owner email session can manage approvals without it.
-
-### Social Login Notes
-
-Google and Kakao login are available on `/login` and `/signup`.
-
-Kakao currently works with nickname-only consent. To collect Kakao account email later:
-
-1. In Kakao Developers, convert app `SunoFox` (`1483472`) to a personal developer Biz app.
-2. Set the Kakao Login consent item `account_email` to required or optional.
-3. Enable the site-side email scope only after the Kakao consent item is available:
-
-Detailed checklist: `docs/kakao-email-migration-checklist.md`
-
-```powershell
-npx wrangler pages secret put SF_KAKAO_EMAIL_SCOPE --project-name sf-studio
-# value: true
-npm run build
-npx wrangler pages deploy dist --project-name sf-studio --branch main
-```
-
-You can confirm the production flag state without exposing secret values:
-
-```powershell
-Invoke-RestMethod https://sunofox.com/api/auth/oauth/status | ConvertTo-Json -Depth 5
-```
-
-Expected Kakao field after enabling the flag: `"emailScopeRequested": true`.
-
-Or run the local checker:
-
-```powershell
-.\scripts\check-oauth-status.ps1
-.\scripts\check-oauth-status.ps1 -ExpectKakaoEmailScope
-```
-
-Admin console OAuth panel static check:
-
-```powershell
-npm run build
-npm run check:admin-oauth
-```
-
-The OAuth handler preserves existing Kakao users by matching the Kakao provider ID first. If a nickname-only Kakao account later receives a real email address, the account key and community references are migrated to the real email instead of creating a duplicate user.
-
-## Deployment Boundary
-
-Do not deploy without an explicit deployment request.
-
-Approved target when requested:
-
-```powershell
-npx wrangler pages deploy . --project-name sf-studio --branch main
-```
-
-Configure `www.sunofox.com` -> `sunofox.com` as a Cloudflare Redirect Rule. Pages `_redirects` only handles path-level routing for the current host.
-
-Do not recreate Cloudflare Access unless the access model changes again. The current model is public edge access, approved-account fan posting, and admin-only SF Studio access.
+- 도메인/DNS/Cloudflare 계정 설정 변경
+- Cloudflare Access 변경
+- 환경변수/API 키/시크릿 추가, 삭제, 출력
+- DB 또는 외부 CMS 도입
+- 인증/로그인/관리자/Functions 대규모 변경
+- `/mv-studio`, `/login`, `/signup`, `/admin` 구조 변경
+- 기존 공개 URL 변경
+- 콘텐츠 대량 삭제
+- 에피소드 본문 대량 변환
+- `_headers/_redirects` 대규모 정리
 
 ## Bridge Extension
 
-The production bridge package is:
+브릿지 확장 프로그램은 기존 운영 버전을 유지합니다.
 
-- `extensions/sf-midjourney-bridge-v1.5.17.zip`
-- source folder: `extensions/midjourney-bridge`
-- Chrome extension name: `SF 미디어 브릿지`
+- 패키지: `public/extensions/sf-midjourney-bridge-v1.5.17.zip`
+- 소스: `public/extensions/midjourney-bridge`
+- Chrome 확장 이름: `SF 미디어 브릿지`
 - required version: `1.5.17`
 
-Chrome loading checklist:
-
-1. Open `chrome://extensions`.
-2. Enable Developer mode.
-3. If an older `SF 미디어 브릿지` is installed, click reload after updating the source folder.
-4. If installing fresh, unzip `extensions/sf-midjourney-bridge-v1.5.17.zip` or use `extensions/midjourney-bridge` as the unpacked folder.
-5. After reloading the extension, refresh `https://sunofox.com/mv-studio`.
-
-Required manifest permissions:
-
-- `https://sunofox.com/*`
-- `https://www.midjourney.com/*`
-- `https://midjourney.com/*`
-- `https://grok.com/*`
-- `https://www.grok.com/*`
-- localhost and `127.0.0.1` are kept for local verification.
+기능 변경 없이 새 도메인 권한만 관리합니다.

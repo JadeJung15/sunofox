@@ -1,6 +1,6 @@
 import { readdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
@@ -65,8 +65,7 @@ function nextPublishedEpisode(episodes, index) {
   return null;
 }
 
-const siteContentSource = await readFile(siteContentPath, 'utf8');
-const siteContentModule = await import(`data:text/javascript;base64,${Buffer.from(siteContentSource).toString('base64')}`);
+const siteContentModule = await import(`${pathToFileURL(siteContentPath).href}?mtime=${Date.now()}`);
 const { novelEpisodes, novelProject, publishedNovelEpisodes, latestNovelEpisode } = siteContentModule;
 
 if (!Array.isArray(novelEpisodes) || novelEpisodes.length === 0) {

@@ -105,6 +105,37 @@ function parseJsonLdTypes(html, label) {
   return types;
 }
 
+function parseJsonLdObjects(html, label) {
+  const objects = [];
+  const scripts = [...html.matchAll(/<script\s+[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
+
+  for (const script of scripts) {
+    try {
+      objects.push(JSON.parse(script[1]));
+    } catch (error) {
+      fail(`${label}: invalid JSON-LD (${error.message})`);
+    }
+  }
+
+  return objects;
+}
+
+function collectJsonLdByType(value, expectedType, matches = []) {
+  if (!value || typeof value !== 'object') return matches;
+
+  if (Array.isArray(value)) {
+    value.forEach((item) => collectJsonLdByType(item, expectedType, matches));
+    return matches;
+  }
+
+  const type = value['@type'];
+  const hasType = Array.isArray(type) ? type.includes(expectedType) : type === expectedType;
+  if (hasType) matches.push(value);
+
+  Object.values(value).forEach((item) => collectJsonLdByType(item, expectedType, matches));
+  return matches;
+}
+
 function assertEqual(label, actual, expected) {
   if (actual !== expected) {
     fail(`${label}: expected "${expected}", got "${actual || '(empty)'}"`);
@@ -208,6 +239,7 @@ for (const route of routes) {
   const head = parseHead(html);
   const meta = head.meta;
   const jsonLdTypes = parseJsonLdTypes(html, route.name);
+  const jsonLdObjects = parseJsonLdObjects(html, route.name);
 
   assertEqual(`${route.name} title`, head.title, route.title);
   assertEqual(`${route.name} canonical`, head.canonical, route.canonical);
@@ -243,6 +275,21 @@ for (const route of routes) {
     assertEqual(`${route.name} og:type`, meta['og:type'], 'article');
     assertEqual(`${route.name} article:published_time`, meta['article:published_time'], route.articlePublishedAt);
     assertEqual(`${route.name} article:modified_time`, meta['article:modified_time'], route.articlePublishedAt);
+
+    const article = collectJsonLdByType(jsonLdObjects, 'Article')[0];
+    assertPresent(`${route.name} Article JSON-LD`, article);
+    assertEqual(`${route.name} Article mainEntityOfPage`, article?.mainEntityOfPage, route.canonical);
+    assertEqual(`${route.name} Article dateModified`, article?.dateModified, route.articlePublishedAt);
+    assertEqual(`${route.name} Article articleSection`, article?.articleSection, novelProject.genre);
+    assertEqual(`${route.name} Article position`, String(article?.position), String(Number(route.name.replace('episode-', ''))));
+
+    if (!Array.isArray(article?.keywords) || article.keywords.length === 0) {
+      fail(`${route.name} Article keywords: missing`);
+    }
+
+    if (!article?.publisher?.logo?.url?.startsWith(`${siteUrl}/`)) {
+      fail(`${route.name} Article publisher logo: must be an absolute sunofox.com URL`);
+    }
   } else {
     assertEqual(`${route.name} og:type`, meta['og:type'], 'website');
   }

@@ -158,10 +158,16 @@ export function createEpisodeStructuredData(episode = novelEpisodes[0]) {
         '@id': `${episodeUrl}#episode`,
         headline: `${Number(episode.number)}화. ${episode.title}`,
         url: episodeUrl,
+        mainEntityOfPage: episodeUrl,
         image: novelCoverUrl,
+        thumbnailUrl: novelCoverUrl,
         description: episode.hook,
         datePublished: episode.isoDate,
+        dateModified: episode.isoDate,
         inLanguage: 'ko-KR',
+        articleSection: novelProject.genre,
+        keywords: novelProject.keywords,
+        position: Number(episode.number),
         isPartOf: { '@id': `${novelUrl}#series` },
         author: {
           '@type': 'Organization',
@@ -171,7 +177,11 @@ export function createEpisodeStructuredData(episode = novelEpisodes[0]) {
         publisher: {
           '@type': 'Organization',
           name: novelProject.publisher,
-          url: `${siteUrl}/`
+          url: `${siteUrl}/`,
+          logo: {
+            '@type': 'ImageObject',
+            url: `${siteUrl}/assets/sunofox-app-icon-512.png`
+          }
         }
       },
       createBreadcrumbList(`${episodeUrl}#breadcrumb`, [

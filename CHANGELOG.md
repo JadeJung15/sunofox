@@ -15,6 +15,7 @@
 - 작품 정보, 세계관, 인물, 에피소드 목록을 `novelContent.js`로 분리해 신규 회차 추가 경로를 명확히 했습니다.
 - 앨범, 음악 아카이브, YouTube/MV 허브 목록을 `musicContent.js`로 분리해 음악 콘텐츠 확장 경로를 명확히 했습니다.
 - `/novels/` 소설 목록 상단에 최신화, 1화부터 읽기, OST, MUSIC 빠른 이동을 추가하고 모바일 회차 행 정렬을 보강했습니다.
+- 에피소드 Article JSON-LD에 `mainEntityOfPage`, 수정일, 장르, 키워드, 회차 순서, publisher logo를 보강하고 SEO 검증 범위를 확장했습니다.
 
 ## 2026-06-15
 

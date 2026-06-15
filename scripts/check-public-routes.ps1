@@ -83,7 +83,7 @@ $routes = @(
     Path = "/__sunofox_not_found_probe__/"
     File = "404.html"
     ExpectedStatus = 404
-    Must = @("페이지를 찾을 수 없습니다", "not-found-panel", "not-found-actions", "/novels/", "/music/", "noindex, follow")
+    Must = @("not-found-page", "not-found-panel", "not-found-actions", "https://sunofox.com/404.html", "/novels/", "/music/", "noindex, follow")
   },
   @{
     Name = "sitemap-index"
@@ -132,7 +132,7 @@ function Read-HttpErrorContent {
     return ""
   }
 
-  if ($Response -is [System.Net.Http.HttpResponseMessage]) {
+  if ($Response.GetType().FullName -eq "System.Net.Http.HttpResponseMessage") {
     return $Response.Content.ReadAsStringAsync().GetAwaiter().GetResult()
   }
 

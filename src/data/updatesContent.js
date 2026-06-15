@@ -1,6 +1,18 @@
 export const siteUpdates = [
   {
     date: '2026.06.16',
+    type: 'Novel',
+    title: '세계관과 주요 인물 빠른 이동 개선',
+    summary:
+      '소설 허브에서 세계관 포인트와 주요 인물 카드로 바로 이동할 수 있는 앵커를 추가해 작품 정보를 더 빠르게 훑을 수 있게 했습니다.',
+    areas: ['novel', 'site'],
+    links: [
+      { label: '세계관 보기', href: '/novels/#world' },
+      { label: '인물 보기', href: '/novels/#characters' }
+    ]
+  },
+  {
+    date: '2026.06.16',
     type: 'Content',
     title: '회차별 OST 매핑 구조 정리',
     summary:

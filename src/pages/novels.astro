@@ -31,6 +31,14 @@ const seasonStatusItems = [
   { label: '상태', value: seasonStatus.status },
   { label: '완결일', value: seasonStatus.completedAt }
 ];
+const worldAnchorItems = novelProject.world.pillars.map((item) => ({
+  label: item.label,
+  href: item.href || '#world'
+}));
+const characterAnchorItems = novelProject.characters.map((character) => ({
+  label: character.name,
+  href: character.href || '#characters'
+}));
 ---
 
 <Layout
@@ -221,11 +229,17 @@ const seasonStatusItems = [
         <span>{novelProject.world.pillars.length}개 포인트</span>
       </div>
       <p class="novel-world-summary">{novelProject.world.summary}</p>
+      <nav class="novel-anchor-strip" aria-label="세계관 빠른 이동">
+        {worldAnchorItems.map((item) => (
+          <a href={item.href}>{item.label}</a>
+        ))}
+      </nav>
       <div class="novel-world-grid">
         {novelProject.world.pillars.map((item) => (
-          <article>
-            <span>{item.label}</span>
+          <article id={item.id}>
+            <a class="novel-card-anchor" href={item.href} aria-label={`${item.label} 세계관 카드로 이동`}>{item.label}</a>
             <strong>{item.title}</strong>
+            {item.status && <small>{item.status}</small>}
             <p>{item.text}</p>
           </article>
         ))}
@@ -238,11 +252,19 @@ const seasonStatusItems = [
         <h2 id="novelCharacterTitle">첫 장을 흔드는 사람들</h2>
         <span>{novelProject.characters.length}명</span>
       </div>
+      <nav class="novel-anchor-strip" aria-label="주요 인물 빠른 이동">
+        {characterAnchorItems.map((item) => (
+          <a href={item.href}>{item.label}</a>
+        ))}
+      </nav>
       <div class="novel-character-grid">
         {novelProject.characters.map((character) => (
-          <article>
-            <span>{character.role}</span>
+          <article id={character.id}>
+            <a class="novel-card-anchor" href={character.href} aria-label={`${character.name} 인물 카드로 이동`}>{character.role}</a>
             <h3>{character.name}</h3>
+            {(character.status || character.firstSeen) && (
+              <small>{[character.status, character.firstSeen].filter(Boolean).join(' · ')}</small>
+            )}
             <p>{character.text}</p>
           </article>
         ))}

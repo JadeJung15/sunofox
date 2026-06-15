@@ -66,41 +66,66 @@ export const novelProject = {
       '이 세계에서는 원작에 적힌 장면이 현실을 보정합니다. 아델라인은 정해진 악녀의 결말을 공개 재판, 증거, 사교계 여론전으로 깨뜨립니다.',
     pillars: [
       {
+        id: 'world-palace',
+        href: '/novels/#world-palace',
         label: '황궁',
         title: '증거가 사라지는 무대',
+        status: '1~4화 중심',
         text: '성녀의 베일 사건처럼 원작이 정한 장면은 황궁 안에서 빠르게 사실처럼 굳어집니다.'
       },
       {
+        id: 'world-system-error',
+        href: '/novels/#world-system-error',
         label: '시스템 오류',
         title: '주인공이 운명을 거부한 흔적',
+        status: '전 회차 관통',
         text: '아델라인이 예정된 대사를 거부할 때마다 세계는 오류 메시지와 보정 실패를 남깁니다.'
       },
       {
+        id: 'world-social-stage',
+        href: '/novels/#world-social-stage',
         label: '사교계',
         title: '악녀 이미지가 무기가 되는 전장',
+        status: '5~6화 중심',
         text: '소문과 시선은 처벌의 도구이지만, 아델라인은 그 무대를 자신의 승리 조건으로 바꿉니다.'
       }
     ]
   },
   characters: [
     {
+      id: 'character-adelaine',
+      href: '/novels/#character-adelaine',
       name: '아델라인 로제 베르크',
       role: '첫 장에서 웃은 악녀',
+      status: '주인공 · 먼치킨형 판 뒤집기',
+      firstSeen: '1화',
       text: '몰락해야 했던 장면에서 깨어난 주인공입니다. 결백 호소보다 판을 뒤집는 증거와 무대를 먼저 잡습니다.'
     },
     {
+      id: 'character-ethan',
+      href: '/novels/#character-ethan',
       name: '에단 블랙',
       role: '원작 바깥의 증인',
+      status: '계약 구조의 균열',
+      firstSeen: '2화',
       text: '사라졌어야 할 이름으로 재판정에 등장합니다. 세계의 보정과 계약 구조를 흔드는 핵심 인물입니다.'
     },
     {
+      id: 'character-kael',
+      href: '/novels/#character-kael',
       name: '카엘',
       role: '흔들리는 황태자',
+      status: '로맨스 긴장의 축',
+      firstSeen: '1화',
       text: '아델라인을 단죄해야 하는 위치에 있지만, 증거와 시선이 바뀌는 순간마다 판단을 미룹니다.'
     },
     {
+      id: 'character-ria',
+      href: '/novels/#character-ria',
       name: '리아',
       role: '눈물을 무기로 쓰는 성녀',
+      status: '첫 장 사건의 대립축',
+      firstSeen: '1화',
       text: '피해자의 얼굴로 사건을 고정하려 하지만, 아델라인이 공개 무대로 끌어낼수록 균열을 드러냅니다.'
     }
   ]

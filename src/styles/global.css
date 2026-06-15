@@ -2418,6 +2418,34 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   word-break: keep-all;
 }
 
+.novel-anchor-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 18px;
+}
+
+.novel-anchor-strip a {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  background: rgba(255, 255, 255, 0.028);
+  padding: 0 14px;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 13px;
+  font-weight: 850;
+  line-height: 1.25;
+  transition: border-color 160ms ease, background 160ms ease, color 160ms ease;
+}
+
+.novel-anchor-strip a:hover,
+.novel-anchor-strip a:focus-visible {
+  border-color: rgba(255, 10, 91, 0.5);
+  background: rgba(255, 10, 91, 0.08);
+  color: #ffffff;
+}
+
 .novel-world-grid,
 .novel-character-grid {
   display: grid;
@@ -2434,20 +2462,30 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
 
 .novel-world-grid article,
 .novel-character-grid article {
+  scroll-margin-top: 104px;
   min-height: 210px;
   border: 1px solid rgba(255, 255, 255, 0.11);
   background: rgba(255, 255, 255, 0.025);
   padding: 20px;
 }
 
-.novel-world-grid span,
-.novel-character-grid span {
+.novel-card-anchor {
+  display: inline-flex;
+  max-width: 100%;
+  min-height: 28px;
+  align-items: center;
   color: var(--pink);
   font-family: var(--font-condensed);
   font-size: 12px;
   font-weight: 950;
   letter-spacing: 0.14em;
   text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+.novel-card-anchor:hover,
+.novel-card-anchor:focus-visible {
+  color: #ffffff;
 }
 
 .novel-world-grid strong,
@@ -2463,9 +2501,21 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   word-break: keep-all;
 }
 
+.novel-world-grid small,
+.novel-character-grid small {
+  display: block;
+  margin-top: 12px;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+}
+
 .novel-world-grid p,
 .novel-character-grid p {
-  margin: 18px 0 0;
+  margin: 14px 0 0;
   color: var(--muted);
   font-size: 14px;
   font-weight: 650;
@@ -5275,9 +5325,24 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
     line-height: 1.76;
   }
 
+  .novel-anchor-strip {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 7px;
+    margin-bottom: 16px;
+  }
+
+  .novel-anchor-strip a {
+    justify-content: center;
+    min-height: 44px;
+    padding-inline: 12px;
+    text-align: center;
+  }
+
   .novel-world-grid article,
   .novel-character-grid article {
     min-height: auto;
+    scroll-margin-top: 84px;
   }
 
   .novel-world-grid strong,

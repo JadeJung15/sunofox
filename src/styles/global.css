@@ -3603,7 +3603,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   line-height: 1.55;
 }
 
-.site-footer div {
+.site-footer-nav {
   display: flex;
   flex-wrap: wrap;
   min-width: 0;
@@ -4176,7 +4176,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
     text-align: center;
   }
 
-  .site-footer div {
+  .site-footer-nav {
     justify-content: center;
   }
 }

@@ -10,7 +10,7 @@ $routes = @(
     Name = "home"
     Path = "/"
     File = "index.html"
-    Must = @("MUSIC TO NOVEL STUDIO", "https://sunofox.com/")
+    Must = @("MUSIC TO NOVEL STUDIO", "site-footer-nav", "/novels/", "/music/", "/profile/", "https://sunofox.com/")
   },
   @{
     Name = "novels"

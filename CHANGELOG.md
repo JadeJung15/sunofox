@@ -4,6 +4,7 @@
 
 ### Improved
 
+- `/music/`에 YouTube/MV 영상 허브 요약, 대표 영상 카드, 채널/재생목록 CTA를 추가했습니다.
 - 공식 업데이트 로그 라우트 `/updates/`를 추가하고 footer/overlay menu 진입점을 연결했습니다.
 - 업데이트 로그용 CollectionPage JSON-LD와 모바일 목록 스타일을 추가했습니다.
 - `npm run check:public-routes`를 추가해 공개 라우트가 홈 fallback 200으로 오인되지 않도록 핵심 문자열을 검증합니다.

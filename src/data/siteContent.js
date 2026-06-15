@@ -319,6 +319,21 @@ export const musicArchive = {
       publishedAt: '2026-05-24T08:15:00+00:00'
     }
   ],
+  videoHub: {
+    title: 'YouTube / MV 영상 허브',
+    summary:
+      '최근 공개 OST, 라이브 아카이브, 애니메이션 OP 감성 영상을 한 곳에서 보고 YouTube 채널과 재생목록으로 이어 봅니다.',
+    facts: [
+      { label: '대표 영상', value: featuredStoryOst.title },
+      { label: '최근 큐레이션', value: 'OST · Live Archive · Anime OP' },
+      { label: '주요 이동', value: 'YouTube 채널 · 재생목록 · 대표 OST' }
+    ],
+    links: [
+      { label: 'YouTube 채널', href: artistLinks.youtube },
+      { label: '재생목록 보기', href: artistLinks.youtubePlaylists },
+      { label: '대표 OST 감상', href: featuredStoryOst.youtubeHref }
+    ]
+  },
   sources: [
     { label: 'YouTube 채널', href: artistLinks.youtube },
     { label: 'YouTube 최신 피드', href: 'https://www.youtube.com/feeds/videos.xml?channel_id=UC8M-2aXbknDT3tDcN1PMvuQ' },

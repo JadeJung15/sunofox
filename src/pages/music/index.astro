@@ -12,6 +12,7 @@ import {
 } from '../../data/siteContent.js';
 
 const currentEpisode = latestNovelEpisode;
+const featuredVideo = musicArchive.videos[0];
 ---
 
 <Layout
@@ -145,9 +146,45 @@ const currentEpisode = latestNovelEpisode;
 
     <section class="music-video-section reveal" aria-labelledby="musicVideoTitle">
       <div class="novel-section-head">
-        <p class="section-kicker">YOUTUBE</p>
-        <h2 id="musicVideoTitle">최근 공개 영상</h2>
-        <span>{musicArchive.videos.length} selected</span>
+        <p class="section-kicker">영상 허브</p>
+        <h2 id="musicVideoTitle">YouTube / MV</h2>
+        <span>{musicArchive.videos.length}편</span>
+      </div>
+
+      <div class="music-video-hub" aria-label="YouTube and MV hub">
+        <a class="music-video-feature" href={featuredVideo.href} target="_blank" rel="noopener noreferrer" aria-label={`${featuredVideo.title} 감상하기`}>
+          <img
+            src={featuredVideo.thumbnail}
+            alt={featuredVideo.thumbnailAlt}
+            width="480"
+            height="360"
+            loading="lazy"
+            decoding="async"
+          />
+          <span>{featuredVideo.date}</span>
+          <strong>{featuredVideo.title}</strong>
+          <p>{featuredVideo.meta}</p>
+          <em>{featuredVideo.type}</em>
+        </a>
+
+        <div class="music-video-hub-copy">
+          <p class="section-kicker">영상 큐레이션</p>
+          <h3>{musicArchive.videoHub.title}</h3>
+          <p>{musicArchive.videoHub.summary}</p>
+          <dl>
+            {musicArchive.videoHub.facts.map((fact) => (
+              <div>
+                <dt>{fact.label}</dt>
+                <dd>{fact.value}</dd>
+              </div>
+            ))}
+          </dl>
+          <div class="music-video-hub-actions">
+            {musicArchive.videoHub.links.map((link) => (
+              <a class="main-button main-button-muted" href={link.href} target="_blank" rel="noopener noreferrer">{link.label}</a>
+            ))}
+          </div>
+        </div>
       </div>
 
       <ol class="music-video-grid">

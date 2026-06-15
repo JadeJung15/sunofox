@@ -103,7 +103,8 @@ const {
   artistLinks,
   archiveAlbum,
   featuredStoryOst,
-  musicArchive
+  musicArchive,
+  storyOsts
 } = siteContentModule;
 
 for (const [key, href] of Object.entries(artistLinks || {})) {
@@ -118,6 +119,27 @@ assertYoutubeVideo('featuredStoryOst', {
   ...featuredStoryOst,
   meta: featuredStoryOst?.englishTitle
 });
+
+const storyOstKeys = new Set();
+assertArray('storyOsts', storyOsts).forEach((ost, index) => {
+  const label = `storyOsts[${index}]`;
+
+  assertPresent(`${label} key`, ost.key);
+  assertPattern(`${label} key`, ost.key, /^[a-z0-9-]+$/);
+  assertYoutubeVideo(label, {
+    ...ost,
+    meta: ost.englishTitle
+  });
+
+  if (storyOstKeys.has(ost.key)) {
+    fail(`${label} key: duplicate story OST key "${ost.key}"`);
+  }
+  storyOstKeys.add(ost.key);
+});
+
+if (!storyOsts?.some((ost) => ost.key === featuredStoryOst?.key)) {
+  fail('storyOsts: must include featuredStoryOst');
+}
 
 if (featuredStoryOst?.href !== artistLinks?.featuredOst) {
   fail('featuredStoryOst href: must match artistLinks.featuredOst');

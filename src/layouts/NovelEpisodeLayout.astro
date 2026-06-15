@@ -2,9 +2,8 @@
 import SiteChrome from '../components/SiteChrome.astro';
 import Layout from './Layout.astro';
 import {
-  artistLinks,
   createEpisodeStructuredData,
-  featuredStoryOst,
+  getEpisodeOst,
   latestNovelEpisode,
   musicArchive,
   novelEpisodes,
@@ -34,6 +33,7 @@ const currentEpisode = novelEpisodes.find((episode) => episode.href && canonical
 const currentEpisodeIndex = novelEpisodes.findIndex((episode) => episode === currentEpisode);
 const publishedEpisodes = novelEpisodes.filter((episode) => episode.href);
 const currentPublishedIndex = publishedEpisodes.findIndex((episode) => episode === currentEpisode);
+const currentEpisodeOst = getEpisodeOst(currentEpisode);
 const episodePosition = currentPublishedIndex >= 0 ? currentPublishedIndex + 1 : currentEpisodeIndex + 1;
 const previousEpisode = currentEpisodeIndex > 0 ? novelEpisodes[currentEpisodeIndex - 1] : null;
 const followingEpisode = currentEpisodeIndex >= 0 ? novelEpisodes[currentEpisodeIndex + 1] : null;
@@ -88,7 +88,7 @@ const episodeRailItems = publishedEpisodes.map((episode) => ({
     <nav class="novel-reader-topbar" aria-label="Episode quick navigation">
       <a href={backHref}>{seriesTitle}</a>
       <span>{episodeLabel}</span>
-      <a href={artistLinks.featuredOst} target="_blank" rel="noopener noreferrer">OST</a>
+      <a href={currentEpisodeOst.href} target="_blank" rel="noopener noreferrer">OST</a>
     </nav>
 
     <article class="novel-reader" aria-labelledby="episodeTitle">
@@ -167,26 +167,26 @@ const episodeRailItems = publishedEpisodes.map((episode) => ({
       </section>
 
       <section class="novel-reader-ost reveal" aria-labelledby="episodeOstTitle">
-        <a class="novel-reader-ost-thumb" href={featuredStoryOst.href} target="_blank" rel="noopener noreferrer" aria-label={`${featuredStoryOst.title} 감상하기`}>
+        <a class="novel-reader-ost-thumb" href={currentEpisodeOst.href} target="_blank" rel="noopener noreferrer" aria-label={`${currentEpisodeOst.title} 감상하기`}>
           <img
-            src={featuredStoryOst.thumbnail}
-            alt={featuredStoryOst.thumbnailAlt}
+            src={currentEpisodeOst.thumbnail}
+            alt={currentEpisodeOst.thumbnailAlt}
             width="480"
             height="360"
             loading="lazy"
             decoding="async"
           />
-          <span>{featuredStoryOst.type}</span>
+          <span>{currentEpisodeOst.type}</span>
         </a>
 
         <div class="novel-reader-ost-copy">
           <p class="section-kicker">회차 OST</p>
-          <h2 id="episodeOstTitle">{featuredStoryOst.title}</h2>
-          <p>{featuredStoryOst.summary}</p>
+          <h2 id="episodeOstTitle">{currentEpisodeOst.title}</h2>
+          <p>{currentEpisodeOst.summary}</p>
         </div>
 
         <div class="novel-reader-ost-actions" aria-label="Episode OST links">
-          <a class="main-button" href={featuredStoryOst.href} target="_blank" rel="noopener noreferrer">OST 감상</a>
+          <a class="main-button" href={currentEpisodeOst.href} target="_blank" rel="noopener noreferrer">OST 감상</a>
           <a class="main-button main-button-muted" href={musicArchive.href}>음악 아카이브</a>
           <a class="main-button main-button-muted" href={backHref}>작품 정보</a>
         </div>
@@ -195,7 +195,7 @@ const episodeRailItems = publishedEpisodes.map((episode) => ({
       <nav class="novel-reader-actions reveal" aria-label="Episode navigation">
         {resolvedPreviousHref && <a class="main-button main-button-muted" href={resolvedPreviousHref}>{resolvedPreviousLabel}</a>}
         <a class="main-button main-button-muted" href={backHref}>목록으로</a>
-        <a class="main-button main-button-muted" href={artistLinks.featuredOst} target="_blank" rel="noopener noreferrer">OST 감상</a>
+        <a class="main-button main-button-muted" href={currentEpisodeOst.href} target="_blank" rel="noopener noreferrer">OST 감상</a>
         {resolvedNextHref ? (
           <a class="main-button" href={resolvedNextHref}>{resolvedNextLabel}</a>
         ) : (

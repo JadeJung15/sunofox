@@ -119,7 +119,13 @@ function nextPublishedEpisode(episodes, index) {
 }
 
 const siteContentModule = await import(`${pathToFileURL(siteContentPath).href}?mtime=${Date.now()}`);
-const { novelEpisodes, novelProject, publishedNovelEpisodes, latestNovelEpisode } = siteContentModule;
+const {
+  novelEpisodes,
+  novelProject,
+  publishedNovelEpisodes,
+  latestNovelEpisode,
+  storyOstMap
+} = siteContentModule;
 
 if (!Array.isArray(novelEpisodes) || novelEpisodes.length === 0) {
   fail('novelEpisodes must be a non-empty array');
@@ -219,7 +225,7 @@ for (const [index, episode] of publishedEpisodes.entries()) {
   const numberThree = String(Number(episode.number)).padStart(3, '0');
   const expectedIsoDate = episode.publishedAt?.replaceAll('.', '-');
 
-  for (const field of ['title', 'status', 'label', 'hook', 'update', 'href', 'cta', 'publishedAt', 'isoDate', 'readTime']) {
+  for (const field of ['title', 'status', 'label', 'hook', 'update', 'href', 'cta', 'publishedAt', 'isoDate', 'readTime', 'ostKey']) {
     assertPresent(`${label} ${field}`, episode[field]);
   }
 
@@ -238,6 +244,10 @@ for (const [index, episode] of publishedEpisodes.entries()) {
   assertPattern(`${label} publishedAt`, episode.publishedAt, /^\d{4}\.\d{2}\.\d{2}$/);
   assertPattern(`${label} isoDate`, episode.isoDate, /^\d{4}-\d{2}-\d{2}$/);
   assertEqual(`${label} isoDate`, episode.isoDate, expectedIsoDate);
+
+  if (!storyOstMap?.[episode.ostKey]) {
+    fail(`${label} ostKey: must reference a registered story OST`);
+  }
 
   if (episode.isFree !== true) {
     fail(`${label}: published episode must set isFree to true`);

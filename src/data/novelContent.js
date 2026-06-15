@@ -1,5 +1,7 @@
 import { featuredStoryOst } from './artistContent.js';
 
+const defaultStoryOstKey = featuredStoryOst.key;
+
 export const novelProject = {
   title: '악녀는 첫 장에서 웃었다',
   englishTitle: 'The Villainess Smiled on Page One',
@@ -106,6 +108,7 @@ export const novelEpisodes = [
     publishedAt: '2026.06.14',
     isoDate: '2026-06-14',
     readTime: '약 12분',
+    ostKey: defaultStoryOstKey,
     shareTags: ['악녀 빙의', '성녀의 베일', '공개 재판 요구'],
     isFree: true
   },
@@ -121,6 +124,7 @@ export const novelEpisodes = [
     publishedAt: '2026.06.14',
     isoDate: '2026-06-14',
     readTime: '약 11분',
+    ostKey: defaultStoryOstKey,
     shareTags: ['멈춘 시계', '에단 블랙', '세계의 오류'],
     isFree: true
   },
@@ -136,6 +140,7 @@ export const novelEpisodes = [
     publishedAt: '2026.06.15',
     isoDate: '2026-06-15',
     readTime: '약 5분',
+    ostKey: defaultStoryOstKey,
     shareTags: ['공개 재판', '검은 잉크 명령서', '증언'],
     isFree: true
   },
@@ -151,6 +156,7 @@ export const novelEpisodes = [
     publishedAt: '2026.06.15',
     isoDate: '2026-06-15',
     readTime: '약 5분',
+    ostKey: defaultStoryOstKey,
     shareTags: ['구속 보류', '에단 블랙', '사교회 초대장'],
     isFree: true
   },
@@ -166,6 +172,7 @@ export const novelEpisodes = [
     publishedAt: '2026.06.15',
     isoDate: '2026-06-15',
     readTime: '약 5분',
+    ostKey: defaultStoryOstKey,
     shareTags: ['검은 드레스', '소문전', '황실 사교회'],
     isFree: true
   },
@@ -181,6 +188,7 @@ export const novelEpisodes = [
     publishedAt: '2026.06.15',
     isoDate: '2026-06-15',
     readTime: '약 5분',
+    ostKey: defaultStoryOstKey,
     shareTags: ['미니시즌 최종화', '악녀의 승리', '사교회 공개 반격'],
     isFree: true
   }

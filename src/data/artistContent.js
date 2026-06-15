@@ -18,6 +18,7 @@ export const artistLinks = {
 };
 
 export const featuredStoryOst = {
+  key: 'villainess-page-one-main',
   date: '2026.06.14',
   title: '웹소설 OST｜악녀는 첫 장에서 웃었다',
   englishTitle: 'The Villainess Smiled on Page One',
@@ -31,3 +32,6 @@ export const featuredStoryOst = {
   summary:
     '첫 장에서 몰락해야 했던 악녀 아델라인이 예정된 비극을 깨고 자신의 운명을 빼앗기 시작하는 순간을 담은 대표 OST입니다.'
 };
+
+export const storyOsts = [featuredStoryOst];
+export const storyOstMap = Object.fromEntries(storyOsts.map((ost) => [ost.key, ost]));

@@ -59,7 +59,7 @@ Last verified: 2026-06-16
 | 공개 메뉴 | `src/data/navigationContent.js` | overlay menu 라벨, active 상태 |
 | 웹소설 작품 정보 | `src/data/novelContent.js` | 작품 요약, 세계관, 인물, 회차 목록, 회차별 공유 태그 |
 | 회차 본문 | `src/pages/novels/episode-00N.md` | frontmatter, 이전/다음 링크, 본문 |
-| 대표 OST/외부 링크 | `src/data/artistContent.js` | YouTube/음원 링크, 썸네일 alt |
+| 대표 OST/외부 링크 | `src/data/artistContent.js` | YouTube/음원 링크, `storyOsts`, 썸네일 alt |
 | Music Archive | `src/data/musicContent.js` | 앨범, 영상 허브, 외부 소스 |
 | 업데이트 로그 | `src/data/updatesContent.js` | 카테고리, 링크, 최근 변경 |
 | JSON-LD/SEO 데이터 | `src/data/siteContent.js` | Organization, CreativeWorkSeries, Article, Breadcrumb |
@@ -116,7 +116,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-public-routes.
 | 기능 | 현재 상태 | 다음 작업 |
 |---|---|---|
 | 웹소설 연재 허브 | 1~6화 공개 | 7화 추가 구조 또는 시즌2 티저 결정 |
-| OST/음악 아카이브 | 대표 OST, ARCHIVE vol.1, 영상 허브 운영 | 회차별 OST 매핑 데이터화 |
+| OST/음악 아카이브 | 대표 OST, ARCHIVE vol.1, 영상 허브 운영 | 신규 OST 추가 시 `storyOsts`와 회차 `ostKey` 연결 |
 | 세계관/캐릭터 | `/novels/`에 요약 섹션 운영 | 캐릭터 상세 탭 또는 별도 섹션 확장 |
 | 공지/업데이트 | `/updates/` 카테고리 허브 운영 | 공지 유형별 필터 또는 고정 공지 추가 |
 | 굿즈샵 | 미운영 | 사용자 확인 후 외부 링크만 추가 |

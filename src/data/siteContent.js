@@ -1,4 +1,4 @@
-import { artistLinks, featuredStoryOst } from './artistContent.js';
+import { artistLinks, featuredStoryOst, storyOstMap, storyOsts } from './artistContent.js';
 import { menuItems } from './navigationContent.js';
 import { archiveAlbum, musicArchive } from './musicContent.js';
 import {
@@ -23,8 +23,14 @@ export {
   plannedContentHubs,
   publishedNovelEpisodes,
   siteUpdates,
+  storyOstMap,
+  storyOsts,
   updateCategories
 };
+
+export function getEpisodeOst(episode = novelEpisodes[0]) {
+  return storyOstMap[episode?.ostKey] || novelProject.ost || featuredStoryOst;
+}
 
 export const sunofoxProfile = {
   researchDate: '2026.06.14',

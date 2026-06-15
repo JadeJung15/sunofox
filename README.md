@@ -84,6 +84,7 @@ OST와 YouTube 연결은 `src/data/siteContent.js`의 `artistLinks`, `featuredSt
 |---|---|---|
 | `npm run dev` | `astro dev` | 로컬 개발 서버 |
 | `npm run build` | `astro build && node scripts/version-auth-assets.mjs` | 정적 빌드와 auth asset versioning |
+| `npm run check` | `npm run check:content && npm run check:dist && npm run check:public-routes` | 배포 전 콘텐츠/asset/공개 라우트 통합 검증 |
 | `npm run check:public-routes` | `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-public-routes.ps1` | `dist` 기준 공개 라우트와 1~6화 핵심 문자열 확인 |
 | `npm run check:content` | `node scripts/check-content-consistency.mjs` | 웹소설 목록 데이터와 에피소드 frontmatter 일치 확인 |
 | `npm run check:dist` | `node scripts/check-dist-integrity.mjs` | 공개 `dist` 내부 링크와 이미지/asset 경로 존재 확인 |
@@ -103,9 +104,9 @@ production 반영 전 기본 순서입니다.
 1. `git status -sb`
 2. `git log --oneline -5`
 3. `npm run build`
-4. `npm run check:content`
-5. `npm run check:dist`
-6. `npm run check:public-routes`
+4. `npm run check`
+5. 필요 시 개별 확인: `npm run check:content`, `npm run check:dist`, `npm run check:public-routes`
+6. 운영 URL 검증 대상 확인
 7. 주요 로컬/빌드 산출물 확인
 8. `git add ...`
 9. `git commit -m "..."`

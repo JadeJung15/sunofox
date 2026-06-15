@@ -6,6 +6,7 @@
 
 - `/sitemap.xml` legacy 호환 XML 라우트를 추가해 sitemap 요청이 HTML fallback으로 오인되지 않도록 정리했습니다.
 - 공개 라우트 검증 스크립트가 `/sitemap.xml`도 XML sitemap index로 확인하도록 보강했습니다.
+- `npm run check` 통합 스크립트를 추가해 콘텐츠, dist asset, 공개 라우트 검증을 배포 전 한 번에 실행할 수 있게 했습니다.
 
 ## 2026-06-15
 

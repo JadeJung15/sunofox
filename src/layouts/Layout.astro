@@ -7,7 +7,11 @@ const {
   canonical = 'https://sunofox.com/',
   image = 'https://sunofox.com/assets/sunofox-app-icon-512.png',
   imageAlt = 'SunoFox',
+  imageWidth = 512,
+  imageHeight = 512,
   type = 'website',
+  publishedTime = '',
+  modifiedTime = '',
   jsonLd
 } = Astro.props;
 
@@ -31,6 +35,10 @@ const jsonLdString = jsonLd ? JSON.stringify(jsonLd) : '';
     <meta property="og:locale" content="ko_KR" />
     <meta property="og:image" content={image} />
     <meta property="og:image:alt" content={imageAlt} />
+    <meta property="og:image:width" content={String(imageWidth)} />
+    <meta property="og:image:height" content={String(imageHeight)} />
+    {type === 'article' && publishedTime && <meta property="article:published_time" content={publishedTime} />}
+    {type === 'article' && modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@sunofox" />
     <meta name="twitter:title" content={title} />

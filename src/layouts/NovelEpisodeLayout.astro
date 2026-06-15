@@ -46,7 +46,11 @@ const episodeJsonLd = createEpisodeStructuredData(currentEpisode);
   canonical={canonical}
   image={`https://sunofox.com${novelProject.coverImage}`}
   imageAlt={novelProject.coverAlt}
+  imageWidth={novelProject.coverWidth}
+  imageHeight={novelProject.coverHeight}
   type="article"
+  publishedTime={currentEpisode.isoDate}
+  modifiedTime={currentEpisode.isoDate}
   jsonLd={episodeJsonLd}
 >
   <SiteChrome active="novels" />

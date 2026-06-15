@@ -20,9 +20,11 @@ const currentEpisode = latestNovelEpisode;
   canonical="https://sunofox.com/music/"
   image={`https://sunofox.com${archiveAlbum.image}`}
   imageAlt={archiveAlbum.imageAlt}
+  imageWidth={512}
+  imageHeight={512}
   jsonLd={musicArchiveStructuredData}
 >
-  <SiteChrome active="profile" />
+  <SiteChrome active="music" />
 
   <main class="site-main music-archive-page">
     <section class="music-archive-hero reveal" aria-labelledby="musicArchiveTitle">
@@ -103,7 +105,7 @@ const currentEpisode = latestNovelEpisode;
         {musicArchive.releases.map((release) => (
           <article class="music-release-card">
             <a class="music-release-cover" href={release.href} aria-label={`${release.title} 상세 보기`}>
-              <img src={release.image} alt="" width="512" height="512" loading="lazy" decoding="async" />
+              <img src={release.image} alt={release.imageAlt} width="512" height="512" loading="lazy" decoding="async" />
               <span>{release.type}</span>
             </a>
             <div class="music-release-copy">

@@ -10,16 +10,18 @@ import { archiveAlbum, archiveAlbumStructuredData } from '../../data/siteContent
   canonical="https://sunofox.com/music/archive-vol-1/"
   image={`https://sunofox.com${archiveAlbum.image}`}
   imageAlt={archiveAlbum.imageAlt}
+  imageWidth={512}
+  imageHeight={512}
   jsonLd={archiveAlbumStructuredData}
 >
-  <SiteChrome active="profile" />
+  <SiteChrome active="music" />
 
   <main class="site-main album-detail-page">
     <section class="album-detail-hero reveal" aria-labelledby="albumTitle">
       <a class="album-back-link" href="/music/">Music Archive</a>
 
       <div class="album-cover-mark" aria-hidden="true">
-        <img src={archiveAlbum.image} alt="" width="512" height="512" loading="eager" decoding="async" />
+        <img src={archiveAlbum.image} alt={archiveAlbum.imageAlt} width="512" height="512" loading="eager" decoding="async" />
         <span>ARCHIVE</span>
         <strong>VOL.1</strong>
       </div>

@@ -260,8 +260,13 @@ for (const route of routes) {
   assertEqual(`${route.name} canonical`, head.canonical, route.canonical);
   assertEqual(`${route.name} og:url`, meta['og:url'], route.canonical);
   assertEqual(`${route.name} og:title`, meta['og:title'], route.title);
+  assertEqual(`${route.name} og:site_name`, meta['og:site_name'], 'SunoFox');
+  assertEqual(`${route.name} og:locale`, meta['og:locale'], 'ko_KR');
   assertEqual(`${route.name} twitter:title`, meta['twitter:title'], route.title);
   assertEqual(`${route.name} twitter:card`, meta['twitter:card'], 'summary_large_image');
+  assertEqual(`${route.name} twitter:site`, meta['twitter:site'], '@sunofox');
+  assertEqual(`${route.name} twitter:domain`, meta['twitter:domain'], 'sunofox.com');
+  assertEqual(`${route.name} twitter:url`, meta['twitter:url'], route.canonical);
   assertEqual(`${route.name} robots`, meta.robots, 'index, follow');
   assertEqual(`${route.name} author`, meta.author, 'SunoFox');
 
@@ -269,6 +274,7 @@ for (const route of routes) {
   assertPresent(`${route.name} og:description`, meta['og:description']);
   assertPresent(`${route.name} twitter:description`, meta['twitter:description']);
   assertPresent(`${route.name} og:image`, meta['og:image']);
+  assertPresent(`${route.name} og:image:secure_url`, meta['og:image:secure_url']);
   assertPresent(`${route.name} og:image:alt`, meta['og:image:alt']);
   assertPresent(`${route.name} twitter:image`, meta['twitter:image']);
   assertPresent(`${route.name} twitter:image:alt`, meta['twitter:image:alt']);
@@ -284,6 +290,8 @@ for (const route of routes) {
     fail(`${route.name} og:image: must be an absolute sunofox.com URL`);
   }
 
+  assertEqual(`${route.name} og:image:secure_url`, meta['og:image:secure_url'], meta['og:image']);
+
   if (meta['og:image:type'] && !validOgImageTypes.has(meta['og:image:type'])) {
     fail(`${route.name} og:image:type: unsupported value "${meta['og:image:type']}"`);
   }
@@ -298,6 +306,7 @@ for (const route of routes) {
     assertEqual(`${route.name} og:type`, meta['og:type'], 'article');
     assertEqual(`${route.name} article:published_time`, meta['article:published_time'], route.articlePublishedAt);
     assertEqual(`${route.name} article:modified_time`, meta['article:modified_time'], route.articlePublishedAt);
+    assertEqual(`${route.name} og:updated_time`, meta['og:updated_time'], route.articlePublishedAt);
     assertEqual(`${route.name} article:author`, meta['article:author'], 'SunoFox');
     assertEqual(`${route.name} article:section`, meta['article:section'], novelProject.genre);
     assertPresent(`${route.name} meta keywords`, meta.keywords);

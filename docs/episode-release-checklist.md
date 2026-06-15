@@ -56,6 +56,8 @@ npm run check
 
 `check:seo`는 공개 HTML의 title, description, canonical, OG/Twitter card, Article/Breadcrumb/CollectionPage 등 JSON-LD 기본 타입을 확인합니다.
 
+`check:a11y`는 공개 HTML의 lang, viewport, h1, 이미지 alt, 링크/버튼 접근 가능한 이름, 새 탭 링크 rel 값을 확인합니다.
+
 `check:public-routes`는 현재 공개된 1~6화 상세 페이지, article publish meta, Breadcrumb JSON-LD, sitemap-index, legacy sitemap, sitemap, robots까지 함께 확인합니다.
 
 빌드 후 최소 확인 URL:

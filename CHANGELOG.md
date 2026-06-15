@@ -8,6 +8,7 @@
 - 공개 라우트 검증 스크립트가 `/sitemap.xml`도 XML sitemap index로 확인하도록 보강했습니다.
 - `npm run check` 통합 스크립트를 추가해 콘텐츠, dist asset, 공개 라우트 검증을 배포 전 한 번에 실행할 수 있게 했습니다.
 - `npm run check:seo`를 추가해 공개 HTML의 title, description, canonical, OG/Twitter card, JSON-LD 기본 타입을 배포 전에 점검합니다.
+- `npm run check:a11y`를 추가해 공개 HTML의 lang, viewport, h1, 이미지 alt, 링크/버튼 접근 가능한 이름을 배포 전에 점검합니다.
 
 ## 2026-06-15
 

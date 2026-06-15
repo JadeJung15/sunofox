@@ -535,30 +535,50 @@ const latestVideos = youtubeProfile?.videos || [];
 const getEpisodeUrl = (episode) => `${siteUrl}${episode.href}`;
 const publishedEpisodeParts = publishedNovelEpisodes.map((episode) => ({ '@id': `${getEpisodeUrl(episode)}#episode` }));
 
+const createBreadcrumbList = (id, items) => ({
+  '@type': 'BreadcrumbList',
+  '@id': id,
+  itemListElement: items.map((item, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: item.name,
+    item: item.url
+  }))
+});
+
 export function createEpisodeStructuredData(episode = novelEpisodes[0]) {
   const episodeUrl = getEpisodeUrl(episode);
 
   return {
     '@context': 'https://schema.org',
-    '@type': 'Article',
-    '@id': `${episodeUrl}#episode`,
-    headline: `${Number(episode.number)}화. ${episode.title}`,
-    url: episodeUrl,
-    image: novelCoverUrl,
-    description: episode.hook,
-    datePublished: episode.isoDate,
-    inLanguage: 'ko-KR',
-    isPartOf: { '@id': `${novelUrl}#series` },
-    author: {
-      '@type': 'Organization',
-      name: novelProject.author,
-      url: `${siteUrl}/`
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: novelProject.publisher,
-      url: `${siteUrl}/`
-    }
+    '@graph': [
+      {
+        '@type': 'Article',
+        '@id': `${episodeUrl}#episode`,
+        headline: `${Number(episode.number)}화. ${episode.title}`,
+        url: episodeUrl,
+        image: novelCoverUrl,
+        description: episode.hook,
+        datePublished: episode.isoDate,
+        inLanguage: 'ko-KR',
+        isPartOf: { '@id': `${novelUrl}#series` },
+        author: {
+          '@type': 'Organization',
+          name: novelProject.author,
+          url: `${siteUrl}/`
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: novelProject.publisher,
+          url: `${siteUrl}/`
+        }
+      },
+      createBreadcrumbList(`${episodeUrl}#breadcrumb`, [
+        { name: 'Home', url: `${siteUrl}/` },
+        { name: novelProject.title, url: novelUrl },
+        { name: `${episode.label}. ${episode.title}`, url: episodeUrl }
+      ])
+    ]
   };
 }
 
@@ -797,26 +817,34 @@ export const musicArchiveStructuredData = {
 
 export const novelStructuredData = {
   '@context': 'https://schema.org',
-  '@type': 'CreativeWorkSeries',
-  '@id': `${novelUrl}#series`,
-  name: novelProject.title,
-  alternateName: novelProject.englishTitle,
-  url: novelUrl,
-  image: novelCoverUrl,
-  description: novelProject.summary,
-  genre: novelProject.genre,
-  inLanguage: 'ko-KR',
-  author: {
-    '@type': 'Organization',
-    name: novelProject.author,
-    url: `${siteUrl}/`
-  },
-  publisher: {
-    '@type': 'Organization',
-    name: novelProject.publisher,
-    url: `${siteUrl}/`
-  },
-  hasPart: publishedEpisodeParts
+  '@graph': [
+    {
+      '@type': 'CreativeWorkSeries',
+      '@id': `${novelUrl}#series`,
+      name: novelProject.title,
+      alternateName: novelProject.englishTitle,
+      url: novelUrl,
+      image: novelCoverUrl,
+      description: novelProject.summary,
+      genre: novelProject.genre,
+      inLanguage: 'ko-KR',
+      author: {
+        '@type': 'Organization',
+        name: novelProject.author,
+        url: `${siteUrl}/`
+      },
+      publisher: {
+        '@type': 'Organization',
+        name: novelProject.publisher,
+        url: `${siteUrl}/`
+      },
+      hasPart: publishedEpisodeParts
+    },
+    createBreadcrumbList(`${novelUrl}#breadcrumb`, [
+      { name: 'Home', url: `${siteUrl}/` },
+      { name: novelProject.title, url: novelUrl }
+    ])
+  ]
 };
 
 export const siteUpdatesStructuredData = {

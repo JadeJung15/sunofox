@@ -4,6 +4,8 @@
 
 ### Improved
 
+- `/novels/`와 1~6화 에피소드 상세에 Breadcrumb JSON-LD를 보강했습니다.
+- 공개 라우트 검증 스크립트가 sitemap-index, 에피소드 article meta, Breadcrumb JSON-LD를 함께 확인하도록 확장했습니다.
 - 모바일 공개 CTA, 작품 탭, footer 링크의 터치 영역 기준을 보강했습니다.
 - 공개 라우트 검증 스크립트가 1~6화 전체 상세 페이지를 직접 확인하도록 범위를 넓혔습니다.
 - `/novels/`에 작품 세계관과 주요 인물 요약 섹션을 추가했습니다.

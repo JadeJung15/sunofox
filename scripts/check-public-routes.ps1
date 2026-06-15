@@ -16,43 +16,43 @@ $routes = @(
     Name = "novels"
     Path = "/novels/"
     File = "novels/index.html"
-    Must = @("EPISODES", "novel-world-section", "novel-character-section", "https://sunofox.com/novels/")
+    Must = @("EPISODES", "novel-world-section", "novel-character-section", "BreadcrumbList", "https://sunofox.com/novels/")
   },
   @{
     Name = "episode-001"
     Path = "/novels/episode-001/"
     File = "novels/episode-001/index.html"
-    Must = @("EPISODE 01", "https://sunofox.com/novels/episode-001/")
+    Must = @("EPISODE 01", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-001/")
   },
   @{
     Name = "episode-002"
     Path = "/novels/episode-002/"
     File = "novels/episode-002/index.html"
-    Must = @("EPISODE 02", "https://sunofox.com/novels/episode-002/")
+    Must = @("EPISODE 02", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-002/")
   },
   @{
     Name = "episode-003"
     Path = "/novels/episode-003/"
     File = "novels/episode-003/index.html"
-    Must = @("EPISODE 03", "https://sunofox.com/novels/episode-003/")
+    Must = @("EPISODE 03", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-003/")
   },
   @{
     Name = "episode-004"
     Path = "/novels/episode-004/"
     File = "novels/episode-004/index.html"
-    Must = @("EPISODE 04", "https://sunofox.com/novels/episode-004/")
+    Must = @("EPISODE 04", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-004/")
   },
   @{
     Name = "episode-005"
     Path = "/novels/episode-005/"
     File = "novels/episode-005/index.html"
-    Must = @("EPISODE 05", "https://sunofox.com/novels/episode-005/")
+    Must = @("EPISODE 05", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-005/")
   },
   @{
     Name = "episode-006"
     Path = "/novels/episode-006/"
     File = "novels/episode-006/index.html"
-    Must = @("EPISODE 06", "https://sunofox.com/novels/episode-006/")
+    Must = @("EPISODE 06", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-006/")
   },
   @{
     Name = "music"
@@ -77,6 +77,12 @@ $routes = @(
     Path = "/updates/"
     File = "updates/index.html"
     Must = @("SunoFox Updates", "https://sunofox.com/updates/")
+  },
+  @{
+    Name = "sitemap-index"
+    Path = "/sitemap-index.xml"
+    File = "sitemap-index.xml"
+    Must = @("https://sunofox.com/sitemap-0.xml")
   },
   @{
     Name = "sitemap"

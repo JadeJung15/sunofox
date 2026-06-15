@@ -74,6 +74,9 @@ SunoFox 공식 사이트는 음악에서 시작한 감정과 장면을 웹소설
 
 OST와 YouTube 연결은 `src/data/siteContent.js`의 `artistLinks`, `featuredStoryOst`, `musicArchive`, `sunofoxProfile`에서 관리합니다.
 
+작품 목록과 에피소드 상세의 JSON-LD는 `src/data/siteContent.js`에서 생성합니다.
+`/novels/`는 `CreativeWorkSeries`와 `BreadcrumbList`, 각 `/novels/episode-00N/`은 `Article`과 `BreadcrumbList`를 함께 출력합니다.
+
 ## Scripts
 
 | script | command | 용도 |
@@ -106,7 +109,8 @@ production 반영 전 기본 순서입니다.
 10. `npx wrangler pages deployment list --project-name sf-studio`
 11. 운영 URL HTTP 200과 핵심 문자열 확인
 
-`check:public-routes`는 홈, 작품 목록, 1~6화 상세, Music Archive, 앨범 상세, Profile, Updates, sitemap, robots를 확인합니다.
+`check:public-routes`는 홈, 작품 목록, 1~6화 상세, Music Archive, 앨범 상세, Profile, Updates, sitemap-index, sitemap, robots를 확인합니다.
+작품 목록과 에피소드 상세는 Breadcrumb JSON-LD, 에피소드는 article publish meta도 함께 검증합니다.
 모바일 검증 시 공개 CTA, 작품 탭, footer 링크는 44px 안팎의 터치 영역을 유지해야 합니다.
 
 배포 후 최소 확인 URL:

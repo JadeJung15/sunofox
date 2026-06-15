@@ -71,6 +71,13 @@ SunoFox 공식 사이트는 음악에서 시작한 감정과 장면을 웹소설
 | Cloudflare 설정 | `wrangler.jsonc` | Pages output, KV/D1 binding, vars |
 | headers/redirects | `_headers`, `_redirects`, `public/_headers`, `public/_redirects` | Cloudflare Pages 헤더/리다이렉트 |
 
+## Operation Docs
+
+| 문서 | 용도 |
+|---|---|
+| `docs/site-route-inventory.md` | 공개/보호 라우트, 콘텐츠 데이터 위치, 배포 후 확인 URL을 한 장으로 정리 |
+| `docs/episode-release-checklist.md` | 신규 웹소설 회차 공개 전 콘텐츠, 파일, UI, 검증, 배포 체크리스트 |
+
 ## Content Model
 
 웹소설은 현재 두 곳을 함께 갱신합니다.

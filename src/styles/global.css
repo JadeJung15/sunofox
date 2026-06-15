@@ -1806,6 +1806,69 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   border-top: 1px solid var(--line);
 }
 
+.novel-list-toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: stretch;
+  gap: 14px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 4px;
+  padding: 14px 0;
+}
+
+.novel-list-featured {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  color: #ffffff;
+}
+
+.novel-list-featured span,
+.novel-list-featured small {
+  display: inline-flex;
+  min-height: 28px;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.72);
+  font-family: var(--font-condensed);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.novel-list-featured span {
+  border: 1px solid rgba(255, 10, 91, 0.52);
+  background: rgba(255, 10, 91, 0.14);
+  padding: 0 9px;
+  color: #ffffff;
+}
+
+.novel-list-featured strong {
+  overflow: hidden;
+  color: #ffffff;
+  font-size: clamp(18px, 2vw, 24px);
+  font-weight: 900;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.novel-list-featured:hover strong,
+.novel-list-featured:focus-visible strong {
+  color: var(--pink);
+}
+
+.novel-list-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
 .novel-episode-row {
   display: grid;
   grid-template-columns: 54px minmax(0, 1fr) auto auto;
@@ -4141,8 +4204,41 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
     gap: 8px;
   }
 
+  .novel-list-toolbar {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px 0;
+  }
+
+  .novel-list-featured {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 7px;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.03);
+    padding: 14px;
+  }
+
+  .novel-list-featured strong {
+    white-space: normal;
+  }
+
+  .novel-list-actions {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    justify-content: stretch;
+  }
+
+  .novel-list-actions .micro-button {
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    padding-inline: 8px;
+  }
+
   .novel-episode-row {
     grid-template-columns: 42px minmax(0, 1fr);
+    align-items: start;
     gap: 12px;
     padding: 18px 0;
   }
@@ -4151,6 +4247,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   .novel-episode-row b {
     grid-column: 2;
     justify-self: start;
+    margin-top: 2px;
   }
 
   .novel-episode-row p {

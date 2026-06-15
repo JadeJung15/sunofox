@@ -14,6 +14,7 @@ import {
 
 const novelListCta = '소설 보러가기';
 const latestEpisodeTitle = `${latestNovelEpisode.label} · ${latestNovelEpisode.title}`;
+const firstNovelEpisode = publishedNovelEpisodes[0];
 ---
 
 <Layout
@@ -82,10 +83,27 @@ const latestEpisodeTitle = `${latestNovelEpisode.label} · ${latestNovelEpisode.
         <span>{publishedNovelEpisodes.length}화 공개 · 최신 {latestEpisodeTitle}</span>
       </div>
 
+      <div class="novel-list-toolbar" aria-label="소설 빠른 이동">
+        <a class="novel-list-featured" href={latestNovelEpisode.href} aria-label={`${latestEpisodeTitle} 바로 읽기`}>
+          <span>최신화</span>
+          <strong>{latestEpisodeTitle}</strong>
+          <small>{latestNovelEpisode.readTime}</small>
+        </a>
+        <div class="novel-list-actions">
+          {firstNovelEpisode && <a class="micro-button micro-button-muted" href={firstNovelEpisode.href}>1화부터</a>}
+          <a class="micro-button micro-button-muted" href={artistLinks.featuredOst} target="_blank" rel="noopener noreferrer">OST</a>
+          <a class="micro-button micro-button-muted" href={musicArchive.href}>MUSIC</a>
+        </div>
+      </div>
+
       <div class="novel-episode-rows">
         {novelEpisodes.map((episode) => (
           episode.href ? (
-            <a class:list={['novel-episode-row', episode === latestNovelEpisode && 'is-latest']} href={episode.href}>
+            <a
+              class:list={['novel-episode-row', episode === latestNovelEpisode && 'is-latest']}
+              href={episode.href}
+              aria-label={`${episode.label} ${episode.title} 읽기`}
+            >
               <span>{episode.number}</span>
               <div>
                 <strong>{episode.title}</strong>

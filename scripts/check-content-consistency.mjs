@@ -25,6 +25,18 @@ function assertEqual(label, actual, expected) {
   }
 }
 
+function assertPresent(label, value) {
+  if (value === undefined || value === null || value === '') {
+    fail(`${label}: missing`);
+  }
+}
+
+function assertPattern(label, value, pattern) {
+  if (!pattern.test(value || '')) {
+    fail(`${label}: invalid format "${value || '(empty)'}"`);
+  }
+}
+
 function parseFrontmatter(markdown, fileName) {
   const match = markdown.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
   if (!match) {
@@ -44,6 +56,10 @@ function parseFrontmatter(markdown, fileName) {
     frontmatter[key] = value;
     return frontmatter;
   }, {});
+}
+
+function markdownBody(markdown) {
+  return markdown.replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n?/, '').trim();
 }
 
 function episodeFileNameFromHref(href) {
@@ -104,6 +120,11 @@ for (const [index, episode] of publishedEpisodes.entries()) {
   const fileName = episodeFileNameFromHref(episode.href);
   const numberPadded = String(Number(episode.number)).padStart(2, '0');
   const numberThree = String(Number(episode.number)).padStart(3, '0');
+  const expectedIsoDate = episode.publishedAt?.replaceAll('.', '-');
+
+  for (const field of ['title', 'status', 'label', 'hook', 'update', 'href', 'cta', 'publishedAt', 'isoDate', 'readTime']) {
+    assertPresent(`${label} ${field}`, episode[field]);
+  }
 
   if (seenNumbers.has(episode.number)) fail(`${label}: duplicate episode number`);
   if (seenHrefs.has(episode.href)) fail(`${label}: duplicate episode href`);
@@ -117,9 +138,18 @@ for (const [index, episode] of publishedEpisodes.entries()) {
   assertEqual(`${label} href`, episode.href, `/novels/episode-${numberThree}/`);
   assertEqual(`${label} status`, episode.status, `${Number(episode.number)}화 공개`);
   assertEqual(`${label} label`, episode.label, `${Number(episode.number)}화`);
+  assertPattern(`${label} publishedAt`, episode.publishedAt, /^\d{4}\.\d{2}\.\d{2}$/);
+  assertPattern(`${label} isoDate`, episode.isoDate, /^\d{4}-\d{2}-\d{2}$/);
+  assertEqual(`${label} isoDate`, episode.isoDate, expectedIsoDate);
+
+  if (episode.isFree !== true) {
+    fail(`${label}: published episode must set isFree to true`);
+  }
 
   const markdownPath = path.join(episodeDir, fileName);
-  const frontmatter = parseFrontmatter(await readFile(markdownPath, 'utf8'), fileName);
+  const markdown = await readFile(markdownPath, 'utf8');
+  const frontmatter = parseFrontmatter(markdown, fileName);
+  const body = markdownBody(markdown);
   const sourceIndex = novelEpisodes.indexOf(episode);
   const previous = previousPublishedEpisode(novelEpisodes, sourceIndex);
   const next = nextPublishedEpisode(novelEpisodes, sourceIndex);
@@ -132,9 +162,13 @@ for (const [index, episode] of publishedEpisodes.entries()) {
   assertEqual(`${fileName} readTime`, frontmatter.readTime, episode.readTime);
   assertEqual(`${fileName} seriesTitle`, frontmatter.seriesTitle, novelProject.title);
   assertEqual(`${fileName} backHref`, frontmatter.backHref, '/novels/');
+  assertEqual(`${fileName} backLabel`, frontmatter.backLabel, 'NOVEL');
 
   if (!frontmatter.description) fail(`${fileName}: description is required`);
   if (!frontmatter.subtitle) fail(`${fileName}: subtitle is required`);
+  if ((frontmatter.description || '').length < 40) fail(`${fileName}: description is too short`);
+  if ((frontmatter.subtitle || '').length < 8) fail(`${fileName}: subtitle is too short`);
+  if (body.length < 500) fail(`${fileName}: body is too short or missing`);
 
   if (previous) {
     assertEqual(`${fileName} previousHref`, frontmatter.previousHref, previous.href);

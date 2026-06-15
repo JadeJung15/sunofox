@@ -17,6 +17,7 @@
 - `/novels/` 소설 목록 상단에 최신화, 1화부터 읽기, OST, MUSIC 빠른 이동을 추가하고 모바일 회차 행 정렬을 보강했습니다.
 - 에피소드 Article JSON-LD에 `mainEntityOfPage`, 수정일, 장르, 키워드, 회차 순서, publisher logo를 보강하고 SEO 검증 범위를 확장했습니다.
 - 공개 라우트 검증 스크립트가 `/novels/` 빠른 이동, 1화부터 읽기, 최신 6화 문구를 함께 확인하도록 보강했습니다.
+- `check:content`가 회차 데이터 필수값, 날짜 포맷, `publishedAt`/`isoDate` 일치, 공개 본문 누락 여부까지 확인하도록 보강했습니다.
 
 ## 2026-06-15
 

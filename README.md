@@ -97,6 +97,8 @@ OST와 YouTube 연결은 `src/data/artistContent.js`의 `artistLinks`, `featured
 |---|---|---|
 | `npm run dev` | `astro dev` | 로컬 개발 서버 |
 | `npm run build` | `astro build && node scripts/version-auth-assets.mjs` | 정적 빌드와 auth asset versioning |
+| `npm run lint` | `npm run build && npm run check:seo && npm run check:a11y` | standalone 공유 메타/접근성 정적 점검 |
+| `npm run test` | `npm run build && npm run check` | standalone 배포 전 전체 검증 |
 | `npm run check` | `npm run check:content && npm run check:dist && npm run check:seo && npm run check:a11y && npm run check:public-routes` | 배포 전 콘텐츠/asset/SEO/접근성/공개 라우트 통합 검증 |
 | `npm run check:public-routes` | `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-public-routes.ps1` | `dist` 기준 공개 라우트, 1~6화 핵심 문자열, robots 보호 경로 정책 확인 |
 | `npm run check:content` | `node scripts/check-content-consistency.mjs` | 웹소설 목록 데이터와 에피소드 frontmatter 일치 확인 |
@@ -110,7 +112,7 @@ OST와 YouTube 연결은 `src/data/artistContent.js`의 `artistLinks`, `featured
 | `npm run check:admin-oauth` | PowerShell checker | 관리자 OAuth 패널 정적 확인 |
 | `npm run check:admin-feedback` | PowerShell checker | 관리자 피드백 요약 확인 |
 
-`lint`와 `test` script는 아직 없습니다.
+`lint`와 `test`는 별도 테스트 프레임워크 없이 현재 운영 검증 스크립트를 standalone으로 실행하는 alias입니다.
 
 ## Deployment Checklist
 

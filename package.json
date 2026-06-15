@@ -3,6 +3,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build && node scripts/version-auth-assets.mjs",
+    "lint": "npm run build && npm run check:seo && npm run check:a11y",
+    "test": "npm run build && npm run check",
     "check:admin-oauth": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-admin-oauth-panel.ps1",
     "check:admin-feedback": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-admin-feedback-summary.ps1",
     "check": "npm run check:content && npm run check:dist && npm run check:seo && npm run check:a11y && npm run check:public-routes",

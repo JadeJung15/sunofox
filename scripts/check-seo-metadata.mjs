@@ -9,6 +9,7 @@ const episodeDir = path.join(rootDir, 'src', 'pages', 'novels');
 const siteContentPath = path.join(rootDir, 'src', 'data', 'siteContent.js');
 const siteUrl = 'https://sunofox.com';
 const errors = [];
+const validOgImageTypes = new Set(['image/jpeg', 'image/png', 'image/webp']);
 
 function fail(message) {
   errors.push(message);
@@ -262,6 +263,7 @@ for (const route of routes) {
   assertEqual(`${route.name} twitter:title`, meta['twitter:title'], route.title);
   assertEqual(`${route.name} twitter:card`, meta['twitter:card'], 'summary_large_image');
   assertEqual(`${route.name} robots`, meta.robots, 'index, follow');
+  assertEqual(`${route.name} author`, meta.author, 'SunoFox');
 
   assertPresent(`${route.name} description`, meta.description);
   assertPresent(`${route.name} og:description`, meta['og:description']);
@@ -272,6 +274,7 @@ for (const route of routes) {
   assertPresent(`${route.name} twitter:image:alt`, meta['twitter:image:alt']);
   assertPresent(`${route.name} og:image:width`, meta['og:image:width']);
   assertPresent(`${route.name} og:image:height`, meta['og:image:height']);
+  assertPresent(`${route.name} og:image:type`, meta['og:image:type']);
 
   if (!meta.description.includes(route.descriptionIncludes)) {
     fail(`${route.name} description: expected to include "${route.descriptionIncludes}"`);
@@ -279,6 +282,10 @@ for (const route of routes) {
 
   if (!meta['og:image']?.startsWith(`${siteUrl}/`)) {
     fail(`${route.name} og:image: must be an absolute sunofox.com URL`);
+  }
+
+  if (meta['og:image:type'] && !validOgImageTypes.has(meta['og:image:type'])) {
+    fail(`${route.name} og:image:type: unsupported value "${meta['og:image:type']}"`);
   }
 
   for (const type of route.jsonLdTypes) {
@@ -291,6 +298,7 @@ for (const route of routes) {
     assertEqual(`${route.name} og:type`, meta['og:type'], 'article');
     assertEqual(`${route.name} article:published_time`, meta['article:published_time'], route.articlePublishedAt);
     assertEqual(`${route.name} article:modified_time`, meta['article:modified_time'], route.articlePublishedAt);
+    assertEqual(`${route.name} article:author`, meta['article:author'], 'SunoFox');
     assertEqual(`${route.name} article:section`, meta['article:section'], novelProject.genre);
     assertPresent(`${route.name} meta keywords`, meta.keywords);
 

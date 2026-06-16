@@ -9,6 +9,8 @@ Add-Type -AssemblyName System.Net.Http
 
 $episodeArticleMetaMust = @('"@type":"Article"', '"abstract":', '"timeRequired":')
 $labelMusicArchive = [string]::Concat([char]0xC74C, [char]0xC545, " ", [char]0xC544, [char]0xCE74, [char]0xC774, [char]0xBE0C)
+$labelMusicSee = -join @([char]0xC74C, [char]0xC545, " ", [char]0xBCF4, [char]0xAE30)
+$labelStudio = -join @([char]0xC2A4, [char]0xD29C, [char]0xB514, [char]0xC624)
 $labelSunoFoxDetail = "SunoFox " + [string]::Concat([char]0xC0C1, [char]0xC138, " ", [char]0xC18C, [char]0xAC1C)
 
 $routes = @(
@@ -16,7 +18,7 @@ $routes = @(
     Name = "home"
     Path = "/"
     File = "index.html"
-    Must = @("MUSIC TO NOVEL STUDIO", "home-hero-status", "home-novel-facts", "site-footer-nav", "/novels/", "/music/", "/profile/", "https://sunofox.com/")
+    Must = @("MUSIC TO NOVEL STUDIO", "home-hero-status", "home-novel-facts", "site-footer-nav", "/novels/", "/music/", "/profile/", "https://sunofox.com/", $labelMusicSee, $labelStudio)
   },
   @{
     Name = "novels"

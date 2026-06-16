@@ -18,7 +18,7 @@ const totalReadMinutes = publishedNovelEpisodes.reduce((sum, episode) => {
 const homeHeroStatusItems = [
   { label: '공개 상태', value: `${publishedNovelEpisodes.length}화 · ${novelProject.season.status}` },
   { label: '읽는 순서', value: '소설 목록에서 1화부터' },
-  { label: '확장 방향', value: 'OST · 세계관 · Studio' }
+  { label: '확장 방향', value: 'OST · 세계관 · 스튜디오' }
 ];
 const homeNovelFacts = [
   { label: '미니시즌', value: novelProject.season.title },
@@ -85,8 +85,8 @@ const homeNovelFacts = [
 
       <div class="hero-side-actions" aria-label="SunoFox quick actions">
         <a class="main-button main-button-primary" href="/novels/" aria-label="소설 회차 목록으로 이동">{novelListCta}</a>
-        <a class="main-button main-button-muted" href="/music/">MUSIC</a>
-        <a class="main-button main-button-muted" href="/mv-studio">STUDIO</a>
+        <a class="main-button main-button-muted" href="/music/">음악 보기</a>
+        <a class="main-button main-button-muted" href="/mv-studio">스튜디오</a>
       </div>
     </section>
 

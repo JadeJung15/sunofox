@@ -2,6 +2,19 @@ export const siteUpdates = [
   {
     date: '2026.06.16',
     type: 'Site',
+    title: '메뉴와 홈 CTA 한국어 라벨 정리',
+    summary:
+      '오버레이 메뉴와 홈, 소설, 음악 허브의 독자 행동 버튼에서 HOME, ABOUT, MUSIC, STUDIO처럼 남아 있던 영문 라벨을 홈, 소개, 음악, 스튜디오 기준으로 정리했습니다.',
+    areas: ['notice', 'site', 'music'],
+    links: [
+      { label: '홈', href: '/' },
+      { label: '음악 보기', href: '/music/' },
+      { label: '소설 보러가기', href: '/novels/' }
+    ]
+  },
+  {
+    date: '2026.06.16',
+    type: 'Site',
     title: '소설 탭 앵커 이동 위치 보정',
     summary:
       '소설 목록, 정보, 세계관, 인물, OST, 키워드 탭으로 이동할 때 고정 헤더가 섹션 제목을 덮지 않도록 스크롤 여백을 보강했습니다.',

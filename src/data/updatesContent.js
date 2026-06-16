@@ -2,6 +2,18 @@ export const siteUpdates = [
   {
     date: '2026.06.16',
     type: 'Site',
+    title: 'robots CDN 캐시 방어 헤더 추가',
+    summary:
+      'Cloudflare가 robots.txt를 기본 캐시할 수 있어 /robots.txt에 CDN-Cache-Control과 Cloudflare-CDN-Cache-Control no-store 헤더를 추가했습니다.',
+    areas: ['notice', 'site'],
+    links: [
+      { label: 'robots', href: '/robots.txt' },
+      { label: '업데이트', href: '/updates/' }
+    ]
+  },
+  {
+    date: '2026.06.16',
+    type: 'Site',
     title: '공개 라우트 검증 실패 판정 보강',
     summary:
       'check:public-routes가 표에서 실패를 표시하고도 종료코드 0으로 끝나지 않도록 실패 결과 집계를 명시적으로 보강했습니다.',

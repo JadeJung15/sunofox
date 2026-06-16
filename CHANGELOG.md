@@ -4,6 +4,7 @@
 
 ### Improved
 
+- `/robots.txt`에 `CDN-Cache-Control`과 `Cloudflare-CDN-Cache-Control`을 추가해 Cloudflare CDN stale robots 응답 재발 가능성을 줄였습니다.
 - `check:public-routes`가 표에서 실패를 표시하고도 종료코드 0으로 끝나지 않도록 실패 판정을 명시적으로 보강했습니다.
 - `robots.txt` 생성 소스와 공개 라우트 검증에 `/account` Disallow를 추가해 보호 라우트 노출 정책을 문서와 맞췄습니다.
 - `check:public-routes`가 `sitemap-0.xml`의 공개 URL 포함과 보호/숨김 URL 미노출을 함께 검증하도록 보강했습니다.

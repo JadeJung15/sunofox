@@ -116,7 +116,7 @@ OST와 YouTube 연결은 `src/data/artistContent.js`의 `artistLinks`, `featured
 | `npm run check:dist` | `node scripts/check-dist-integrity.mjs` | 공개 `dist` 내부 링크와 이미지/asset 경로 존재 확인 |
 | `npm run check:seo` | `node scripts/check-seo-metadata.mjs` | 공개 HTML의 title, description, canonical, OG/Twitter, JSON-LD 확인 |
 | `npm run check:a11y` | `node scripts/check-accessibility-basics.mjs` | 공개 HTML의 lang, viewport, h1, img alt, 링크/버튼 이름 확인 |
-| `npm run check:mobile-css` | `node scripts/check-mobile-css.mjs` | 메뉴/CTA/작품 탭/회차 이동/Music 버튼의 모바일 터치 영역과 줄바꿈 CSS 계약 확인 |
+| `npm run check:mobile-css` | `node scripts/check-mobile-css.mjs` | 메뉴/CTA/작품 탭/회차 이동/보조 링크/Music 버튼의 모바일 터치 영역과 줄바꿈 CSS 계약 확인 |
 | `npm run preview` | `astro preview` | 빌드 결과 미리보기 |
 | `npm run pages:dev` | `npm run build && wrangler pages dev dist --compatibility-date=2026-06-07` | Cloudflare Pages 로컬 검증 |
 | `npm run deploy:preview` | `npm run build && wrangler pages deploy dist --project-name sf-studio --branch astro-redesign` | preview 배포 |
@@ -153,7 +153,7 @@ production 반영 전 기본 순서입니다.
 `check:dist`는 빌드된 공개 HTML/CSS/manifest의 내부 링크, 이미지, asset 경로가 `dist` 안에 실제 존재하는지 확인합니다. 보호/운영 HTML인 `/mv-studio`, `/login`, `/signup`, `/admin`, `/account` 계열은 구조 변경 승인 범위와 분리해 제외합니다.
 `check:seo`는 홈, 작품 목록, 1~6화 상세, Music Archive, 앨범 상세, Profile, Updates의 title, description, canonical, OG/Twitter card, 회차별 공유 문구, JSON-LD 기본 타입을 확인합니다.
 `check:a11y`는 공개 HTML의 lang, viewport, h1, 이미지 alt, 링크/버튼 접근 가능한 이름, 새 탭 링크 rel 값을 확인합니다.
-`check:mobile-css`는 모바일에서 메뉴, CTA, 소설 탭, 회차 이동, Music Archive 버튼이 최소 터치 영역과 줄바꿈 방어 규칙을 유지하는지 확인합니다.
+`check:mobile-css`는 모바일에서 메뉴, CTA, 소설 탭, 회차 이동, 에피소드/음악 보조 링크, Music Archive 버튼이 최소 터치 영역과 줄바꿈 방어 규칙을 유지하는지 확인합니다.
 `check:public-routes`는 홈, 작품 목록, 1~6화 상세, Music Archive, 앨범 상세, Profile, Updates, custom 404, sitemap-index, legacy sitemap, sitemap, robots의 sitemap 연결과 보호 경로 Disallow 정책을 확인합니다. 운영 URL 모드에서는 존재하지 않는 probe URL이 홈 fallback 200이 아니라 404로 응답하는지도 확인합니다.
 `check:production-seo`는 같은 SEO 검증 기준을 운영 도메인 HTML에 적용해 배포 후 title, description, OG/Twitter card, JSON-LD 반영 여부를 확인합니다.
 작품 목록과 에피소드 상세는 Breadcrumb JSON-LD, 에피소드는 article publish meta도 함께 검증합니다.

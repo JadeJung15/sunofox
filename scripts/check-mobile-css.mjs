@@ -73,6 +73,8 @@ if (mobileMediaIndex === -1) {
 assertBlockIncludes('.menu-trigger', ['min-width: 44px;', 'min-height: 44px;']);
 assertBlockIncludes('.main-button', ['min-height: 46px;']);
 assertBlockIncludes('.micro-button', ['min-height: 44px;']);
+assertBlockIncludes('.novel-reader-topbar a', ['min-width: 44px;', 'min-height: 44px;']);
+assertBlockIncludes('.album-back-link', ['display: inline-flex;', 'min-height: 44px;']);
 
 if (mobileMediaIndex !== -1) {
   assertBlockIncludes('.main-button', ['min-height: 44px;'], { after: mobileMediaIndex });
@@ -106,4 +108,4 @@ if (errors.length > 0) {
   process.exit(1);
 }
 
-console.log('Mobile CSS check passed: responsive touch and wrapping rules are present.');
+console.log('Mobile CSS check passed: responsive touch, auxiliary link, and wrapping rules are present.');

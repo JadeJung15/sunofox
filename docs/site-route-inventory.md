@@ -93,7 +93,7 @@ npm run check
 | `check:profile` | SunoFox 소개/필모그래피 허브, 탭, 출처 링크 데이터 |
 | `check:seo` | title, description, canonical, OG/Twitter, JSON-LD |
 | `check:a11y` | lang, viewport, h1, alt, 링크/버튼 이름, 새 탭 rel |
-| `check:mobile-css` | 메뉴/CTA/작품 탭/회차 이동/Music 버튼의 모바일 터치 영역과 줄바꿈 CSS 계약 |
+| `check:mobile-css` | 메뉴/CTA/작품 탭/회차 이동/보조 링크/Music 버튼의 모바일 터치 영역과 줄바꿈 CSS 계약 |
 | `check:public-routes` | 공개 URL 200, custom 404 상태, 핵심 문자열, sitemap, robots 보호 경로 Disallow |
 
 ## Post Deploy Verification

@@ -1,6 +1,18 @@
 export const siteUpdates = [
   {
     date: '2026.06.16',
+    type: 'Site',
+    title: '모바일 탭과 메뉴 터치 영역 보강',
+    summary:
+      '모바일 작품/프로필 탭을 화면 안에서 바로 보이는 그리드형 터치 영역으로 정리하고, 메뉴 버튼의 실제 클릭 박스를 44px 이상으로 고정했습니다.',
+    areas: ['notice', 'novel', 'site'],
+    links: [
+      { label: '소설 목록', href: '/novels/' },
+      { label: 'SunoFox 소개', href: '/profile/' }
+    ]
+  },
+  {
+    date: '2026.06.16',
     type: 'SEO',
     title: '운영 라우트의 Article 메타 검증 확장',
     summary:

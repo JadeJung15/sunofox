@@ -99,7 +99,7 @@ $routes = @(
     Name = "episode-006"
     Path = "/novels/episode-006/"
     File = "novels/episode-006/index.html"
-    Must = @("EPISODE 06", "data-reader-state=""season-final""", "novel-reader-summary", "novel-reader-progress", "novel-reader-quicklinks", "episodeBody", "episodeIndex", "episodeOst", "novel-reader-jumpbar", "novel-reader-index", "novel-reader-actions", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-006/") + $episodeArticleMetaMust + $episodeNavigationMust + @('data-reader-action="jump-previous"', 'data-reader-action="jump-next-disabled"', 'data-reader-action="action-previous"', 'data-reader-action="action-next-disabled"', '"timeRequired":"PT5M"')
+    Must = @("EPISODE 06", "data-reader-state=""season-final""", 'data-reader-state="season-complete"', "novel-reader-summary", "novel-reader-progress", "novel-reader-quicklinks", "episodeBody", "episodeIndex", "episodeOst", "novel-reader-jumpbar", "novel-reader-index", "novel-reader-actions", "novel-reader-completion", "novel-reader-completion-actions", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-006/") + $episodeArticleMetaMust + $episodeNavigationMust + @('data-reader-action="jump-previous"', 'data-reader-action="jump-next-disabled"', 'data-reader-action="action-previous"', 'data-reader-action="action-next-disabled"', 'data-reader-action="completion-list"', 'data-reader-action="completion-music"', 'data-reader-action="completion-profile"', '"timeRequired":"PT5M"')
   },
   @{
     Name = "music"

@@ -75,6 +75,11 @@ const episodeProgressPercent = publishedEpisodes.length > 0
   ? Math.round((episodePosition / publishedEpisodes.length) * 100)
   : 0;
 const episodeProgressStyle = `--episode-progress: ${episodeProgressPercent}%`;
+const completionActions = [
+  { label: '소설 목록', href: backHref, action: 'completion-list' },
+  { label: '음악 아카이브', href: musicArchive.href, action: 'completion-music' },
+  { label: 'SunoFox 소개', href: '/profile/', action: 'completion-profile' }
+];
 ---
 
 <Layout
@@ -239,6 +244,29 @@ const episodeProgressStyle = `--episode-progress: ${episodeProgressPercent}%`;
           <span class="main-button novel-next-disabled" aria-disabled="true" data-reader-action="action-next-disabled" data-reader-state={isSeasonFinalEpisode ? 'season-final' : 'next-pending'}>{nextDisabledText}</span>
         )}
       </nav>
+
+      {isSeasonFinalEpisode && (
+        <section
+          class="novel-reader-completion reveal"
+          aria-labelledby="episodeCompletionTitle"
+          data-reader-state="season-complete"
+        >
+          <p class="section-kicker">SEASON COMPLETE</p>
+          <h2 id="episodeCompletionTitle">{novelProject.season.title}</h2>
+          <p>{novelProject.season.nextPlan}</p>
+          <div class="novel-reader-completion-actions" aria-label="미니시즌 완료 후 이동">
+            {completionActions.map((action) => (
+              <a
+                class:list={['main-button', action.action !== 'completion-list' && 'main-button-muted']}
+                href={action.href}
+                data-reader-action={action.action}
+              >
+                {action.label}
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
     </article>
   </main>
 </Layout>

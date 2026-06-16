@@ -1534,6 +1534,44 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   margin-top: 36px;
 }
 
+.novel-reader-completion {
+  display: grid;
+  gap: 16px;
+  margin-top: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: clamp(24px, 4vw, 36px);
+  background: linear-gradient(135deg, rgba(255, 0, 102, 0.11), rgba(255, 255, 255, 0.035));
+  text-align: center;
+}
+
+.novel-reader-completion h2 {
+  margin: 0;
+  font-family: var(--font-condensed);
+  font-size: clamp(30px, 4vw, 52px);
+  font-weight: 950;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.novel-reader-completion p:not(.section-kicker) {
+  max-width: 680px;
+  margin: 0 auto;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.72;
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+}
+
+.novel-reader-completion-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
 .novel-platform-home,
 .novel-detail-page {
   min-height: 100svh;
@@ -5882,6 +5920,30 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
     width: 100%;
     overflow-wrap: anywhere;
     white-space: normal;
+  }
+
+  .novel-reader-completion {
+    margin-top: 22px;
+    padding: 22px 16px;
+  }
+
+  .novel-reader-completion h2 {
+    font-size: clamp(28px, 9vw, 40px);
+    line-height: 1.04;
+  }
+
+  .novel-reader-completion p:not(.section-kicker) {
+    font-size: 14px;
+    line-height: 1.72;
+  }
+
+  .novel-reader-completion-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .novel-reader-completion-actions .main-button {
+    width: 100%;
   }
 
   .about-page .category-hero h1 {

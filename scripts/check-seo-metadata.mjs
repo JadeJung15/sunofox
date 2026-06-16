@@ -163,6 +163,10 @@ function assertIncludes(label, set, expected) {
   if (!set.has(expected)) fail(`${label}: missing JSON-LD type ${expected}`);
 }
 
+function readMinutes(readTime = '') {
+  return Number(String(readTime).match(/\d+/)?.[0] || 0);
+}
+
 async function readHtml(route) {
   const filePath = path.join(distDir, route.file);
   await stat(filePath).catch(() => {
@@ -245,6 +249,8 @@ for (const episode of publishedNovelEpisodes) {
     jsonLdTypes: ['Article', 'BreadcrumbList'],
     articlePublishedAt: episode.isoDate,
     episodeTitle: episode.title,
+    episodeUpdate: episode.update,
+    timeRequired: `PT${readMinutes(episode.readTime)}M`,
     shareTags: episode.shareTags || []
   });
 }
@@ -333,6 +339,8 @@ for (const route of routes) {
     assertEqual(`${route.name} Article dateModified`, article?.dateModified, route.articlePublishedAt);
     assertEqual(`${route.name} Article articleSection`, article?.articleSection, novelProject.genre);
     assertEqual(`${route.name} Article position`, String(article?.position), String(Number(route.name.replace('episode-', ''))));
+    assertEqual(`${route.name} Article abstract`, article?.abstract, route.episodeUpdate);
+    assertEqual(`${route.name} Article timeRequired`, article?.timeRequired, route.timeRequired);
 
     if (!Array.isArray(article?.keywords) || article.keywords.length === 0) {
       fail(`${route.name} Article keywords: missing`);

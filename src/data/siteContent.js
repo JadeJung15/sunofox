@@ -198,6 +198,11 @@ const getEpisodeKeywords = (episode) => Array.from(new Set([
   ...novelProject.keywords,
   ...(episode.shareTags || [])
 ]));
+const getEpisodeReadMinutes = (episode) => Number(String(episode?.readTime || '').match(/\d+/)?.[0] || 0);
+const getEpisodeTimeRequired = (episode) => {
+  const minutes = getEpisodeReadMinutes(episode);
+  return minutes > 0 ? `PT${minutes}M` : undefined;
+};
 const publishedEpisodeParts = publishedNovelEpisodes.map((episode) => ({ '@id': `${getEpisodeUrl(episode)}#episode` }));
 
 const createBreadcrumbList = (id, items) => ({
@@ -226,11 +231,13 @@ export function createEpisodeStructuredData(episode = novelEpisodes[0]) {
         image: novelCoverUrl,
         thumbnailUrl: novelCoverUrl,
         description: episode.hook,
+        abstract: episode.update,
         datePublished: episode.isoDate,
         dateModified: episode.isoDate,
         inLanguage: 'ko-KR',
         articleSection: novelProject.genre,
         keywords: getEpisodeKeywords(episode),
+        timeRequired: getEpisodeTimeRequired(episode),
         position: Number(episode.number),
         isPartOf: { '@id': `${novelUrl}#series` },
         author: {

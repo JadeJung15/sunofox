@@ -1,6 +1,18 @@
 export const siteUpdates = [
   {
     date: '2026.06.16',
+    type: 'SEO',
+    title: '에피소드 Article 구조화 데이터 보강',
+    summary:
+      '1~6화 상세 페이지의 Article JSON-LD에 회차 요약과 읽기 시간을 추가하고, SEO 검증이 이 값을 배포 전 확인하도록 보강했습니다.',
+    areas: ['novel', 'site'],
+    links: [
+      { label: '소설 목록', href: '/novels/' },
+      { label: '완결화 보기', href: '/novels/episode-006/' }
+    ]
+  },
+  {
+    date: '2026.06.16',
     type: 'Novel',
     title: '최종화 완결 안내 문구 정리',
     summary:

@@ -2,6 +2,18 @@ export const siteUpdates = [
   {
     date: '2026.06.16',
     type: 'Site',
+    title: '푸터 이동 링크 한국어 정리',
+    summary:
+      '전체 공개 페이지 하단의 소설, 음악, 소개, 업데이트, 개인정보, 이용약관 이동 링크를 한국어 라벨로 정리해 독자가 목적지를 더 빠르게 이해하도록 개선했습니다.',
+    areas: ['notice', 'site'],
+    links: [
+      { label: '소설 목록', href: '/novels/' },
+      { label: '업데이트', href: '/updates/' }
+    ]
+  },
+  {
+    date: '2026.06.16',
+    type: 'Site',
     title: '독자 행동 라벨 한국어 정리',
     summary:
       '404, Profile, Music Archive에서 독자가 누르는 행동 라벨을 음악 아카이브, 업데이트, SunoFox 소개처럼 한국어 기준으로 정리하고, check:profile과 공개 라우트 검증에 반영했습니다.',

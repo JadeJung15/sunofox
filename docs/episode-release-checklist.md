@@ -75,6 +75,8 @@ npm run check
 
 `check:korean-reader`는 에피소드 본문과 시스템 문구의 영어 문장이 독자용 한글 병기를 같은 줄에 포함하는지 확인합니다.
 
+`check:navigation`은 공개 오버레이 메뉴의 한국어 라벨, 순서, 내부 canonical href가 유지되는지 확인합니다.
+
 `check:dist`는 공개 빌드 산출물의 내부 링크와 이미지/asset 경로가 실제 `dist` 안에 존재하는지 확인합니다. `/mv-studio`, `/login`, `/signup`, `/admin`, `/account` 계열 운영 HTML은 별도 승인 영역이라 제외합니다.
 
 `check:seo`는 공개 HTML의 title, description, canonical, OG/Twitter card, 회차별 공유 설명, Article/Breadcrumb/CollectionPage 등 JSON-LD 기본 타입을 확인합니다.

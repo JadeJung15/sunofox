@@ -1,6 +1,19 @@
 export const siteUpdates = [
   {
     date: '2026.06.16',
+    type: 'Site',
+    title: '공개 메뉴 데이터 검증 추가',
+    summary:
+      '오버레이 메뉴의 홈, 소개, 소설 보러가기, 음악, 업데이트, 스튜디오 라벨과 내부 canonical href가 다시 어긋나지 않도록 check:navigation 검증을 추가했습니다.',
+    areas: ['notice', 'site'],
+    links: [
+      { label: '홈', href: '/' },
+      { label: '소설 보러가기', href: '/novels/' },
+      { label: '음악 보기', href: '/music/' }
+    ]
+  },
+  {
+    date: '2026.06.16',
     type: 'Docs',
     title: '운영 문서와 소개 메타 라벨 동기화',
     summary:

@@ -142,6 +142,8 @@ export const novelEpisodes = [
     shareTitle: '1화. 첫 장에서 웃은 악녀 | 악녀는 첫 장에서 웃었다',
     shareDescription:
       '침대에 묶인 악녀 아델라인이 성녀의 베일 사건을 뒤집고 공개 재판을 요구하는 시작 회차입니다.',
+    shareImageAlt:
+      '1화 첫 장에서 웃은 악녀 공유 이미지 - 침대에 묶인 아델라인과 찢어진 성녀의 베일',
     href: '/novels/episode-001/',
     cta: '첫 화 보기',
     publishedAt: '2026.06.14',
@@ -161,6 +163,8 @@ export const novelEpisodes = [
     shareTitle: '2화. 멈춘 시계의 이름 | 악녀는 첫 장에서 웃었다',
     shareDescription:
       '황궁의 시계가 멈춘 밤, 아델라인은 에단 블랙이라는 사라진 이름이 세계의 오류와 연결됐음을 추적합니다.',
+    shareImageAlt:
+      '2화 멈춘 시계의 이름 공유 이미지 - 멈춘 황궁 시계와 에단 블랙의 이름을 추적하는 아델라인',
     href: '/novels/episode-002/',
     cta: '2화 읽기',
     publishedAt: '2026.06.14',
@@ -180,6 +184,8 @@ export const novelEpisodes = [
     shareTitle: '3화. 재판은 오래 기다리지 않는다 | 악녀는 첫 장에서 웃었다',
     shareDescription:
       '공개 재판이 시작되자 아델라인은 마레나의 증언과 검은 잉크 명령서로 성녀의 베일 사건을 뒤집습니다.',
+    shareImageAlt:
+      '3화 재판은 오래 기다리지 않는다 공유 이미지 - 공개 재판정에서 증거를 꺼내는 아델라인',
     href: '/novels/episode-003/',
     cta: '3화 읽기',
     publishedAt: '2026.06.15',
@@ -199,6 +205,8 @@ export const novelEpisodes = [
     shareTitle: '4화. 악녀는 구속되지 않는다 | 악녀는 첫 장에서 웃었다',
     shareDescription:
       '에단 블랙이 재판정에 들어온 뒤, 아델라인은 결백 호소 대신 구속 보류와 다음 무대를 얻습니다.',
+    shareImageAlt:
+      '4화 악녀는 구속되지 않는다 공유 이미지 - 에단 블랙의 등장과 구속 보류를 얻는 아델라인',
     href: '/novels/episode-004/',
     cta: '4화 읽기',
     publishedAt: '2026.06.15',
@@ -218,6 +226,8 @@ export const novelEpisodes = [
     shareTitle: '5화. 악녀의 드레스는 검다 | 악녀는 첫 장에서 웃었다',
     shareDescription:
       '아델라인은 소문을 역이용하고 검은 드레스를 선택해 황실 사교회라는 새 전장으로 걸어갑니다.',
+    shareImageAlt:
+      '5화 악녀의 드레스는 검다 공유 이미지 - 검은 드레스를 입고 황실 사교회로 향하는 아델라인',
     href: '/novels/episode-005/',
     cta: '5화 읽기',
     publishedAt: '2026.06.15',
@@ -237,6 +247,8 @@ export const novelEpisodes = [
     shareTitle: '6화. 첫 장의 끝에서 웃었다 | 악녀는 첫 장에서 웃었다',
     shareDescription:
       '황실 사교회 중앙에서 아델라인은 성녀의 눈물 대신 장면을 만든 자를 묻고 첫 미니시즌을 승리로 닫습니다.',
+    shareImageAlt:
+      '6화 첫 장의 끝에서 웃었다 공유 이미지 - 황실 사교회 중앙에서 첫 미니시즌을 승리로 닫는 아델라인',
     href: '/novels/episode-006/',
     cta: '6화 읽기',
     publishedAt: '2026.06.15',

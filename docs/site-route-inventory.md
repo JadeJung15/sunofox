@@ -58,7 +58,7 @@ Last verified: 2026-06-16
 | 콘텐츠 | 파일 | 신규 추가 시 확인 |
 |---|---|---|
 | 공개 메뉴 | `src/data/navigationContent.js` | overlay menu 라벨, active 상태 |
-| 웹소설 작품 정보 | `src/data/novelContent.js` | 작품 요약, 세계관, 인물, 회차 목록, 회차별 공유 태그 |
+| 웹소설 작품 정보 | `src/data/novelContent.js` | 작품 요약, 세계관, 인물, 회차 목록, 회차별 공유 문구/이미지 alt/태그 |
 | 회차 본문 | `src/pages/novels/episode-00N.md` | frontmatter, 이전/다음 링크, 본문 |
 | 회차 작성 템플릿 | `docs/episode-authoring-template.md` | 공개 전 초안 관리, 회차 데이터/frontmatter 예시, 시즌 갱신 기준 |
 | 대표 OST/외부 링크 | `src/data/artistContent.js` | YouTube/음원 링크, `storyOsts`, 썸네일 alt |
@@ -85,14 +85,14 @@ npm run check
 
 | check | 확인 범위 |
 |---|---|
-| `check:content` | `novelContent.js`와 미니시즌 상태, 1~6화 frontmatter/본문/shareTags 일치, 예상 밖 에피소드 route 파일 차단, 세계관/캐릭터 앵커 검증 |
+| `check:content` | `novelContent.js`와 미니시즌 상태, 1~6화 frontmatter/본문/shareTags/shareImageAlt 일치, 예상 밖 에피소드 route 파일 차단, 세계관/캐릭터 앵커 검증 |
 | `check:music` | 대표 OST, YouTube/MV 영상 목록, 영상 허브 요약/필수 링크, 앨범 트랙 순서, 영상 ID와 썸네일 URL 일치 |
 | `check:updates` | Updates 고정 공지, 카테고리별 기록, 공식 허브 상태, 대기 링크 사유/확인 필요 항목, 업데이트 링크 |
 | `check:dist` | 빌드 산출물의 내부 링크, 이미지, asset 존재 |
 | `check:korean-reader` | 에피소드 본문과 시스템 영어 문장의 한글 병기 |
 | `check:profile` | SunoFox 소개/필모그래피 허브, 탭, 출처 링크 데이터 |
 | `check:navigation` | 공개 오버레이 메뉴/푸터 라벨, 순서, 내부 canonical href, 업데이트 보조 계층 |
-| `check:seo` | title, description, canonical, OG/Twitter, JSON-LD |
+| `check:seo` | title, description, canonical, OG/Twitter, 에피소드별 이미지 alt, JSON-LD |
 | `check:a11y` | lang, viewport, h1, alt, 링크/버튼 이름, 새 탭 rel |
 | `check:mobile-css` | 메뉴/CTA/작품 탭/회차 이동/보조 링크/음악 버튼의 모바일 터치 영역과 줄바꿈 CSS 계약 |
 | `check:public-routes` | 공개 URL 200, custom 404 상태, 핵심 문자열, 에피소드 이동 마커, sitemap 공개 URL 포함/보호·숨김 URL 제외, robots 보호 경로 Disallow, 로컬 `_headers` robots 캐시 정책 |

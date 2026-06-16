@@ -278,6 +278,7 @@ for (const episode of publishedNovelEpisodes) {
     articlePublishedAt: episode.isoDate,
     episodeTitle: episode.title,
     episodeUpdate: episode.update,
+    shareImageAlt: episode.shareImageAlt,
     timeRequired: `PT${readMinutes(episode.readTime)}M`,
     shareTags: episode.shareTags || []
   });
@@ -324,6 +325,11 @@ for (const route of routes) {
     assertEqual(`${route.name} description`, meta.description, route.shareDescription);
     assertEqual(`${route.name} og:description`, meta['og:description'], route.shareDescription);
     assertEqual(`${route.name} twitter:description`, meta['twitter:description'], route.shareDescription);
+  }
+
+  if (route.shareImageAlt) {
+    assertEqual(`${route.name} og:image:alt`, meta['og:image:alt'], route.shareImageAlt);
+    assertEqual(`${route.name} twitter:image:alt`, meta['twitter:image:alt'], route.shareImageAlt);
   }
 
   if (!meta['og:image']?.startsWith(`${siteUrl}/`)) {

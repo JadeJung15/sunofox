@@ -308,7 +308,7 @@ for (const [index, episode] of publishedEpisodes.entries()) {
   const numberThree = String(Number(episode.number)).padStart(3, '0');
   const expectedIsoDate = episode.publishedAt?.replaceAll('.', '-');
 
-  for (const field of ['title', 'status', 'label', 'hook', 'update', 'shareTitle', 'shareDescription', 'href', 'cta', 'publishedAt', 'isoDate', 'readTime', 'ostKey']) {
+  for (const field of ['title', 'status', 'label', 'hook', 'update', 'shareTitle', 'shareDescription', 'shareImageAlt', 'href', 'cta', 'publishedAt', 'isoDate', 'readTime', 'ostKey']) {
     assertPresent(`${label} ${field}`, episode[field]);
   }
 
@@ -350,6 +350,18 @@ for (const [index, episode] of publishedEpisodes.entries()) {
 
   if (episode.shareDescription.length < 40) {
     fail(`${label} shareDescription: must be at least 40 characters`);
+  }
+
+  if (episode.shareImageAlt.length < 30) {
+    fail(`${label} shareImageAlt: must be at least 30 characters`);
+  }
+
+  if (!episode.shareImageAlt.includes(`${Number(episode.number)}화`)) {
+    fail(`${label} shareImageAlt: must include the episode label`);
+  }
+
+  if (!episode.shareImageAlt.includes(episode.title)) {
+    fail(`${label} shareImageAlt: must include the episode title`);
   }
 
   const shareTags = assertStringArray(`${label} shareTags`, episode.shareTags, { min: 3 });

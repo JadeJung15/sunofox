@@ -1,6 +1,18 @@
 export const siteUpdates = [
   {
     date: '2026.06.16',
+    type: 'Novel',
+    title: '소설 목록 빠른 읽기 UX 정리',
+    summary:
+      '소설 목록 상단을 1화 정주행, 완결화 보기, OST 감상, 음악 아카이브 CTA 중심으로 정리하고 각 회차 행의 읽기 행동을 더 명확하게 표시했습니다.',
+    areas: ['notice', 'novel', 'site'],
+    links: [
+      { label: '소설 목록', href: '/novels/' },
+      { label: '완결화 보기', href: '/novels/episode-006/' }
+    ]
+  },
+  {
+    date: '2026.06.16',
     type: 'Site',
     title: 'Profile 데이터 검증 추가',
     summary:

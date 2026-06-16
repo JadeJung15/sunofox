@@ -4,6 +4,8 @@
 
 ### Improved
 
+- `/novels/` 목록 상단을 `READ ORDER` 중심으로 재구성해 1화 정주행, 완결화 보기, OST 감상, 음악 아카이브 CTA를 한 번에 고를 수 있게 했습니다.
+- `/novels/` 회차 행의 우측 배지를 상태 중심에서 `읽기`/`완결화 읽기` 행동 중심으로 바꿔 독자가 목록에서 바로 클릭 의도를 이해할 수 있게 했습니다.
 - `npm run check:profile`을 추가해 SunoFox 소개/필모그래피 허브, 탭, quick action, YouTube 영상 링크, 출처 링크 데이터가 깨지지 않는지 배포 전 검증하도록 했습니다.
 - `npm run check:korean-reader`를 추가해 에피소드 본문과 시스템 영어 문장이 같은 줄에 한글 병기를 포함하는지 배포 전 검증하도록 했습니다.
 - `npm run check:mobile-css`를 추가해 모바일 메뉴, CTA, 소설 탭, 회차 이동, Music Archive 버튼의 터치 영역과 줄바꿈 CSS 계약을 배포 전 검증하도록 했습니다.

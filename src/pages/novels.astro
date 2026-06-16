@@ -15,17 +15,23 @@ import {
 const novelListCta = '소설 보러가기';
 const latestEpisodeTitle = `${latestNovelEpisode.label} · ${latestNovelEpisode.title}`;
 const firstNovelEpisode = publishedNovelEpisodes[0];
+const seasonStatus = novelProject.season;
 const totalReadMinutes = publishedNovelEpisodes.reduce((sum, episode) => {
   const minutes = Number(episode.readTime?.match(/\d+/)?.[0] || 0);
   return sum + minutes;
 }, 0);
+const novelListPrimaryActions = [
+  { label: '1화부터 정주행', href: firstNovelEpisode?.href || seasonStatus.startHref, primary: true },
+  { label: '완결화 보기', href: seasonStatus.finalHref },
+  { label: 'OST 감상', href: artistLinks.featuredOst, external: true },
+  { label: '음악 아카이브', href: musicArchive.href }
+];
 const novelListSummaryItems = [
   { label: '공개 회차', value: `${publishedNovelEpisodes.length}화` },
   { label: '예상 읽기', value: `약 ${totalReadMinutes}분` },
   { label: '최신 공개', value: latestNovelEpisode.publishedAt },
   { label: '현재 상태', value: `${latestNovelEpisode.label}까지 공개` }
 ];
-const seasonStatus = novelProject.season;
 const seasonStatusItems = [
   { label: '구성', value: `${seasonStatus.label} · ${publishedNovelEpisodes.length}화` },
   { label: '상태', value: seasonStatus.status },
@@ -108,15 +114,27 @@ const characterAnchorItems = novelProject.characters.map((character) => ({
       </div>
 
       <div class="novel-list-toolbar" aria-label="소설 빠른 이동">
+        <div class="novel-list-toolbar-copy">
+          <p class="section-kicker">READ ORDER</p>
+          <h3>짧게 완결까지 정주행</h3>
+          <p>첫 미니시즌은 6화 완결입니다. 1화부터 읽거나 완결화로 바로 이동할 수 있습니다.</p>
+        </div>
         <a class="novel-list-featured" href={latestNovelEpisode.href} aria-label={`${latestEpisodeTitle} 바로 읽기`}>
-          <span>최신화</span>
+          <span>완결화</span>
           <strong>{latestEpisodeTitle}</strong>
           <small>{latestNovelEpisode.readTime}</small>
         </a>
         <div class="novel-list-actions">
-          {firstNovelEpisode && <a class="micro-button micro-button-muted" href={firstNovelEpisode.href}>1화부터</a>}
-          <a class="micro-button micro-button-muted" href={artistLinks.featuredOst} target="_blank" rel="noopener noreferrer">OST</a>
-          <a class="micro-button micro-button-muted" href={musicArchive.href}>MUSIC</a>
+          {novelListPrimaryActions.map((action) => (
+            <a
+              class:list={['micro-button', !action.primary && 'micro-button-muted']}
+              href={action.href}
+              target={action.external ? '_blank' : undefined}
+              rel={action.external ? 'noopener noreferrer' : undefined}
+            >
+              {action.label}
+            </a>
+          ))}
         </div>
       </div>
 
@@ -187,7 +205,7 @@ const characterAnchorItems = novelProject.characters.map((character) => ({
                 </span>
               </div>
               <em>{episode.publishedAt}</em>
-              <b>{episode === latestNovelEpisode ? '최신화' : episode.isFree ? '무료' : '공개 예정'}</b>
+              <b>{episode === latestNovelEpisode ? '완결화 읽기' : '읽기'}</b>
             </a>
           ) : (
             <article class="novel-episode-row is-upcoming" aria-disabled="true">

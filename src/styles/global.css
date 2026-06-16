@@ -1695,6 +1695,12 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-weight: 850;
 }
 
+.novel-episode-row b {
+  justify-content: center;
+  min-width: 88px;
+  white-space: nowrap;
+}
+
 .novel-platform-band strong {
   color: #ffffff;
   font-family: var(--font-condensed);
@@ -2149,13 +2155,36 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
 
 .novel-list-toolbar {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(180px, 0.42fr) minmax(0, 1fr) minmax(260px, 0.5fr);
   align-items: stretch;
   gap: 14px;
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
   margin-bottom: 4px;
   padding: 14px 0;
+}
+
+.novel-list-toolbar-copy {
+  min-width: 0;
+  padding-right: 6px;
+}
+
+.novel-list-toolbar-copy h3 {
+  margin: 6px 0 0;
+  color: #ffffff;
+  font-size: clamp(20px, 2.1vw, 28px);
+  font-weight: 950;
+  line-height: 1.12;
+  word-break: keep-all;
+}
+
+.novel-list-toolbar-copy > p:last-child {
+  margin: 9px 0 0;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.62;
+  word-break: keep-all;
 }
 
 .novel-list-featured {
@@ -2165,6 +2194,8 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   gap: 12px;
   min-width: 0;
   min-height: 48px;
+  border-left: 1px solid var(--line);
+  padding-left: 16px;
   color: #ffffff;
 }
 
@@ -2205,11 +2236,21 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
 }
 
 .novel-list-actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-end;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: minmax(44px, auto);
+  align-content: center;
+  justify-content: stretch;
   gap: 8px;
+  min-width: 0;
+}
+
+.novel-list-actions .micro-button {
+  justify-content: center;
+  width: 100%;
+  min-width: 0;
+  margin-top: 0;
+  padding-inline: 9px;
 }
 
 .novel-list-summary {
@@ -5412,6 +5453,18 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
     padding: 12px 0;
   }
 
+  .novel-list-toolbar-copy {
+    padding-right: 0;
+  }
+
+  .novel-list-toolbar-copy h3 {
+    font-size: clamp(24px, 7.2vw, 32px);
+  }
+
+  .novel-list-toolbar-copy > p:last-child {
+    font-size: 13px;
+  }
+
   .novel-list-featured {
     grid-template-columns: 1fr;
     align-items: start;
@@ -5427,7 +5480,8 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
 
   .novel-list-actions {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: minmax(44px, auto);
     justify-content: stretch;
   }
 
@@ -5435,6 +5489,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
     justify-content: center;
     width: 100%;
     min-width: 0;
+    margin-top: 0;
     padding-inline: 8px;
   }
 

@@ -79,8 +79,8 @@ if (mobileMediaIndex !== -1) {
   assertBlockIncludes('.hero-side-actions', ['grid-template-columns: repeat(2, minmax(0, 1fr));', 'width: calc(100% - 32px);'], { after: mobileMediaIndex });
   assertBlockIncludes('.hero-side-actions .main-button', ['width: 100%;', 'min-width: 0;'], { after: mobileMediaIndex });
   assertBlockIncludes('.novel-detail-tabs', ['grid-template-columns: repeat(3, minmax(0, 1fr));', 'overflow-x: visible;'], { after: mobileMediaIndex });
-  assertBlockIncludes('.novel-list-actions', ['grid-template-columns: repeat(3, minmax(0, 1fr));'], { after: mobileMediaIndex });
-  assertBlockIncludes('.novel-list-actions .micro-button', ['width: 100%;', 'min-width: 0;'], { after: mobileMediaIndex });
+  assertBlockIncludes('.novel-list-actions', ['grid-template-columns: repeat(2, minmax(0, 1fr));', 'grid-auto-rows: minmax(44px, auto);'], { after: mobileMediaIndex });
+  assertBlockIncludes('.novel-list-actions .micro-button', ['width: 100%;', 'min-width: 0;', 'margin-top: 0;'], { after: mobileMediaIndex });
   assertBlockIncludes('.novel-anchor-strip', ['grid-template-columns: 1fr;'], { after: mobileMediaIndex });
   assertBlockIncludes('.novel-anchor-strip a', ['min-height: 44px;', 'text-align: center;'], { after: mobileMediaIndex });
   assertBlockIncludes('.novel-reader-ost-actions', ['grid-template-columns: 1fr;'], { after: mobileMediaIndex });

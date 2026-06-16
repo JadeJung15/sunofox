@@ -28,7 +28,7 @@ Last verified: 2026-06-16
 | `/novels/episode-004/` | 4화 상세 | `src/pages/novels/episode-004.md` | 200, 이전/다음 링크, 본문/전체 회차/OST 내부 이동 |
 | `/novels/episode-005/` | 5화 상세 | `src/pages/novels/episode-005.md` | 200, 이전/다음 링크, 본문/전체 회차/OST 내부 이동 |
 | `/novels/episode-006/` | 6화 상세 | `src/pages/novels/episode-006.md` | 200, 최신화 배지, 본문/전체 회차/OST 내부 이동 |
-| `/music/` | Music Archive / YouTube-MV 허브 | `src/pages/music/index.astro` | 200, 대표 OST, 앨범, 영상 허브 |
+| `/music/` | Music Archive / YouTube-MV 허브 | `src/pages/music/index.astro` | 200, 대표 OST, 앨범, 영상 허브, 유형별 빠른 이동 |
 | `/music/archive-vol-1/` | ARCHIVE vol.1 앨범 상세 | `src/pages/music/archive-vol-1.astro` | 200, 트랙/앨범 정보 |
 | `/profile/` | SunoFox 소개/필모그래피 | `src/pages/profile.astro` | 200, 공식 허브 스냅샷, YouTube/Music/Novel 탭 |
 | `/updates/` | 공식 업데이트 로그 | `src/pages/updates.astro` | 200, 고정 공지, 카테고리 허브, 카테고리별 기록, 최근 업데이트 |
@@ -121,7 +121,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-public-routes.
 | 기능 | 현재 상태 | 다음 작업 |
 |---|---|---|
 | 웹소설 연재 허브 | 1~6화 미니시즌 완결 상태 공개 | 7화 추가 구조 또는 시즌2 티저 결정 |
-| OST/음악 아카이브 | 대표 OST, ARCHIVE vol.1, 영상 허브 운영 | 신규 OST 추가 시 `storyOsts`와 회차 `ostKey` 연결 |
+| OST/음악 아카이브 | 대표 OST, ARCHIVE vol.1, 영상 허브와 유형별 빠른 이동 운영 | 신규 OST 추가 시 `storyOsts`와 회차 `ostKey` 연결 |
 | 세계관/캐릭터 | `/novels/`에 요약 섹션과 카드별 빠른 이동 앵커 운영 | 캐릭터 상세 탭 또는 별도 섹션 확장 |
 | 공지/업데이트 | `/updates/` 고정 공지, 카테고리별 기록, 공식 허브 상태판 운영 | 공지 유형별 필터 또는 공개 일정 슬롯 추가 |
 | 404/오류 안내 | custom 404 페이지 운영 | 검색 유입이 많은 깨진 URL이 생기면 관련 허브로 안내 문구 보강 |

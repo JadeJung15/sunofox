@@ -14,6 +14,17 @@ import {
 const currentEpisode = latestNovelEpisode;
 const featuredVideo = musicArchive.videos[0];
 const videoTypes = Array.from(new Set(musicArchive.videos.map((video) => video.type))).slice(0, 4);
+const videoAnchorItems = Array.from(
+  new Map(
+    musicArchive.videos.map((video) => [
+      video.type,
+      {
+        label: video.type,
+        href: `#music-video-${video.videoId}`
+      }
+    ])
+  ).values()
+);
 const latestVideoDate = musicArchive.videos[0]?.date || musicArchive.researchDate;
 const oldestVideoDate = musicArchive.videos.at(-1)?.date || latestVideoDate;
 const videoSummaryItems = [
@@ -205,9 +216,15 @@ const videoSummaryItems = [
         ))}
       </dl>
 
+      <nav class="music-video-anchor-strip" aria-label="영상 유형 빠른 이동">
+        {videoAnchorItems.map((item) => (
+          <a href={item.href}>{item.label}</a>
+        ))}
+      </nav>
+
       <ol class="music-video-grid">
         {musicArchive.videos.map((video) => (
-          <li>
+          <li id={`music-video-${video.videoId}`}>
             <a href={video.href} target="_blank" rel="noopener noreferrer">
               <img
                 src={video.thumbnail}

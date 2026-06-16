@@ -1,6 +1,18 @@
 export const siteUpdates = [
   {
     date: '2026.06.16',
+    type: 'Docs',
+    title: '운영 문서와 소개 메타 라벨 동기화',
+    summary:
+      'README, 라우트 인벤토리, 회차 공개 체크리스트, Profile 설명 메타에서 화면과 맞지 않게 남아 있던 Music/Studio 표현을 음악/스튜디오 기준으로 정리했습니다.',
+    areas: ['notice', 'site'],
+    links: [
+      { label: 'SunoFox 소개', href: '/profile/' },
+      { label: '업데이트 로그', href: '/updates/' }
+    ]
+  },
+  {
+    date: '2026.06.16',
     type: 'Site',
     title: '메뉴와 홈 CTA 한국어 라벨 정리',
     summary:

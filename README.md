@@ -1,6 +1,6 @@
 # SunoFox Official Site
 
-SunoFox 공식 사이트는 음악에서 시작한 감정과 장면을 웹소설, OST, Music Archive, Studio 제작 흐름으로 확장하는 Cloudflare Pages 기반 정적 사이트입니다.
+SunoFox 공식 사이트는 음악에서 시작한 감정과 장면을 웹소설, OST, 음악 아카이브, 스튜디오 제작 흐름으로 확장하는 Cloudflare Pages 기반 정적 사이트입니다.
 
 ## Current Production
 
@@ -13,7 +13,7 @@ SunoFox 공식 사이트는 음악에서 시작한 감정과 장면을 웹소설
 | 패키지 매니저 | npm |
 | Cloudflare Pages 프로젝트 | `sf-studio` |
 | 빌드 출력 | `dist` |
-| 공개 사이트 방향 | 웹소설 연재 허브, OST/음악 아카이브, SunoFox 소개, Studio 진입 |
+| 공개 사이트 방향 | 웹소설 연재 허브, OST/음악 아카이브, SunoFox 소개, 스튜디오 진입 |
 | 접근 모델 | 공개 사이트 + SF Studio 자체 승인/로그인 |
 
 ## Public Routes
@@ -22,7 +22,7 @@ SunoFox 공식 사이트는 음악에서 시작한 감정과 장면을 웹소설
 
 | Route | 용도 | 소스 |
 |---|---|---|
-| `/` | SunoFox 메인, 공개 회차 상태와 소설/Music/Studio CTA | `src/pages/index.astro` |
+| `/` | SunoFox 메인, 공개 회차 상태와 소설/음악/스튜디오 CTA | `src/pages/index.astro` |
 | `/novels/` | 웹소설 작품/회차 목록 | `src/pages/novels.astro` |
 | `/novels/episode-001/` | 1화 | `src/pages/novels/episode-001.md` |
 | `/novels/episode-002/` | 2화 | `src/pages/novels/episode-002.md` |
@@ -153,7 +153,7 @@ production 반영 전 기본 순서입니다.
 `check:dist`는 빌드된 공개 HTML/CSS/manifest의 내부 링크, 이미지, asset 경로가 `dist` 안에 실제 존재하는지 확인합니다. 보호/운영 HTML인 `/mv-studio`, `/login`, `/signup`, `/admin`, `/account` 계열은 구조 변경 승인 범위와 분리해 제외합니다.
 `check:seo`는 홈, 작품 목록, 1~6화 상세, Music Archive, 앨범 상세, Profile, Updates의 title, description, canonical, OG/Twitter card, 회차별 공유 문구, JSON-LD 기본 타입을 확인합니다.
 `check:a11y`는 공개 HTML의 lang, viewport, h1, 이미지 alt, 링크/버튼 접근 가능한 이름, 새 탭 링크 rel 값을 확인합니다.
-`check:mobile-css`는 모바일에서 메뉴, CTA, 소설 탭, 회차 이동, 에피소드/음악 보조 링크, Music Archive 버튼이 최소 터치 영역과 줄바꿈 방어 규칙을 유지하는지 확인합니다.
+`check:mobile-css`는 모바일에서 메뉴, CTA, 소설 탭, 회차 이동, 에피소드/음악 보조 링크, 음악 아카이브 버튼이 최소 터치 영역과 줄바꿈 방어 규칙을 유지하는지 확인합니다.
 `check:public-routes`는 홈, 작품 목록, 1~6화 상세, Music Archive, 앨범 상세, Profile, Updates, custom 404, sitemap-index, legacy sitemap, sitemap, robots의 sitemap 연결과 보호 경로 Disallow 정책을 확인합니다. 운영 URL 모드에서는 존재하지 않는 probe URL이 홈 fallback 200이 아니라 404로 응답하는지도 확인합니다.
 `check:production-seo`는 같은 SEO 검증 기준을 운영 도메인 HTML에 적용해 배포 후 title, description, OG/Twitter card, JSON-LD 반영 여부를 확인합니다.
 작품 목록과 에피소드 상세는 Breadcrumb JSON-LD, 에피소드는 article publish meta도 함께 검증합니다.

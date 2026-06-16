@@ -20,7 +20,7 @@ Last verified: 2026-06-16
 
 | Route | 용도 | 소스 | 배포 후 확인 |
 |---|---|---|---|
-| `/` | SunoFox 메인 | `src/pages/index.astro` | 200, 소설/Music/Studio CTA, 공개 상태 정보 |
+| `/` | SunoFox 메인 | `src/pages/index.astro` | 200, 소설/음악/스튜디오 CTA, 공개 상태 정보 |
 | `/novels/` | 웹소설 작품/회차 목록 | `src/pages/novels.astro` | 200, 1~6화 목록, 미니시즌 완결 상태, 최신화 표시 |
 | `/novels/episode-001/` | 1화 상세 | `src/pages/novels/episode-001.md` | 200, Article/Breadcrumb meta, 본문/전체 회차/OST 내부 이동 |
 | `/novels/episode-002/` | 2화 상세 | `src/pages/novels/episode-002.md` | 200, 이전/다음 링크, 본문/전체 회차/OST 내부 이동 |
@@ -93,7 +93,7 @@ npm run check
 | `check:profile` | SunoFox 소개/필모그래피 허브, 탭, 출처 링크 데이터 |
 | `check:seo` | title, description, canonical, OG/Twitter, JSON-LD |
 | `check:a11y` | lang, viewport, h1, alt, 링크/버튼 이름, 새 탭 rel |
-| `check:mobile-css` | 메뉴/CTA/작품 탭/회차 이동/보조 링크/Music 버튼의 모바일 터치 영역과 줄바꿈 CSS 계약 |
+| `check:mobile-css` | 메뉴/CTA/작품 탭/회차 이동/보조 링크/음악 버튼의 모바일 터치 영역과 줄바꿈 CSS 계약 |
 | `check:public-routes` | 공개 URL 200, custom 404 상태, 핵심 문자열, sitemap, robots 보호 경로 Disallow |
 
 ## Post Deploy Verification

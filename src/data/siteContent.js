@@ -161,7 +161,7 @@ export const sunofoxProfile = {
       kicker: 'MUSIC TO NOVEL',
       title: '음악에서 웹소설로 확장',
       summary:
-        'SunoFox의 현재 사이트 구조는 음악 채널에서 출발한 감정선을 웹소설, OST, Studio 제작 흐름으로 연결합니다. 첫 웹소설 프로젝트는 《악녀는 첫 장에서 웃었다》입니다.',
+        'SunoFox의 현재 사이트 구조는 음악 채널에서 출발한 감정선을 웹소설, OST, 스튜디오 제작 흐름으로 연결합니다. 첫 웹소설 프로젝트는 《악녀는 첫 장에서 웃었다》입니다.',
       facts: [
         { label: '첫 작품', value: novelProject.title },
         { label: '장르', value: novelProject.genre },

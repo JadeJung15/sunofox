@@ -106,8 +106,8 @@ OST와 YouTube 연결은 `src/data/artistContent.js`의 `artistLinks`, `featured
 | `npm run lint` | `npm run build && npm run check:seo && npm run check:a11y` | standalone 공유 메타/접근성 정적 점검 |
 | `npm run test` | `npm run build && npm run check` | standalone 배포 전 전체 검증 |
 | `npm run check` | `npm run check:content && npm run check:korean-reader && npm run check:music && npm run check:profile && npm run check:navigation && npm run check:updates && npm run check:dist && npm run check:seo && npm run check:a11y && npm run check:mobile-css && npm run check:public-routes` | 배포 전 콘텐츠/한글 병기/음악/프로필/메뉴 데이터/asset/SEO/접근성/모바일 CSS/공개 라우트 통합 검증 |
-| `npm run check:public-routes` | `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-public-routes.ps1` | `dist` 기준 공개 라우트, custom 404, 1~6화 핵심 문자열, robots 보호 경로 정책 확인 |
-| `npm run check:production` | `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-public-routes.ps1 -BaseUrl https://sunofox.com` | 배포 후 운영 도메인 공개 라우트와 404 상태 검증 |
+| `npm run check:public-routes` | `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-public-routes.ps1` | `dist` 기준 공개 라우트, custom 404, 1~6화 핵심 문자열, sitemap 공개/숨김 URL 정책, robots 보호 경로 정책 확인 |
+| `npm run check:production` | `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-public-routes.ps1 -BaseUrl https://sunofox.com` | 배포 후 운영 도메인 공개 라우트, 404 상태, sitemap 공개/숨김 URL 정책 검증 |
 | `npm run check:production-seo` | `node scripts/check-seo-metadata.mjs --base-url=https://sunofox.com` | 배포 후 운영 도메인의 title, description, OG/Twitter, JSON-LD 검증 |
 | `npm run check:content` | `node scripts/check-content-consistency.mjs` | 웹소설 목록 데이터와 에피소드 frontmatter 일치 확인 |
 | `npm run check:korean-reader` | `node scripts/check-korean-reader-support.mjs` | 에피소드 본문과 시스템 영어 문장에 한글 병기가 있는지 확인 |
@@ -156,7 +156,7 @@ production 반영 전 기본 순서입니다.
 `check:seo`는 홈, 작품 목록, 1~6화 상세, Music Archive, 앨범 상세, Profile, Updates의 title, description, canonical, OG/Twitter card, 회차별 공유 문구, JSON-LD 기본 타입을 확인합니다.
 `check:a11y`는 공개 HTML의 lang, viewport, h1, 이미지 alt, 링크/버튼 접근 가능한 이름, 새 탭 링크 rel 값을 확인합니다.
 `check:mobile-css`는 모바일에서 메뉴, CTA, 소설 탭, 회차 이동, 에피소드/음악 보조 링크, 음악 아카이브 버튼이 최소 터치 영역과 줄바꿈 방어 규칙을 유지하는지 확인합니다.
-`check:public-routes`는 홈, 작품 목록, 1~6화 상세, Music Archive, 앨범 상세, Profile, Updates, custom 404, sitemap-index, legacy sitemap, sitemap, robots의 sitemap 연결과 보호 경로 Disallow 정책을 확인합니다. 운영 URL 모드에서는 존재하지 않는 probe URL이 홈 fallback 200이 아니라 404로 응답하는지도 확인합니다.
+`check:public-routes`는 홈, 작품 목록, 1~6화 상세, Music Archive, 앨범 상세, Profile, Updates, custom 404, sitemap-index, legacy sitemap, sitemap, robots의 sitemap 연결과 보호 경로 Disallow 정책을 확인합니다. `sitemap-0.xml`에는 공개 URL이 포함되어야 하고 `/admin`, `/api/`, `/login`, `/signup`, `/mv-studio`, `/account`, 레거시 커뮤니티/뉴스/미디어/굿즈 계열 URL은 포함되면 실패합니다. 운영 URL 모드에서는 존재하지 않는 probe URL이 홈 fallback 200이 아니라 404로 응답하는지도 확인합니다.
 `check:production-seo`는 같은 SEO 검증 기준을 운영 도메인 HTML에 적용해 배포 후 title, description, OG/Twitter card, JSON-LD 반영 여부를 확인합니다.
 작품 목록과 에피소드 상세는 Breadcrumb JSON-LD, 에피소드는 article publish meta도 함께 검증합니다.
 모바일 검증 시 공개 CTA, 작품 탭, footer 링크는 44px 안팎의 터치 영역을 유지해야 합니다.

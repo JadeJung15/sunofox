@@ -2,6 +2,19 @@ export const siteUpdates = [
   {
     date: '2026.06.16',
     type: 'Site',
+    title: '사이트맵 노출 정책 검증 보강',
+    summary:
+      'check:public-routes가 sitemap-0.xml의 공개 URL 포함과 관리자, 로그인, 스튜디오, 레거시 커뮤니티/뉴스/미디어/굿즈 계열 URL 미노출을 함께 검증하도록 보강했습니다.',
+    areas: ['notice', 'site'],
+    links: [
+      { label: '사이트맵', href: '/sitemap-0.xml' },
+      { label: 'robots', href: '/robots.txt' },
+      { label: '업데이트', href: '/updates/' }
+    ]
+  },
+  {
+    date: '2026.06.16',
+    type: 'Site',
     title: '공개 메뉴 데이터 검증 추가',
     summary:
       '오버레이 메뉴의 홈, 소개, 소설 보러가기, 음악, 업데이트, 스튜디오 라벨과 내부 canonical href가 다시 어긋나지 않도록 check:navigation 검증을 추가했습니다.',

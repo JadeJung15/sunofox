@@ -12,6 +12,37 @@ $labelMusicArchive = [string]::Concat([char]0xC74C, [char]0xC545, " ", [char]0xC
 $labelMusicSee = -join @([char]0xC74C, [char]0xC545, " ", [char]0xBCF4, [char]0xAE30)
 $labelStudio = -join @([char]0xC2A4, [char]0xD29C, [char]0xB514, [char]0xC624)
 $labelSunoFoxDetail = "SunoFox " + [string]::Concat([char]0xC0C1, [char]0xC138, " ", [char]0xC18C, [char]0xAC1C)
+$sitemapPublicMust = @(
+  "https://sunofox.com/",
+  "https://sunofox.com/novels/",
+  "https://sunofox.com/novels/episode-001/",
+  "https://sunofox.com/novels/episode-006/",
+  "https://sunofox.com/music/",
+  "https://sunofox.com/music/archive-vol-1/",
+  "https://sunofox.com/profile/",
+  "https://sunofox.com/updates/",
+  "https://sunofox.com/privacy/",
+  "https://sunofox.com/terms/"
+)
+$sitemapForbiddenMustNot = @(
+  "https://sunofox.com/admin",
+  "https://sunofox.com/api/",
+  "https://sunofox.com/login",
+  "https://sunofox.com/signup",
+  "https://sunofox.com/mv-studio",
+  "https://sunofox.com/account",
+  "https://sunofox.com/community",
+  "https://sunofox.com/community-post",
+  "https://sunofox.com/news",
+  "https://sunofox.com/media",
+  "https://sunofox.com/series",
+  "https://sunofox.com/songs",
+  "https://sunofox.com/contact",
+  "https://sunofox.com/live",
+  "https://sunofox.com/biography",
+  "https://sunofox.com/goods",
+  "https://sunofox.com/404"
+)
 
 $routes = @(
   @{
@@ -109,7 +140,8 @@ $routes = @(
     Name = "sitemap"
     Path = "/sitemap-0.xml"
     File = "sitemap-0.xml"
-    Must = @("https://sunofox.com/updates/", "https://sunofox.com/novels/episode-006/")
+    Must = $sitemapPublicMust
+    MustNot = $sitemapForbiddenMustNot
   },
   @{
     Name = "robots"
@@ -221,6 +253,7 @@ $results = foreach ($route in $routes) {
     $payload = Get-RouteContent -Route $route
     $expectedStatus = Get-ExpectedStatus -Route $route
     $missing = @()
+    $unexpected = @()
 
     foreach ($needle in $route["Must"]) {
       if ($payload.Content -notmatch [regex]::Escape($needle)) {
@@ -228,12 +261,21 @@ $results = foreach ($route in $routes) {
       }
     }
 
+    if ($route.ContainsKey("MustNot")) {
+      foreach ($needle in $route["MustNot"]) {
+        if ($payload.Content -match [regex]::Escape($needle)) {
+          $unexpected += $needle
+        }
+      }
+    }
+
     [pscustomobject]@{
       Name = $route["Name"]
       Path = $route["Path"]
       Status = $payload.Status
-      Pass = ($payload.Status -eq $expectedStatus -and $missing.Count -eq 0)
+      Pass = ($payload.Status -eq $expectedStatus -and $missing.Count -eq 0 -and $unexpected.Count -eq 0)
       Missing = ($missing -join " | ")
+      Unexpected = ($unexpected -join " | ")
       Source = $payload.Source
     }
   } catch {
@@ -243,6 +285,7 @@ $results = foreach ($route in $routes) {
       Status = "error"
       Pass = $false
       Missing = $_.Exception.Message
+      Unexpected = ""
       Source = if ([string]::IsNullOrWhiteSpace($BaseUrl) -eq $false) {
         "$(([string]$BaseUrl).Trim().TrimEnd([char]'/'))$($route['Path'])"
       } else {
@@ -252,7 +295,7 @@ $results = foreach ($route in $routes) {
   }
 }
 
-$results | Format-Table Name, Path, Status, Pass, Missing -AutoSize
+$results | Format-Table Name, Path, Status, Pass, Missing, Unexpected -AutoSize
 
 if (($results | Where-Object { -not $_.Pass }).Count -gt 0) {
   exit 1

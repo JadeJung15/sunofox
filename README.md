@@ -104,12 +104,13 @@ OST와 YouTube 연결은 `src/data/artistContent.js`의 `artistLinks`, `featured
 | `npm run build` | `astro build && node scripts/version-auth-assets.mjs` | 정적 빌드와 auth asset versioning |
 | `npm run lint` | `npm run build && npm run check:seo && npm run check:a11y` | standalone 공유 메타/접근성 정적 점검 |
 | `npm run test` | `npm run build && npm run check` | standalone 배포 전 전체 검증 |
-| `npm run check` | `npm run check:content && npm run check:korean-reader && npm run check:music && npm run check:updates && npm run check:dist && npm run check:seo && npm run check:a11y && npm run check:mobile-css && npm run check:public-routes` | 배포 전 콘텐츠/한글 병기/음악 데이터/asset/SEO/접근성/모바일 CSS/공개 라우트 통합 검증 |
+| `npm run check` | `npm run check:content && npm run check:korean-reader && npm run check:music && npm run check:profile && npm run check:updates && npm run check:dist && npm run check:seo && npm run check:a11y && npm run check:mobile-css && npm run check:public-routes` | 배포 전 콘텐츠/한글 병기/음악/프로필 데이터/asset/SEO/접근성/모바일 CSS/공개 라우트 통합 검증 |
 | `npm run check:public-routes` | `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-public-routes.ps1` | `dist` 기준 공개 라우트, custom 404, 1~6화 핵심 문자열, robots 보호 경로 정책 확인 |
 | `npm run check:production` | `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-public-routes.ps1 -BaseUrl https://sunofox.com` | 배포 후 운영 도메인 공개 라우트와 404 상태 검증 |
 | `npm run check:content` | `node scripts/check-content-consistency.mjs` | 웹소설 목록 데이터와 에피소드 frontmatter 일치 확인 |
 | `npm run check:korean-reader` | `node scripts/check-korean-reader-support.mjs` | 에피소드 본문과 시스템 영어 문장에 한글 병기가 있는지 확인 |
 | `npm run check:music` | `node scripts/check-music-content.mjs` | OST, YouTube/MV, 앨범 트랙 데이터 일치 확인 |
+| `npm run check:profile` | `node scripts/check-profile-content.mjs` | SunoFox 소개/필모그래피 허브, 탭, 출처 링크 데이터 확인 |
 | `npm run check:dist` | `node scripts/check-dist-integrity.mjs` | 공개 `dist` 내부 링크와 이미지/asset 경로 존재 확인 |
 | `npm run check:seo` | `node scripts/check-seo-metadata.mjs` | 공개 HTML의 title, description, canonical, OG/Twitter, JSON-LD 확인 |
 | `npm run check:a11y` | `node scripts/check-accessibility-basics.mjs` | 공개 HTML의 lang, viewport, h1, img alt, 링크/버튼 이름 확인 |
@@ -145,6 +146,7 @@ production 반영 전 기본 순서입니다.
 `check:content`는 `src/data/siteContent.js`의 `novelEpisodes`와 `src/pages/novels/episode-00N.md` frontmatter의 title, canonical, publishedAt, readTime, 이전/다음 링크, 공유 태그를 비교합니다. 또한 `/novels/`의 `readingPath`가 공개 회차를 빠짐없이 덮고 각 구간의 첫 화로 연결되는지 확인하며, 공개 데이터에 없는 에피소드 route 파일이 실수로 배포되지 않도록 실패 처리합니다. 세계관/캐릭터 카드의 `id`와 `/novels/#...` 앵커도 함께 검증합니다.
 `check:korean-reader`는 에피소드 본문과 시스템 문구에 영어 문장이 들어갈 경우 같은 줄에 한글 설명 또는 괄호 병기가 있는지 확인합니다.
 `check:music`은 대표 OST, YouTube/MV 영상 목록, ARCHIVE vol.1 트랙 순서, 영상 ID와 썸네일 URL의 일치 여부를 확인합니다.
+`check:profile`은 SunoFox 소개 페이지의 허브 카드, quick action, 필모그래피 탭, YouTube 영상 링크, 출처 링크가 기본 구조를 유지하는지 확인합니다.
 `check:dist`는 빌드된 공개 HTML/CSS/manifest의 내부 링크, 이미지, asset 경로가 `dist` 안에 실제 존재하는지 확인합니다. 보호/운영 HTML인 `/mv-studio`, `/login`, `/signup`, `/admin`, `/account` 계열은 구조 변경 승인 범위와 분리해 제외합니다.
 `check:seo`는 홈, 작품 목록, 1~6화 상세, Music Archive, 앨범 상세, Profile, Updates의 title, description, canonical, OG/Twitter card, JSON-LD 기본 타입을 확인합니다.
 `check:a11y`는 공개 HTML의 lang, viewport, h1, 이미지 alt, 링크/버튼 접근 가능한 이름, 새 탭 링크 rel 값을 확인합니다.

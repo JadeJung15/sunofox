@@ -4,6 +4,7 @@
 
 ### Improved
 
+- `npm run check:profile`을 추가해 SunoFox 소개/필모그래피 허브, 탭, quick action, YouTube 영상 링크, 출처 링크 데이터가 깨지지 않는지 배포 전 검증하도록 했습니다.
 - `npm run check:korean-reader`를 추가해 에피소드 본문과 시스템 영어 문장이 같은 줄에 한글 병기를 포함하는지 배포 전 검증하도록 했습니다.
 - `npm run check:mobile-css`를 추가해 모바일 메뉴, CTA, 소설 탭, 회차 이동, Music Archive 버튼의 터치 영역과 줄바꿈 CSS 계약을 배포 전 검증하도록 했습니다.
 - `check:content`가 `/novels/` 세계관과 캐릭터 카드의 `id`, `href`, 필수 설명 필드를 검증하도록 보강해 내부 앵커가 깨지는 문제를 배포 전에 잡을 수 있게 했습니다.

@@ -90,6 +90,7 @@ npm run check
 | `check:updates` | Updates 고정 공지, 카테고리별 기록, 공식 허브 상태, 대기 링크 사유, 업데이트 링크 |
 | `check:dist` | 빌드 산출물의 내부 링크, 이미지, asset 존재 |
 | `check:korean-reader` | 에피소드 본문과 시스템 영어 문장의 한글 병기 |
+| `check:profile` | SunoFox 소개/필모그래피 허브, 탭, 출처 링크 데이터 |
 | `check:seo` | title, description, canonical, OG/Twitter, JSON-LD |
 | `check:a11y` | lang, viewport, h1, alt, 링크/버튼 이름, 새 탭 rel |
 | `check:mobile-css` | 메뉴/CTA/작품 탭/회차 이동/Music 버튼의 모바일 터치 영역과 줄바꿈 CSS 계약 |

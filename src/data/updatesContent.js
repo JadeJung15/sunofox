@@ -2,6 +2,18 @@ export const siteUpdates = [
   {
     date: '2026.06.16',
     type: 'Site',
+    title: 'Profile 데이터 검증 추가',
+    summary:
+      'SunoFox 소개 페이지의 허브 카드, quick action, 필모그래피 탭, YouTube 영상 링크, 출처 링크를 check:profile로 확인해 프로필 상세 데이터 회귀를 배포 전에 잡도록 했습니다.',
+    areas: ['notice', 'site'],
+    links: [
+      { label: 'Profile', href: '/profile/' },
+      { label: '운영 문서', href: 'https://github.com/JadeJung15/sunofox/blob/main/docs/site-route-inventory.md' }
+    ]
+  },
+  {
+    date: '2026.06.16',
+    type: 'Site',
     title: '영어 문장 한글 병기 검증 추가',
     summary:
       '웹소설 본문과 시스템 문구에 영어 문장이 들어갈 때 같은 줄에 한글 병기가 있는지 check:korean-reader로 확인해 독자 접근성을 배포 전 점검하도록 했습니다.',

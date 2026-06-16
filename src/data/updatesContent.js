@@ -2,6 +2,18 @@ export const siteUpdates = [
   {
     date: '2026.06.16',
     type: 'Site',
+    title: '계정 보호 라우트 robots 정책 정리',
+    summary:
+      '계정/입장 상태 라우트인 /account를 robots.txt Disallow와 공개 라우트 검증에 추가해 보호 라우트 검색 노출 정책을 문서와 맞췄습니다.',
+    areas: ['notice', 'site'],
+    links: [
+      { label: 'robots', href: '/robots.txt' },
+      { label: '업데이트', href: '/updates/' }
+    ]
+  },
+  {
+    date: '2026.06.16',
+    type: 'Site',
     title: '사이트맵 노출 정책 검증 보강',
     summary:
       'check:public-routes가 sitemap-0.xml의 공개 URL 포함과 관리자, 로그인, 스튜디오, 레거시 커뮤니티/뉴스/미디어/굿즈 계열 URL 미노출을 함께 검증하도록 보강했습니다.',

@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 
 const disallowPaths = [
+  '/account',
   '/admin',
   '/api/',
   '/community-post',

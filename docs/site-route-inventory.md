@@ -35,7 +35,7 @@ Last verified: 2026-06-16
 | `/privacy/` | 개인정보 처리방침 | `src/pages/privacy.astro` | 200 |
 | `/terms/` | 이용약관 | `src/pages/terms.astro` | 200 |
 | `/404.html` | custom 404 fallback | `src/pages/404.astro` | 없는 URL이 404 상태와 안내 CTA를 반환 |
-| `/robots.txt` | robots | `src/pages/robots.txt.ts` | 200, sitemap-index 연결, 보호 경로 Disallow |
+| `/robots.txt` | robots | `src/pages/robots.txt.ts` | 200, sitemap-index 연결, `/account` 포함 보호 경로 Disallow |
 | `/sitemap-index.xml` | sitemap index | `@astrojs/sitemap` | 200, `sitemap-0.xml` 연결 |
 | `/sitemap.xml` | legacy sitemap index | `src/pages/sitemap.xml.ts` | 200, `sitemap-0.xml` 연결 |
 | `/sitemap-0.xml` | public route sitemap | `@astrojs/sitemap` | 200, 공개 URL 포함 |

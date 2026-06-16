@@ -51,6 +51,7 @@ SunoFox 공식 사이트는 음악에서 시작한 감정과 장면을 웹소설
 | `/login` | 자체 로그인 | 인증 구조 변경 금지 |
 | `/signup` | 입장 신청 | 인증 구조 변경 금지 |
 | `/admin` | 승인/관리 화면 | 관리자 기능 변경 금지 |
+| `/account` | 계정/입장 상태 | 인증 흐름 변경 금지, robots noindex/Disallow 유지 |
 | `/api/auth/*` | 인증 API | 대규모 변경 금지 |
 | `/api/community/*` | 레거시 커뮤니티 API | 삭제/DB 변경 금지 |
 
@@ -156,7 +157,7 @@ production 반영 전 기본 순서입니다.
 `check:seo`는 홈, 작품 목록, 1~6화 상세, Music Archive, 앨범 상세, Profile, Updates의 title, description, canonical, OG/Twitter card, 회차별 공유 문구, JSON-LD 기본 타입을 확인합니다.
 `check:a11y`는 공개 HTML의 lang, viewport, h1, 이미지 alt, 링크/버튼 접근 가능한 이름, 새 탭 링크 rel 값을 확인합니다.
 `check:mobile-css`는 모바일에서 메뉴, CTA, 소설 탭, 회차 이동, 에피소드/음악 보조 링크, 음악 아카이브 버튼이 최소 터치 영역과 줄바꿈 방어 규칙을 유지하는지 확인합니다.
-`check:public-routes`는 홈, 작품 목록, 1~6화 상세, Music Archive, 앨범 상세, Profile, Updates, custom 404, sitemap-index, legacy sitemap, sitemap, robots의 sitemap 연결과 보호 경로 Disallow 정책을 확인합니다. `sitemap-0.xml`에는 공개 URL이 포함되어야 하고 `/admin`, `/api/`, `/login`, `/signup`, `/mv-studio`, `/account`, 레거시 커뮤니티/뉴스/미디어/굿즈 계열 URL은 포함되면 실패합니다. 운영 URL 모드에서는 존재하지 않는 probe URL이 홈 fallback 200이 아니라 404로 응답하는지도 확인합니다.
+`check:public-routes`는 홈, 작품 목록, 1~6화 상세, Music Archive, 앨범 상세, Profile, Updates, custom 404, sitemap-index, legacy sitemap, sitemap, robots의 sitemap 연결과 보호 경로 Disallow 정책을 확인합니다. `robots.txt`는 `/account`, `/admin`, `/api/`, `/login`, `/signup`, `/mv-studio`를 Disallow해야 합니다. `sitemap-0.xml`에는 공개 URL이 포함되어야 하고 `/admin`, `/api/`, `/login`, `/signup`, `/mv-studio`, `/account`, 레거시 커뮤니티/뉴스/미디어/굿즈 계열 URL은 포함되면 실패합니다. 운영 URL 모드에서는 존재하지 않는 probe URL이 홈 fallback 200이 아니라 404로 응답하는지도 확인합니다.
 `check:production-seo`는 같은 SEO 검증 기준을 운영 도메인 HTML에 적용해 배포 후 title, description, OG/Twitter card, JSON-LD 반영 여부를 확인합니다.
 작품 목록과 에피소드 상세는 Breadcrumb JSON-LD, 에피소드는 article publish meta도 함께 검증합니다.
 모바일 검증 시 공개 CTA, 작품 탭, footer 링크는 44px 안팎의 터치 영역을 유지해야 합니다.

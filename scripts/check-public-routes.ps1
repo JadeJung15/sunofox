@@ -52,7 +52,7 @@ $routes = @(
     Name = "episode-006"
     Path = "/novels/episode-006/"
     File = "novels/episode-006/index.html"
-    Must = @("EPISODE 06", "novel-reader-summary", "novel-reader-progress", "novel-reader-quicklinks", "episodeBody", "episodeIndex", "episodeOst", "novel-reader-jumpbar", "novel-reader-index", "novel-reader-actions", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-006/")
+    Must = @("EPISODE 06", "미니시즌 1 완결", "novel-reader-summary", "novel-reader-progress", "novel-reader-quicklinks", "episodeBody", "episodeIndex", "episodeOst", "novel-reader-jumpbar", "novel-reader-index", "novel-reader-actions", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-006/")
   },
   @{
     Name = "music"

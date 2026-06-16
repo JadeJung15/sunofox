@@ -1,6 +1,18 @@
 export const siteUpdates = [
   {
     date: '2026.06.16',
+    type: 'Novel',
+    title: '최종화 완결 안내 문구 정리',
+    summary:
+      '6화 상세의 다음 화 비활성 영역을 일반 준비중 문구가 아니라 미니시즌 완결 상태로 표시해, 독자가 첫 시즌이 닫혔음을 바로 알 수 있게 했습니다.',
+    areas: ['notice', 'novel', 'site'],
+    links: [
+      { label: '6화 보기', href: '/novels/episode-006/' },
+      { label: '소설 목록', href: '/novels/' }
+    ]
+  },
+  {
+    date: '2026.06.16',
     type: 'Site',
     title: '메인 첫 화면 공개 상태 정보 개선',
     summary:

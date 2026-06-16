@@ -42,9 +42,12 @@ const resolvedPreviousHref = previousHref || previousEpisode?.href || '';
 const resolvedPreviousLabel = previousEpisode ? `${previousEpisode.label} · ${previousEpisode.title}` : previousLabel;
 const resolvedNextHref = nextHref || followingEpisode?.href || '';
 const resolvedNextLabel = followingEpisode ? `${followingEpisode.label} · ${followingEpisode.title}` : nextLabel;
+const isSeasonFinalEpisode = currentEpisode.href === novelProject.season.finalHref;
 const nextDisabledText = followingEpisode
   ? `${followingEpisode.label} 준비중 · ${followingEpisode.title}`
-  : '다음 화 준비중';
+  : isSeasonFinalEpisode
+    ? `${novelProject.season.label} 완결`
+    : '다음 화 준비중';
 const episodeMetaKeywords = Array.from(new Set([
   novelProject.title,
   novelProject.genre,

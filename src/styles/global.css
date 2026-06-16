@@ -2036,6 +2036,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
 .novel-character-section,
 .novel-ost-panel,
 .novel-keyword-section {
+  scroll-margin-top: 96px;
   width: min(1120px, 100%);
   margin: 34px auto 0;
 }

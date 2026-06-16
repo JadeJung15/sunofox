@@ -104,6 +104,7 @@ assertContains('episode title wrapping', '.novel-episode-row strong');
 assertContains('reader title wrapping', '.novel-reader-header h1');
 assertContains('music title wrapping', '.music-video-grid strong');
 assertContains('footer mobile wrapping', '.site-footer-nav');
+assertContains('novel anchor scroll offset', 'scroll-margin-top: 96px;');
 
 if (errors.length > 0) {
   console.error('Mobile CSS check failed:');

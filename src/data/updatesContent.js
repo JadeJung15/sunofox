@@ -1,6 +1,18 @@
 export const siteUpdates = [
   {
     date: '2026.06.16',
+    type: 'Site',
+    title: '소설 탭 앵커 이동 위치 보정',
+    summary:
+      '소설 목록, 정보, 세계관, 인물, OST, 키워드 탭으로 이동할 때 고정 헤더가 섹션 제목을 덮지 않도록 스크롤 여백을 보강했습니다.',
+    areas: ['notice', 'novel', 'site'],
+    links: [
+      { label: '소설 목록', href: '/novels/#episodes' },
+      { label: '세계관 보기', href: '/novels/#world' }
+    ]
+  },
+  {
+    date: '2026.06.16',
     type: 'Novel',
     title: '소설 목록 모바일 스캔성 개선',
     summary:

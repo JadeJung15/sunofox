@@ -76,6 +76,8 @@ npm run check
 
 `check:a11y`는 공개 HTML의 lang, viewport, h1, 이미지 alt, 링크/버튼 접근 가능한 이름, 새 탭 링크 rel 값을 확인합니다.
 
+`check:mobile-css`는 모바일에서 메뉴, CTA, 소설 탭, 회차 이동, Music Archive 버튼이 최소 터치 영역과 줄바꿈 방어 규칙을 유지하는지 확인합니다.
+
 `check:public-routes`는 현재 공개된 1~6화 상세 페이지, article publish meta, Breadcrumb JSON-LD, custom 404, sitemap-index, legacy sitemap, sitemap, robots까지 함께 확인합니다.
 
 빌드 후 최소 확인 URL:

@@ -91,6 +91,7 @@ npm run check
 | `check:dist` | 빌드 산출물의 내부 링크, 이미지, asset 존재 |
 | `check:seo` | title, description, canonical, OG/Twitter, JSON-LD |
 | `check:a11y` | lang, viewport, h1, alt, 링크/버튼 이름, 새 탭 rel |
+| `check:mobile-css` | 메뉴/CTA/작품 탭/회차 이동/Music 버튼의 모바일 터치 영역과 줄바꿈 CSS 계약 |
 | `check:public-routes` | 공개 URL 200, custom 404 상태, 핵심 문자열, sitemap, robots 보호 경로 Disallow |
 
 ## Post Deploy Verification

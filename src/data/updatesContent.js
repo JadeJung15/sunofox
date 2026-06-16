@@ -1,6 +1,18 @@
 export const siteUpdates = [
   {
     date: '2026.06.16',
+    type: 'Site',
+    title: '운영 SEO 검증 명령 추가',
+    summary:
+      '기존 SEO 검증을 운영 URL 모드로도 실행할 수 있게 해, 배포 후 sunofox.com의 title, description, OG/Twitter 카드와 JSON-LD가 dist와 같은 기준을 통과하는지 확인합니다.',
+    areas: ['notice', 'site'],
+    links: [
+      { label: '업데이트 로그', href: '/updates/' },
+      { label: '완결화 보기', href: '/novels/episode-006/' }
+    ]
+  },
+  {
+    date: '2026.06.16',
     type: 'Novel',
     title: '에피소드별 공유 메타 문구 보강',
     summary:

@@ -4,6 +4,7 @@
 
 ### Improved
 
+- `check:seo`에 운영 URL 모드를 추가하고 `npm run check:production-seo`로 `https://sunofox.com`의 title, description, OG/Twitter, JSON-LD를 배포 후 검증할 수 있게 했습니다.
 - 에피소드별 `shareTitle`과 `shareDescription`을 추가하고, 회차 상세의 OG/Twitter 공유 제목·설명과 Article JSON-LD 설명이 회차별 문구를 사용하도록 보강했습니다.
 - `check:content`와 `check:seo`가 회차별 공유 제목/설명 누락과 OG/Twitter/Article JSON-LD 반영 여부를 배포 전에 검증하도록 확장했습니다.
 - `/novels/` 목록 상단을 `READ ORDER` 중심으로 재구성해 1화 정주행, 완결화 보기, OST 감상, 음악 아카이브 CTA를 한 번에 고를 수 있게 했습니다.

@@ -10,6 +10,8 @@ const siteContentPath = path.join(rootDir, 'src', 'data', 'siteContent.js');
 const siteUrl = 'https://sunofox.com';
 const errors = [];
 const validOgImageTypes = new Set(['image/jpeg', 'image/png', 'image/webp']);
+const baseUrlArg = process.argv.find((arg) => arg.startsWith('--base-url='));
+const remoteBaseUrl = baseUrlArg ? baseUrlArg.slice('--base-url='.length).trim().replace(/\/+$/, '') : '';
 
 function fail(message) {
   errors.push(message);
@@ -168,6 +170,30 @@ function readMinutes(readTime = '') {
 }
 
 async function readHtml(route) {
+  if (remoteBaseUrl) {
+    const url = new URL(route.canonical);
+    const source = `${remoteBaseUrl}${url.pathname}`;
+
+    let response;
+    try {
+      response = await fetch(source, {
+        headers: {
+          'Cache-Control': 'no-cache'
+        }
+      });
+    } catch (error) {
+      fail(`${route.name}: failed to fetch ${source} (${error.message})`);
+      return '';
+    }
+
+    const html = await response.text();
+    if (!response.ok) {
+      fail(`${route.name}: ${source} returned HTTP ${response.status}`);
+    }
+
+    return html;
+  }
+
   const filePath = path.join(distDir, route.file);
   await stat(filePath).catch(() => {
     fail(`${route.name}: ${route.file} is missing. Run npm run build first.`);
@@ -379,4 +405,4 @@ if (errors.length > 0) {
   process.exit(1);
 }
 
-console.log(`SEO metadata check passed: ${routes.length} HTML routes.`);
+console.log(`SEO metadata check passed: ${routes.length} HTML routes${remoteBaseUrl ? ` from ${remoteBaseUrl}` : ''}.`);

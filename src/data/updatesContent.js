@@ -1,6 +1,18 @@
 export const siteUpdates = [
   {
     date: '2026.06.16',
+    type: 'Novel',
+    title: '신규 회차 공개 템플릿 정리',
+    summary:
+      '7화 또는 시즌2를 준비할 때 공개 route를 먼저 만들지 않도록 회차 데이터, frontmatter, 시즌/읽는 흐름 갱신 기준을 문서화했습니다.',
+    areas: ['notice', 'novel', 'site'],
+    links: [
+      { label: '작성 템플릿', href: 'https://github.com/JadeJung15/sunofox/blob/main/docs/episode-authoring-template.md' },
+      { label: '공개 체크리스트', href: 'https://github.com/JadeJung15/sunofox/blob/main/docs/episode-release-checklist.md' }
+    ]
+  },
+  {
+    date: '2026.06.16',
     type: 'Music',
     title: 'YouTube / MV 영상 빠른 이동 개선',
     summary:

@@ -4,6 +4,7 @@
 
 ### Improved
 
+- 7화 또는 시즌2 공개 전 route가 먼저 생성되지 않도록 신규 회차 데이터/frontmatter/시즌 갱신 기준을 `docs/episode-authoring-template.md`로 정리하고 공개 체크리스트에 연결했습니다.
 - `/music/` YouTube/MV 영상 허브에 유형별 빠른 이동 앵커와 카드별 target 상태를 추가해 대표 OST, Live Archive, Anime OP, Dark Fantasy OST 영상을 더 빠르게 찾을 수 있게 했습니다.
 - 에피소드 상세 상단에 `본문 읽기`, `전체 회차`, `회차 OST` 내부 이동과 회차 진행 표시를 추가해 모바일 독자가 바로 읽기 흐름을 잡을 수 있게 했습니다.
 - `/novels/` 세계관과 주요 인물 섹션에 빠른 이동 앵커와 카드별 상태 정보를 추가해 작품 허브에서 설정과 캐릭터를 더 쉽게 훑을 수 있게 했습니다.

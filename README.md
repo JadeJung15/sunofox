@@ -78,6 +78,7 @@ SunoFox 공식 사이트는 음악에서 시작한 감정과 장면을 웹소설
 |---|---|
 | `docs/site-route-inventory.md` | 공개/보호 라우트, 콘텐츠 데이터 위치, 배포 후 확인 URL을 한 장으로 정리 |
 | `docs/episode-release-checklist.md` | 신규 웹소설 회차 공개 전 콘텐츠, 파일, UI, 검증, 배포 체크리스트 |
+| `docs/episode-authoring-template.md` | 신규 회차 데이터, frontmatter, 시즌/읽는 흐름 갱신 템플릿 |
 
 ## Content Model
 
@@ -85,6 +86,8 @@ SunoFox 공식 사이트는 음악에서 시작한 감정과 장면을 웹소설
 
 1. 회차 목록/카드/메타: `src/data/novelContent.js`의 `novelEpisodes`
 2. 실제 본문: `src/pages/novels/episode-00N.md`
+
+공개 확정 전 내부 원고는 `src/pages/novels/`에 먼저 만들지 않습니다. 이 폴더에 `episode-00N.md`를 추가하면 링크를 숨겨도 Astro 빌드에서 공개 URL이 생성될 수 있으므로, 7화나 시즌2 초안은 공개 확정 후 route 파일로 옮깁니다.
 
 OST와 YouTube 연결은 `src/data/artistContent.js`의 `artistLinks`, `featuredStoryOst`, `src/data/musicContent.js`의 `musicArchive`, `archiveAlbum`, 그리고 `src/data/siteContent.js`의 `sunofoxProfile`에서 관리합니다.
 메뉴 항목은 `src/data/navigationContent.js`, 업데이트 로그 항목은 `src/data/updatesContent.js`에서 관리하고 `siteContent.js`가 기존 import 호환을 위해 다시 export합니다.

@@ -60,6 +60,7 @@ Last verified: 2026-06-16
 | 공개 메뉴 | `src/data/navigationContent.js` | overlay menu 라벨, active 상태 |
 | 웹소설 작품 정보 | `src/data/novelContent.js` | 작품 요약, 세계관, 인물, 회차 목록, 회차별 공유 태그 |
 | 회차 본문 | `src/pages/novels/episode-00N.md` | frontmatter, 이전/다음 링크, 본문 |
+| 회차 작성 템플릿 | `docs/episode-authoring-template.md` | 공개 전 초안 관리, 회차 데이터/frontmatter 예시, 시즌 갱신 기준 |
 | 대표 OST/외부 링크 | `src/data/artistContent.js` | YouTube/음원 링크, `storyOsts`, 썸네일 alt |
 | Music Archive | `src/data/musicContent.js` | 앨범, 영상 허브, 외부 소스 |
 | 업데이트 로그 | `src/data/updatesContent.js` | 카테고리, 허브 공개 상태, 링크, 최근 변경 |
@@ -120,7 +121,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-public-routes.
 
 | 기능 | 현재 상태 | 다음 작업 |
 |---|---|---|
-| 웹소설 연재 허브 | 1~6화 미니시즌 완결 상태 공개 | 7화 추가 구조 또는 시즌2 티저 결정 |
+| 웹소설 연재 허브 | 1~6화 미니시즌 완결 상태 공개, 신규 회차 작성 템플릿 준비 | 7화 연속 공개 또는 시즌2 시작 여부 결정 |
 | OST/음악 아카이브 | 대표 OST, ARCHIVE vol.1, 영상 허브와 유형별 빠른 이동 운영 | 신규 OST 추가 시 `storyOsts`와 회차 `ostKey` 연결 |
 | 세계관/캐릭터 | `/novels/`에 요약 섹션과 카드별 빠른 이동 앵커 운영 | 캐릭터 상세 탭 또는 별도 섹션 확장 |
 | 공지/업데이트 | `/updates/` 고정 공지, 카테고리별 기록, 공식 허브 상태판 운영 | 공지 유형별 필터 또는 공개 일정 슬롯 추가 |

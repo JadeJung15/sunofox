@@ -4,6 +4,7 @@
 
 ### Improved
 
+- 에피소드 상세의 본문/전체 회차/OST, 이전/다음/목록/OST 이동 링크에 안정적인 검증 마커를 추가하고 `check:public-routes`가 이를 확인하도록 보강했습니다.
 - `check:public-routes`가 로컬 `dist/_headers`의 `/robots.txt` 캐시 방어 헤더를 검증하도록 보강했습니다.
 - `/robots.txt`에 `CDN-Cache-Control`과 `Cloudflare-CDN-Cache-Control`을 추가해 Cloudflare CDN stale robots 응답 재발 가능성을 줄였습니다.
 - `check:public-routes`가 표에서 실패를 표시하고도 종료코드 0으로 끝나지 않도록 실패 판정을 명시적으로 보강했습니다.

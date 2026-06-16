@@ -2,6 +2,18 @@ export const siteUpdates = [
   {
     date: '2026.06.16',
     type: 'Site',
+    title: '에피소드 이동 마커 검증 추가',
+    summary:
+      '회차 상세의 본문, 전체 회차, OST, 이전/다음/목록 이동 링크에 안정적인 마커를 추가하고 check:public-routes에서 1~6화 이동 상태를 확인하도록 보강했습니다.',
+    areas: ['notice', 'novel'],
+    links: [
+      { label: '소설 보러가기', href: '/novels/' },
+      { label: '최신화', href: '/novels/episode-006/' }
+    ]
+  },
+  {
+    date: '2026.06.16',
+    type: 'Site',
     title: 'robots 헤더 정책 검증 추가',
     summary:
       'check:public-routes가 로컬 dist/_headers의 /robots.txt 캐시 방어 헤더를 함께 확인해 운영 배포 전 헤더 누락을 잡도록 보강했습니다.',

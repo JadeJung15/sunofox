@@ -86,7 +86,7 @@ npm run check
 
 `check:mobile-css`는 모바일에서 메뉴, CTA, 소설 탭, 회차 이동, 에피소드/음악 보조 링크, 음악 아카이브 버튼이 최소 터치 영역과 줄바꿈 방어 규칙을 유지하는지 확인합니다.
 
-`check:public-routes`는 현재 공개된 1~6화 상세 페이지, article publish meta, Breadcrumb JSON-LD, custom 404, sitemap-index, legacy sitemap, sitemap, robots까지 함께 확인합니다. 로컬 `dist` 검증에서는 `_headers`의 `/robots.txt` 캐시 방어 헤더도 확인합니다. sitemap 검증은 공개 URL 포함뿐 아니라 `/admin`, `/api/`, `/login`, `/signup`, `/mv-studio`, `/account`, 레거시 커뮤니티/뉴스/미디어/굿즈 계열 URL이 노출되지 않는지도 확인합니다.
+`check:public-routes`는 현재 공개된 1~6화 상세 페이지, article publish meta, Breadcrumb JSON-LD, 본문/전체 회차/OST 내부 이동, 이전/다음/목록/OST 이동 마커, custom 404, sitemap-index, legacy sitemap, sitemap, robots까지 함께 확인합니다. 로컬 `dist` 검증에서는 `_headers`의 `/robots.txt` 캐시 방어 헤더도 확인합니다. sitemap 검증은 공개 URL 포함뿐 아니라 `/admin`, `/api/`, `/login`, `/signup`, `/mv-studio`, `/account`, 레거시 커뮤니티/뉴스/미디어/굿즈 계열 URL이 노출되지 않는지도 확인합니다.
 
 빌드 후 최소 확인 URL:
 

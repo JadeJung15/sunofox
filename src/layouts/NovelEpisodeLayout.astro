@@ -99,14 +99,14 @@ const episodeProgressStyle = `--episode-progress: ${episodeProgressPercent}%`;
 
   <main id="main-content" class="site-main novel-reader-page">
     <nav class="novel-reader-topbar" aria-label="Episode quick navigation">
-      <a href={backHref}>{seriesTitle}</a>
+      <a href={backHref} data-reader-action="series">{seriesTitle}</a>
       <span>{episodeLabel}</span>
-      <a href={currentEpisodeOst.href} target="_blank" rel="noopener noreferrer">OST</a>
+      <a href={currentEpisodeOst.href} target="_blank" rel="noopener noreferrer" data-reader-action="top-ost">OST</a>
     </nav>
 
     <article class="novel-reader" aria-labelledby="episodeTitle">
       <header class="novel-reader-header reveal">
-        <a class="micro-button micro-button-muted novel-reader-back" href={backHref}>{backLabel}</a>
+        <a class="micro-button micro-button-muted novel-reader-back" href={backHref} data-reader-action="back">{backLabel}</a>
         <p class="section-kicker">{episodeLabel}</p>
         <h1 id="episodeTitle">{title}</h1>
         {subtitle && <p class="novel-reader-subtitle">{subtitle}</p>}
@@ -145,34 +145,34 @@ const episodeProgressStyle = `--episode-progress: ${episodeProgressPercent}%`;
         </div>
 
         <nav class="novel-reader-quicklinks" aria-label="회차 내부 이동">
-          <a href="#episodeBody">본문 읽기</a>
-          <a href="#episodeIndex">전체 회차</a>
-          <a href="#episodeOst">회차 OST</a>
+          <a href="#episodeBody" data-reader-action="quick-body">본문 읽기</a>
+          <a href="#episodeIndex" data-reader-action="quick-index">전체 회차</a>
+          <a href="#episodeOst" data-reader-action="quick-ost">회차 OST</a>
         </nav>
 
         <nav class="novel-reader-jumpbar" aria-label="회차 빠른 이동">
           {resolvedPreviousHref ? (
-            <a href={resolvedPreviousHref}>
+            <a href={resolvedPreviousHref} data-reader-action="jump-previous">
               <span>이전</span>
               <strong>{resolvedPreviousLabel}</strong>
             </a>
           ) : (
-            <span aria-disabled="true">
+            <span aria-disabled="true" data-reader-action="jump-previous-disabled">
               <span>이전</span>
               <strong>첫 화입니다</strong>
             </span>
           )}
-          <a href={backHref}>
+          <a href={backHref} data-reader-action="jump-list">
             <span>목록</span>
             <strong>소설 목록</strong>
           </a>
           {resolvedNextHref ? (
-            <a href={resolvedNextHref}>
+            <a href={resolvedNextHref} data-reader-action="jump-next">
               <span>다음</span>
               <strong>{resolvedNextLabel}</strong>
             </a>
           ) : (
-            <span aria-disabled="true" data-reader-state={isSeasonFinalEpisode ? 'season-final' : 'next-pending'}>
+            <span aria-disabled="true" data-reader-action="jump-next-disabled" data-reader-state={isSeasonFinalEpisode ? 'season-final' : 'next-pending'}>
               <span>다음</span>
               <strong>{nextDisabledText}</strong>
             </span>
@@ -223,20 +223,20 @@ const episodeProgressStyle = `--episode-progress: ${episodeProgressPercent}%`;
         </div>
 
         <div class="novel-reader-ost-actions" aria-label="Episode OST links">
-          <a class="main-button" href={currentEpisodeOst.href} target="_blank" rel="noopener noreferrer">OST 감상</a>
-          <a class="main-button main-button-muted" href={musicArchive.href}>음악 아카이브</a>
-          <a class="main-button main-button-muted" href={backHref}>작품 정보</a>
+          <a class="main-button" href={currentEpisodeOst.href} target="_blank" rel="noopener noreferrer" data-reader-action="ost-primary">OST 감상</a>
+          <a class="main-button main-button-muted" href={musicArchive.href} data-reader-action="music-archive">음악 아카이브</a>
+          <a class="main-button main-button-muted" href={backHref} data-reader-action="work-info">작품 정보</a>
         </div>
       </section>
 
       <nav class="novel-reader-actions reveal" aria-label="Episode navigation">
-        {resolvedPreviousHref && <a class="main-button main-button-muted" href={resolvedPreviousHref}>{resolvedPreviousLabel}</a>}
-        <a class="main-button main-button-muted" href={backHref}>목록으로</a>
-        <a class="main-button main-button-muted" href={currentEpisodeOst.href} target="_blank" rel="noopener noreferrer">OST 감상</a>
+        {resolvedPreviousHref && <a class="main-button main-button-muted" href={resolvedPreviousHref} data-reader-action="action-previous">{resolvedPreviousLabel}</a>}
+        <a class="main-button main-button-muted" href={backHref} data-reader-action="action-list">목록으로</a>
+        <a class="main-button main-button-muted" href={currentEpisodeOst.href} target="_blank" rel="noopener noreferrer" data-reader-action="action-ost">OST 감상</a>
         {resolvedNextHref ? (
-          <a class="main-button" href={resolvedNextHref}>{resolvedNextLabel}</a>
+          <a class="main-button" href={resolvedNextHref} data-reader-action="action-next">{resolvedNextLabel}</a>
         ) : (
-          <span class="main-button novel-next-disabled" aria-disabled="true" data-reader-state={isSeasonFinalEpisode ? 'season-final' : 'next-pending'}>{nextDisabledText}</span>
+          <span class="main-button novel-next-disabled" aria-disabled="true" data-reader-action="action-next-disabled" data-reader-state={isSeasonFinalEpisode ? 'season-final' : 'next-pending'}>{nextDisabledText}</span>
         )}
       </nav>
     </article>

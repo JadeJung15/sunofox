@@ -4,6 +4,7 @@
 
 ### Improved
 
+- 에피소드 상세 상단 보조 링크와 음악 상세 뒤로가기 링크의 실제 터치 영역을 44px 기준으로 맞춰 모바일 조작 안정성을 보강했습니다.
 - `check:seo`에 운영 URL 모드를 추가하고 `npm run check:production-seo`로 `https://sunofox.com`의 title, description, OG/Twitter, JSON-LD를 배포 후 검증할 수 있게 했습니다.
 - 에피소드별 `shareTitle`과 `shareDescription`을 추가하고, 회차 상세의 OG/Twitter 공유 제목·설명과 Article JSON-LD 설명이 회차별 문구를 사용하도록 보강했습니다.
 - `check:content`와 `check:seo`가 회차별 공유 제목/설명 누락과 OG/Twitter/Article JSON-LD 반영 여부를 배포 전에 검증하도록 확장했습니다.

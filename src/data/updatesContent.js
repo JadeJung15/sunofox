@@ -2,6 +2,18 @@ export const siteUpdates = [
   {
     date: '2026.06.16',
     type: 'Site',
+    title: '상단 보조 링크 터치 영역 보강',
+    summary:
+      '에피소드 상세 상단의 전체 회차/OST 링크와 음악 상세의 뒤로가기 링크 터치 영역을 44px 기준으로 맞춰 모바일에서 더 안정적으로 누를 수 있게 정리했습니다.',
+    areas: ['notice', 'site', 'novel'],
+    links: [
+      { label: '완결화 보기', href: '/novels/episode-006/' },
+      { label: '음악 아카이브', href: '/music/' }
+    ]
+  },
+  {
+    date: '2026.06.16',
+    type: 'Site',
     title: '운영 SEO 검증 명령 추가',
     summary:
       '기존 SEO 검증을 운영 URL 모드로도 실행할 수 있게 해, 배포 후 sunofox.com의 title, description, OG/Twitter 카드와 JSON-LD가 dist와 같은 기준을 통과하는지 확인합니다.',

@@ -2790,6 +2790,16 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   text-transform: uppercase;
 }
 
+.novel-reader-topbar a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  margin-block: -13px;
+  padding-inline: 2px;
+}
+
 .novel-reader-topbar span {
   color: var(--subtle);
 }
@@ -4032,6 +4042,11 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
 .album-back-link {
   grid-column: 1 / -1;
   justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-block: -13px;
+  padding-inline: 2px;
   color: var(--subtle);
   font-family: var(--font-condensed);
   font-size: 12px;

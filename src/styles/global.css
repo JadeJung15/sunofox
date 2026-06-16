@@ -5509,7 +5509,16 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   }
 
   .novel-list-summary {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin: 0 0 12px;
+    border-bottom: 0;
+  }
+
+  .novel-list-summary div {
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    background: rgba(255, 255, 255, 0.024);
+    padding: 12px;
   }
 
   .novel-season-status {
@@ -5581,6 +5590,17 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
     border: 1px solid rgba(255, 255, 255, 0.09);
     background: rgba(255, 255, 255, 0.024);
     padding: 16px 14px;
+  }
+
+  .novel-episode-row > span {
+    display: inline-flex;
+    width: 42px;
+    min-height: 42px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 10, 91, 0.32);
+    background: rgba(255, 10, 91, 0.08);
+    font-size: 16px;
   }
 
   .novel-episode-row:hover,

@@ -1,6 +1,18 @@
 export const siteUpdates = [
   {
     date: '2026.06.16',
+    type: 'Novel',
+    title: '소설 목록 모바일 스캔성 개선',
+    summary:
+      '모바일 소설 목록에서 공개 요약 정보를 2열 카드로 정리하고 회차 번호를 더 분명한 배지 형태로 보여 주어 1~6화를 더 빠르게 훑을 수 있게 했습니다.',
+    areas: ['notice', 'novel', 'site'],
+    links: [
+      { label: '소설 목록', href: '/novels/' },
+      { label: '완결화 보기', href: '/novels/episode-006/' }
+    ]
+  },
+  {
+    date: '2026.06.16',
     type: 'Site',
     title: '푸터 이동 링크 한국어 정리',
     summary:

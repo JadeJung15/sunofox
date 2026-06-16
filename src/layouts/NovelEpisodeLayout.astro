@@ -167,7 +167,7 @@ const episodeProgressStyle = `--episode-progress: ${episodeProgressPercent}%`;
               <strong>{resolvedNextLabel}</strong>
             </a>
           ) : (
-            <span aria-disabled="true">
+            <span aria-disabled="true" data-reader-state={isSeasonFinalEpisode ? 'season-final' : 'next-pending'}>
               <span>다음</span>
               <strong>{nextDisabledText}</strong>
             </span>
@@ -231,7 +231,7 @@ const episodeProgressStyle = `--episode-progress: ${episodeProgressPercent}%`;
         {resolvedNextHref ? (
           <a class="main-button" href={resolvedNextHref}>{resolvedNextLabel}</a>
         ) : (
-          <span class="main-button novel-next-disabled" aria-disabled="true">{nextDisabledText}</span>
+          <span class="main-button novel-next-disabled" aria-disabled="true" data-reader-state={isSeasonFinalEpisode ? 'season-final' : 'next-pending'}>{nextDisabledText}</span>
         )}
       </nav>
     </article>

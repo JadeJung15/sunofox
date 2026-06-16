@@ -5,6 +5,7 @@
 ### Improved
 
 - 6화 상세의 다음 화 비활성 문구를 `미니시즌 1 완결`로 표시해 최종화에서 독자가 시즌 완료 상태를 바로 이해할 수 있게 했습니다.
+- 6화 최종화 상태 검증을 한글 문자열 직접 매칭 대신 `season-final` 상태 마커로 확인하도록 보강해 운영 HTTP 검증의 인코딩 영향을 줄였습니다.
 - 홈 첫 화면에 공개 회차, 읽는 순서, 확장 방향 상태 정보를 추가하고 모바일에서는 세로 스택으로 표시해 소설/Music/Studio CTA와 겹치지 않도록 보강했습니다.
 - 7화 또는 시즌2 공개 전 route가 먼저 생성되지 않도록 신규 회차 데이터/frontmatter/시즌 갱신 기준을 `docs/episode-authoring-template.md`로 정리하고 공개 체크리스트에 연결했습니다.
 - `/music/` YouTube/MV 영상 허브에 유형별 빠른 이동 앵커와 카드별 target 상태를 추가해 대표 OST, Live Archive, Anime OP, Dark Fantasy OST 영상을 더 빠르게 찾을 수 있게 했습니다.

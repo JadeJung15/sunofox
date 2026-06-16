@@ -4,6 +4,7 @@
 
 ### Improved
 
+- `check:content`가 `/novels/` 세계관과 캐릭터 카드의 `id`, `href`, 필수 설명 필드를 검증하도록 보강해 내부 앵커가 깨지는 문제를 배포 전에 잡을 수 있게 했습니다.
 - `check:content`가 `novelEpisodes`에 없는 `src/pages/novels/episode-00N.md` 파일을 실패 처리하도록 보강해, 내부 초안이나 미승인 회차가 Astro 공개 route로 배포되는 사고를 막습니다.
 - `/music/` 상단과 YouTube/MV 허브에 YouTube 채널, 재생목록, 최신 영상 감상 CTA를 추가해 OST와 영상 콘텐츠 접근성을 보강했습니다.
 - 모바일 작품/프로필 탭을 화면 안에서 바로 보이는 그리드형 터치 영역으로 정리하고, 메뉴 버튼의 실제 클릭 박스를 44px 이상으로 고정했습니다.

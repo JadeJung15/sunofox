@@ -99,6 +99,24 @@ function parseReadingPathRange(range) {
   };
 }
 
+function assertUniqueObjectField(label, items, field) {
+  const seen = new Set();
+
+  items.forEach((item, index) => {
+    const value = item?.[field];
+    if (!value) return;
+    if (seen.has(value)) fail(`${label}[${index}] ${field}: duplicate value "${value}"`);
+    seen.add(value);
+  });
+}
+
+function assertNovelsAnchor(label, item) {
+  assertPresent(`${label} id`, item.id);
+  assertPattern(`${label} id`, item.id, /^[a-z0-9-]+$/);
+  assertPresent(`${label} href`, item.href);
+  assertEqual(`${label} href`, item.href, `/novels/#${item.id}`);
+}
+
 function previousPublishedEpisode(episodes, index) {
   for (let cursor = index - 1; cursor >= 0; cursor -= 1) {
     if (episodes[cursor].href) return episodes[cursor];
@@ -238,6 +256,46 @@ if (!Array.isArray(novelProject.readingPath) || novelProject.readingPath.length 
       fail(`novelProject.readingPath: range covers unpublished episode ${coveredNumber}`);
     }
   }
+}
+
+if (!novelProject.world || typeof novelProject.world !== 'object') {
+  fail('novelProject.world must be defined');
+} else {
+  assertPresent('novelProject.world title', novelProject.world.title);
+  assertPresent('novelProject.world summary', novelProject.world.summary);
+
+  if (!Array.isArray(novelProject.world.pillars) || novelProject.world.pillars.length === 0) {
+    fail('novelProject.world.pillars must be a non-empty array');
+  } else {
+    assertStringArray('novelProject.world.pillars ids', novelProject.world.pillars.map((item) => item?.id), { min: 1 });
+    assertUniqueObjectField('novelProject.world.pillars', novelProject.world.pillars, 'href');
+
+    novelProject.world.pillars.forEach((item, index) => {
+      const label = `novelProject.world.pillars[${index}]`;
+      assertNovelsAnchor(label, item);
+
+      for (const field of ['label', 'title', 'status', 'text']) {
+        assertPresent(`${label} ${field}`, item[field]);
+      }
+    });
+  }
+}
+
+if (!Array.isArray(novelProject.characters) || novelProject.characters.length === 0) {
+  fail('novelProject.characters must be a non-empty array');
+} else {
+  assertUniqueObjectField('novelProject.characters', novelProject.characters, 'id');
+  assertUniqueObjectField('novelProject.characters', novelProject.characters, 'href');
+  assertUniqueObjectField('novelProject.characters', novelProject.characters, 'name');
+
+  novelProject.characters.forEach((character, index) => {
+    const label = `novelProject.characters[${index}]`;
+    assertNovelsAnchor(label, character);
+
+    for (const field of ['name', 'role', 'status', 'firstSeen', 'text']) {
+      assertPresent(`${label} ${field}`, character[field]);
+    }
+  });
 }
 
 const seenNumbers = new Set();

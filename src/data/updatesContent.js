@@ -1,6 +1,18 @@
 export const siteUpdates = [
   {
     date: '2026.06.16',
+    type: 'Novel',
+    title: '세계관·캐릭터 앵커 검증 보강',
+    summary:
+      '소설 허브의 세계관과 주요 인물 카드가 실제 /novels/#... 앵커로 연결되는지 check:content가 확인하도록 보강해, 독자 탐색 링크가 깨지는 문제를 배포 전에 잡을 수 있게 했습니다.',
+    areas: ['novel', 'site'],
+    links: [
+      { label: '세계관 보기', href: '/novels/#world' },
+      { label: '인물 보기', href: '/novels/#characters' }
+    ]
+  },
+  {
+    date: '2026.06.16',
     type: 'Content',
     title: '미승인 회차 route 공개 방지 검증 보강',
     summary:

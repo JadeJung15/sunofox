@@ -4464,6 +4464,38 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   line-height: 1.58;
 }
 
+.updates-roadmap-checklist {
+  margin-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 12px;
+}
+
+.updates-roadmap-checklist span {
+  display: block;
+  color: var(--pink);
+  font-family: var(--font-condensed);
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.updates-roadmap-checklist ul {
+  display: grid;
+  gap: 6px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.updates-roadmap-checklist li {
+  color: rgba(255, 255, 255, 0.66);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.45;
+  word-break: keep-all;
+}
+
 .updates-roadmap-card .micro-button {
   width: fit-content;
   margin-top: auto;

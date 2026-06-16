@@ -31,7 +31,7 @@ Last verified: 2026-06-16
 | `/music/` | Music Archive / YouTube-MV 허브 | `src/pages/music/index.astro` | 200, 대표 OST, 앨범, 영상 허브 CTA/대표 카드 마커, 유형별 빠른 이동 |
 | `/music/archive-vol-1/` | ARCHIVE vol.1 앨범 상세 | `src/pages/music/archive-vol-1.astro` | 200, 트랙/앨범 정보 |
 | `/profile/` | SunoFox 소개/필모그래피 | `src/pages/profile.astro` | 200, 공식 허브 스냅샷, YouTube/Music/Novel 탭 |
-| `/updates/` | 공식 업데이트 로그 | `src/pages/updates.astro` | 200, 고정 공지, 카테고리 허브, 카테고리별 기록, 최근 업데이트 |
+| `/updates/` | 공식 업데이트 로그 | `src/pages/updates.astro` | 200, 고정 공지, 카테고리 허브, 확장 현황 확인 필요 항목, 카테고리별 기록, 최근 업데이트 |
 | `/privacy/` | 개인정보 처리방침 | `src/pages/privacy.astro` | 200 |
 | `/terms/` | 이용약관 | `src/pages/terms.astro` | 200 |
 | `/404.html` | custom 404 fallback | `src/pages/404.astro` | 없는 URL이 404 상태와 안내 CTA를 반환 |
@@ -87,7 +87,7 @@ npm run check
 |---|---|
 | `check:content` | `novelContent.js`와 미니시즌 상태, 1~6화 frontmatter/본문/shareTags 일치, 예상 밖 에피소드 route 파일 차단, 세계관/캐릭터 앵커 검증 |
 | `check:music` | 대표 OST, YouTube/MV 영상 목록, 영상 허브 요약/필수 링크, 앨범 트랙 순서, 영상 ID와 썸네일 URL 일치 |
-| `check:updates` | Updates 고정 공지, 카테고리별 기록, 공식 허브 상태, 대기 링크 사유, 업데이트 링크 |
+| `check:updates` | Updates 고정 공지, 카테고리별 기록, 공식 허브 상태, 대기 링크 사유/확인 필요 항목, 업데이트 링크 |
 | `check:dist` | 빌드 산출물의 내부 링크, 이미지, asset 존재 |
 | `check:korean-reader` | 에피소드 본문과 시스템 영어 문장의 한글 병기 |
 | `check:profile` | SunoFox 소개/필모그래피 허브, 탭, 출처 링크 데이터 |

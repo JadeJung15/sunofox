@@ -123,7 +123,7 @@ $routes = @(
     Name = "updates"
     Path = "/updates/"
     File = "updates/index.html"
-    Must = @("SunoFox Updates", "updates-pinned-section", "updates-pinned-actions", "updates-hub-section", "updates-hub-grid", "updates-category-notice", "updates-category-section", "updates-category-grid", "content-roadmap", "updates-roadmap-section", "updates-roadmap-card", "updates-roadmap-visibility", "updates-roadmap-next", "updates-roadmap-disabled", "updates-log-section", "updates-log-list", "/novels/", "/music/", "https://sunofox.com/updates/")
+    Must = @("SunoFox Updates", "updates-pinned-section", "updates-pinned-actions", "updates-hub-section", "updates-hub-grid", "updates-category-notice", "updates-category-section", "updates-category-grid", "content-roadmap", "updates-roadmap-section", "updates-roadmap-card", "updates-roadmap-visibility", "updates-roadmap-next", "updates-roadmap-checklist", "updates-roadmap-disabled", 'data-hub-key="commerce"', 'data-hub-key="community"', 'data-hub-checklist="commerce"', 'data-hub-checklist="community"', 'data-hub-state="waiting"', "/novels/", "/music/", "https://sunofox.com/updates/")
   },
   @{
     Name = "not-found"

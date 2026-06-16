@@ -1,6 +1,18 @@
 export const siteUpdates = [
   {
     date: '2026.06.16',
+    type: 'Site',
+    title: '확장 허브 공개 전 확인 항목 정리',
+    summary:
+      '굿즈샵과 팬 커뮤니티처럼 외부 URL과 운영 기준 확정이 필요한 허브에 공개 전 확인 항목을 추가하고 Updates 화면과 check:updates에서 대기 사유를 검증하도록 보강했습니다.',
+    areas: ['notice', 'site', 'commerce', 'community'],
+    links: [
+      { label: '확장 현황', href: '/updates/#content-roadmap' },
+      { label: '업데이트', href: '/updates/' }
+    ]
+  },
+  {
+    date: '2026.06.16',
     type: 'Music',
     title: 'YouTube/MV 허브 검증 보강',
     summary:
@@ -544,14 +556,14 @@ const updateCategoryDefinitions = [
     key: 'commerce',
     label: '굿즈',
     summary: '공식 판매 URL, 상품 범위, 결제/배송 정책이 확정된 뒤 공개할 굿즈샵 연결 상태를 관리합니다.',
-    href: '#content-roadmap',
+    href: '#updates-category-commerce',
     cta: '준비 상태'
   },
   {
     key: 'community',
     label: '팬 커뮤니티',
     summary: '운영 플랫폼, 공지 기준, moderation 정책 확정 전까지 커뮤니티 진입점 공개를 보류합니다.',
-    href: '#content-roadmap',
+    href: '#updates-category-community',
     cta: '준비 상태'
   }
 ];
@@ -621,6 +633,7 @@ export const plannedContentHubs = [
     summary: '공식 판매 URL, 상품 범위, 결제/배송 정책이 확정된 뒤 깨지지 않는 외부 링크로 연결합니다.',
     nextAction: '판매 URL, 상품 범위, 결제/배송 고지 확정이 필요합니다.',
     visibility: '링크 비공개',
+    confirmBeforePublish: ['공식 판매 URL', '상품 범위', '결제/배송 고지'],
     href: '',
     cta: 'URL 확정 대기'
   },
@@ -631,6 +644,7 @@ export const plannedContentHubs = [
     summary: '운영 플랫폼, 공지 기준, moderation 정책을 확정한 뒤 공식 커뮤니티 진입점을 공개합니다.',
     nextAction: '공식 플랫폼과 운영 기준 확정 후 링크를 공개합니다.',
     visibility: '링크 비공개',
+    confirmBeforePublish: ['공식 플랫폼', '운영 공지 기준', 'moderation 정책'],
     href: '',
     cta: '운영 기준 대기'
   }

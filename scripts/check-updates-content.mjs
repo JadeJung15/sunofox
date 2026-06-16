@@ -125,8 +125,16 @@ assertArray('plannedContentHubs', plannedContentHubs, { min: 6 }).forEach((hub, 
 
   assertLink(`${label} href`, hub.href, { allowEmpty: true });
 
-  if (!hub.href && !/(대기|비공개|확정|운영 기준)/.test(`${hub.cta} ${hub.nextAction} ${hub.visibility}`)) {
-    fail(`${label}: waiting hub without href must explain what is pending`);
+  if (!hub.href) {
+    if (!/(대기|비공개|확정|운영 기준)/.test(`${hub.cta} ${hub.nextAction} ${hub.visibility}`)) {
+      fail(`${label}: waiting hub without href must explain what is pending`);
+    }
+
+    assertArray(`${label} confirmBeforePublish`, hub.confirmBeforePublish, { min: 3 }).forEach((item, itemIndex) => {
+      assertPresent(`${label} confirmBeforePublish[${itemIndex}]`, item);
+    });
+  } else if (hub.confirmBeforePublish?.length > 0) {
+    fail(`${label}: public hub should not expose confirmBeforePublish checklist`);
   }
 });
 

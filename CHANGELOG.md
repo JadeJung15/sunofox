@@ -4,6 +4,7 @@
 
 ### Improved
 
+- Updates 확장 현황의 굿즈샵/팬 커뮤니티 대기 허브에 공개 전 확인 필요 항목을 데이터화하고, 화면과 `check:updates`/공개 라우트 검증에서 확인하도록 보강했습니다.
 - `/music/` YouTube/MV 허브의 직접 CTA와 대표 영상 카드에 안정적인 `data-video-*` 마커를 추가하고, `check:music`과 공개 라우트 검증이 영상 허브 구조를 확인하도록 보강했습니다.
 - 푸터 링크를 `footerItems` 데이터로 분리하고 `check:navigation`과 공개 라우트 검증이 푸터 허브 링크 계약을 확인하도록 보강했습니다.
 - 에피소드 상세의 본문/전체 회차/OST, 이전/다음/목록/OST 이동 링크에 안정적인 검증 마커를 추가하고 `check:public-routes`가 이를 확인하도록 보강했습니다.

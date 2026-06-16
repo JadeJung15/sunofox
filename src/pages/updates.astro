@@ -73,16 +73,30 @@ import {
 
       <div class="updates-roadmap-grid">
         {plannedContentHubs.map((hub) => (
-          <article class:list={['updates-roadmap-card', !hub.href && 'is-waiting']}>
+          <article
+            class:list={['updates-roadmap-card', !hub.href && 'is-waiting']}
+            data-hub-key={hub.key}
+            data-hub-visibility={hub.visibility}
+          >
             <span>{hub.status}</span>
             <strong>{hub.label}</strong>
             <p>{hub.summary}</p>
             <small class="updates-roadmap-visibility">{hub.visibility}</small>
             <p class="updates-roadmap-next">{hub.nextAction}</p>
+            {hub.confirmBeforePublish?.length > 0 && (
+              <div class="updates-roadmap-checklist" aria-label={`${hub.label} 공개 전 확인 필요`} data-hub-checklist={hub.key}>
+                <span>확인 필요</span>
+                <ul>
+                  {hub.confirmBeforePublish.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
             {hub.href ? (
               <a class="micro-button micro-button-muted" href={hub.href}>{hub.cta}</a>
             ) : (
-              <span class="micro-button micro-button-muted updates-roadmap-disabled" aria-disabled="true">{hub.cta}</span>
+              <span class="micro-button micro-button-muted updates-roadmap-disabled" aria-disabled="true" data-hub-state="waiting">{hub.cta}</span>
             )}
           </article>
         ))}

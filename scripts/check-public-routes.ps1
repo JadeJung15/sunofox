@@ -248,6 +248,52 @@ function Get-RouteContent {
     }
   }
 
+function Get-LocalHeaderPolicyCheck {
+  if ([string]::IsNullOrWhiteSpace($BaseUrl) -eq $false) {
+    return $null
+  }
+
+  $headersPath = Join-Path $DistPath "_headers"
+  $requiredHeaders = @(
+    "/robots.txt",
+    "Cache-Control: no-cache, max-age=0, must-revalidate",
+    "CDN-Cache-Control: no-store",
+    "Cloudflare-CDN-Cache-Control: no-store",
+    "Content-Type: text/plain; charset=utf-8"
+  )
+
+  if (-not (Test-Path -LiteralPath $headersPath)) {
+    return [pscustomobject]@{
+      Name = "headers-robots"
+      Path = "/robots.txt"
+      Status = "missing"
+      Pass = $false
+      Missing = "_headers"
+      Unexpected = ""
+      Source = $headersPath
+    }
+  }
+
+  $content = Get-Content -Raw -Encoding UTF8 -LiteralPath $headersPath
+  $missing = @()
+
+  foreach ($needle in $requiredHeaders) {
+    if ($content -notmatch [regex]::Escape($needle)) {
+      $missing += $needle
+    }
+  }
+
+  return [pscustomobject]@{
+    Name = "headers-robots"
+    Path = "/robots.txt"
+    Status = "headers"
+    Pass = ($missing.Count -eq 0)
+    Missing = ($missing -join " | ")
+    Unexpected = ""
+    Source = $headersPath
+  }
+}
+
 $results = foreach ($route in $routes) {
   try {
     $payload = Get-RouteContent -Route $route
@@ -293,6 +339,11 @@ $results = foreach ($route in $routes) {
       }
     }
   }
+}
+
+$localHeaderPolicyCheck = Get-LocalHeaderPolicyCheck
+if ($null -ne $localHeaderPolicyCheck) {
+  $results = @($results) + $localHeaderPolicyCheck
 }
 
 $results | Format-Table Name, Path, Status, Pass, Missing, Unexpected -AutoSize

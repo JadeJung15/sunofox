@@ -5,7 +5,11 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+Add-Type -AssemblyName System.Net.Http
+
 $episodeArticleMetaMust = @('"@type":"Article"', '"abstract":', '"timeRequired":')
+$labelMusicArchive = [string]::Concat([char]0xC74C, [char]0xC545, " ", [char]0xC544, [char]0xCE74, [char]0xC774, [char]0xBE0C)
+$labelSunoFoxDetail = "SunoFox " + [string]::Concat([char]0xC0C1, [char]0xC138, " ", [char]0xC18C, [char]0xAC1C)
 
 $routes = @(
   @{
@@ -72,7 +76,7 @@ $routes = @(
     Name = "profile"
     Path = "/profile/"
     File = "profile/index.html"
-    Must = @("SunoFox 상세 소개", "profile-snapshot-section", "profile-snapshot-card", "profile-current-actions", "/novels/", "/music/", "/updates/", "https://sunofox.com/profile/")
+    Must = @($labelSunoFoxDetail, "profile-snapshot-section", "profile-snapshot-card", "profile-current-actions", "/novels/", "/music/", "/updates/", "https://sunofox.com/profile/")
   },
   @{
     Name = "updates"
@@ -85,7 +89,7 @@ $routes = @(
     Path = "/__sunofox_not_found_probe__/"
     File = "404.html"
     ExpectedStatus = 404
-    Must = @("not-found-page", "not-found-panel", "not-found-actions", "음악 아카이브", "https://sunofox.com/404.html", "/novels/", "/music/", "noindex, follow")
+    Must = @("not-found-page", "not-found-panel", "not-found-actions", $labelMusicArchive, "https://sunofox.com/404.html", "/novels/", "/music/", "noindex, follow")
   },
   @{
     Name = "sitemap-index"
@@ -171,25 +175,26 @@ function Get-RouteContent {
   if ([string]::IsNullOrWhiteSpace($BaseUrl) -eq $false) {
     $base = ([string]$BaseUrl).Trim().TrimEnd([char]"/")
     $source = "$base$($Route['Path'])"
+    $client = [System.Net.Http.HttpClient]::new()
+    $client.Timeout = [TimeSpan]::FromSeconds(30)
+    $response = $null
 
     try {
-      $response = Invoke-WebRequest -Uri $source -TimeoutSec 30 -UseBasicParsing
-    } catch {
-      if ($null -eq $_.Exception.Response) {
-        throw
-      }
+      $response = $client.GetAsync($source).GetAwaiter().GetResult()
+      $bytes = $response.Content.ReadAsByteArrayAsync().GetAwaiter().GetResult()
 
       return @{
-        Status = Get-HttpStatusCode -Response $_.Exception.Response
-        Content = Read-HttpErrorContent -Response $_.Exception.Response
+        Status = [int]$response.StatusCode
+        Content = [System.Text.Encoding]::UTF8.GetString($bytes)
         Source = $source
       }
-    }
-
-    return @{
-      Status = [int]$response.StatusCode
-      Content = $response.Content
-      Source = $source
+    } catch {
+      throw
+    } finally {
+      if ($null -ne $response) {
+        $response.Dispose()
+      }
+      $client.Dispose()
     }
   }
 
@@ -202,12 +207,12 @@ function Get-RouteContent {
     }
   }
 
-  return @{
-    Status = 200
-    Content = Get-Content -Raw -LiteralPath $filePath
-    Source = $filePath
+    return @{
+      Status = 200
+      Content = Get-Content -Raw -Encoding UTF8 -LiteralPath $filePath
+      Source = $filePath
+    }
   }
-}
 
 $results = foreach ($route in $routes) {
   try {

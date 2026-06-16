@@ -2,6 +2,18 @@ export const siteUpdates = [
   {
     date: '2026.06.16',
     type: 'SEO',
+    title: '운영 라우트의 Article 메타 검증 확장',
+    summary:
+      '공개 라우트 검증이 1~6화 상세의 Article JSON-LD, 회차 요약, 읽기 시간 값을 함께 확인하도록 확장해 production 배포 후 메타 누락을 더 빨리 잡을 수 있게 했습니다.',
+    areas: ['notice', 'novel', 'site'],
+    links: [
+      { label: '소설 목록', href: '/novels/' },
+      { label: '운영 로그', href: '/updates/' }
+    ]
+  },
+  {
+    date: '2026.06.16',
+    type: 'SEO',
     title: '에피소드 Article 구조화 데이터 보강',
     summary:
       '1~6화 상세 페이지의 Article JSON-LD에 회차 요약과 읽기 시간을 추가하고, SEO 검증이 이 값을 배포 전 확인하도록 보강했습니다.',

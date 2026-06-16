@@ -1,5 +1,5 @@
 import { artistLinks, featuredStoryOst, storyOstMap, storyOsts } from './artistContent.js';
-import { menuItems } from './navigationContent.js';
+import { footerItems, menuItems } from './navigationContent.js';
 import { archiveAlbum, musicArchive } from './musicContent.js';
 import {
   latestNovelEpisode,
@@ -21,6 +21,7 @@ export {
   artistLinks,
   categorizedSiteUpdates,
   featuredStoryOst,
+  footerItems,
   latestNovelEpisode,
   menuItems,
   musicArchive,

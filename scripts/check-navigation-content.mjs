@@ -15,6 +15,15 @@ const expectedMenuItems = [
   { key: 'studio', label: '스튜디오', href: '/mv-studio' }
 ];
 
+const expectedFooterItems = [
+  { key: 'novels', label: '소설', href: '/novels/' },
+  { key: 'music', label: '음악', href: '/music/' },
+  { key: 'profile', label: '소개', href: '/profile/' },
+  { key: 'updates', label: '업데이트', href: '/updates/' },
+  { key: 'privacy', label: '개인정보', href: '/privacy/' },
+  { key: 'terms', label: '이용약관', href: '/terms/' }
+];
+
 function fail(message) {
   errors.push(message);
 }
@@ -47,7 +56,7 @@ function assertSiteRoute(label, href) {
 }
 
 const siteContentModule = await import(`${pathToFileURL(siteContentPath).href}?mtime=${Date.now()}`);
-const { menuItems } = siteContentModule;
+const { footerItems, menuItems } = siteContentModule;
 
 if (!Array.isArray(menuItems)) {
   fail('menuItems must be an array');
@@ -81,10 +90,33 @@ if (!Array.isArray(menuItems)) {
   }
 }
 
+if (!Array.isArray(footerItems)) {
+  fail('footerItems must be an array');
+} else {
+  assertEqual('footerItems length', String(footerItems.length), String(expectedFooterItems.length));
+  assertUnique('footerItems key', footerItems.map((item) => item.key));
+  assertUnique('footerItems href', footerItems.map((item) => item.href));
+
+  expectedFooterItems.forEach((expected, index) => {
+    const item = footerItems[index];
+    const label = `footerItems[${index}]`;
+
+    if (!item) {
+      fail(`${label}: missing ${expected.key}`);
+      return;
+    }
+
+    assertEqual(`${label} key`, item.key, expected.key);
+    assertEqual(`${label} label`, item.label, expected.label);
+    assertEqual(`${label} href`, item.href, expected.href);
+    assertSiteRoute(`${label} href`, item.href);
+  });
+}
+
 if (errors.length > 0) {
   console.error('Navigation content check failed:');
   errors.forEach((message) => console.error(`- ${message}`));
   process.exit(1);
 }
 
-console.log(`Navigation content check passed: ${menuItems.length} menu items.`);
+console.log(`Navigation content check passed: ${menuItems.length} menu items, ${footerItems.length} footer items.`);

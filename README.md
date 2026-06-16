@@ -114,7 +114,7 @@ OST와 YouTube 연결은 `src/data/artistContent.js`의 `artistLinks`, `featured
 | `npm run check:korean-reader` | `node scripts/check-korean-reader-support.mjs` | 에피소드 본문과 시스템 영어 문장에 한글 병기가 있는지 확인 |
 | `npm run check:music` | `node scripts/check-music-content.mjs` | OST, YouTube/MV, 앨범 트랙 데이터 일치 확인 |
 | `npm run check:profile` | `node scripts/check-profile-content.mjs` | SunoFox 소개/필모그래피 허브, 탭, 출처 링크 데이터 확인 |
-| `npm run check:navigation` | `node scripts/check-navigation-content.mjs` | 오버레이 메뉴의 한국어 라벨, 순서, 내부 canonical href 확인 |
+| `npm run check:navigation` | `node scripts/check-navigation-content.mjs` | 오버레이 메뉴와 푸터의 한국어 라벨, 순서, 내부 canonical href 확인 |
 | `npm run check:dist` | `node scripts/check-dist-integrity.mjs` | 공개 `dist` 내부 링크와 이미지/asset 경로 존재 확인 |
 | `npm run check:seo` | `node scripts/check-seo-metadata.mjs` | 공개 HTML의 title, description, canonical, OG/Twitter, JSON-LD 확인 |
 | `npm run check:a11y` | `node scripts/check-accessibility-basics.mjs` | 공개 HTML의 lang, viewport, h1, img alt, 링크/버튼 이름 확인 |
@@ -152,7 +152,7 @@ production 반영 전 기본 순서입니다.
 `check:korean-reader`는 에피소드 본문과 시스템 문구에 영어 문장이 들어갈 경우 같은 줄에 한글 설명 또는 괄호 병기가 있는지 확인합니다.
 `check:music`은 대표 OST, YouTube/MV 영상 목록, ARCHIVE vol.1 트랙 순서, 영상 ID와 썸네일 URL의 일치 여부를 확인합니다.
 `check:profile`은 SunoFox 소개 페이지의 허브 카드, quick action, 필모그래피 탭, YouTube 영상 링크, 출처 링크가 기본 구조를 유지하는지 확인합니다.
-`check:navigation`은 오버레이 메뉴의 `홈`, `소개`, `소설 보러가기`, `음악`, `업데이트`, `스튜디오` 라벨과 내부 canonical href, compact hierarchy를 확인합니다.
+`check:navigation`은 오버레이 메뉴의 `홈`, `소개`, `소설 보러가기`, `음악`, `업데이트`, `스튜디오` 라벨과 내부 canonical href, compact hierarchy를 확인하고, 푸터의 `소설`, `음악`, `소개`, `업데이트`, `개인정보`, `이용약관` 링크 순서도 함께 검증합니다.
 `check:dist`는 빌드된 공개 HTML/CSS/manifest의 내부 링크, 이미지, asset 경로가 `dist` 안에 실제 존재하는지 확인합니다. 보호/운영 HTML인 `/mv-studio`, `/login`, `/signup`, `/admin`, `/account` 계열은 구조 변경 승인 범위와 분리해 제외합니다.
 `check:seo`는 홈, 작품 목록, 1~6화 상세, Music Archive, 앨범 상세, Profile, Updates의 title, description, canonical, OG/Twitter card, 회차별 공유 문구, JSON-LD 기본 타입을 확인합니다.
 `check:a11y`는 공개 HTML의 lang, viewport, h1, 이미지 alt, 링크/버튼 접근 가능한 이름, 새 탭 링크 rel 값을 확인합니다.

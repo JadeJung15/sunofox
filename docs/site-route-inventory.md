@@ -66,7 +66,7 @@ Last verified: 2026-06-16
 | 업데이트 로그 | `src/data/updatesContent.js` | 카테고리, 허브 공개 상태, 링크, 최근 변경 |
 | SunoFox 프로필 | `src/data/siteContent.js` | 필모그래피 탭, 공식 허브 스냅샷, 공개 출처 |
 | JSON-LD/SEO 데이터 | `src/data/siteContent.js` | Organization, CreativeWorkSeries, Article, Breadcrumb |
-| 공통 meta/layout | `src/layouts/Layout.astro` | title, description, canonical, OG/Twitter |
+| 공통 meta/layout | `src/layouts/Layout.astro` | title, description, canonical, OG/Twitter, 데이터 기반 푸터 |
 | 에피소드 레이아웃 | `src/layouts/NovelEpisodeLayout.astro` | 본문, OST, 이전/다음/목록 CTA |
 | 전역 스타일 | `src/styles/global.css` | 모바일 간격, 버튼 터치 영역, 다크 판타지 톤 |
 
@@ -91,7 +91,7 @@ npm run check
 | `check:dist` | 빌드 산출물의 내부 링크, 이미지, asset 존재 |
 | `check:korean-reader` | 에피소드 본문과 시스템 영어 문장의 한글 병기 |
 | `check:profile` | SunoFox 소개/필모그래피 허브, 탭, 출처 링크 데이터 |
-| `check:navigation` | 공개 오버레이 메뉴 라벨, 순서, 내부 canonical href, 업데이트 보조 계층 |
+| `check:navigation` | 공개 오버레이 메뉴/푸터 라벨, 순서, 내부 canonical href, 업데이트 보조 계층 |
 | `check:seo` | title, description, canonical, OG/Twitter, JSON-LD |
 | `check:a11y` | lang, viewport, h1, alt, 링크/버튼 이름, 새 탭 rel |
 | `check:mobile-css` | 메뉴/CTA/작품 탭/회차 이동/보조 링크/음악 버튼의 모바일 터치 영역과 줄바꿈 CSS 계약 |

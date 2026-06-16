@@ -2,6 +2,18 @@ export const siteUpdates = [
   {
     date: '2026.06.16',
     type: 'Site',
+    title: '푸터 링크 데이터와 검증 정리',
+    summary:
+      '공통 푸터 링크를 footerItems 데이터로 분리하고 check:navigation과 공개 라우트 검증이 소설, 음악, 소개, 업데이트, 개인정보, 이용약관 링크 계약을 확인하도록 보강했습니다.',
+    areas: ['notice', 'site'],
+    links: [
+      { label: '홈', href: '/' },
+      { label: '업데이트', href: '/updates/' }
+    ]
+  },
+  {
+    date: '2026.06.16',
+    type: 'Site',
     title: '에피소드 이동 마커 검증 추가',
     summary:
       '회차 상세의 본문, 전체 회차, OST, 이전/다음/목록 이동 링크에 안정적인 마커를 추가하고 check:public-routes에서 1~6화 이동 상태를 확인하도록 보강했습니다.',

@@ -57,7 +57,7 @@ $routes = @(
     Name = "home"
     Path = "/"
     File = "index.html"
-    Must = @("MUSIC TO NOVEL STUDIO", "home-hero-status", "home-novel-facts", "site-footer-nav", "/novels/", "/music/", "/profile/", "https://sunofox.com/", $labelMusicSee, $labelStudio)
+    Must = @("MUSIC TO NOVEL STUDIO", "home-hero-status", "home-novel-facts", "site-footer-nav", 'data-footer-key="novels"', 'data-footer-key="music"', 'data-footer-key="profile"', 'data-footer-key="updates"', 'data-footer-key="privacy"', 'data-footer-key="terms"', "/novels/", "/music/", "/profile/", "https://sunofox.com/", $labelMusicSee, $labelStudio)
   },
   @{
     Name = "novels"

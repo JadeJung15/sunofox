@@ -54,7 +54,7 @@ export const sunofoxProfile = {
     },
     {
       key: 'music',
-      label: 'Music Archive',
+      label: '음악 아카이브',
       status: `${archiveAlbum.releaseDate} 공개`,
       title: archiveAlbum.title,
       summary: 'SunoFox의 오리지널 트랙과 대표 OST를 한 곳에서 이어 보는 음악 아카이브입니다.',
@@ -83,8 +83,8 @@ export const sunofoxProfile = {
   quickActions: [
     { label: '소설 정주행', href: novelProject.season.startHref },
     { label: '완결화 보기', href: novelProject.season.finalHref },
-    { label: 'Music Archive', href: musicArchive.href },
-    { label: 'Updates', href: '/updates/' }
+    { label: '음악 아카이브', href: musicArchive.href },
+    { label: '업데이트', href: '/updates/' }
   ],
   tabs: [
     {

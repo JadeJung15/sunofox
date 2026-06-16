@@ -72,7 +72,7 @@ $routes = @(
     Name = "profile"
     Path = "/profile/"
     File = "profile/index.html"
-    Must = @("SunoFox Detail", "profile-snapshot-section", "profile-snapshot-card", "profile-current-actions", "/novels/", "/music/", "/updates/", "https://sunofox.com/profile/")
+    Must = @("SunoFox 상세 소개", "profile-snapshot-section", "profile-snapshot-card", "profile-current-actions", "/novels/", "/music/", "/updates/", "https://sunofox.com/profile/")
   },
   @{
     Name = "updates"
@@ -85,7 +85,7 @@ $routes = @(
     Path = "/__sunofox_not_found_probe__/"
     File = "404.html"
     ExpectedStatus = 404
-    Must = @("not-found-page", "not-found-panel", "not-found-actions", "https://sunofox.com/404.html", "/novels/", "/music/", "noindex, follow")
+    Must = @("not-found-page", "not-found-panel", "not-found-actions", "음악 아카이브", "https://sunofox.com/404.html", "/novels/", "/music/", "noindex, follow")
   },
   @{
     Name = "sitemap-index"

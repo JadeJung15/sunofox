@@ -1,6 +1,18 @@
 export const siteUpdates = [
   {
     date: '2026.06.16',
+    type: 'Site',
+    title: '독자 행동 라벨 한국어 정리',
+    summary:
+      '404, Profile, Music Archive에서 독자가 누르는 행동 라벨을 음악 아카이브, 업데이트, SunoFox 소개처럼 한국어 기준으로 정리하고, check:profile과 공개 라우트 검증에 반영했습니다.',
+    areas: ['notice', 'site', 'music'],
+    links: [
+      { label: 'SunoFox 소개', href: '/profile/' },
+      { label: '음악 아카이브', href: '/music/' }
+    ]
+  },
+  {
+    date: '2026.06.16',
     type: 'Music',
     title: '앨범 출처 링크 한국어 라벨 정리',
     summary:

@@ -184,8 +184,23 @@ if (!sunofoxProfile?.highlights?.some((item) => item.href === musicArchive.href)
   fail('sunofoxProfile.highlights: must include musicArchive href');
 }
 
+const musicHighlight = sunofoxProfile?.highlights?.find((item) => item.href === musicArchive.href);
+if (musicHighlight?.label !== '음악 아카이브') {
+  fail('sunofoxProfile.highlights music label: must be "음악 아카이브"');
+}
+
 if (!sunofoxProfile?.quickActions?.some((action) => action.href === novelProject.season.finalHref)) {
   fail('sunofoxProfile.quickActions: must include current season final href');
+}
+
+const musicQuickAction = sunofoxProfile?.quickActions?.find((action) => action.href === musicArchive.href);
+if (musicQuickAction?.label !== '음악 아카이브') {
+  fail('sunofoxProfile.quickActions music label: must be "음악 아카이브"');
+}
+
+const updatesQuickAction = sunofoxProfile?.quickActions?.find((action) => action.href === '/updates/');
+if (updatesQuickAction?.label !== '업데이트') {
+  fail('sunofoxProfile.quickActions updates label: must be "업데이트"');
 }
 
 assertArray('sunofoxProfile.sources', sunofoxProfile?.sources, { min: 3 }).forEach((source, index) => {

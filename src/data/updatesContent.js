@@ -1,6 +1,19 @@
 export const siteUpdates = [
   {
     date: '2026.06.16',
+    type: 'Site',
+    title: '메인 첫 화면 공개 상태 정보 개선',
+    summary:
+      '홈 첫 화면에 공개 회차, 읽는 순서, 확장 방향을 바로 확인하는 상태 정보를 추가해 소설 목록 중심 CTA를 더 빠르게 판단할 수 있게 했습니다.',
+    areas: ['notice', 'novel', 'music', 'site'],
+    links: [
+      { label: '홈', href: '/' },
+      { label: '소설 목록', href: '/novels/' },
+      { label: '음악 아카이브', href: '/music/' }
+    ]
+  },
+  {
+    date: '2026.06.16',
     type: 'Novel',
     title: '신규 회차 공개 템플릿 정리',
     summary:

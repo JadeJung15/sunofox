@@ -835,6 +835,42 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   padding: 8px 0;
 }
 
+.home-hero-status {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  width: min(780px, 100%);
+  margin: 26px auto 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.home-hero-status div {
+  min-width: 0;
+  padding: 13px 18px;
+}
+
+.home-hero-status div + div {
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.home-hero-status dt {
+  color: var(--subtle);
+  font-family: var(--font-condensed);
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.home-hero-status dd {
+  margin: 8px 0 0;
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 13px;
+  font-weight: 850;
+  line-height: 1.42;
+  word-break: keep-all;
+}
+
 .hero-side-actions {
   position: absolute;
   left: 50%;
@@ -1706,6 +1742,38 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-size: clamp(15px, 1.5vw, 18px);
   font-weight: 650;
   line-height: 1.76;
+  word-break: keep-all;
+}
+
+.home-novel-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 22px 0 0;
+}
+
+.home-novel-facts div {
+  min-width: 132px;
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  background: rgba(255, 255, 255, 0.025);
+  padding: 12px 14px;
+}
+
+.home-novel-facts dt {
+  color: var(--subtle);
+  font-family: var(--font-condensed);
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.home-novel-facts dd {
+  margin: 8px 0 0;
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 14px;
+  font-weight: 850;
+  line-height: 1.42;
   word-break: keep-all;
 }
 
@@ -4882,8 +4950,8 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   }
 
   .hero-stage-landing {
-    min-height: 760px;
-    padding-bottom: 164px;
+    min-height: 820px;
+    padding-bottom: 176px;
   }
 
   .home-hero-cover {
@@ -4902,6 +4970,30 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
 
   .home-hero-meta span {
     padding: 6px 0;
+  }
+
+  .home-hero-status {
+    grid-template-columns: 1fr;
+    width: min(100%, 330px);
+    margin-top: 18px;
+  }
+
+  .home-hero-status div {
+    padding: 11px 0;
+  }
+
+  .home-hero-status div + div {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 0;
+  }
+
+  .home-hero-status dt {
+    font-size: 10px;
+  }
+
+  .home-hero-status dd {
+    margin-top: 6px;
+    font-size: 12px;
   }
 
   .landing-note {
@@ -5059,6 +5151,16 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
 
   .home-novel-entry .main-button {
     width: 100%;
+  }
+
+  .home-novel-facts {
+    display: grid;
+    grid-template-columns: 1fr;
+    margin-top: 18px;
+  }
+
+  .home-novel-facts div {
+    min-width: 0;
   }
 
   .home-ost-showcase {

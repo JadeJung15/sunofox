@@ -4,12 +4,27 @@ import Layout from '../layouts/Layout.astro';
 import {
   featuredStoryOst,
   novelProject,
+  publishedNovelEpisodes,
   structuredData
 } from '../data/siteContent.js';
 
 const wordmark = 'SUNOFOX'.split('');
 const heroParticles = Array.from({ length: 42 });
 const novelListCta = '소설 보러가기';
+const totalReadMinutes = publishedNovelEpisodes.reduce((sum, episode) => {
+  const minutes = Number(episode.readTime?.match(/\d+/)?.[0] || 0);
+  return sum + minutes;
+}, 0);
+const homeHeroStatusItems = [
+  { label: '공개 상태', value: `${publishedNovelEpisodes.length}화 · ${novelProject.season.status}` },
+  { label: '읽는 순서', value: '소설 목록에서 1화부터' },
+  { label: '확장 방향', value: 'OST · 세계관 · Studio' }
+];
+const homeNovelFacts = [
+  { label: '미니시즌', value: novelProject.season.title },
+  { label: '공개 회차', value: `${publishedNovelEpisodes.length}화` },
+  { label: '예상 시간', value: `약 ${totalReadMinutes}분` }
+];
 ---
 
 <Layout
@@ -58,6 +73,14 @@ const novelListCta = '소설 보러가기';
           <span>{novelProject.genre}</span>
           <span>READ NOW</span>
         </div>
+        <dl class="home-hero-status" aria-label="SunoFox home status">
+          {homeHeroStatusItems.map((item) => (
+            <div>
+              <dt>{item.label}</dt>
+              <dd>{item.value}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
 
       <div class="hero-side-actions" aria-label="SunoFox quick actions">
@@ -72,6 +95,14 @@ const novelListCta = '소설 보러가기';
         <p class="section-kicker">NOVEL LIST</p>
         <h2 id="homeNovelEntryTitle">{novelListCta}</h2>
         <p>《{novelProject.title}》 공개 회차를 한 곳에서 확인하고 바로 읽습니다.</p>
+        <dl class="home-novel-facts" aria-label="Novel list summary">
+          {homeNovelFacts.map((item) => (
+            <div>
+              <dt>{item.label}</dt>
+              <dd>{item.value}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
       <a class="main-button main-button-primary" href="/novels/" aria-label={`${novelProject.title} 소설 목록 페이지로 이동`}>{novelListCta}</a>
     </section>

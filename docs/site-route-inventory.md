@@ -20,7 +20,7 @@ Last verified: 2026-06-16
 
 | Route | 용도 | 소스 | 배포 후 확인 |
 |---|---|---|---|
-| `/` | SunoFox 메인 | `src/pages/index.astro` | 200, 소설/Music/Studio CTA |
+| `/` | SunoFox 메인 | `src/pages/index.astro` | 200, 소설/Music/Studio CTA, 공개 상태 정보 |
 | `/novels/` | 웹소설 작품/회차 목록 | `src/pages/novels.astro` | 200, 1~6화 목록, 미니시즌 완결 상태, 최신화 표시 |
 | `/novels/episode-001/` | 1화 상세 | `src/pages/novels/episode-001.md` | 200, Article/Breadcrumb meta, 본문/전체 회차/OST 내부 이동 |
 | `/novels/episode-002/` | 2화 상세 | `src/pages/novels/episode-002.md` | 200, 이전/다음 링크, 본문/전체 회차/OST 내부 이동 |

@@ -22,7 +22,7 @@ SunoFox 공식 사이트는 음악에서 시작한 감정과 장면을 웹소설
 
 | Route | 용도 | 소스 |
 |---|---|---|
-| `/` | SunoFox 메인 | `src/pages/index.astro` |
+| `/` | SunoFox 메인, 공개 회차 상태와 소설/Music/Studio CTA | `src/pages/index.astro` |
 | `/novels/` | 웹소설 작품/회차 목록 | `src/pages/novels.astro` |
 | `/novels/episode-001/` | 1화 | `src/pages/novels/episode-001.md` |
 | `/novels/episode-002/` | 2화 | `src/pages/novels/episode-002.md` |

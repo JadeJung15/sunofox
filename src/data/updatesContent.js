@@ -1,6 +1,18 @@
 export const siteUpdates = [
   {
     date: '2026.06.16',
+    type: 'Music',
+    title: 'Music Archive의 YouTube 직접 진입 개선',
+    summary:
+      '음악 아카이브 상단과 YouTube/MV 허브에 YouTube 채널, 재생목록, 최신 영상 감상 CTA를 추가해 OST와 영상 콘텐츠로 바로 이동할 수 있게 했습니다.',
+    areas: ['notice', 'music', 'site'],
+    links: [
+      { label: '음악 아카이브', href: '/music/' },
+      { label: 'YouTube 채널', href: 'https://www.youtube.com/@sunofox' }
+    ]
+  },
+  {
+    date: '2026.06.16',
     type: 'Site',
     title: '모바일 탭과 메뉴 터치 영역 보강',
     summary:

@@ -4,6 +4,7 @@
 
 ### Improved
 
+- `/music/` 상단과 YouTube/MV 허브에 YouTube 채널, 재생목록, 최신 영상 감상 CTA를 추가해 OST와 영상 콘텐츠 접근성을 보강했습니다.
 - 모바일 작품/프로필 탭을 화면 안에서 바로 보이는 그리드형 터치 영역으로 정리하고, 메뉴 버튼의 실제 클릭 박스를 44px 이상으로 고정했습니다.
 - 공개 라우트 검증이 1~6화 상세의 Article JSON-LD, 회차 요약(`abstract`), 읽기 시간(`timeRequired`)을 함께 확인하도록 확장했습니다.
 - 에피소드 Article JSON-LD에 회차 요약(`abstract`)과 읽기 시간(`timeRequired`)을 추가하고, `check:seo`가 1~6화 구조화 데이터 값을 배포 전 검증하도록 보강했습니다.

@@ -27,6 +27,19 @@ const videoAnchorItems = Array.from(
 );
 const latestVideoDate = musicArchive.videos[0]?.date || musicArchive.researchDate;
 const oldestVideoDate = musicArchive.videos.at(-1)?.date || latestVideoDate;
+const musicHeroActions = [
+  { label: '대표 OST', href: featuredStoryOst.href, external: true, primary: true },
+  { label: 'YouTube 채널', href: artistLinks.youtube, external: true },
+  { label: '재생목록', href: artistLinks.youtubePlaylists, external: true },
+  { label: `${currentEpisode.label} 읽기`, href: currentEpisode.href },
+  { label: '작품 정보', href: '/novels/' },
+  { label: 'STUDIO', href: '/mv-studio' }
+];
+const videoDirectActions = [
+  { label: '최신 영상 감상', href: featuredVideo.href, external: true, primary: true },
+  { label: 'YouTube 채널', href: artistLinks.youtube, external: true },
+  { label: '재생목록 보기', href: artistLinks.youtubePlaylists, external: true }
+];
 const videoSummaryItems = [
   { label: '영상 수', value: `${musicArchive.videos.length}편` },
   { label: '최근 공개', value: latestVideoDate },
@@ -57,10 +70,16 @@ const videoSummaryItems = [
         <p>{musicArchive.summary}</p>
         <span>확인 기준 {musicArchive.researchDate}</span>
         <div class="music-archive-actions" aria-label="Music archive quick actions">
-          <a class="main-button" href={featuredStoryOst.href} target="_blank" rel="noopener noreferrer">대표 OST</a>
-          <a class="main-button main-button-muted" href={currentEpisode.href}>{currentEpisode.label} 읽기</a>
-          <a class="main-button main-button-muted" href="/novels/">작품 정보</a>
-          <a class="main-button main-button-muted" href="/mv-studio">STUDIO</a>
+          {musicHeroActions.map((action) => (
+            <a
+              class:list={['main-button', !action.primary && 'main-button-muted']}
+              href={action.href}
+              target={action.external ? '_blank' : undefined}
+              rel={action.external ? 'noopener noreferrer' : undefined}
+            >
+              {action.label}
+            </a>
+          ))}
         </div>
       </div>
 
@@ -169,6 +188,19 @@ const videoSummaryItems = [
         <p class="section-kicker">영상 허브</p>
         <h2 id="musicVideoTitle">YouTube / MV</h2>
         <span>{musicArchive.videos.length}편</span>
+      </div>
+
+      <div class="music-video-direct-actions" aria-label="YouTube direct actions">
+        {videoDirectActions.map((action) => (
+          <a
+            class:list={['main-button', !action.primary && 'main-button-muted']}
+            href={action.href}
+            target={action.external ? '_blank' : undefined}
+            rel={action.external ? 'noopener noreferrer' : undefined}
+          >
+            {action.label}
+          </a>
+        ))}
       </div>
 
       <div class="music-video-hub" aria-label="YouTube and MV hub">

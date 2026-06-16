@@ -1,6 +1,18 @@
 export const siteUpdates = [
   {
     date: '2026.06.16',
+    type: 'Music',
+    title: '앨범 출처 링크 한국어 라벨 정리',
+    summary:
+      'ARCHIVE vol.1 상세 하단 출처 링크를 데이터 기반 한국어 라벨로 통일하고, check:music이 앨범 외부 링크 목록까지 검증하도록 보강했습니다.',
+    areas: ['notice', 'music', 'site'],
+    links: [
+      { label: 'ARCHIVE vol.1', href: '/music/archive-vol-1/' },
+      { label: '음악 아카이브', href: '/music/' }
+    ]
+  },
+  {
+    date: '2026.06.16',
     type: 'Site',
     title: '보조 링크 터치 회귀 검증 추가',
     summary:

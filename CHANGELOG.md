@@ -4,6 +4,7 @@
 
 ### Improved
 
+- `/music/archive-vol-1/` 하단 출처 링크를 `archiveAlbum.links` 기반 한국어 라벨로 통일하고, `check:music`이 앨범 외부 링크 목록까지 검증하도록 보강했습니다.
 - `check:mobile-css`가 에피소드 상세 상단 보조 링크와 음악 상세 뒤로가기 링크의 44px 터치 영역을 검증하도록 보강했습니다.
 - 에피소드 상세 상단 보조 링크와 음악 상세 뒤로가기 링크의 실제 터치 영역을 44px 기준으로 맞춰 모바일 조작 안정성을 보강했습니다.
 - `check:seo`에 운영 URL 모드를 추가하고 `npm run check:production-seo`로 `https://sunofox.com`의 title, description, OG/Twitter, JSON-LD를 배포 후 검증할 수 있게 했습니다.

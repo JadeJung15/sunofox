@@ -160,6 +160,21 @@ assertLink('archiveAlbum externalHref', archiveAlbum?.externalHref);
 assertLink('archiveAlbum bugsHref', archiveAlbum?.bugsHref);
 assertLink('archiveAlbum image', archiveAlbum?.image);
 
+const albumLinkHrefs = new Set();
+assertArray('archiveAlbum.links', archiveAlbum?.links, { min: 2 }).forEach((link, index) => {
+  assertPresent(`archiveAlbum.links[${index}] label`, link.label);
+  assertLink(`archiveAlbum.links[${index}] href`, link.href);
+  albumLinkHrefs.add(link.href);
+});
+
+if (!albumLinkHrefs.has(archiveAlbum?.externalHref)) {
+  fail('archiveAlbum.links: must include archiveAlbum.externalHref');
+}
+
+if (!albumLinkHrefs.has(archiveAlbum?.bugsHref)) {
+  fail('archiveAlbum.links: must include archiveAlbum.bugsHref');
+}
+
 const trackTitles = new Set();
 assertArray('archiveAlbum.tracks', archiveAlbum?.tracks).forEach((track, index) => {
   const label = `archiveAlbum.tracks[${index}]`;

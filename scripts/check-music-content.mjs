@@ -231,6 +231,22 @@ assertArray('musicArchive.videoHub.links', musicArchive?.videoHub?.links).forEac
   assertLink(`musicArchive.videoHub.links[${index}] href`, link.href);
 });
 
+for (const field of ['title', 'summary']) {
+  assertPresent(`musicArchive.videoHub ${field}`, musicArchive?.videoHub?.[field]);
+}
+
+assertArray('musicArchive.videoHub.facts', musicArchive?.videoHub?.facts, { min: 3 }).forEach((fact, index) => {
+  assertPresent(`musicArchive.videoHub.facts[${index}] label`, fact.label);
+  assertPresent(`musicArchive.videoHub.facts[${index}] value`, fact.value);
+});
+
+const videoHubLinkHrefs = new Set((musicArchive?.videoHub?.links || []).map((link) => link.href));
+for (const requiredHref of [artistLinks?.youtube, artistLinks?.youtubePlaylists, featuredStoryOst?.youtubeHref]) {
+  if (!videoHubLinkHrefs.has(requiredHref)) {
+    fail(`musicArchive.videoHub.links: missing required href "${requiredHref || '(empty)'}"`);
+  }
+}
+
 assertArray('musicArchive.sources', musicArchive?.sources).forEach((source, index) => {
   assertPresent(`musicArchive.sources[${index}] label`, source.label);
   assertLink(`musicArchive.sources[${index}] href`, source.href);

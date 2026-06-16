@@ -36,9 +36,9 @@ const musicHeroActions = [
   { label: '스튜디오', href: '/mv-studio' }
 ];
 const videoDirectActions = [
-  { label: '최신 영상 감상', href: featuredVideo.href, external: true, primary: true },
-  { label: 'YouTube 채널', href: artistLinks.youtube, external: true },
-  { label: '재생목록 보기', href: artistLinks.youtubePlaylists, external: true }
+  { key: 'latest', label: '최신 영상 감상', href: featuredVideo.href, external: true, primary: true },
+  { key: 'channel', label: 'YouTube 채널', href: artistLinks.youtube, external: true },
+  { key: 'playlists', label: '재생목록 보기', href: artistLinks.youtubePlaylists, external: true }
 ];
 const videoSummaryItems = [
   { label: '영상 수', value: `${musicArchive.videos.length}편` },
@@ -197,6 +197,7 @@ const videoSummaryItems = [
             href={action.href}
             target={action.external ? '_blank' : undefined}
             rel={action.external ? 'noopener noreferrer' : undefined}
+            data-video-action={action.key}
           >
             {action.label}
           </a>
@@ -204,7 +205,15 @@ const videoSummaryItems = [
       </div>
 
       <div class="music-video-hub" aria-label="YouTube and MV hub">
-        <a class="music-video-feature" href={featuredVideo.href} target="_blank" rel="noopener noreferrer" aria-label={`${featuredVideo.title} 감상하기`}>
+        <a
+          class="music-video-feature"
+          href={featuredVideo.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${featuredVideo.title} 감상하기`}
+          data-video-feature={featuredVideo.videoId}
+          data-video-type={featuredVideo.type}
+        >
           <img
             src={featuredVideo.thumbnail}
             alt={featuredVideo.thumbnailAlt}
@@ -233,7 +242,7 @@ const videoSummaryItems = [
           </dl>
           <div class="music-video-hub-actions">
             {musicArchive.videoHub.links.map((link) => (
-              <a class="main-button main-button-muted" href={link.href} target="_blank" rel="noopener noreferrer">{link.label}</a>
+              <a class="main-button main-button-muted" href={link.href} target="_blank" rel="noopener noreferrer" data-video-hub-link={link.label}>{link.label}</a>
             ))}
           </div>
         </div>
@@ -256,8 +265,13 @@ const videoSummaryItems = [
 
       <ol class="music-video-grid">
         {musicArchive.videos.map((video) => (
-          <li id={`music-video-${video.videoId}`}>
-            <a href={video.href} target="_blank" rel="noopener noreferrer">
+          <li
+            id={`music-video-${video.videoId}`}
+            data-video-id={video.videoId}
+            data-video-type={video.type}
+            data-video-date={video.date}
+          >
+            <a href={video.href} target="_blank" rel="noopener noreferrer" data-video-card={video.videoId}>
               <img
                 src={video.thumbnail}
                 alt={video.thumbnailAlt}

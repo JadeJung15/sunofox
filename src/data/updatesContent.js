@@ -1,6 +1,18 @@
 export const siteUpdates = [
   {
     date: '2026.06.16',
+    type: 'Music',
+    title: 'YouTube/MV 허브 검증 보강',
+    summary:
+      '음악 아카이브의 최신 영상, YouTube 채널, 재생목록, 대표 영상 카드에 data-video 마커를 추가하고 check:music과 공개 라우트 검증에서 영상 허브 구조를 확인하도록 보강했습니다.',
+    areas: ['notice', 'music', 'site'],
+    links: [
+      { label: '음악 아카이브', href: '/music/' },
+      { label: '영상 허브', href: '/music/#music-video-u_OwBr3Cstk' }
+    ]
+  },
+  {
+    date: '2026.06.16',
     type: 'Site',
     title: '푸터 링크 데이터와 검증 정리',
     summary:

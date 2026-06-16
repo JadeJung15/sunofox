@@ -112,7 +112,7 @@ OST와 YouTube 연결은 `src/data/artistContent.js`의 `artistLinks`, `featured
 | `npm run check:production-seo` | `node scripts/check-seo-metadata.mjs --base-url=https://sunofox.com` | 배포 후 운영 도메인의 title, description, OG/Twitter, JSON-LD 검증 |
 | `npm run check:content` | `node scripts/check-content-consistency.mjs` | 웹소설 목록 데이터와 에피소드 frontmatter 일치 확인 |
 | `npm run check:korean-reader` | `node scripts/check-korean-reader-support.mjs` | 에피소드 본문과 시스템 영어 문장에 한글 병기가 있는지 확인 |
-| `npm run check:music` | `node scripts/check-music-content.mjs` | OST, YouTube/MV, 앨범 트랙 데이터 일치 확인 |
+| `npm run check:music` | `node scripts/check-music-content.mjs` | OST, YouTube/MV, 영상 허브 요약/필수 링크, 앨범 트랙 데이터 일치 확인 |
 | `npm run check:profile` | `node scripts/check-profile-content.mjs` | SunoFox 소개/필모그래피 허브, 탭, 출처 링크 데이터 확인 |
 | `npm run check:navigation` | `node scripts/check-navigation-content.mjs` | 오버레이 메뉴와 푸터의 한국어 라벨, 순서, 내부 canonical href 확인 |
 | `npm run check:dist` | `node scripts/check-dist-integrity.mjs` | 공개 `dist` 내부 링크와 이미지/asset 경로 존재 확인 |
@@ -150,7 +150,7 @@ production 반영 전 기본 순서입니다.
 
 `check:content`는 `src/data/siteContent.js`의 `novelEpisodes`와 `src/pages/novels/episode-00N.md` frontmatter의 title, canonical, publishedAt, readTime, 이전/다음 링크, 공유 제목/설명/태그를 비교합니다. 또한 `/novels/`의 `readingPath`가 공개 회차를 빠짐없이 덮고 각 구간의 첫 화로 연결되는지 확인하며, 공개 데이터에 없는 에피소드 route 파일이 실수로 배포되지 않도록 실패 처리합니다. 세계관/캐릭터 카드의 `id`와 `/novels/#...` 앵커도 함께 검증합니다.
 `check:korean-reader`는 에피소드 본문과 시스템 문구에 영어 문장이 들어갈 경우 같은 줄에 한글 설명 또는 괄호 병기가 있는지 확인합니다.
-`check:music`은 대표 OST, YouTube/MV 영상 목록, ARCHIVE vol.1 트랙 순서, 영상 ID와 썸네일 URL의 일치 여부를 확인합니다.
+`check:music`은 대표 OST, YouTube/MV 영상 목록, 영상 허브 요약/필수 링크, ARCHIVE vol.1 트랙 순서, 영상 ID와 썸네일 URL의 일치 여부를 확인합니다.
 `check:profile`은 SunoFox 소개 페이지의 허브 카드, quick action, 필모그래피 탭, YouTube 영상 링크, 출처 링크가 기본 구조를 유지하는지 확인합니다.
 `check:navigation`은 오버레이 메뉴의 `홈`, `소개`, `소설 보러가기`, `음악`, `업데이트`, `스튜디오` 라벨과 내부 canonical href, compact hierarchy를 확인하고, 푸터의 `소설`, `음악`, `소개`, `업데이트`, `개인정보`, `이용약관` 링크 순서도 함께 검증합니다.
 `check:dist`는 빌드된 공개 HTML/CSS/manifest의 내부 링크, 이미지, asset 경로가 `dist` 안에 실제 존재하는지 확인합니다. 보호/운영 HTML인 `/mv-studio`, `/login`, `/signup`, `/admin`, `/account` 계열은 구조 변경 승인 범위와 분리해 제외합니다.

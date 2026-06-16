@@ -4,6 +4,7 @@
 
 ### Improved
 
+- `/music/` YouTube/MV 허브의 직접 CTA와 대표 영상 카드에 안정적인 `data-video-*` 마커를 추가하고, `check:music`과 공개 라우트 검증이 영상 허브 구조를 확인하도록 보강했습니다.
 - 푸터 링크를 `footerItems` 데이터로 분리하고 `check:navigation`과 공개 라우트 검증이 푸터 허브 링크 계약을 확인하도록 보강했습니다.
 - 에피소드 상세의 본문/전체 회차/OST, 이전/다음/목록/OST 이동 링크에 안정적인 검증 마커를 추가하고 `check:public-routes`가 이를 확인하도록 보강했습니다.
 - `check:public-routes`가 로컬 `dist/_headers`의 `/robots.txt` 캐시 방어 헤더를 검증하도록 보강했습니다.

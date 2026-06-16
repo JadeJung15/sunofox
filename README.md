@@ -88,6 +88,7 @@ SunoFox 공식 사이트는 음악에서 시작한 감정과 장면을 웹소설
 2. 실제 본문: `src/pages/novels/episode-00N.md`
 
 공개 확정 전 내부 원고는 `src/pages/novels/`에 먼저 만들지 않습니다. 이 폴더에 `episode-00N.md`를 추가하면 링크를 숨겨도 Astro 빌드에서 공개 URL이 생성될 수 있으므로, 7화나 시즌2 초안은 공개 확정 후 route 파일로 옮깁니다.
+`npm run check:content`는 `novelEpisodes`에 공개 회차로 등록되지 않은 `src/pages/novels/episode-00N.md` 파일을 발견하면 실패합니다.
 
 OST와 YouTube 연결은 `src/data/artistContent.js`의 `artistLinks`, `featuredStoryOst`, `src/data/musicContent.js`의 `musicArchive`, `archiveAlbum`, 그리고 `src/data/siteContent.js`의 `sunofoxProfile`에서 관리합니다.
 메뉴 항목은 `src/data/navigationContent.js`, 업데이트 로그 항목은 `src/data/updatesContent.js`에서 관리하고 `siteContent.js`가 기존 import 호환을 위해 다시 export합니다.
@@ -139,7 +140,7 @@ production 반영 전 기본 순서입니다.
 13. `npm run check:production`
 14. 운영 URL HTTP 200과 핵심 문자열 확인
 
-`check:content`는 `src/data/siteContent.js`의 `novelEpisodes`와 `src/pages/novels/episode-00N.md` frontmatter의 title, canonical, publishedAt, readTime, 이전/다음 링크, 공유 태그를 비교합니다. 또한 `/novels/`의 `readingPath`가 공개 회차를 빠짐없이 덮고 각 구간의 첫 화로 연결되는지 확인합니다.
+`check:content`는 `src/data/siteContent.js`의 `novelEpisodes`와 `src/pages/novels/episode-00N.md` frontmatter의 title, canonical, publishedAt, readTime, 이전/다음 링크, 공유 태그를 비교합니다. 또한 `/novels/`의 `readingPath`가 공개 회차를 빠짐없이 덮고 각 구간의 첫 화로 연결되는지 확인하며, 공개 데이터에 없는 에피소드 route 파일이 실수로 배포되지 않도록 실패 처리합니다.
 `check:music`은 대표 OST, YouTube/MV 영상 목록, ARCHIVE vol.1 트랙 순서, 영상 ID와 썸네일 URL의 일치 여부를 확인합니다.
 `check:dist`는 빌드된 공개 HTML/CSS/manifest의 내부 링크, 이미지, asset 경로가 `dist` 안에 실제 존재하는지 확인합니다. 보호/운영 HTML인 `/mv-studio`, `/login`, `/signup`, `/admin`, `/account` 계열은 구조 변경 승인 범위와 분리해 제외합니다.
 `check:seo`는 홈, 작품 목록, 1~6화 상세, Music Archive, 앨범 상세, Profile, Updates의 title, description, canonical, OG/Twitter card, JSON-LD 기본 타입을 확인합니다.

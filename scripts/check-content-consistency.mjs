@@ -9,14 +9,9 @@ const episodeDir = path.join(rootDir, 'src', 'pages', 'novels');
 const siteUrl = 'https://sunofox.com';
 
 const errors = [];
-const warnings = [];
 
 function fail(message) {
   errors.push(message);
-}
-
-function warn(message) {
-  warnings.push(message);
 }
 
 function assertEqual(label, actual, expected) {
@@ -183,7 +178,7 @@ for (const file of expectedFiles) {
 
 for (const file of episodeFiles) {
   if (!expectedFileSet.has(file)) {
-    warn(`${file}: markdown file exists but is not listed as a published episode`);
+    fail(`${file}: markdown route exists but is not listed as a published episode. Move drafts outside src/pages/novels until release is approved.`);
   }
 }
 
@@ -338,11 +333,6 @@ for (let index = 0; index < publishedEpisodes.length; index += 1) {
   if (publishedEpisodes[index].number !== expectedNumber) {
     fail(`published episode order mismatch at index ${index}: expected ${expectedNumber}, got ${publishedEpisodes[index].number}`);
   }
-}
-
-if (warnings.length > 0) {
-  console.log('Content consistency warnings:');
-  warnings.forEach((message) => console.log(`- ${message}`));
 }
 
 if (errors.length > 0) {

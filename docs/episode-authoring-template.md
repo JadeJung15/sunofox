@@ -4,6 +4,8 @@ SunoFox 웹소설 회차를 추가할 때 사용하는 작성 템플릿입니다
 
 이 문서는 공개 route를 바로 만들기 위한 파일이 아닙니다. 7화, 시즌2, 외전처럼 공개 여부가 확정되지 않은 원고는 `src/pages/novels/`에 먼저 만들지 않습니다. 이 폴더에 `episode-00N.md`를 추가하면 링크를 노출하지 않아도 Astro 빌드에서 공개 URL이 생성될 수 있습니다.
 
+현재 `npm run check:content`는 `novelEpisodes`에 공개 회차로 등록되지 않은 `src/pages/novels/episode-00N.md` 파일을 발견하면 실패합니다. 내부 초안은 기록 repo, 로컬 작업본, 또는 공개 빌드에 포함되지 않는 위치에서 관리합니다.
+
 ## 1. 공개 전 결정
 
 | 항목 | 기준 |
@@ -46,6 +48,7 @@ SunoFox 웹소설 회차를 추가할 때 사용하는 작성 템플릿입니다
 - `publishedAt`과 `isoDate`는 같은 날짜여야 합니다.
 - `shareTags`는 3개 이상이며, 작품 공통 키워드가 아닌 회차 고유 키워드를 1개 이상 포함해야 합니다.
 - `ostKey`는 `storyOstMap`에 등록된 키여야 합니다.
+- `src/pages/novels/episode-00N.md` route 파일은 `novelEpisodes` 공개 데이터가 준비된 뒤에만 추가합니다.
 
 ## 3. Markdown frontmatter 템플릿
 

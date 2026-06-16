@@ -1,6 +1,18 @@
 export const siteUpdates = [
   {
     date: '2026.06.16',
+    type: 'Content',
+    title: '미승인 회차 route 공개 방지 검증 보강',
+    summary:
+      'novelEpisodes에 공개 회차로 등록되지 않은 episode-00N Markdown 파일이 src/pages/novels 안에 있으면 check:content가 실패하도록 보강해, 내부 초안이 운영 URL로 배포되는 위험을 줄였습니다.',
+    areas: ['notice', 'novel', 'site'],
+    links: [
+      { label: '공개 체크리스트', href: 'https://github.com/JadeJung15/sunofox/blob/main/docs/episode-release-checklist.md' },
+      { label: '작성 템플릿', href: 'https://github.com/JadeJung15/sunofox/blob/main/docs/episode-authoring-template.md' }
+    ]
+  },
+  {
+    date: '2026.06.16',
     type: 'Music',
     title: 'Music Archive의 YouTube 직접 진입 개선',
     summary:

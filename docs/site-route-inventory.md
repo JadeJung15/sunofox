@@ -85,7 +85,7 @@ npm run check
 
 | check | 확인 범위 |
 |---|---|
-| `check:content` | `novelContent.js`와 미니시즌 상태, 1~6화 frontmatter/본문/shareTags 일치 |
+| `check:content` | `novelContent.js`와 미니시즌 상태, 1~6화 frontmatter/본문/shareTags 일치, 예상 밖 에피소드 route 파일 차단 |
 | `check:music` | 대표 OST, YouTube/MV 영상 목록, 앨범 트랙 순서, 영상 ID와 썸네일 URL 일치 |
 | `check:updates` | Updates 고정 공지, 카테고리별 기록, 공식 허브 상태, 대기 링크 사유, 업데이트 링크 |
 | `check:dist` | 빌드 산출물의 내부 링크, 이미지, asset 존재 |

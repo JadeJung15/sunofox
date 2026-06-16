@@ -230,7 +230,7 @@ export function createEpisodeStructuredData(episode = novelEpisodes[0]) {
         mainEntityOfPage: episodeUrl,
         image: novelCoverUrl,
         thumbnailUrl: novelCoverUrl,
-        description: episode.hook,
+        description: episode.shareDescription || episode.hook,
         abstract: episode.update,
         datePublished: episode.isoDate,
         dateModified: episode.isoDate,

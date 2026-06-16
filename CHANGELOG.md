@@ -4,6 +4,8 @@
 
 ### Improved
 
+- 에피소드별 `shareTitle`과 `shareDescription`을 추가하고, 회차 상세의 OG/Twitter 공유 제목·설명과 Article JSON-LD 설명이 회차별 문구를 사용하도록 보강했습니다.
+- `check:content`와 `check:seo`가 회차별 공유 제목/설명 누락과 OG/Twitter/Article JSON-LD 반영 여부를 배포 전에 검증하도록 확장했습니다.
 - `/novels/` 목록 상단을 `READ ORDER` 중심으로 재구성해 1화 정주행, 완결화 보기, OST 감상, 음악 아카이브 CTA를 한 번에 고를 수 있게 했습니다.
 - `/novels/` 회차 행의 우측 배지를 상태 중심에서 `읽기`/`완결화 읽기` 행동 중심으로 바꿔 독자가 목록에서 바로 클릭 의도를 이해할 수 있게 했습니다.
 - `npm run check:profile`을 추가해 SunoFox 소개/필모그래피 허브, 탭, quick action, YouTube 영상 링크, 출처 링크 데이터가 깨지지 않는지 배포 전 검증하도록 했습니다.

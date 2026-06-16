@@ -308,7 +308,7 @@ for (const [index, episode] of publishedEpisodes.entries()) {
   const numberThree = String(Number(episode.number)).padStart(3, '0');
   const expectedIsoDate = episode.publishedAt?.replaceAll('.', '-');
 
-  for (const field of ['title', 'status', 'label', 'hook', 'update', 'href', 'cta', 'publishedAt', 'isoDate', 'readTime', 'ostKey']) {
+  for (const field of ['title', 'status', 'label', 'hook', 'update', 'shareTitle', 'shareDescription', 'href', 'cta', 'publishedAt', 'isoDate', 'readTime', 'ostKey']) {
     assertPresent(`${label} ${field}`, episode[field]);
   }
 
@@ -334,6 +334,22 @@ for (const [index, episode] of publishedEpisodes.entries()) {
 
   if (episode.isFree !== true) {
     fail(`${label}: published episode must set isFree to true`);
+  }
+
+  if (!episode.shareTitle.includes(`${Number(episode.number)}화`)) {
+    fail(`${label} shareTitle: must include the episode label`);
+  }
+
+  if (!episode.shareTitle.includes(episode.title)) {
+    fail(`${label} shareTitle: must include the episode title`);
+  }
+
+  if (!episode.shareTitle.includes(novelProject.title)) {
+    fail(`${label} shareTitle: must include the series title`);
+  }
+
+  if (episode.shareDescription.length < 40) {
+    fail(`${label} shareDescription: must be at least 40 characters`);
   }
 
   const shareTags = assertStringArray(`${label} shareTags`, episode.shareTags, { min: 3 });

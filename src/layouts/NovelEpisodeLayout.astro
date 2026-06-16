@@ -56,6 +56,9 @@ const episodeMetaKeywords = Array.from(new Set([
   ...novelProject.keywords,
   ...(currentEpisode.shareTags || [])
 ]));
+const episodeShareTitle =
+  currentEpisode.shareTitle || `${currentEpisode.label}. ${currentEpisode.title} | ${novelProject.title}`;
+const episodeShareDescription = currentEpisode.shareDescription || currentEpisode.update || description;
 const episodeJsonLd = createEpisodeStructuredData(currentEpisode);
 const episodeSummaryItems = [
   { label: '회차 위치', value: `${episodePosition}/${publishedEpisodes.length}` },
@@ -76,7 +79,9 @@ const episodeProgressStyle = `--episode-progress: ${episodeProgressPercent}%`;
 
 <Layout
   title={`${title} | SunoFox`}
-  description={description}
+  description={episodeShareDescription}
+  shareTitle={episodeShareTitle}
+  shareDescription={episodeShareDescription}
   canonical={canonical}
   image={`https://sunofox.com${novelProject.coverImage}`}
   imageAlt={novelProject.coverAlt}

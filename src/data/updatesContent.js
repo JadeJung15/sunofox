@@ -2,6 +2,18 @@ export const siteUpdates = [
   {
     date: '2026.06.16',
     type: 'Novel',
+    title: '에피소드별 공유 메타 문구 보강',
+    summary:
+      '1~6화에 회차별 공유 제목과 설명을 추가하고, OG/Twitter 카드와 Article JSON-LD가 같은 문구를 사용하는지 SEO 검증으로 확인하도록 보강했습니다.',
+    areas: ['notice', 'novel', 'site'],
+    links: [
+      { label: '완결화 보기', href: '/novels/episode-006/' },
+      { label: '소설 목록', href: '/novels/' }
+    ]
+  },
+  {
+    date: '2026.06.16',
+    type: 'Novel',
     title: '소설 목록 빠른 읽기 UX 정리',
     summary:
       '소설 목록 상단을 1화 정주행, 완결화 보기, OST 감상, 음악 아카이브 CTA 중심으로 정리하고 각 회차 행의 읽기 행동을 더 명확하게 표시했습니다.',

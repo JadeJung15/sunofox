@@ -245,7 +245,9 @@ for (const episode of publishedNovelEpisodes) {
     file: `novels/episode-${number}/index.html`,
     canonical: `${siteUrl}${episode.href}`,
     title: `${frontmatter.title} | SunoFox`,
-    descriptionIncludes: frontmatter.description?.slice(0, 20) || episode.title,
+    shareTitle: episode.shareTitle,
+    shareDescription: episode.shareDescription,
+    descriptionIncludes: episode.shareDescription?.slice(0, 20) || frontmatter.description?.slice(0, 20) || episode.title,
     jsonLdTypes: ['Article', 'BreadcrumbList'],
     articlePublishedAt: episode.isoDate,
     episodeTitle: episode.title,
@@ -265,10 +267,10 @@ for (const route of routes) {
   assertEqual(`${route.name} title`, head.title, route.title);
   assertEqual(`${route.name} canonical`, head.canonical, route.canonical);
   assertEqual(`${route.name} og:url`, meta['og:url'], route.canonical);
-  assertEqual(`${route.name} og:title`, meta['og:title'], route.title);
+  assertEqual(`${route.name} og:title`, meta['og:title'], route.shareTitle || route.title);
   assertEqual(`${route.name} og:site_name`, meta['og:site_name'], 'SunoFox');
   assertEqual(`${route.name} og:locale`, meta['og:locale'], 'ko_KR');
-  assertEqual(`${route.name} twitter:title`, meta['twitter:title'], route.title);
+  assertEqual(`${route.name} twitter:title`, meta['twitter:title'], route.shareTitle || route.title);
   assertEqual(`${route.name} twitter:card`, meta['twitter:card'], 'summary_large_image');
   assertEqual(`${route.name} twitter:site`, meta['twitter:site'], '@sunofox');
   assertEqual(`${route.name} twitter:domain`, meta['twitter:domain'], 'sunofox.com');
@@ -290,6 +292,12 @@ for (const route of routes) {
 
   if (!meta.description.includes(route.descriptionIncludes)) {
     fail(`${route.name} description: expected to include "${route.descriptionIncludes}"`);
+  }
+
+  if (route.shareDescription) {
+    assertEqual(`${route.name} description`, meta.description, route.shareDescription);
+    assertEqual(`${route.name} og:description`, meta['og:description'], route.shareDescription);
+    assertEqual(`${route.name} twitter:description`, meta['twitter:description'], route.shareDescription);
   }
 
   if (!meta['og:image']?.startsWith(`${siteUrl}/`)) {
@@ -339,6 +347,7 @@ for (const route of routes) {
     assertEqual(`${route.name} Article dateModified`, article?.dateModified, route.articlePublishedAt);
     assertEqual(`${route.name} Article articleSection`, article?.articleSection, novelProject.genre);
     assertEqual(`${route.name} Article position`, String(article?.position), String(Number(route.name.replace('episode-', ''))));
+    assertEqual(`${route.name} Article description`, article?.description, route.shareDescription);
     assertEqual(`${route.name} Article abstract`, article?.abstract, route.episodeUpdate);
     assertEqual(`${route.name} Article timeRequired`, article?.timeRequired, route.timeRequired);
 

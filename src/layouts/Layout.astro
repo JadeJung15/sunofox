@@ -4,6 +4,8 @@ import '../styles/global.css';
 const {
   title = 'SunoFox Music to Novel',
   description = 'SunoFox 음악에서 시작한 감정을 웹소설로 확장하는 공식 웹사이트.',
+  shareTitle = title,
+  shareDescription = description,
   canonical = 'https://sunofox.com/',
   image = 'https://sunofox.com/assets/sunofox-app-icon-512.png',
   imageAlt = 'SunoFox',
@@ -43,8 +45,8 @@ const imageType = image.match(/\.jpe?g($|\?)/i)
     <meta name="author" content={author} />
     {keywordContent && <meta name="keywords" content={keywordContent} />}
     <meta name="robots" content={robots} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
+    <meta property="og:title" content={shareTitle} />
+    <meta property="og:description" content={shareDescription} />
     <meta property="og:type" content={type} />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="SunoFox" />
@@ -65,8 +67,8 @@ const imageType = image.match(/\.jpe?g($|\?)/i)
     <meta name="twitter:site" content="@sunofox" />
     <meta name="twitter:domain" content="sunofox.com" />
     <meta name="twitter:url" content={canonical} />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
+    <meta name="twitter:title" content={shareTitle} />
+    <meta name="twitter:description" content={shareDescription} />
     <meta name="twitter:image" content={image} />
     <meta name="twitter:image:alt" content={imageAlt} />
     <link rel="canonical" href={canonical} />

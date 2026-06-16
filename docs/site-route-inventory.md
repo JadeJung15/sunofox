@@ -89,6 +89,7 @@ npm run check
 | `check:music` | 대표 OST, YouTube/MV 영상 목록, 앨범 트랙 순서, 영상 ID와 썸네일 URL 일치 |
 | `check:updates` | Updates 고정 공지, 카테고리별 기록, 공식 허브 상태, 대기 링크 사유, 업데이트 링크 |
 | `check:dist` | 빌드 산출물의 내부 링크, 이미지, asset 존재 |
+| `check:korean-reader` | 에피소드 본문과 시스템 영어 문장의 한글 병기 |
 | `check:seo` | title, description, canonical, OG/Twitter, JSON-LD |
 | `check:a11y` | lang, viewport, h1, alt, 링크/버튼 이름, 새 탭 rel |
 | `check:mobile-css` | 메뉴/CTA/작품 탭/회차 이동/Music 버튼의 모바일 터치 영역과 줄바꿈 CSS 계약 |

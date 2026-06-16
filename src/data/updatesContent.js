@@ -2,6 +2,18 @@ export const siteUpdates = [
   {
     date: '2026.06.16',
     type: 'Site',
+    title: '영어 문장 한글 병기 검증 추가',
+    summary:
+      '웹소설 본문과 시스템 문구에 영어 문장이 들어갈 때 같은 줄에 한글 병기가 있는지 check:korean-reader로 확인해 독자 접근성을 배포 전 점검하도록 했습니다.',
+    areas: ['notice', 'site', 'novel'],
+    links: [
+      { label: '공개 체크리스트', href: 'https://github.com/JadeJung15/sunofox/blob/main/docs/episode-release-checklist.md' },
+      { label: '소설 목록', href: '/novels/' }
+    ]
+  },
+  {
+    date: '2026.06.16',
+    type: 'Site',
     title: '모바일 CSS 회귀 검증 추가',
     summary:
       '메뉴, CTA, 소설 탭, 회차 이동, Music Archive 버튼의 최소 터치 영역과 줄바꿈 방어 규칙을 check:mobile-css로 확인해 모바일 레이아웃 회귀를 배포 전에 잡을 수 있게 했습니다.',

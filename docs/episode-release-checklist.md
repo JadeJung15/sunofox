@@ -70,6 +70,8 @@ npm run check
 
 `check:content`는 `novelContent.js`의 회차 데이터와 각 에피소드 frontmatter의 제목, canonical, 공개일, ISO 날짜, 읽는 시간, 이전/다음 링크, 본문 존재 여부, 공유 태그 누락 여부를 비교합니다. 또한 `novelProject.readingPath`가 공개 회차 전체를 빠짐없이 포함하고 각 구간의 첫 화로 연결되는지 확인합니다. `novelEpisodes`에 공개 회차로 등록되지 않은 `src/pages/novels/episode-00N.md` 파일이 있으면 공개 route가 생길 수 있으므로 실패 처리합니다.
 
+`check:korean-reader`는 에피소드 본문과 시스템 문구의 영어 문장이 독자용 한글 병기를 같은 줄에 포함하는지 확인합니다.
+
 `check:dist`는 공개 빌드 산출물의 내부 링크와 이미지/asset 경로가 실제 `dist` 안에 존재하는지 확인합니다. `/mv-studio`, `/login`, `/signup`, `/admin`, `/account` 계열 운영 HTML은 별도 승인 영역이라 제외합니다.
 
 `check:seo`는 공개 HTML의 title, description, canonical, OG/Twitter card, Article/Breadcrumb/CollectionPage 등 JSON-LD 기본 타입을 확인합니다.

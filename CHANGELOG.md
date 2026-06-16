@@ -4,6 +4,7 @@
 
 ### Improved
 
+- `npm run check:korean-reader`를 추가해 에피소드 본문과 시스템 영어 문장이 같은 줄에 한글 병기를 포함하는지 배포 전 검증하도록 했습니다.
 - `npm run check:mobile-css`를 추가해 모바일 메뉴, CTA, 소설 탭, 회차 이동, Music Archive 버튼의 터치 영역과 줄바꿈 CSS 계약을 배포 전 검증하도록 했습니다.
 - `check:content`가 `/novels/` 세계관과 캐릭터 카드의 `id`, `href`, 필수 설명 필드를 검증하도록 보강해 내부 앵커가 깨지는 문제를 배포 전에 잡을 수 있게 했습니다.
 - `check:content`가 `novelEpisodes`에 없는 `src/pages/novels/episode-00N.md` 파일을 실패 처리하도록 보강해, 내부 초안이나 미승인 회차가 Astro 공개 route로 배포되는 사고를 막습니다.

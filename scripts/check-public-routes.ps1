@@ -297,6 +297,7 @@ $results = foreach ($route in $routes) {
 
 $results | Format-Table Name, Path, Status, Pass, Missing, Unexpected -AutoSize
 
-if (($results | Where-Object { -not $_.Pass }).Count -gt 0) {
+$failedResults = @($results | Where-Object { $_.Pass -ne $true })
+if ($failedResults.Count -gt 0) {
   exit 1
 }

@@ -4,6 +4,7 @@
 
 ### Improved
 
+- `check:public-routes`가 표에서 실패를 표시하고도 종료코드 0으로 끝나지 않도록 실패 판정을 명시적으로 보강했습니다.
 - `robots.txt` 생성 소스와 공개 라우트 검증에 `/account` Disallow를 추가해 보호 라우트 노출 정책을 문서와 맞췄습니다.
 - `check:public-routes`가 `sitemap-0.xml`의 공개 URL 포함과 보호/숨김 URL 미노출을 함께 검증하도록 보강했습니다.
 - `check:navigation`을 추가해 공개 오버레이 메뉴의 한국어 라벨, 순서, 내부 canonical href, 업데이트 보조 계층이 배포 전 검증되도록 했습니다.

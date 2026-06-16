@@ -2,6 +2,18 @@ export const siteUpdates = [
   {
     date: '2026.06.16',
     type: 'Site',
+    title: '공개 라우트 검증 실패 판정 보강',
+    summary:
+      'check:public-routes가 표에서 실패를 표시하고도 종료코드 0으로 끝나지 않도록 실패 결과 집계를 명시적으로 보강했습니다.',
+    areas: ['notice', 'site'],
+    links: [
+      { label: '업데이트', href: '/updates/' },
+      { label: 'robots', href: '/robots.txt' }
+    ]
+  },
+  {
+    date: '2026.06.16',
+    type: 'Site',
     title: '계정 보호 라우트 robots 정책 정리',
     summary:
       '계정/입장 상태 라우트인 /account를 robots.txt Disallow와 공개 라우트 검증에 추가해 보호 라우트 검색 노출 정책을 문서와 맞췄습니다.',

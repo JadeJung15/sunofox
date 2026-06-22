@@ -31,6 +31,7 @@ SunoFox 웹소설 회차를 추가할 때 사용하는 작성 템플릿입니다
   update: '업데이트 로그와 독자 안내에 사용할 짧은 설명입니다.',
   shareTitle: '7화. 확정된 회차 제목 | 악녀는 첫 장에서 웃었다',
   shareDescription: '공유 카드와 Article JSON-LD에 사용할 40자 이상의 회차별 요약입니다.',
+  shareImageAlt: '7화 확정된 회차 제목 공유 이미지 - 주요 장면과 인물이 드러나는 설명입니다.',
   href: '/novels/episode-007/',
   cta: '7화 읽기',
   publishedAt: 'YYYY.MM.DD',
@@ -50,6 +51,7 @@ SunoFox 웹소설 회차를 추가할 때 사용하는 작성 템플릿입니다
 - `publishedAt`과 `isoDate`는 같은 날짜여야 합니다.
 - `shareTitle`은 회차 번호, 회차 제목, 작품명을 함께 포함해야 합니다.
 - `shareDescription`은 40자 이상이어야 하며 공유 카드에서 바로 이해되는 문장으로 작성합니다.
+- `shareImageAlt`는 30자 이상이어야 하며 회차 번호와 회차 제목을 함께 포함해야 합니다.
 - `shareTags`는 3개 이상이며, 작품 공통 키워드가 아닌 회차 고유 키워드를 1개 이상 포함해야 합니다.
 - `ostKey`는 `storyOstMap`에 등록된 키여야 합니다.
 - `src/pages/novels/episode-00N.md` route 파일은 `novelEpisodes` 공개 데이터가 준비된 뒤에만 추가합니다.

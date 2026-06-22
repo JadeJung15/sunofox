@@ -21,10 +21,9 @@ const totalReadMinutes = publishedNovelEpisodes.reduce((sum, episode) => {
   return sum + minutes;
 }, 0);
 const novelListPrimaryActions = [
-  { label: '1화부터 정주행', href: firstNovelEpisode?.href || seasonStatus.startHref, primary: true },
+  { label: '1화부터 읽기', href: firstNovelEpisode?.href || seasonStatus.startHref, primary: true },
   { label: '완결화 보기', href: seasonStatus.finalHref },
-  { label: 'OST 감상', href: artistLinks.featuredOst, external: true },
-  { label: '음악 아카이브', href: musicArchive.href }
+  { label: 'OST 감상', href: artistLinks.featuredOst, external: true }
 ];
 const novelListSummaryItems = [
   { label: '공개 회차', value: `${publishedNovelEpisodes.length}화` },
@@ -90,7 +89,6 @@ const characterAnchorItems = novelProject.characters.map((character) => ({
 
         <div class="novel-platform-actions">
           <a class="main-button" href="#episodes">{novelListCta}</a>
-          <a class="main-button main-button-muted" href={artistLinks.featuredOst} target="_blank" rel="noopener noreferrer">OST 감상</a>
           <a class="main-button main-button-muted" href={musicArchive.href}>음악 아카이브</a>
           <a class="main-button main-button-muted" href="/mv-studio">스튜디오</a>
         </div>
@@ -99,11 +97,8 @@ const characterAnchorItems = novelProject.characters.map((character) => ({
 
     <section class="novel-detail-tabs reveal" aria-label="작품 탭">
       <a href="#episodes">소설 목록</a>
-      <a href="#about">정보</a>
       <a href="#world">세계관</a>
       <a href="#characters">인물</a>
-      <a href="#ost">OST</a>
-      <a href="#keywords">키워드</a>
     </section>
 
     <section id="episodes" class="novel-episode-list reveal" aria-labelledby="episodeListTitle">
@@ -116,8 +111,8 @@ const characterAnchorItems = novelProject.characters.map((character) => ({
       <div class="novel-list-toolbar" aria-label="소설 빠른 이동">
         <div class="novel-list-toolbar-copy">
           <p class="section-kicker">READ ORDER</p>
-          <h3>짧게 완결까지 정주행</h3>
-          <p>첫 미니시즌은 6화 완결입니다. 1화부터 읽거나 완결화로 바로 이동할 수 있습니다.</p>
+          <h3>1화부터 바로 읽기</h3>
+          <p>첫 미니시즌은 6화 완결입니다. 처음부터 읽거나 완결화로 바로 이동하세요.</p>
         </div>
         <a class="novel-list-featured" href={latestNovelEpisode.href} aria-label={`${latestEpisodeTitle} 바로 읽기`}>
           <span>완결화</span>

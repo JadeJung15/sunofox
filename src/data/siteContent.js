@@ -1,4 +1,11 @@
-import { artistLinks, featuredStoryOst, storyOstMap, storyOsts } from './artistContent.js';
+import {
+  artistLinks,
+  detectedErrorStoryOst,
+  featuredStoryOst,
+  latestStoryOst,
+  storyOstMap,
+  storyOsts
+} from './artistContent.js';
 import { footerItems, menuItems } from './navigationContent.js';
 import { archiveAlbum, musicArchive } from './musicContent.js';
 import {
@@ -20,9 +27,11 @@ export {
   archiveAlbum,
   artistLinks,
   categorizedSiteUpdates,
+  detectedErrorStoryOst,
   featuredStoryOst,
   footerItems,
   latestNovelEpisode,
+  latestStoryOst,
   menuItems,
   musicArchive,
   nextNovelEpisode,
@@ -42,8 +51,17 @@ export function getEpisodeOst(episode = novelEpisodes[0]) {
 }
 
 export const sunofoxProfile = {
-  researchDate: '2026.06.14',
+  researchDate: '2026.06.19',
   highlights: [
+    {
+      key: 'video',
+      label: 'YouTube / MV',
+      status: `${musicArchive.videos.length}개 영상 큐레이션`,
+      title: 'Anime OST Studio',
+      summary: 'YouTube에서 공개되는 Anime OST와 영상 흐름을 중심으로 스토리 IP를 확장합니다.',
+      href: artistLinks.youtube,
+      cta: 'YouTube'
+    },
     {
       key: 'novel',
       label: 'Story IP',
@@ -61,15 +79,6 @@ export const sunofoxProfile = {
       summary: 'SunoFox의 오리지널 트랙과 대표 OST를 한 곳에서 이어 보는 음악 아카이브입니다.',
       href: musicArchive.href,
       cta: '음악 보기'
-    },
-    {
-      key: 'video',
-      label: 'YouTube / MV',
-      status: `${musicArchive.videos.length}개 영상 큐레이션`,
-      title: 'Anime OST Studio',
-      summary: 'YouTube 채널과 MV/Shorts로 확장되는 공개 영상 흐름을 음악 허브에서 연결합니다.',
-      href: artistLinks.youtube,
-      cta: 'YouTube'
     },
     {
       key: 'studio',
@@ -94,14 +103,14 @@ export const sunofoxProfile = {
       kicker: 'CHANNEL',
       title: 'SunoFox Anime OST Studio',
       summary:
-        '유튜브 채널은 애니메이션 감성의 오리지널 음악을 공개하는 중심 채널입니다. 공개 채널 소개 기준으로 매주 수요일과 일요일 17:15(KST)에 새 이야기와 선율을 정기적으로 공개하는 운영 흐름을 사용합니다.',
+        '유튜브 채널은 애니메이션 감성의 오리지널 음악과 웹소설 OST를 공개하는 중심 채널입니다. 공개 채널 소개 기준으로 매주 수요일과 일요일 17:15(KST)에 새 이야기와 선율을 정기적으로 공개하는 운영 흐름을 사용합니다.',
       facts: [
         { label: '채널명', value: 'SunoFox / 수노폭스' },
         { label: '핸들', value: '@SunoFox' },
-        { label: '규모', value: '구독자 약 4.17K명 · 영상 130편대' },
+        { label: '규모', value: '구독자 약 4.18K명 · 영상 131편' },
         { label: '누적 조회', value: '90만+ 회 공개 스냅샷 기준' },
         { label: '업로드', value: '수 · 일 17:15 KST' },
-        { label: '카테고리', value: 'Music · South Korea' }
+        { label: '최근 IP', value: latestStoryOst.title }
       ],
       videos: musicArchive.videos.slice(0, 4).map((video) => ({
         ...video,
@@ -167,11 +176,12 @@ export const sunofoxProfile = {
         { label: '첫 작품', value: novelProject.title },
         { label: '장르', value: novelProject.genre },
         { label: '현재 상태', value: `${latestNovelEpisode.label} 공개` },
-        { label: '대표 OST', value: '울어야 할 장면에서 웃은 악녀 OST' }
+        { label: '최근 OST', value: latestStoryOst.title }
       ],
       links: [
         { label: '소설 보러가기', href: '/novels/' },
-        { label: 'OST 감상', href: artistLinks.featuredOst }
+        { label: '대표 OST 감상', href: artistLinks.featuredOst },
+        { label: '최신 OST 감상', href: latestStoryOst.youtubeHref }
       ]
     }
   ],

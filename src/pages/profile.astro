@@ -5,8 +5,8 @@ import { artistLinks, novelProject, structuredData, sunofoxProfile } from '../da
 ---
 
 <Layout
-  title="SunoFox 소개 | Music to Novel"
-  description="SunoFox는 음악에서 시작한 감정과 장면을 웹소설, OST, 스튜디오 제작 흐름으로 확장하는 IP 스튜디오입니다."
+  title="SunoFox 소개 | Anime OST Studio"
+  description="SunoFox는 이야기 기반 Anime OST와 웹소설 OST를 YouTube, 음악 아카이브, Story IP로 확장하는 스튜디오입니다."
   canonical="https://sunofox.com/profile/"
   image={`https://sunofox.com${novelProject.coverImage}`}
   imageAlt={novelProject.coverAlt}
@@ -18,37 +18,42 @@ import { artistLinks, novelProject, structuredData, sunofoxProfile } from '../da
 
   <main id="main-content" class="site-main category-page about-page">
     <section class="category-hero" aria-labelledby="profileTitle">
-      <p class="section-kicker">ABOUT</p>
+      <p class="section-kicker">ANIME OST STUDIO</p>
       <h1 id="profileTitle">SunoFox</h1>
-      <p>SunoFox는 음악에서 시작한 감정과 장면을 웹소설, OST, 영상 제작 흐름으로 확장하는 IP 스튜디오입니다.</p>
+      <p>SunoFox는 이야기 기반 Anime OST와 웹소설 OST를 YouTube, 음악 아카이브, Story IP로 확장하는 스튜디오입니다.</p>
     </section>
 
     <section class="category-content about-compact" aria-label="SunoFox profile">
       <p class="about-lead">
-        먼저 음악으로 장면을 만들고, 그 감정을 캐릭터와 사건으로 옮겨 웹소설로 연재합니다.
+        먼저 YouTube에서 장면과 선율을 공개하고, 선택된 감정선을 웹소설과 영상 패키징으로 확장합니다.
       </p>
 
       <div class="about-route-grid" aria-label="SunoFox operating routes">
-        <a href="/novels/">
+        <a href={artistLinks.youtube} target="_blank" rel="noopener noreferrer">
           <span>01</span>
-          <strong>웹소설</strong>
+          <strong>YouTube / MV</strong>
+          <p>Anime OST와 웹소설 OST를 먼저 공개하는 SunoFox의 중심 채널입니다.</p>
+        </a>
+        <a href="/music/">
+          <span>02</span>
+          <strong>음악 아카이브</strong>
+          <p>대표 OST, 최신 영상, 앨범과 재생목록을 한 곳에서 이어 봅니다.</p>
+        </a>
+        <a href="/novels/">
+          <span>03</span>
+          <strong>Story IP</strong>
           <p>첫 작품 《{novelProject.title}》의 작품 정보와 회차를 공개합니다.</p>
         </a>
-        <a href={artistLinks.featuredOst} target="_blank" rel="noopener noreferrer">
-          <span>02</span>
-          <strong>OST</strong>
-          <p>소설 장면의 감정 원천이 되는 SunoFox 음악을 함께 들을 수 있습니다.</p>
-        </a>
         <a href="/mv-studio">
-          <span>03</span>
+          <span>04</span>
           <strong>스튜디오</strong>
           <p>웹소설, OST, 영상 패키징을 이어 붙이는 제작 공간입니다.</p>
         </a>
       </div>
 
       <ul class="about-line-list">
-        <li>현재 공개 범위는 소개, 웹소설, 스튜디오 중심입니다.</li>
-        <li>OST는 작품의 분위기를 먼저 들려주는 진입점으로 연결합니다.</li>
+        <li>현재 공개 흐름의 첫 진입점은 YouTube / MV와 음악 아카이브입니다.</li>
+        <li>Story IP는 OST에서 시작한 장면을 웹소설 회차와 제작 흐름으로 확장합니다.</li>
         <li>공개 전인 회차와 확장 콘텐츠는 준비 상태가 확정된 뒤만 안내합니다.</li>
       </ul>
     </section>
@@ -57,7 +62,7 @@ import { artistLinks, novelProject, structuredData, sunofoxProfile } from '../da
       <div class="profile-snapshot-head">
         <p class="section-kicker">OFFICIAL HUBS</p>
         <h2 id="profileSnapshotTitle">현재 공개 흐름</h2>
-        <p>독자가 바로 들어갈 수 있는 SunoFox의 공개 콘텐츠 허브만 모았습니다.</p>
+        <p>YouTube, 음악 아카이브, Story IP, 제작 스튜디오로 이어지는 공개 허브만 모았습니다.</p>
       </div>
 
       <div class="profile-snapshot-grid">

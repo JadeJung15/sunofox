@@ -6,6 +6,7 @@ import {
   archiveAlbum,
   featuredStoryOst,
   latestNovelEpisode,
+  latestStoryOst,
   musicArchive,
   musicArchiveStructuredData,
   novelProject
@@ -13,6 +14,7 @@ import {
 
 const currentEpisode = latestNovelEpisode;
 const featuredVideo = musicArchive.videos[0];
+const latestStoryVideo = musicArchive.videos.find((video) => video.videoId === latestStoryOst.videoId) || featuredVideo;
 const videoTypes = Array.from(new Set(musicArchive.videos.map((video) => video.type))).slice(0, 4);
 const videoAnchorItems = Array.from(
   new Map(
@@ -25,18 +27,18 @@ const videoAnchorItems = Array.from(
     ])
   ).values()
 );
-const latestVideoDate = musicArchive.videos[0]?.date || musicArchive.researchDate;
+const latestVideoDate = latestStoryVideo?.date || musicArchive.researchDate;
 const oldestVideoDate = musicArchive.videos.at(-1)?.date || latestVideoDate;
 const musicHeroActions = [
-  { label: '대표 OST', href: featuredStoryOst.href, external: true, primary: true },
+  { label: '최신 영상 감상', href: latestStoryVideo.href, external: true, primary: true },
   { label: 'YouTube 채널', href: artistLinks.youtube, external: true },
   { label: '재생목록', href: artistLinks.youtubePlaylists, external: true },
-  { label: `${currentEpisode.label} 읽기`, href: currentEpisode.href },
-  { label: '작품 정보', href: '/novels/' },
+  { label: 'Story IP', href: '/novels/' },
+  { label: '대표 OST', href: featuredStoryOst.href, external: true },
   { label: '스튜디오', href: '/mv-studio' }
 ];
 const videoDirectActions = [
-  { key: 'latest', label: '최신 영상 감상', href: featuredVideo.href, external: true, primary: true },
+  { key: 'latest', label: '최신 영상 감상', href: latestStoryVideo.href, external: true, primary: true },
   { key: 'channel', label: 'YouTube 채널', href: artistLinks.youtube, external: true },
   { key: 'playlists', label: '재생목록 보기', href: artistLinks.youtubePlaylists, external: true }
 ];
@@ -49,7 +51,7 @@ const videoSummaryItems = [
 ---
 
 <Layout
-  title="SunoFox Music Archive | Music to Novel"
+  title="SunoFox Music Archive | Anime OST Studio"
   description={musicArchive.summary}
   canonical="https://sunofox.com/music/"
   image={`https://sunofox.com${archiveAlbum.image}`}
@@ -65,10 +67,13 @@ const videoSummaryItems = [
       <a class="album-back-link" href="/profile/#discography">SunoFox 소개</a>
 
       <div class="music-archive-copy">
-        <p class="section-kicker">기록</p>
-        <h1 id="musicArchiveTitle">음악 아카이브</h1>
-        <p>{musicArchive.summary}</p>
-        <span>확인 기준 {musicArchive.researchDate}</span>
+        <p class="section-kicker">YOUTUBE / ANIME OST</p>
+        <h1 id="musicArchiveTitle">Anime OST / Story OST 허브</h1>
+        <p>
+          YouTube에서 공개되는 Anime OST, 웹소설 OST, 라이브 아카이브를 한 곳에서 이어 봅니다.
+          음악 아카이브는 SunoFox의 영상 중심 IP 흐름을 정리하는 공개 허브입니다.
+        </p>
+        <span>최신 OST {latestStoryVideo.date} · 확인 기준 {musicArchive.researchDate}</span>
         <div class="music-archive-actions" aria-label="Music archive quick actions">
           {musicHeroActions.map((action) => (
             <a
@@ -95,8 +100,8 @@ const videoSummaryItems = [
 
     <section class="music-flow-section reveal" aria-labelledby="musicFlowTitle">
       <div class="novel-section-head">
-        <p class="section-kicker">MUSIC TO NOVEL</p>
-        <h2 id="musicFlowTitle">작동 방식</h2>
+        <p class="section-kicker">STORY IP FLOW</p>
+        <h2 id="musicFlowTitle">음악에서 IP로 이어지는 방식</h2>
         <span>3 steps</span>
       </div>
 

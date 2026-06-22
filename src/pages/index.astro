@@ -2,7 +2,10 @@
 import SiteChrome from '../components/SiteChrome.astro';
 import Layout from '../layouts/Layout.astro';
 import {
+  artistLinks,
   featuredStoryOst,
+  latestStoryOst,
+  musicArchive,
   novelProject,
   publishedNovelEpisodes,
   structuredData
@@ -11,25 +14,28 @@ import {
 const wordmark = 'SUNOFOX'.split('');
 const heroParticles = Array.from({ length: 42 });
 const novelListCta = '소설 보러가기';
-const totalReadMinutes = publishedNovelEpisodes.reduce((sum, episode) => {
-  const minutes = Number(episode.readTime?.match(/\d+/)?.[0] || 0);
-  return sum + minutes;
-}, 0);
+const channelCta = 'YouTube 채널';
+const channelSpotlight = latestStoryOst || featuredStoryOst;
 const homeHeroStatusItems = [
-  { label: '공개 상태', value: `${publishedNovelEpisodes.length}화 · ${novelProject.season.status}` },
-  { label: '읽는 순서', value: '소설 목록에서 1화부터' },
-  { label: '확장 방향', value: 'OST · 세계관 · 스튜디오' }
+  { label: '채널 성격', value: 'Anime OST Studio' },
+  { label: '운영 흐름', value: 'OST · MV · Story IP' },
+  { label: '최근 영상', value: `EP.02 · ${channelSpotlight.englishTitle}` }
 ];
-const homeNovelFacts = [
-  { label: '미니시즌', value: novelProject.season.title },
-  { label: '공개 회차', value: `${publishedNovelEpisodes.length}화` },
-  { label: '예상 시간', value: `약 ${totalReadMinutes}분` }
+const homeChannelFacts = [
+  { label: '채널', value: 'SunoFox Anime OST Studio' },
+  { label: '영상 큐레이션', value: `${musicArchive.videos.length}편` },
+  { label: 'Story IP', value: `${publishedNovelEpisodes.length}화 · ${novelProject.season.status}` }
+];
+const homeChannelActions = [
+  { label: channelCta, href: artistLinks.youtube, external: true, primary: true },
+  { label: '음악 아카이브', href: '/music/' },
+  { label: novelListCta, href: '/novels/' }
 ];
 ---
 
 <Layout
-  title="SunoFox | Music to Novel"
-  description="SunoFox는 음악에서 시작한 감정을 웹소설과 장면으로 확장하는 IP 스튜디오입니다."
+  title="SunoFox | Anime OST Studio"
+  description="SunoFox는 이야기 기반 Anime OST와 웹소설 OST를 YouTube, 음악 아카이브, Story IP로 확장하는 스튜디오입니다."
   image={`https://sunofox.com${novelProject.coverImage}`}
   imageAlt={novelProject.coverAlt}
   imageWidth={novelProject.coverWidth}
@@ -56,22 +62,22 @@ const homeNovelFacts = [
       </div>
 
       <div class="hero-center reveal">
-        <p class="hero-kicker">MUSIC TO NOVEL STUDIO</p>
+        <p class="hero-kicker">ANIME OST STUDIO</p>
         <h1 id="heroTitle" class="hero-wordmark sign-wordmark" aria-label="SUNOFOX">
           {wordmark.map((letter, index) => (
             <span aria-hidden="true" style={`--letter-index: ${index}`}>{letter}</span>
           ))}
         </h1>
         <p class="hero-tagline">
-          음악에서 시작한 장면을 웹소설로 연재합니다.
+          이야기 기반 Anime OST를 만들고, 음악의 장면을 IP로 확장합니다.
         </p>
         <p class="hero-subcopy">
-          첫 작품인 《{novelProject.title}》는 OST의 감정을 캐릭터와 사건으로 확장한 로맨스 판타지입니다.
+          YouTube에서 공개되는 OST와 영상 감성을 웹소설, 음악 아카이브, 제작 흐름으로 이어 붙입니다.
         </p>
         <div class="home-hero-meta" aria-label="SunoFox current status">
-          <span>WEB NOVEL</span>
-          <span>{novelProject.genre}</span>
-          <span>READ NOW</span>
+          <span>YOUTUBE / MV</span>
+          <span>STORY OST</span>
+          <span>IP HUB</span>
         </div>
         <dl class="home-hero-status" aria-label="SunoFox home status">
           {homeHeroStatusItems.map((item) => (
@@ -84,19 +90,22 @@ const homeNovelFacts = [
       </div>
 
       <div class="hero-side-actions" aria-label="SunoFox quick actions">
-        <a class="main-button main-button-primary" href="/novels/" aria-label="소설 회차 목록으로 이동">{novelListCta}</a>
-        <a class="main-button main-button-muted" href="/music/">음악 보기</a>
-        <a class="main-button main-button-muted" href="/mv-studio">스튜디오</a>
+        <a class="main-button main-button-primary" href={artistLinks.youtube} target="_blank" rel="noopener noreferrer" aria-label="SunoFox YouTube 채널로 이동">{channelCta}</a>
+        <a class="main-button main-button-muted" href="/music/">음악 아카이브</a>
+        <a class="main-button main-button-muted" href="/novels/">Story IP</a>
       </div>
     </section>
 
-    <section class="home-novel-entry reveal" aria-labelledby="homeNovelEntryTitle">
+    <section class="home-channel-entry reveal" aria-labelledby="homeChannelEntryTitle">
       <div>
-        <p class="section-kicker">NOVEL LIST</p>
-        <h2 id="homeNovelEntryTitle">{novelListCta}</h2>
-        <p>《{novelProject.title}》 공개 회차를 한 곳에서 확인하고 바로 읽습니다.</p>
-        <dl class="home-novel-facts" aria-label="Novel list summary">
-          {homeNovelFacts.map((item) => (
+        <p class="section-kicker">YOUTUBE / MV</p>
+        <h2 id="homeChannelEntryTitle">YouTube에서 시작되는 스토리 OST 허브</h2>
+        <p>
+          Anime OST와 영상으로 먼저 장면을 공개하고, 선택된 감정선을 웹소설과 음악 아카이브로 확장합니다.
+          《{novelProject.title}》는 그 흐름에서 이어지는 첫 Story IP입니다.
+        </p>
+        <dl class="home-channel-facts" aria-label="SunoFox channel summary">
+          {homeChannelFacts.map((item) => (
             <div>
               <dt>{item.label}</dt>
               <dd>{item.value}</dd>
@@ -104,31 +113,137 @@ const homeNovelFacts = [
           ))}
         </dl>
       </div>
-      <a class="main-button main-button-primary" href="/novels/" aria-label={`${novelProject.title} 소설 목록 페이지로 이동`}>{novelListCta}</a>
+      <div class="home-channel-actions" aria-label="SunoFox channel entry actions">
+        {homeChannelActions.map((action) => (
+          <a
+            class:list={['main-button', !action.primary && 'main-button-muted']}
+            href={action.href}
+            target={action.external ? '_blank' : undefined}
+            rel={action.external ? 'noopener noreferrer' : undefined}
+          >
+            {action.label}
+          </a>
+        ))}
+      </div>
     </section>
 
     <section class="home-ost-showcase reveal" aria-labelledby="homeOstTitle">
-      <a class="home-ost-thumb" href={featuredStoryOst.href} target="_blank" rel="noopener noreferrer" aria-label={`${featuredStoryOst.title} 감상하기`}>
+      <a class="home-ost-thumb" href={channelSpotlight.youtubeHref} target="_blank" rel="noopener noreferrer" aria-label={`${channelSpotlight.title} 감상하기`}>
         <img
-          src={featuredStoryOst.thumbnail}
-          alt={featuredStoryOst.thumbnailAlt}
+          src={channelSpotlight.thumbnail}
+          alt={channelSpotlight.thumbnailAlt}
           width="480"
           height="360"
           loading="lazy"
           decoding="async"
         />
-        <span>{featuredStoryOst.type}</span>
+        <span>{channelSpotlight.type}</span>
       </a>
 
       <div class="home-ost-copy">
-        <p class="section-kicker">대표 OST</p>
-        <h2 id="homeOstTitle">{featuredStoryOst.title}</h2>
-        <p>{featuredStoryOst.summary}</p>
+        <p class="section-kicker">최근 YouTube 공개</p>
+        <h2 id="homeOstTitle">{channelSpotlight.title}</h2>
+        <p>{channelSpotlight.summary}</p>
         <div class="home-feature-actions">
-          <a class="main-button" href={featuredStoryOst.href} target="_blank" rel="noopener noreferrer">OST 감상</a>
+          <a class="main-button" href={channelSpotlight.youtubeHref} target="_blank" rel="noopener noreferrer">최신 영상 감상</a>
           <a class="main-button main-button-muted" href="/music/">음악 아카이브</a>
         </div>
       </div>
     </section>
   </main>
 </Layout>
+
+<style>
+  .home-channel-entry {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
+    gap: 24px;
+    width: min(1120px, calc(100% - 32px));
+    margin: -58px auto 120px;
+    padding: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
+    background:
+      linear-gradient(135deg, rgba(10, 18, 28, 0.9), rgba(29, 18, 30, 0.82)),
+      rgba(8, 12, 18, 0.92);
+    box-shadow: 0 28px 90px rgba(0, 0, 0, 0.32);
+  }
+
+  .home-channel-entry h2 {
+    max-width: 760px;
+    margin: 0;
+    font-size: clamp(1.65rem, 3vw, 2.8rem);
+    line-height: 1.08;
+    letter-spacing: 0;
+  }
+
+  .home-channel-entry p:not(.section-kicker) {
+    max-width: 760px;
+    margin: 16px 0 0;
+    color: rgba(255, 255, 255, 0.74);
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+
+  .home-channel-facts {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin: 24px 0 0;
+  }
+
+  .home-channel-facts div {
+    min-width: 0;
+    padding: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.055);
+  }
+
+  .home-channel-facts dt {
+    color: rgba(255, 255, 255, 0.52);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .home-channel-facts dd {
+    margin: 8px 0 0;
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 0.95rem;
+    font-weight: 800;
+    line-height: 1.35;
+  }
+
+  .home-channel-actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .home-channel-actions .main-button {
+    justify-content: center;
+    min-height: 46px;
+  }
+
+  @media (max-width: 760px) {
+    .home-channel-entry {
+      grid-template-columns: 1fr;
+      width: min(100% - 24px, 560px);
+      margin: -26px auto 72px;
+      padding: 20px;
+    }
+
+    .home-channel-facts {
+      grid-template-columns: 1fr;
+    }
+
+    .home-channel-actions {
+      flex-direction: column;
+    }
+  }
+</style>

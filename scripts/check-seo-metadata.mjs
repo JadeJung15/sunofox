@@ -215,8 +215,8 @@ const routes = [
     name: 'home',
     file: 'index.html',
     canonical: `${siteUrl}/`,
-    title: 'SunoFox | Music to Novel',
-    descriptionIncludes: '음악에서 시작한 감정',
+    title: 'SunoFox | Anime OST Studio',
+    descriptionIncludes: '이야기 기반 Anime OST',
     jsonLdTypes: ['Organization', 'WebSite', 'CreativeWorkSeries']
   },
   {
@@ -231,7 +231,7 @@ const routes = [
     name: 'music',
     file: 'music/index.html',
     canonical: `${siteUrl}/music/`,
-    title: `${musicArchive.title} | Music to Novel`,
+    title: `${musicArchive.title} | Anime OST Studio`,
     descriptionIncludes: '필모그래피',
     jsonLdTypes: ['CollectionPage', 'BreadcrumbList']
   },
@@ -247,8 +247,8 @@ const routes = [
     name: 'profile',
     file: 'profile/index.html',
     canonical: `${siteUrl}/profile/`,
-    title: 'SunoFox 소개 | Music to Novel',
-    descriptionIncludes: 'IP 스튜디오',
+    title: 'SunoFox 소개 | Anime OST Studio',
+    descriptionIncludes: '이야기 기반 Anime OST',
     jsonLdTypes: ['Organization', 'WebSite']
   },
   {

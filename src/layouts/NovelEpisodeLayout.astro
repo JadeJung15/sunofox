@@ -65,8 +65,7 @@ const episodeSummaryItems = [
   { label: '회차 위치', value: `${episodePosition}/${publishedEpisodes.length}` },
   { label: '시즌', value: `${novelProject.season.label} · ${novelProject.season.status}` },
   { label: '공개일', value: publishedAt || currentEpisode.publishedAt },
-  { label: '읽기 시간', value: readTime || currentEpisode.readTime },
-  { label: '키워드', value: (currentEpisode.shareTags || []).join(' · ') }
+  { label: '읽기 시간', value: readTime || currentEpisode.readTime }
 ].filter((item) => item.value);
 const episodeRailItems = publishedEpisodes.map((episode) => ({
   ...episode,
@@ -152,7 +151,7 @@ const completionActions = [
 
         <nav class="novel-reader-quicklinks" aria-label="회차 내부 이동">
           <a href="#episodeBody" data-reader-action="quick-body">본문 읽기</a>
-          <a href="#episodeIndex" data-reader-action="quick-index">전체 회차</a>
+          <a href="#episodeIndex" data-reader-action="quick-index">회차 목록</a>
           <a href="#episodeOst" data-reader-action="quick-ost">회차 OST</a>
         </nav>
 
@@ -165,7 +164,7 @@ const completionActions = [
           ) : (
             <span aria-disabled="true" data-reader-action="jump-previous-disabled">
               <span>이전</span>
-              <strong>첫 화입니다</strong>
+              <strong>첫 화</strong>
             </span>
           )}
           <a href={backHref} data-reader-action="jump-list">

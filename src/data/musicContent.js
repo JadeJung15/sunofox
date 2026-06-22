@@ -1,4 +1,4 @@
-import { artistLinks, featuredStoryOst } from './artistContent.js';
+import { artistLinks, featuredStoryOst, latestStoryOst } from './artistContent.js';
 
 export const archiveAlbum = {
   title: 'ARCHIVE vol.1',
@@ -50,16 +50,16 @@ export const archiveAlbum = {
 export const musicArchive = {
   title: 'SunoFox Music Archive',
   href: '/music/',
-  researchDate: '2026.06.14',
+  researchDate: '2026.06.19',
   summary:
-    '수노폭스가 공개한 앨범, 유튜브 OST, 웹소설 OST를 필모그래피처럼 이어 보는 음악 기록 페이지입니다.',
+    '수노폭스가 공개한 앨범, 유튜브 OST, 웹소설 OST를 필모그래피처럼 이어 보는 Anime OST 기록 페이지입니다.',
   facts: [
     { label: '채널', value: 'SunoFox Anime OST Studio' },
-    { label: '규모', value: '구독자 약 4.17K명 · 영상 130편대' },
+    { label: '규모', value: '구독자 약 4.18K명 · 영상 131편' },
     { label: '누적 조회', value: '90만+ 회 공개 스냅샷 기준' },
     { label: '업로드', value: '수 · 일 17:15 KST' },
     { label: '장르', value: 'Anime OST, J-Pop Rock, Game Soundtrack' },
-    { label: '정책', value: '오리지널 기획·작사·디렉팅 중심' }
+    { label: '최근 IP', value: '웹소설 OST EP.02까지 공개' }
   ],
   flow: [
     {
@@ -90,6 +90,17 @@ export const musicArchive = {
       thumbnail: featuredStoryOst.thumbnail,
       thumbnailAlt: featuredStoryOst.thumbnailAlt,
       publishedAt: featuredStoryOst.publishedAt
+    },
+    {
+      date: latestStoryOst.date,
+      title: latestStoryOst.title,
+      meta: `${latestStoryOst.englishTitle}｜악녀는 첫 장에서 웃었다`,
+      type: latestStoryOst.type,
+      href: latestStoryOst.youtubeHref,
+      videoId: latestStoryOst.videoId,
+      thumbnail: latestStoryOst.thumbnail,
+      thumbnailAlt: latestStoryOst.thumbnailAlt,
+      publishedAt: latestStoryOst.publishedAt
     },
     {
       date: '2026.06.11',
@@ -161,15 +172,17 @@ export const musicArchive = {
   videoHub: {
     title: 'YouTube / MV 영상 허브',
     summary:
-      '최근 공개 OST, 라이브 아카이브, 애니메이션 OP 감성 영상을 한 곳에서 보고 YouTube 채널과 재생목록으로 이어 봅니다.',
+      '웹소설 OST, 라이브 아카이브, 애니메이션 OP 감성 영상을 한 곳에서 보고 YouTube 채널과 재생목록으로 이어 봅니다.',
     facts: [
       { label: '대표 영상', value: featuredStoryOst.title },
-      { label: '최근 큐레이션', value: 'OST · Live Archive · Anime OP' },
+      { label: '최근 영상', value: latestStoryOst.title },
+      { label: '최근 큐레이션', value: 'Web Novel OST · Live Archive · Anime OP' },
       { label: '주요 이동', value: 'YouTube 채널 · 재생목록 · 대표 OST' }
     ],
     links: [
       { label: 'YouTube 채널', href: artistLinks.youtube },
       { label: '재생목록 보기', href: artistLinks.youtubePlaylists },
+      { label: '최신 OST 감상', href: latestStoryOst.youtubeHref },
       { label: '대표 OST 감상', href: featuredStoryOst.youtubeHref }
     ]
   },

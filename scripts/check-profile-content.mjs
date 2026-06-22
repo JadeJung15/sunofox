@@ -86,6 +86,7 @@ const siteContentModule = await import(`${pathToFileURL(siteContentPath).href}?m
 const {
   archiveAlbum,
   artistLinks,
+  latestStoryOst,
   musicArchive,
   novelProject,
   sunofoxProfile
@@ -170,6 +171,16 @@ const storyTab = sunofoxProfile?.tabs?.find((tab) => tab.id === 'story');
 
 if (youtubeTab?.links?.[0]?.href !== artistLinks.youtube) {
   fail('sunofoxProfile.tabs.youtube links: first link must point to artistLinks.youtube');
+}
+
+if (youtubeTab?.videos?.[0]?.videoId !== latestStoryOst?.videoId) {
+  fail('sunofoxProfile.tabs.youtube videos: first video must be latestStoryOst');
+}
+
+const expectedYoutubeVideoIds = musicArchive.videos.slice(0, 4).map((video) => video.videoId).join('|');
+const actualYoutubeVideoIds = (youtubeTab?.videos || []).map((video) => video.videoId).join('|');
+if (actualYoutubeVideoIds !== expectedYoutubeVideoIds) {
+  fail('sunofoxProfile.tabs.youtube videos: must mirror the first four musicArchive videos');
 }
 
 if (!discographyTab?.tracks || discographyTab.tracks.length !== archiveAlbum.tracks.length) {

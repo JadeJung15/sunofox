@@ -105,7 +105,7 @@ $routes = @(
     Name = "music"
     Path = "/music/"
     File = "music/index.html"
-    Must = @("Music Archive", "Anime OST / Story OST", "music-archive-actions", "music-video-direct-actions", "music-featured-ost-section", "music-release-card", "music-video-feature", "music-video-hub", "music-video-summary", "music-video-anchor-strip", "music-video-u_OwBr3Cstk", "music-video-grid", "music-story-section", 'data-video-action="latest"', 'data-video-action="channel"', 'data-video-action="playlists"', 'data-video-feature="u_OwBr3Cstk"', 'data-video-id="u_OwBr3Cstk"', 'data-video-card="u_OwBr3Cstk"', 'data-video-type="Web Novel OST"', "https://www.youtube.com/@sunofox", "https://www.youtube.com/@sunofox/playlists", "https://www.youtube.com/watch?v=u_OwBr3Cstk", "https://www.youtube.com/watch?v=2KsAbBnf2Lk", "/novels/episode-006/", "https://sunofox.com/music/")
+    Must = @("Music Archive", "Anime OST / Story OST", "music-archive-actions", "music-video-direct-actions", "music-featured-ost-section", "music-release-card", "music-video-feature", "music-video-hub", "music-video-summary", "music-video-anchor-strip", "music-video-2KsAbBnf2Lk", "music-video-u_OwBr3Cstk", "music-video-grid", "music-story-section", 'data-video-action="latest"', 'data-video-action="channel"', 'data-video-action="playlists"', 'data-video-feature="2KsAbBnf2Lk"', 'data-video-id="2KsAbBnf2Lk"', 'data-video-card="2KsAbBnf2Lk"', 'data-video-type="Web Novel OST"', "https://www.youtube.com/@sunofox", "https://www.youtube.com/@sunofox/playlists", "https://www.youtube.com/watch?v=u_OwBr3Cstk", "https://www.youtube.com/watch?v=2KsAbBnf2Lk", "/novels/episode-006/", "https://sunofox.com/music/")
   },
   @{
     Name = "album"

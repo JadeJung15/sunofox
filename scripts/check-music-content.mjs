@@ -103,6 +103,7 @@ const {
   artistLinks,
   archiveAlbum,
   featuredStoryOst,
+  latestStoryOst,
   musicArchive,
   storyOsts
 } = siteContentModule;
@@ -212,6 +213,7 @@ if (!releaseHrefs.has(archiveAlbum?.href)) {
 }
 
 const videoIds = new Set();
+let previousVideoPublishedAt = Number.POSITIVE_INFINITY;
 assertArray('musicArchive.videos', musicArchive?.videos).forEach((video, index) => {
   const label = `musicArchive.videos[${index}]`;
   assertYoutubeVideo(label, video);
@@ -220,10 +222,22 @@ assertArray('musicArchive.videos', musicArchive?.videos).forEach((video, index) 
     fail(`${label} videoId: duplicate video id "${video.videoId}"`);
   }
   videoIds.add(video.videoId);
+
+  const publishedAt = Date.parse(video.publishedAt);
+  if (!Number.isNaN(publishedAt)) {
+    if (publishedAt > previousVideoPublishedAt) {
+      fail(`${label} publishedAt: videos must be sorted newest first`);
+    }
+    previousVideoPublishedAt = publishedAt;
+  }
 });
 
-if (musicArchive?.videos?.[0]?.videoId !== featuredStoryOst?.videoId) {
-  fail('musicArchive.videos[0]: must be the featured story OST');
+if (musicArchive?.videos?.[0]?.videoId !== latestStoryOst?.videoId) {
+  fail('musicArchive.videos[0]: must be the latest story OST');
+}
+
+if (!musicArchive?.videos?.some((video) => video.videoId === featuredStoryOst?.videoId)) {
+  fail('musicArchive.videos: must include featured story OST');
 }
 
 assertArray('musicArchive.videoHub.links', musicArchive?.videoHub?.links).forEach((link, index) => {

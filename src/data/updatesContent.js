@@ -20,7 +20,7 @@ export const siteUpdates = [
     areas: ['notice', 'music', 'site'],
     links: [
       { label: '음악 아카이브', href: '/music/' },
-      { label: '영상 허브', href: '/music/#music-video-u_OwBr3Cstk' }
+      { label: '영상 허브', href: '/music/#music-video-2KsAbBnf2Lk' }
     ]
   },
   {
@@ -419,7 +419,7 @@ export const siteUpdates = [
       'Music Archive의 영상 허브에 유형별 빠른 이동 앵커를 추가해 대표 OST, Live Archive, Anime OP, Dark Fantasy OST 영상을 더 빠르게 찾아볼 수 있게 했습니다.',
     areas: ['music', 'site'],
     links: [
-      { label: '영상 허브', href: '/music/#music-video-u_OwBr3Cstk' },
+      { label: '영상 허브', href: '/music/#music-video-2KsAbBnf2Lk' },
       { label: '음악 아카이브', href: '/music/' }
     ]
   },

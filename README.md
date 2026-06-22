@@ -1,6 +1,6 @@
 # SunoFox Official Site
 
-SunoFox 공식 사이트는 음악에서 시작한 감정과 장면을 웹소설, OST, 음악 아카이브, 스튜디오 제작 흐름으로 확장하는 Cloudflare Pages 기반 정적 사이트입니다.
+SunoFox 공식 사이트는 YouTube에서 공개되는 Anime OST와 웹소설 OST를 음악 아카이브, Story IP, 제작 스튜디오 흐름으로 확장하는 Cloudflare Pages 기반 정적 사이트입니다.
 
 ## Current Production
 
@@ -13,7 +13,7 @@ SunoFox 공식 사이트는 음악에서 시작한 감정과 장면을 웹소설
 | 패키지 매니저 | npm |
 | Cloudflare Pages 프로젝트 | `sf-studio` |
 | 빌드 출력 | `dist` |
-| 공개 사이트 방향 | 웹소설 연재 허브, OST/음악 아카이브, SunoFox 소개, 스튜디오 진입 |
+| 공개 사이트 방향 | YouTube 중심 Anime OST Studio, 웹소설 OST, Story IP, 음악 아카이브, 스튜디오 진입 |
 | 접근 모델 | 공개 사이트 + SF Studio 자체 승인/로그인 |
 
 ## Public Routes

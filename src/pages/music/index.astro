@@ -13,8 +13,8 @@ import {
 } from '../../data/siteContent.js';
 
 const currentEpisode = latestNovelEpisode;
-const featuredVideo = musicArchive.videos[0];
-const latestStoryVideo = musicArchive.videos.find((video) => video.videoId === latestStoryOst.videoId) || featuredVideo;
+const primaryVideo = musicArchive.videos[0];
+const latestStoryVideo = musicArchive.videos.find((video) => video.videoId === latestStoryOst.videoId) || primaryVideo;
 const videoTypes = Array.from(new Set(musicArchive.videos.map((video) => video.type))).slice(0, 4);
 const videoAnchorItems = Array.from(
   new Map(
@@ -68,7 +68,7 @@ const videoSummaryItems = [
 
       <div class="music-archive-copy">
         <p class="section-kicker">YOUTUBE / ANIME OST</p>
-        <h1 id="musicArchiveTitle">Anime OST / Story OST 허브</h1>
+        <h1 id="musicArchiveTitle">Anime OST / Story OST <span class="headline-lock">허브</span></h1>
         <p>
           YouTube에서 공개되는 Anime OST, 웹소설 OST, 라이브 아카이브를 한 곳에서 이어 봅니다.
           음악 아카이브는 SunoFox의 영상 중심 IP 흐름을 정리하는 공개 허브입니다.
@@ -212,25 +212,25 @@ const videoSummaryItems = [
       <div class="music-video-hub" aria-label="YouTube and MV hub">
         <a
           class="music-video-feature"
-          href={featuredVideo.href}
+          href={primaryVideo.href}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={`${featuredVideo.title} 감상하기`}
-          data-video-feature={featuredVideo.videoId}
-          data-video-type={featuredVideo.type}
+          aria-label={`${primaryVideo.title} 감상하기`}
+          data-video-feature={primaryVideo.videoId}
+          data-video-type={primaryVideo.type}
         >
           <img
-            src={featuredVideo.thumbnail}
-            alt={featuredVideo.thumbnailAlt}
+            src={primaryVideo.thumbnail}
+            alt={primaryVideo.thumbnailAlt}
             width="480"
             height="360"
             loading="lazy"
             decoding="async"
           />
-          <span>{featuredVideo.date}</span>
-          <strong>{featuredVideo.title}</strong>
-          <p>{featuredVideo.meta}</p>
-          <em>{featuredVideo.type}</em>
+          <span>{primaryVideo.date}</span>
+          <strong>{primaryVideo.title}</strong>
+          <p>{primaryVideo.meta}</p>
+          <em>{primaryVideo.type}</em>
         </a>
 
         <div class="music-video-hub-copy">

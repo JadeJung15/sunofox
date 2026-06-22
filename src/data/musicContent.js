@@ -81,17 +81,6 @@ export const musicArchive = {
   releases: [archiveAlbum],
   videos: [
     {
-      date: '2026.06.14',
-      title: featuredStoryOst.title,
-      meta: featuredStoryOst.englishTitle,
-      type: featuredStoryOst.type,
-      href: featuredStoryOst.youtubeHref,
-      videoId: featuredStoryOst.videoId,
-      thumbnail: featuredStoryOst.thumbnail,
-      thumbnailAlt: featuredStoryOst.thumbnailAlt,
-      publishedAt: featuredStoryOst.publishedAt
-    },
-    {
       date: latestStoryOst.date,
       title: latestStoryOst.title,
       meta: `${latestStoryOst.englishTitle}｜악녀는 첫 장에서 웃었다`,
@@ -101,6 +90,17 @@ export const musicArchive = {
       thumbnail: latestStoryOst.thumbnail,
       thumbnailAlt: latestStoryOst.thumbnailAlt,
       publishedAt: latestStoryOst.publishedAt
+    },
+    {
+      date: '2026.06.14',
+      title: featuredStoryOst.title,
+      meta: featuredStoryOst.englishTitle,
+      type: featuredStoryOst.type,
+      href: featuredStoryOst.youtubeHref,
+      videoId: featuredStoryOst.videoId,
+      thumbnail: featuredStoryOst.thumbnail,
+      thumbnailAlt: featuredStoryOst.thumbnailAlt,
+      publishedAt: featuredStoryOst.publishedAt
     },
     {
       date: '2026.06.11',

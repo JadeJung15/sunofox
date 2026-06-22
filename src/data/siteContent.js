@@ -63,15 +63,6 @@ export const sunofoxProfile = {
       cta: 'YouTube'
     },
     {
-      key: 'novel',
-      label: 'Story IP',
-      status: '1~6화 미니시즌 완결',
-      title: novelProject.title,
-      summary: '음악에서 시작한 장면을 로맨스 판타지 웹소설로 확장한 첫 공개 작품입니다.',
-      href: '/novels/',
-      cta: '소설 보기'
-    },
-    {
       key: 'music',
       label: '음악 아카이브',
       status: `${archiveAlbum.releaseDate} 공개`,
@@ -79,6 +70,15 @@ export const sunofoxProfile = {
       summary: 'SunoFox의 오리지널 트랙과 대표 OST를 한 곳에서 이어 보는 음악 아카이브입니다.',
       href: musicArchive.href,
       cta: '음악 보기'
+    },
+    {
+      key: 'novel',
+      label: 'Story IP',
+      status: '1~6화 미니시즌 완결',
+      title: novelProject.title,
+      summary: '음악에서 시작한 장면을 로맨스 판타지 웹소설로 확장한 첫 공개 작품입니다.',
+      href: '/novels/',
+      cta: '소설 보기'
     },
     {
       key: 'studio',

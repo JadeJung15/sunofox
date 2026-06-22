@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-06-22
+
+### Improved
+
+- `/music/` YouTube/MV 허브의 대표 영상 카드와 영상 목록 순서를 최신 웹소설 OST EP.02 `감지된 오류`가 먼저 노출되도록 정리했습니다.
+- `/profile/` 최근 영상 목록과 공식 허브 스냅샷 순서를 YouTube, 음악 아카이브, Story IP, 스튜디오 흐름으로 맞췄습니다.
+- `/music/` 히어로 제목과 `/profile/` route 카드 제목의 한글 낱글자 줄바꿈을 방지하고, 프로필 운영 경로를 2x2 카드 흐름으로 정리했습니다.
+- `check:music`과 `check:profile`이 YouTube 영상 데이터의 최신순 정렬과 Profile 최근 영상 동기화를 검증하도록 보강했습니다.
+- README의 사이트 방향 설명을 YouTube 중심 Anime OST Studio / Story IP 허브 기준으로 갱신했습니다.
+
 ## 2026-06-19
 
 ### Improved

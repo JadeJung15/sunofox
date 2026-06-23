@@ -2049,12 +2049,28 @@
     return hours ? `${hours}:${pad(minutes)}:${secs}` : `${pad(minutes)}:${secs}`;
   }
 
+  function workflowMidjourneyPromptForOutput(cut, nijiVersion = null) {
+    let value = String(cut?.midjourneyPrompt || '').trim();
+    if (!value) return '';
+    const version = sanitizeNijiVersion(nijiVersion || state.nijiVersion || els.niji?.value || '7');
+    if (/(^|\s)--niji\s+\d+\b/i.test(value)) {
+      value = value.replace(/(^|\s)--niji\s+\d+\b/gi, `$1--niji ${version}`);
+    } else {
+      value = `${value} --niji ${version}`;
+    }
+    return value
+      .replace(/[ \t]+\n/g, '\n')
+      .replace(/\n{3,}/g, '\n\n')
+      .replace(/[ \t]{2,}/g, ' ')
+      .trim();
+  }
+
   function workflowPromptsFromCuts(cuts, target = 'midjourney') {
     return (cuts || []).map((cut) => {
       const label = cut.workflowLabel || cut.cutLabel || cut.label || `Cut ${pad(cut.number)}`;
       const prompt = target === 'grok'
         ? cut.grokPrompt || cut.videoPrompt || ''
-        : cut.midjourneyPrompt || '';
+        : workflowMidjourneyPromptForOutput(cut);
       return `## ${label}\n${prompt}`.trim();
     }).filter(Boolean).join('\n\n');
   }
@@ -2069,7 +2085,7 @@
         cut.lyric || cut.lyricBeat?.ko || '',
         cut.scene || '',
         cut.use || '',
-        cut.midjourneyPrompt || '',
+        workflowMidjourneyPromptForOutput(cut),
         cut.grokPrompt || cut.videoPrompt || '',
         cut.editNote || '',
         (cut.workflowIssues || cut.issues || []).join('; ')
@@ -4793,7 +4809,7 @@
   function ensureSendableMidjourneyPrompt(cut) {
     if (!cut) return { prompt: '', repaired: false };
     if (isWorkflowPromptCut(cut)) {
-      return { prompt: cut.midjourneyPrompt || '', repaired: false };
+      return { prompt: workflowMidjourneyPromptForOutput(cut), repaired: false };
     }
     if (isImportedPromptCut(cut)) {
       return { prompt: importedPromptForCut(cut, 'midjourney'), repaired: false };
@@ -5961,7 +5977,7 @@
     return state.storyboard.cuts
       .filter((cut) => cut.number >= start && cut.number <= end)
       .map((cut) => {
-        if (isWorkflowPromptCut(cut) && target === 'midjourney') return `Cut ${pad(cut.number)}\n${cut.midjourneyPrompt || ''}`;
+        if (isWorkflowPromptCut(cut) && target === 'midjourney') return `Cut ${pad(cut.number)}\n${workflowMidjourneyPromptForOutput(cut)}`;
         if (isWorkflowPromptCut(cut) && target === 'video') return `Cut ${pad(cut.number)}\n${cut.grokPrompt || cut.videoPrompt || ''}`;
         if (target === 'midjourney') return ensureSendableMidjourneyPrompt(cut).prompt;
         if (target === 'video') return `Cut ${pad(cut.number)}\n${cut.videoPrompt || promptForVideo({ number: cut.number, direction: currentDirection(), lyricBeat: cut.lyricBeat })}`;
@@ -5975,7 +5991,7 @@
     if (isWorkflowPromptCut(cut)) {
       if (state.promptTarget === 'video') return cut.grokPrompt || cut.videoPrompt || '';
       if (state.promptTarget === 'chatgpt') return cut.chatgptPrompt || cut.midjourneyPrompt || '';
-      return cut.midjourneyPrompt || '';
+      return workflowMidjourneyPromptForOutput(cut);
     }
     if (state.promptTarget === 'video') return cut.videoPrompt || promptForVideo({ number: cut.number, direction: currentDirection(), lyricBeat: cut.lyricBeat });
     if (isImportedPromptCut(cut)) return importedPromptForCut(cut, state.promptTarget);
@@ -6054,7 +6070,12 @@
   }
 
   function promptVariant(cut, variantKey) {
-    if (isWorkflowPromptCut(cut)) return cut.midjourneyPrompt || '';
+    if (isWorkflowPromptCut(cut)) {
+      const config = promptVariantConfigs[variantKey] || promptVariantConfigs.niji7;
+      const direction = currentDirection();
+      const version = config.nijiVersion || sanitizeNijiVersion(direction.nijiVersion);
+      return workflowMidjourneyPromptForOutput(cut, version);
+    }
     if (isImportedPromptCut(cut)) return importedPromptForCut(cut, 'midjourney');
     const config = promptVariantConfigs[variantKey] || promptVariantConfigs.niji7;
     const direction = currentDirection();
@@ -6073,7 +6094,7 @@
   function allPrompts() {
     if (!state.storyboard) return '';
     return state.storyboard.cuts.map((cut) => {
-      if (isWorkflowPromptCut(cut) && state.promptTarget === 'midjourney') return `Cut ${pad(cut.number)}\n${cut.midjourneyPrompt || ''}`;
+      if (isWorkflowPromptCut(cut) && state.promptTarget === 'midjourney') return `Cut ${pad(cut.number)}\n${workflowMidjourneyPromptForOutput(cut)}`;
       if (isWorkflowPromptCut(cut) && state.promptTarget === 'video') return `Cut ${pad(cut.number)}\n${cut.grokPrompt || cut.videoPrompt || ''}`;
       if (state.promptTarget === 'midjourney') return ensureSendableMidjourneyPrompt(cut).prompt;
       if (state.promptTarget === 'video') return `Cut ${pad(cut.number)}\n${cut.videoPrompt || promptForVideo({ number: cut.number, direction: currentDirection(), lyricBeat: cut.lyricBeat })}`;
@@ -6907,7 +6928,7 @@
       <div class="mv-workflow-prompt-grid">
         <article>
           <span class="mv-kicker">Midjourney 프롬프트</span>
-          <code>${escapeHtml(cut.midjourneyPrompt || '프롬프트 없음')}</code>
+          <code>${escapeHtml(workflowMidjourneyPromptForOutput(cut) || '프롬프트 없음')}</code>
         </article>
         <article>
           <span class="mv-kicker">Grok 프롬프트</span>

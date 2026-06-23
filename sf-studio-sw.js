@@ -6,7 +6,7 @@ const SF_STUDIO_ASSETS = [
   '/css/sf-category.css?v=20260607-categories',
   '/css/mv-storyboard.css?v=20260607-auth',
   '/js/sfLinkHub.js?v=20260607-nav-platforms',
-  '/js/mvStoryboardStudio.js?v=20260607-auth',
+  '/js/mvStoryboardStudio.js?v=20260624-workflow-mj-hotfix',
   '/assets/sunofox-logo-black.png',
   '/assets/home/hero-anime-city.jpg?v=20260607-art2',
   '/assets/home/release-awakening.jpg?v=20260607-art2',

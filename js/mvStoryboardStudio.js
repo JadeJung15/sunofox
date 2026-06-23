@@ -83,6 +83,7 @@
     local: 'Local 생성',
     gpt: '외부 생성',
     'gpt-markdown': 'MJ Markdown 가져오기',
+    'workflow-md': 'Workflow MD 가져오기',
     'image-only': '키 비주얼 보드'
   };
   const studioRoutes = {
@@ -926,6 +927,7 @@
       queue: null
     },
     statusFilter: 'all',
+    workflowIssueFilter: 'all',
     cutNotes: {},
     failureMarks: {},
     cutMarks: {},
@@ -1342,9 +1344,12 @@
 
   function setupPwaInstallPrompt() {
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sf-studio-sw.js').catch((error) => {
-        console.warn('[SF Studio] service worker registration failed', error);
-      });
+      navigator.serviceWorker
+        .register('/sf-studio-sw.js?v=20260614-music-to-novel', { updateViaCache: 'none' })
+        .then((registration) => registration.update().catch(() => {}))
+        .catch((error) => {
+          console.warn('[SF Studio] service worker registration failed', error);
+        });
     }
     els.installApp?.addEventListener('click', async () => {
       if (!deferredPwaInstallPrompt) return;
@@ -1596,22 +1601,32 @@
     state.importApplySref = Boolean(els.importApplySref?.checked);
     state.importSref = sanitizeMidjourneySref(els.importSref?.value || state.importSref);
     state.importModelMode = sanitizeImportModelMode(state.importModelMode);
-    const cuts = parseGptMarkdownCuts(text);
-    if (!cuts.length) {
-      showError('Cut 01 형식과 ```text 코드블록을 찾지 못했습니다. MJ Markdown 원문 전체를 파일로 업로드하거나 붙여넣기 영역에 입력해 주세요.');
+    const imported = parseStudioMarkdownImport(text);
+    if (!imported.cuts.length) {
+      showError(imported.errorMessage || 'Cut 01 형식의 Markdown 원문을 찾지 못했습니다. Workflow MD 또는 MJ Markdown 원문 전체를 파일로 업로드하거나 붙여넣기 영역에 입력해 주세요.');
       return;
     }
 
-    if (state.storyboard && !window.confirm('현재 작업을 MJ Markdown 가져오기 결과로 교체할까요?')) {
+    const importLabel = imported.kind === 'workflow-md' ? 'Workflow MD' : 'MJ Markdown';
+    if (state.storyboard && !window.confirm(`현재 작업을 ${importLabel} 가져오기 결과로 교체할까요?`)) {
       return;
     }
 
     revokeObjectUrls();
-    const title = els.title.value.trim() || filename.replace(/\.(md|markdown|txt)$/i, '') || 'MJ Markdown 가져오기';
+    const metadataTitle = imported.kind === 'workflow-md'
+      ? imported.metadata.project || imported.metadata.episode || ''
+      : '';
+    const title = els.title.value.trim() || metadataTitle || filename.replace(/\.(md|markdown|txt)$/i, '') || `${importLabel} 가져오기`;
     if (!els.title.value.trim()) els.title.value = title;
-    if (!els.style.value.trim()) els.style.value = 'Imported anime MV image prompt sequence';
-    state.storyboard = storyboardFromGptMarkdown(cuts, filename, title);
-    state.generationSource = 'gpt-markdown';
+    if (!els.style.value.trim()) {
+      els.style.value = imported.kind === 'workflow-md'
+        ? 'Imported anime OST Workflow MD production pack'
+        : 'Imported anime MV image prompt sequence';
+    }
+    state.storyboard = imported.kind === 'workflow-md'
+      ? storyboardFromWorkflowMarkdown(imported, filename, title)
+      : storyboardFromGptMarkdown(imported.cuts, filename, title);
+    state.generationSource = imported.kind;
     state.activeTab = 'assist';
     state.studioRoute = 'storyboard';
     state.selectedCut = state.storyboard.cuts[0]?.number || 1;
@@ -1633,6 +1648,7 @@
     state.cutMarks = {};
     state.promptHistory = {};
     state.search = '';
+    state.workflowIssueFilter = 'all';
 
     syncUiMode();
     syncStudioSurface();
@@ -1643,7 +1659,10 @@
     setResultActionsEnabled(true);
     saveProject('auto');
     render();
-    toast(`${state.storyboard.cuts.length}컷 MJ 프롬프트를 가져왔습니다.`);
+    const issueCount = imported.kind === 'workflow-md' ? imported.issues.length : 0;
+    toast(issueCount
+      ? `${state.storyboard.cuts.length}컷 Workflow MD를 가져왔습니다. 검증 메시지 ${issueCount}개를 확인하세요.`
+      : `${state.storyboard.cuts.length}컷 ${importLabel}를 가져왔습니다.`);
   }
 
   function parseGptMarkdownCuts(text) {
@@ -1670,6 +1689,393 @@
       if (!byNumber.has(cut.number)) byNumber.set(cut.number, cut);
     });
     return [...byNumber.values()].sort((a, b) => a.number - b.number);
+  }
+
+  function parseStudioMarkdownImport(text) {
+    const workflow = parseWorkflowMarkdown(text);
+    if (workflow.isWorkflow) return workflow;
+    const cuts = parseGptMarkdownCuts(text);
+    return {
+      kind: 'gpt-markdown',
+      isWorkflow: false,
+      metadata: {},
+      cuts,
+      issues: [],
+      stats: {
+        cutCount: cuts.length
+      },
+      errorMessage: cuts.length
+        ? ''
+        : 'Cut 01 형식과 ```text 코드블록을 찾지 못했습니다. Workflow MD 또는 MJ Markdown 원문 전체를 입력해 주세요.'
+    };
+  }
+
+  function parseWorkflowMarkdown(text) {
+    const source = String(text || '').replace(/\r\n?/g, '\n');
+    const isWorkflow = isWorkflowMarkdown(source);
+    if (!isWorkflow) {
+      return {
+        kind: 'workflow-md',
+        isWorkflow: false,
+        metadata: {},
+        cuts: [],
+        issues: [],
+        stats: {},
+        errorMessage: ''
+      };
+    }
+
+    const split = splitWorkflowFrontmatter(source);
+    const metadataSource = `${split.frontmatter}\n${metadataBlockBeforeFirstCut(split.body)}`;
+    const metadata = parseWorkflowMetadata(metadataSource);
+    const cutBlocks = extractWorkflowCutBlocks(split.body);
+    const issues = [];
+    invalidWorkflowCutHeadings(split.body).forEach((heading) => {
+      issues.push(`컷 번호를 인식할 수 없습니다: ${heading}`);
+    });
+    if (!cutBlocks.length) {
+      return {
+        kind: 'workflow-md',
+        isWorkflow: true,
+        metadata,
+        cuts: [],
+        issues,
+        stats: {},
+        errorMessage: 'Workflow MD로 보이지만 ## Cut 01 또는 ## C01 형식의 컷 헤딩을 찾지 못했습니다.'
+      };
+    }
+
+    const cuts = cutBlocks.map((item, index) => parseWorkflowCutBlock(item, index));
+    const numberCounts = cuts.reduce((acc, cut) => {
+      acc.set(cut.number, (acc.get(cut.number) || 0) + 1);
+      return acc;
+    }, new Map());
+
+    cuts.forEach((cut) => {
+      if ((numberCounts.get(cut.number) || 0) > 1) {
+        addWorkflowCutIssue(cut, '컷 번호가 중복되었습니다.');
+      }
+      if (!cut.time) addWorkflowCutIssue(cut, 'time 값이 없습니다.');
+      if (!cut.midjourneyPrompt) addWorkflowCutIssue(cut, 'Midjourney 프롬프트가 없습니다.');
+      if (!cut.grokPrompt) addWorkflowCutIssue(cut, 'Grok 프롬프트가 없습니다.');
+      if (cut.unclosedFence) addWorkflowCutIssue(cut, '닫히지 않은 코드블록이 있습니다.');
+      if (cut.time && !cut.timeRange) addWorkflowCutIssue(cut, 'time 형식을 해석할 수 없습니다.');
+      if (cut.timeRange && cut.timeRange.end <= cut.timeRange.start) {
+        addWorkflowCutIssue(cut, 'time 종료 시각이 시작 시각보다 빠르거나 같습니다.');
+      }
+    });
+
+    [...numberCounts.entries()]
+      .filter(([, count]) => count > 1)
+      .forEach(([number]) => issues.push(`Cut ${pad(number)} 번호가 중복되었습니다.`));
+
+    const maxNumber = Math.max(...cuts.map((cut) => cut.number));
+    for (let number = 1; number <= maxNumber; number += 1) {
+      if (!numberCounts.has(number)) issues.push(`Cut ${pad(number)} 번호가 누락되었습니다.`);
+    }
+
+    const expectedTotal = Number(metadata.total_cuts || metadata.totalCuts || 0);
+    if (Number.isFinite(expectedTotal) && expectedTotal > 0 && expectedTotal !== cuts.length) {
+      issues.push(`전체 컷 수가 일치하지 않습니다. total_cuts ${expectedTotal}, 실제 ${cuts.length}컷입니다.`);
+    }
+
+    const timedCuts = cuts
+      .filter((cut) => cut.timeRange)
+      .sort((a, b) => a.timeRange.start - b.timeRange.start || a.number - b.number);
+    timedCuts.forEach((cut, index) => {
+      const previous = timedCuts[index - 1];
+      if (previous && cut.timeRange.start < previous.timeRange.end - 0.02) {
+        addWorkflowCutIssue(cut, `이전 컷 Cut ${pad(previous.number)}과 타임라인이 겹칩니다.`);
+      }
+    });
+
+    cuts.forEach((cut) => {
+      cut.issues.forEach((message) => issues.push(`${cut.label}: ${message}`));
+    });
+
+    const sortedCuts = cuts.sort((a, b) => a.number - b.number || a.sequence - b.sequence);
+    const stats = workflowStatsForCuts(sortedCuts, metadata);
+    return {
+      kind: 'workflow-md',
+      isWorkflow: true,
+      metadata,
+      cuts: sortedCuts,
+      issues: dedupeStrings(issues),
+      stats,
+      errorMessage: ''
+    };
+  }
+
+  function isWorkflowMarkdown(source) {
+    const value = String(source || '');
+    const hasVersion = /^sf_studio_md_version\s*:\s*2\s*$/im.test(value)
+      || /^---[\s\S]*?sf_studio_md_version\s*:\s*2[\s\S]*?---/im.test(value);
+    const hasCutHeading = /^#{2,6}\s*(?:cut\s*\d{1,4}|c\d{1,4})\b/im.test(value);
+    const hasWorkflowMeta = /^(project|episode|audio_length|edit_mode|grok_source_duration|aspect_ratio|total_cuts)\s*:/im.test(value);
+    const hasCutFields = /^(time|duration|lyric|scene|use)\s*:/im.test(value);
+    const hasImageRole = /^#{3,6}\s*(?:midjourney_prompt|midjourney prompt|미드저니 프롬프트|image_prompt|mj)\s*$/im.test(value)
+      || /^```(?:mj|midjourney|image_prompt)\b/im.test(value);
+    const hasVideoRole = /^#{3,6}\s*(?:grok_prompt|grok prompt|그록 프롬프트|video_prompt|grok)\s*$/im.test(value)
+      || /^```(?:grok|video_prompt)\b/im.test(value);
+    return hasVersion || (hasCutHeading && (hasImageRole || hasVideoRole || (hasWorkflowMeta && hasCutFields)));
+  }
+
+  function splitWorkflowFrontmatter(source) {
+    const match = String(source || '').match(/^\s*---\s*\n([\s\S]*?)\n---\s*(?:\n|$)/);
+    if (!match) return { frontmatter: '', body: String(source || '') };
+    return {
+      frontmatter: match[1],
+      body: String(source || '').slice(match[0].length)
+    };
+  }
+
+  function metadataBlockBeforeFirstCut(body) {
+    const match = /^#{2,6}\s*(?:cut\s*\d{1,4}|c\d{1,4})\b/im.exec(body);
+    return match ? body.slice(0, match.index) : body;
+  }
+
+  function parseWorkflowMetadata(value) {
+    const metadata = {};
+    String(value || '').split('\n').forEach((line) => {
+      const match = line.match(/^\s*([A-Za-z][\w-]*)\s*:\s*(.*?)\s*$/);
+      if (!match) return;
+      metadata[match[1].trim()] = match[2].trim();
+    });
+    return metadata;
+  }
+
+  function extractWorkflowCutBlocks(body) {
+    const heading = /^#{2,6}\s*(?:cut\s*0*(\d{1,4})|c0*(\d{1,4}))(?:\s*[-:/|].*)?\s*$/gim;
+    const matches = [];
+    let match;
+    while ((match = heading.exec(body))) {
+      matches.push({
+        index: match.index,
+        end: heading.lastIndex,
+        number: Number(match[1] || match[2])
+      });
+    }
+    return matches.map((item, index) => ({
+      number: item.number,
+      sequence: index + 1,
+      block: body
+        .slice(item.end, matches[index + 1]?.index ?? body.length)
+        .replace(/^\s*---\s*$/gm, '')
+        .trim()
+    }));
+  }
+
+  function invalidWorkflowCutHeadings(body) {
+    const invalid = [];
+    const heading = /^#{2,6}\s*(?:cut|c)\b(?!\s*\d)[^\n]*$/gim;
+    let match;
+    while ((match = heading.exec(body))) {
+      invalid.push(match[0].replace(/^#+\s*/, '').trim());
+    }
+    return invalid;
+  }
+
+  function parseWorkflowCutBlock(item, index) {
+    const fields = parseWorkflowCutFields(item.block);
+    const sections = parseWorkflowSections(item.block);
+    const timeRange = parseWorkflowTimeRange(fields.time);
+    const durationSeconds = parseWorkflowDurationValue(fields.duration)
+      ?? (timeRange ? Math.max(0, timeRange.end - timeRange.start) : null);
+    const label = `Cut ${pad(item.number)}`;
+    return {
+      number: item.number,
+      sequence: item.sequence || index + 1,
+      label,
+      cutLabel: label,
+      time: fields.time || '',
+      duration: fields.duration || (Number.isFinite(durationSeconds) ? `${durationSeconds.toFixed(2)}s` : ''),
+      durationSeconds,
+      timeRange,
+      lyric: fields.lyric || fields.cue || '',
+      scene: fields.scene || '',
+      use: fields.use || '',
+      midjourneyPrompt: sections.midjourney || '',
+      grokPrompt: sections.grok || '',
+      editNote: sections.edit || '',
+      issues: [],
+      unclosedFence: ((item.block.match(/^```/gm) || []).length % 2) === 1
+    };
+  }
+
+  function parseWorkflowCutFields(block) {
+    const fields = {};
+    const firstStructuredBlock = block.search(/^#{3,6}\s+|^```/m);
+    const zone = firstStructuredBlock >= 0 ? block.slice(0, firstStructuredBlock) : block;
+    const field = /^\s*(time|duration|lyric|cue|scene|use)\s*:\s*(.*?)\s*$/gim;
+    let match;
+    while ((match = field.exec(zone))) {
+      fields[match[1].toLowerCase()] = match[2].trim();
+    }
+    return fields;
+  }
+
+  function parseWorkflowSections(block) {
+    const sections = {};
+    const headings = [];
+    const heading = /^#{3,6}\s*(.+?)\s*$/gm;
+    let match;
+    while ((match = heading.exec(block))) {
+      headings.push({
+        role: workflowRoleFor(match[1]),
+        start: match.index,
+        contentStart: heading.lastIndex
+      });
+    }
+    headings.forEach((item, index) => {
+      if (!item.role) return;
+      const end = headings[index + 1]?.start ?? block.length;
+      appendWorkflowSection(sections, item.role, cleanWorkflowSectionContent(block.slice(item.contentStart, end)));
+    });
+
+    const fence = /```([A-Za-z0-9_-]*)[^\n]*\n?([\s\S]*?)```/g;
+    while ((match = fence.exec(block))) {
+      const role = workflowRoleFor(match[1]);
+      if (!role || sections[role]) continue;
+      appendWorkflowSection(sections, role, match[2]);
+    }
+    return sections;
+  }
+
+  function workflowRoleFor(value) {
+    const key = String(value || '')
+      .trim()
+      .toLowerCase()
+      .replace(/[\s_-]+/g, '')
+      .replace(/[：:]+$/g, '');
+    if (['midjourneyprompt', 'midjourney', '미드저니프롬프트', 'imageprompt', 'mj'].includes(key)) return 'midjourney';
+    if (['grokprompt', 'grok', '그록프롬프트', 'videoprompt'].includes(key)) return 'grok';
+    if (['editnote', '편집메모', 'note', 'edit'].includes(key)) return 'edit';
+    return '';
+  }
+
+  function appendWorkflowSection(sections, role, value) {
+    const text = normalizeWorkflowText(value);
+    if (!role || !text) return;
+    sections[role] = sections[role] ? `${sections[role]}\n\n${text}` : text;
+  }
+
+  function cleanWorkflowSectionContent(value) {
+    const trimmed = String(value || '').trim();
+    const fenced = trimmed.match(/^```[A-Za-z0-9_-]*[^\n]*\n?([\s\S]*?)```$/);
+    return fenced ? fenced[1] : trimmed;
+  }
+
+  function normalizeWorkflowText(value) {
+    return String(value || '')
+      .replace(/\r\n?/g, '\n')
+      .replace(/^\s*---\s*$/gm, '')
+      .split('\n')
+      .map((line) => line.trimEnd())
+      .join('\n')
+      .replace(/\n{3,}/g, '\n\n')
+      .trim();
+  }
+
+  function parseWorkflowTimeRange(value) {
+    const match = String(value || '').trim().match(/^(.+?)\s*[~\-–]\s*(.+)$/);
+    if (!match) return null;
+    const start = parseWorkflowTimeValue(match[1]);
+    const end = parseWorkflowTimeValue(match[2]);
+    if (!Number.isFinite(start) || !Number.isFinite(end)) return null;
+    return {
+      start,
+      end,
+      duration: Math.max(0, end - start)
+    };
+  }
+
+  function parseWorkflowTimeValue(value) {
+    const cleaned = String(value || '').trim();
+    const parts = cleaned.split(':').map((part) => part.trim());
+    if (parts.length === 2) {
+      const minutes = Number(parts[0]);
+      const seconds = Number(parts[1]);
+      return Number.isFinite(minutes) && Number.isFinite(seconds) ? minutes * 60 + seconds : NaN;
+    }
+    if (parts.length === 3) {
+      const hours = Number(parts[0]);
+      const minutes = Number(parts[1]);
+      const seconds = Number(parts[2]);
+      return [hours, minutes, seconds].every(Number.isFinite) ? hours * 3600 + minutes * 60 + seconds : NaN;
+    }
+    return NaN;
+  }
+
+  function parseWorkflowDurationValue(value) {
+    const match = String(value || '').trim().match(/^(\d+(?:\.\d+)?)\s*s?$/i);
+    return match ? Number(match[1]) : null;
+  }
+
+  function workflowStatsForCuts(cuts, metadata = {}) {
+    const ranges = cuts.map((cut) => cut.timeRange).filter(Boolean);
+    const timelineStart = ranges.length ? Math.min(...ranges.map((range) => range.start)) : 0;
+    const timelineEnd = ranges.length ? Math.max(...ranges.map((range) => range.end)) : 0;
+    const totalDuration = cuts.reduce((sum, cut) => sum + (Number(cut.durationSeconds) || 0), 0);
+    const average = cuts.length ? totalDuration / cuts.length : 0;
+    const audioLength = parseWorkflowTimeValue(metadata.audio_length || metadata.audioLength || '');
+    return {
+      cutCount: cuts.length,
+      issueCutCount: cuts.filter((cut) => cut.issues.length).length,
+      timelineStart,
+      timelineEnd,
+      timelineLengthSeconds: Math.max(0, timelineEnd - timelineStart),
+      timelineLengthLabel: formatWorkflowSeconds(Math.max(0, timelineEnd - timelineStart)),
+      totalDurationSeconds: totalDuration,
+      averageCutSeconds: average,
+      averageCutLabel: Number.isFinite(average) ? `${average.toFixed(2)}s` : '-',
+      audioLengthSeconds: Number.isFinite(audioLength) ? audioLength : null,
+      audioLengthLabel: Number.isFinite(audioLength) ? formatWorkflowSeconds(audioLength) : (metadata.audio_length || '-')
+    };
+  }
+
+  function addWorkflowCutIssue(cut, message) {
+    if (!cut.issues.includes(message)) cut.issues.push(message);
+  }
+
+  function dedupeStrings(values) {
+    return [...new Set(values.filter(Boolean))];
+  }
+
+  function formatWorkflowSeconds(seconds) {
+    if (!Number.isFinite(seconds) || seconds < 0) return '-';
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = (seconds % 60).toFixed(2).padStart(5, '0');
+    return hours ? `${hours}:${pad(minutes)}:${secs}` : `${pad(minutes)}:${secs}`;
+  }
+
+  function workflowPromptsFromCuts(cuts, target = 'midjourney') {
+    return (cuts || []).map((cut) => {
+      const label = cut.workflowLabel || cut.cutLabel || cut.label || `Cut ${pad(cut.number)}`;
+      const prompt = target === 'grok'
+        ? cut.grokPrompt || cut.videoPrompt || ''
+        : cut.midjourneyPrompt || '';
+      return `## ${label}\n${prompt}`.trim();
+    }).filter(Boolean).join('\n\n');
+  }
+
+  function workflowCutlistCsvFromCuts(cuts) {
+    const rows = [['cut', 'time', 'duration', 'lyric', 'scene', 'use', 'midjourney_prompt', 'grok_prompt', 'edit_note', 'issues'].join(',')];
+    (cuts || []).forEach((cut) => {
+      rows.push([
+        cut.workflowLabel || cut.cutLabel || cut.label || `Cut ${pad(cut.number)}`,
+        cut.timecode || cut.time || '',
+        cut.duration || '',
+        cut.lyric || cut.lyricBeat?.ko || '',
+        cut.scene || '',
+        cut.use || '',
+        cut.midjourneyPrompt || '',
+        cut.grokPrompt || cut.videoPrompt || '',
+        cut.editNote || '',
+        (cut.workflowIssues || cut.issues || []).join('; ')
+      ].map(csvCell).join(','));
+    });
+    return rows.join('\n');
   }
 
   function parsedMarkdownCut(numberValue, labelValue, promptValue) {
@@ -1795,7 +2201,11 @@
   }
 
   function isImportedPromptCut(cut) {
-    return Boolean(cut?.promptLocked || cut?.source === 'gpt-markdown' || state.storyboard?.source === 'gpt-markdown');
+    return Boolean(cut?.source === 'gpt-markdown' || state.storyboard?.source === 'gpt-markdown');
+  }
+
+  function isWorkflowPromptCut(cut) {
+    return Boolean(cut?.source === 'workflow-md' || state.storyboard?.source === 'workflow-md');
   }
 
   function importedPromptForCut(cut, target = 'midjourney') {
@@ -1952,6 +2362,82 @@
       storyStructure: importedStoryStructure(cuts.length),
       cuts
     };
+  }
+
+  function storyboardFromWorkflowMarkdown(workflow, filename, title) {
+    const cuts = workflow.cuts.map((cut) => ({
+      number: cut.number,
+      source: 'workflow-md',
+      promptLocked: true,
+      workflowLabel: cut.label,
+      cutLabel: cut.label,
+      importedLabel: cut.lyric || cut.scene || cut.label,
+      timecode: cut.time,
+      duration: cut.duration,
+      durationSeconds: cut.durationSeconds,
+      lyric: cut.lyric,
+      scene: cut.scene || cut.lyric || `${cut.label} 장면`,
+      use: cut.use,
+      editNote: cut.editNote,
+      workflowIssues: cut.issues,
+      shotType: cut.use || 'Workflow MD 컷',
+      emotion: cut.lyric || cut.scene || 'Workflow MD 감정선',
+      camera: cut.scene || 'Workflow MD 장면 기준',
+      visualKey: importedVisualKey(cut.midjourneyPrompt, cut.scene || cut.lyric || cut.label),
+      lyricBeat: {
+        ko: cut.lyric || `${cut.label} 구간`,
+        en: cut.scene || cut.lyric || cut.label
+      },
+      chatgptPrompt: cut.midjourneyPrompt,
+      midjourneyPrompt: cut.midjourneyPrompt,
+      grokPrompt: cut.grokPrompt,
+      videoPrompt: cut.grokPrompt
+    }));
+    return {
+      source: 'workflow-md',
+      importedFrom: filename,
+      title,
+      cutFlow: 'narrative',
+      promptMode: 'video',
+      nijiVersion: '',
+      midjourneyProfile: '',
+      importApplyProfile: false,
+      importProfile: '',
+      importApplySref: false,
+      importSref: '',
+      importModelMode: 'workflow',
+      workflowMeta: workflow.metadata,
+      workflowIssues: workflow.issues,
+      workflowStats: workflow.stats,
+      characterSheetPrompt: '',
+      styleGuidePrompt: '',
+      conceptAnalysis: {
+        coreEmotion: `Workflow MD ${cuts.length}컷 감정선`,
+        storyTheme: workflow.metadata.project || workflow.metadata.episode || 'Workflow MD 기반 MV 제작 패키지',
+        worldSetting: summarizeImportedWorld(cuts),
+        mainCharacter: 'Workflow MD 원문에 포함된 캐릭터와 장면 기준을 따릅니다.',
+        visualTone: '컷별 Midjourney 이미지 프롬프트와 Grok 영상 프롬프트를 분리 보존합니다.',
+        cameraStyle: 'time, lyric, scene, edit_note를 기준으로 MV 편집 컷을 관리합니다.',
+        lyricAnalysis: 'SF Studio가 Workflow MD를 컷별 이미지/영상/편집 작업 보드로 변환했습니다.'
+      },
+      storyStructure: workflowStoryStructure(cuts, workflow.metadata),
+      cuts
+    };
+  }
+
+  function workflowStoryStructure(cuts, metadata = {}) {
+    const total = cuts.length;
+    if (!total) return [];
+    const thirds = [
+      { phase: 'Opening', start: 1, end: Math.max(1, Math.ceil(total / 3)), summary: '초반 훅과 세계관 진입 컷을 Workflow MD 기준으로 정리합니다.' },
+      { phase: 'Build', start: Math.ceil(total / 3) + 1, end: Math.max(Math.ceil(total / 3) + 1, Math.ceil(total * 2 / 3)), summary: '중반 감정선과 장면 전환을 time/lyric 기준으로 연결합니다.' },
+      { phase: 'Final', start: Math.ceil(total * 2 / 3) + 1, end: total, summary: '후반 클라이맥스와 엔딩 후보 컷을 편집 메모와 함께 관리합니다.' }
+    ].filter((phase) => phase.start <= total);
+    return thirds.map((phase) => ({
+      phase: phase.phase,
+      cutRange: `Cut ${pad(phase.start)}-${pad(phase.end)}`,
+      summary: metadata.edit_mode ? `${phase.summary} 편집 모드: ${metadata.edit_mode}.` : phase.summary
+    }));
   }
 
   function summarizeImportedWorld(cuts) {
@@ -3904,6 +4390,8 @@
             ${promptActionButtonsHtml(cut)}
           </div>
 
+          ${workflowCutDetailHtml(cut)}
+
           ${basicMode ? simpleCutGuideHtml(cut, status, stats) : `
             ${promptQualityHtml(cut)}
             ${promptVariantsHtml(cut)}
@@ -4029,6 +4517,22 @@
       state.statusFilter = button.dataset.statusFilter || 'all';
       saveProject('auto');
       renderAssist();
+    }
+    if (action === 'workflow-filter') {
+      state.workflowIssueFilter = button.dataset.workflowFilter || 'all';
+      saveProject('auto');
+      renderAssist();
+    }
+    if (action === 'copy-workflow-mj') {
+      copyText(workflowPromptsFromCuts(state.storyboard?.cuts || [], 'midjourney'), 'Workflow MD Midjourney 프롬프트');
+    }
+    if (action === 'copy-workflow-grok') {
+      copyText(workflowPromptsFromCuts(state.storyboard?.cuts || [], 'grok'), 'Workflow MD Grok 프롬프트');
+    }
+    if (action === 'download-workflow-csv') {
+      if (state.storyboard?.cuts?.length) {
+        downloadText(`${slugify(els.title.value || 'sf-studio')}-workflow-cutlist.csv`, workflowCutlistCsvFromCuts(state.storyboard.cuts), 'text/csv;charset=utf-8');
+      }
     }
     if (action === 'toggle-mark') {
       const key = button.dataset.mark;
@@ -4189,6 +4693,10 @@
   function fixPromptWarnings(cutNumber) {
     if (!state.storyboard?.cuts?.length) return;
     const cut = getCut(cutNumber);
+    if (isWorkflowPromptCut(cut)) {
+      toast('Workflow MD 프롬프트는 원본 보존 상태입니다.');
+      return;
+    }
     if (cut?.promptLocked && state.promptTarget !== 'video') {
       toast('MJ Markdown 프롬프트는 원본 보존 상태입니다.');
       return;
@@ -4207,6 +4715,10 @@
 
   function fixAllPromptWarnings() {
     if (!state.storyboard?.cuts?.length) return;
+    if (state.storyboard.source === 'workflow-md') {
+      toast('Workflow MD 프롬프트는 원본 보존 상태입니다.');
+      return;
+    }
     if (state.storyboard.source === 'gpt-markdown' && state.promptTarget !== 'video') {
       toast('MJ Markdown 프롬프트는 원본 보존 상태입니다.');
       return;
@@ -4280,6 +4792,9 @@
 
   function ensureSendableMidjourneyPrompt(cut) {
     if (!cut) return { prompt: '', repaired: false };
+    if (isWorkflowPromptCut(cut)) {
+      return { prompt: cut.midjourneyPrompt || '', repaired: false };
+    }
     if (isImportedPromptCut(cut)) {
       return { prompt: importedPromptForCut(cut, 'midjourney'), repaired: false };
     }
@@ -5446,6 +5961,8 @@
     return state.storyboard.cuts
       .filter((cut) => cut.number >= start && cut.number <= end)
       .map((cut) => {
+        if (isWorkflowPromptCut(cut) && target === 'midjourney') return `Cut ${pad(cut.number)}\n${cut.midjourneyPrompt || ''}`;
+        if (isWorkflowPromptCut(cut) && target === 'video') return `Cut ${pad(cut.number)}\n${cut.grokPrompt || cut.videoPrompt || ''}`;
         if (target === 'midjourney') return ensureSendableMidjourneyPrompt(cut).prompt;
         if (target === 'video') return `Cut ${pad(cut.number)}\n${cut.videoPrompt || promptForVideo({ number: cut.number, direction: currentDirection(), lyricBeat: cut.lyricBeat })}`;
         if (isImportedPromptCut(cut)) return `Cut ${pad(cut.number)}\n${importedPromptForCut(cut, 'chatgpt')}`;
@@ -5455,6 +5972,11 @@
   }
 
   function promptForTarget(cut) {
+    if (isWorkflowPromptCut(cut)) {
+      if (state.promptTarget === 'video') return cut.grokPrompt || cut.videoPrompt || '';
+      if (state.promptTarget === 'chatgpt') return cut.chatgptPrompt || cut.midjourneyPrompt || '';
+      return cut.midjourneyPrompt || '';
+    }
     if (state.promptTarget === 'video') return cut.videoPrompt || promptForVideo({ number: cut.number, direction: currentDirection(), lyricBeat: cut.lyricBeat });
     if (isImportedPromptCut(cut)) return importedPromptForCut(cut, state.promptTarget);
     return state.promptTarget === 'chatgpt' ? cut.chatgptPrompt : ensureSendableMidjourneyPrompt(cut).prompt;
@@ -5532,6 +6054,7 @@
   }
 
   function promptVariant(cut, variantKey) {
+    if (isWorkflowPromptCut(cut)) return cut.midjourneyPrompt || '';
     if (isImportedPromptCut(cut)) return importedPromptForCut(cut, 'midjourney');
     const config = promptVariantConfigs[variantKey] || promptVariantConfigs.niji7;
     const direction = currentDirection();
@@ -5550,6 +6073,8 @@
   function allPrompts() {
     if (!state.storyboard) return '';
     return state.storyboard.cuts.map((cut) => {
+      if (isWorkflowPromptCut(cut) && state.promptTarget === 'midjourney') return `Cut ${pad(cut.number)}\n${cut.midjourneyPrompt || ''}`;
+      if (isWorkflowPromptCut(cut) && state.promptTarget === 'video') return `Cut ${pad(cut.number)}\n${cut.grokPrompt || cut.videoPrompt || ''}`;
       if (state.promptTarget === 'midjourney') return ensureSendableMidjourneyPrompt(cut).prompt;
       if (state.promptTarget === 'video') return `Cut ${pad(cut.number)}\n${cut.videoPrompt || promptForVideo({ number: cut.number, direction: currentDirection(), lyricBeat: cut.lyricBeat })}`;
       if (isImportedPromptCut(cut)) return `Cut ${pad(cut.number)}\n${importedPromptForCut(cut, 'chatgpt')}`;
@@ -5613,6 +6138,10 @@
 
   function downloadCsv() {
     if (!state.storyboard) return;
+    if (state.storyboard.source === 'workflow-md') {
+      downloadText(`${slugify(els.title.value || 'sf-studio')}-workflow-cutlist.csv`, workflowCutlistCsvFromCuts(state.storyboard.cuts), 'text/csv;charset=utf-8');
+      return;
+    }
     const rows = [['cut', 'status', 'suggested_filename', 'attached_file', 'chatgpt_prompt', 'midjourney_prompt', 'video_prompt'].join(',')];
     state.storyboard.cuts.forEach((cut) => {
       rows.push([
@@ -5933,6 +6462,8 @@
       ? '외부에서 만든 컷 구성을 가져온 스토리보드입니다.'
       : source === 'gpt-markdown'
         ? 'MJ Markdown/TXT 컷 프롬프트를 원본 보존 상태로 가져왔습니다.'
+        : source === 'workflow-md'
+          ? 'Workflow MD 파일에서 컷 정보, Midjourney, Grok, 편집 메모를 분리해 가져왔습니다.'
         : '브라우저 로컬 규칙 기반으로 생성된 빠른 초안입니다.';
     return `<section class="mv-source-banner">
       <div>
@@ -6122,6 +6653,23 @@
   }
 
   function promptQualityHtml(cut) {
+    if (isWorkflowPromptCut(cut)) {
+      const issues = cut.workflowIssues || [];
+      return `<section class="mv-quality-card ${issues.length ? 'warn' : 'ok'}">
+        <div class="mv-quality-head">
+          <div>
+            <span class="mv-kicker">Workflow MD 원본</span>
+            <strong>${issues.length ? '검증 메시지 확인 필요' : '컷 데이터 정상'}</strong>
+          </div>
+          <em>${issues.length ? 'CHECK' : 'OK'}</em>
+        </div>
+        <ul>
+          ${issues.length
+            ? issues.map((issue) => `<li class="warn"><strong>검증</strong><span>${escapeHtml(issue)}</span></li>`).join('')
+            : '<li class="ok"><strong>원본 보존</strong><span>Midjourney, Grok, 편집 메모가 Workflow MD 기준으로 분리 저장되어 있습니다.</span></li>'}
+        </ul>
+      </section>`;
+    }
     if (isImportedPromptCut(cut) && state.promptTarget !== 'video') {
       return `<section class="mv-quality-card ok">
         <div class="mv-quality-head">
@@ -6252,6 +6800,7 @@
   }
 
   function workflowOverviewHtml() {
+    if (state.storyboard?.source === 'workflow-md') return workflowMdOverviewHtml();
     const stats = assistStats();
     const videoReady = state.storyboard.cuts.filter((cut) => cut.videoPrompt).length;
     const done = stats.saved;
@@ -6297,6 +6846,81 @@
         ${steps.map(([key, label, checked]) => `<span class="${checked ? 'done' : ''}" data-step="${key}">${checked ? '✓' : '·'} ${label}</span>`).join('')}
       </div>
       ${flowTimelineHtml()}
+    </section>`;
+  }
+
+  function workflowMdOverviewHtml() {
+    const stats = state.storyboard.workflowStats || workflowStatsForCuts(state.storyboard.cuts, state.storyboard.workflowMeta || {});
+    const issues = state.storyboard.workflowIssues || [];
+    const issueCutCount = state.storyboard.cuts.filter((cut) => (cut.workflowIssues || []).length).length;
+    const filter = state.workflowIssueFilter || 'all';
+    const meta = state.storyboard.workflowMeta || {};
+    return `<section class="mv-progress-card mv-workflow-md-summary">
+      <div class="mv-progress-top">
+        <div>
+          <span class="mv-kicker">Workflow MD 가져오기</span>
+          <strong>${escapeHtml(meta.project || state.storyboard.title || 'MV Prompt Pack')}</strong>
+        </div>
+        <em>${stats.cutCount || state.storyboard.cuts.length} Cuts</em>
+      </div>
+      <div class="mv-workflow-metrics">
+        <span><b>전체 타임라인</b>${escapeHtml(stats.timelineLengthLabel || '-')}</span>
+        <span><b>오디오 길이</b>${escapeHtml(stats.audioLengthLabel || meta.audio_length || '-')}</span>
+        <span><b>평균 컷</b>${escapeHtml(stats.averageCutLabel || '-')}</span>
+        <span class="${issues.length ? 'warn' : 'ok'}"><b>검증</b>${issues.length ? `${issues.length}개 메시지` : '오류 0개'}</span>
+      </div>
+      <div class="mv-workflow-actions">
+        <button class="mv-small-btn" data-action="copy-workflow-mj" type="button">Midjourney만 복사</button>
+        <button class="mv-small-btn" data-action="copy-workflow-grok" type="button">Grok만 복사</button>
+        <button class="mv-small-btn" data-action="download-workflow-csv" type="button">컷리스트 CSV</button>
+        <button class="mv-small-btn ${filter === 'all' ? 'active' : ''}" data-action="workflow-filter" data-workflow-filter="all" type="button">전체 컷</button>
+        <button class="mv-small-btn ${filter === 'issues' ? 'active warn' : ''}" data-action="workflow-filter" data-workflow-filter="issues" type="button">누락/오류 컷 ${issueCutCount}</button>
+      </div>
+      ${issues.length ? `<div class="mv-workflow-issues">
+        ${issues.slice(0, 6).map((issue) => `<span>${escapeHtml(issue)}</span>`).join('')}
+        ${issues.length > 6 ? `<span>외 ${issues.length - 6}개 메시지</span>` : ''}
+      </div>` : ''}
+    </section>`;
+  }
+
+  function workflowCutDetailHtml(cut) {
+    if (!isWorkflowPromptCut(cut)) return '';
+    const issues = cut.workflowIssues || [];
+    return `<section class="mv-workflow-cut-detail">
+      <header>
+        <div>
+          <span class="mv-kicker">Workflow MD 컷 정보</span>
+          <strong>${escapeHtml(cut.workflowLabel || `Cut ${pad(cut.number)}`)}</strong>
+        </div>
+        ${issues.length ? `<em class="warn">${issues.length}개 확인 필요</em>` : '<em class="ok">정상</em>'}
+      </header>
+      <div class="mv-workflow-cut-info">
+        <span><b>타임코드</b>${escapeHtml(cut.timecode || '-')}</span>
+        <span><b>길이</b>${escapeHtml(cut.duration || '-')}</span>
+        <span><b>구간 문구</b>${escapeHtml(cut.lyric || '-')}</span>
+        <span><b>용도</b>${escapeHtml(cut.use || '-')}</span>
+      </div>
+      <div class="mv-workflow-scene">
+        <span class="mv-kicker">장면 설명</span>
+        <p>${escapeHtml(cut.scene || '-')}</p>
+      </div>
+      <div class="mv-workflow-prompt-grid">
+        <article>
+          <span class="mv-kicker">Midjourney 프롬프트</span>
+          <code>${escapeHtml(cut.midjourneyPrompt || '프롬프트 없음')}</code>
+        </article>
+        <article>
+          <span class="mv-kicker">Grok 프롬프트</span>
+          <code>${escapeHtml(cut.grokPrompt || cut.videoPrompt || '프롬프트 없음')}</code>
+        </article>
+      </div>
+      <div class="mv-workflow-edit-note">
+        <span class="mv-kicker">편집 메모</span>
+        <p>${escapeHtml(cut.editNote || '편집 메모 없음')}</p>
+      </div>
+      ${issues.length ? `<div class="mv-workflow-cut-issues">
+        ${issues.map((issue) => `<span>${escapeHtml(issue)}</span>`).join('')}
+      </div>` : ''}
     </section>`;
   }
 
@@ -6408,8 +7032,9 @@
     const keyword = (state.search || '').trim().toLowerCase();
     const itemStatus = state.statuses[cut.number] || 'queued';
     if (state.statusFilter && state.statusFilter !== 'all' && itemStatus !== state.statusFilter) return false;
+    if (state.storyboard?.source === 'workflow-md' && state.workflowIssueFilter === 'issues' && !(cut.workflowIssues || []).length) return false;
     if (!keyword) return true;
-    return `${cut.number} ${cut.emotion} ${cut.scene}`.toLowerCase().includes(keyword);
+    return `${cut.number} ${cut.timecode || ''} ${cut.lyric || ''} ${cut.use || ''} ${cut.emotion || ''} ${cut.scene || ''} ${(cut.workflowIssues || []).join(' ')}`.toLowerCase().includes(keyword);
   }
 
   function getCut(number) {
@@ -7161,6 +7786,25 @@
   function refreshMidjourneyPrompts() {
     if (!state.storyboard?.cuts?.length) return;
     const direction = currentDirection();
+    if (state.storyboard.source === 'workflow-md') {
+      state.storyboard = {
+        ...state.storyboard,
+        cutFlow: 'narrative',
+        promptMode: 'video',
+        nijiVersion: '',
+        midjourneyProfile: '',
+        cuts: state.storyboard.cuts.map((cut) => ({
+          ...cut,
+          source: 'workflow-md',
+          promptLocked: true,
+          chatgptPrompt: cut.chatgptPrompt || cut.midjourneyPrompt || '',
+          midjourneyPrompt: cut.midjourneyPrompt || cut.chatgptPrompt || '',
+          grokPrompt: cut.grokPrompt || cut.videoPrompt || '',
+          videoPrompt: cut.videoPrompt || cut.grokPrompt || ''
+        }))
+      };
+      return;
+    }
     if (state.storyboard.source === 'gpt-markdown') {
       state.storyboard = {
         ...state.storyboard,
@@ -7257,6 +7901,10 @@
   }
 
   function cutListTitle(cut) {
+    if (isWorkflowPromptCut(cut)) {
+      const text = cut.lyric || cut.scene || cut.timecode || cut.workflowLabel || `Cut ${pad(cut.number)}`;
+      return text.length > 24 ? `${text.slice(0, 24)}...` : text;
+    }
     const isImported = cut?.source === 'gpt-markdown' || state.storyboard?.source === 'gpt-markdown';
     const text = isImported
       ? cut.shotType || cut.importedLabel || cut.scene || `Cut ${pad(cut.number)}`
@@ -7348,7 +7996,11 @@
 
   if (typeof window !== 'undefined') {
     window.SFStudioImportTools = {
-      parseGptMarkdownCuts
+      parseGptMarkdownCuts,
+      parseStudioMarkdownImport,
+      parseWorkflowMarkdown,
+      workflowPromptsFromCuts,
+      workflowCutlistCsvFromCuts
     };
   }
 })();

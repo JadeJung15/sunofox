@@ -60,8 +60,8 @@
         <span>30컷 작업실</span>
       </a>
       <a href="/mv-studio/import" data-studio-route="import">
-        <strong>MJ 프롬프트 가져오기</strong>
-        <span>Markdown 원문</span>
+        <strong>Workflow MD 가져오기</strong>
+        <span>MJ/Grok 원문</span>
       </a>
       <a href="/mv-studio/help" data-studio-route="help">
         <strong>사용방법</strong>
@@ -107,12 +107,12 @@
         </section>
       </section>
 
-      <section class="mv-import-studio" id="mv-import-studio" aria-label="MJ 프롬프트 가져오기" hidden>
+      <section class="mv-import-studio" id="mv-import-studio" aria-label="Workflow MD 가져오기" hidden>
         <header class="mv-import-hero">
           <div>
-            <span class="mv-page-kicker">MJ PROMPT IMPORT</span>
-            <h2>MJ 프롬프트 가져오기</h2>
-            <p>외부 제작 도구에서 정리한 30컷 MJ Markdown을 붙여넣고, 모델 옵션만 정리한 뒤 SF Studio 작업실로 넘깁니다.</p>
+            <span class="mv-page-kicker">WORKFLOW MD IMPORT</span>
+            <h2>Workflow MD 가져오기</h2>
+            <p>컷 정보, Midjourney 이미지 프롬프트, Grok 영상 프롬프트, 편집 메모를 한 파일에서 분리해 SF Studio 작업실로 넘깁니다. 기존 MJ Markdown도 계속 지원합니다.</p>
           </div>
           <a class="mv-small-btn" href="/mv-studio/storyboard" data-studio-route="storyboard">작업실 열기</a>
         </header>
@@ -120,16 +120,16 @@
         <div class="mv-import-grid">
           <section class="mv-workflow-card mv-import-compose" data-route-target="import">
             <div class="mv-flow-title">
-              <strong>MJ Markdown → SF Studio</strong>
-              <span>원문 구조를 유지한 채 컷 번호, 샷 타입, 원본 Midjourney 프롬프트를 가져옵니다.</span>
+              <strong>Workflow MD → SF Studio</strong>
+              <span>컷 번호, 타임코드, 가사/문구, 장면, MJ, Grok, 편집 메모를 자동 분리합니다.</span>
             </div>
             <input id="mv-gpt-markdown-file" type="file" accept=".md,.markdown,.txt,text/markdown,text/plain" hidden>
             <label class="mv-field">
-              <span>MJ Markdown 원문</span>
-              <textarea id="mv-gpt-markdown-text" class="mv-gpt-markdown-input" spellcheck="false" placeholder="## Cut 01 / 배경 중심&#10;&#10;```text&#10;single continuous scene,&#10;one uninterrupted composition,&#10;one camera view,&#10;...&#10;```"></textarea>
+              <span>Workflow MD 또는 MJ Markdown 원문</span>
+              <textarea id="mv-gpt-markdown-text" class="mv-gpt-markdown-input" spellcheck="false" placeholder="# MV Prompt Pack&#10;project: 끝났다고 말해 - Say It's Over&#10;audio_length: 03:22.60&#10;&#10;## Cut 01&#10;time: 00:00.00~00:03.51&#10;lyric: 끝났다고 말해&#10;scene: 오프닝 훅 / 판결 전복 시작&#10;use: main&#10;&#10;### midjourney_prompt&#10;dark royal courtroom...&#10;&#10;### grok_prompt&#10;The camera pushes quickly...&#10;&#10;### edit_note&#10;첫 가사 시작에 맞춰 바로 컷 인."></textarea>
             </label>
             <div class="mv-paste-actions mv-primary-actions">
-              <button class="mv-small-btn" id="mv-import-gpt-text" type="button">MJ Markdown 가져오기</button>
+              <button class="mv-small-btn" id="mv-import-gpt-text" type="button">Workflow MD 가져오기</button>
               <button class="mv-small-btn" id="mv-import-gpt-md" type="button">파일 가져오기</button>
               <button class="mv-small-btn" id="mv-clear-gpt-text" type="button">비우기</button>
             </div>
@@ -181,9 +181,9 @@
                 <span>성공하면 자동으로 콘티 제작 화면으로 이동합니다.</span>
               </div>
               <ol>
-                <li>MJ Markdown 원문 붙여넣기</li>
-                <li>모델/Profile/SREF 정리</li>
-                <li>SF Studio로 가져오기</li>
+                <li>Workflow MD 또는 기존 MJ Markdown 원문 붙여넣기</li>
+                <li>신규 규격은 MJ/Grok/편집 메모 자동 분리</li>
+                <li>기존 MJ Markdown은 모델/Profile/SREF 정리</li>
                 <li>Midjourney Bridge 전송</li>
               </ol>
               <a class="mv-small-btn mv-gpts-primary-link" href="https://chatgpt.com/g/g-69f6ccaad32c8191a04a7d0a850be300-anime-ost-mv-cutscene-prompt-builder" target="_blank" rel="noopener noreferrer">MV 컷 제작 도구 열기</a>
@@ -199,7 +199,7 @@
             <h2>사용방법</h2>
             <p>SF Studio는 이미 만든 30컷 프롬프트와 후보 이미지를 정리하는 작업실입니다. 생성 순서는 편하게 관리하고, 최종 영상 순서는 편집 단계에서 음악과 가사에 맞춰 직접 결정합니다.</p>
           </div>
-          <a class="mv-small-btn" href="/mv-studio/import" data-studio-route="import">MJ 프롬프트 가져오기</a>
+          <a class="mv-small-btn" href="/mv-studio/import" data-studio-route="import">Workflow MD 가져오기</a>
         </header>
 
         <div class="mv-help-grid">
@@ -209,10 +209,11 @@
               <span>처음 사용하는 경우 이 순서만 따라가면 됩니다.</span>
             </div>
             <ol class="mv-help-steps">
-              <li>MV 컷 제작 도구에서 30컷 MJ Markdown을 만듭니다.</li>
-              <li>SF Studio의 MJ 프롬프트 가져오기에 원문을 붙여넣습니다.</li>
-              <li>필요하면 Niji 버전, Profile, SREF 옵션만 정리합니다.</li>
-              <li>가져오기 후 콘티 제작 화면에서 컷별 프롬프트를 확인합니다.</li>
+              <li>MV 컷 제작 도구에서 Workflow MD 또는 기존 MJ Markdown을 만듭니다.</li>
+              <li>SF Studio의 Workflow MD 가져오기에 원문을 붙여넣습니다.</li>
+              <li>신규 Workflow MD는 컷 정보, MJ, Grok, 편집 메모를 자동 분리합니다.</li>
+              <li>기존 MJ Markdown은 필요하면 Niji 버전, Profile, SREF 옵션만 정리합니다.</li>
+              <li>가져오기 후 콘티 제작 화면에서 컷별 프롬프트와 검증 메시지를 확인합니다.</li>
               <li>Midjourney Bridge로 현재 컷, 다음 컷, 5컷/10컷을 전송합니다.</li>
               <li>마음에 드는 이미지를 후보 이미지 보관함에 모읍니다.</li>
               <li>Grok 클립 작업은 이미지 선택이 끝난 뒤 진행합니다.</li>
@@ -227,7 +228,7 @@
             </div>
             <ul class="mv-help-list">
               <li><strong>SF 홈</strong><span>외부 제작 도구와 주요 작업 화면으로 이동합니다.</span></li>
-              <li><strong>MJ 프롬프트</strong><span>Markdown 원문을 붙여넣고 가져오기 옵션을 정리합니다.</span></li>
+              <li><strong>Workflow MD</strong><span>Markdown 원문을 붙여넣고 컷별 MJ/Grok/편집 메모를 분리합니다.</span></li>
               <li><strong>콘티 제작</strong><span>컷별 전송, 후보 이미지 첨부, Grok 클립 준비를 처리합니다.</span></li>
               <li><strong>사용방법</strong><span>작업 순서와 주의사항을 확인합니다.</span></li>
             </ul>
@@ -240,7 +241,7 @@
             </div>
             <ul class="mv-help-list">
               <li><strong>순서 강제 금지</strong><span>Midjourney와 Grok 결과 순서는 언제든 바뀔 수 있으므로 편집 단계에서 확정합니다.</span></li>
-              <li><strong>원문 보존</strong><span>가져온 MJ Markdown은 자동 재작성하지 않고 전송용 옵션만 정리합니다.</span></li>
+              <li><strong>원문 보존</strong><span>가져온 Workflow MD는 MJ/Grok 프롬프트를 자동 재작성하지 않습니다. 기존 MJ Markdown은 전송용 옵션만 정리합니다.</span></li>
               <li><strong>이미지 후보 관리</strong><span>30컷을 넘어도 후보 컷으로 추가할 수 있습니다. 마음에 드는 결과만 모아두면 됩니다.</span></li>
             </ul>
           </section>
@@ -287,9 +288,9 @@
               <small>처음 사용할 때만 확인</small>
             </summary>
             <ol>
-              <li>MV 컷 제작 도구에서 만든 MJ Markdown을 가져옵니다.</li>
-              <li>모델/Profile/SREF 옵션을 정리합니다.</li>
-              <li>Midjourney로 보내기 또는 5컷/10컷 전송을 사용합니다.</li>
+              <li>MV 컷 제작 도구에서 만든 Workflow MD를 가져옵니다.</li>
+              <li>컷별 MJ/Grok 프롬프트와 편집 메모를 확인합니다.</li>
+              <li>Midjourney로 보내기 또는 일괄 추출을 사용합니다.</li>
               <li>선택한 이미지를 후보 이미지에 모아 Grok 클립 제작으로 넘깁니다.</li>
             </ol>
           </details>
@@ -632,8 +633,8 @@
           </div>
 
           <div class="mv-empty" id="mv-empty">
-            <strong>MJ 프롬프트를 가져오면 작업 보드가 열립니다.</strong>
-            <span>Markdown 원문을 붙여넣거나 파일을 불러온 뒤, 후보 이미지를 첨부하고 Grok 클립 작업으로 넘기세요.</span>
+            <strong>Workflow MD를 가져오면 작업 보드가 열립니다.</strong>
+            <span>Markdown 원문을 붙여넣거나 파일을 불러온 뒤, 컷별 MJ/Grok 프롬프트와 후보 이미지를 함께 관리하세요.</span>
           </div>
 
           <div class="mv-result" id="mv-result" hidden></div>

@@ -2397,6 +2397,11 @@
   color: #475569;
 }
 
+.mv-source-badge.workflow-md {
+  background: #ede9fe;
+  color: #6d28d9;
+}
+
 .mv-concept-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -2616,6 +2621,80 @@
   background: linear-gradient(90deg, #2563eb, #14b8a6);
   display: block;
   height: 100%;
+}
+
+.mv-workflow-md-summary {
+  border-top: 3px solid #7c3aed;
+}
+
+.mv-workflow-metrics {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.mv-workflow-metrics span {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  color: #475569;
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  padding: 10px 12px;
+}
+
+.mv-workflow-metrics b {
+  color: #0f172a;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.mv-workflow-metrics .ok {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+  color: #047857;
+}
+
+.mv-workflow-metrics .warn {
+  background: #fff7ed;
+  border-color: #fed7aa;
+  color: #c2410c;
+}
+
+.mv-workflow-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.mv-workflow-actions .active {
+  background: #111827;
+  border-color: #111827;
+  color: #ffffff;
+}
+
+.mv-workflow-actions .warn {
+  background: #fff7ed;
+  border-color: #fdba74;
+  color: #9a3412;
+}
+
+.mv-workflow-issues,
+.mv-workflow-cut-issues {
+  display: grid;
+  gap: 6px;
+}
+
+.mv-workflow-issues span,
+.mv-workflow-cut-issues span {
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 10px;
+  color: #9a3412;
+  font-size: 12px;
+  line-height: 1.45;
+  padding: 8px 10px;
 }
 
 .mv-checklist,
@@ -2902,6 +2981,120 @@
   border: 1px solid #e2e8f0;
   border-radius: 14px;
   padding: 14px;
+}
+
+.mv-workflow-cut-detail {
+  background: #ffffff;
+  border: 1px solid #dbe3ef;
+  border-radius: 14px;
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+}
+
+.mv-workflow-cut-detail header {
+  align-items: center;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+  padding-bottom: 10px;
+}
+
+.mv-workflow-cut-detail header strong {
+  color: #0f172a;
+  display: block;
+  font-size: 17px;
+  margin-top: 3px;
+}
+
+.mv-workflow-cut-detail header em {
+  border-radius: 999px;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 900;
+  padding: 6px 10px;
+  white-space: nowrap;
+}
+
+.mv-workflow-cut-detail header em.ok {
+  background: #dcfce7;
+  color: #047857;
+}
+
+.mv-workflow-cut-detail header em.warn {
+  background: #ffedd5;
+  color: #c2410c;
+}
+
+.mv-workflow-cut-info {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.mv-workflow-cut-info span {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  color: #475569;
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  padding: 9px 10px;
+  word-break: break-word;
+}
+
+.mv-workflow-cut-info b {
+  color: #0f172a;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.mv-workflow-scene,
+.mv-workflow-edit-note {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.mv-workflow-scene p,
+.mv-workflow-edit-note p {
+  color: #334155;
+  line-height: 1.55;
+  margin: 6px 0 0;
+}
+
+.mv-workflow-prompt-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.mv-workflow-prompt-grid article {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  min-width: 0;
+  padding: 12px;
+}
+
+.mv-workflow-prompt-grid code {
+  background: #0f172a;
+  border-radius: 10px;
+  box-sizing: border-box;
+  color: #e5eefb;
+  display: block;
+  font-family: Consolas, "SFMono-Regular", monospace;
+  font-size: 12px;
+  height: clamp(150px, 22vh, 260px);
+  line-height: 1.55;
+  margin-top: 8px;
+  overflow: auto;
+  padding: 10px;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 
 .mv-simple-card {
@@ -3962,6 +4155,21 @@
     grid-template-columns: 1fr;
   }
 
+  .mv-workflow-metrics,
+  .mv-workflow-cut-info,
+  .mv-workflow-prompt-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .mv-workflow-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .mv-workflow-cut-detail header {
+    align-items: start;
+  }
+
   .mv-toolbar {
     align-items: stretch;
     flex-direction: column;
@@ -4087,6 +4295,10 @@
 }
 
 @media (max-width: 560px) {
+  .mv-workflow-actions {
+    grid-template-columns: 1fr;
+  }
+
   .mv-showcase-grid,
   .mv-showcase-footer {
     grid-template-columns: 1fr;

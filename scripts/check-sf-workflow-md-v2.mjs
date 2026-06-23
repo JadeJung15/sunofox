@@ -142,6 +142,20 @@ const grokExtract = tools.workflowPromptsFromCuts(parsed.cuts, 'grok');
 const csv = tools.workflowCutlistCsvFromCuts(parsed.cuts);
 assert(mjExtract.includes('## Cut 01') && mjExtract.includes('## Cut 51'), 'Midjourney 일괄 추출 결과가 비정상입니다.');
 assert(grokExtract.includes('## Cut 01') && grokExtract.includes('## Cut 51'), 'Grok 일괄 추출 결과가 비정상입니다.');
+const mjSections = mjExtract.split(/\n(?=## Cut \d+)/).filter(Boolean);
+assert(mjSections.length === 51, `Midjourney 일괄 추출 컷 수가 51이 아닙니다: ${mjSections.length}`);
+mjSections.forEach((section, index) => {
+  const cutLabel = `Cut ${String(index + 1).padStart(2, '0')}`;
+  const body = section.split('\n').slice(1).join('\n').trim();
+  assert(body, `${cutLabel} Midjourney 출력 본문이 비어 있습니다.`);
+  assert(!/^time:/i.test(body), `${cutLabel} Midjourney 출력이 time 메타데이터로 시작합니다.`);
+  assert(!/^duration:/i.test(body), `${cutLabel} Midjourney 출력이 duration 메타데이터로 시작합니다.`);
+  assert(!/^lyric:/i.test(body), `${cutLabel} Midjourney 출력이 lyric 메타데이터로 시작합니다.`);
+  assert(!/^scene:/i.test(body), `${cutLabel} Midjourney 출력이 scene 메타데이터로 시작합니다.`);
+  assert(/(^|\s)--niji\s+7\b/i.test(body), `${cutLabel} Midjourney 출력에 --niji 7이 없습니다.`);
+  assert((body.match(/(^|\s)--niji\b/gi) || []).length === 1, `${cutLabel} Midjourney 출력에 --niji가 중복되었습니다.`);
+  assert((body.match(/(^|\s)--ar\s+16:9\b/gi) || []).length <= 1, `${cutLabel} Midjourney 출력에 --ar 16:9가 중복되었습니다.`);
+});
 assert(csv.split('\n').length === 52, 'CSV 행 수가 헤더 포함 52줄이 아닙니다.');
 assert(csv.startsWith('cut,time,duration,lyric,scene,use,midjourney_prompt,grok_prompt,edit_note,issues'), 'CSV 헤더가 다릅니다.');
 

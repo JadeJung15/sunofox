@@ -1,4 +1,5 @@
 import path from 'node:path';
+import { existsSync } from 'node:fs';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -74,6 +75,25 @@ function assertLink(label, href) {
   }
 }
 
+function assertThumbnail(label, thumbnail, videoId) {
+  assertLink(`${label} thumbnail`, thumbnail);
+
+  const isYoutubeThumbnail = thumbnail?.includes(`/vi/${videoId}/`);
+  const isPublicAsset = /^\/assets\/.+\.(?:avif|jpe?g|png|webp|svg)$/i.test(thumbnail || '');
+
+  if (!isYoutubeThumbnail && !isPublicAsset) {
+    fail(`${label} thumbnail: expected a YouTube thumbnail for "${videoId}" or a public /assets image`);
+    return;
+  }
+
+  if (isPublicAsset) {
+    const publicPath = path.join(rootDir, 'public', thumbnail.slice(1));
+    if (!existsSync(publicPath)) {
+      fail(`${label} thumbnail: local asset not found at "${thumbnail}"`);
+    }
+  }
+}
+
 function assertYoutubeVideo(label, video) {
   for (const field of ['date', 'title', 'meta', 'type', 'href', 'videoId', 'thumbnail', 'thumbnailAlt', 'publishedAt']) {
     assertPresent(`${label} ${field}`, video[field]);
@@ -82,15 +102,11 @@ function assertYoutubeVideo(label, video) {
   assertPattern(`${label} date`, video.date, /^\d{4}\.\d{2}\.\d{2}$/);
   assertPattern(`${label} videoId`, video.videoId, /^[\w-]{6,}$/);
   assertLink(`${label} href`, video.href);
-  assertLink(`${label} thumbnail`, video.thumbnail);
+  assertThumbnail(label, video.thumbnail, video.videoId);
 
   const hrefVideoId = youtubeIdFromHref(video.href);
   if (hrefVideoId !== video.videoId) {
     fail(`${label} href: expected YouTube video id "${video.videoId}", got "${hrefVideoId || '(empty)'}"`);
-  }
-
-  if (!video.thumbnail.includes(`/vi/${video.videoId}/`)) {
-    fail(`${label} thumbnail: expected to include /vi/${video.videoId}/`);
   }
 
   if (Number.isNaN(Date.parse(video.publishedAt))) {

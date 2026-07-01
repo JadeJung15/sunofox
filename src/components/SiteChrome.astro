@@ -2,21 +2,7 @@
 import { menuItems } from '../data/siteContent.js';
 
 const { active = 'home' } = Astro.props;
-const starCount = 28;
 ---
-
-<div class="custom-cursor" aria-hidden="true">
-  <span class="cursor-dot"></span>
-  <span class="cursor-ring"></span>
-</div>
-
-<div class="star-field" aria-hidden="true">
-  {Array.from({ length: starCount }).map((_, index) => (
-    <span style={`--star-index: ${index + 1}`}></span>
-  ))}
-</div>
-
-<p class="mobile-vertical-mark" aria-hidden="true">SUNOFOX</p>
 
 <header class="site-header" aria-label="SunoFox header">
   <a class:list={['site-logo', active === 'home' && 'is-current']} href="/" aria-label="SunoFox home">
@@ -53,11 +39,6 @@ const starCount = 28;
 
 <script is:inline>
   function initSiteChrome() {
-    const supportsFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-    const allowsMotion = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const cursorRoot = document.querySelector('.custom-cursor');
-    const cursorDot = document.querySelector('.cursor-dot');
-    const cursorRing = document.querySelector('.cursor-ring');
     const menuButton = document.getElementById('menuButton');
     const overlayMenu = document.getElementById('overlayMenu');
     const menuLabel = menuButton?.querySelector('.menu-trigger-label');
@@ -150,45 +131,6 @@ const starCount = 28;
       window.setTimeout(showAllRevealItems, 1800);
     } else {
       showAllRevealItems();
-    }
-
-    if (supportsFinePointer && allowsMotion && cursorRoot && cursorDot && cursorRing) {
-      document.body.classList.add('custom-cursor-ready');
-      let pointerX = window.innerWidth / 2;
-      let pointerY = window.innerHeight / 2;
-      let ringX = pointerX;
-      let ringY = pointerY;
-      let dotX = pointerX;
-      let dotY = pointerY;
-
-      const moveCursor = () => {
-        dotX += (pointerX - dotX) * 0.9;
-        dotY += (pointerY - dotY) * 0.9;
-        ringX += (pointerX - ringX) * 0.18;
-        ringY += (pointerY - ringY) * 0.18;
-        cursorDot.style.transform = `translate3d(${dotX}px, ${dotY}px, 0) translate(-50%, -50%)`;
-        cursorRing.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
-        requestAnimationFrame(moveCursor);
-      };
-
-      window.addEventListener('pointermove', (event) => {
-        pointerX = event.clientX;
-        pointerY = event.clientY;
-        cursorRoot.classList.add('is-visible');
-      }, { passive: true });
-
-      window.addEventListener('pointerleave', () => cursorRoot.classList.remove('is-visible'));
-      window.addEventListener('pointerenter', () => cursorRoot.classList.add('is-visible'));
-
-      document.addEventListener('pointerover', (event) => {
-        const target = event.target.closest('a, button, input, textarea');
-        document.body.classList.toggle('cursor-hover', Boolean(target));
-      });
-
-      document.addEventListener('pointerdown', () => document.body.classList.add('cursor-down'));
-      document.addEventListener('pointerup', () => document.body.classList.remove('cursor-down'));
-
-      moveCursor();
     }
   }
 

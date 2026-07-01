@@ -12,7 +12,8 @@ import {
 } from '../data/siteContent.js';
 
 const wordmark = 'SUNOFOX'.split('');
-const heroParticles = Array.from({ length: 42 });
+const editorialHeroAsset = '/assets/brand/sunofox-editorial-hero.webp';
+const studioTokenAsset = '/assets/brand/sunofox-studio-token.webp';
 const novelListCta = '소설 보러가기';
 const channelCta = 'YouTube 채널';
 const channelSpotlight = latestStoryOst || featuredStoryOst;
@@ -48,18 +49,12 @@ const homeChannelActions = [
     <section class="hero-stage hero-stage-landing" aria-labelledby="heroTitle">
       <img
         class="home-hero-cover"
-        src={novelProject.coverImage}
+        src={editorialHeroAsset}
         alt=""
-        width={novelProject.coverWidth}
-        height={novelProject.coverHeight}
+        width="1600"
+        height="900"
         aria-hidden="true"
       />
-
-      <div class="hero-particle-layer" aria-hidden="true">
-        {heroParticles.map((_, index) => (
-          <span style={`--particle-index: ${index + 1}`}></span>
-        ))}
-      </div>
 
       <div class="hero-center reveal">
         <p class="hero-kicker">ANIME OST STUDIO</p>
@@ -114,6 +109,7 @@ const homeChannelActions = [
         </dl>
       </div>
       <div class="home-channel-actions" aria-label="SunoFox channel entry actions">
+        <img class="home-action-token" src={studioTokenAsset} alt="" width="720" height="720" loading="lazy" decoding="async" aria-hidden="true" />
         {homeChannelActions.map((action) => (
           <a
             class:list={['main-button', !action.primary && 'main-button-muted']}
@@ -161,19 +157,18 @@ const homeChannelActions = [
     grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
     gap: 24px;
     width: min(1120px, calc(100% - 32px));
-    margin: -58px auto 120px;
+    margin: 0 auto 88px;
     padding: 28px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    border: 1px solid #dde3ea;
     border-radius: 8px;
-    background:
-      linear-gradient(135deg, rgba(10, 18, 28, 0.9), rgba(29, 18, 30, 0.82)),
-      rgba(8, 12, 18, 0.92);
-    box-shadow: 0 28px 90px rgba(0, 0, 0, 0.32);
+    background: #ffffff;
+    box-shadow: none;
   }
 
   .home-channel-entry h2 {
     max-width: 760px;
     margin: 0;
+    color: #101827;
     font-size: clamp(1.65rem, 3vw, 2.8rem);
     line-height: 1.08;
     letter-spacing: 0;
@@ -182,7 +177,7 @@ const homeChannelActions = [
   .home-channel-entry p:not(.section-kicker) {
     max-width: 760px;
     margin: 16px 0 0;
-    color: rgba(255, 255, 255, 0.74);
+    color: #526071;
     font-size: 1rem;
     line-height: 1.8;
   }
@@ -197,22 +192,22 @@ const homeChannelActions = [
   .home-channel-facts div {
     min-width: 0;
     padding: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid #dde3ea;
     border-radius: 8px;
-    background: rgba(255, 255, 255, 0.055);
+    background: #f7f8fa;
   }
 
   .home-channel-facts dt {
-    color: rgba(255, 255, 255, 0.52);
+    color: #7b8796;
     font-size: 0.72rem;
     font-weight: 800;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    letter-spacing: 0;
+    text-transform: none;
   }
 
   .home-channel-facts dd {
     margin: 8px 0 0;
-    color: rgba(255, 255, 255, 0.92);
+    color: #101827;
     font-size: 0.95rem;
     font-weight: 800;
     line-height: 1.35;

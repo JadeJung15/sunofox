@@ -27,8 +27,8 @@ export const featuredStoryOst = {
   href: artistLinks.featuredOst,
   youtubeHref: 'https://www.youtube.com/watch?v=u_OwBr3Cstk',
   videoId: 'u_OwBr3Cstk',
-  thumbnail: 'https://i.ytimg.com/vi/u_OwBr3Cstk/hqdefault.jpg',
-  thumbnailAlt: '웹소설 악녀는 첫 장에서 웃었다 OST 유튜브 썸네일',
+  thumbnail: '/assets/brand/sunofox-thumb-villainess-page-one.webp',
+  thumbnailAlt: '웹소설 악녀는 첫 장에서 웃었다 OST를 상징하는 달빛 침실과 검은 드레스 썸네일',
   publishedAt: '2026-06-14T08:00:11+00:00',
   summary:
     '첫 장에서 몰락해야 했던 악녀 아델라인이 예정된 비극을 깨고 자신의 운명을 빼앗기 시작하는 순간을 담은 대표 OST입니다.'
@@ -43,8 +43,8 @@ export const detectedErrorStoryOst = {
   href: artistLinks.detectedErrorOst,
   youtubeHref: 'https://www.youtube.com/watch?v=2KsAbBnf2Lk',
   videoId: '2KsAbBnf2Lk',
-  thumbnail: 'https://i.ytimg.com/vi/2KsAbBnf2Lk/hqdefault.jpg',
-  thumbnailAlt: '웹소설 악녀는 첫 장에서 웃었다 OST EP.02 감지된 오류 유튜브 썸네일',
+  thumbnail: '/assets/brand/sunofox-thumb-detected-error.webp',
+  thumbnailAlt: '웹소설 OST EP.02 감지된 오류를 상징하는 멈춘 시계와 찢어진 베일 썸네일',
   publishedAt: '2026-06-17T08:15:18+00:00',
   summary:
     '아델라인이 예정된 몰락을 벗어난 뒤, 멈춘 시계와 원작 보정이 시작되는 순간을 담은 두 번째 웹소설 OST입니다.'

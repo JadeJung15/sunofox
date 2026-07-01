@@ -109,8 +109,8 @@ export const musicArchive = {
       type: 'Live Archive',
       href: 'https://www.youtube.com/watch?v=AtijgVi5NFU',
       videoId: 'AtijgVi5NFU',
-      thumbnail: 'https://i.ytimg.com/vi/AtijgVi5NFU/hqdefault.jpg',
-      thumbnailAlt: 'SunoFox Anime OST Radio Live 유튜브 썸네일',
+      thumbnail: '/assets/home/hero-anime-city.jpg',
+      thumbnailAlt: '별이 뜬 애니메이션 도시와 관측소가 보이는 SunoFox 라디오 라이브 썸네일',
       publishedAt: '2026-06-10T21:00:45+00:00'
     },
     {
@@ -120,8 +120,8 @@ export const musicArchive = {
       type: 'Anime OP',
       href: 'https://www.youtube.com/watch?v=jCtym0WLKms',
       videoId: 'jCtym0WLKms',
-      thumbnail: 'https://i.ytimg.com/vi/jCtym0WLKms/hqdefault.jpg',
-      thumbnailAlt: '별의 심연 Anime OP 유튜브 썸네일',
+      thumbnail: '/assets/home/release-awakening.jpg',
+      thumbnailAlt: '별빛 도시와 추상적인 사운드 궤적이 보이는 Anime OP 썸네일',
       publishedAt: '2026-06-10T08:15:34+00:00'
     },
     {
@@ -131,8 +131,8 @@ export const musicArchive = {
       type: 'Anime OST',
       href: 'https://www.youtube.com/watch?v=5LNUxXm28CY',
       videoId: '5LNUxXm28CY',
-      thumbnail: 'https://i.ytimg.com/vi/5LNUxXm28CY/hqdefault.jpg',
-      thumbnailAlt: '覚醒 Anime OST 유튜브 썸네일',
+      thumbnail: '/assets/home/popular-reviver.jpg',
+      thumbnailAlt: '밤하늘 아래 도시 실루엣과 별빛이 보이는 각성 Anime OST 썸네일',
       publishedAt: '2026-06-07T08:15:14+00:00'
     },
     {
@@ -142,8 +142,8 @@ export const musicArchive = {
       type: 'Isekai Anime OP',
       href: 'https://www.youtube.com/watch?v=8LgtlhxlG9I',
       videoId: '8LgtlhxlG9I',
-      thumbnail: 'https://i.ytimg.com/vi/8LgtlhxlG9I/hqdefault.jpg',
-      thumbnailAlt: '도망친 왕녀는 오늘도 살아남는다 유튜브 썸네일',
+      thumbnail: '/assets/home/story-universe.jpg',
+      thumbnailAlt: '어두운 밤의 성과 도시 불빛이 보이는 도망친 왕녀 Anime OP 썸네일',
       publishedAt: '2026-06-03T08:00:31+00:00'
     },
     {
@@ -153,8 +153,8 @@ export const musicArchive = {
       type: 'Anime OST',
       href: 'https://www.youtube.com/watch?v=_DebZ1_3lpQ',
       videoId: '_DebZ1_3lpQ',
-      thumbnail: 'https://i.ytimg.com/vi/_DebZ1_3lpQ/hqdefault.jpg',
-      thumbnailAlt: '말 안 하면 끝이야 유튜브 썸네일',
+      thumbnail: '/assets/home/popular-last-greeting.jpg',
+      thumbnailAlt: '도시의 밤하늘과 따뜻한 불빛이 보이는 Anime OST 썸네일',
       publishedAt: '2026-05-31T08:15:04+00:00'
     },
     {
@@ -164,8 +164,8 @@ export const musicArchive = {
       type: 'Dark Fantasy OST',
       href: 'https://www.youtube.com/watch?v=JZY3Lew_ZD8',
       videoId: 'JZY3Lew_ZD8',
-      thumbnail: 'https://i.ytimg.com/vi/JZY3Lew_ZD8/hqdefault.jpg',
-      thumbnailAlt: '검은 새벽의 왕녀 유튜브 썸네일',
+      thumbnail: '/assets/home/popular-unbreakable.jpg',
+      thumbnailAlt: '푸른 새벽의 도시 실루엣이 보이는 다크 판타지 OST 썸네일',
       publishedAt: '2026-05-24T08:15:00+00:00'
     }
   ],

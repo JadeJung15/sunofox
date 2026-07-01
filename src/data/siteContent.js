@@ -201,6 +201,11 @@ const novelCoverUrl = `${siteUrl}${novelProject.coverImage}`;
 const musicArchiveUrl = `${siteUrl}${musicArchive.href}`;
 const archiveUrl = `${siteUrl}${archiveAlbum.href}`;
 const archiveImageUrl = `${siteUrl}${archiveAlbum.image}`;
+const toAbsoluteSiteUrl = (value) => {
+  if (!value) return '';
+  if (/^https?:\/\//i.test(value)) return value;
+  return value.startsWith('/') ? `${siteUrl}${value}` : value;
+};
 const archiveTracks = archiveAlbum.tracks;
 const youtubeProfile = sunofoxProfile.tabs.find((tab) => tab.id === 'youtube');
 const latestVideos = youtubeProfile?.videos || [];
@@ -390,7 +395,7 @@ export const structuredData = {
       url: video.href,
       contentUrl: video.href,
       embedUrl: `https://www.youtube.com/embed/${video.videoId}`,
-      thumbnailUrl: [video.thumbnail || `https://i.ytimg.com/vi/${video.videoId}/hqdefault.jpg`],
+      thumbnailUrl: [toAbsoluteSiteUrl(video.thumbnail) || `https://i.ytimg.com/vi/${video.videoId}/hqdefault.jpg`],
       uploadDate: video.publishedAt,
       inLanguage: 'ko-KR',
       isPartOf: { '@id': `${siteUrl}/#website` },

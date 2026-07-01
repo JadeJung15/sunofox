@@ -165,6 +165,10 @@
     button.textContent = `${label} 준비 중`;
   }
 
+  function isStaticLocalPreview() {
+    return ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
+  }
+
   async function updateOAuthProviderStatus() {
     const buttons = [...document.querySelectorAll('[data-oauth-provider]')];
     if (!buttons.length) return;
@@ -178,6 +182,16 @@
         }
       });
     });
+    if (isStaticLocalPreview()) {
+      buttons.forEach((button) => {
+        setOAuthButtonState(button, button.dataset.oauthProvider, false);
+      });
+      if (note) {
+        note.hidden = false;
+        note.textContent = '로컬 미리보기에서는 소셜 로그인 API를 호출하지 않습니다. 이메일 방식 또는 배포 환경에서 확인해 주세요.';
+      }
+      return;
+    }
     try {
       const data = await requestJson('/api/auth/oauth/status', { method: 'GET' });
       const providers = data.providers || {};

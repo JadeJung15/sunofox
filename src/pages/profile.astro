@@ -44,10 +44,10 @@ import { artistLinks, novelProject, structuredData, sunofoxProfile } from '../da
           <strong>Story IP</strong>
           <p>첫 작품 《{novelProject.title}》의 작품 정보와 회차를 공개합니다.</p>
         </a>
-        <a href="/mv-studio">
+        <a class="about-route-private" href="/login?next=/mv-studio">
           <span>04</span>
-          <strong>스튜디오</strong>
-          <p>웹소설, OST, 영상 패키징을 이어 붙이는 제작 공간입니다.</p>
+          <strong>제작실 로그인</strong>
+          <p>소유자 계정으로만 입장하는 내부 제작 공간입니다.</p>
         </a>
       </div>
 
@@ -62,13 +62,13 @@ import { artistLinks, novelProject, structuredData, sunofoxProfile } from '../da
       <div class="profile-snapshot-head">
         <p class="section-kicker">OFFICIAL HUBS</p>
         <h2 id="profileSnapshotTitle">현재 공개 흐름</h2>
-        <p>YouTube, 음악 아카이브, Story IP, 제작 스튜디오로 이어지는 공개 허브만 모았습니다.</p>
+        <p>YouTube, 음악 아카이브, Story IP를 중심으로 공개 흐름을 정리하고, 제작실은 소유자 전용 내부 도구로 분리했습니다.</p>
       </div>
 
       <div class="profile-snapshot-grid">
         {sunofoxProfile.highlights.map((item) => (
           <a
-            class="profile-snapshot-card"
+            class:list={['profile-snapshot-card', item.key === 'studio' && 'is-private-tool']}
             href={item.href}
             target={item.href.startsWith('http') ? '_blank' : undefined}
             rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}

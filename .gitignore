@@ -4,6 +4,7 @@ output/
 .astro/
 dist/
 node_modules/
+reports/
 
 .env
 .env.*

@@ -14,8 +14,8 @@
   const PRESET_KEY = 'webling_mv_studio_presets_v1';
   const ACCESS_KEY = 'webling_mv_studio_access_v1';
   const WORKFLOW_COLLAPSE_KEY = 'webling_mv_studio_workflow_collapsed_v2';
-  const REQUIRED_MJ_BRIDGE_VERSION = '1.5.17';
-  const MJ_BRIDGE_DOWNLOAD_URL = './extensions/sf-midjourney-bridge-v1.5.17.zip';
+  const REQUIRED_MJ_BRIDGE_VERSION = '1.5.23';
+  const MJ_BRIDGE_DOWNLOAD_URL = './extensions/sf-midjourney-bridge-v1.5.23.zip';
   const DEFAULT_GROK_FILL_DELAY_MS = 10000;
   const DEFAULT_GROK_SUBMIT_DELAY_MS = 7000;
   const DEFAULT_GROK_BACK_DELAY_MS = 5000;
@@ -1148,7 +1148,7 @@
     });
     els.importApplyProfile?.addEventListener('change', () => {
       state.importApplyProfile = Boolean(els.importApplyProfile.checked);
-      if (state.storyboard?.source === 'gpt-markdown') {
+      if (isImportOptionStoryboard()) {
         refreshMidjourneyPrompts();
         saveProject('auto');
         render();
@@ -1157,7 +1157,7 @@
     els.importProfile?.addEventListener('change', () => {
       state.importProfile = sanitizeMidjourneyProfile(els.importProfile.value);
       els.importProfile.value = state.importProfile;
-      if (state.storyboard?.source === 'gpt-markdown') {
+      if (isImportOptionStoryboard()) {
         refreshMidjourneyPrompts();
         saveProject('auto');
         render();
@@ -1165,7 +1165,7 @@
     });
     els.importApplySref?.addEventListener('change', () => {
       state.importApplySref = Boolean(els.importApplySref.checked);
-      if (state.storyboard?.source === 'gpt-markdown') {
+      if (isImportOptionStoryboard()) {
         refreshMidjourneyPrompts();
         saveProject('auto');
         render();
@@ -1174,7 +1174,7 @@
     els.importSref?.addEventListener('change', () => {
       state.importSref = sanitizeMidjourneySref(els.importSref.value);
       els.importSref.value = state.importSref;
-      if (state.storyboard?.source === 'gpt-markdown') {
+      if (isImportOptionStoryboard()) {
         refreshMidjourneyPrompts();
         saveProject('auto');
         render();
@@ -2050,14 +2050,23 @@
   }
 
   function workflowMidjourneyPromptForOutput(cut, nijiVersion = null) {
-    let value = String(cut?.midjourneyPrompt || '').trim();
+    let value = stripImportedManagedParams(cut?.midjourneyPrompt || '');
     if (!value) return '';
-    const version = sanitizeNijiVersion(nijiVersion || state.nijiVersion || els.niji?.value || '7');
-    if (/(^|\s)--niji\s+\d+\b/i.test(value)) {
-      value = value.replace(/(^|\s)--niji\s+\d+\b/gi, `$1--niji ${version}`);
-    } else {
-      value = `${value} --niji ${version}`;
-    }
+    const mode = nijiVersion
+      ? (sanitizeNijiVersion(nijiVersion) === '5' ? 'niji5' : 'niji7')
+      : sanitizeImportModelMode(state.importModelMode);
+    value = mode === 'v81' ? importedV81PromptWithNaturalNegative(value) : value;
+    const profileParam = shouldApplyImportedProfile() && canApplyImportedProfile(mode)
+      ? currentImportedProfile(mode)
+      : '';
+    const srefParam = shouldApplyImportedSref()
+      ? currentImportedSref()
+      : '';
+    value = insertImportedParamsBeforeNegative(value, [
+      importedModelParam(mode),
+      profileParam ? `--profile ${profileParam}` : '',
+      srefParam ? `--sref ${srefParam}` : ''
+    ].filter(Boolean));
     return value
       .replace(/[ \t]+\n/g, '\n')
       .replace(/\n{3,}/g, '\n\n')
@@ -2224,6 +2233,10 @@
     return Boolean(cut?.source === 'workflow-md' || state.storyboard?.source === 'workflow-md');
   }
 
+  function isImportOptionStoryboard() {
+    return Boolean(['gpt-markdown', 'workflow-md'].includes(state.storyboard?.source));
+  }
+
   function importedPromptForCut(cut, target = 'midjourney') {
     const value = target === 'chatgpt'
       ? cut?.chatgptPrompt || cut?.midjourneyPrompt || ''
@@ -2290,16 +2303,16 @@
     return `${prompt}\n${paramText}`.trim();
   }
 
-  function importedModelParam() {
-    const mode = sanitizeImportModelMode(state.importModelMode);
+  function importedModelParam(modeValue = state.importModelMode) {
+    const mode = sanitizeImportModelMode(modeValue);
     if (mode === 'niji7') return '--niji 7';
     if (mode === 'niji5') return '--niji 5';
     if (mode === 'v81') return '--v 8.1';
     return '--niji 7';
   }
 
-  function canApplyImportedProfile() {
-    const mode = sanitizeImportModelMode(state.importModelMode);
+  function canApplyImportedProfile(modeValue = state.importModelMode) {
+    const mode = sanitizeImportModelMode(modeValue);
     if (mode === 'niji5') return false;
     if (mode === 'v81') return Boolean(importedProfileInputValue());
     return true;
@@ -2308,7 +2321,7 @@
   function setImportModelMode(value) {
     state.importModelMode = sanitizeImportModelMode(value);
     syncImportModelButtons();
-    if (state.storyboard?.source === 'gpt-markdown') {
+    if (isImportOptionStoryboard()) {
       refreshMidjourneyPrompts();
       saveProject('auto');
       render();
@@ -2335,10 +2348,10 @@
     return sanitizeMidjourneyProfile(els.importProfile?.value || state.importProfile || state.storyboard?.importProfile || '');
   }
 
-  function currentImportedProfile() {
+  function currentImportedProfile(modeValue = state.importModelMode) {
     const profile = importedProfileInputValue();
     if (profile) return profile;
-    return sanitizeImportModelMode(state.importModelMode) === 'niji7' ? DEFAULT_MJ_PROFILE : '';
+    return sanitizeImportModelMode(modeValue) === 'niji7' ? DEFAULT_MJ_PROFILE : '';
   }
 
   function shouldApplyImportedSref() {
@@ -2416,12 +2429,12 @@
       cutFlow: 'narrative',
       promptMode: 'video',
       nijiVersion: '',
-      midjourneyProfile: '',
-      importApplyProfile: false,
-      importProfile: '',
-      importApplySref: false,
-      importSref: '',
-      importModelMode: 'workflow',
+      midjourneyProfile: shouldApplyImportedProfile() ? currentImportedProfile() : '',
+      importApplyProfile: shouldApplyImportedProfile(),
+      importProfile: importedProfileInputValue(),
+      importApplySref: shouldApplyImportedSref(),
+      importSref: currentImportedSref(),
+      importModelMode: sanitizeImportModelMode(state.importModelMode),
       workflowMeta: workflow.metadata,
       workflowIssues: workflow.issues,
       workflowStats: workflow.stats,
@@ -7813,7 +7826,12 @@
         cutFlow: 'narrative',
         promptMode: 'video',
         nijiVersion: '',
-        midjourneyProfile: '',
+        midjourneyProfile: shouldApplyImportedProfile() ? currentImportedProfile() : '',
+        importApplyProfile: shouldApplyImportedProfile(),
+        importProfile: importedProfileInputValue(),
+        importApplySref: shouldApplyImportedSref(),
+        importSref: currentImportedSref(),
+        importModelMode: sanitizeImportModelMode(state.importModelMode),
         cuts: state.storyboard.cuts.map((cut) => ({
           ...cut,
           source: 'workflow-md',
@@ -8015,13 +8033,32 @@
     return escapeHtml(value).replaceAll('`', '&#96;');
   }
 
+  function setImportOptionsForTest(options = {}) {
+    if (Object.prototype.hasOwnProperty.call(options, 'importApplyProfile')) {
+      state.importApplyProfile = Boolean(options.importApplyProfile);
+    }
+    if (Object.prototype.hasOwnProperty.call(options, 'importProfile')) {
+      state.importProfile = sanitizeMidjourneyProfile(options.importProfile);
+    }
+    if (Object.prototype.hasOwnProperty.call(options, 'importApplySref')) {
+      state.importApplySref = Boolean(options.importApplySref);
+    }
+    if (Object.prototype.hasOwnProperty.call(options, 'importSref')) {
+      state.importSref = sanitizeMidjourneySref(options.importSref);
+    }
+    if (Object.prototype.hasOwnProperty.call(options, 'importModelMode')) {
+      state.importModelMode = sanitizeImportModelMode(options.importModelMode);
+    }
+  }
+
   if (typeof window !== 'undefined') {
     window.SFStudioImportTools = {
       parseGptMarkdownCuts,
       parseStudioMarkdownImport,
       parseWorkflowMarkdown,
       workflowPromptsFromCuts,
-      workflowCutlistCsvFromCuts
+      workflowCutlistCsvFromCuts,
+      setImportOptionsForTest
     };
   }
 })();

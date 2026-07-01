@@ -119,6 +119,7 @@
   function getOAuthStatusMessage() {
     const status = new URLSearchParams(window.location.search).get('oauth') || '';
     const messages = {
+      pending: ['소셜 계정 신청이 접수되었습니다. 승인 안내와 입장 코드를 받은 뒤 로그인해 주세요.', 'pending'],
       rejected: ['이 소셜 계정은 이용이 제한되어 있습니다. 사이트 주인에게 문의해 주세요.', 'error'],
       'status-error': ['소셜 계정 상태를 확인하지 못했습니다. 잠시 후 다시 시도해 주세요.', 'error'],
       'missing-google': ['Google 로그인이 아직 준비 중입니다. 지금은 이메일로 로그인해 주세요.', 'info'],
@@ -289,17 +290,17 @@
     function showSignupResult(data) {
       if (!resultPanel) return;
       const isApproved = data?.status === 'approved';
-      if (resultKicker) resultKicker.textContent = isApproved ? 'ACCOUNT READY' : 'ACCOUNT CHECK';
-      if (resultTitle) resultTitle.textContent = isApproved ? '회원가입이 완료되었습니다.' : '계정 상태를 확인해 주세요.';
+      if (resultKicker) resultKicker.textContent = isApproved ? 'ACCOUNT READY' : 'REQUEST SENT';
+      if (resultTitle) resultTitle.textContent = isApproved ? '회원가입이 완료되었습니다.' : '승인 대기 중입니다.';
       if (resultCopy) {
         resultCopy.textContent = isApproved
           ? 'LOGIN 화면에서 이메일과 비밀번호로 로그인해 주세요.'
-          : '이메일 계정 상태를 확인해 주세요.';
+          : '가입 신청이 접수되었습니다. 승인 안내와 입장 코드를 받은 뒤 로그인해 주세요.';
       }
       if (resultDetail) {
         resultDetail.textContent = isApproved
           ? '로그인 후 MY ACCOUNT에서 표시 닉네임을 바꿀 수 있습니다.'
-          : '계정 이용이 제한된 경우 사이트 주인에게 문의해 주세요.';
+          : '사이트 주인이 신청 내용을 확인한 뒤 승인 안내문과 입장 코드를 전달합니다. 같은 이메일로 다시 신청하면 현재 상태를 확인할 수 있습니다.';
       }
       resultPanel.dataset.status = isApproved ? 'approved' : 'pending';
       resultPanel.hidden = false;

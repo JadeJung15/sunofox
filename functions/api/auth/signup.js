@@ -34,12 +34,14 @@ export async function onRequestPost(context) {
   }
 
   const now = new Date().toISOString();
+  const adminEmail = getAdminEmail(context.env);
+  const isAdminEmail = email === adminEmail;
   const existing = await getUser(context.env, email);
   if (existing) {
     if (existing.status === 'rejected') {
       return json({ ok: false, status: 'rejected', message: '이메일 계정 이용이 제한되어 있습니다.' }, { status: 403 });
     }
-    const status = 'approved';
+    const status = existing.status === 'approved' || isAdminEmail ? 'approved' : 'pending';
     if (!existing.password) {
       await saveUser(context.env, {
         ...existing,
@@ -50,7 +52,7 @@ export async function onRequestPost(context) {
         password: await hashPassword(password),
         status,
         approvedAt: status === 'approved' ? existing.approvedAt || now : existing.approvedAt || null,
-        approvedBy: status === 'approved' ? existing.approvedBy || 'self-service' : existing.approvedBy || null,
+        approvedBy: status === 'approved' ? existing.approvedBy || (isAdminEmail ? 'system' : null) : existing.approvedBy || null,
         updatedAt: now
       });
     } else if (existing.status !== status) {
@@ -58,7 +60,7 @@ export async function onRequestPost(context) {
         ...existing,
         status,
         approvedAt: status === 'approved' ? existing.approvedAt || now : existing.approvedAt || null,
-        approvedBy: status === 'approved' ? existing.approvedBy || 'self-service' : existing.approvedBy || null,
+        approvedBy: status === 'approved' ? existing.approvedBy || (isAdminEmail ? 'system' : null) : existing.approvedBy || null,
         updatedAt: now
       });
     }
@@ -66,13 +68,12 @@ export async function onRequestPost(context) {
       ok: true,
       status,
       message: status === 'approved'
-        ? '회원가입이 완료되었습니다. 이메일 비밀번호로 로그인해 주세요.'
-        : '이메일 계정 이용이 제한되어 있습니다.'
+        ? '이미 승인된 계정입니다. 이메일 비밀번호로 로그인해 주세요.'
+        : '가입 신청이 접수되어 있습니다. 승인 안내와 입장 코드를 받은 뒤 로그인해 주세요.'
     });
   }
 
-  const adminEmail = getAdminEmail(context.env);
-  const status = 'approved';
+  const status = isAdminEmail ? 'approved' : 'pending';
   await saveUser(context.env, {
     email,
     name,
@@ -84,13 +85,15 @@ export async function onRequestPost(context) {
     status,
     createdAt: now,
     updatedAt: now,
-    approvedAt: now,
-    approvedBy: email === adminEmail ? 'system' : 'self-service'
+    approvedAt: status === 'approved' ? now : null,
+    approvedBy: status === 'approved' ? 'system' : null
   });
 
   return json({
     ok: true,
     status,
-    message: '회원가입이 완료되었습니다. 로그인 후 닉네임을 언제든 수정할 수 있습니다.'
+    message: status === 'approved'
+      ? '회원가입이 완료되었습니다. 로그인 후 닉네임을 언제든 수정할 수 있습니다.'
+      : '가입 신청이 접수되었습니다. 승인 안내와 입장 코드를 받은 뒤 로그인해 주세요.'
   });
 }

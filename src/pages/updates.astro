@@ -10,6 +10,9 @@ import {
   siteUpdatesStructuredData,
   updateCategories
 } from '../data/siteContent.js';
+
+const visibleSiteUpdates = siteUpdates.slice(0, 12);
+const hiddenUpdateCount = Math.max(0, siteUpdates.length - visibleSiteUpdates.length);
 ---
 
 <Layout
@@ -107,11 +110,15 @@ import {
       <div class="novel-section-head">
         <p class="section-kicker">공식 기록</p>
         <h2 id="updatesLogTitle">최근 업데이트</h2>
-        <span>{siteUpdates.length}건</span>
+        <span>최근 {visibleSiteUpdates.length}건 / 전체 {siteUpdates.length}건</span>
       </div>
+      <p class="updates-log-intro">
+        공개 페이지에서는 최근 변경만 빠르게 확인하도록 압축했습니다.
+        {hiddenUpdateCount > 0 && <> 이전 {hiddenUpdateCount}건은 아래 카테고리별 기록에서 이어서 확인할 수 있습니다.</>}
+      </p>
 
       <ol class="updates-log-list">
-        {siteUpdates.map((item) => (
+        {visibleSiteUpdates.map((item) => (
           <li>
             <div class="updates-log-meta">
               <time datetime={item.date.replaceAll('.', '-')}>{item.date}</time>
@@ -148,13 +155,16 @@ import {
               <strong>{category.countLabel}</strong>
             </div>
             <ol>
-              {category.updates.map((item) => (
+              {category.updates.slice(0, 6).map((item) => (
                 <li>
                   <time datetime={item.date.replaceAll('.', '-')}>{item.date}</time>
                   <a href={item.links[0]?.href || '#updates-log'}>{item.title}</a>
                 </li>
               ))}
             </ol>
+            {category.updates.length > 6 && (
+              <p class="updates-category-more">이전 {category.updates.length - 6}건은 운영 로그 데이터에 보관됩니다.</p>
+            )}
           </article>
         ))}
       </div>

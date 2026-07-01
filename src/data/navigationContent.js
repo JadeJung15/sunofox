@@ -4,7 +4,7 @@ export const menuItems = [
   { key: 'novels', label: '소설 보러가기', href: '/novels/' },
   { key: 'music', label: '음악', href: '/music/' },
   { key: 'updates', label: '업데이트', href: '/updates/', secondary: true },
-  { key: 'studio', label: '스튜디오', href: '/mv-studio' }
+  { key: 'studio', label: '제작실 로그인', href: '/login?next=/mv-studio', secondary: true }
 ];
 
 export const footerItems = [

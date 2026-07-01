@@ -18,7 +18,7 @@ Chrome extension for SF Studio.
 4. Select this folder:
    `C:\Users\jadej\OneDrive\문서\SunoFox PJ\SunoFox\extensions\midjourney-bridge`
 
-If you install from ZIP, unzip `sf-midjourney-bridge-v1.5.17.zip` first and load the unzipped folder.
+If you install from ZIP, unzip `sf-midjourney-bridge-v1.5.23.zip` first and load the unzipped folder.
 
 ## Notes
 

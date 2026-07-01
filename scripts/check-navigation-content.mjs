@@ -12,7 +12,7 @@ const expectedMenuItems = [
   { key: 'novels', label: '소설 보러가기', href: '/novels/' },
   { key: 'music', label: '음악', href: '/music/' },
   { key: 'updates', label: '업데이트', href: '/updates/' },
-  { key: 'studio', label: '스튜디오', href: '/mv-studio' }
+  { key: 'studio', label: '제작실 로그인', href: '/login?next=/mv-studio' }
 ];
 
 const expectedFooterItems = [
@@ -87,6 +87,15 @@ if (!Array.isArray(menuItems)) {
   const updatesItem = menuItems.find((item) => item.key === 'updates');
   if (updatesItem?.secondary !== true) {
     fail('menuItems updates: must remain secondary to keep the overlay hierarchy compact');
+  }
+
+  const studioItem = menuItems.find((item) => item.key === 'studio');
+  if (studioItem?.secondary !== true) {
+    fail('menuItems studio: must remain secondary because it is a private tool entry');
+  }
+
+  if (studioItem?.href?.startsWith('/login') !== true) {
+    fail('menuItems studio: must enter through the login route, not direct public Studio content');
   }
 }
 

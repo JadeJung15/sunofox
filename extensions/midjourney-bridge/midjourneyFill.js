@@ -4,7 +4,7 @@
   const PANEL_HIDDEN_KEY = 'weblingMjPanelHidden';
   const PANEL_ID = 'webling-mj-bridge-panel';
   const BATCH_DELAY_MS = 2600;
-  const BRIDGE_VERSION = '1.5.17';
+  const BRIDGE_VERSION = '1.5.23';
 
   let batchRunToken = 0;
   let batchRunning = false;

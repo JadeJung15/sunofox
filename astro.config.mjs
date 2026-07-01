@@ -3,9 +3,14 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 const hiddenPublicPrefixes = [
+  '/account',
+  '/admin',
   '/community',
+  '/login',
+  '/mv-studio',
   '/news',
   '/media',
+  '/signup',
   '/series',
   '/songs',
   '/contact',

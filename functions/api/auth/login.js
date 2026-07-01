@@ -52,22 +52,13 @@ export async function onRequestPost(context) {
     return json({ ok: false, message: '회원가입 후 로그인해 주세요.' }, { status: 403 });
   }
 
-  if (user.status === 'pending') {
-    user = {
-      ...user,
-      status: 'approved',
-      approvedAt: user.approvedAt || now,
-      approvedBy: user.approvedBy || 'self-service',
-      updatedAt: now
-    };
-    await saveUser(context.env, user);
-  }
-
   if (user.status !== 'approved') {
     return json({
       ok: false,
       status: user.status,
-      message: user.status === 'rejected' ? '이메일 계정 이용이 제한되어 있습니다.' : '계정 상태를 확인해 주세요.'
+      message: user.status === 'rejected'
+        ? '이메일 계정 이용이 제한되어 있습니다.'
+        : '승인 대기 중입니다. 승인 안내와 입장 코드를 받은 뒤 로그인해 주세요.'
     }, { status: 403 });
   }
 

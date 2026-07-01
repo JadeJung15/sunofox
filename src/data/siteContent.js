@@ -82,12 +82,12 @@ export const sunofoxProfile = {
     },
     {
       key: 'studio',
-      label: '스튜디오',
-      status: '제작 공간',
+      label: '제작실',
+      status: '소유자 전용',
       title: 'SF Studio',
-      summary: '웹소설, OST, 영상 패키징을 이어 붙이는 내부 제작 흐름의 진입점입니다.',
-      href: '/mv-studio',
-      cta: '스튜디오'
+      summary: '공개 콘텐츠 제작에 사용하는 사이트 소유자 전용 내부 작업실입니다. 소유자 계정으로 로그인한 뒤 입장합니다.',
+      href: '/login?next=/mv-studio',
+      cta: '제작실 로그인'
     }
   ],
   quickActions: [
@@ -148,7 +148,7 @@ export const sunofoxProfile = {
       kicker: 'STREAMING',
       title: '국내외 음악 플랫폼 연결',
       summary:
-        '수노폭스는 유튜브와 주요 음원 플랫폼을 함께 사용합니다. 웹소설로 확장된 현재 구조에서는 OST 감상, 작품 정보, 스튜디오 제작 흐름을 한 곳에서 이어 보도록 연결합니다.',
+        '수노폭스는 유튜브와 주요 음원 플랫폼을 함께 사용합니다. 웹소설로 확장된 현재 구조에서는 OST 감상과 작품 정보를 한 곳에서 이어 보도록 연결합니다.',
       facts: [
         { label: '국내', value: 'Melon, Bugs, FLO, VIBE, KakaoMusic' },
         { label: '글로벌', value: 'YouTube Music, Spotify, Apple Music, TIDAL, SoundCloud' },
@@ -171,7 +171,7 @@ export const sunofoxProfile = {
       kicker: 'MUSIC TO NOVEL',
       title: '음악에서 웹소설로 확장',
       summary:
-        'SunoFox의 현재 사이트 구조는 음악 채널에서 출발한 감정선을 웹소설, OST, 스튜디오 제작 흐름으로 연결합니다. 첫 웹소설 프로젝트는 《악녀는 첫 장에서 웃었다》입니다.',
+        'SunoFox의 현재 사이트 구조는 음악 채널에서 출발한 감정선을 웹소설과 OST 아카이브로 연결합니다. 첫 웹소설 프로젝트는 《악녀는 첫 장에서 웃었다》입니다.',
       facts: [
         { label: '첫 작품', value: novelProject.title },
         { label: '장르', value: novelProject.genre },

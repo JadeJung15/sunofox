@@ -6,12 +6,12 @@
   const PANEL_ID = 'webling-grok-bridge-panel';
   const PANEL_STYLE_ID = `${PANEL_ID}-style`;
   const DEBUG_STORAGE_KEY = 'weblingGrokDebug';
-  const BRIDGE_VERSION = '1.5.17';
+  const BRIDGE_VERSION = '1.5.23';
   const DEFAULT_GROK_FILL_DELAY_MS = 10000;
   const DEFAULT_GROK_SUBMIT_DELAY_MS = 7000;
   const DEFAULT_GROK_BACK_DELAY_MS = 5000;
   const GROK_HOME_URL = 'https://grok.com/imagine';
-  const GROK_SAVED_URL = 'https://grok.com/imagine/saved';
+  const GROK_SAVED_URL = 'https://grok.com/imagine';
 
   let activeJobKey = '';
   let completedJobKey = '';
@@ -22,6 +22,7 @@
   let manualSessionCache = null;
   let manualPromptSaveTimer = null;
   let suppressNextManualSessionRender = false;
+  let panelHiddenRevision = 0;
   const uploadLocksByCutId = new Set();
   const submitLocksByCutId = new Set();
   const boundPanelElements = new WeakSet();
@@ -105,7 +106,7 @@
 
   function normalizeManualStatus(status) {
     if (status === 'completed') return 'submitted';
-    if (['submitted', 'failed', 'skipped'].includes(status)) return status;
+    if (['pending', 'loaded', 'filled', 'send_needed', 'send_clicked', 'submitted', 'failed', 'skipped'].includes(status)) return status;
     return 'pending';
   }
 
@@ -248,10 +249,11 @@
     }
     if (action === 'toggle-panel') {
       await togglePanelHidden();
+      return;
     }
     if (action === 'previous-cut') await loadPreviousManualCut();
     if (action === 'next-cut') await loadNextManualCut();
-    if (action === 'send-active-cut') await sendActiveManualCut();
+    if (action === 'send-active-cut') await fillCurrentManualCut();
     if (action === 'reload-current-cut') await reloadCurrentManualCut();
     if (action === 'reset-manual-session') await resetManualSessionProgress();
     if (action === 'fail-current-cut') await markCurrentManualCut('failed');
@@ -291,8 +293,15 @@
     return boundPanel;
   }
 
+  function removeDuplicateElementsById(id) {
+    const elements = Array.from(document.querySelectorAll(`[id="${id}"]`));
+    elements.slice(1).forEach((element) => element.remove());
+    return elements[0] || null;
+  }
+
   function ensurePanel() {
-    let panel = document.getElementById(PANEL_ID);
+    removeDuplicateElementsById(PANEL_STYLE_ID);
+    let panel = removeDuplicateElementsById(PANEL_ID);
     if (panel) {
       panel = bindPanelEvents(panel, true) || panel;
       restorePanelHiddenState();
@@ -614,15 +623,21 @@
   }
 
   async function restorePanelHiddenState() {
+    const revision = panelHiddenRevision;
     const value = await getStorage(PANEL_HIDDEN_KEY);
+    if (revision !== panelHiddenRevision) return;
     setPanelHidden(Boolean(value[PANEL_HIDDEN_KEY]));
   }
 
   async function togglePanelHidden() {
-    const panel = ensurePanel();
+    const panel = document.getElementById(PANEL_ID);
+    if (!panel) return false;
     const hidden = !panel.classList.contains('is-hidden');
+    panelHiddenRevision += 1;
     setPanelHidden(hidden);
     await setStorage({ [PANEL_HIDDEN_KEY]: hidden });
+    setPanelHidden(hidden);
+    return true;
   }
 
   async function loadManualSession() {
@@ -722,7 +737,7 @@
           <textarea id="webling-grok-manual-prompt" data-manual-prompt ${hasActive && !isTerminal ? '' : 'disabled'}>${escapeHtml(active?.prompt || '')}</textarea>
         </div>
         <div class="webling-grok-actions">
-          <button type="button" data-action="send-active-cut" class="webling-grok-primary webling-grok-main-send" ${sendDisabledAttr}>현재 컷 보내기</button>
+          <button type="button" data-action="send-active-cut" class="webling-grok-primary webling-grok-main-send" ${sendDisabledAttr}>현재 컷 입력</button>
           <div class="webling-grok-action-grid">
             <button type="button" data-action="previous-cut" ${activeIndex > 0 ? '' : 'disabled'}>이전 컷</button>
             <button type="button" data-action="next-cut" ${items.length ? '' : 'disabled'}>다음 컷</button>
@@ -735,7 +750,7 @@
               <button type="button" data-action="fail-current-cut" class="danger" ${hasActive ? '' : 'disabled'}>실패 처리</button>
               <button type="button" data-action="skip-current-cut" class="warning" ${hasActive ? '' : 'disabled'}>건너뛰기</button>
             </div>
-            <p>submitted는 영상 생성 성공이 아니라 Grok 전송 액션 완료 상태입니다.</p>
+            <p>현재 컷 입력은 이미지와 프롬프트만 채운 뒤 브릿지 패널을 다음 컷으로 이동합니다. Grok 보내기 버튼은 사용자가 직접 눌러주세요.</p>
           </details>
         </div>
       </div>
@@ -824,6 +839,16 @@
       return false;
     }
     const active = activeManualItem(session);
+    if (['filled', 'send_needed', 'send_clicked'].includes(active?.status)) {
+      active.status = 'submitted';
+      const submittedItem = { ...active, status: 'submitted' };
+      return advanceToNextPendingManualCut(session, active.cutNumber, {
+        message: `${submittedItem.label || cutLabel(submittedItem)} 전송 완료 · 다음 pending 컷 표시`,
+        publishItem: submittedItem,
+        publishMessage: `${submittedItem.label || cutLabel(submittedItem)} Grok 수동 전송 완료`,
+        publishState: 'submitted'
+      });
+    }
     const next = findNextPendingManualItem(session, active?.cutNumber || 0);
     if (!next) {
       renderManualPanel('모든 컷 전송 완료', 'submitted');
@@ -1011,7 +1036,7 @@
   }
 
   function isGrokSavedUrl(url = window.location.href) {
-    return /^https:\/\/(www\.)?grok\.com\/imagine\/saved\/?(\?|#|$)/i.test(String(url || ''));
+    return /^https:\/\/(www\.)?grok\.com\/imagine(?:\/saved)?\/?(\?|#|$)/i.test(String(url || ''));
   }
 
   function composerRoot(promptInput) {
@@ -1096,7 +1121,7 @@
     if (isBridgePanelElement(promptInput)) return null;
     const root = composerRoot(promptInput);
     const promptRect = promptInput.getBoundingClientRect();
-    const modeTextPattern = /(agent|이미지|image|동영상|video|480p|720p|6s|10s|16:9|beta|모델|model)/i;
+    const modeTextPattern = /(agent|에이전트|이미지|image|동영상|비디오|video|업로드|upload|480p|720p|6s|10s|16:9|beta|모델|model)/i;
 
     const candidates = [...root.querySelectorAll('button')]
       .filter((button) => (
@@ -1108,15 +1133,16 @@
       .map((button) => {
         const rect = button.getBoundingClientRect();
         const text = String(button.textContent || button.getAttribute('aria-label') || button.title || '').trim();
+        const type = button.getAttribute('type') || '';
         const sizeOk = rect.width >= 24 && rect.height >= 24 && rect.width <= 96 && rect.height <= 96;
         const nearY = rect.top < promptRect.bottom + 140 && rect.bottom > promptRect.top - 140;
         const rightOfInput = rect.left > promptRect.left;
-        const explicit = /(send|submit|generate|create|arrow|전송|생성|보내기)/i.test(text);
+        const explicit = /(send|submit|generate|create|arrow|전송|제출|생성|보내기)/i.test(text) || type === 'submit';
         const notMode = !modeTextPattern.test(text);
         const score = (explicit ? 1000 : 0) + (rightOfInput ? 200 : 0) + (sizeOk ? 100 : 0) + rect.right;
-        return { button, rect, nearY, notMode, score };
+        return { button, rect, nearY, explicit, notMode, score };
       })
-      .filter((item) => item.nearY && item.notMode)
+      .filter((item) => item.nearY && item.notMode && item.explicit)
       .sort((a, b) => b.score - a.score);
 
     if (candidates[0]?.button) return candidates[0].button;
@@ -1126,7 +1152,8 @@
       'button[aria-label*="send" i]',
       'button[aria-label*="submit" i]',
       'button[aria-label*="generate" i]',
-      'button[aria-label*="create" i]'
+      'button[aria-label*="create" i]',
+      'button[aria-label*="제출"]'
     ];
     return selectors
       .flatMap((selector) => [...document.querySelectorAll(selector)])
@@ -1567,17 +1594,8 @@
         return failManualSend(session, item, '프롬프트 입력 확인 실패');
       }
 
+      const beforeSnapshot = submissionSnapshot(promptInput);
       const button = await waitForSubmitButton(promptInput);
-      item.status = 'submitted';
-      const submittedItem = { ...item, status: 'submitted' };
-      const advanced = await advanceToNextPendingManualCut(session, cutNumber, {
-        message: `${submittedItem.label || cutLabel(submittedItem)} 전송 완료 · 다음 pending 컷 표시`,
-        publishItem: submittedItem,
-        publishMessage: `${submittedItem.label || cutLabel(submittedItem)} Grok 전송 완료`,
-        publishState: 'submitted'
-      });
-      if (!advanced) return false;
-
       let sent = false;
       if (button) {
         sent = clickElement(button);
@@ -1602,6 +1620,21 @@
         renderManualPanel('Grok 전송 액션 실행 실패', 'failed');
         return false;
       }
+
+      const confirmed = await waitForSubmissionChange(promptInput, item.prompt, beforeSnapshot, 16000);
+      if (!confirmed) {
+        return failManualSend(session, item, 'Grok 전송 확인 실패');
+      }
+
+      item.status = 'submitted';
+      const submittedItem = { ...item, status: 'submitted' };
+      const advanced = await advanceToNextPendingManualCut(session, cutNumber, {
+        message: `${submittedItem.label || cutLabel(submittedItem)} 전송 완료 · 다음 pending 컷 표시`,
+        publishItem: submittedItem,
+        publishMessage: `${submittedItem.label || cutLabel(submittedItem)} Grok 전송 완료`,
+        publishState: 'submitted'
+      });
+      if (!advanced) return false;
       return true;
     } catch (error) {
       return failManualSend(session, item, error?.message || 'Grok 전송 중 오류가 발생했습니다.');
@@ -1657,9 +1690,21 @@
       return false;
     }
     setPromptInput(promptInput, item.prompt);
-    item.status = 'send_needed';
-    await saveManualSession(session, 'Grok 입력 완료 · 보내기 필요', 'send_needed');
-    return true;
+    const marker = String(item.prompt || '').trim().slice(0, 48);
+    const applied = await waitUntilPromptIsApplied(marker);
+    if (!applied) {
+      item.status = 'failed';
+      await saveManualSession(session, '프롬프트 입력 확인 실패', 'failed');
+      return false;
+    }
+    item.status = 'submitted';
+    const submittedItem = { ...item, status: 'submitted' };
+    return advanceToNextPendingManualCut(session, item.cutNumber, {
+      message: `${submittedItem.label || cutLabel(submittedItem)} 입력 완료 · 다음 컷 표시`,
+      publishItem: submittedItem,
+      publishMessage: `${submittedItem.label || cutLabel(submittedItem)} Grok 입력 완료`,
+      publishState: 'submitted'
+    });
   }
 
   async function sendCurrentManualCut() {

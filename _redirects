@@ -6,6 +6,7 @@
 /novel/ /novels 301
 /studio /mv-studio 301
 /studio/ /mv-studio 301
+/mv-studio/* /mv-studio.html 200
 /privacy.html /privacy/ 301
 /terms.html /terms/ 301
 /ost https://youtu.be/u_OwBr3Cstk?si=Vs1Y6xQ1jpSfmm53 302

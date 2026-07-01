@@ -1,12 +1,12 @@
 const MIDJOURNEY_URL = 'https://www.midjourney.com/explore';
 const GROK_URL = 'https://grok.com/imagine';
-const GROK_SAVED_URL = 'https://grok.com/imagine/saved';
+const GROK_SAVED_URL = 'https://grok.com/imagine';
 const QUEUE_KEY = 'weblingMjQueue';
 const STATUS_KEY = 'weblingMjStatus';
 const GROK_JOB_KEY = 'weblingGrokJob';
 const GROK_SESSION_KEY = 'weblingGrokManualSession';
 const GROK_STATUS_KEY = 'weblingGrokStatus';
-const BRIDGE_VERSION = '1.5.17';
+const BRIDGE_VERSION = '1.5.23';
 const DEFAULT_GROK_FILL_DELAY_MS = 10000;
 const DEFAULT_GROK_SUBMIT_DELAY_MS = 7000;
 const DEFAULT_GROK_BACK_DELAY_MS = 5000;
@@ -117,7 +117,7 @@ const sendTabMessage = (tabId, message) => new Promise((resolve) => {
 });
 
 function isGrokSavedUrl(url) {
-  return /^https:\/\/(www\.)?grok\.com\/imagine\/saved\/?(\?|#|$)/i.test(String(url || ''));
+  return /^https:\/\/(www\.)?grok\.com\/imagine(?:\/saved)?\/?(\?|#|$)/i.test(String(url || ''));
 }
 
 const attachDebugger = (tabId) => new Promise((resolve) => {
@@ -278,7 +278,7 @@ async function returnGrokToSaved(tabId, options = {}) {
 async function focusGrokTab(options = {}) {
   const targetUrl = options.savedMacro ? GROK_SAVED_URL : GROK_URL;
   const targetPattern = options.savedMacro
-    ? /^https:\/\/(www\.)?grok\.com\/imagine\/saved\/?(\?|#|$)/i
+    ? /^https:\/\/(www\.)?grok\.com\/imagine(?:\/saved)?\/?(\?|#|$)/i
     : /^https:\/\/(www\.)?grok\.com\/imagine\/?(\?|#|$)/i;
 
   const cached = await getTab(activeGrokTabId);

@@ -206,11 +206,11 @@ https://sunofox.com/robots.txt
 
 ## Bridge Extension
 
-브릿지 확장 프로그램은 기존 운영 버전을 유지합니다.
+브릿지 확장 프로그램은 현재 운영 버전을 기준으로 관리합니다.
 
-- 패키지: `public/extensions/sf-midjourney-bridge-v1.5.17.zip`
+- 패키지: `public/extensions/sf-midjourney-bridge-v1.5.23.zip`
 - 소스: `public/extensions/midjourney-bridge`
 - Chrome 확장 이름: `SF 미디어 브릿지`
-- required version: `1.5.17`
+- required version: `1.5.23`
 
-기능 변경 없이 새 도메인 권한만 관리합니다.
+기능 변경 또는 권한 변경 시 manifest, 소스 상수, ZIP 파일, Studio 요구 버전, 문서를 함께 갱신합니다.

@@ -1,0 +1,20 @@
+---
+const target = '/signup.html';
+---
+
+<!doctype html>
+<html lang="ko-KR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>SunoFox 회원가입으로 이동</title>
+    <link rel="canonical" href="https://sunofox.com/signup" />
+    <script is:inline define:vars={{ target }}>
+      window.location.replace(`${target}${window.location.search}${window.location.hash}`);
+    </script>
+  </head>
+  <body>
+    <a href={target}>SunoFox 회원가입으로 이동</a>
+  </body>
+</html>

@@ -57,7 +57,7 @@ $routes = @(
     Name = "home"
     Path = "/"
     File = "index.html"
-    Must = @("ANIME OST STUDIO", "SUNOFOX", "STORY OST", "MEETS IP", "WHAT WE BUILD", "FANS", "OST SHOP", "ONE MORE THING", "bg-home", "bg-header", "bg-hero", "bg-company", "bg-product", "bg-footer", "/novels/", "/music/", "/profile/", "https://sunofox.com/", "https://www.youtube.com/@sunofox", $labelMusicArchive)
+    Must = @("SUNOFOX", "STORY OST MEETS IP", "WE TELL STORIES THROUGH MUSIC", "FEATURED RELEASE", "ORIGINAL SOUNDTRACK PART.1", "MUSIC ARCHIVE", "STORY IP", "EXPLORE MUSIC", "DISCOVER IP", "showcase-stage", "showcase-release", "data-showcase-panel=""featured""", "data-showcase-panel=""music""", "data-showcase-panel=""story""", "/novels/", "/music/", "/profile/", "https://www.youtube.com/@sunofox", $labelMusicArchive)
   },
   @{
     Name = "novels"

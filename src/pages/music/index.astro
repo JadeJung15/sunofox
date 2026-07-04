@@ -29,17 +29,10 @@ const videoAnchorItems = Array.from(
 );
 const latestVideoDate = latestStoryVideo?.date || musicArchive.researchDate;
 const oldestVideoDate = musicArchive.videos.at(-1)?.date || latestVideoDate;
-const musicHeroActions = [
-  { label: '최신 영상 감상', href: latestStoryVideo.href, external: true, primary: true },
-  { label: 'YouTube 채널', href: artistLinks.youtube, external: true },
-  { label: '재생목록', href: artistLinks.youtubePlaylists, external: true },
-  { label: 'Story IP', href: '/novels/' },
-  { label: '대표 OST', href: featuredStoryOst.href, external: true }
-];
 const musicPremiereActions = [
-  { label: '최신 영상 감상', href: latestStoryVideo.href, external: true, primary: true },
-  { label: 'YouTube 채널', href: artistLinks.youtube, external: true },
-  { label: 'Story IP', href: '/novels/' }
+  { label: 'LISTEN', href: latestStoryVideo.href, external: true, primary: true },
+  { label: 'CHANNEL', href: artistLinks.youtube, external: true },
+  { label: 'STORY IP', href: '/novels/' }
 ];
 const videoDirectActions = [
   { key: 'latest', label: '최신 영상 감상', href: latestStoryVideo.href, external: true, primary: true },
@@ -109,18 +102,6 @@ const videoSummaryItems = [
           음악 아카이브는 SunoFox의 영상 중심 IP 흐름을 정리하는 공개 허브입니다.
         </p>
         <span>최신 OST {latestStoryVideo.date} · 확인 기준 {musicArchive.researchDate}</span>
-        <div class="music-archive-actions" aria-label="Music archive quick actions">
-          {musicHeroActions.map((action) => (
-            <a
-              class:list={['main-button', action.primary && 'main-button-primary', !action.primary && 'main-button-muted']}
-              href={action.href}
-              target={action.external ? '_blank' : undefined}
-              rel={action.external ? 'noopener noreferrer' : undefined}
-            >
-              {action.label}
-            </a>
-          ))}
-        </div>
       </div>
 
       <dl class="music-archive-facts">

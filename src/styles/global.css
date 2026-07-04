@@ -8236,3 +8236,168 @@ body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-det
     font-size: clamp(2.35rem, 11vw, 3.6rem);
   }
 }
+
+/* 2026-07 Music archive premium pass: restore first-screen art and reduce dense utility chrome. */
+body:has(.music-archive-page) .music-archive-page {
+  padding-bottom: 92px;
+}
+
+body:has(.music-archive-page) .music-archive-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.98fr) minmax(360px, 0.62fr);
+  grid-template-areas:
+    "copy premiere"
+    "facts facts";
+  align-items: center;
+  min-height: clamp(680px, 92svh, 900px);
+  gap: clamp(28px, 4vw, 64px);
+  padding-top: clamp(104px, 12vh, 132px);
+  padding-bottom: clamp(46px, 7vh, 74px);
+}
+
+body:has(.music-archive-page) .music-archive-copy {
+  max-width: 920px;
+}
+
+body:has(.music-archive-page) .music-archive-copy h1 {
+  max-width: 880px;
+  font-size: clamp(4.5rem, 9vw, 8.2rem);
+  line-height: 0.88;
+}
+
+body:has(.music-archive-page) .music-archive-copy p:not(.section-kicker) {
+  max-width: 680px;
+  margin-top: 24px;
+  font-size: clamp(1rem, 1.34vw, 1.2rem);
+  line-height: 1.68;
+}
+
+body:has(.music-archive-page) .music-archive-copy > span {
+  margin-top: 18px;
+  color: rgba(255, 255, 255, 0.52);
+}
+
+body:has(.music-archive-page) .music-premiere-actions .main-button {
+  min-height: 50px;
+  padding-inline: 18px;
+  border-color: rgba(255, 255, 255, 0.2);
+  font-size: 0.78rem;
+}
+
+body:has(.music-archive-page) .music-premiere-card {
+  display: grid;
+  gap: 18px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+body:has(.music-archive-page) .music-premiere-thumb {
+  aspect-ratio: 16 / 9;
+  border-color: rgba(255, 255, 255, 0.16);
+  border-radius: 0;
+}
+
+body:has(.music-archive-page) .music-premiere-thumb span {
+  left: 14px;
+  bottom: 14px;
+  min-height: 30px;
+  border-radius: 0;
+  padding-inline: 11px;
+}
+
+body:has(.music-archive-page) .music-premiere-copy h2 {
+  max-width: 14ch;
+  margin-top: 8px;
+  font-family: var(--font-condensed);
+  font-size: clamp(2.1rem, 3.2vw, 4.1rem);
+  font-weight: 950;
+  line-height: 0.98;
+}
+
+body:has(.music-archive-page) .music-premiere-copy > p:not(.section-kicker) {
+  display: block;
+  max-width: 420px;
+  color: rgba(255, 255, 255, 0.58);
+}
+
+body:has(.music-archive-page) .music-premiere-actions {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+body:has(.music-archive-page) .music-archive-facts {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 10px;
+  border-top-color: rgba(255, 255, 255, 0.14);
+}
+
+body:has(.music-archive-page) .music-archive-facts div {
+  min-height: 82px;
+  padding: 18px 22px 18px 0;
+}
+
+body:has(.music-archive-page) .music-archive-facts dt {
+  font-family: var(--font-condensed);
+  font-size: 0.72rem;
+  font-weight: 950;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+body:has(.music-archive-page) .music-archive-facts dd {
+  font-size: clamp(0.95rem, 1.16vw, 1.15rem);
+  line-height: 1.35;
+}
+
+body:has(.music-archive-page) :is(.music-flow-section, .music-featured-ost-section, .music-release-section, .music-video-section, .music-story-section) {
+  padding-block: clamp(56px, 8vw, 92px);
+}
+
+@media (max-width: 1120px) {
+  body:has(.music-archive-page) .music-archive-hero {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "copy"
+      "premiere"
+      "facts";
+    align-items: start;
+  }
+
+  body:has(.music-archive-page) .music-premiere-copy h2 {
+    max-width: 18ch;
+  }
+}
+
+@media (max-width: 760px) {
+  body:has(.music-archive-page) .music-archive-hero {
+    min-height: 0;
+    gap: 28px;
+    padding-top: 92px;
+    padding-bottom: 38px;
+  }
+
+  body:has(.music-archive-page) .music-archive-copy h1 {
+    font-size: clamp(3.45rem, 16vw, 5.35rem);
+    line-height: 0.92;
+  }
+
+  body:has(.music-archive-page) .music-premiere-actions {
+    grid-template-columns: 1fr;
+  }
+
+  body:has(.music-archive-page) .music-archive-facts {
+    grid-template-columns: 1fr;
+  }
+
+  body:has(.music-archive-page) .music-archive-facts div {
+    min-height: 0;
+    padding: 15px 0;
+  }
+
+  body:has(.music-archive-page) .music-premiere-copy h2 {
+    font-size: clamp(2rem, 9vw, 3.1rem);
+  }
+}

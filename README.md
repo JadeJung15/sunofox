@@ -77,6 +77,7 @@ SunoFox 공식 사이트는 YouTube에서 공개되는 Anime OST와 웹소설 OS
 
 | 문서 | 용도 |
 |---|---|
+| `docs/sunofox-site-direction-v1.md` | 공개 사이트 정체성, 정보 우선순위, 페이지별 역할, 디자인 금지선을 고정 |
 | `docs/site-route-inventory.md` | 공개/보호 라우트, 콘텐츠 데이터 위치, 배포 후 확인 URL을 한 장으로 정리 |
 | `docs/episode-release-checklist.md` | 신규 웹소설 회차 공개 전 콘텐츠, 파일, UI, 검증, 배포 체크리스트 |
 | `docs/episode-authoring-template.md` | 신규 회차 데이터, frontmatter, 시즌/읽는 흐름 갱신 템플릿 |

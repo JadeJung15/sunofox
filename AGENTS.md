@@ -7,6 +7,8 @@
 - 기본 정본 도메인은 `https://sunofox.com`이며, 내부 canonical route는 `/mv-studio`입니다.
 - 기본 배포 대상은 Cloudflare Pages 프로젝트 `sf-studio`입니다.
 - 현재 접근 모델은 Cloudflare Access가 아니라 SF Studio 자체 이메일 신청 + 사이트 주인 승인 + 입장 코드 로그인입니다.
+- 공개 사이트 방향과 디자인 판단은 `docs/sunofox-site-direction-v1.md`를 기준서로 삼으세요. 공개 페이지는 "스토리 기반 음악과 Story IP를 전시하는 프리미엄 쇼케이스"로 고정하고, 큰 이미지, 넓은 여백, 짧은 문장, 명확한 Music/Story 진입을 우선합니다.
+- 공개 페이지 개편은 한 번에 한 페이지씩 진행하세요. 홈, Music, Story IP, 상세, Profile, Updates 순서로 정리하며, 대시보드형 UI, 과도한 카드 나열, 긴 회사소개 문구, 버튼 과다, 텍스트 겹침을 금지합니다.
 - 사용자 최신 운영 기준: 코드 수정 후 검증이 통과하면 커밋, push, PR 생성, Cloudflare Pages `sf-studio` main 배포까지 기본 진행하세요.
 - 단, Cloudflare Access 앱 생성/변경/복구, DNS 변경, 강제 push, PR merge, 운영 인증/DB 변경은 별도 명시 없이는 하지 마세요.
 - 코드 수정 전에는 수정 예정 파일과 영향 범위를 먼저 요약해 주세요.

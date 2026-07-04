@@ -13,8 +13,8 @@ export const archiveAlbum = {
   distributor: 'mixtape.so',
   agency: 'SNFX',
   direction: '오리지널 트랙 아카이브',
-  image: '/assets/sunofox-app-icon-512.png',
-  imageAlt: 'SunoFox 로고를 활용한 ARCHIVE vol.1 상세 페이지 대표 이미지',
+  image: '/assets/brand/sunofox-archive-vol-1-cover.webp',
+  imageAlt: 'ARCHIVE vol.1을 상징하는 바이닐 레코드와 아카이브 슬리브 커버',
   summary:
     'SunoFox가 제작해온 오리지널 트랙을 기록의 형태로 정리한 첫 정규 아카이브입니다.',
   intro: [

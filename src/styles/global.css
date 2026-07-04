@@ -235,7 +235,7 @@ body.cursor-down .cursor-ring {
   font-family: var(--font-condensed);
   font-size: 10px;
   font-weight: 950;
-  letter-spacing: 0.2em;
+  letter-spacing: 0;
   pointer-events: none;
   text-transform: uppercase;
   transform: translateY(-50%);
@@ -274,7 +274,7 @@ body.cursor-down .cursor-ring {
   align-items: center;
   font-size: 22px;
   font-weight: 900;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
   transition: color 160ms ease, transform 160ms ease;
 }
 
@@ -336,7 +336,7 @@ body.menu-open .menu-trigger::before {
 .menu-trigger-label {
   font-size: 12px;
   font-weight: 900;
-  letter-spacing: 0.18em;
+  letter-spacing: 0;
   font-family: var(--font-condensed);
 }
 
@@ -441,7 +441,7 @@ body.menu-open .overlay-menu {
   font-size: clamp(30px, 5.4vw, 64px);
   font-weight: 950;
   line-height: 0.96;
-  letter-spacing: -0.035em;
+  letter-spacing: 0;
   opacity: 1;
   transform: translateY(0);
   transition:
@@ -508,7 +508,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   margin-top: 10px;
   color: var(--muted);
   font-size: clamp(22px, 3.8vw, 42px);
-  letter-spacing: -0.015em;
+  letter-spacing: 0;
 }
 
 .overlay-nav a:hover,
@@ -543,7 +543,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   color: var(--muted);
   font-size: 12px;
   font-weight: 900;
-  letter-spacing: 0.18em;
+  letter-spacing: 0;
   font-family: var(--font-condensed);
   opacity: 1;
   transform: translateY(0);
@@ -654,7 +654,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   color: var(--pink);
   font-size: 12px;
   font-weight: 950;
-  letter-spacing: 0.24em;
+  letter-spacing: 0;
   text-transform: uppercase;
   font-family: var(--font-condensed);
 }
@@ -669,7 +669,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-size: clamp(78px, 18vw, 248px);
   font-weight: 950;
   line-height: 0.95;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
   text-transform: uppercase;
   font-family: var(--font-condensed);
   transform: scaleY(1.12);
@@ -701,7 +701,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-size: clamp(14px, 1.5vw, 19px);
   font-weight: 800;
   line-height: 1.65;
-  letter-spacing: 0.08em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
@@ -736,7 +736,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   color: #ffffff;
   font-size: 12px;
   font-weight: 950;
-  letter-spacing: 0.14em;
+  letter-spacing: 0;
   text-transform: uppercase;
   font-family: var(--font-condensed);
   transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
@@ -787,7 +787,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   color: var(--subtle);
   font-size: 10px;
   font-weight: 900;
-  letter-spacing: 0.22em;
+  letter-spacing: 0;
   transform: translateX(-50%);
   writing-mode: vertical-rl;
 }
@@ -827,7 +827,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 12px;
   font-weight: 950;
-  letter-spacing: 0.14em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
@@ -860,7 +860,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 11px;
   font-weight: 950;
-  letter-spacing: 0.12em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
@@ -900,7 +900,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 12px;
   font-weight: 950;
-  letter-spacing: 0.16em;
+  letter-spacing: 0;
   text-transform: uppercase;
   transition: border-color 180ms ease, background 180ms ease, color 180ms ease, transform 180ms ease;
 }
@@ -975,7 +975,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 11px;
   font-weight: 950;
-  letter-spacing: 0.2em;
+  letter-spacing: 0;
   line-height: 1;
   text-align: center;
   transform: translateX(-50%);
@@ -1015,7 +1015,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: clamp(62px, 11vw, 154px);
   font-weight: 950;
-  letter-spacing: -0.04em;
+  letter-spacing: 0;
   line-height: 0.9;
   text-transform: uppercase;
 }
@@ -1074,7 +1074,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 12px;
   font-weight: 950;
-  letter-spacing: 0.18em;
+  letter-spacing: 0;
 }
 
 .novel-intro-card h2 {
@@ -1091,7 +1091,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   color: var(--subtle);
   font-size: 13px;
   font-weight: 800;
-  letter-spacing: 0.04em;
+  letter-spacing: 0;
 }
 
 .novel-intro-card p {
@@ -1161,7 +1161,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: clamp(48px, 8vw, 96px);
   font-weight: 950;
-  letter-spacing: -0.035em;
+  letter-spacing: 0;
   line-height: 0.96;
   overflow-wrap: anywhere;
   word-break: keep-all;
@@ -1187,7 +1187,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 12px;
   font-weight: 950;
-  letter-spacing: 0.16em;
+  letter-spacing: 0;
 }
 
 .novel-reader-summary {
@@ -1209,7 +1209,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 12px;
   font-weight: 950;
-  letter-spacing: 0.12em;
+  letter-spacing: 0;
 }
 
 .novel-reader-summary dd {
@@ -1242,7 +1242,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   color: var(--subtle);
   font-size: 11px;
   font-weight: 950;
-  letter-spacing: 0.14em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
@@ -1375,7 +1375,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 11px;
   font-weight: 950;
-  letter-spacing: 0.14em;
+  letter-spacing: 0;
 }
 
 .novel-reader-index-links strong {
@@ -1426,7 +1426,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 10px;
   font-weight: 950;
-  letter-spacing: 0.14em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
@@ -1488,7 +1488,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 11px;
   font-weight: 950;
-  letter-spacing: 0.12em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
@@ -1624,7 +1624,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 11px;
   font-weight: 950;
-  letter-spacing: 0.14em;
+  letter-spacing: 0;
 }
 
 .novel-platform-copy h1,
@@ -1634,7 +1634,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: clamp(54px, 8.5vw, 126px);
   font-weight: 950;
-  letter-spacing: -0.04em;
+  letter-spacing: 0;
   line-height: 0.92;
   word-break: keep-all;
 }
@@ -1644,7 +1644,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   color: var(--subtle);
   font-size: 13px;
   font-weight: 850;
-  letter-spacing: 0.06em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
@@ -1688,7 +1688,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 12px;
   font-weight: 950;
-  letter-spacing: 0.12em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
@@ -1815,7 +1815,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 11px;
   font-weight: 950;
-  letter-spacing: 0.12em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
@@ -1876,7 +1876,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: clamp(44px, 7vw, 106px);
   font-weight: 950;
-  letter-spacing: -0.04em;
+  letter-spacing: 0;
   line-height: 0.94;
   word-break: keep-all;
 }
@@ -1955,7 +1955,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 11px;
   font-weight: 950;
-  letter-spacing: 0.12em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
@@ -2019,7 +2019,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: clamp(34px, 4vw, 58px);
   font-weight: 950;
-  letter-spacing: -0.035em;
+  letter-spacing: 0;
   line-height: 0.96;
 }
 
@@ -2124,7 +2124,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 12px;
   font-weight: 950;
-  letter-spacing: 0.18em;
+  letter-spacing: 0;
 }
 
 .novel-release-card.is-next span {
@@ -2248,7 +2248,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 11px;
   font-weight: 900;
-  letter-spacing: 0.12em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
@@ -2313,7 +2313,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 12px;
   font-weight: 950;
-  letter-spacing: 0.12em;
+  letter-spacing: 0;
 }
 
 .novel-list-summary dd {
@@ -2378,7 +2378,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 11px;
   font-weight: 950;
-  letter-spacing: 0.14em;
+  letter-spacing: 0;
 }
 
 .novel-season-facts dd {
@@ -2453,7 +2453,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 12px;
   font-weight: 950;
-  letter-spacing: 0.14em;
+  letter-spacing: 0;
 }
 
 .novel-reading-card strong {
@@ -2564,7 +2564,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-size: 11px;
   font-style: normal;
   font-weight: 900;
-  letter-spacing: 0.12em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
@@ -2715,7 +2715,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 12px;
   font-weight: 950;
-  letter-spacing: 0.14em;
+  letter-spacing: 0;
   text-transform: uppercase;
   overflow-wrap: anywhere;
 }
@@ -2828,7 +2828,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 12px;
   font-weight: 950;
-  letter-spacing: 0.14em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
@@ -2953,7 +2953,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 13px;
   font-weight: 950;
-  letter-spacing: 0.16em;
+  letter-spacing: 0;
 }
 
 .about-route-grid strong {
@@ -3022,7 +3022,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: clamp(42px, 7vw, 88px);
   font-weight: 950;
-  letter-spacing: -0.04em;
+  letter-spacing: 0;
   line-height: 0.92;
   text-transform: uppercase;
 }
@@ -3069,7 +3069,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 11px;
   font-weight: 950;
-  letter-spacing: 0.12em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
@@ -3139,7 +3139,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: clamp(48px, 8vw, 112px);
   font-weight: 950;
-  letter-spacing: -0.04em;
+  letter-spacing: 0;
   line-height: 0.92;
   text-transform: uppercase;
 }
@@ -3162,7 +3162,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 12px;
   font-weight: 950;
-  letter-spacing: 0.16em;
+  letter-spacing: 0;
   text-transform: uppercase;
   writing-mode: vertical-rl;
 }
@@ -3187,7 +3187,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 12px;
   font-weight: 950;
-  letter-spacing: 0.12em;
+  letter-spacing: 0;
   text-transform: uppercase;
   transition: border-color 160ms ease, background 160ms ease, color 160ms ease, transform 160ms ease;
 }
@@ -3221,7 +3221,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: clamp(34px, 4.6vw, 68px);
   font-weight: 950;
-  letter-spacing: -0.035em;
+  letter-spacing: 0;
   line-height: 0.96;
 }
 
@@ -3273,7 +3273,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: clamp(18px, 2vw, 26px);
   font-weight: 950;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
 }
 
 .profile-track-list li {
@@ -3294,7 +3294,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 12px;
   font-weight: 950;
-  letter-spacing: 0.14em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
@@ -3391,7 +3391,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 11px;
   font-weight: 950;
-  letter-spacing: 0.12em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
@@ -3435,15 +3435,24 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
 
 .music-archive-hero {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.48fr);
+  grid-template-columns: minmax(0, 0.96fr) minmax(320px, 0.54fr);
+  grid-template-areas:
+    "back back"
+    "copy premiere"
+    "facts premiere";
   gap: 34px 52px;
-  align-items: end;
+  align-items: start;
   border-bottom: 1px solid var(--line);
   padding-bottom: 46px;
 }
 
 .music-archive-hero .album-back-link {
+  grid-area: back;
   grid-column: 1 / -1;
+}
+
+.music-archive-copy {
+  grid-area: copy;
 }
 
 .music-archive-copy h1 {
@@ -3481,7 +3490,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 12px;
   font-weight: 950;
-  letter-spacing: 0.14em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
@@ -3492,7 +3501,30 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   margin-top: 26px;
 }
 
+.music-premiere-card {
+  grid-area: premiere;
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.035)),
+    #111827;
+  color: #ffffff;
+}
+
+.music-premiere-thumb {
+  aspect-ratio: 4 / 3;
+}
+
+.music-premiere-copy > p:not(.section-kicker) {
+  color: rgba(248, 250, 252, 0.68);
+}
+
 .music-archive-facts {
+  grid-area: facts;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0;
@@ -3660,7 +3692,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 13px;
   font-weight: 950;
-  letter-spacing: 0.14em;
+  letter-spacing: 0;
 }
 
 .music-release-copy h3 {
@@ -3764,7 +3796,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 12px;
   font-weight: 950;
-  letter-spacing: 0.12em;
+  letter-spacing: 0;
 }
 
 .music-video-summary dd {
@@ -3893,7 +3925,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-size: 12px;
   font-style: normal;
   font-weight: 950;
-  letter-spacing: 0.12em;
+  letter-spacing: 0;
   overflow-wrap: anywhere;
   text-transform: uppercase;
 }
@@ -4031,7 +4063,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-size: 12px;
   font-style: normal;
   font-weight: 950;
-  letter-spacing: 0.12em;
+  letter-spacing: 0;
   overflow-wrap: anywhere;
   text-transform: uppercase;
 }
@@ -4102,7 +4134,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 12px;
   font-weight: 950;
-  letter-spacing: 0.14em;
+  letter-spacing: 0;
   text-transform: uppercase;
   transition: color 160ms ease;
 }
@@ -4119,24 +4151,32 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   align-content: end;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.13);
-  background:
-    linear-gradient(145deg, rgba(255, 10, 91, 0.12), transparent 42%),
-    rgba(255, 255, 255, 0.025);
+  background: #111827;
   padding: 28px;
 }
 
 .album-cover-mark img {
   position: absolute;
-  top: 24px;
-  right: 24px;
-  width: min(42%, 178px);
-  height: auto;
-  opacity: 0.34;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 1;
+}
+
+.album-cover-mark::after {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, transparent 42%, rgba(17, 24, 39, 0.76)),
+    linear-gradient(90deg, rgba(17, 24, 39, 0.24), transparent 46%);
+  content: "";
 }
 
 .album-cover-mark span,
 .album-cover-mark strong {
   position: relative;
+  z-index: 1;
   display: block;
   color: #ffffff;
   font-family: var(--font-condensed);
@@ -4144,6 +4184,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-weight: 950;
   letter-spacing: 0;
   line-height: 0.88;
+  text-shadow: 0 16px 34px rgba(0, 0, 0, 0.44);
   text-transform: uppercase;
 }
 
@@ -4158,7 +4199,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: clamp(56px, 9vw, 122px);
   font-weight: 950;
-  letter-spacing: -0.035em;
+  letter-spacing: 0;
   line-height: 0.9;
 }
 
@@ -4221,7 +4262,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: clamp(36px, 5.8vw, 76px);
   font-weight: 950;
-  letter-spacing: -0.03em;
+  letter-spacing: 0;
   line-height: 0.96;
 }
 
@@ -4303,7 +4344,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 11px;
   font-weight: 950;
-  letter-spacing: 0.12em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
@@ -4376,7 +4417,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 12px;
   font-weight: 950;
-  letter-spacing: 0.12em;
+  letter-spacing: 0;
 }
 
 .updates-pinned-actions {
@@ -4415,7 +4456,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 11px;
   font-weight: 950;
-  letter-spacing: 0.12em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
@@ -4471,7 +4512,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 11px;
   font-weight: 950;
-  letter-spacing: 0.12em;
+  letter-spacing: 0;
 }
 
 .updates-roadmap-card strong {
@@ -4503,7 +4544,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 11px;
   font-weight: 850;
-  letter-spacing: 0.08em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
@@ -4526,7 +4567,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 11px;
   font-weight: 950;
-  letter-spacing: 0.12em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
@@ -4592,7 +4633,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 11px;
   font-weight: 950;
-  letter-spacing: 0.12em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
@@ -4607,7 +4648,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-size: clamp(24px, 3vw, 42px);
   font-weight: 950;
   line-height: 1.18;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
 }
 
 .updates-log-copy p {
@@ -4657,7 +4698,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 12px;
   font-weight: 950;
-  letter-spacing: 0.12em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
@@ -4697,7 +4738,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-condensed);
   font-size: 11px;
   font-weight: 950;
-  letter-spacing: 0.1em;
+  letter-spacing: 0;
 }
 
 .updates-category-grid a {
@@ -4719,7 +4760,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-size: clamp(44px, 7vw, 96px);
   font-weight: 950;
   line-height: 0.92;
-  letter-spacing: -0.04em;
+  letter-spacing: 0;
   text-transform: uppercase;
   font-family: var(--font-condensed);
 }
@@ -4746,7 +4787,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   color: var(--subtle);
   font-size: 12px;
   font-weight: 800;
-  letter-spacing: 0.06em;
+  letter-spacing: 0;
 }
 
 .site-footer span {
@@ -5122,7 +5163,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
     gap: 8px 12px;
     margin-top: 22px;
     font-size: 10px;
-    letter-spacing: 0.11em;
+    letter-spacing: 0;
   }
 
   .home-hero-meta span {
@@ -5213,7 +5254,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   .hero-tagline {
     max-width: 300px;
     font-size: 12px;
-    letter-spacing: 0.06em;
+    letter-spacing: 0;
     line-height: 1.55;
   }
 
@@ -5388,7 +5429,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
 @media (max-width: 640px) {
   .novel-page .category-hero h1 {
     font-size: clamp(40px, 12vw, 62px);
-    letter-spacing: -0.025em;
+    letter-spacing: 0;
   }
 
   .novel-intro-card {
@@ -6431,7 +6472,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   font-family: var(--font-body);
   font-size: 0.34em;
   font-weight: 850;
-  letter-spacing: 0.08em;
+  letter-spacing: 0;
   vertical-align: middle;
   content: 'PRIVATE';
 }
@@ -6609,7 +6650,7 @@ body.page-enter {
   color: var(--sf-accent);
   font-size: 0.78rem;
   font-weight: 850;
-  letter-spacing: 0.08em;
+  letter-spacing: 0;
 }
 
 .site-header {
@@ -7125,6 +7166,23 @@ body.menu-open .menu-trigger:focus-visible .menu-trigger-lines span:last-child {
   color: var(--sf-accent);
 }
 
+.site-footer a {
+  min-width: 44px;
+  justify-content: center;
+}
+
+.album-source-panel a,
+.profile-source-strip a {
+  min-height: 40px;
+  border-radius: 8px;
+}
+
+.updates-category-grid a {
+  display: inline-flex;
+  min-height: 40px;
+  align-items: center;
+}
+
 .reveal-ready .reveal,
 .reveal,
 .reveal.is-visible {
@@ -7292,21 +7350,25 @@ body.menu-open .menu-trigger:focus-visible .menu-trigger-lines span:last-child {
 
 .hero-stage-landing {
   display: grid;
-  grid-template-columns: minmax(0, 0.96fr) minmax(340px, 0.84fr);
+  grid-template-columns: minmax(0, 0.88fr) minmax(360px, 0.92fr);
+  grid-template-areas:
+    "copy art"
+    "gateway art";
   align-items: center;
-  gap: 44px;
+  gap: 22px 44px;
   width: min(1180px, calc(100% - 40px));
   margin: 0 auto;
-  padding: 112px 0 72px;
+  padding: 84px 0 64px;
 }
 
 .hero-stage-landing .home-hero-cover {
+  grid-area: art;
   position: relative;
   top: auto;
   right: auto;
-  order: 2;
   width: 100%;
   aspect-ratio: 16 / 9;
+  min-height: 438px;
   border: 1px solid var(--sf-line);
   border-radius: 8px;
   object-fit: cover;
@@ -7316,7 +7378,9 @@ body.menu-open .menu-trigger:focus-visible .menu-trigger-lines span:last-child {
 }
 
 .hero-stage-landing .hero-center {
+  grid-area: copy;
   display: grid;
+  align-self: end;
   justify-items: start;
   text-align: left;
 }
@@ -7341,6 +7405,175 @@ body.menu-open .menu-trigger:focus-visible .menu-trigger-lines span:last-child {
 
 .home-hero-status {
   width: min(100%, 760px);
+}
+
+.hero-release-gateway {
+  grid-area: gateway;
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  gap: 14px;
+  align-self: start;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid rgba(17, 24, 39, 0.16);
+  border-radius: 8px;
+  background: #101720;
+  color: #f8fafc;
+  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.14);
+}
+
+.hero-release-thumb,
+.music-premiere-thumb {
+  position: relative;
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  background: #05070a;
+}
+
+.hero-release-thumb {
+  min-height: 112px;
+}
+
+.hero-release-thumb img,
+.music-premiere-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 38% center;
+  transition: transform 480ms cubic-bezier(0.22, 1, 0.36, 1), filter 220ms ease;
+}
+
+.home-ost-thumb img {
+  object-position: 38% center;
+}
+
+.music-featured-thumb img,
+.novel-ost-thumb img {
+  object-position: 58% center;
+}
+
+.hero-release-thumb span,
+.music-premiere-thumb span {
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  display: inline-flex;
+  min-height: 24px;
+  align-items: center;
+  padding: 0 8px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  background: rgba(5, 7, 10, 0.72);
+  color: #ffffff;
+  font-family: var(--font-condensed);
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.hero-release-thumb:hover img,
+.hero-release-thumb:focus-visible img,
+.music-premiere-thumb:hover img,
+.music-premiere-thumb:focus-visible img {
+  filter: saturate(1.08);
+  transform: scale(1.035);
+}
+
+.hero-release-copy,
+.music-premiere-copy {
+  display: grid;
+  align-content: center;
+  min-width: 0;
+}
+
+.hero-release-copy .section-kicker,
+.music-premiere-copy .section-kicker {
+  color: #9fb7d7;
+}
+
+.hero-release-copy h2,
+.music-premiere-copy h2 {
+  margin: 4px 0 0;
+  color: #ffffff;
+  font-size: 1.22rem;
+  font-weight: 900;
+  line-height: 1.18;
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+}
+
+.hero-release-copy > p:not(.section-kicker),
+.music-premiere-copy > p:not(.section-kicker) {
+  margin: 8px 0 0;
+  color: rgba(248, 250, 252, 0.72);
+  font-size: 0.88rem;
+  line-height: 1.58;
+  word-break: keep-all;
+}
+
+.hero-release-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  margin: 12px 0 0;
+}
+
+.hero-release-stats div {
+  min-width: 0;
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.hero-release-stats dt {
+  color: rgba(248, 250, 252, 0.52);
+  font-size: 0.68rem;
+  font-weight: 850;
+}
+
+.hero-release-stats dd {
+  margin: 4px 0 0;
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 850;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.hero-release-actions,
+.music-premiere-actions {
+  display: grid;
+  grid-template-columns: minmax(148px, 1fr) repeat(2, minmax(104px, 0.72fr));
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.hero-release-actions .main-button,
+.music-premiere-actions .main-button {
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  padding: 0 11px;
+  border-radius: 8px;
+  font-size: 11px;
+  letter-spacing: 0;
+}
+
+.hero-release-actions .main-button-primary,
+.music-premiere-actions .main-button-primary {
+  border-color: rgba(255, 255, 255, 0.68);
+  background-image:
+    linear-gradient(90deg, rgba(180, 59, 86, 0.96), rgba(17, 24, 39, 0.82)),
+    url('/assets/brand/sunofox-release-gateway.webp');
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 12px 30px rgba(180, 59, 86, 0.24);
 }
 
 .hero-side-actions {
@@ -7456,26 +7689,177 @@ body.menu-open .menu-trigger:focus-visible .menu-trigger-lines span:last-child {
   background: rgba(255, 254, 250, 0.94);
 }
 
+.music-archive-hero {
+  grid-template-columns: minmax(0, 0.96fr) minmax(320px, 0.54fr);
+  grid-template-areas:
+    "back back"
+    "copy premiere"
+    "facts premiere";
+  align-items: start;
+}
+
+.music-archive-hero .album-back-link {
+  grid-area: back;
+}
+
+.music-archive-copy {
+  grid-area: copy;
+}
+
+.music-premiere-card {
+  grid-area: premiere;
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid rgba(17, 24, 39, 0.16);
+  border-radius: 8px;
+  background: #101720;
+  color: #ffffff;
+  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.12);
+}
+
+.music-premiere-thumb {
+  aspect-ratio: 4 / 3;
+}
+
+.music-archive-facts {
+  grid-area: facts;
+}
+
+.novel-ost-panel {
+  gap: 18px 24px;
+  border: 1px solid var(--sf-line);
+  border-radius: 8px;
+  padding: 18px;
+}
+
+.novel-ost-panel .section-kicker {
+  color: var(--sf-accent);
+}
+
+.novel-ost-panel h2 {
+  max-width: 16ch;
+  color: var(--sf-ink);
+  font-family: inherit;
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  line-height: 1.02;
+  overflow-wrap: anywhere;
+}
+
+.novel-ost-panel p {
+  color: var(--sf-muted);
+}
+
+.novel-keyword-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.novel-keyword-section span {
+  border-color: rgba(180, 59, 86, 0.34);
+  border-radius: 8px;
+  background: rgba(255, 254, 250, 0.9);
+  color: var(--sf-ink);
+}
+
+.about-route-grid a {
+  min-height: 172px;
+  align-content: start;
+  gap: 12px;
+  background: rgba(255, 254, 250, 0.94);
+}
+
+.about-route-grid span,
+.profile-snapshot-card span,
+.profile-snapshot-card small,
+.profile-snapshot-card em {
+  font-family: inherit;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.about-route-grid strong,
+.profile-snapshot-card strong {
+  margin-top: 0;
+  color: var(--sf-ink);
+  font-family: inherit;
+  line-height: 1.1;
+}
+
+.about-route-grid p,
+.profile-snapshot-card p {
+  color: var(--sf-muted);
+}
+
+.profile-snapshot-card {
+  min-height: 242px;
+}
+
+.profile-snapshot-card small {
+  border-color: var(--sf-line);
+  border-radius: 999px;
+  background: var(--sf-surface-muted);
+  color: var(--sf-muted);
+}
+
+.profile-snapshot-card em {
+  color: var(--sf-accent);
+}
+
+.album-cover-mark img {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.album-detail-copy {
+  display: grid;
+  align-content: start;
+}
+
+.album-detail-actions {
+  margin-top: 24px;
+}
+
+.album-meta-grid {
+  margin-top: 24px;
+}
+
 @media (max-width: 960px) {
   .hero-stage-landing {
     grid-template-columns: 1fr;
-    gap: 26px;
+    grid-template-areas:
+      "art"
+      "gateway"
+      "copy";
+    gap: 18px;
     width: min(720px, calc(100% - 28px));
-    padding: 64px 0 54px;
+    padding: 38px 0 54px;
   }
 
   .hero-stage-landing .home-hero-cover {
-    order: 1;
+    min-height: 0;
+    max-height: 320px;
   }
 
   .hero-stage-landing .hero-center {
-    order: 2;
+    align-self: start;
   }
 
-  .hero-side-actions {
-    grid-column: 1;
-    order: 3;
-    margin: 0;
+  .hero-release-gateway {
+    grid-template-columns: 104px minmax(0, 1fr);
+  }
+
+  .hero-release-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .hero-release-actions,
+  .music-premiere-actions {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .hero-stage-landing .hero-wordmark {
@@ -7485,6 +7869,20 @@ body.menu-open .menu-trigger:focus-visible .menu-trigger-lines span:last-child {
   .home-ost-showcase,
   .music-featured-ost-section {
     grid-template-columns: 1fr;
+  }
+
+  .music-archive-page {
+    padding-top: 62px;
+  }
+
+  .music-archive-hero {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "back"
+      "premiere"
+      "copy"
+      "facts";
+    padding-top: 24px;
   }
 
   .home-ost-copy h2,
@@ -7506,11 +7904,52 @@ body.menu-open .menu-trigger:focus-visible .menu-trigger-lines span:last-child {
 @media (max-width: 520px) {
   .hero-stage-landing {
     width: min(100% - 24px, 520px);
-    padding-top: 38px;
+    padding-top: 30px;
   }
 
   .hero-stage-landing .hero-wordmark {
     font-size: 3rem;
+  }
+
+  .hero-stage-landing .home-hero-cover {
+    max-height: 224px;
+  }
+
+  .hero-release-gateway {
+    grid-template-columns: 86px minmax(0, 1fr);
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .hero-release-thumb {
+    min-height: 92px;
+  }
+
+  .hero-release-copy h2,
+  .music-premiere-copy h2 {
+    display: -webkit-box;
+    overflow: hidden;
+    font-size: 1.02rem;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .hero-release-copy > p:not(.section-kicker) {
+    display: none;
+  }
+
+  .hero-release-stats {
+    display: none;
+  }
+
+  .hero-release-actions,
+  .music-premiere-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hero-release-actions .main-button-primary,
+  .music-premiere-actions .main-button-primary {
+    grid-column: 1 / -1;
   }
 
   .home-action-token {
@@ -7526,6 +7965,59 @@ body.menu-open .menu-trigger:focus-visible .menu-trigger-lines span:last-child {
   .profile-detail-head h2,
   .updates-page .category-hero h1 {
     font-size: 2.25rem;
+  }
+
+  .music-premiere-card {
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .music-archive-hero {
+    padding-top: 18px;
+  }
+
+  .music-premiere-copy > p:not(.section-kicker) {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .about-route-grid a,
+  .profile-snapshot-card {
+    min-height: 0;
+  }
+
+  .album-detail-page {
+    padding-top: 58px;
+  }
+
+  .album-detail-hero {
+    gap: 16px;
+    padding-top: 18px;
+    padding-bottom: 26px;
+  }
+
+  .album-cover-mark {
+    min-height: 214px;
+    padding: 18px;
+  }
+
+  .album-cover-mark span,
+  .album-cover-mark strong {
+    font-size: clamp(38px, 11.5vw, 54px);
+  }
+
+  .album-detail-copy h1 {
+    font-size: clamp(42px, 11vw, 60px);
+  }
+
+  .album-detail-summary {
+    margin-top: 14px;
+  }
+
+  .album-detail-actions,
+  .album-meta-grid {
+    margin-top: 18px;
   }
 }
 
@@ -7562,5 +8054,185 @@ body.menu-open .menu-trigger:focus-visible .menu-trigger-lines span:last-child {
     animation-duration: 1ms !important;
     scroll-behavior: auto !important;
     transition-duration: 1ms !important;
+  }
+}
+
+/* 2026-07 public category tone alignment: keep page structure, only unify the visual language. */
+body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) {
+  --sf-paper: #111111;
+  --sf-surface: #111111;
+  --sf-surface-muted: #171717;
+  --sf-ink: #ffffff;
+  --sf-muted: rgba(255, 255, 255, 0.66);
+  --sf-soft: rgba(255, 255, 255, 0.42);
+  --sf-line: rgba(255, 255, 255, 0.16);
+  --sf-line-strong: rgba(255, 255, 255, 0.38);
+  --sf-accent: #009fe3;
+  --sf-accent-soft: rgba(0, 159, 227, 0.1);
+  background: #111111 !important;
+}
+
+body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .site-main {
+  background: #111111;
+}
+
+body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .site-header {
+  position: fixed;
+  border-bottom: 0;
+  background: transparent;
+  backdrop-filter: none;
+}
+
+body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .site-logo,
+body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .menu-trigger {
+  color: #ffffff;
+}
+
+body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .site-logo {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+}
+
+body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .menu-trigger::before {
+  display: none;
+}
+
+body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .menu-trigger-lines span {
+  background: #ffffff;
+}
+
+body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .overlay-menu {
+  background: rgba(17, 17, 17, 0.98);
+}
+
+body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) :is(.overlay-nav a, .overlay-nav a.overlay-nav-secondary) {
+  color: #ffffff;
+}
+
+body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) :is(.overlay-nav a:hover, .overlay-nav a:focus-visible, .overlay-nav a.is-current) {
+  color: var(--sf-accent);
+}
+
+body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) :is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page) {
+  color: #ffffff;
+  padding-top: 0;
+}
+
+body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) :is(.category-hero, .music-archive-hero, .novel-detail-hero, .album-detail-hero) {
+  min-height: clamp(560px, 78svh, 860px);
+  align-content: end;
+  border-bottom-color: var(--sf-line);
+  padding-top: 150px;
+  padding-bottom: clamp(64px, 8vw, 108px);
+}
+
+body:has(.music-archive-page) .music-archive-hero {
+  grid-template-columns: 1fr;
+}
+
+body:has(.music-archive-page) .music-archive-copy {
+  max-width: 1120px;
+}
+
+body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) :is(.category-hero h1, .music-archive-copy h1, .novel-detail-copy h1, .album-detail-copy h1, .updates-page .category-hero h1) {
+  max-width: 1080px;
+  color: #ffffff;
+  font-size: clamp(4.8rem, 11vw, 9.5rem);
+  font-weight: 950;
+  line-height: 0.9;
+}
+
+body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) :is(.category-hero h1, .music-archive-copy h1, .novel-detail-copy h1, .album-detail-copy h1, .updates-page .category-hero h1) :is(span, em, strong) {
+  color: inherit;
+}
+
+body:has(.music-archive-page) .music-archive-copy h1 span {
+  display: block;
+  white-space: nowrap;
+}
+
+body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .music-archive-copy h1 .headline-lock {
+  white-space: normal;
+}
+
+body:has(.music-archive-page) :is(.album-back-link, .music-premiere-card) {
+  display: none;
+}
+
+body:has(.novel-detail-page) .novel-detail-cover {
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) :is(.category-hero p:last-child, .music-archive-copy p:not(.section-kicker), .novel-detail-summary, .album-detail-summary, .about-lead) {
+  max-width: 760px;
+  color: var(--sf-muted);
+  font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+  font-weight: 600;
+}
+
+body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) :is(.section-kicker, .hero-kicker) {
+  color: var(--sf-accent);
+  font-weight: 950;
+}
+
+body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) :is(.novel-section-head, .profile-snapshot-head, .profile-detail-head, .novel-reading-path-head) {
+  border-top: 6px solid #ffffff;
+  padding-top: 22px;
+}
+
+body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) :is(.novel-section-head h2, .profile-snapshot-head h2, .profile-detail-head h2, .novel-reading-path-head h3, .music-featured-copy h2, .music-story-section h2, .album-note-section h2, .album-track-section h2) {
+  color: #ffffff;
+  font-size: clamp(2.8rem, 7vw, 6.4rem);
+  line-height: 0.98;
+}
+
+body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) :is(.about-route-grid a, .profile-snapshot-card, .profile-detail-panel, .music-flow-grid article, .music-release-card, .music-video-hub, .music-video-grid a, .music-video-feature, .novel-list-toolbar, .novel-season-status, .novel-reading-card, .novel-episode-row, .novel-world-grid article, .novel-character-grid article, .updates-pinned-section, .updates-hub-grid article, .updates-roadmap-card, .updates-log-list li, .updates-category-grid article, .album-track-grid li, .album-note-section, .profile-source-strip) {
+  border-color: var(--sf-line);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) :is(.about-route-grid a:hover, .about-route-grid a:focus-visible, .profile-snapshot-card:hover, .profile-snapshot-card:focus-visible, .music-video-grid a:hover, .music-video-grid a:focus-visible, .novel-episode-row:hover, .novel-episode-row:focus-visible, .updates-hub-grid article:hover, .updates-hub-grid article:focus-within) {
+  border-color: var(--sf-line-strong);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) :is(.main-button, .micro-button) {
+  border-radius: 0;
+  background: transparent;
+  color: #ffffff;
+}
+
+body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) :is(.main-button:hover, .main-button:focus-visible, .micro-button:hover, .micro-button:focus-visible) {
+  border-color: var(--sf-accent);
+  background: var(--sf-accent);
+  color: #111111;
+}
+
+body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .site-footer {
+  border-top-color: var(--sf-line);
+  background: #111111;
+}
+
+body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .site-footer :is(span, a) {
+  color: var(--sf-muted);
+}
+
+@media (max-width: 760px) {
+  body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) :is(.category-hero, .music-archive-hero, .novel-detail-hero, .album-detail-hero) {
+    min-height: clamp(500px, 74svh, 700px);
+    padding-top: 118px;
+    padding-bottom: 56px;
+  }
+
+  body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) :is(.category-hero h1, .music-archive-copy h1, .novel-detail-copy h1, .album-detail-copy h1, .updates-page .category-hero h1) {
+    font-size: clamp(3.35rem, 16vw, 5.5rem);
+    line-height: 0.96;
+  }
+
+  body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) :is(.novel-section-head h2, .profile-snapshot-head h2, .profile-detail-head h2, .novel-reading-path-head h3, .music-featured-copy h2, .music-story-section h2, .album-note-section h2, .album-track-section h2) {
+    font-size: clamp(2.35rem, 11vw, 3.6rem);
   }
 }

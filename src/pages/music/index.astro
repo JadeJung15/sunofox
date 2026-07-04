@@ -36,6 +36,11 @@ const musicHeroActions = [
   { label: 'Story IP', href: '/novels/' },
   { label: '대표 OST', href: featuredStoryOst.href, external: true }
 ];
+const musicPremiereActions = [
+  { label: '최신 영상 감상', href: latestStoryVideo.href, external: true, primary: true },
+  { label: 'YouTube 채널', href: artistLinks.youtube, external: true },
+  { label: 'Story IP', href: '/novels/' }
+];
 const videoDirectActions = [
   { key: 'latest', label: '최신 영상 감상', href: latestStoryVideo.href, external: true, primary: true },
   { key: 'channel', label: 'YouTube 채널', href: artistLinks.youtube, external: true },
@@ -55,8 +60,8 @@ const videoSummaryItems = [
   canonical="https://sunofox.com/music/"
   image={`https://sunofox.com${archiveAlbum.image}`}
   imageAlt={archiveAlbum.imageAlt}
-  imageWidth={512}
-  imageHeight={512}
+  imageWidth={1600}
+  imageHeight={1600}
   jsonLd={musicArchiveStructuredData}
 >
   <SiteChrome active="music" />
@@ -65,9 +70,40 @@ const videoSummaryItems = [
     <section class="music-archive-hero reveal" aria-labelledby="musicArchiveTitle">
       <a class="album-back-link" href="/profile/#discography">SunoFox 소개</a>
 
+      <aside class="music-premiere-card" aria-label="Latest SunoFox music premiere">
+        <a class="music-premiere-thumb" href={latestStoryVideo.href} target="_blank" rel="noopener noreferrer" aria-label={`${latestStoryVideo.title} 감상하기`}>
+          <img
+            src={latestStoryVideo.thumbnail}
+            alt={latestStoryVideo.thumbnailAlt}
+            width="480"
+            height="360"
+            loading="eager"
+            decoding="async"
+          />
+          <span>Latest OST</span>
+        </a>
+        <div class="music-premiere-copy">
+          <p class="section-kicker">NOW PLAYING</p>
+          <h2>{latestStoryVideo.title}</h2>
+          <p>{latestStoryVideo.meta}</p>
+          <div class="music-premiere-actions" aria-label="Latest OST quick actions">
+            {musicPremiereActions.map((action) => (
+              <a
+                class:list={['main-button', action.primary && 'main-button-primary', !action.primary && 'main-button-muted']}
+                href={action.href}
+                target={action.external ? '_blank' : undefined}
+                rel={action.external ? 'noopener noreferrer' : undefined}
+              >
+                {action.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      </aside>
+
       <div class="music-archive-copy">
         <p class="section-kicker">YOUTUBE / ANIME OST</p>
-        <h1 id="musicArchiveTitle">Anime OST / Story OST <span class="headline-lock">허브</span></h1>
+        <h1 id="musicArchiveTitle"><span>MUSIC</span><span>ARCHIVE</span></h1>
         <p>
           YouTube에서 공개되는 Anime OST, 웹소설 OST, 라이브 아카이브를 한 곳에서 이어 봅니다.
           음악 아카이브는 SunoFox의 영상 중심 IP 흐름을 정리하는 공개 허브입니다.
@@ -76,7 +112,7 @@ const videoSummaryItems = [
         <div class="music-archive-actions" aria-label="Music archive quick actions">
           {musicHeroActions.map((action) => (
             <a
-              class:list={['main-button', !action.primary && 'main-button-muted']}
+              class:list={['main-button', action.primary && 'main-button-primary', !action.primary && 'main-button-muted']}
               href={action.href}
               target={action.external ? '_blank' : undefined}
               rel={action.external ? 'noopener noreferrer' : undefined}

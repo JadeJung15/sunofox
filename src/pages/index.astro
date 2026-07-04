@@ -3,7 +3,6 @@ import Layout from '../layouts/Layout.astro';
 import {
   artistLinks,
   featuredStoryOst,
-  latestStoryOst,
   musicArchive,
   novelProject,
   structuredData
@@ -16,13 +15,34 @@ const showcaseImages = {
 };
 
 const releaseLinks = [
-  { label: 'LISTEN', href: latestStoryOst.youtubeHref, external: true },
-  { label: 'READ', href: novelProject.season.finalHref },
+  { label: 'LISTEN', href: featuredStoryOst.youtubeHref, external: true },
+  { label: 'READ', href: novelProject.season.startHref },
   { label: 'WATCH', href: artistLinks.youtube, external: true }
 ];
 
+const sectionLinks = [
+  {
+    eyebrow: 'MUSIC ARCHIVE',
+    title: 'EXPLORE MUSIC',
+    text: 'Original OST, album archive, and YouTube premieres.',
+    href: musicArchive.href,
+    image: showcaseImages.music,
+    imageAlt: '푸른 달빛 성당 안에 놓인 피아노 이미지',
+    panel: 'music'
+  },
+  {
+    eyebrow: 'STORY IP',
+    title: 'DISCOVER IP',
+    text: 'A story world expanded from music into episodes.',
+    href: '/novels/',
+    image: showcaseImages.story,
+    imageAlt: '하늘 아래 거대한 성채가 보이는 SunoFox Story IP 비주얼',
+    panel: 'story'
+  }
+];
+
 const navItems = [
-  { label: 'MUSIC', href: '/music/', active: true },
+  { label: 'MUSIC', href: '/music/' },
   { label: 'STORY IP', href: '/novels/' },
   { label: 'ABOUT', href: '/profile/' },
   { label: 'UPDATES', href: '/updates/' }
@@ -46,9 +66,7 @@ const navItems = [
 
       <nav class="showcase-nav" aria-label="Primary navigation">
         {navItems.map((item) => (
-          <a class={item.active ? 'is-active' : undefined} href={item.href} aria-current={item.active ? 'page' : undefined}>
-            {item.label}
-          </a>
+          <a href={item.href}>{item.label}</a>
         ))}
       </nav>
 
@@ -61,93 +79,69 @@ const navItems = [
 
     <section class="showcase-stage" aria-label="SunoFox premium IP label">
       <div class="showcase-title">
-        <h1 id="homeTitle">
+        <p class="showcase-kicker">STORY-DRIVEN MUSIC & IP STUDIO</p>
+        <h1 id="homeTitle" aria-label="SUNOFOX STORY OST MEETS IP">
           <span>SUNOFOX</span>
-          <span>STORY OST MEETS IP</span>
+          <span>STORY OST</span>
+          <span>MEETS IP</span>
         </h1>
-        <p>
-          <span></span>
+        <p class="showcase-statement">
+          <span aria-hidden="true"></span>
           WE TELL STORIES THROUGH MUSIC.<br />
           WE BRING MUSIC INTO WORLDS.
         </p>
       </div>
 
-      <figure class="showcase-featured-visual" data-showcase-panel="featured">
-        <img
-          src={showcaseImages.featured}
-          alt="별빛 성채와 검은 망토의 인물이 보이는 SunoFox 대표 릴리즈 비주얼"
-          width="925"
-          height="166"
-          loading="eager"
-          decoding="async"
-        />
-      </figure>
+      <div class="showcase-main-grid">
+        <figure class="showcase-featured-visual" data-showcase-panel="featured">
+          <img
+            src={showcaseImages.featured}
+            alt="별빛 성채와 검은 망토의 인물이 보이는 SunoFox 대표 릴리즈 비주얼"
+            width="925"
+            height="166"
+            loading="eager"
+            decoding="async"
+          />
+        </figure>
 
-      <article class="showcase-release" aria-labelledby="featuredReleaseTitle">
-        <p>FEATURED RELEASE</p>
-        <h2 id="featuredReleaseTitle">별을 삼킨 소년</h2>
-        <strong>ORIGINAL SOUNDTRACK PART.1</strong>
-        <i aria-hidden="true"></i>
-        <time datetime="2024-05-24">2024.05.24 RELEASE</time>
-        <span>
-          어둠 속에서도 빛을 찾는 소년의 이야기<br />
-          그 첫 번째 여정의 시작
-        </span>
-        <div class="release-actions">
-          {releaseLinks.map((link) => (
-            <a href={link.href} target={link.external ? '_blank' : undefined} rel={link.external ? 'noopener noreferrer' : undefined}>
-              {link.label}
-              <span aria-hidden="true">→</span>
-            </a>
-          ))}
-        </div>
-      </article>
-
-      <div class="showcase-scroll" aria-hidden="true">
-        <b>SCROLL</b>
-        <span></span>
+        <article class="showcase-release" aria-labelledby="featuredReleaseTitle">
+          <p>FEATURED RELEASE</p>
+          <h2 id="featuredReleaseTitle">{novelProject.title}</h2>
+          <strong>ORIGINAL SOUNDTRACK PART.1</strong>
+          <time datetime="2026-06-14">{featuredStoryOst.date} RELEASE</time>
+          <span>{featuredStoryOst.summary}</span>
+          <div class="release-actions">
+            {releaseLinks.map((link) => (
+              <a href={link.href} target={link.external ? '_blank' : undefined} rel={link.external ? 'noopener noreferrer' : undefined}>
+                {link.label}
+                <span aria-hidden="true">→</span>
+              </a>
+            ))}
+          </div>
+        </article>
       </div>
 
       <section class="showcase-panels" aria-label="SunoFox public sections">
-        <article class="panel-copy panel-copy-music">
-          <h2 aria-label="MUSIC ARCHIVE"><span>MUSIC</span><span>ARCHIVE</span></h2>
-          <p>SunoFox가 만든 음악의 모든 기록</p>
-          <a href={musicArchive.href}>
-            EXPLORE MUSIC
-            <span aria-hidden="true">→</span>
+        {sectionLinks.map((item) => (
+          <a class="showcase-panel-link" href={item.href}>
+            <span class="panel-copy">
+              <small>{item.eyebrow}</small>
+              <strong>{item.title}</strong>
+              <em>{item.text}</em>
+            </span>
+            <figure class="panel-image" data-showcase-panel={item.panel}>
+              <img
+                src={item.image}
+                alt={item.imageAlt}
+                width="540"
+                height="154"
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+            <b aria-hidden="true">→</b>
           </a>
-        </article>
-
-        <figure class="panel-image panel-image-music" data-showcase-panel="music">
-          <img
-            src={showcaseImages.music}
-            alt="푸른 달빛 성당 안에 놓인 피아노 이미지"
-            width="480"
-            height="154"
-            loading="lazy"
-            decoding="async"
-          />
-        </figure>
-
-        <article class="panel-copy panel-copy-story">
-          <h2>STORY IP</h2>
-          <p>SunoFox가 창조한 이야기의 세계</p>
-          <a href="/novels/">
-            DISCOVER IP
-            <span aria-hidden="true">→</span>
-          </a>
-        </article>
-
-        <figure class="panel-image panel-image-story" data-showcase-panel="story">
-          <img
-            src={showcaseImages.story}
-            alt="하늘 아래 거대한 성채가 보이는 SunoFox Story IP 비주얼"
-            width="540"
-            height="154"
-            loading="lazy"
-            decoding="async"
-          />
-        </figure>
+        ))}
       </section>
     </section>
 
@@ -156,7 +150,7 @@ const navItems = [
       <nav aria-label="External links">
         <a href={artistLinks.youtube} target="_blank" rel="noopener noreferrer">YOUTUBE</a>
         <a href={artistLinks.soundcloud} target="_blank" rel="noopener noreferrer">SOUNDCLOUD</a>
-        <a href="/updates/">X</a>
+        <a href="/updates/">UPDATES</a>
         <a href="/profile/">CONTACT</a>
       </nav>
     </footer>
@@ -182,23 +176,23 @@ const navItems = [
   .bg-home {
     --bg: #020202;
     --text: #f5f5f2;
-    --muted: rgba(245, 245, 242, 0.6);
-    --dim: rgba(245, 245, 242, 0.42);
+    --muted: rgba(245, 245, 242, 0.64);
+    --dim: rgba(245, 245, 242, 0.38);
     --blue: #1f78ff;
-    --line: rgba(245, 245, 242, 0.14);
+    --line: rgba(245, 245, 242, 0.15);
     display: grid;
     min-height: 100svh;
     grid-template-rows: auto minmax(0, 1fr) auto;
-    padding: clamp(18px, 1.7vw, 30px);
+    padding: clamp(18px, 1.8vw, 32px);
     background:
-      radial-gradient(circle at 84% 28%, rgba(31, 120, 255, 0.08), transparent 22rem),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.015), transparent 45%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.018), transparent 36%),
+      radial-gradient(circle at 86% 22%, rgba(31, 120, 255, 0.1), transparent 25rem),
       var(--bg);
     color: var(--text);
     font-family: Pretendard, Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   }
 
-  .bg-home :where(h1, h2, h3, p, a, span, strong, b, i) {
+  .bg-home :where(h1, h2, h3, p, a, span, strong, b, i, small, em) {
     letter-spacing: 0;
   }
 
@@ -210,9 +204,9 @@ const navItems = [
   .showcase-header,
   .showcase-footer {
     position: relative;
-    z-index: 3;
+    z-index: 5;
     display: grid;
-    grid-template-columns: minmax(120px, 0.26fr) minmax(0, 1fr) auto;
+    grid-template-columns: minmax(120px, 0.24fr) minmax(0, 1fr) auto;
     align-items: start;
     gap: 28px;
   }
@@ -223,7 +217,7 @@ const navItems = [
     gap: 8px;
     color: #ffffff;
     font-family: "Arial Narrow", Impact, Haettenschweiler, sans-serif;
-    font-size: clamp(1.15rem, 1.25vw, 1.45rem);
+    font-size: clamp(1.12rem, 1.2vw, 1.4rem);
     font-weight: 900;
     line-height: 1;
     text-decoration: none;
@@ -236,7 +230,7 @@ const navItems = [
   .showcase-nav {
     display: flex;
     justify-content: end;
-    gap: clamp(34px, 4vw, 72px);
+    gap: clamp(30px, 4vw, 70px);
     padding-top: 2px;
   }
 
@@ -270,8 +264,7 @@ const navItems = [
   }
 
   .showcase-nav a:hover::after,
-  .showcase-nav a:focus-visible::after,
-  .showcase-nav a.is-active::after {
+  .showcase-nav a:focus-visible::after {
     opacity: 1;
     transform: scaleX(1);
   }
@@ -304,62 +297,69 @@ const navItems = [
     position: relative;
     z-index: 1;
     display: grid;
-    grid-template-columns: minmax(0, 0.59fr) minmax(360px, 0.37fr) minmax(54px, 0.04fr);
-    grid-template-rows: auto auto minmax(160px, auto);
-    gap: clamp(22px, 2.6vw, 50px) clamp(28px, 3vw, 56px);
+    width: min(100%, 1480px);
+    margin-inline: auto;
     align-content: center;
-    padding-top: clamp(20px, 3.5vh, 48px);
-    padding-bottom: clamp(22px, 3vh, 34px);
+    gap: clamp(26px, 4vw, 58px);
+    padding-top: clamp(42px, 7vh, 86px);
+    padding-bottom: clamp(28px, 4vh, 46px);
   }
 
   .showcase-title {
-    position: relative;
     display: grid;
-    grid-column: 1 / 4;
-    grid-template-columns: minmax(0, 1fr);
-    gap: clamp(16px, 1.8vw, 28px);
-    align-items: start;
-    max-width: min(1280px, 100%);
-    margin-inline: auto;
+    gap: clamp(13px, 1.8vw, 24px);
+    max-width: min(1150px, 100%);
+  }
+
+  .showcase-kicker {
+    width: fit-content;
+    margin: 0;
+    border-left: 2px solid var(--blue);
+    padding-left: 16px;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: clamp(0.74rem, 0.78vw, 0.92rem);
+    font-weight: 900;
+    line-height: 1;
   }
 
   .showcase-title h1 {
-    grid-column: 1;
     margin: 0;
     color: #f7f7f2;
     font-family: Impact, "Arial Narrow", Haettenschweiler, sans-serif;
-    font-size: clamp(4rem, 6.15vw, 7.35rem);
+    font-size: clamp(4.6rem, 9vw, 9.2rem);
     font-weight: 900;
-    line-height: 0.92;
+    line-height: 0.9;
     text-transform: uppercase;
-    text-wrap: nowrap;
-    text-shadow: 0 0 24px rgba(255, 255, 255, 0.08);
-    max-width: 100%;
+    text-shadow: 0 0 24px rgba(255, 255, 255, 0.07);
   }
 
   .showcase-title h1 span {
     display: block;
-    white-space: nowrap;
   }
 
-  .showcase-title p {
-    position: static;
+  .showcase-statement {
     display: grid;
     grid-template-columns: 2px minmax(0, 1fr);
     gap: 18px;
-    justify-self: end;
-    width: min(430px, 100%);
+    width: min(520px, 100%);
     margin: 0;
-    color: rgba(255, 255, 255, 0.68);
-    font-size: clamp(0.78rem, 0.78vw, 0.95rem);
+    color: rgba(255, 255, 255, 0.72);
+    font-size: clamp(0.82rem, 0.86vw, 1rem);
     font-weight: 850;
-    line-height: 1.45;
+    line-height: 1.52;
   }
 
-  .showcase-title p span {
+  .showcase-statement span {
     width: 2px;
-    min-height: 50px;
+    min-height: 52px;
     background: var(--blue);
+  }
+
+  .showcase-main-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.58fr);
+    gap: clamp(22px, 3.5vw, 64px);
+    align-items: end;
   }
 
   .showcase-featured-visual,
@@ -370,10 +370,8 @@ const navItems = [
   }
 
   .showcase-featured-visual {
-    grid-column: 1;
-    grid-row: 2;
-    align-self: start;
-    aspect-ratio: 4.05 / 1;
+    aspect-ratio: 3.55 / 1;
+    min-height: 190px;
   }
 
   .showcase-featured-visual img,
@@ -385,74 +383,67 @@ const navItems = [
   }
 
   .showcase-release {
-    grid-column: 2;
-    grid-row: 2;
-    align-self: start;
-    padding-top: 2px;
+    display: grid;
+    gap: 14px;
+    align-content: end;
+    min-width: 0;
+    padding-bottom: 2px;
   }
 
-  .showcase-release p,
-  .panel-copy p {
+  .showcase-release p {
     margin: 0;
     color: var(--blue);
     font-size: 0.86rem;
     font-weight: 900;
     line-height: 1;
-  }
-
-  .showcase-release p {
     word-spacing: 0.45em;
   }
 
   .showcase-release h2 {
-    margin: 20px 0 10px;
+    margin: 0;
     color: #ffffff;
-    font-size: clamp(1.8rem, 2vw, 2.45rem);
+    font-size: clamp(1.9rem, 2.4vw, 3.1rem);
     font-weight: 850;
-    line-height: 1.15;
+    line-height: 1.08;
+    word-break: keep-all;
   }
 
   .showcase-release strong {
     display: block;
+    width: fit-content;
+    border-top: 1px solid var(--blue);
+    padding-top: 13px;
     color: #ffffff;
     font-size: 0.86rem;
     font-weight: 900;
     line-height: 1.35;
   }
 
-  .showcase-release i {
-    display: block;
-    width: 42px;
-    height: 1px;
-    margin: 14px 0;
-    background: var(--blue);
-  }
-
   .showcase-release time,
   .showcase-release > span {
     display: block;
     color: var(--muted);
-    font-size: 0.86rem;
+    font-size: 0.88rem;
     font-weight: 750;
-    line-height: 1.6;
+    line-height: 1.65;
   }
 
   .showcase-release > span {
-    margin-top: 22px;
-    color: rgba(255, 255, 255, 0.5);
+    max-width: 520px;
+    color: rgba(255, 255, 255, 0.54);
+    word-break: keep-all;
   }
 
   .release-actions {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: clamp(18px, 2.8vw, 54px);
-    margin-top: 32px;
+    gap: 12px;
+    margin-top: 8px;
   }
 
-  .release-actions a,
-  .panel-copy a {
+  .release-actions a {
     display: flex;
-    min-height: 43px;
+    min-height: 48px;
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid var(--blue);
@@ -463,18 +454,8 @@ const navItems = [
     text-decoration: none;
   }
 
-  .release-actions a {
-    border-left: 1px solid rgba(255, 255, 255, 0.12);
-    padding-left: 28px;
-  }
-
-  .release-actions a:first-child {
-    border-left: 0;
-    padding-left: 0;
-  }
-
   .release-actions span,
-  .panel-copy a span {
+  .showcase-panel-link b {
     color: #ffffff;
     font-size: 1rem;
     transform: translateX(0);
@@ -483,106 +464,70 @@ const navItems = [
 
   .release-actions a:hover span,
   .release-actions a:focus-visible span,
-  .panel-copy a:hover span,
-  .panel-copy a:focus-visible span {
+  .showcase-panel-link:hover b,
+  .showcase-panel-link:focus-visible b {
     transform: translateX(5px);
-  }
-
-  .showcase-scroll {
-    grid-column: 3;
-    grid-row: 2;
-    display: grid;
-    justify-items: center;
-    align-self: start;
-    gap: 12px;
-    margin-top: clamp(60px, 9vw, 116px);
-  }
-
-  .showcase-scroll b {
-    color: #ffffff;
-    font-size: 0.76rem;
-    font-weight: 900;
-    line-height: 1;
-  }
-
-  .showcase-scroll span {
-    position: relative;
-    display: block;
-    width: 1px;
-    height: 58px;
-    background: rgba(255, 255, 255, 0.76);
-  }
-
-  .showcase-scroll span::after {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 1px;
-    height: 12px;
-    background: var(--blue);
-    content: "";
-    animation: scrollPulse 1.4s ease-in-out infinite;
   }
 
   .showcase-panels {
     display: grid;
-    grid-column: 1 / 4;
-    grid-row: 3;
-    grid-template-columns: minmax(210px, 0.17fr) minmax(400px, 0.33fr) minmax(170px, 0.14fr) minmax(420px, 0.36fr);
-    gap: clamp(28px, 2.4vw, 48px);
-    align-items: end;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
   }
 
-  .panel-copy h2 {
-    margin: 0 0 18px;
+  .showcase-panel-link {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(132px, 0.34fr) auto;
+    gap: clamp(18px, 2vw, 30px);
+    align-items: center;
+    min-height: clamp(154px, 14vw, 218px);
+    padding: clamp(20px, 2.7vw, 42px) clamp(16px, 2.4vw, 34px);
+    color: #ffffff;
+    text-decoration: none;
+  }
+
+  .showcase-panel-link + .showcase-panel-link {
+    border-left: 1px solid var(--line);
+  }
+
+  .panel-copy {
+    display: grid;
+    min-width: 0;
+    gap: 10px;
+  }
+
+  .panel-copy small,
+  .panel-copy em {
+    display: block;
+    color: rgba(255, 255, 255, 0.52);
+    font-style: normal;
+    font-size: 0.8rem;
+    font-weight: 850;
+    line-height: 1.45;
+  }
+
+  .panel-copy small {
+    color: var(--blue);
+    font-size: 0.82rem;
+    font-weight: 900;
+    line-height: 1;
+  }
+
+  .panel-copy strong {
+    display: block;
     color: #ffffff;
     font-family: Impact, "Arial Narrow", Haettenschweiler, sans-serif;
-    font-size: clamp(2.5rem, 3.25vw, 4.7rem);
+    font-size: clamp(2.7rem, 4.8vw, 6.2rem);
     font-weight: 900;
-    line-height: 0.94;
+    line-height: 0.88;
     text-transform: uppercase;
-    text-wrap: balance;
-    white-space: normal;
-    transform: none;
-    transform-origin: left center;
-  }
-
-  .panel-copy h2 span {
-    display: block;
-  }
-
-  .panel-copy-music h2 {
-    display: block;
-    white-space: nowrap;
-  }
-
-  .panel-copy-music h2 span {
-    display: inline;
-  }
-
-  .panel-copy-music h2 span + span {
-    margin-left: 0.18em;
-  }
-
-  .panel-copy p {
-    color: rgba(255, 255, 255, 0.52);
-    font-size: 0.82rem;
-    line-height: 1.6;
-  }
-
-  .panel-copy a {
-    width: min(100%, 186px);
-    margin-top: 24px;
-    border: 1px solid var(--blue);
-    padding: 0 16px;
   }
 
   .panel-image {
-    aspect-ratio: 3.05 / 1;
-  }
-
-  .panel-image-story {
-    aspect-ratio: 3.5 / 1;
+    aspect-ratio: 1.35 / 1;
+    min-height: 118px;
   }
 
   .showcase-footer {
@@ -616,67 +561,21 @@ const navItems = [
   .showcase-lang:hover,
   .showcase-lang:focus-visible,
   .showcase-footer a:hover,
-  .showcase-footer a:focus-visible {
+  .showcase-footer a:focus-visible,
+  .showcase-panel-link:hover,
+  .showcase-panel-link:focus-visible {
     color: #ffffff;
   }
 
-  @keyframes scrollPulse {
-    0%,
-    100% {
-      transform: translateY(0);
-      opacity: 0.35;
-    }
-
-    50% {
-      transform: translateY(-20px);
-      opacity: 1;
-    }
-  }
-
-  @media (max-width: 1180px) {
-    .showcase-stage {
-      grid-template-columns: minmax(0, 1fr);
-      grid-template-rows: auto;
-    }
-
-    .showcase-title,
-    .showcase-featured-visual,
-    .showcase-release,
-    .showcase-scroll,
+  @media (max-width: 1120px) {
+    .showcase-main-grid,
     .showcase-panels {
-      grid-column: 1;
-      grid-row: auto;
-    }
-
-    .showcase-title {
       grid-template-columns: 1fr;
     }
 
-    .showcase-title h1,
-    .showcase-title p {
-      grid-column: 1;
-    }
-
-    .showcase-title p {
-      position: static;
-    }
-
-    .showcase-title h1 {
-      font-size: clamp(3.2rem, 8vw, 5.8rem);
-      line-height: 0.96;
-    }
-
-    .showcase-title p {
-      margin-top: 0;
-      max-width: 420px;
-    }
-
-    .showcase-scroll {
-      display: none;
-    }
-
-    .showcase-panels {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    .showcase-panel-link + .showcase-panel-link {
+      border-top: 1px solid var(--line);
+      border-left: 0;
     }
   }
 
@@ -706,53 +605,58 @@ const navItems = [
     }
 
     .showcase-stage {
-      display: grid;
-      gap: 26px;
+      gap: 32px;
       padding-top: 52px;
       padding-bottom: 34px;
     }
 
+    .showcase-title {
+      gap: 14px;
+    }
+
     .showcase-title h1 {
-      font-size: clamp(3.5rem, 16vw, 5.8rem);
-      line-height: 0.88;
-      text-wrap: balance;
+      font-size: clamp(3.6rem, 17vw, 5.5rem);
+      line-height: 0.92;
     }
 
-    .showcase-title h1 span {
-      white-space: normal;
+    .showcase-kicker {
+      font-size: 0.72rem;
     }
 
-    .showcase-title p {
+    .showcase-statement {
       font-size: 0.78rem;
     }
 
     .showcase-featured-visual {
       aspect-ratio: 2.2 / 1;
+      min-height: 0;
     }
 
-    .release-actions,
-    .showcase-panels {
-      grid-template-columns: 1fr;
+    .showcase-release {
+      gap: 13px;
+    }
+
+    .showcase-release h2 {
+      font-size: clamp(1.85rem, 9vw, 2.45rem);
     }
 
     .release-actions {
-      gap: 12px;
+      grid-template-columns: 1fr;
+      gap: 8px;
     }
 
-    .release-actions a {
-      border-left: 0;
-      padding-left: 0;
+    .showcase-panel-link {
+      grid-template-columns: minmax(0, 1fr) auto;
+      min-height: 0;
+      padding: 22px 0;
     }
 
-    .panel-copy h2 {
-      font-size: clamp(3.1rem, 15vw, 5rem);
-      white-space: normal;
-      transform: none;
+    .panel-image {
+      display: none;
     }
 
-    .panel-image,
-    .panel-image-story {
-      aspect-ratio: 2.3 / 1;
+    .panel-copy strong {
+      font-size: clamp(3rem, 16vw, 5rem);
     }
 
     .showcase-footer {
@@ -773,12 +677,16 @@ const navItems = [
     }
   }
 
+  @media (max-width: 390px) {
+    .showcase-title h1 {
+      font-size: clamp(3.35rem, 16vw, 4.35rem);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .showcase-scroll span::after,
     .release-actions span,
-    .panel-copy a span,
-    .showcase-nav a::after {
-      animation: none;
+    .showcase-nav a::after,
+    .showcase-panel-link b {
       transition: none;
     }
   }

@@ -8597,6 +8597,12 @@ body:has(.music-archive-page) .music-video-grid li {
   scroll-snap-align: start;
 }
 
+@media (min-width: 761px) {
+  body:has(.music-archive-page) .music-video-grid li {
+    scroll-margin-top: clamp(280px, 34vh, 360px);
+  }
+}
+
 body:has(.music-archive-page) .music-video-grid a {
   min-height: 330px;
   padding: 0;

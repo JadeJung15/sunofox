@@ -8058,7 +8058,7 @@ body.menu-open .menu-trigger:focus-visible .menu-trigger-lines span:last-child {
 }
 
 /* 2026-07 public category tone alignment: keep page structure, only unify the visual language. */
-body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) {
+body:has(:is(.bg-home, .category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) {
   --sf-paper: #111111;
   --sf-surface: #111111;
   --sf-surface-muted: #171717;
@@ -8072,90 +8072,80 @@ body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-det
   background: #111111 !important;
 }
 
-body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .site-main {
+body:has(:is(.bg-home, .category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .site-main {
   background: #111111;
 }
 
-body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .site-header {
+body:has(:is(.bg-home, .category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .site-header {
   position: fixed;
-  border-bottom: 0;
-  background: transparent;
-  backdrop-filter: none;
-}
-
-body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .site-logo,
-body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .menu-trigger {
-  color: #ffffff;
-}
-
-body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .site-logo {
-  font-size: 0.82rem;
-  text-transform: uppercase;
-}
-
-body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .menu-trigger::before {
-  display: none;
-}
-
-body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .menu-trigger-lines span {
-  background: #ffffff;
-}
-
-body:has(.music-archive-page) .site-header {
   left: 50%;
   right: auto;
   width: min(1180px, calc(100% - 56px));
   padding: 24px 0 0;
+  border-bottom: 0;
+  background: transparent;
+  backdrop-filter: none;
   transform: translateX(-50%);
 }
 
-body:has(.music-archive-page) .site-logo {
+body:has(:is(.bg-home, .category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .site-logo,
+body:has(:is(.bg-home, .category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .menu-trigger {
+  color: #ffffff;
+}
+
+body:has(:is(.bg-home, .category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .site-logo {
   gap: 6px;
   min-height: 36px;
   font-size: 0.86rem;
   line-height: 1;
+  text-transform: uppercase;
 }
 
-body:has(.music-archive-page) .site-logo span {
+body:has(:is(.bg-home, .category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .site-logo span {
   display: block;
 }
 
-body:has(.music-archive-page) .menu-trigger {
+body:has(:is(.bg-home, .category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .menu-trigger {
   min-height: 36px;
   gap: 14px;
 }
 
-body:has(.music-archive-page) .menu-trigger-label {
+body:has(:is(.bg-home, .category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .menu-trigger::before {
+  display: none;
+}
+
+body:has(:is(.bg-home, .category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .menu-trigger-label {
   font-family: var(--font-condensed);
   font-size: 0.82rem;
   font-weight: 950;
   line-height: 1;
 }
 
-body:has(.music-archive-page) .menu-trigger-lines {
+body:has(:is(.bg-home, .category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .menu-trigger-lines {
   width: 34px;
   gap: 7px;
 }
 
-body:has(.music-archive-page) .menu-trigger-lines span {
+body:has(:is(.bg-home, .category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .menu-trigger-lines span {
+  background: #ffffff;
   height: 2px;
 }
 
 @media (max-width: 760px) {
-  body:has(.music-archive-page) .site-header {
+  body:has(:is(.bg-home, .category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .site-header {
     width: min(100% - 28px, 1180px);
   }
 }
 
-body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .overlay-menu {
+body:has(:is(.bg-home, .category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .overlay-menu {
   background: rgba(17, 17, 17, 0.98);
 }
 
-body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) :is(.overlay-nav a, .overlay-nav a.overlay-nav-secondary) {
+body:has(:is(.bg-home, .category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) :is(.overlay-nav a, .overlay-nav a.overlay-nav-secondary) {
   color: #ffffff;
 }
 
-body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) :is(.overlay-nav a:hover, .overlay-nav a:focus-visible, .overlay-nav a.is-current) {
+body:has(:is(.bg-home, .category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) :is(.overlay-nav a:hover, .overlay-nav a:focus-visible, .overlay-nav a.is-current) {
   color: var(--sf-accent);
 }
 

@@ -7588,6 +7588,22 @@ body:has(.anime-home) .menu-trigger-lines span {
   background: #ffffff;
 }
 
+body:has(.anime-home) .site-footer {
+  border-top: 1px solid rgba(255, 247, 251, 0.16);
+  background: #050509;
+  color: #aa9ab4;
+}
+
+body:has(.anime-home) .site-footer span,
+body:has(.anime-home) .site-footer a {
+  color: #aa9ab4;
+}
+
+body:has(.anime-home) .site-footer a:hover,
+body:has(.anime-home) .site-footer a:focus-visible {
+  color: #ff6f9f;
+}
+
 @media (max-width: 820px) {
   body:has(.anime-home) .menu-trigger {
     position: fixed !important;

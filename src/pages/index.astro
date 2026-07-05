@@ -12,11 +12,11 @@ import {
 
 const keyVisual = '/assets/release-desk/mask-good-girl.jpg';
 
-const animeRoutes = [
-  { label: 'Listen', title: 'OST', href: latestStoryOst.youtubeHref, external: true },
-  { label: 'Read', title: 'Story', href: novelProject.season.startHref },
-  { label: 'Archive', title: 'Music', href: musicArchive.href },
-  { label: 'Studio', title: 'MV', href: '/login?next=/mv-studio' }
+const posterLinks = [
+  { label: 'OST', title: latestStoryOst.title, href: latestStoryOst.youtubeHref, external: true },
+  { label: 'Story', title: novelProject.title, href: novelProject.season.startHref },
+  { label: 'Archive', title: musicArchive.title, href: musicArchive.href },
+  { label: 'Studio', title: 'MV Studio', href: '/login?next=/mv-studio' }
 ];
 
 const latestEpisodeLabel = `${latestNovelEpisode.label} · ${latestNovelEpisode.title}`;
@@ -33,58 +33,57 @@ const latestEpisodeLabel = `${latestNovelEpisode.label} · ${latestNovelEpisode.
 >
   <SiteChrome active="home" />
 
-  <main id="main-content" class="site-main anime-home">
-    <section class="anime-hero reveal" aria-labelledby="animeHomeTitle">
-      <div class="anime-visual">
-        <img
-          src={keyVisual}
-          alt="Mask of a Good Girl OST를 상징하는 SunoFox 애니메이션 키비주얼"
-          width="1200"
-          height="900"
-          loading="eager"
-          decoding="async"
-          fetchpriority="high"
-        />
-      </div>
+  <main id="main-content" class="site-main anime-home poster-home">
+    <section class="poster-hero reveal" aria-labelledby="posterHomeTitle">
+      <img
+        class="poster-bg"
+        src={keyVisual}
+        alt="Mask of a Good Girl OST를 상징하는 SunoFox 애니메이션 키비주얼"
+        width="1200"
+        height="900"
+        loading="eager"
+        decoding="async"
+        fetchpriority="high"
+      />
 
-      <div class="anime-copy">
-        <p class="anime-kicker">ANIME OST STUDIO</p>
-        <h1 id="animeHomeTitle">SunoFox</h1>
-        <p class="anime-lead">감정을 노래하고, 이야기를 장면으로 남깁니다.</p>
-        <div class="anime-actions" aria-label="SunoFox primary links">
-          <a class="anime-button anime-button-primary" href={latestStoryOst.youtubeHref} target="_blank" rel="noopener noreferrer">OST 듣기</a>
-          <a class="anime-button" href={novelProject.season.startHref}>소설 보기</a>
+      <div class="poster-content">
+        <p class="poster-kicker">ANIME OST STUDIO</p>
+        <h1 id="posterHomeTitle">SunoFox</h1>
+        <p class="poster-lead">감정을 노래하고, 이야기를 장면으로 남깁니다.</p>
+        <div class="poster-actions" aria-label="SunoFox primary links">
+          <a class="poster-button poster-button-primary" href={latestStoryOst.youtubeHref} target="_blank" rel="noopener noreferrer">OST 듣기</a>
+          <a class="poster-button" href={novelProject.season.startHref}>소설 보기</a>
         </div>
       </div>
-    </section>
 
-    <section class="anime-now reveal" aria-labelledby="animeNowTitle">
-      <p class="anime-kicker">NOW PLAYING</p>
-      <a id="animeNowTitle" href={latestStoryOst.youtubeHref} target="_blank" rel="noopener noreferrer">
+      <a class="poster-now" href={latestStoryOst.youtubeHref} target="_blank" rel="noopener noreferrer">
+        <span>NOW PLAYING</span>
         <strong>{latestStoryOst.title}</strong>
-        <span>{latestStoryOst.englishTitle} · {latestStoryOst.date}</span>
+        <small>{latestStoryOst.englishTitle} · {latestStoryOst.date}</small>
       </a>
     </section>
 
-    <nav class="anime-routes reveal" aria-label="SunoFox main links">
-      {animeRoutes.map((item) => (
-        <a
-          href={item.href}
-          target={item.external ? '_blank' : undefined}
-          rel={item.external ? 'noopener noreferrer' : undefined}
-        >
-          <span>{item.label}</span>
-          <strong>{item.title}</strong>
-        </a>
-      ))}
-    </nav>
+    <section class="poster-panel reveal" aria-label="SunoFox featured routes">
+      <nav class="poster-links" aria-label="SunoFox main links">
+        {posterLinks.map((item) => (
+          <a
+            href={item.href}
+            target={item.external ? '_blank' : undefined}
+            rel={item.external ? 'noopener noreferrer' : undefined}
+          >
+            <span>{item.label}</span>
+            <strong>{item.title}</strong>
+          </a>
+        ))}
+      </nav>
 
-    <section class="anime-note reveal" aria-label="SunoFox story note">
-      <span>{novelProject.title}</span>
-      <a href={latestNovelEpisode.href}>{latestEpisodeLabel}</a>
+      <a class="poster-story" href={latestNovelEpisode.href}>
+        <span>{novelProject.title}</span>
+        <strong>{latestEpisodeLabel}</strong>
+      </a>
     </section>
 
-    <section class="anime-social reveal" aria-label="SunoFox external links">
+    <section class="poster-social reveal" aria-label="SunoFox external links">
       <a href={artistLinks.youtube} target="_blank" rel="noopener noreferrer">YouTube</a>
       <a href="/music/">{musicArchive.title}</a>
       <a href="/updates/">Updates</a>
@@ -97,7 +96,6 @@ const latestEpisodeLabel = `${latestNovelEpisode.label} · ${latestNovelEpisode.
 <style>
   .anime-home {
     --anime-bg: #050509;
-    --anime-panel: rgba(13, 14, 20, 0.78);
     --anime-ink: #fff7fb;
     --anime-muted: #d8cfdd;
     --anime-soft: #aa9ab4;
@@ -106,91 +104,70 @@ const latestEpisodeLabel = `${latestNovelEpisode.label} · ${latestNovelEpisode.
     --anime-warm: #f6b86a;
     min-height: 100svh;
     overflow: hidden;
-    background:
-      linear-gradient(180deg, rgba(255, 111, 159, 0.1), transparent 210px),
-      var(--anime-bg);
+    background: var(--anime-bg);
     color: var(--anime-ink);
   }
 
-  .anime-home::before {
-    position: fixed;
+  .poster-hero {
+    position: relative;
+    display: grid;
+    min-height: 100svh;
+    align-items: end;
+    overflow: hidden;
+    padding: 112px 0 34px;
+    isolation: isolate;
+  }
+
+  .poster-hero::before,
+  .poster-hero::after {
+    position: absolute;
     inset: 0;
     z-index: -1;
     content: "";
-    background-image:
-      linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
-    background-size: 48px 48px;
-    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.82), transparent 78%);
     pointer-events: none;
   }
 
-  .anime-hero,
-  .anime-now,
-  .anime-routes,
-  .anime-note,
-  .anime-social {
-    width: min(1040px, calc(100% - 40px));
-    margin: 0 auto;
+  .poster-hero::before {
+    background:
+      linear-gradient(90deg, rgba(5, 5, 9, 0.92), rgba(5, 5, 9, 0.52) 42%, rgba(5, 5, 9, 0.12)),
+      linear-gradient(180deg, rgba(5, 5, 9, 0.18), rgba(5, 5, 9, 0.08) 42%, rgba(5, 5, 9, 0.92));
   }
 
-  .anime-hero {
-    display: grid;
-    grid-template-columns: minmax(0, 0.94fr) minmax(300px, 0.76fr);
-    gap: 42px;
-    align-items: center;
-    min-height: min(820px, 100svh);
-    padding: 104px 0 54px;
+  .poster-hero::after {
+    background:
+      radial-gradient(circle at 26% 22%, rgba(255, 111, 159, 0.2), transparent 26rem),
+      linear-gradient(rgba(255, 247, 251, 0.028) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 247, 251, 0.028) 1px, transparent 1px);
+    background-size: auto, 54px 54px, 54px 54px;
+    opacity: 0.8;
   }
 
-  .anime-visual {
-    position: relative;
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: 8px;
-    background: #09090d;
-    box-shadow: 0 34px 90px rgba(0, 0, 0, 0.44);
-    animation: animeFloat 7s ease-in-out infinite;
-  }
-
-  .anime-visual::before,
-  .anime-visual::after {
+  .poster-bg {
     position: absolute;
     inset: 0;
-    content: "";
-    pointer-events: none;
-  }
-
-  .anime-visual::before {
-    z-index: 1;
-    background:
-      linear-gradient(90deg, rgba(5, 5, 9, 0.08), transparent 34%, rgba(5, 5, 9, 0.32)),
-      linear-gradient(180deg, transparent 74%, rgba(5, 5, 9, 0.68));
-  }
-
-  .anime-visual::after {
-    z-index: 2;
-    border: 1px solid rgba(255, 255, 255, 0.28);
-    border-radius: 6px;
-    inset: 10px;
-  }
-
-  .anime-visual img {
+    z-index: -2;
     width: 100%;
-    aspect-ratio: 4 / 5;
+    height: 100%;
     object-fit: cover;
-    object-position: 62% 42%;
+    object-position: 64% 42%;
     filter: saturate(1.08) contrast(1.05);
   }
 
-  .anime-copy {
-    display: grid;
-    gap: 18px;
-    min-width: 0;
-    animation: animeFadeUp 520ms ease both;
+  .poster-content,
+  .poster-now,
+  .poster-panel,
+  .poster-social {
+    width: min(1120px, calc(100% - 40px));
+    margin: 0 auto;
   }
 
-  .anime-kicker {
+  .poster-content {
+    display: grid;
+    gap: 18px;
+    padding-bottom: 118px;
+  }
+
+  .poster-kicker {
     margin: 0;
     color: var(--anime-warm);
     font-size: 0.78rem;
@@ -198,35 +175,36 @@ const latestEpisodeLabel = `${latestNovelEpisode.label} · ${latestNovelEpisode.
     letter-spacing: 0;
   }
 
-  .anime-copy h1 {
+  .poster-content h1 {
+    max-width: 9ch;
     margin: 0;
     color: var(--anime-ink);
-    font-size: 5.1rem;
+    font-size: 5.8rem;
     font-weight: 950;
     line-height: 0.94;
     letter-spacing: 0;
     overflow-wrap: anywhere;
-    text-shadow: 0 0 26px rgba(255, 111, 159, 0.24);
+    text-shadow: 0 0 30px rgba(255, 111, 159, 0.28);
   }
 
-  .anime-lead {
+  .poster-lead {
     max-width: 420px;
     margin: 0;
     color: var(--anime-muted);
     font-size: 1.08rem;
-    font-weight: 650;
+    font-weight: 680;
     line-height: 1.75;
     word-break: keep-all;
   }
 
-  .anime-actions {
+  .poster-actions {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     padding-top: 4px;
   }
 
-  .anime-button {
+  .poster-button {
     display: inline-flex;
     min-height: 46px;
     align-items: center;
@@ -234,97 +212,109 @@ const latestEpisodeLabel = `${latestNovelEpisode.label} · ${latestNovelEpisode.
     border: 1px solid var(--anime-line);
     border-radius: 999px;
     padding: 0 18px;
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(5, 5, 9, 0.36);
     color: var(--anime-ink);
     font-size: 0.94rem;
     font-weight: 900;
+    backdrop-filter: blur(12px);
     transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
   }
 
-  .anime-button:hover,
-  .anime-button:focus-visible {
+  .poster-button:hover,
+  .poster-button:focus-visible {
     border-color: var(--anime-accent);
     background: rgba(255, 111, 159, 0.12);
     transform: translateY(-1px);
   }
 
-  .anime-button-primary {
+  .poster-button-primary {
     border-color: var(--anime-accent);
     background: var(--anime-accent);
     color: #1d0711;
   }
 
-  .anime-now {
+  .poster-now {
+    position: absolute;
+    right: 0;
+    bottom: 34px;
+    left: 0;
     display: grid;
     grid-template-columns: 132px minmax(0, 1fr);
     gap: 18px;
-    align-items: start;
+    align-items: baseline;
     border-top: 1px solid var(--anime-line);
-    padding: 22px 0 0;
+    padding-top: 18px;
   }
 
-  .anime-now a {
-    display: grid;
-    gap: 4px;
-    min-width: 0;
+  .poster-now span,
+  .poster-links span,
+  .poster-story span,
+  .poster-social a {
+    color: var(--anime-soft);
+    font-size: 0.78rem;
+    font-weight: 860;
   }
 
-  .anime-now strong {
+  .poster-now span {
+    color: var(--anime-warm);
+  }
+
+  .poster-now strong {
     color: var(--anime-ink);
     font-size: 1.28rem;
     font-weight: 950;
-    line-height: 1.28;
+    line-height: 1.24;
     overflow-wrap: anywhere;
   }
 
-  .anime-now span {
+  .poster-now small {
+    grid-column: 2;
     color: var(--anime-soft);
-    font-size: 0.92rem;
+    font-size: 0.9rem;
     font-weight: 720;
   }
 
-  .anime-routes {
+  .poster-panel {
+    display: grid;
+    gap: 0;
+    padding: 44px 0 0;
+  }
+
+  .poster-links {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    margin-top: 34px;
     border-top: 1px solid var(--anime-line);
     border-bottom: 1px solid var(--anime-line);
   }
 
-  .anime-routes a {
+  .poster-links a {
     display: grid;
-    gap: 5px;
+    gap: 6px;
     min-width: 0;
-    padding: 18px 16px;
+    min-height: 82px;
+    align-content: center;
     border-right: 1px solid var(--anime-line);
-    background: rgba(255, 255, 255, 0.018);
-    transition: background 160ms ease, color 160ms ease;
+    padding: 14px 16px;
   }
 
-  .anime-routes a:last-child {
+  .poster-links a:last-child {
     border-right: 0;
   }
 
-  .anime-routes a:hover,
-  .anime-routes a:focus-visible {
-    background: rgba(255, 111, 159, 0.11);
+  .poster-links a:hover,
+  .poster-links a:focus-visible {
+    background: rgba(255, 111, 159, 0.1);
   }
 
-  .anime-routes span,
-  .anime-note span,
-  .anime-social a {
-    color: var(--anime-soft);
-    font-size: 0.78rem;
-    font-weight: 840;
-  }
-
-  .anime-routes strong {
+  .poster-links strong {
     color: var(--anime-ink);
-    font-size: 1.18rem;
-    font-weight: 950;
+    font-size: 1.05rem;
+    font-weight: 930;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
   }
 
-  .anime-note {
+  .poster-story {
     display: flex;
     flex-wrap: wrap;
     gap: 10px 18px;
@@ -333,144 +323,118 @@ const latestEpisodeLabel = `${latestNovelEpisode.label} · ${latestNovelEpisode.
     padding: 18px 0;
   }
 
-  .anime-note a {
-    max-width: 100%;
+  .poster-story strong {
     color: var(--anime-muted);
-    font-size: 0.95rem;
+    font-size: 0.94rem;
     font-weight: 850;
     overflow-wrap: anywhere;
   }
 
-  .anime-social {
+  .poster-social {
     display: flex;
     flex-wrap: wrap;
     gap: 16px;
     padding: 30px 0 78px;
   }
 
-  .anime-social a:hover,
-  .anime-social a:focus-visible {
+  .poster-social a:hover,
+  .poster-social a:focus-visible {
     color: var(--anime-accent);
   }
 
-  @keyframes animeFloat {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-
-    50% {
-      transform: translateY(-6px);
-    }
-  }
-
-  @keyframes animeFadeUp {
-    from {
-      opacity: 0;
-      transform: translateY(14px);
-    }
-
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @media (max-width: 860px) {
-    .anime-hero {
-      grid-template-columns: 1fr;
-      gap: 24px;
-      min-height: auto;
+  @media (max-width: 760px) {
+    .poster-hero {
       padding-top: 82px;
     }
 
-    .anime-visual {
-      order: -1;
+    .poster-hero::before {
+      background:
+        linear-gradient(180deg, rgba(5, 5, 9, 0.12), rgba(5, 5, 9, 0.16) 36%, rgba(5, 5, 9, 0.96)),
+        linear-gradient(90deg, rgba(5, 5, 9, 0.38), transparent 68%);
     }
 
-    .anime-visual img {
-      aspect-ratio: 16 / 12;
-      object-position: 62% 38%;
+    .poster-bg {
+      object-position: 62% 32%;
     }
-  }
 
-  @media (max-width: 560px) {
-    .anime-hero,
-    .anime-now,
-    .anime-routes,
-    .anime-note,
-    .anime-social {
+    .poster-content,
+    .poster-now,
+    .poster-panel,
+    .poster-social {
       width: calc(100% - 28px);
     }
 
-    .anime-hero {
-      padding-bottom: 34px;
+    .poster-content {
+      padding-bottom: 146px;
     }
 
-    .anime-visual img {
-      height: min(53svh, 430px);
-      aspect-ratio: auto;
-    }
-
-    .anime-copy {
-      gap: 14px;
-    }
-
-    .anime-copy h1 {
-      font-size: 3.35rem;
+    .poster-content h1 {
+      font-size: 3.55rem;
       line-height: 0.98;
     }
 
-    .anime-lead {
+    .poster-lead {
       font-size: 1rem;
       line-height: 1.65;
     }
 
-    .anime-actions {
+    .poster-actions {
       display: grid;
       grid-template-columns: 1fr;
     }
 
-    .anime-button {
+    .poster-button {
       width: 100%;
     }
 
-    .anime-now {
+    .poster-now {
       grid-template-columns: 1fr;
-      gap: 8px;
-      padding-top: 20px;
+      gap: 5px;
+      bottom: 26px;
+      padding-top: 16px;
     }
 
-    .anime-now strong {
-      font-size: 1.12rem;
+    .poster-now strong {
+      font-size: 1.08rem;
     }
 
-    .anime-routes {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      margin-top: 28px;
+    .poster-now small {
+      grid-column: 1;
     }
 
-    .anime-routes a:nth-child(2) {
+    .poster-panel {
+      padding-top: 30px;
+    }
+
+    .poster-links {
+      grid-template-columns: 1fr;
+    }
+
+    .poster-links a {
+      min-height: 62px;
       border-right: 0;
+      border-bottom: 1px solid var(--anime-line);
+      padding: 13px 0;
     }
 
-    .anime-routes a:nth-child(n + 3) {
-      border-top: 1px solid var(--anime-line);
+    .poster-links a:last-child {
+      border-bottom: 0;
     }
 
-    .anime-routes strong {
-      font-size: 1.05rem;
+    .poster-story {
+      display: grid;
+      gap: 8px;
     }
 
-    .anime-social {
+    .poster-social {
       padding-bottom: 58px;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .anime-visual,
-    .anime-copy {
-      animation: none;
+    .poster-button,
+    .poster-links a {
+      transition: none;
     }
   }
 </style>

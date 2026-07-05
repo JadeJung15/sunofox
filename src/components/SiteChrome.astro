@@ -6,7 +6,7 @@ const { active = 'home' } = Astro.props;
 
 <header class="site-header" aria-label="SunoFox header">
   <a class:list={['site-logo', active === 'home' && 'is-current']} href="/" aria-label="SunoFox home">
-    <span>SunoFox</span>
+    {Array.from('SUNOFOX').map((letter) => <span aria-hidden="true">{letter}</span>)}
   </a>
 
   <button id="menuButton" class="menu-trigger" type="button" aria-expanded="false" aria-controls="overlayMenu" aria-label="전체 메뉴 열기">

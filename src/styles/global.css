@@ -8101,6 +8101,52 @@ body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-det
   background: #ffffff;
 }
 
+body:has(.music-archive-page) .site-header {
+  left: 50%;
+  right: auto;
+  width: min(1180px, calc(100% - 56px));
+  padding: 24px 0 0;
+  transform: translateX(-50%);
+}
+
+body:has(.music-archive-page) .site-logo {
+  gap: 6px;
+  min-height: 36px;
+  font-size: 0.86rem;
+  line-height: 1;
+}
+
+body:has(.music-archive-page) .site-logo span {
+  display: block;
+}
+
+body:has(.music-archive-page) .menu-trigger {
+  min-height: 36px;
+  gap: 14px;
+}
+
+body:has(.music-archive-page) .menu-trigger-label {
+  font-family: var(--font-condensed);
+  font-size: 0.82rem;
+  font-weight: 950;
+  line-height: 1;
+}
+
+body:has(.music-archive-page) .menu-trigger-lines {
+  width: 34px;
+  gap: 7px;
+}
+
+body:has(.music-archive-page) .menu-trigger-lines span {
+  height: 2px;
+}
+
+@media (max-width: 760px) {
+  body:has(.music-archive-page) .site-header {
+    width: min(100% - 28px, 1180px);
+  }
+}
+
 body:has(:is(.category-page, .novel-detail-page, .music-archive-page, .album-detail-page)) .overlay-menu {
   background: rgba(17, 17, 17, 0.98);
 }

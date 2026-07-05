@@ -2,23 +2,13 @@
 import Layout from '../layouts/Layout.astro';
 import {
   artistLinks,
-  featuredStoryOst,
   musicArchive,
-  novelProject,
   structuredData
 } from '../data/siteContent.js';
 
 const showcaseImages = {
-  featured: '/assets/brand/sunofox-home-villainess-stage.png',
-  music: '/assets/brand/sunofox-showcase-music.png',
-  story: '/assets/brand/sunofox-showcase-story.png'
+  featured: '/assets/brand/sunofox-home-villainess-stage.png'
 };
-
-const releaseLinks = [
-  { label: 'LISTEN', href: featuredStoryOst.youtubeHref, external: true },
-  { label: 'READ', href: novelProject.season.startHref },
-  { label: 'WATCH', href: artistLinks.youtube, external: true }
-];
 
 const sectionLinks = [
   {
@@ -26,8 +16,6 @@ const sectionLinks = [
     title: 'EXPLORE MUSIC',
     text: 'Original OST, album archive, and YouTube premieres.',
     href: musicArchive.href,
-    image: showcaseImages.music,
-    imageAlt: '푸른 달빛 성당 안에 놓인 피아노 이미지',
     panel: 'music'
   },
   {
@@ -35,8 +23,6 @@ const sectionLinks = [
     title: 'DISCOVER IP',
     text: 'A story world expanded from music into episodes.',
     href: '/novels/',
-    image: showcaseImages.story,
-    imageAlt: '하늘 아래 거대한 성채가 보이는 SunoFox Story IP 비주얼',
     panel: 'story'
   }
 ];
@@ -78,21 +64,19 @@ const navItems = [
     </header>
 
     <section class="showcase-stage" aria-label="SunoFox premium IP label">
-      <div class="showcase-title">
-        <p class="showcase-kicker">STORY-DRIVEN MUSIC & IP STUDIO</p>
-        <h1 id="homeTitle" aria-label="SUNOFOX STORY OST MEETS IP">
-          <span>SUNOFOX</span>
-          <span>STORY OST</span>
-          <span>MEETS IP</span>
-        </h1>
-        <p class="showcase-statement">
-          <span aria-hidden="true"></span>
-          WE TELL STORIES THROUGH MUSIC.<br />
-          WE BRING MUSIC INTO WORLDS.
-        </p>
-      </div>
+      <div class="showcase-hero-grid">
+        <div class="showcase-title">
+          <p class="showcase-kicker">STORY-DRIVEN MUSIC & IP STUDIO</p>
+          <h1 id="homeTitle" aria-label="SUNOFOX STORY OST MEETS IP">
+            <span>SUNOFOX</span>
+          </h1>
+          <p class="showcase-statement">
+            <span aria-hidden="true"></span>
+            STORY OST MEETS IP.<br />
+            MUSIC FIRST, STORY NEXT.
+          </p>
+        </div>
 
-      <div class="showcase-main-grid">
         <figure class="showcase-featured-visual" data-showcase-panel="featured">
           <img
             src={showcaseImages.featured}
@@ -103,46 +87,18 @@ const navItems = [
             decoding="async"
           />
         </figure>
-
-        <article class="showcase-release" aria-labelledby="featuredReleaseTitle">
-          <p>FEATURED RELEASE</p>
-          <h2 id="featuredReleaseTitle">{novelProject.title}</h2>
-          <strong>ORIGINAL SOUNDTRACK PART.1</strong>
-          <time datetime="2026-06-14">{featuredStoryOst.date} RELEASE</time>
-          <span>{featuredStoryOst.summary}</span>
-          <div class="release-actions">
-            {releaseLinks.map((link) => (
-              <a href={link.href} target={link.external ? '_blank' : undefined} rel={link.external ? 'noopener noreferrer' : undefined}>
-                {link.label}
-                <span aria-hidden="true">→</span>
-              </a>
-            ))}
-          </div>
-        </article>
       </div>
 
-      <section class="showcase-panels" aria-label="SunoFox public sections">
+      <nav class="showcase-primary-links" aria-label="SunoFox public sections">
         {sectionLinks.map((item) => (
-          <a class="showcase-panel-link" href={item.href}>
-            <span class="panel-copy">
-              <small>{item.eyebrow}</small>
-              <strong>{item.title}</strong>
-              <em>{item.text}</em>
-            </span>
-            <figure class="panel-image" data-showcase-panel={item.panel}>
-              <img
-                src={item.image}
-                alt={item.imageAlt}
-                width="540"
-                height="154"
-                loading="lazy"
-                decoding="async"
-              />
-            </figure>
+          <a class="showcase-primary-link" href={item.href} data-showcase-panel={item.panel}>
+            <span>{item.eyebrow}</span>
+            <strong>{item.title}</strong>
+            <em>{item.text}</em>
             <b aria-hidden="true">→</b>
           </a>
         ))}
-      </section>
+      </nav>
     </section>
 
     <footer class="showcase-footer" aria-label="SunoFox footer">
@@ -298,17 +254,25 @@ const navItems = [
     z-index: 1;
     display: grid;
     width: min(100%, 1480px);
+    min-height: min(860px, calc(100svh - 126px));
     margin-inline: auto;
     align-content: center;
-    gap: clamp(20px, 2.7vw, 38px);
-    padding-top: clamp(28px, 5vh, 58px);
-    padding-bottom: clamp(26px, 4vh, 42px);
+    gap: clamp(28px, 4vw, 62px);
+    padding-top: clamp(34px, 6vh, 72px);
+    padding-bottom: clamp(34px, 5vh, 58px);
+  }
+
+  .showcase-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(440px, 0.58fr) minmax(0, 1fr);
+    gap: clamp(42px, 5vw, 78px);
+    align-items: center;
   }
 
   .showcase-title {
     display: grid;
-    gap: clamp(10px, 1.1vw, 16px);
-    max-width: min(1080px, 100%);
+    gap: clamp(16px, 1.8vw, 28px);
+    max-width: min(720px, 100%);
   }
 
   .showcase-kicker {
@@ -326,9 +290,9 @@ const navItems = [
     margin: 0;
     color: #f7f7f2;
     font-family: Impact, "Arial Narrow", Haettenschweiler, sans-serif;
-    font-size: clamp(4.25rem, 7.2vw, 7.45rem);
+    font-size: clamp(4.8rem, 6.8vw, 7.2rem);
     font-weight: 900;
-    line-height: 0.88;
+    line-height: 0.86;
     text-transform: uppercase;
     text-shadow: 0 0 24px rgba(255, 255, 255, 0.07);
   }
@@ -341,7 +305,7 @@ const navItems = [
     display: grid;
     grid-template-columns: 2px minmax(0, 1fr);
     gap: 18px;
-    width: min(520px, 100%);
+    width: min(420px, 100%);
     margin: 0;
     color: rgba(255, 255, 255, 0.72);
     font-size: clamp(0.82rem, 0.86vw, 1rem);
@@ -355,179 +319,95 @@ const navItems = [
     background: var(--blue);
   }
 
-  .showcase-main-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1.28fr) minmax(320px, 0.62fr);
-    gap: clamp(22px, 3vw, 48px);
-    align-items: start;
-  }
-
-  .showcase-featured-visual,
-  .panel-image {
+  .showcase-featured-visual {
     margin: 0;
     overflow: hidden;
     background: #050505;
   }
 
   .showcase-featured-visual {
-    aspect-ratio: 3.55 / 1;
-    min-height: 190px;
+    aspect-ratio: 16 / 9;
+    min-height: 360px;
   }
 
-  .showcase-featured-visual img,
-  .panel-image img {
+  .showcase-featured-visual img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
 
-  .showcase-release {
-    display: grid;
-    gap: 14px;
-    align-content: end;
-    min-width: 0;
-    padding-bottom: 2px;
-  }
-
-  .showcase-release p {
-    margin: 0;
-    color: var(--blue);
-    font-size: 0.86rem;
-    font-weight: 900;
-    line-height: 1;
-    word-spacing: 0.45em;
-  }
-
-  .showcase-release h2 {
-    margin: 0;
-    color: #ffffff;
-    font-size: clamp(1.9rem, 2.4vw, 3.1rem);
-    font-weight: 850;
-    line-height: 1.08;
-    word-break: keep-all;
-  }
-
-  .showcase-release strong {
-    display: block;
-    width: fit-content;
-    border-top: 1px solid var(--blue);
-    padding-top: 13px;
-    color: #ffffff;
-    font-size: 0.86rem;
-    font-weight: 900;
-    line-height: 1.35;
-  }
-
-  .showcase-release time,
-  .showcase-release > span {
-    display: block;
-    color: var(--muted);
-    font-size: 0.88rem;
-    font-weight: 750;
-    line-height: 1.65;
-  }
-
-  .showcase-release > span {
-    max-width: 520px;
-    color: rgba(255, 255, 255, 0.54);
-    word-break: keep-all;
-  }
-
-  .release-actions {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 12px;
-    margin-top: 8px;
-  }
-
-  .release-actions a {
-    display: flex;
-    min-height: 48px;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid var(--blue);
-    color: #ffffff;
-    font-size: 0.84rem;
-    font-weight: 900;
-    line-height: 1;
-    text-decoration: none;
-  }
-
-  .release-actions span,
-  .showcase-panel-link b {
-    color: #ffffff;
-    font-size: 1rem;
-    transform: translateX(0);
-    transition: transform 160ms ease;
-  }
-
-  .release-actions a:hover span,
-  .release-actions a:focus-visible span,
-  .showcase-panel-link:hover b,
-  .showcase-panel-link:focus-visible b {
-    transform: translateX(5px);
-  }
-
-  .showcase-panels {
+  .showcase-primary-links {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
   }
 
-  .showcase-panel-link {
+  .showcase-primary-link {
     position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(132px, 0.34fr) auto;
-    gap: clamp(18px, 2vw, 30px);
-    align-items: center;
-    min-height: clamp(154px, 14vw, 218px);
-    padding: clamp(20px, 2.7vw, 42px) clamp(16px, 2.4vw, 34px);
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px 24px;
+    min-height: 132px;
+    align-content: center;
+    padding: clamp(22px, 2.8vw, 42px) clamp(16px, 2.6vw, 36px);
     color: #ffffff;
     text-decoration: none;
   }
 
-  .showcase-panel-link + .showcase-panel-link {
+  .showcase-primary-link + .showcase-primary-link {
     border-left: 1px solid var(--line);
   }
 
-  .panel-copy {
-    display: grid;
-    min-width: 0;
-    gap: 10px;
-  }
-
-  .panel-copy small,
-  .panel-copy em {
+  .showcase-primary-link span,
+  .showcase-primary-link em {
     display: block;
     color: rgba(255, 255, 255, 0.52);
     font-style: normal;
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     font-weight: 850;
     line-height: 1.45;
   }
 
-  .panel-copy small {
+  .showcase-primary-link span {
+    grid-column: 1 / 2;
     color: var(--blue);
-    font-size: 0.82rem;
+    font-size: 0.78rem;
     font-weight: 900;
     line-height: 1;
   }
 
-  .panel-copy strong {
-    display: block;
+  .showcase-primary-link strong {
+    grid-column: 1 / 2;
     color: #ffffff;
-    font-family: Impact, "Arial Narrow", Haettenschweiler, sans-serif;
-    font-size: clamp(2.7rem, 4.8vw, 6.2rem);
+    font-size: clamp(1.85rem, 2.8vw, 3.45rem);
     font-weight: 900;
-    line-height: 0.88;
+    line-height: 0.95;
     text-transform: uppercase;
   }
 
-  .panel-image {
-    aspect-ratio: 1.35 / 1;
-    min-height: 118px;
+  .showcase-primary-link em {
+    grid-column: 1 / 2;
+    max-width: 420px;
+  }
+
+  .showcase-primary-link b {
+    grid-column: 2;
+    grid-row: 1 / 4;
+    align-self: center;
+  }
+
+  .showcase-primary-link b {
+    color: #ffffff;
+    font-size: 1rem;
+    transform: translateX(0);
+    transition: transform 160ms ease;
+  }
+
+  .showcase-primary-link:hover b,
+  .showcase-primary-link:focus-visible b {
+    transform: translateX(5px);
   }
 
   .showcase-footer {
@@ -562,20 +442,18 @@ const navItems = [
   .showcase-lang:focus-visible,
   .showcase-footer a:hover,
   .showcase-footer a:focus-visible,
-  .showcase-panel-link:hover,
-  .showcase-panel-link:focus-visible {
+  .showcase-primary-link:hover,
+  .showcase-primary-link:focus-visible {
     color: #ffffff;
   }
 
   @media (max-width: 1120px) {
-    .showcase-main-grid,
-    .showcase-panels {
+    .showcase-hero-grid {
       grid-template-columns: 1fr;
     }
 
-    .showcase-panel-link + .showcase-panel-link {
-      border-top: 1px solid var(--line);
-      border-left: 0;
+    .showcase-featured-visual {
+      min-height: 0;
     }
   }
 
@@ -605,8 +483,9 @@ const navItems = [
     }
 
     .showcase-stage {
-      gap: 32px;
-      padding-top: 52px;
+      min-height: auto;
+      gap: 34px;
+      padding-top: 54px;
       padding-bottom: 34px;
     }
 
@@ -615,8 +494,8 @@ const navItems = [
     }
 
     .showcase-title h1 {
-      font-size: clamp(3.6rem, 17vw, 5.5rem);
-      line-height: 0.92;
+      font-size: clamp(4.2rem, 22vw, 6.6rem);
+      line-height: 0.86;
     }
 
     .showcase-kicker {
@@ -628,35 +507,22 @@ const navItems = [
     }
 
     .showcase-featured-visual {
-      aspect-ratio: 2.2 / 1;
+      aspect-ratio: 1.65 / 1;
       min-height: 0;
     }
 
-    .showcase-release {
-      gap: 13px;
-    }
-
-    .showcase-release h2 {
-      font-size: clamp(1.85rem, 9vw, 2.45rem);
-    }
-
-    .release-actions {
+    .showcase-primary-links {
       grid-template-columns: 1fr;
-      gap: 8px;
     }
 
-    .showcase-panel-link {
-      grid-template-columns: minmax(0, 1fr) auto;
+    .showcase-primary-link {
       min-height: 0;
-      padding: 22px 0;
+      padding: 24px 0;
     }
 
-    .panel-image {
-      display: none;
-    }
-
-    .panel-copy strong {
-      font-size: clamp(3rem, 16vw, 5rem);
+    .showcase-primary-link + .showcase-primary-link {
+      border-top: 1px solid var(--line);
+      border-left: 0;
     }
 
     .showcase-footer {
@@ -679,14 +545,13 @@ const navItems = [
 
   @media (max-width: 390px) {
     .showcase-title h1 {
-      font-size: clamp(3.35rem, 16vw, 4.35rem);
+      font-size: clamp(3.7rem, 20vw, 5rem);
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .release-actions span,
     .showcase-nav a::after,
-    .showcase-panel-link b {
+    .showcase-primary-link b {
       transition: none;
     }
   }

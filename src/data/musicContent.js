@@ -52,14 +52,12 @@ export const musicArchive = {
   href: '/music/',
   researchDate: '2026.06.19',
   summary:
-    '수노폭스가 공개한 앨범, 음원 플랫폼, YouTube OST와 MV 링크를 한 곳에서 이어 보는 음악 필모그래피형 허브입니다.',
+    '앨범, 주요 스트리밍 채널, YouTube OST와 MV를 빠르게 여는 SunoFox 음악 필모그래피 링크 허브입니다.',
   facts: [
-    { label: '채널', value: 'SunoFox Anime OST Studio' },
-    { label: '규모', value: '구독자 약 4.18K명 · 영상 131편' },
-    { label: '누적 조회', value: '90만+ 회 공개 스냅샷 기준' },
-    { label: '업로드', value: '수 · 일 17:15 KST' },
-    { label: '장르', value: 'Anime OST, J-Pop Rock, Game Soundtrack' },
-    { label: '링크 허브', value: 'Album · Streaming · YouTube' }
+    { label: '앨범', value: 'ARCHIVE vol.1' },
+    { label: '스트리밍', value: '13 links' },
+    { label: '영상', value: '8편' },
+    { label: '채널', value: 'YouTube / MV' }
   ],
   flow: [
     {

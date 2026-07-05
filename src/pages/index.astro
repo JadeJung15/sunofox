@@ -12,73 +12,64 @@ import {
   structuredData
 } from '../data/siteContent.js';
 
-const heroFacts = [
-  { label: 'Now Playing', value: latestStoryOst.englishTitle },
-  { label: 'Story IP', value: `${novelProject.season.label} · ${novelProject.season.status}` },
-  { label: 'Library', value: `${musicArchive.videos.length} videos · ${archiveAlbum.tracks.length} tracks` }
-];
-
-const releaseDeskAssets = {
-  ostVisual: '/assets/release-desk/mask-good-girl.jpg',
-  archiveVisual: '/assets/release-desk/cozy-drift.jpg',
-  controlDeck: '/assets/release-desk/control-deck.jpg'
+const signalAssets = {
+  stage: '/assets/release-desk/mask-good-girl.jpg',
+  archive: '/assets/release-desk/cozy-drift.jpg',
+  console: '/assets/release-desk/control-deck.jpg'
 };
 
-const entryCards = [
+const channelDeck = [
   {
-    label: 'Watch',
-    title: 'SunoFox OST 감상',
-    summary: '신규 OST와 영상 컷은 YouTube에서 먼저 공개하고, 공개 흐름은 홈에서 바로 이어 봅니다.',
-    href: artistLinks.youtube,
-    cta: 'YouTube 채널',
+    number: '01',
+    key: 'ost',
+    label: 'OST',
+    title: latestStoryOst.title,
+    text: '최신 공개곡을 바로 재생합니다.',
+    href: latestStoryOst.youtubeHref,
     external: true,
-    image: releaseDeskAssets.ostVisual,
-    alt: 'Mask of a Good Girl OST 썸네일 비주얼'
+    image: latestStoryOst.thumbnail,
+    alt: latestStoryOst.thumbnailAlt
   },
   {
-    label: 'Read',
-    title: '완결 미니시즌 읽기',
-    summary: `${novelProject.title} ${publishedNovelEpisodes.length}화 미니시즌을 1화부터 이어 읽습니다.`,
-    href: novelProject.season.startHref,
-    cta: '1화부터 읽기',
+    number: '02',
+    key: 'story',
+    label: 'Story',
+    title: novelProject.title,
+    text: `${publishedNovelEpisodes.length}화 미니시즌을 순서대로 읽습니다.`,
+    href: '/novels/',
     image: novelProject.coverImage,
     alt: novelProject.coverAlt
   },
   {
-    label: 'Listen',
-    title: '음악 아카이브 정리',
-    summary: archiveAlbum.summary,
+    number: '03',
+    key: 'archive',
+    label: 'Archive',
+    title: archiveAlbum.title,
+    text: '공개된 음악과 영상을 다시 찾을 수 있게 보관합니다.',
     href: musicArchive.href,
-    cta: '아카이브 열기',
-    image: releaseDeskAssets.archiveVisual,
-    alt: 'SunoFox Cozy Drift 앨범 자켓 비주얼'
+    image: signalAssets.archive,
+    alt: 'SunoFox Cozy Drift 앨범 자켓'
   },
   {
-    label: 'Build',
-    title: 'MV Studio 입장',
-    summary: '공개 콘텐츠 제작에 사용하는 사이트 소유자 전용 작업실입니다.',
+    number: '04',
+    key: 'studio',
+    label: 'Studio',
+    title: 'Owner MV Studio',
+    text: '제작과 업로드 흐름은 승인된 사용자만 입장합니다.',
     href: '/login?next=/mv-studio',
-    cta: '제작실 로그인',
-    image: releaseDeskAssets.controlDeck,
-    alt: 'Watch Read Listen Build 흐름을 상징하는 4버튼 컨트롤 패널'
+    image: signalAssets.console,
+    alt: 'SunoFox 제작 흐름을 상징하는 미디어 콘솔'
   }
 ];
 
-const releaseSteps = [
-  { step: '01', title: 'OST 공개', text: 'YouTube 영상과 썸네일이 먼저 공개됩니다.' },
-  { step: '02', title: 'Story 연결', text: '감정선이 작품, 회차, 캐릭터 정보로 정리됩니다.' },
-  { step: '03', title: 'Archive 보관', text: '음악과 영상은 감상 가능한 라이브러리로 남깁니다.' },
-  { step: '04', title: 'Studio 제작', text: '다음 MV와 스토리보드 작업은 내부 제작실에서 이어집니다.' }
-];
-
 const latestVideos = musicArchive.videos.slice(0, 4);
-const readingGroups = novelProject.readingPath;
+const episodeRail = publishedNovelEpisodes.slice(0, 6);
 const latestEpisodeLabel = `${latestNovelEpisode.label} · ${latestNovelEpisode.title}`;
 ---
 
 <Layout
-  title="SunoFox Release Desk | Anime OST Studio"
-  description="SunoFox의 최신 Anime OST, 웹소설 미니시즌, 음악 아카이브, MV Studio 입구를 한 화면에서 정리한 공식 Release Desk입니다."
+  title="SunoFox Signal Room | Anime OST Story Studio"
+  description="SunoFox Signal Room은 Anime OST, 웹소설 세계관, 음악 아카이브, MV Studio 입구를 라디오 콘솔형 감상 경험으로 연결하는 공식 홈입니다."
   image={`https://sunofox.com${latestStoryOst.thumbnail}`}
   imageAlt={latestStoryOst.thumbnailAlt}
   imageWidth={1200}
@@ -87,654 +78,942 @@ const latestEpisodeLabel = `${latestNovelEpisode.label} · ${latestNovelEpisode.
 >
   <SiteChrome active="home" />
 
-  <main id="main-content" class="site-main release-desk-main">
-    <section class="release-hero reveal" aria-labelledby="releaseHeroTitle">
-      <div class="release-hero-copy">
-        <p class="release-eyebrow">OFFICIAL RELEASE DESK</p>
-        <h1 id="releaseHeroTitle">
-          <span>SunoFox는</span>
-          <span>공개물 중심으로</span>
-          <span>움직입니다.</span>
-        </h1>
-        <p class="release-lead">
-          <span>복잡한 전시형 홈은 줄였습니다.</span>
-          <span>최신 OST, 소설, 아카이브,</span>
-          <span>MV Studio 입구만 남겼습니다.</span>
-        </p>
-        <div class="release-actions" aria-label="SunoFox primary actions">
-          <a class="main-button main-button-primary" href={latestStoryOst.youtubeHref} target="_blank" rel="noopener noreferrer">최신 OST 감상</a>
-          <a class="main-button main-button-muted" href={novelProject.season.startHref}>소설 1화부터</a>
-          <a class="main-button main-button-muted" href="/login?next=/mv-studio">MV Studio</a>
-        </div>
-        <dl class="release-facts" aria-label="SunoFox current release status">
-          {heroFacts.map((item) => (
-            <div>
-              <dt>{item.label}</dt>
-              <dd>{item.value}</dd>
-            </div>
+  <main id="main-content" class="site-main signal-home">
+    <section class="signal-stage reveal" aria-labelledby="signalTitle">
+      <img
+        class="signal-stage-art"
+        src={signalAssets.stage}
+        alt="Mask of a Good Girl OST를 상징하는 SunoFox 애니메이션 장면"
+        width="1200"
+        height="900"
+        loading="eager"
+        decoding="async"
+        fetchpriority="high"
+      />
+
+      <div class="signal-shell">
+        <nav class="signal-frequency" aria-label="SunoFox channels">
+          <span class="signal-label">CHANNELS</span>
+          {channelDeck.map((channel) => (
+            <a
+              href={channel.href}
+              class:list={['frequency-link', channel.key === 'ost' && 'is-active']}
+              target={channel.external ? '_blank' : undefined}
+              rel={channel.external ? 'noopener noreferrer' : undefined}
+            >
+              <span class="frequency-number">{channel.number}</span>
+              <span class="frequency-name">{channel.label}</span>
+            </a>
           ))}
-        </dl>
+        </nav>
+
+        <a
+          class="signal-turntable"
+          href={latestStoryOst.youtubeHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${latestStoryOst.title} 감상하기`}
+        >
+          <span class="turntable-orbit" aria-hidden="true"></span>
+          <img
+            src={latestStoryOst.thumbnail}
+            alt={latestStoryOst.thumbnailAlt}
+            width="720"
+            height="720"
+            loading="eager"
+            decoding="async"
+          />
+          <span class="turntable-core">
+            <span>PLAY</span>
+            <strong>OST</strong>
+          </span>
+        </a>
+
+        <div class="signal-copy">
+          <p class="signal-label">SIGNAL ROOM</p>
+          <h1 id="signalTitle">SunoFox</h1>
+          <p>
+            첫 화면을 안내문이 아니라 감상 콘솔로 바꿨습니다. OST를 틀고, 소설 회차를 따라가고, 아카이브와 제작실로 바로 이동하는 구조입니다.
+          </p>
+          <div class="signal-actions">
+            <a class="signal-button signal-button-primary" href={latestStoryOst.youtubeHref} target="_blank" rel="noopener noreferrer">최신 OST 재생</a>
+            <a class="signal-button" href={novelProject.season.startHref}>1화부터 읽기</a>
+          </div>
+        </div>
       </div>
 
-      <a class="release-now" href={latestStoryOst.youtubeHref} target="_blank" rel="noopener noreferrer" aria-label={`${latestStoryOst.title} 감상하기`}>
-        <img
-          src={latestStoryOst.thumbnail}
-          alt={latestStoryOst.thumbnailAlt}
-          width="480"
-          height="360"
-          loading="eager"
-          decoding="async"
-          fetchpriority="high"
-        />
-        <span>{latestStoryOst.type}</span>
-        <strong>{latestStoryOst.title}</strong>
-        <small>{latestStoryOst.date} 공개 · 바로 감상</small>
-      </a>
-    </section>
-
-    <section class="release-entry-section reveal" aria-labelledby="releaseEntryTitle">
-      <div class="release-section-head">
-        <p class="release-eyebrow">START HERE</p>
-        <h2 id="releaseEntryTitle">첫 화면은 네 가지 입구만 남깁니다.</h2>
-        <p>방문자는 감상, 읽기, 아카이브, 제작실 중 하나를 바로 선택합니다.</p>
-      </div>
-
-      <div class="release-entry-grid">
-        {entryCards.map((card) => (
-          <a
-            class="release-entry-card"
-            href={card.href}
-            target={card.external ? '_blank' : undefined}
-            rel={card.external ? 'noopener noreferrer' : undefined}
-          >
-            <img src={card.image} alt={card.alt} width="480" height="360" loading="lazy" decoding="async" />
-            <span>{card.label}</span>
-            <strong>{card.title}</strong>
-            <p>{card.summary}</p>
-            <em>{card.cta}</em>
-          </a>
-        ))}
-      </div>
-    </section>
-
-    <section class="release-flow-section reveal" aria-labelledby="releaseFlowTitle">
-      <div class="release-section-head">
-        <p class="release-eyebrow">STRUCTURE</p>
-        <h2 id="releaseFlowTitle">사이트 구조는 공개 흐름 그대로 갑니다.</h2>
-      </div>
-
-      <ol class="release-flow-list">
-        {releaseSteps.map((item) => (
+      <ol class="signal-episode-sequence" aria-label="Story episode sequence">
+        {episodeRail.map((episode) => (
           <li>
-            <span>{item.step}</span>
-            <strong>{item.title}</strong>
-            <p>{item.text}</p>
+            <a href={episode.href}>
+              <span>{episode.label}</span>
+              <strong>{episode.title}</strong>
+            </a>
           </li>
         ))}
       </ol>
     </section>
 
-    <section class="release-story-board reveal" aria-labelledby="releaseStoryTitle">
-      <div class="release-story-copy">
-        <p class="release-eyebrow">STORY BOARD</p>
-        <h2 id="releaseStoryTitle">{novelProject.title}</h2>
-        <p>{novelProject.shortSummary}</p>
-        <dl class="release-story-status" aria-label="Story IP status">
-          <div>
-            <dt>상태</dt>
-            <dd>{novelProject.season.status}</dd>
-          </div>
-          <div>
-            <dt>최신</dt>
-            <dd>{latestEpisodeLabel}</dd>
-          </div>
-          <div>
-            <dt>회차</dt>
-            <dd>{publishedNovelEpisodes.length}화</dd>
-          </div>
-        </dl>
-        <div class="release-actions">
-          <a class="main-button" href="/novels/">작품 페이지</a>
-          <a class="main-button main-button-muted" href={latestNovelEpisode.href}>완결화 읽기</a>
-          <a class="main-button main-button-muted" href={latestStoryOst.youtubeHref} target="_blank" rel="noopener noreferrer">OST 감상</a>
-        </div>
+    <section class="broadcast-flow reveal" aria-labelledby="broadcastFlowTitle">
+      <div class="broadcast-heading">
+        <p class="signal-label">BROADCAST MAP</p>
+        <h2 id="broadcastFlowTitle">방문자는 채널을 고르듯 이동합니다.</h2>
+        <p>홈의 목적은 설명을 길게 읽히는 것이 아니라, 지금 보고 들을 것을 빠르게 선택하게 만드는 것입니다.</p>
       </div>
 
-      <div class="release-reading-path" aria-label="Reading path">
-        {readingGroups.map((item) => (
-          <a href={item.href}>
-            <span>{item.range}</span>
-            <strong>{item.title}</strong>
-            <p>{item.text}</p>
+      <div class="broadcast-board">
+        {channelDeck.map((channel) => (
+          <a
+            class="broadcast-row"
+            href={channel.href}
+            target={channel.external ? '_blank' : undefined}
+            rel={channel.external ? 'noopener noreferrer' : undefined}
+          >
+            <img src={channel.image} alt={channel.alt} width="220" height="160" loading="lazy" decoding="async" />
+            <span>{channel.number}</span>
+            <strong>{channel.title}</strong>
+            <p>{channel.text}</p>
           </a>
         ))}
       </div>
     </section>
 
-    <section class="release-library-section reveal" aria-labelledby="releaseLibraryTitle">
-      <div class="release-section-head">
-        <p class="release-eyebrow">LATEST LIBRARY</p>
-        <h2 id="releaseLibraryTitle">최근 공개물은 작은 큐로 정리합니다.</h2>
-        <p>대시보드처럼 보이지 않게, 최신 영상과 운영 이동만 남겼습니다.</p>
+    <section class="story-console reveal" aria-labelledby="storyConsoleTitle">
+      <div class="story-console-copy">
+        <p class="signal-label">STORY INPUT</p>
+        <h2 id="storyConsoleTitle">{novelProject.title}</h2>
+        <p>{novelProject.shortSummary}</p>
+        <p class="story-status">{novelProject.season.status} · 최신 {latestEpisodeLabel}</p>
+        <div class="signal-actions">
+          <a class="signal-button signal-button-primary" href="/novels/">작품 세계관</a>
+          <a class="signal-button" href={latestNovelEpisode.href}>완결화 읽기</a>
+          <a class="signal-button" href={latestStoryOst.youtubeHref} target="_blank" rel="noopener noreferrer">연결 OST</a>
+        </div>
       </div>
 
-      <div class="release-library-grid">
-        <ol class="release-video-list">
-          {latestVideos.map((video) => (
-            <li>
-              <a href={video.href} target="_blank" rel="noopener noreferrer">
-                <img src={video.thumbnail} alt={video.thumbnailAlt} width="240" height="180" loading="lazy" decoding="async" />
-                <span>{video.date}</span>
-                <strong>{video.title}</strong>
-                <p>{video.type}</p>
-              </a>
-            </li>
-          ))}
-        </ol>
+      <img
+        class="story-console-cover"
+        src={novelProject.coverImage}
+        alt={novelProject.coverAlt}
+        width="720"
+        height="960"
+        loading="lazy"
+        decoding="async"
+      />
+    </section>
 
-        <aside class="release-ops-panel" aria-label="SunoFox operation shortcuts">
-          <img
-            class="release-ops-visual"
-            src={releaseDeskAssets.controlDeck}
-            alt="SunoFox 공개 흐름을 상징하는 버튼형 컨트롤 패널"
-            width="960"
-            height="720"
-            loading="lazy"
-            decoding="async"
-          />
-          <p class="release-eyebrow">OPERATIONS</p>
-          <h3>운영 이동</h3>
-          <p>
-            공개 페이지는 감상과 읽기 중심으로 유지하고, 제작·업로드·스토리보드 작업은 승인된 사용자만 MV Studio에서 진행합니다.
-          </p>
-          <div class="release-ops-links">
-            <a href="/music/">Music Archive</a>
-            <a href="/updates/">Updates</a>
-            <a href={artistLinks.youtube} target="_blank" rel="noopener noreferrer">YouTube Channel</a>
-            <a href="/login?next=/mv-studio">Owner Studio</a>
-          </div>
-        </aside>
+    <section class="archive-reel reveal" aria-labelledby="archiveReelTitle">
+      <div class="archive-reel-copy">
+        <p class="signal-label">ARCHIVE REEL</p>
+        <h2 id="archiveReelTitle">공개곡은 목록이 아니라 릴로 쌓입니다.</h2>
+        <p>영상 썸네일과 앨범 자켓을 한 화면에서 이어 보여 주어, 음악 아카이브가 단순 게시판처럼 보이지 않게 했습니다.</p>
+        <a class="signal-button signal-button-primary" href={musicArchive.href}>음악 아카이브 열기</a>
+      </div>
+
+      <div class="reel-collage" aria-label="Latest SunoFox videos">
+        <a class="reel-album" href={archiveAlbum.href}>
+          <img src={signalAssets.archive} alt="SunoFox Cozy Drift 앨범 자켓" width="640" height="640" loading="lazy" decoding="async" />
+          <span>{archiveAlbum.title}</span>
+        </a>
+        {latestVideos.map((video) => (
+          <a class="reel-video" href={video.href} target="_blank" rel="noopener noreferrer">
+            <img src={video.thumbnail} alt={video.thumbnailAlt} width="360" height="270" loading="lazy" decoding="async" />
+            <span>{video.date}</span>
+            <strong>{video.title}</strong>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="owner-console reveal" aria-labelledby="ownerConsoleTitle">
+      <img
+        class="owner-console-image"
+        src={signalAssets.console}
+        alt="SunoFox 제작 흐름을 상징하는 버튼형 미디어 컨트롤 패널"
+        width="960"
+        height="720"
+        loading="lazy"
+        decoding="async"
+      />
+
+      <div class="owner-console-copy">
+        <p class="signal-label">OWNER OUTPUT</p>
+        <h2 id="ownerConsoleTitle">제작실은 무대 뒤에 둡니다.</h2>
+        <p>공개 홈은 감상과 읽기에 집중하고, 업로드·스토리보드·MV 제작은 승인된 사용자만 Studio에서 이어갑니다.</p>
+        <div class="signal-actions">
+          <a class="signal-button signal-button-primary" href="/login?next=/mv-studio">MV Studio 로그인</a>
+          <a class="signal-button" href="/updates/">업데이트 로그</a>
+          <a class="signal-button" href={artistLinks.youtube} target="_blank" rel="noopener noreferrer">YouTube 채널</a>
+        </div>
       </div>
     </section>
   </main>
 </Layout>
 
 <style>
-  .release-desk-main {
-    --release-paper: #f5f1e8;
-    --release-panel: #fffdf7;
-    --release-panel-muted: #ebe8dd;
-    --release-ink: #111720;
-    --release-muted: #526070;
-    --release-soft: #7a8491;
-    --release-line: #d9d2c3;
-    --release-line-strong: #b9ad99;
-    --release-accent: #c85a17;
-    --release-accent-strong: #9e3e0f;
+  .signal-home {
+    --signal-bg: #05080c;
+    --signal-ink: #f8fafc;
+    --signal-muted: #b8c4d3;
+    --signal-soft: #7f90a4;
+    --signal-line: rgba(255, 255, 255, 0.18);
+    --signal-line-strong: rgba(255, 255, 255, 0.38);
+    --signal-panel: rgba(8, 13, 21, 0.82);
+    --signal-orange: #ff8a2b;
+    --signal-teal: #32d6bc;
+    --signal-rose: #f05c7f;
     min-height: 100svh;
-    padding: 96px 0 104px;
     background:
-      linear-gradient(90deg, rgba(17, 23, 32, 0.055) 1px, transparent 1px),
-      linear-gradient(180deg, #fbf8ef 0%, var(--release-paper) 48%, #ede9df 100%);
-    background-size: 48px 48px, auto;
-    color: var(--release-ink);
+      linear-gradient(180deg, #05080c 0%, #0a0f17 44%, #111820 74%, #f4f2ed 100%);
+    color: var(--signal-ink);
   }
 
-  .release-hero,
-  .release-entry-section,
-  .release-flow-section,
-  .release-story-board,
-  .release-library-section {
-    width: min(1160px, calc(100% - 40px));
+  .signal-stage {
+    position: relative;
+    isolation: isolate;
+    min-height: calc(100svh - 1px);
+    overflow: hidden;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    background: var(--signal-bg);
+  }
+
+  .signal-stage::before {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    content: "";
+    background:
+      linear-gradient(90deg, rgba(5, 8, 12, 0.98) 0%, rgba(5, 8, 12, 0.72) 48%, rgba(5, 8, 12, 0.28) 100%),
+      linear-gradient(180deg, rgba(5, 8, 12, 0.12) 0%, rgba(5, 8, 12, 0.92) 100%),
+      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 88px);
+  }
+
+  .signal-stage-art {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 72% 44%;
+    filter: saturate(1.05) contrast(1.06);
+  }
+
+  .signal-shell {
+    display: grid;
+    grid-template-columns: 154px minmax(260px, 430px) minmax(0, 1fr);
+    gap: 42px;
+    align-items: center;
+    width: min(1180px, calc(100% - 40px));
+    min-height: calc(100svh - 138px);
     margin: 0 auto;
+    padding: 112px 0 168px;
   }
 
-  .release-hero {
+  .signal-frequency {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(300px, 420px);
-    gap: clamp(28px, 5vw, 64px);
-    align-items: end;
-  }
-
-  .release-hero-copy {
-    display: grid;
-    gap: 22px;
+    gap: 9px;
     min-width: 0;
   }
 
-  .release-eyebrow {
+  .signal-label {
+    display: block;
     margin: 0;
-    color: var(--release-accent);
+    color: var(--signal-orange);
     font-size: 0.78rem;
     font-weight: 900;
-    letter-spacing: 0.08em;
+    letter-spacing: 0;
   }
 
-  .release-hero h1,
-  .release-section-head h2,
-  .release-story-copy h2 {
-    max-width: 100%;
-    margin: 0;
-    color: var(--release-ink);
-    font-size: clamp(2.7rem, 6vw, 5.7rem);
+  .frequency-link {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 10px;
+    min-height: 48px;
+    align-items: center;
+    border-left: 2px solid var(--signal-line);
+    padding-left: 12px;
+    color: var(--signal-muted);
+    transition: border-color 160ms ease, color 160ms ease, transform 160ms ease;
+  }
+
+  .frequency-link:hover,
+  .frequency-link:focus-visible,
+  .frequency-link.is-active {
+    border-left-color: var(--signal-orange);
+    color: #ffffff;
+    transform: translateX(4px);
+  }
+
+  .frequency-number,
+  .frequency-name {
+    min-width: 0;
+    color: inherit;
+    font-weight: 900;
+  }
+
+  .frequency-number {
+    color: var(--signal-soft);
+    font-size: 0.78rem;
+  }
+
+  .frequency-name {
+    font-size: 1rem;
+  }
+
+  .signal-turntable {
+    position: relative;
+    display: grid;
+    width: min(100%, 430px);
+    aspect-ratio: 1;
+    place-items: center;
+    justify-self: center;
+    border-radius: 50%;
+    background:
+      repeating-radial-gradient(circle, rgba(255, 255, 255, 0.15) 0 1px, transparent 1px 17px),
+      linear-gradient(145deg, rgba(255, 138, 43, 0.2), rgba(50, 214, 188, 0.08));
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.16),
+      0 32px 90px rgba(0, 0, 0, 0.42);
+    transition: transform 180ms ease;
+  }
+
+  .signal-turntable:hover,
+  .signal-turntable:focus-visible {
+    transform: translateY(-4px);
+  }
+
+  .turntable-orbit {
+    position: absolute;
+    inset: 8%;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: 50%;
+  }
+
+  .signal-turntable img {
+    width: 68%;
+    aspect-ratio: 1;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: 50%;
+    object-fit: cover;
+    animation: turntableSpin 24s linear infinite;
+  }
+
+  .turntable-core {
+    position: absolute;
+    display: grid;
+    width: 112px;
+    height: 112px;
+    place-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: 50%;
+    background: rgba(5, 8, 12, 0.82);
+    color: #ffffff;
+    text-align: center;
+    backdrop-filter: blur(10px);
+  }
+
+  .turntable-core span,
+  .turntable-core strong {
+    color: #ffffff;
+    line-height: 1;
+  }
+
+  .turntable-core span {
+    align-self: end;
+    font-size: 0.74rem;
+    font-weight: 900;
+  }
+
+  .turntable-core strong {
+    align-self: start;
+    color: var(--signal-orange);
+    font-size: 1.28rem;
     font-weight: 950;
-    line-height: 0.98;
+  }
+
+  .signal-copy {
+    display: grid;
+    gap: 16px;
+    min-width: 0;
+    align-content: center;
+  }
+
+  .signal-copy h1,
+  .broadcast-heading h2,
+  .story-console-copy h2,
+  .archive-reel-copy h2,
+  .owner-console-copy h2 {
+    margin: 0;
+    color: #ffffff;
+    font-size: 5.4rem;
+    font-weight: 950;
+    line-height: 0.96;
     letter-spacing: 0;
     overflow-wrap: anywhere;
   }
 
-  .release-hero h1 span {
-    display: block;
-  }
-
-  .release-lead span {
-    display: block;
-  }
-
-  .release-lead,
-  .release-section-head p,
-  .release-story-copy > p,
-  .release-ops-panel p {
-    max-width: 700px;
+  .signal-copy p,
+  .broadcast-heading p,
+  .story-console-copy p,
+  .archive-reel-copy p,
+  .owner-console-copy p,
+  .broadcast-row p {
+    max-width: 640px;
     margin: 0;
-    color: var(--release-muted);
-    font-size: 1.05rem;
-    font-weight: 550;
-    line-height: 1.75;
+    color: var(--signal-muted);
+    font-size: 1.04rem;
+    font-weight: 560;
+    line-height: 1.72;
     overflow-wrap: anywhere;
-    word-break: break-all;
+    word-break: keep-all;
   }
 
-  .release-actions {
+  .signal-actions {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
   }
 
-  .release-desk-main .main-button {
-    border-color: var(--release-ink);
-    background: var(--release-ink);
-    color: #ffffff;
-  }
-
-  .release-desk-main .main-button:hover,
-  .release-desk-main .main-button:focus-visible {
-    border-color: var(--release-accent);
-    background: var(--release-accent);
-    color: #ffffff;
-  }
-
-  .release-desk-main .main-button-muted {
-    border-color: var(--release-line);
-    background: var(--release-panel);
-    color: var(--release-ink);
-  }
-
-  .release-facts,
-  .release-story-status {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0;
-    margin: 10px 0 0;
-    border: 1px solid var(--release-line);
-    border-radius: 8px;
-    overflow: hidden;
-    background: rgba(255, 253, 247, 0.78);
-  }
-
-  .release-facts div,
-  .release-story-status div {
+  .signal-button {
+    display: inline-flex;
     min-width: 0;
-    padding: 16px;
-  }
-
-  .release-facts div + div,
-  .release-story-status div + div {
-    border-left: 1px solid var(--release-line);
-  }
-
-  .release-facts dt,
-  .release-story-status dt {
-    color: var(--release-soft);
-    font-size: 0.76rem;
-    font-weight: 850;
-  }
-
-  .release-facts dd,
-  .release-story-status dd {
-    margin: 7px 0 0;
-    color: var(--release-ink);
-    font-size: 0.96rem;
-    font-weight: 850;
-    line-height: 1.35;
-  }
-
-  .release-now {
-    display: grid;
-    gap: 10px;
-    border: 1px solid var(--release-line);
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--signal-line);
     border-radius: 8px;
-    padding: 12px;
-    background: var(--release-panel);
-    box-shadow: 0 24px 60px rgba(17, 23, 32, 0.08);
-    transition: border-color 160ms ease, transform 160ms ease;
+    padding: 0 16px;
+    background: rgba(8, 13, 21, 0.74);
+    color: #ffffff;
+    font-size: 0.94rem;
+    font-weight: 850;
+    text-align: center;
+    transition: border-color 160ms ease, background 160ms ease, color 160ms ease, transform 160ms ease;
   }
 
-  .release-now:hover,
-  .release-now:focus-visible {
-    border-color: var(--release-line-strong);
-    transform: translateY(-2px);
+  .signal-button:hover,
+  .signal-button:focus-visible {
+    border-color: var(--signal-orange);
+    background: rgba(255, 138, 43, 0.17);
+    color: #ffffff;
+    transform: translateY(-1px);
   }
 
-  .release-now img,
-  .release-entry-card img,
-  .release-video-list img {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    border-radius: 6px;
-    object-fit: cover;
+  .signal-button-primary {
+    border-color: var(--signal-orange);
+    background: var(--signal-orange);
+    color: #170b03;
   }
 
-  .release-now span,
-  .release-entry-card span,
-  .release-video-list span {
-    color: var(--release-accent);
+  .signal-button-primary:hover,
+  .signal-button-primary:focus-visible {
+    border-color: var(--signal-teal);
+    background: var(--signal-teal);
+    color: #03110f;
+  }
+
+  .signal-episode-sequence {
+    position: absolute;
+    right: max(20px, calc((100% - 1180px) / 2));
+    bottom: 28px;
+    left: max(20px, calc((100% - 1180px) / 2));
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 0;
+    margin: 0;
+    border-top: 1px solid var(--signal-line);
+    border-bottom: 1px solid var(--signal-line);
+    padding: 0;
+    background: rgba(5, 8, 12, 0.68);
+    backdrop-filter: blur(14px);
+    list-style: none;
+  }
+
+  .signal-episode-sequence a {
+    display: grid;
+    gap: 7px;
+    min-height: 90px;
+    align-content: center;
+    border-right: 1px solid var(--signal-line);
+    padding: 14px;
+    color: #ffffff;
+  }
+
+  .signal-episode-sequence li:last-child a {
+    border-right: 0;
+  }
+
+  .signal-episode-sequence span,
+  .story-status,
+  .reel-collage span,
+  .broadcast-row span {
+    color: var(--signal-orange);
     font-size: 0.78rem;
     font-weight: 900;
   }
 
-  .release-now strong,
-  .release-entry-card strong,
-  .release-video-list strong,
-  .release-flow-list strong,
-  .release-reading-path strong,
-  .release-ops-panel h3 {
-    color: var(--release-ink);
-    font-size: 1.08rem;
-    font-weight: 900;
-    line-height: 1.28;
+  .signal-episode-sequence strong,
+  .broadcast-row strong,
+  .reel-video strong {
+    color: #ffffff;
+    font-size: 0.92rem;
+    font-weight: 850;
+    line-height: 1.34;
   }
 
-  .release-now small {
-    color: var(--release-soft);
-    font-weight: 750;
+  .broadcast-flow,
+  .story-console,
+  .archive-reel,
+  .owner-console {
+    width: min(1180px, calc(100% - 40px));
+    margin: 0 auto;
   }
 
-  .release-entry-section,
-  .release-flow-section,
-  .release-story-board,
-  .release-library-section {
-    margin-top: 84px;
-  }
-
-  .release-section-head {
+  .broadcast-flow {
     display: grid;
-    gap: 10px;
-    min-width: 0;
-    margin-bottom: 22px;
-  }
-
-  .release-section-head h2,
-  .release-story-copy h2 {
-    font-size: clamp(2rem, 4.2vw, 4rem);
-  }
-
-  .release-entry-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 14px;
-  }
-
-  .release-entry-card {
-    display: grid;
-    grid-template-rows: auto auto auto 1fr auto;
-    gap: 10px;
-    min-width: 0;
-    border: 1px solid var(--release-line);
-    border-radius: 8px;
-    padding: 12px;
-    background: rgba(255, 253, 247, 0.9);
-    color: var(--release-ink);
-    transition: border-color 160ms ease, transform 160ms ease, background 160ms ease;
-  }
-
-  .release-entry-card:hover,
-  .release-entry-card:focus-visible {
-    border-color: var(--release-line-strong);
-    background: #ffffff;
-    transform: translateY(-2px);
-  }
-
-  .release-entry-card p,
-  .release-video-list p,
-  .release-reading-path p,
-  .release-flow-list p {
-    margin: 0;
-    color: var(--release-muted);
-    font-size: 0.94rem;
-    line-height: 1.62;
-  }
-
-  .release-entry-card em {
-    color: var(--release-accent-strong);
-    font-size: 0.9rem;
-    font-style: normal;
-    font-weight: 900;
-  }
-
-  .release-flow-list {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 1px;
-    margin: 0;
-    border: 1px solid var(--release-line);
-    border-radius: 8px;
-    padding: 0;
-    overflow: hidden;
-    background: var(--release-line);
-    list-style: none;
-  }
-
-  .release-flow-list li {
-    display: grid;
-    gap: 10px;
-    min-width: 0;
-    padding: 22px;
-    background: var(--release-panel);
-  }
-
-  .release-flow-list span {
-    color: var(--release-accent);
-    font-size: 0.86rem;
-    font-weight: 950;
-  }
-
-  .release-story-board {
-    display: grid;
-    grid-template-columns: minmax(0, 0.95fr) minmax(300px, 0.75fr);
-    gap: 22px;
+    grid-template-columns: minmax(260px, 360px) minmax(0, 1fr);
+    gap: 44px;
     align-items: start;
-    border: 1px solid var(--release-line);
-    border-radius: 8px;
-    padding: clamp(20px, 3vw, 34px);
-    background:
-      linear-gradient(135deg, rgba(255, 253, 247, 0.96), rgba(255, 253, 247, 0.86)),
-      url('/assets/brand/sunofox-signal-texture.webp');
-    background-size: cover;
-    background-position: center;
+    padding: 82px 0 74px;
   }
 
-  .release-story-copy {
+  .broadcast-heading,
+  .story-console-copy,
+  .archive-reel-copy,
+  .owner-console-copy {
     display: grid;
     gap: 16px;
     min-width: 0;
   }
 
-  .release-reading-path {
+  .broadcast-heading h2,
+  .story-console-copy h2,
+  .archive-reel-copy h2,
+  .owner-console-copy h2 {
+    font-size: 3.55rem;
+  }
+
+  .broadcast-board {
     display: grid;
-    gap: 10px;
+    border-top: 1px solid var(--signal-line);
   }
 
-  .release-reading-path a {
+  .broadcast-row {
     display: grid;
-    gap: 7px;
-    border: 1px solid var(--release-line);
-    border-radius: 8px;
-    padding: 16px;
-    background: rgba(255, 253, 247, 0.88);
-    transition: border-color 160ms ease, transform 160ms ease;
-  }
-
-  .release-reading-path a:hover,
-  .release-reading-path a:focus-visible {
-    border-color: var(--release-line-strong);
-    transform: translateY(-1px);
-  }
-
-  .release-reading-path span {
-    color: var(--release-accent);
-    font-weight: 900;
-  }
-
-  .release-library-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+    grid-template-columns: 112px 44px minmax(160px, 0.7fr) minmax(0, 1fr);
     gap: 18px;
-  }
-
-  .release-video-list {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .release-video-list a,
-  .release-ops-panel {
-    display: grid;
-    gap: 10px;
-    height: 100%;
-    border: 1px solid var(--release-line);
-    border-radius: 8px;
-    padding: 12px;
-    background: var(--release-panel);
-  }
-
-  .release-video-list a {
-    transition: border-color 160ms ease, transform 160ms ease;
-  }
-
-  .release-video-list a:hover,
-  .release-video-list a:focus-visible {
-    border-color: var(--release-line-strong);
-    transform: translateY(-1px);
-  }
-
-  .release-ops-panel {
-    align-content: start;
+    align-items: center;
     min-width: 0;
-    padding: 22px;
+    border-bottom: 1px solid var(--signal-line);
+    padding: 16px 0;
   }
 
-  .release-ops-panel h3 {
-    margin: 0;
-    font-size: 1.7rem;
-  }
-
-  .release-ops-visual {
-    width: 100%;
+  .broadcast-row img {
+    width: 112px;
     aspect-ratio: 4 / 3;
-    border: 1px solid var(--release-line);
-    border-radius: 6px;
+    border-radius: 8px;
     object-fit: cover;
   }
 
-  .release-ops-links {
+  .broadcast-row:hover strong,
+  .broadcast-row:focus-visible strong {
+    color: var(--signal-teal);
+  }
+
+  .story-console {
     display: grid;
-    gap: 8px;
-    margin-top: 8px;
-  }
-
-  .release-ops-links a {
-    display: flex;
-    min-height: 44px;
+    grid-template-columns: minmax(0, 1fr) minmax(230px, 320px);
+    gap: 38px;
     align-items: center;
-    justify-content: space-between;
-    border: 1px solid var(--release-line);
+    padding: 58px 0;
+    border-top: 1px solid var(--signal-line);
+    border-bottom: 1px solid var(--signal-line);
+  }
+
+  .story-console-cover {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    border: 1px solid var(--signal-line);
     border-radius: 8px;
-    padding: 0 12px;
-    color: var(--release-ink);
-    font-weight: 850;
+    object-fit: cover;
+    box-shadow: 0 28px 76px rgba(0, 0, 0, 0.35);
   }
 
-  .release-ops-links a::after {
-    content: ">";
-    color: var(--release-accent);
+  .archive-reel {
+    display: grid;
+    grid-template-columns: minmax(270px, 340px) minmax(0, 1fr);
+    gap: 34px;
+    align-items: start;
+    padding: 82px 0 86px;
   }
 
-  .release-ops-links a:hover,
-  .release-ops-links a:focus-visible {
-    border-color: var(--release-line-strong);
-    background: #ffffff;
+  .archive-reel-copy .signal-button {
+    width: fit-content;
   }
 
-  @media (max-width: 980px) {
-    .release-hero,
-    .release-story-board,
-    .release-library-grid {
+  .reel-collage {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: 146px;
+    gap: 12px;
+  }
+
+  .reel-album,
+  .reel-video {
+    position: relative;
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--signal-line);
+    border-radius: 8px;
+    background: var(--signal-panel);
+  }
+
+  .reel-album {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  .reel-album img,
+  .reel-video img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 220ms ease;
+  }
+
+  .reel-album::after,
+  .reel-video::after {
+    position: absolute;
+    inset: auto 0 0;
+    height: 58%;
+    content: "";
+    background: linear-gradient(180deg, rgba(5, 8, 12, 0), rgba(5, 8, 12, 0.86));
+  }
+
+  .reel-album span,
+  .reel-video span,
+  .reel-video strong {
+    position: absolute;
+    right: 12px;
+    left: 12px;
+    z-index: 1;
+  }
+
+  .reel-album span,
+  .reel-video strong {
+    bottom: 12px;
+  }
+
+  .reel-video span {
+    bottom: 42px;
+  }
+
+  .reel-album:hover img,
+  .reel-album:focus-visible img,
+  .reel-video:hover img,
+  .reel-video:focus-visible img {
+    transform: scale(1.035);
+  }
+
+  .owner-console {
+    display: grid;
+    grid-template-columns: minmax(280px, 430px) minmax(0, 1fr);
+    gap: 42px;
+    align-items: center;
+    padding: 56px 0 98px;
+    border-top: 1px solid var(--signal-line);
+  }
+
+  .owner-console-image {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border: 1px solid var(--signal-line);
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.32);
+  }
+
+  @keyframes turntableSpin {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (max-width: 1040px) {
+    .signal-shell {
+      grid-template-columns: 132px minmax(240px, 360px) minmax(0, 1fr);
+      gap: 28px;
+    }
+
+    .signal-copy h1 {
+      font-size: 4.2rem;
+    }
+
+    .broadcast-heading h2,
+    .story-console-copy h2,
+    .archive-reel-copy h2,
+    .owner-console-copy h2 {
+      font-size: 3rem;
+    }
+
+    .signal-episode-sequence {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 820px) {
+    .signal-stage {
+      min-height: auto;
+    }
+
+    .signal-stage::before {
+      background:
+        linear-gradient(180deg, rgba(5, 8, 12, 0.56) 0%, rgba(5, 8, 12, 0.94) 48%, rgba(5, 8, 12, 0.98) 100%),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 70px);
+    }
+
+    .signal-stage-art {
+      height: 420px;
+      object-position: 66% 18%;
+    }
+
+    .signal-shell,
+    .broadcast-flow,
+    .story-console,
+    .archive-reel,
+    .owner-console {
+      width: calc(100% - 28px);
+      max-width: 620px;
+    }
+
+    .signal-shell {
       grid-template-columns: 1fr;
+      gap: 22px;
+      min-height: auto;
+      padding: 390px 0 32px;
     }
 
-    .release-entry-grid,
-    .release-flow-list {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
-  @media (max-width: 640px) {
-    .release-desk-main {
-      padding-top: 76px;
-    }
-
-    .release-hero,
-    .release-entry-section,
-    .release-flow-section,
-    .release-story-board,
-    .release-library-section {
-      width: min(100% - 28px, 560px);
-    }
-
-    .release-hero h1 {
-      font-size: 2.28rem;
-      line-height: 1.06;
-    }
-
-    .release-actions,
-    .release-entry-grid,
-    .release-flow-list,
-    .release-video-list,
-    .release-facts,
-    .release-story-status {
-      grid-template-columns: 1fr;
-    }
-
-    .release-actions {
+    .signal-frequency {
       display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      order: 2;
+      max-width: 100%;
     }
 
-    .release-facts div + div,
-    .release-story-status div + div {
-      border-left: 0;
-      border-top: 1px solid var(--release-line);
+    .signal-frequency .signal-label {
+      grid-column: 1 / -1;
     }
 
-    .release-entry-section,
-    .release-flow-section,
-    .release-story-board,
-    .release-library-section {
-      margin-top: 58px;
+    .frequency-link {
+      grid-template-columns: auto auto;
+      min-height: 42px;
+      min-width: 0;
+      border: 1px solid var(--signal-line);
+      border-radius: 8px;
+      padding: 0 12px;
+      background: rgba(8, 13, 21, 0.78);
+      transform: none;
+    }
+
+    .frequency-link:hover,
+    .frequency-link:focus-visible,
+    .frequency-link.is-active {
+      border-color: var(--signal-orange);
+      transform: none;
+    }
+
+    .frequency-name {
+      overflow-wrap: anywhere;
+    }
+
+    .signal-turntable {
+      order: 3;
+      width: min(100%, 310px);
+      justify-self: start;
+    }
+
+    .turntable-core {
+      width: 88px;
+      height: 88px;
+    }
+
+    .signal-copy {
+      order: 1;
+      width: 100%;
+      max-width: calc(100vw - 28px);
+    }
+
+    .signal-copy h1 {
+      font-size: 3.4rem;
+    }
+
+    .signal-copy p,
+    .broadcast-heading p,
+    .story-console-copy p,
+    .archive-reel-copy p,
+    .owner-console-copy p,
+    .broadcast-row p {
+      max-width: 100%;
+      font-size: 0.98rem;
+      line-height: 1.66;
+    }
+
+    .signal-episode-sequence {
+      position: static;
+      grid-template-columns: 1fr;
+      width: min(100% - 28px, 620px);
+      margin: 0 auto 30px;
+    }
+
+    .signal-episode-sequence a {
+      min-height: 72px;
+      border-right: 0;
+      border-bottom: 1px solid var(--signal-line);
+    }
+
+    .signal-episode-sequence li:last-child a {
+      border-bottom: 0;
+    }
+
+    .broadcast-flow,
+    .story-console,
+    .archive-reel,
+    .owner-console {
+      grid-template-columns: 1fr;
+    }
+
+    .broadcast-flow {
+      padding: 56px 0 50px;
+    }
+
+    .broadcast-row {
+      grid-template-columns: 92px 34px minmax(0, 1fr);
+      gap: 12px;
+    }
+
+    .broadcast-row img {
+      width: 92px;
+    }
+
+    .broadcast-row p {
+      grid-column: 3;
+    }
+
+    .story-console {
+      padding: 44px 0;
+    }
+
+    .story-console-cover {
+      max-width: 320px;
+    }
+
+    .archive-reel {
+      padding: 56px 0 62px;
+    }
+
+    .reel-collage {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-auto-rows: 138px;
+    }
+
+    .owner-console {
+      padding: 46px 0 68px;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .signal-shell,
+    .broadcast-flow,
+    .story-console,
+    .archive-reel,
+    .owner-console,
+    .signal-episode-sequence {
+      max-width: 362px;
+      margin-left: 14px;
+      margin-right: auto;
+    }
+
+    .signal-shell {
+      padding-top: 350px;
+    }
+
+    .signal-stage-art {
+      height: 380px;
+    }
+
+    .signal-copy h1 {
+      font-size: 3rem;
+    }
+
+    .broadcast-heading h2,
+    .story-console-copy h2,
+    .archive-reel-copy h2,
+    .owner-console-copy h2 {
+      font-size: 2.28rem;
+      line-height: 1.04;
+    }
+
+    .signal-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      width: 100%;
+      max-width: calc(100vw - 28px);
+    }
+
+    .signal-button {
+      width: 100%;
+    }
+
+    .signal-frequency {
+      grid-template-columns: 1fr;
+      width: 100%;
+      max-width: calc(100vw - 28px);
+    }
+
+    .frequency-link {
+      grid-template-columns: 34px minmax(0, 1fr);
+    }
+
+    .signal-turntable {
+      width: min(100%, 280px);
+    }
+
+    .broadcast-row {
+      grid-template-columns: 82px minmax(0, 1fr);
+    }
+
+    .broadcast-row img {
+      width: 82px;
+      grid-row: span 3;
+    }
+
+    .broadcast-row span,
+    .broadcast-row strong,
+    .broadcast-row p {
+      grid-column: 2;
+    }
+
+    .reel-collage {
+      grid-template-columns: 1fr;
+      grid-auto-rows: 168px;
+    }
+
+    .reel-album {
+      grid-column: auto;
+      grid-row: span 2;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .signal-turntable img {
+      animation: none;
     }
   }
 </style>

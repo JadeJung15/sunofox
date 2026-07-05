@@ -7564,3 +7564,62 @@ body.menu-open .menu-trigger:focus-visible .menu-trigger-lines span:last-child {
     transition-duration: 1ms !important;
   }
 }
+
+/* Signal Room home keeps the global chrome visible over the immersive stage. */
+body:has(.signal-home) .site-header {
+  position: fixed;
+  width: 100vw;
+  max-width: 100vw;
+  box-sizing: border-box;
+  border-bottom: 0;
+  background: linear-gradient(180deg, rgba(5, 8, 12, 0.8), rgba(5, 8, 12, 0));
+}
+
+body:has(.signal-home) .site-logo,
+body:has(.signal-home) .menu-trigger {
+  color: #ffffff;
+}
+
+body:has(.signal-home) .site-logo.is-current {
+  color: #ff8a2b;
+}
+
+body:has(.signal-home) .menu-trigger-lines span {
+  background: #ffffff;
+}
+
+@media (max-width: 820px) {
+  body:has(.signal-home) .menu-trigger {
+    position: fixed !important;
+    top: 10px !important;
+    right: 14px !important;
+    left: auto !important;
+    z-index: 999 !important;
+    display: inline-flex !important;
+    width: 48px !important;
+    height: 48px !important;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: 8px;
+    background: rgba(5, 8, 12, 0.72) !important;
+    color: #ffffff;
+    opacity: 1 !important;
+    visibility: visible !important;
+    backdrop-filter: blur(10px);
+  }
+
+  body:has(.signal-home) .menu-trigger-lines {
+    display: grid !important;
+  }
+
+  body:has(.signal-home) .menu-trigger-lines span {
+    background: #ffffff !important;
+  }
+}
+
+@media (max-width: 520px) {
+  body:has(.signal-home) .site-header {
+    width: min(100vw, 390px);
+  }
+}

@@ -1,5 +1,5 @@
 export const menuItems = [
-  { key: 'home', label: '릴리스 데스크', href: '/' },
+  { key: 'home', label: '홈', href: '/' },
   { key: 'music', label: '음악 아카이브', href: '/music/' },
   { key: 'novels', label: '스토리 보드', href: '/novels/' },
   { key: 'profile', label: '채널 소개', href: '/profile' },

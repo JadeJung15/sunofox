@@ -3,11 +3,12 @@ import SiteChrome from '../../components/SiteChrome.astro';
 import Layout from '../../layouts/Layout.astro';
 import {
   archiveAlbum,
+  artistLinks,
   musicArchive,
   musicArchiveStructuredData
 } from '../../data/siteContent.js';
 
-const visibleVideos = musicArchive.videos.slice(0, 3);
+const visibleVideos = musicArchive.videos.slice(0, 4);
 const videoAnchorItems = Array.from(
   new Map(
     visibleVideos.map((video) => [
@@ -22,10 +23,13 @@ const videoAnchorItems = Array.from(
 const linkHubCount = musicArchive.linkHub.reduce((total, group) => total + group.links.length, 0);
 const albumGroup = musicArchive.linkHub.find((group) => group.key === 'album');
 const streamingGroup = musicArchive.linkHub.find((group) => group.key === 'streaming');
+const ogImage = '/assets/og/sunofox-music-og.webp';
+const channelSnapshot = '구독자 약 4.28K명 · 영상 137편';
 const heroLinks = [
-  albumGroup?.links.find((link) => link.href === archiveAlbum.href),
+  { label: 'YouTube 구독', href: artistLinks.youtubeSubscribe },
   streamingGroup?.links.find((link) => link.label === 'YouTube Music'),
-  streamingGroup?.links.find((link) => link.label === 'Spotify')
+  streamingGroup?.links.find((link) => link.label === 'Spotify'),
+  albumGroup?.links.find((link) => link.href === archiveAlbum.href)
 ].filter(Boolean);
 const cleanLinkGroups = musicArchive.linkHub.map((group) => {
   const availableLinks = group.links.filter((link) => Boolean(link.href));
@@ -40,12 +44,12 @@ const cleanLinkGroups = musicArchive.linkHub.map((group) => {
 
 <Layout
   title="SunoFox Music Archive | Anime OST Studio"
-  description={musicArchive.summary}
+  description={`${musicArchive.summary} 최신 YouTube OST와 음원 플랫폼을 한 화면에서 여는 공식 음악 필모그래피입니다.`}
   canonical="https://sunofox.com/music/"
-  image={`https://sunofox.com${archiveAlbum.image}`}
-  imageAlt={archiveAlbum.imageAlt}
-  imageWidth={1600}
-  imageHeight={1600}
+  image={`https://sunofox.com${ogImage}`}
+  imageAlt="웹소설 OST EP.04 아직 데려가지 마 공식 썸네일 기반 SunoFox Music Archive 공유 이미지"
+  imageWidth={1200}
+  imageHeight={630}
   jsonLd={musicArchiveStructuredData}
 >
   <SiteChrome active="music" />
@@ -54,13 +58,24 @@ const cleanLinkGroups = musicArchive.linkHub.map((group) => {
     <section class="music-studio-hero reveal" aria-labelledby="musicArchiveTitle">
       <div class="music-studio-hero-copy">
         <p class="section-kicker">SUNOFOX MUSIC</p>
-        <h1 id="musicArchiveTitle"><span>MUSIC</span><span>ARCHIVE</span></h1>
+        <h1 id="musicArchiveTitle"><span>LISTEN</span><span>SUNOFOX</span></h1>
         <p>{musicArchive.summary}</p>
         <div class="music-studio-meta-line" aria-label="Music archive summary">
-          <span>Album</span>
-          <span>Streaming</span>
-          <span>YouTube</span>
+          <span>{channelSnapshot}</span>
+          <span>Streaming Hub</span>
+          <span>Latest {visibleVideos.length}</span>
           <span>Updated {musicArchive.researchDate}</span>
+        </div>
+        <div class="music-studio-hero-actions">
+          {heroLinks.map((link) => (
+            <a
+              href={link.href}
+              target={link.href.startsWith('http') ? '_blank' : undefined}
+              rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+            >
+              {link.label}
+            </a>
+          ))}
         </div>
       </div>
 
@@ -94,17 +109,6 @@ const cleanLinkGroups = musicArchive.linkHub.map((group) => {
               <dd>{archiveAlbum.direction}</dd>
             </div>
           </dl>
-          <div class="music-studio-hero-actions">
-            {heroLinks.map((link) => (
-              <a
-                href={link.href}
-                target={link.href.startsWith('http') ? '_blank' : undefined}
-                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
         </div>
       </aside>
     </section>
@@ -122,6 +126,7 @@ const cleanLinkGroups = musicArchive.linkHub.map((group) => {
             <div>
               <p class="section-kicker">{group.kicker}</p>
               <h3>{group.title}</h3>
+              <p>{group.summary}</p>
             </div>
 
             <nav class="music-link-actions music-channel-links" aria-label={`${group.title} links`}>
@@ -163,8 +168,8 @@ const cleanLinkGroups = musicArchive.linkHub.map((group) => {
     <section class="music-video-section music-studio-section reveal" aria-labelledby="musicVideoTitle">
       <div class="music-studio-section-head">
         <p class="section-kicker">YOUTUBE</p>
-        <h2 id="musicVideoTitle">Recent OST</h2>
-        <span>{visibleVideos.length} recent</span>
+        <h2 id="musicVideoTitle">Latest OST & MV</h2>
+        <span>{visibleVideos.length} latest</span>
       </div>
 
       <nav class="music-video-anchor-strip" aria-label="영상 유형 빠른 이동" hidden>
@@ -183,10 +188,13 @@ const cleanLinkGroups = musicArchive.linkHub.map((group) => {
           >
             <a class="music-video-row" href={video.href} target="_blank" rel="noopener noreferrer" data-video-card={video.videoId}>
               <span class="music-video-index">{String(index + 1).padStart(2, '0')}</span>
-              <span class="music-video-date">{video.date}</span>
-              <strong>{video.title}</strong>
-              <p>{video.meta}</p>
-              <em>{video.type}</em>
+              <img src={video.thumbnail} alt={video.thumbnailAlt} width="640" height="360" loading={index === 0 ? 'eager' : 'lazy'} decoding="async" />
+              <span class="music-video-copy">
+                <span class="music-video-date">{video.date}</span>
+                <strong>{video.title}</strong>
+                <p>{video.meta}</p>
+                <em>{video.type}</em>
+              </span>
             </a>
           </li>
         ))}

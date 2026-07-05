@@ -150,10 +150,12 @@ $routes = @(
       "music-video-xwV_wACJatw",
       "music-video-CLHeFg8QVvc",
       "music-video-KrfD7PD4l6k",
+      "music-video-2KsAbBnf2Lk",
       "music-video-grid",
       'data-video-id="xwV_wACJatw"',
       'data-video-card="xwV_wACJatw"',
       'data-video-type="Web Novel OST"',
+      'data-video-card="2KsAbBnf2Lk"',
       "https://www.youtube.com/@sunofox",
       "https://www.youtube.com/@sunofox/playlists",
       "https://music.youtube.com/channel/UCjPuy8z0pdzW3OVUXka0lMw",
@@ -162,6 +164,7 @@ $routes = @(
       "https://www.youtube.com/watch?v=xwV_wACJatw",
       "https://www.youtube.com/watch?v=CLHeFg8QVvc",
       "https://www.youtube.com/watch?v=KrfD7PD4l6k",
+      "https://www.youtube.com/watch?v=2KsAbBnf2Lk",
       "https://sunofox.com/music/"
     )
   },

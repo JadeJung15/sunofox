@@ -5,14 +5,11 @@ import {
   artistLinks,
   archiveAlbum,
   featuredStoryOst,
-  latestNovelEpisode,
   latestStoryOst,
   musicArchive,
-  musicArchiveStructuredData,
-  novelProject
+  musicArchiveStructuredData
 } from '../../data/siteContent.js';
 
-const currentEpisode = latestNovelEpisode;
 const primaryVideo = musicArchive.videos[0];
 const latestStoryVideo = musicArchive.videos.find((video) => video.videoId === latestStoryOst.videoId) || primaryVideo;
 const videoTypes = Array.from(new Set(musicArchive.videos.map((video) => video.type))).slice(0, 4);
@@ -29,10 +26,11 @@ const videoAnchorItems = Array.from(
 );
 const latestVideoDate = latestStoryVideo?.date || musicArchive.researchDate;
 const oldestVideoDate = musicArchive.videos.at(-1)?.date || latestVideoDate;
+const linkHubCount = musicArchive.linkHub.reduce((total, group) => total + group.links.length, 0);
 const musicPremiereActions = [
   { label: 'LISTEN', href: latestStoryVideo.href, external: true, primary: true },
   { label: 'CHANNEL', href: artistLinks.youtube, external: true },
-  { label: 'STORY IP', href: '/novels/' }
+  { label: 'STREAM', href: '#musicLinkHub' }
 ];
 const videoDirectActions = [
   { key: 'latest', label: '최신 영상 감상', href: latestStoryVideo.href, external: true, primary: true },
@@ -98,8 +96,8 @@ const videoSummaryItems = [
         <p class="section-kicker">YOUTUBE / ANIME OST</p>
         <h1 id="musicArchiveTitle"><span>MUSIC</span><span>ARCHIVE</span></h1>
         <p>
-          YouTube에서 공개되는 Anime OST, 웹소설 OST, 라이브 아카이브를 한 곳에서 이어 봅니다.
-          음악 아카이브는 SunoFox의 영상 중심 IP 흐름을 정리하는 공개 허브입니다.
+          앨범, 음원 플랫폼, YouTube OST와 MV를 한 곳에서 이어 봅니다.
+          음악 페이지는 감상 링크와 공개 기록을 빠르게 확인하는 SunoFox 음악 전용 허브입니다.
         </p>
         <span>최신 OST {latestStoryVideo.date} · 확인 기준 {musicArchive.researchDate}</span>
       </div>
@@ -112,24 +110,6 @@ const videoSummaryItems = [
           </div>
         ))}
       </dl>
-    </section>
-
-    <section class="music-flow-section reveal" aria-labelledby="musicFlowTitle">
-      <div class="novel-section-head">
-        <p class="section-kicker">STORY IP FLOW</p>
-        <h2 id="musicFlowTitle">음악에서 IP로 이어지는 방식</h2>
-        <span>3 steps</span>
-      </div>
-
-      <div class="music-flow-grid">
-        {musicArchive.flow.map((item) => (
-          <article>
-            <span>{item.step}</span>
-            <strong>{item.title}</strong>
-            <p>{item.text}</p>
-          </article>
-        ))}
-      </div>
     </section>
 
     <section class="music-featured-ost-section reveal" aria-labelledby="musicFeaturedOstTitle">
@@ -149,8 +129,8 @@ const videoSummaryItems = [
         <p>{featuredStoryOst.summary}</p>
         <div class="music-story-actions">
           <a class="main-button" href={featuredStoryOst.href} target="_blank" rel="noopener noreferrer">OST 감상</a>
-          <a class="main-button main-button-muted" href="/novels/">작품 정보</a>
-          <a class="main-button main-button-muted" href={currentEpisode.href}>{currentEpisode.label} 읽기</a>
+          <a class="main-button main-button-muted" href={artistLinks.youtube} target="_blank" rel="noopener noreferrer">YouTube 채널</a>
+          <a class="main-button main-button-muted" href="#musicLinkHub">스트리밍 허브</a>
         </div>
       </div>
     </section>
@@ -198,6 +178,36 @@ const videoSummaryItems = [
                   <a class="main-button main-button-muted" href={link.href} target="_blank" rel="noopener noreferrer">{link.label}</a>
                 ))}
               </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section id="musicLinkHub" class="music-link-hub-section reveal" aria-labelledby="musicLinkHubTitle">
+      <div class="novel-section-head">
+        <p class="section-kicker">LINK HUB</p>
+        <h2 id="musicLinkHubTitle">앨범과 스트리밍 채널</h2>
+        <span>{linkHubCount} links</span>
+      </div>
+
+      <div class="music-link-grid">
+        {musicArchive.linkHub.map((group) => (
+          <article class="music-link-card" data-link-group={group.key}>
+            <p class="section-kicker">{group.kicker}</p>
+            <h3>{group.title}</h3>
+            <p>{group.summary}</p>
+            <div class="music-link-actions">
+              {group.links.map((link) => (
+                <a
+                  class="main-button main-button-muted"
+                  href={link.href}
+                  target={link.href.startsWith('http') ? '_blank' : undefined}
+                  rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                >
+                  {link.label}
+                </a>
+              ))}
             </div>
           </article>
         ))}
@@ -309,24 +319,6 @@ const videoSummaryItems = [
           </li>
         ))}
       </ol>
-    </section>
-
-    <section class="music-story-section reveal" aria-labelledby="musicStoryTitle">
-      <div>
-        <p class="section-kicker">STORY IP</p>
-        <h2 id="musicStoryTitle">웹소설로 이어진 첫 작품</h2>
-      </div>
-      <div>
-        <p>
-          현재 음악에서 웹소설로 확장된 대표 프로젝트는 《{novelProject.title}》입니다.
-          OST에서 출발한 정서가 작품 소개와 최신 공개 화로 이어지도록 연결했습니다.
-        </p>
-        <div class="music-story-actions">
-          <a class="main-button" href="/novels/">작품 정보</a>
-          <a class="main-button main-button-muted" href={currentEpisode.href}>{currentEpisode.label} 읽기</a>
-          <a class="main-button main-button-muted" href={artistLinks.featuredOst} target="_blank" rel="noopener noreferrer">OST 감상</a>
-        </div>
-      </div>
     </section>
 
     <section class="album-source-panel reveal" aria-label="Music archive sources">

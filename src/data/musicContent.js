@@ -52,33 +52,71 @@ export const musicArchive = {
   href: '/music/',
   researchDate: '2026.06.19',
   summary:
-    '수노폭스가 공개한 앨범, 유튜브 OST, 웹소설 OST를 필모그래피처럼 이어 보는 Anime OST 기록 페이지입니다.',
+    '수노폭스가 공개한 앨범, 음원 플랫폼, YouTube OST와 MV 링크를 한 곳에서 이어 보는 음악 필모그래피형 허브입니다.',
   facts: [
     { label: '채널', value: 'SunoFox Anime OST Studio' },
     { label: '규모', value: '구독자 약 4.18K명 · 영상 131편' },
     { label: '누적 조회', value: '90만+ 회 공개 스냅샷 기준' },
     { label: '업로드', value: '수 · 일 17:15 KST' },
     { label: '장르', value: 'Anime OST, J-Pop Rock, Game Soundtrack' },
-    { label: '최근 IP', value: '웹소설 OST EP.02까지 공개' }
+    { label: '링크 허브', value: 'Album · Streaming · YouTube' }
   ],
   flow: [
     {
       step: '01',
-      title: 'Music',
-      text: '애니메이션 OST와 게임 사운드트랙 감성의 오리지널 음악을 먼저 공개합니다.'
+      title: 'Album',
+      text: '정규 앨범과 오리지널 트랙 정보를 먼저 확인합니다.'
     },
     {
       step: '02',
-      title: 'Scene',
-      text: '곡의 정서와 제목을 장면, 캐릭터, 사건의 방향으로 정리합니다.'
+      title: 'Stream',
+      text: 'YouTube Music, Spotify, Apple Music 등 외부 감상 채널로 이동합니다.'
     },
     {
       step: '03',
-      title: 'Novel',
-      text: '선별된 감정선을 웹소설과 OST 패키지로 확장합니다.'
+      title: 'Video',
+      text: 'YouTube OST, MV, 라이브 아카이브를 최신 공개 순서로 이어 봅니다.'
     }
   ],
   releases: [archiveAlbum],
+  linkHub: [
+    {
+      key: 'album',
+      kicker: 'ALBUM',
+      title: archiveAlbum.title,
+      summary: '정규 앨범 상세, Genie 앨범 페이지, Bugs 아티스트 페이지로 바로 이동합니다.',
+      links: [
+        { label: '앨범 상세', href: archiveAlbum.href },
+        ...archiveAlbum.links
+      ]
+    },
+    {
+      key: 'streaming',
+      kicker: 'STREAMING',
+      title: '음원 플랫폼',
+      summary: '국내외 주요 음원 플랫폼에서 SunoFox 트랙과 아티스트 페이지를 확인합니다.',
+      links: [
+        { label: 'YouTube Music', href: artistLinks.youtubeMusic },
+        { label: 'Spotify', href: artistLinks.spotify },
+        { label: 'Apple Music', href: artistLinks.appleMusic },
+        { label: 'Melon', href: artistLinks.melon },
+        { label: 'FLO', href: artistLinks.flo },
+        { label: 'VIBE', href: artistLinks.vibe }
+      ]
+    },
+    {
+      key: 'channel',
+      kicker: 'CHANNEL',
+      title: '채널 링크',
+      summary: 'YouTube 채널, 재생목록, 공식 링크 허브, SoundCloud를 한 곳에서 엽니다.',
+      links: [
+        { label: 'YouTube 채널', href: artistLinks.youtube },
+        { label: '재생목록', href: artistLinks.youtubePlaylists },
+        { label: 'Linktree', href: artistLinks.linktree },
+        { label: 'SoundCloud', href: artistLinks.soundcloud }
+      ]
+    }
+  ],
   videos: [
     {
       date: latestStoryOst.date,
@@ -172,12 +210,12 @@ export const musicArchive = {
   videoHub: {
     title: 'YouTube / MV 영상 허브',
     summary:
-      '웹소설 OST, 라이브 아카이브, 애니메이션 OP 감성 영상을 한 곳에서 보고 YouTube 채널과 재생목록으로 이어 봅니다.',
+      '공개 OST, 라이브 아카이브, 애니메이션 OP 감성 영상을 한 곳에서 보고 YouTube 채널과 재생목록으로 이어 봅니다.',
     facts: [
       { label: '대표 영상', value: featuredStoryOst.title },
       { label: '최근 영상', value: latestStoryOst.title },
-      { label: '최근 큐레이션', value: 'Web Novel OST · Live Archive · Anime OP' },
-      { label: '주요 이동', value: 'YouTube 채널 · 재생목록 · 대표 OST' }
+      { label: '최근 큐레이션', value: 'OST · Live Archive · Anime OP' },
+      { label: '주요 이동', value: 'YouTube 채널 · 재생목록 · 최신 영상' }
     ],
     links: [
       { label: 'YouTube 채널', href: artistLinks.youtube },

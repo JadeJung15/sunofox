@@ -8723,3 +8723,105 @@ body:has(.music-archive-page) .music-story-actions .main-button:focus-visible {
     font-size: clamp(3.1rem, 14vw, 4.8rem);
   }
 }
+
+/* 2026-07 Music archive simplification: make the page a music-first album and streaming hub. */
+body:has(.music-archive-page) .music-link-hub-section {
+  width: min(1180px, calc(100% - 56px));
+  margin: 0 auto;
+  padding-block: clamp(56px, 8vw, 92px);
+  scroll-margin-top: 112px;
+}
+
+body:has(.music-archive-page) .music-link-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  border-top: 1px solid var(--sf-line);
+  border-bottom: 1px solid var(--sf-line);
+}
+
+body:has(.music-archive-page) .music-link-card {
+  display: grid;
+  min-height: clamp(330px, 34vw, 430px);
+  align-content: space-between;
+  border-right: 1px solid var(--sf-line);
+  padding: clamp(24px, 3vw, 38px);
+  background: transparent;
+}
+
+body:has(.music-archive-page) .music-link-card:last-child {
+  border-right: 0;
+}
+
+body:has(.music-archive-page) .music-link-card h3 {
+  max-width: 9ch;
+  margin: 14px 0 0;
+  color: #ffffff;
+  font-size: clamp(2.7rem, 5.4vw, 5.8rem);
+  font-weight: 950;
+  line-height: 0.94;
+  overflow-wrap: normal;
+  word-break: keep-all;
+}
+
+body:has(.music-archive-page) .music-link-card > p:not(.section-kicker) {
+  max-width: 30ch;
+  margin: 22px 0 0;
+  color: var(--sf-muted);
+  font-size: clamp(0.98rem, 1.2vw, 1.12rem);
+  font-weight: 650;
+  line-height: 1.72;
+  word-break: keep-all;
+}
+
+body:has(.music-archive-page) .music-link-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+body:has(.music-archive-page) .music-link-actions .main-button {
+  min-height: 40px;
+  padding-inline: 13px;
+  white-space: nowrap;
+}
+
+@media (max-width: 1120px) {
+  body:has(.music-archive-page) .music-link-grid {
+    grid-template-columns: 1fr;
+  }
+
+  body:has(.music-archive-page) .music-link-card {
+    min-height: 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--sf-line);
+  }
+
+  body:has(.music-archive-page) .music-link-card:last-child {
+    border-bottom: 0;
+  }
+
+  body:has(.music-archive-page) .music-link-card h3 {
+    max-width: 14ch;
+  }
+}
+
+@media (max-width: 760px) {
+  body:has(.music-archive-page) .music-link-hub-section {
+    width: min(100% - 28px, 1180px);
+  }
+
+  body:has(.music-archive-page) .music-link-card {
+    padding: 22px 0;
+  }
+
+  body:has(.music-archive-page) .music-link-card h3 {
+    font-size: clamp(2.8rem, 13vw, 4.4rem);
+  }
+
+  body:has(.music-archive-page) .music-link-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}

@@ -2,8 +2,9 @@
 import SiteChrome from '../components/SiteChrome.astro';
 import Layout from '../layouts/Layout.astro';
 import {
+  archiveAlbum,
   artistLinks,
-  featuredStoryOst,
+  latestNovelEpisode,
   latestStoryOst,
   musicArchive,
   novelProject,
@@ -11,71 +12,102 @@ import {
   structuredData
 } from '../data/siteContent.js';
 
-const wordmark = 'SUNOFOX'.split('');
-const editorialHeroAsset = '/assets/brand/sunofox-editorial-hero.webp';
-const studioTokenAsset = '/assets/brand/sunofox-studio-token.webp';
-const novelListCta = '소설 보러가기';
-const channelCta = 'YouTube 채널';
-const channelSpotlight = latestStoryOst || featuredStoryOst;
-const homeHeroStatusItems = [
-  { label: '채널 성격', value: 'Anime OST Studio' },
-  { label: '운영 흐름', value: 'OST · MV · Story IP' },
-  { label: '최근 영상', value: `EP.02 · ${channelSpotlight.englishTitle}` }
+const heroFacts = [
+  { label: 'Now Playing', value: latestStoryOst.englishTitle },
+  { label: 'Story IP', value: `${novelProject.season.label} · ${novelProject.season.status}` },
+  { label: 'Library', value: `${musicArchive.videos.length} videos · ${archiveAlbum.tracks.length} tracks` }
 ];
-const homeChannelFacts = [
-  { label: '채널', value: 'SunoFox Anime OST Studio' },
-  { label: '영상 큐레이션', value: `${musicArchive.videos.length}편` },
-  { label: 'Story IP', value: `${publishedNovelEpisodes.length}화 · ${novelProject.season.status}` }
+
+const releaseDeskAssets = {
+  ostVisual: '/assets/release-desk/mask-good-girl.jpg',
+  archiveVisual: '/assets/release-desk/cozy-drift.jpg',
+  controlDeck: '/assets/release-desk/control-deck.jpg'
+};
+
+const entryCards = [
+  {
+    label: 'Watch',
+    title: 'SunoFox OST 감상',
+    summary: '신규 OST와 영상 컷은 YouTube에서 먼저 공개하고, 공개 흐름은 홈에서 바로 이어 봅니다.',
+    href: artistLinks.youtube,
+    cta: 'YouTube 채널',
+    external: true,
+    image: releaseDeskAssets.ostVisual,
+    alt: 'Mask of a Good Girl OST 썸네일 비주얼'
+  },
+  {
+    label: 'Read',
+    title: '완결 미니시즌 읽기',
+    summary: `${novelProject.title} ${publishedNovelEpisodes.length}화 미니시즌을 1화부터 이어 읽습니다.`,
+    href: novelProject.season.startHref,
+    cta: '1화부터 읽기',
+    image: novelProject.coverImage,
+    alt: novelProject.coverAlt
+  },
+  {
+    label: 'Listen',
+    title: '음악 아카이브 정리',
+    summary: archiveAlbum.summary,
+    href: musicArchive.href,
+    cta: '아카이브 열기',
+    image: releaseDeskAssets.archiveVisual,
+    alt: 'SunoFox Cozy Drift 앨범 자켓 비주얼'
+  },
+  {
+    label: 'Build',
+    title: 'MV Studio 입장',
+    summary: '공개 콘텐츠 제작에 사용하는 사이트 소유자 전용 작업실입니다.',
+    href: '/login?next=/mv-studio',
+    cta: '제작실 로그인',
+    image: releaseDeskAssets.controlDeck,
+    alt: 'Watch Read Listen Build 흐름을 상징하는 4버튼 컨트롤 패널'
+  }
 ];
-const homeChannelActions = [
-  { label: channelCta, href: artistLinks.youtube, external: true, primary: true },
-  { label: '음악 아카이브', href: '/music/' },
-  { label: novelListCta, href: '/novels/' }
+
+const releaseSteps = [
+  { step: '01', title: 'OST 공개', text: 'YouTube 영상과 썸네일이 먼저 공개됩니다.' },
+  { step: '02', title: 'Story 연결', text: '감정선이 작품, 회차, 캐릭터 정보로 정리됩니다.' },
+  { step: '03', title: 'Archive 보관', text: '음악과 영상은 감상 가능한 라이브러리로 남깁니다.' },
+  { step: '04', title: 'Studio 제작', text: '다음 MV와 스토리보드 작업은 내부 제작실에서 이어집니다.' }
 ];
+
+const latestVideos = musicArchive.videos.slice(0, 4);
+const readingGroups = novelProject.readingPath;
+const latestEpisodeLabel = `${latestNovelEpisode.label} · ${latestNovelEpisode.title}`;
 ---
 
 <Layout
-  title="SunoFox | Anime OST Studio"
-  description="SunoFox는 이야기 기반 Anime OST와 웹소설 OST를 YouTube, 음악 아카이브, Story IP로 확장하는 스튜디오입니다."
-  image={`https://sunofox.com${novelProject.coverImage}`}
-  imageAlt={novelProject.coverAlt}
-  imageWidth={novelProject.coverWidth}
-  imageHeight={novelProject.coverHeight}
+  title="SunoFox Release Desk | Anime OST Studio"
+  description="SunoFox의 최신 Anime OST, 웹소설 미니시즌, 음악 아카이브, MV Studio 입구를 한 화면에서 정리한 공식 Release Desk입니다."
+  image={`https://sunofox.com${latestStoryOst.thumbnail}`}
+  imageAlt={latestStoryOst.thumbnailAlt}
+  imageWidth={1200}
+  imageHeight={675}
   jsonLd={structuredData}
 >
   <SiteChrome active="home" />
 
-  <main id="main-content" class="site-main landing-main restored-home">
-    <section class="hero-stage hero-stage-landing" aria-labelledby="heroTitle">
-      <img
-        class="home-hero-cover"
-        src={editorialHeroAsset}
-        alt=""
-        width="1600"
-        height="900"
-        aria-hidden="true"
-      />
-
-      <div class="hero-center reveal">
-        <p class="hero-kicker">ANIME OST STUDIO</p>
-        <h1 id="heroTitle" class="hero-wordmark sign-wordmark" aria-label="SUNOFOX">
-          {wordmark.map((letter, index) => (
-            <span aria-hidden="true" style={`--letter-index: ${index}`}>{letter}</span>
-          ))}
+  <main id="main-content" class="site-main release-desk-main">
+    <section class="release-hero reveal" aria-labelledby="releaseHeroTitle">
+      <div class="release-hero-copy">
+        <p class="release-eyebrow">OFFICIAL RELEASE DESK</p>
+        <h1 id="releaseHeroTitle">
+          <span>SunoFox는</span>
+          <span>공개물 중심으로</span>
+          <span>움직입니다.</span>
         </h1>
-        <p class="hero-tagline">
-          이야기 기반 Anime OST를 만들고, 음악의 장면을 IP로 확장합니다.
+        <p class="release-lead">
+          <span>복잡한 전시형 홈은 줄였습니다.</span>
+          <span>최신 OST, 소설, 아카이브,</span>
+          <span>MV Studio 입구만 남겼습니다.</span>
         </p>
-        <p class="hero-subcopy">
-          YouTube에서 공개되는 OST와 영상 감성을 웹소설, 음악 아카이브, 제작 흐름으로 이어 붙입니다.
-        </p>
-        <div class="home-hero-meta" aria-label="SunoFox current status">
-          <span>YOUTUBE / MV</span>
-          <span>STORY OST</span>
-          <span>IP HUB</span>
+        <div class="release-actions" aria-label="SunoFox primary actions">
+          <a class="main-button main-button-primary" href={latestStoryOst.youtubeHref} target="_blank" rel="noopener noreferrer">최신 OST 감상</a>
+          <a class="main-button main-button-muted" href={novelProject.season.startHref}>소설 1화부터</a>
+          <a class="main-button main-button-muted" href="/login?next=/mv-studio">MV Studio</a>
         </div>
-        <dl class="home-hero-status" aria-label="SunoFox home status">
-          {homeHeroStatusItems.map((item) => (
+        <dl class="release-facts" aria-label="SunoFox current release status">
+          {heroFacts.map((item) => (
             <div>
               <dt>{item.label}</dt>
               <dd>{item.value}</dd>
@@ -84,161 +116,625 @@ const homeChannelActions = [
         </dl>
       </div>
 
-      <div class="hero-side-actions" aria-label="SunoFox quick actions">
-        <a class="main-button main-button-primary" href={artistLinks.youtube} target="_blank" rel="noopener noreferrer" aria-label="SunoFox YouTube 채널로 이동">{channelCta}</a>
-        <a class="main-button main-button-muted" href="/music/">음악 아카이브</a>
-        <a class="main-button main-button-muted" href="/novels/">Story IP</a>
-      </div>
+      <a class="release-now" href={latestStoryOst.youtubeHref} target="_blank" rel="noopener noreferrer" aria-label={`${latestStoryOst.title} 감상하기`}>
+        <img
+          src={latestStoryOst.thumbnail}
+          alt={latestStoryOst.thumbnailAlt}
+          width="480"
+          height="360"
+          loading="eager"
+          decoding="async"
+          fetchpriority="high"
+        />
+        <span>{latestStoryOst.type}</span>
+        <strong>{latestStoryOst.title}</strong>
+        <small>{latestStoryOst.date} 공개 · 바로 감상</small>
+      </a>
     </section>
 
-    <section class="home-channel-entry reveal" aria-labelledby="homeChannelEntryTitle">
-      <div>
-        <p class="section-kicker">YOUTUBE / MV</p>
-        <h2 id="homeChannelEntryTitle">YouTube에서 시작되는 스토리 OST 허브</h2>
-        <p>
-          Anime OST와 영상으로 먼저 장면을 공개하고, 선택된 감정선을 웹소설과 음악 아카이브로 확장합니다.
-          《{novelProject.title}》는 그 흐름에서 이어지는 첫 Story IP입니다.
-        </p>
-        <dl class="home-channel-facts" aria-label="SunoFox channel summary">
-          {homeChannelFacts.map((item) => (
-            <div>
-              <dt>{item.label}</dt>
-              <dd>{item.value}</dd>
-            </div>
-          ))}
-        </dl>
+    <section class="release-entry-section reveal" aria-labelledby="releaseEntryTitle">
+      <div class="release-section-head">
+        <p class="release-eyebrow">START HERE</p>
+        <h2 id="releaseEntryTitle">첫 화면은 네 가지 입구만 남깁니다.</h2>
+        <p>방문자는 감상, 읽기, 아카이브, 제작실 중 하나를 바로 선택합니다.</p>
       </div>
-      <div class="home-channel-actions" aria-label="SunoFox channel entry actions">
-        <img class="home-action-token" src={studioTokenAsset} alt="" width="720" height="720" loading="lazy" decoding="async" aria-hidden="true" />
-        {homeChannelActions.map((action) => (
+
+      <div class="release-entry-grid">
+        {entryCards.map((card) => (
           <a
-            class:list={['main-button', !action.primary && 'main-button-muted']}
-            href={action.href}
-            target={action.external ? '_blank' : undefined}
-            rel={action.external ? 'noopener noreferrer' : undefined}
+            class="release-entry-card"
+            href={card.href}
+            target={card.external ? '_blank' : undefined}
+            rel={card.external ? 'noopener noreferrer' : undefined}
           >
-            {action.label}
+            <img src={card.image} alt={card.alt} width="480" height="360" loading="lazy" decoding="async" />
+            <span>{card.label}</span>
+            <strong>{card.title}</strong>
+            <p>{card.summary}</p>
+            <em>{card.cta}</em>
           </a>
         ))}
       </div>
     </section>
 
-    <section class="home-ost-showcase reveal" aria-labelledby="homeOstTitle">
-      <a class="home-ost-thumb" href={channelSpotlight.youtubeHref} target="_blank" rel="noopener noreferrer" aria-label={`${channelSpotlight.title} 감상하기`}>
-        <img
-          src={channelSpotlight.thumbnail}
-          alt={channelSpotlight.thumbnailAlt}
-          width="480"
-          height="360"
-          loading="lazy"
-          decoding="async"
-        />
-        <span>{channelSpotlight.type}</span>
-      </a>
+    <section class="release-flow-section reveal" aria-labelledby="releaseFlowTitle">
+      <div class="release-section-head">
+        <p class="release-eyebrow">STRUCTURE</p>
+        <h2 id="releaseFlowTitle">사이트 구조는 공개 흐름 그대로 갑니다.</h2>
+      </div>
 
-      <div class="home-ost-copy">
-        <p class="section-kicker">최근 YouTube 공개</p>
-        <h2 id="homeOstTitle">{channelSpotlight.title}</h2>
-        <p>{channelSpotlight.summary}</p>
-        <div class="home-feature-actions">
-          <a class="main-button" href={channelSpotlight.youtubeHref} target="_blank" rel="noopener noreferrer">최신 영상 감상</a>
-          <a class="main-button main-button-muted" href="/music/">음악 아카이브</a>
+      <ol class="release-flow-list">
+        {releaseSteps.map((item) => (
+          <li>
+            <span>{item.step}</span>
+            <strong>{item.title}</strong>
+            <p>{item.text}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="release-story-board reveal" aria-labelledby="releaseStoryTitle">
+      <div class="release-story-copy">
+        <p class="release-eyebrow">STORY BOARD</p>
+        <h2 id="releaseStoryTitle">{novelProject.title}</h2>
+        <p>{novelProject.shortSummary}</p>
+        <dl class="release-story-status" aria-label="Story IP status">
+          <div>
+            <dt>상태</dt>
+            <dd>{novelProject.season.status}</dd>
+          </div>
+          <div>
+            <dt>최신</dt>
+            <dd>{latestEpisodeLabel}</dd>
+          </div>
+          <div>
+            <dt>회차</dt>
+            <dd>{publishedNovelEpisodes.length}화</dd>
+          </div>
+        </dl>
+        <div class="release-actions">
+          <a class="main-button" href="/novels/">작품 페이지</a>
+          <a class="main-button main-button-muted" href={latestNovelEpisode.href}>완결화 읽기</a>
+          <a class="main-button main-button-muted" href={latestStoryOst.youtubeHref} target="_blank" rel="noopener noreferrer">OST 감상</a>
         </div>
+      </div>
+
+      <div class="release-reading-path" aria-label="Reading path">
+        {readingGroups.map((item) => (
+          <a href={item.href}>
+            <span>{item.range}</span>
+            <strong>{item.title}</strong>
+            <p>{item.text}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="release-library-section reveal" aria-labelledby="releaseLibraryTitle">
+      <div class="release-section-head">
+        <p class="release-eyebrow">LATEST LIBRARY</p>
+        <h2 id="releaseLibraryTitle">최근 공개물은 작은 큐로 정리합니다.</h2>
+        <p>대시보드처럼 보이지 않게, 최신 영상과 운영 이동만 남겼습니다.</p>
+      </div>
+
+      <div class="release-library-grid">
+        <ol class="release-video-list">
+          {latestVideos.map((video) => (
+            <li>
+              <a href={video.href} target="_blank" rel="noopener noreferrer">
+                <img src={video.thumbnail} alt={video.thumbnailAlt} width="240" height="180" loading="lazy" decoding="async" />
+                <span>{video.date}</span>
+                <strong>{video.title}</strong>
+                <p>{video.type}</p>
+              </a>
+            </li>
+          ))}
+        </ol>
+
+        <aside class="release-ops-panel" aria-label="SunoFox operation shortcuts">
+          <img
+            class="release-ops-visual"
+            src={releaseDeskAssets.controlDeck}
+            alt="SunoFox 공개 흐름을 상징하는 버튼형 컨트롤 패널"
+            width="960"
+            height="720"
+            loading="lazy"
+            decoding="async"
+          />
+          <p class="release-eyebrow">OPERATIONS</p>
+          <h3>운영 이동</h3>
+          <p>
+            공개 페이지는 감상과 읽기 중심으로 유지하고, 제작·업로드·스토리보드 작업은 승인된 사용자만 MV Studio에서 진행합니다.
+          </p>
+          <div class="release-ops-links">
+            <a href="/music/">Music Archive</a>
+            <a href="/updates/">Updates</a>
+            <a href={artistLinks.youtube} target="_blank" rel="noopener noreferrer">YouTube Channel</a>
+            <a href="/login?next=/mv-studio">Owner Studio</a>
+          </div>
+        </aside>
       </div>
     </section>
   </main>
 </Layout>
 
 <style>
-  .home-channel-entry {
-    position: relative;
-    z-index: 2;
+  .release-desk-main {
+    --release-paper: #f5f1e8;
+    --release-panel: #fffdf7;
+    --release-panel-muted: #ebe8dd;
+    --release-ink: #111720;
+    --release-muted: #526070;
+    --release-soft: #7a8491;
+    --release-line: #d9d2c3;
+    --release-line-strong: #b9ad99;
+    --release-accent: #c85a17;
+    --release-accent-strong: #9e3e0f;
+    min-height: 100svh;
+    padding: 96px 0 104px;
+    background:
+      linear-gradient(90deg, rgba(17, 23, 32, 0.055) 1px, transparent 1px),
+      linear-gradient(180deg, #fbf8ef 0%, var(--release-paper) 48%, #ede9df 100%);
+    background-size: 48px 48px, auto;
+    color: var(--release-ink);
+  }
+
+  .release-hero,
+  .release-entry-section,
+  .release-flow-section,
+  .release-story-board,
+  .release-library-section {
+    width: min(1160px, calc(100% - 40px));
+    margin: 0 auto;
+  }
+
+  .release-hero {
     display: grid;
-    grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
-    gap: 24px;
-    width: min(1120px, calc(100% - 32px));
-    margin: 0 auto 88px;
-    padding: 28px;
-    border: 1px solid #dde3ea;
-    border-radius: 8px;
-    background: #ffffff;
-    box-shadow: none;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 420px);
+    gap: clamp(28px, 5vw, 64px);
+    align-items: end;
   }
 
-  .home-channel-entry h2 {
-    max-width: 760px;
+  .release-hero-copy {
+    display: grid;
+    gap: 22px;
+    min-width: 0;
+  }
+
+  .release-eyebrow {
     margin: 0;
-    color: #101827;
-    font-size: clamp(1.65rem, 3vw, 2.8rem);
-    line-height: 1.08;
+    color: var(--release-accent);
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+  }
+
+  .release-hero h1,
+  .release-section-head h2,
+  .release-story-copy h2 {
+    max-width: 100%;
+    margin: 0;
+    color: var(--release-ink);
+    font-size: clamp(2.7rem, 6vw, 5.7rem);
+    font-weight: 950;
+    line-height: 0.98;
     letter-spacing: 0;
+    overflow-wrap: anywhere;
   }
 
-  .home-channel-entry p:not(.section-kicker) {
-    max-width: 760px;
-    margin: 16px 0 0;
-    color: #526071;
-    font-size: 1rem;
-    line-height: 1.8;
+  .release-hero h1 span {
+    display: block;
   }
 
-  .home-channel-facts {
+  .release-lead span {
+    display: block;
+  }
+
+  .release-lead,
+  .release-section-head p,
+  .release-story-copy > p,
+  .release-ops-panel p {
+    max-width: 700px;
+    margin: 0;
+    color: var(--release-muted);
+    font-size: 1.05rem;
+    font-weight: 550;
+    line-height: 1.75;
+    overflow-wrap: anywhere;
+    word-break: break-all;
+  }
+
+  .release-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .release-desk-main .main-button {
+    border-color: var(--release-ink);
+    background: var(--release-ink);
+    color: #ffffff;
+  }
+
+  .release-desk-main .main-button:hover,
+  .release-desk-main .main-button:focus-visible {
+    border-color: var(--release-accent);
+    background: var(--release-accent);
+    color: #ffffff;
+  }
+
+  .release-desk-main .main-button-muted {
+    border-color: var(--release-line);
+    background: var(--release-panel);
+    color: var(--release-ink);
+  }
+
+  .release-facts,
+  .release-story-status {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 10px;
-    margin: 24px 0 0;
-  }
-
-  .home-channel-facts div {
-    min-width: 0;
-    padding: 14px;
-    border: 1px solid #dde3ea;
+    gap: 0;
+    margin: 10px 0 0;
+    border: 1px solid var(--release-line);
     border-radius: 8px;
-    background: #f7f8fa;
+    overflow: hidden;
+    background: rgba(255, 253, 247, 0.78);
   }
 
-  .home-channel-facts dt {
-    color: #7b8796;
-    font-size: 0.72rem;
-    font-weight: 800;
-    letter-spacing: 0;
-    text-transform: none;
+  .release-facts div,
+  .release-story-status div {
+    min-width: 0;
+    padding: 16px;
   }
 
-  .home-channel-facts dd {
-    margin: 8px 0 0;
-    color: #101827;
-    font-size: 0.95rem;
-    font-weight: 800;
+  .release-facts div + div,
+  .release-story-status div + div {
+    border-left: 1px solid var(--release-line);
+  }
+
+  .release-facts dt,
+  .release-story-status dt {
+    color: var(--release-soft);
+    font-size: 0.76rem;
+    font-weight: 850;
+  }
+
+  .release-facts dd,
+  .release-story-status dd {
+    margin: 7px 0 0;
+    color: var(--release-ink);
+    font-size: 0.96rem;
+    font-weight: 850;
     line-height: 1.35;
   }
 
-  .home-channel-actions {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  .release-now {
+    display: grid;
+    gap: 10px;
+    border: 1px solid var(--release-line);
+    border-radius: 8px;
+    padding: 12px;
+    background: var(--release-panel);
+    box-shadow: 0 24px 60px rgba(17, 23, 32, 0.08);
+    transition: border-color 160ms ease, transform 160ms ease;
+  }
+
+  .release-now:hover,
+  .release-now:focus-visible {
+    border-color: var(--release-line-strong);
+    transform: translateY(-2px);
+  }
+
+  .release-now img,
+  .release-entry-card img,
+  .release-video-list img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 6px;
+    object-fit: cover;
+  }
+
+  .release-now span,
+  .release-entry-card span,
+  .release-video-list span {
+    color: var(--release-accent);
+    font-size: 0.78rem;
+    font-weight: 900;
+  }
+
+  .release-now strong,
+  .release-entry-card strong,
+  .release-video-list strong,
+  .release-flow-list strong,
+  .release-reading-path strong,
+  .release-ops-panel h3 {
+    color: var(--release-ink);
+    font-size: 1.08rem;
+    font-weight: 900;
+    line-height: 1.28;
+  }
+
+  .release-now small {
+    color: var(--release-soft);
+    font-weight: 750;
+  }
+
+  .release-entry-section,
+  .release-flow-section,
+  .release-story-board,
+  .release-library-section {
+    margin-top: 84px;
+  }
+
+  .release-section-head {
+    display: grid;
+    gap: 10px;
+    min-width: 0;
+    margin-bottom: 22px;
+  }
+
+  .release-section-head h2,
+  .release-story-copy h2 {
+    font-size: clamp(2rem, 4.2vw, 4rem);
+  }
+
+  .release-entry-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .release-entry-card {
+    display: grid;
+    grid-template-rows: auto auto auto 1fr auto;
+    gap: 10px;
+    min-width: 0;
+    border: 1px solid var(--release-line);
+    border-radius: 8px;
+    padding: 12px;
+    background: rgba(255, 253, 247, 0.9);
+    color: var(--release-ink);
+    transition: border-color 160ms ease, transform 160ms ease, background 160ms ease;
+  }
+
+  .release-entry-card:hover,
+  .release-entry-card:focus-visible {
+    border-color: var(--release-line-strong);
+    background: #ffffff;
+    transform: translateY(-2px);
+  }
+
+  .release-entry-card p,
+  .release-video-list p,
+  .release-reading-path p,
+  .release-flow-list p {
+    margin: 0;
+    color: var(--release-muted);
+    font-size: 0.94rem;
+    line-height: 1.62;
+  }
+
+  .release-entry-card em {
+    color: var(--release-accent-strong);
+    font-size: 0.9rem;
+    font-style: normal;
+    font-weight: 900;
+  }
+
+  .release-flow-list {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    margin: 0;
+    border: 1px solid var(--release-line);
+    border-radius: 8px;
+    padding: 0;
+    overflow: hidden;
+    background: var(--release-line);
+    list-style: none;
+  }
+
+  .release-flow-list li {
+    display: grid;
+    gap: 10px;
+    min-width: 0;
+    padding: 22px;
+    background: var(--release-panel);
+  }
+
+  .release-flow-list span {
+    color: var(--release-accent);
+    font-size: 0.86rem;
+    font-weight: 950;
+  }
+
+  .release-story-board {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(300px, 0.75fr);
+    gap: 22px;
+    align-items: start;
+    border: 1px solid var(--release-line);
+    border-radius: 8px;
+    padding: clamp(20px, 3vw, 34px);
+    background:
+      linear-gradient(135deg, rgba(255, 253, 247, 0.96), rgba(255, 253, 247, 0.86)),
+      url('/assets/brand/sunofox-signal-texture.webp');
+    background-size: cover;
+    background-position: center;
+  }
+
+  .release-story-copy {
+    display: grid;
+    gap: 16px;
+    min-width: 0;
+  }
+
+  .release-reading-path {
+    display: grid;
     gap: 10px;
   }
 
-  .home-channel-actions .main-button {
-    justify-content: center;
-    min-height: 46px;
+  .release-reading-path a {
+    display: grid;
+    gap: 7px;
+    border: 1px solid var(--release-line);
+    border-radius: 8px;
+    padding: 16px;
+    background: rgba(255, 253, 247, 0.88);
+    transition: border-color 160ms ease, transform 160ms ease;
   }
 
-  @media (max-width: 760px) {
-    .home-channel-entry {
+  .release-reading-path a:hover,
+  .release-reading-path a:focus-visible {
+    border-color: var(--release-line-strong);
+    transform: translateY(-1px);
+  }
+
+  .release-reading-path span {
+    color: var(--release-accent);
+    font-weight: 900;
+  }
+
+  .release-library-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+    gap: 18px;
+  }
+
+  .release-video-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .release-video-list a,
+  .release-ops-panel {
+    display: grid;
+    gap: 10px;
+    height: 100%;
+    border: 1px solid var(--release-line);
+    border-radius: 8px;
+    padding: 12px;
+    background: var(--release-panel);
+  }
+
+  .release-video-list a {
+    transition: border-color 160ms ease, transform 160ms ease;
+  }
+
+  .release-video-list a:hover,
+  .release-video-list a:focus-visible {
+    border-color: var(--release-line-strong);
+    transform: translateY(-1px);
+  }
+
+  .release-ops-panel {
+    align-content: start;
+    min-width: 0;
+    padding: 22px;
+  }
+
+  .release-ops-panel h3 {
+    margin: 0;
+    font-size: 1.7rem;
+  }
+
+  .release-ops-visual {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border: 1px solid var(--release-line);
+    border-radius: 6px;
+    object-fit: cover;
+  }
+
+  .release-ops-links {
+    display: grid;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .release-ops-links a {
+    display: flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid var(--release-line);
+    border-radius: 8px;
+    padding: 0 12px;
+    color: var(--release-ink);
+    font-weight: 850;
+  }
+
+  .release-ops-links a::after {
+    content: ">";
+    color: var(--release-accent);
+  }
+
+  .release-ops-links a:hover,
+  .release-ops-links a:focus-visible {
+    border-color: var(--release-line-strong);
+    background: #ffffff;
+  }
+
+  @media (max-width: 980px) {
+    .release-hero,
+    .release-story-board,
+    .release-library-grid {
       grid-template-columns: 1fr;
-      width: min(100% - 24px, 560px);
-      margin: -26px auto 72px;
-      padding: 20px;
     }
 
-    .home-channel-facts {
+    .release-entry-grid,
+    .release-flow-list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 640px) {
+    .release-desk-main {
+      padding-top: 76px;
+    }
+
+    .release-hero,
+    .release-entry-section,
+    .release-flow-section,
+    .release-story-board,
+    .release-library-section {
+      width: min(100% - 28px, 560px);
+    }
+
+    .release-hero h1 {
+      font-size: 2.28rem;
+      line-height: 1.06;
+    }
+
+    .release-actions,
+    .release-entry-grid,
+    .release-flow-list,
+    .release-video-list,
+    .release-facts,
+    .release-story-status {
       grid-template-columns: 1fr;
     }
 
-    .home-channel-actions {
-      flex-direction: column;
+    .release-actions {
+      display: grid;
+    }
+
+    .release-facts div + div,
+    .release-story-status div + div {
+      border-left: 0;
+      border-top: 1px solid var(--release-line);
+    }
+
+    .release-entry-section,
+    .release-flow-section,
+    .release-story-board,
+    .release-library-section {
+      margin-top: 58px;
     }
   }
 </style>

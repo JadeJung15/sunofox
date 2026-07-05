@@ -82,6 +82,21 @@ SunoFox 공식 사이트는 YouTube에서 공개되는 Anime OST와 웹소설 OS
 | `docs/episode-release-checklist.md` | 신규 웹소설 회차 공개 전 콘텐츠, 파일, UI, 검증, 배포 체크리스트 |
 | `docs/episode-authoring-template.md` | 신규 회차 데이터, frontmatter, 시즌/읽는 흐름 갱신 템플릿 |
 
+## Design Direction
+
+SunoFox 공개 사이트는 Astro + Tailwind + `src/styles/global.css`의 커스텀 클래스 체계를 유지합니다. 새 UI 프레임워크를 기본 의존성으로 추가하지 않습니다.
+
+| 기준 | 적용 |
+|---|---|
+| 기본 구현 | 기존 Astro 컴포넌트, Tailwind, 커스텀 CSS 토큰과 클래스 우선 |
+| daisyUI | 설치하지 않고 `btn`, `card`, `badge`, `tabs`, `modal`, `toast` 같은 의미 체계만 참고 |
+| shadcn/ui | React 도입 없이 정돈된 카드, 버튼, 탭, 다이얼로그, 상태 표현, 접근성 패턴 참고 |
+| HeroUI | 메인 히어로, 앨범/OST 카드, hover/focus/loading 등 제한된 상호작용 참고 |
+| Mantine / Ant Design | 관리자, 폼, 테이블 중심 화면의 정보 구조만 참고 |
+| Bootstrap / Bulma / Chakra UI | 공개 홈페이지에는 사용하지 않음 |
+
+공개 UI 톤은 Anime OST archive, 음악/세계관 브랜드 사이트 느낌을 유지합니다. 여러 UI 프레임워크 스타일을 섞지 않고, 어두운 무드와 선명한 accent, 읽기 쉬운 카드/버튼/섹션 구조를 기존 디자인 언어 안에서 확장합니다.
+
 ## Content Model
 
 웹소설은 현재 두 곳을 함께 갱신합니다.

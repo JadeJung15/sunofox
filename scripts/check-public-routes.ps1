@@ -57,7 +57,7 @@ $routes = @(
     Name = "home"
     Path = "/"
     File = "index.html"
-    Must = @("ANIME OST STUDIO", "home-hero-status", "home-channel-entry", "home-channel-facts", "site-footer-nav", 'data-footer-key="novels"', 'data-footer-key="music"', 'data-footer-key="profile"', 'data-footer-key="updates"', 'data-footer-key="privacy"', 'data-footer-key="terms"', "/novels/", "/music/", "/profile/", "https://sunofox.com/", "https://www.youtube.com/@sunofox", $labelMusicArchive)
+    Must = @("OFFICIAL RELEASE DESK", "release-facts", "release-entry-grid", "release-flow-list", "release-story-board", "release-library-grid", "site-footer-nav", 'data-footer-key="novels"', 'data-footer-key="music"', 'data-footer-key="profile"', 'data-footer-key="updates"', 'data-footer-key="privacy"', 'data-footer-key="terms"', "/novels/", "/music/", "/profile/", "https://sunofox.com/", "https://www.youtube.com/@sunofox", $labelMusicArchive)
   },
   @{
     Name = "novels"

@@ -7,19 +7,19 @@ const siteContentPath = path.join(rootDir, 'src', 'data', 'siteContent.js');
 const errors = [];
 
 const expectedMenuItems = [
-  { key: 'home', label: '홈', href: '/' },
-  { key: 'profile', label: '소개', href: '/profile' },
-  { key: 'novels', label: '소설 보러가기', href: '/novels/' },
-  { key: 'music', label: '음악', href: '/music/' },
-  { key: 'updates', label: '업데이트', href: '/updates/' },
-  { key: 'studio', label: '제작실 로그인', href: '/login?next=/mv-studio' }
+  { key: 'home', label: '릴리스 데스크', href: '/' },
+  { key: 'music', label: '음악 아카이브', href: '/music/' },
+  { key: 'novels', label: '스토리 보드', href: '/novels/' },
+  { key: 'profile', label: '채널 소개', href: '/profile' },
+  { key: 'updates', label: '업데이트 로그', href: '/updates/' },
+  { key: 'studio', label: '오너 스튜디오', href: '/login?next=/mv-studio' }
 ];
 
 const expectedFooterItems = [
-  { key: 'novels', label: '소설', href: '/novels/' },
-  { key: 'music', label: '음악', href: '/music/' },
-  { key: 'profile', label: '소개', href: '/profile/' },
-  { key: 'updates', label: '업데이트', href: '/updates/' },
+  { key: 'music', label: '음악 아카이브', href: '/music/' },
+  { key: 'novels', label: '스토리 보드', href: '/novels/' },
+  { key: 'profile', label: '채널 소개', href: '/profile/' },
+  { key: 'updates', label: '업데이트 로그', href: '/updates/' },
   { key: 'privacy', label: '개인정보', href: '/privacy/' },
   { key: 'terms', label: '이용약관', href: '/terms/' }
 ];

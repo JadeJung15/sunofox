@@ -2,17 +2,15 @@
 import SiteChrome from '../../components/SiteChrome.astro';
 import Layout from '../../layouts/Layout.astro';
 import {
-  artistLinks,
   archiveAlbum,
-  latestStoryOst,
   musicArchive,
   musicArchiveStructuredData
 } from '../../data/siteContent.js';
 
-const latestStoryVideo = musicArchive.videos.find((video) => video.videoId === latestStoryOst.videoId) || musicArchive.videos[0];
+const visibleVideos = musicArchive.videos.slice(0, 4);
 const videoAnchorItems = Array.from(
   new Map(
-    musicArchive.videos.map((video) => [
+    visibleVideos.map((video) => [
       video.type,
       {
         label: video.type,
@@ -21,13 +19,7 @@ const videoAnchorItems = Array.from(
     ])
   ).values()
 );
-const latestVideoDate = latestStoryVideo?.date || musicArchive.researchDate;
 const linkHubCount = musicArchive.linkHub.reduce((total, group) => total + group.links.length, 0);
-const musicPremiereActions = [
-  { label: 'LISTEN', href: latestStoryVideo.href, external: true, primary: true },
-  { label: 'CHANNEL', href: artistLinks.youtube, external: true },
-  { label: 'STREAM', href: '#musicLinkHub' }
-];
 ---
 
 <Layout
@@ -43,64 +35,21 @@ const musicPremiereActions = [
   <SiteChrome active="music" />
 
   <main id="main-content" class="site-main music-archive-page">
-    <section class="music-archive-hero reveal" aria-labelledby="musicArchiveTitle">
-      <a class="album-back-link" href="/profile/#discography">SunoFox 소개</a>
-
-      <aside class="music-premiere-card" aria-label="Latest SunoFox music premiere">
-        <a class="music-premiere-thumb" href={latestStoryVideo.href} target="_blank" rel="noopener noreferrer" aria-label={`${latestStoryVideo.title} 감상하기`}>
-          <img
-            src={latestStoryVideo.thumbnail}
-            alt={latestStoryVideo.thumbnailAlt}
-            width="480"
-            height="360"
-            loading="eager"
-            decoding="async"
-          />
-          <span>Latest OST</span>
-        </a>
-        <div class="music-premiere-copy">
-          <p class="section-kicker">NOW PLAYING</p>
-          <h2>{latestStoryVideo.title}</h2>
-          <p>{latestStoryVideo.meta}</p>
-          <div class="music-premiere-actions" aria-label="Latest OST quick actions">
-            {musicPremiereActions.map((action) => (
-              <a
-                class:list={['main-button', action.primary && 'main-button-primary', !action.primary && 'main-button-muted']}
-                href={action.href}
-                target={action.external ? '_blank' : undefined}
-                rel={action.external ? 'noopener noreferrer' : undefined}
-              >
-                {action.label}
-              </a>
-            ))}
-          </div>
-        </div>
-      </aside>
-
+    <section class="music-archive-hero music-archive-hero-quiet reveal" aria-labelledby="musicArchiveTitle">
       <div class="music-archive-copy">
         <p class="section-kicker">YOUTUBE / ANIME OST</p>
         <h1 id="musicArchiveTitle"><span>MUSIC</span><span>ARCHIVE</span></h1>
         <p>
-          앨범, 음원 플랫폼, YouTube OST와 MV를 한 곳에서 이어 봅니다.
-          음악 페이지는 감상 링크와 공개 기록을 빠르게 확인하는 SunoFox 음악 전용 허브입니다.
+          앨범, 주요 스트리밍 채널, YouTube 링크만 간결하게 정리했습니다.
         </p>
-        <span>최신 OST {latestStoryVideo.date} · 확인 기준 {musicArchive.researchDate}</span>
+        <span>Album · Streaming · YouTube · 확인 기준 {musicArchive.researchDate}</span>
       </div>
-
-      <dl class="music-archive-facts">
-        {musicArchive.facts.map((fact) => (
-          <div>
-            <dt>{fact.label}</dt>
-            <dd>{fact.value}</dd>
-          </div>
-        ))}
-      </dl>
     </section>
 
     <section id="musicLinkHub" class="music-link-hub-section reveal" aria-labelledby="musicLinkHubTitle">
       <div class="novel-section-head">
         <p class="section-kicker">LINK HUB</p>
-        <h2 id="musicLinkHubTitle">앨범과 스트리밍 채널</h2>
+        <h2 id="musicLinkHubTitle">Music Links</h2>
         <span>{linkHubCount} links</span>
       </div>
 
@@ -130,8 +79,8 @@ const musicPremiereActions = [
     <section class="music-video-section reveal" aria-labelledby="musicVideoTitle">
       <div class="novel-section-head">
         <p class="section-kicker">최근 영상</p>
-        <h2 id="musicVideoTitle">YouTube / MV</h2>
-        <span>{musicArchive.videos.length}편</span>
+        <h2 id="musicVideoTitle">Recent Videos</h2>
+        <span>{visibleVideos.length} recent</span>
       </div>
 
       <nav class="music-video-anchor-strip" aria-label="영상 유형 빠른 이동">
@@ -141,7 +90,7 @@ const musicPremiereActions = [
       </nav>
 
       <ol class="music-video-grid">
-        {musicArchive.videos.map((video) => (
+        {visibleVideos.map((video) => (
           <li
             id={`music-video-${video.videoId}`}
             data-video-id={video.videoId}

@@ -215,8 +215,8 @@ const routes = [
     name: 'home',
     file: 'index.html',
     canonical: `${siteUrl}/`,
-    title: 'SunoFox | Anime OST Studio',
-    descriptionIncludes: '이야기 기반 Anime OST',
+    title: 'SunoFox | Anime OST & Web Novel OST',
+    descriptionIncludes: '오리지널 OST와 뮤직비디오',
     jsonLdTypes: ['Organization', 'WebSite', 'CreativeWorkSeries']
   },
   {

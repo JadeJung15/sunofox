@@ -57,7 +57,29 @@ $routes = @(
     Name = "home"
     Path = "/"
     File = "index.html"
-    Must = @("SUNOFOX", "STORY OST MEETS IP", "MUSIC FIRST, STORY NEXT", "MUSIC ARCHIVE", "STORY IP", "EXPLORE MUSIC", "DISCOVER IP", "showcase-stage", "showcase-hero-grid", "showcase-primary-link", "data-showcase-panel=""featured""", "data-showcase-panel=""music""", "data-showcase-panel=""story""", "/novels/", "/music/", "/profile/", "https://www.youtube.com/@sunofox", $labelMusicArchive)
+    Must = @(
+      "SunoFox | Anime OST &amp; Web Novel OST",
+      "Original Anime OST Music by SunoFox",
+      "funnel-button-youtube",
+      "funnel-button-streaming",
+      "Latest Videos",
+      "Streaming Links",
+      "Featured OST",
+      "Explore Series",
+      "Music to Story IP",
+      "renewal-home",
+      "funnel-hero",
+      "streaming-strip",
+      "latest-video-grid",
+      "featured-release-section",
+      "mobile-sticky-cta",
+      "https://www.youtube.com/@sunofox",
+      "https://music.youtube.com/channel/UCjPuy8z0pdzW3OVUXka0lMw",
+      "https://open.spotify.com/artist/5fzr4xqw1e0c5cI8dVj11D",
+      "/novels/",
+      "/music/",
+      "/profile/"
+    )
   },
   @{
     Name = "novels"

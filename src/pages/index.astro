@@ -2,442 +2,762 @@
 import Layout from '../layouts/Layout.astro';
 import SiteChrome from '../components/SiteChrome.astro';
 import {
+  archiveAlbum,
   artistLinks,
+  featuredStoryOst,
+  latestStoryOst,
   musicArchive,
+  novelProject,
   structuredData
 } from '../data/siteContent.js';
 
-const showcaseImages = {
-  featured: '/assets/brand/sunofox-home-villainess-stage.png'
-};
-
-const sectionLinks = [
+const latestVideos = musicArchive.videos.slice(0, 4);
+const featuredVideo = latestStoryOst;
+const streamingLinks = [
+  { label: 'YouTube Music', href: artistLinks.youtubeMusic, priority: 'primary' },
+  { label: 'Spotify', href: artistLinks.spotify, priority: 'primary' },
+  { label: 'Apple Music', href: artistLinks.appleMusic, priority: 'primary' },
+  { label: 'Melon', href: artistLinks.melon },
+  { label: 'Bugs', href: artistLinks.bugs },
+  { label: 'VIBE', href: artistLinks.vibe },
+  { label: 'FLO', href: artistLinks.flo },
+  { label: 'SoundCloud', href: artistLinks.soundcloud }
+];
+const seriesItems = [
   {
-    eyebrow: 'MUSIC ARCHIVE',
-    title: 'EXPLORE MUSIC',
-    text: 'Original OST, album archive, and YouTube premieres.',
-    href: musicArchive.href,
-    panel: 'music'
+    title: 'Web Novel OST',
+    text: '웹소설 장면을 위한 보컬 OST와 캐릭터 테마.',
+    href: featuredStoryOst.youtubeHref
   },
   {
-    eyebrow: 'STORY IP',
-    title: 'DISCOVER IP',
-    text: 'A story world expanded from music into episodes.',
-    href: '/novels/',
-    panel: 'story'
+    title: 'Anime OP',
+    text: '애니메이션 오프닝처럼 빠르게 진입하는 곡과 영상.',
+    href: musicArchive.videos.find((video) => video.type.includes('Anime OP'))?.href || artistLinks.youtube
+  },
+  {
+    title: 'Live Archive',
+    text: '공개곡과 비공개곡을 이어 듣는 긴 호흡의 플레이리스트.',
+    href: musicArchive.videos.find((video) => video.type === 'Live Archive')?.href || artistLinks.youtubePlaylists
   }
 ];
-
 ---
 
 <Layout
-  title="SunoFox | Anime OST Studio"
-  description="SunoFox는 이야기 기반 Anime OST와 웹소설 OST를 YouTube, 음악 아카이브, Story IP로 확장하는 스튜디오입니다."
-  image={`https://sunofox.com${showcaseImages.featured}`}
-  imageAlt="붉은 막이 열린 황실 무대에서 폭발하는 빛 앞에 선 SunoFox Story IP 대표 이미지"
-  imageWidth={1456}
-  imageHeight={410}
+  title="SunoFox | Anime OST & Web Novel OST"
+  description="SunoFox는 애니메이션 장면을 위한 오리지널 OST와 뮤직비디오를 만들고, YouTube와 주요 음원 플랫폼으로 공개하는 음악 채널/스튜디오입니다."
+  image={`https://sunofox.com${featuredVideo.thumbnail}`}
+  imageAlt={featuredVideo.thumbnailAlt}
+  imageWidth={1200}
+  imageHeight={675}
+  keywords="SunoFox, Anime OST, Web Novel OST, YouTube Music, Spotify, 애니메이션 OST, 웹소설 OST"
   jsonLd={structuredData}
 >
   <SiteChrome active="home" />
 
-  <main id="main-content" class="bg-home" aria-labelledby="homeTitle">
-    <section class="showcase-stage" aria-label="SunoFox premium IP label">
-      <div class="showcase-hero-grid">
-        <div class="showcase-title">
-          <p class="showcase-kicker">STORY-DRIVEN MUSIC & IP STUDIO</p>
-          <h1 id="homeTitle" aria-label="SUNOFOX STORY OST MEETS IP">
-            <span>SUNOFOX</span>
-          </h1>
-          <p class="showcase-statement">
-            <span aria-hidden="true"></span>
-            STORY OST MEETS IP.<br />
-            MUSIC FIRST, STORY NEXT.
-          </p>
+  <main id="main-content" class="renewal-home" aria-labelledby="homeTitle">
+    <section id="watch" class="funnel-hero" aria-label="SunoFox Anime OST hero">
+      <div class="funnel-hero-copy">
+        <p class="funnel-kicker">ANIME OST / MUSIC VIDEO STUDIO</p>
+        <h1 id="homeTitle">Original Anime OST Music by SunoFox</h1>
+        <p class="funnel-lead">
+          애니메이션 장면을 위한 오리지널 OST와 뮤직비디오를 만듭니다.
+        </p>
+        <div class="funnel-hero-actions" aria-label="Primary actions">
+          <a class="funnel-button funnel-button-youtube" href={artistLinks.youtubeSubscribe} target="_blank" rel="noopener noreferrer">
+            YouTube 구독하기
+          </a>
+          <a class="funnel-button funnel-button-streaming" href="#listen">
+            음원 바로 듣기
+          </a>
+          <a class="funnel-button funnel-button-ghost" href="#latest">
+            최신 영상 보기
+          </a>
         </div>
-
-        <figure class="showcase-featured-visual" data-showcase-panel="featured">
-          <img
-            src={showcaseImages.featured}
-            alt="붉은 막이 열린 황실 무대에서 폭발하는 빛 앞에 선 악녀는 첫 장에서 웃었다 대표 장면"
-            width="1456"
-            height="410"
-            loading="eager"
-            decoding="async"
-          />
-        </figure>
       </div>
 
-      <nav class="showcase-primary-links" aria-label="SunoFox public sections">
-        {sectionLinks.map((item) => (
-          <a class="showcase-primary-link" href={item.href} data-showcase-panel={item.panel}>
-            <span>{item.eyebrow}</span>
-            <strong>{item.title}</strong>
-            <em>{item.text}</em>
-            <b aria-hidden="true">→</b>
+      <a class="funnel-featured-video" href={featuredVideo.youtubeHref} target="_blank" rel="noopener noreferrer" aria-label={`${featuredVideo.title} YouTube에서 보기`}>
+        <img
+          src={featuredVideo.thumbnail}
+          alt={featuredVideo.thumbnailAlt}
+          width="1200"
+          height="675"
+          loading="eager"
+          decoding="async"
+        />
+        <span>{featuredVideo.type}</span>
+        <strong>{featuredVideo.title}</strong>
+        <em>Watch on YouTube</em>
+      </a>
+    </section>
+
+    <section id="listen" class="streaming-strip" aria-labelledby="listenTitle">
+      <div>
+        <p class="funnel-kicker">LISTEN EVERYWHERE</p>
+        <h2 id="listenTitle">Streaming Links</h2>
+      </div>
+      <nav class="streaming-links" aria-label="Streaming platforms">
+        {streamingLinks.map((link) => (
+          <a class:list={['streaming-link', link.priority === 'primary' && 'is-primary']} href={link.href} target="_blank" rel="noopener noreferrer">
+            {link.label}
           </a>
         ))}
       </nav>
     </section>
 
-    <footer class="showcase-footer" aria-label="SunoFox footer">
-      <p>© SUNOFOX. ALL RIGHTS RESERVED.</p>
-      <nav aria-label="External links">
-        <a href={artistLinks.youtube} target="_blank" rel="noopener noreferrer">YOUTUBE</a>
-        <a href={artistLinks.soundcloud} target="_blank" rel="noopener noreferrer">SOUNDCLOUD</a>
-        <a href="/updates/">UPDATES</a>
-        <a href="/profile/">CONTACT</a>
+    <section id="latest" class="latest-videos-section" aria-labelledby="latestTitle">
+      <div class="funnel-section-head">
+        <p class="funnel-kicker">LATEST OST & MV</p>
+        <h2 id="latestTitle">Latest Videos</h2>
+        <a href={artistLinks.youtube} target="_blank" rel="noopener noreferrer">YouTube 채널</a>
+      </div>
+
+      <div class="latest-video-grid">
+        {latestVideos.map((video, index) => (
+          <a class:list={['video-card', index === 0 && 'is-featured']} href={video.href} target="_blank" rel="noopener noreferrer">
+            <img src={video.thumbnail} alt={video.thumbnailAlt} width="640" height="360" loading={index === 0 ? 'eager' : 'lazy'} decoding="async" />
+            <span>{video.type}</span>
+            <strong>{video.title}</strong>
+            <p>{video.meta}</p>
+            <em>{video.date}</em>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="featured-release-section" aria-labelledby="releaseTitle">
+      <a class="release-cover" href={archiveAlbum.href} aria-label={`${archiveAlbum.title} 앨범 상세 보기`}>
+        <img src={archiveAlbum.image} alt={archiveAlbum.imageAlt} width="1600" height="1600" loading="lazy" decoding="async" />
+      </a>
+      <div class="release-copy">
+        <p class="funnel-kicker">FEATURED OST</p>
+        <h2 id="releaseTitle">{archiveAlbum.title}</h2>
+        <p>{archiveAlbum.summary}</p>
+        <div class="release-actions">
+          <a class="funnel-button funnel-button-streaming" href={archiveAlbum.externalHref} target="_blank" rel="noopener noreferrer">Genie 앨범</a>
+          <a class="funnel-button funnel-button-ghost" href={artistLinks.youtubeMusic} target="_blank" rel="noopener noreferrer">YouTube Music</a>
+          <a class="funnel-button funnel-button-ghost" href={artistLinks.spotify} target="_blank" rel="noopener noreferrer">Spotify</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="series-section" aria-labelledby="seriesTitle">
+      <div class="funnel-section-head">
+        <p class="funnel-kicker">SERIES</p>
+        <h2 id="seriesTitle">Explore Series</h2>
+      </div>
+      <div class="series-grid">
+        {seriesItems.map((item) => (
+          <a class="series-card" href={item.href} target={item.href.startsWith('http') ? '_blank' : undefined} rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
+            <strong>{item.title}</strong>
+            <span>{item.text}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="story-preview-section" aria-labelledby="storyTitle">
+      <div>
+        <p class="funnel-kicker">MUSIC TO STORY IP</p>
+        <h2 id="storyTitle">{novelProject.title}</h2>
+        <p>{novelProject.shortSummary}</p>
+      </div>
+      <div class="story-actions">
+        <a class="funnel-button funnel-button-ghost" href={latestStoryOst.youtubeHref} target="_blank" rel="noopener noreferrer">OST 감상</a>
+        <a class="funnel-button funnel-button-ghost" href={novelProject.season.startHref}>1화 읽기</a>
+        <a class="funnel-button funnel-button-ghost" href="/novels/">Story IP 보기</a>
+      </div>
+    </section>
+
+    <footer class="funnel-footer" aria-label="SunoFox public footer">
+      <span>© SUNOFOX</span>
+      <nav aria-label="Footer links">
+        <a href={artistLinks.youtube} target="_blank" rel="noopener noreferrer">YouTube</a>
+        <a href="/music/">OST Archive</a>
+        <a href="/updates/">Updates</a>
+        <a href="/profile/">About</a>
       </nav>
     </footer>
+
+    <nav class="mobile-sticky-cta" aria-label="Mobile primary actions">
+      <a href={artistLinks.youtubeSubscribe} target="_blank" rel="noopener noreferrer">YouTube 구독</a>
+      <a href="#listen">음원 듣기</a>
+    </nav>
   </main>
 </Layout>
 
 <style>
-  :global(body:has(.bg-home)) {
+  :global(body:has(.renewal-home)) {
     margin: 0;
-    background: #020202;
-    color: #ffffff;
+    background: #03030a;
+    color: #f8fafc;
     overflow-x: hidden;
   }
 
-  :global(body:has(.bg-home) .skip-link) {
-    border-color: #1f78ff;
-  }
-
-  :global(body:has(.bg-home) .site-footer) {
+  :global(body:has(.renewal-home) .site-footer) {
     display: none;
   }
 
-  .bg-home {
-    --bg: #020202;
-    --text: #f5f5f2;
-    --muted: rgba(245, 245, 242, 0.64);
-    --dim: rgba(245, 245, 242, 0.38);
-    --blue: #1f78ff;
-    --line: rgba(245, 245, 242, 0.15);
-    display: grid;
-    min-height: 100svh;
-    grid-template-rows: minmax(0, 1fr) auto;
-    padding: clamp(18px, 1.8vw, 32px);
-    background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.018), transparent 36%),
-      radial-gradient(circle at 86% 22%, rgba(31, 120, 255, 0.1), transparent 25rem),
-      var(--bg);
-    color: var(--text);
-    font-family: Pretendard, Inter, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  :global(body:has(.renewal-home) .site-header) {
+    border-bottom: 1px solid rgba(42, 46, 61, 0.72);
+    background: rgba(3, 3, 10, 0.92);
+    color: #f8fafc;
+    backdrop-filter: blur(16px);
   }
 
-  .bg-home :where(h1, h2, h3, p, a, span, strong, b, i, small, em) {
+  :global(body:has(.renewal-home) .site-logo),
+  :global(body:has(.renewal-home) .menu-trigger) {
+    color: #f8fafc;
+  }
+
+  :global(body:has(.renewal-home) .menu-trigger-lines span) {
+    background: #f8fafc;
+  }
+
+  .renewal-home {
+    --bg-base: #03030a;
+    --bg-elevated: #0b0d14;
+    --bg-raised: #121622;
+    --border-subtle: #2a2e3d;
+    --text-primary: #f8fafc;
+    --text-secondary: #a7adba;
+    --text-muted: #6f7687;
+    --youtube: #ff0033;
+    --streaming: #f5b84b;
+    --ost: #4fd8ff;
+    display: grid;
+    gap: 0;
+    min-height: 100svh;
+    padding: 0 min(56px, 4.2vw) 54px;
+    background:
+      radial-gradient(circle at 76% 12%, rgba(255, 0, 51, 0.18), transparent 30rem),
+      radial-gradient(circle at 12% 72%, rgba(79, 216, 255, 0.12), transparent 28rem),
+      var(--bg-base);
+    color: var(--text-primary);
+    font-family: Pretendard, "Noto Sans KR", system-ui, sans-serif;
+    box-sizing: border-box;
+  }
+
+  .renewal-home *,
+  .renewal-home *::before,
+  .renewal-home *::after {
+    box-sizing: border-box;
+  }
+
+  .renewal-home :where(h1, h2, h3, p, a, span, strong, em) {
     letter-spacing: 0;
   }
 
-  .bg-home a:focus-visible {
-    outline: 2px solid var(--blue);
-    outline-offset: 6px;
+  .renewal-home a {
+    color: inherit;
   }
 
-  .showcase-footer {
-    position: relative;
-    z-index: 5;
+  .renewal-home a:focus-visible {
+    outline: 2px solid var(--ost);
+    outline-offset: 5px;
+  }
+
+  .funnel-hero,
+  .streaming-strip,
+  .latest-videos-section,
+  .featured-release-section,
+  .series-section,
+  .story-preview-section,
+  .funnel-footer {
+    width: min(1180px, 100%);
+    margin-inline: auto;
+  }
+
+  .funnel-hero {
     display: grid;
-    grid-template-columns: minmax(120px, 0.24fr) minmax(0, 1fr) auto;
-    align-items: start;
-    gap: 28px;
+    grid-template-columns: minmax(0, 0.92fr) minmax(380px, 0.82fr);
+    min-height: min(820px, 100svh);
+    align-items: center;
+    gap: clamp(34px, 5vw, 72px);
+    padding: clamp(112px, 15vh, 148px) 0 72px;
   }
 
-  .showcase-footer a {
-    color: #f8f8f4;
-    font-size: 0.82rem;
+  .funnel-kicker {
+    margin: 0;
+    color: var(--ost);
+    font-family: "Roboto Condensed", sans-serif;
+    font-size: 12px;
+    font-weight: 900;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .funnel-hero h1,
+  .funnel-section-head h2,
+  .release-copy h2,
+  .story-preview-section h2 {
+    margin: 0;
+    color: var(--text-primary);
+    font-family: "Roboto Condensed", Pretendard, sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+
+  .funnel-hero h1 {
+    max-width: 720px;
+    margin-top: 18px;
+    font-size: clamp(52px, 6.8vw, 86px);
+    line-height: 0.95;
+  }
+
+  .funnel-lead {
+    max-width: 560px;
+    margin: 24px 0 0;
+    color: var(--text-secondary);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+    word-break: keep-all;
+  }
+
+  .funnel-hero-actions,
+  .release-actions,
+  .story-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 28px;
+  }
+
+  .funnel-button {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    padding: 0 18px;
+    font-size: 14px;
     font-weight: 900;
     line-height: 1;
     text-decoration: none;
   }
 
-  .showcase-stage {
-    position: relative;
-    z-index: 1;
+  .funnel-button-youtube {
+    border-color: transparent;
+    background: linear-gradient(135deg, #ff0033, #b91c3c);
+    box-shadow: 0 12px 32px rgba(255, 0, 51, 0.24);
+    color: #ffffff;
+  }
+
+  .funnel-button-streaming {
+    border-color: transparent;
+    background: linear-gradient(135deg, #f5b84b, #ffdd8a);
+    box-shadow: 0 12px 32px rgba(245, 184, 75, 0.22);
+    color: #03030a;
+  }
+
+  .funnel-button-ghost {
+    background: rgba(255, 255, 255, 0.035);
+    color: var(--text-primary);
+  }
+
+  .funnel-featured-video,
+  .video-card,
+  .release-cover,
+  .series-card {
+    border: 1px solid rgba(42, 46, 61, 0.9);
+    border-radius: 8px;
+    background: rgba(11, 13, 20, 0.84);
+    text-decoration: none;
+  }
+
+  .funnel-featured-video {
     display: grid;
-    width: min(100%, 1480px);
-    min-height: min(860px, calc(100svh - 126px));
-    margin-inline: auto;
-    align-content: center;
-    gap: clamp(28px, 4vw, 62px);
-    padding-top: clamp(92px, 12vh, 132px);
-    padding-bottom: clamp(34px, 5vh, 58px);
-  }
-
-  .showcase-hero-grid {
-    display: grid;
-    grid-template-columns: minmax(440px, 0.58fr) minmax(0, 1fr);
-    gap: clamp(42px, 5vw, 78px);
-    align-items: center;
-  }
-
-  .showcase-title {
-    display: grid;
-    gap: clamp(16px, 1.8vw, 28px);
-    max-width: min(720px, 100%);
-  }
-
-  .showcase-kicker {
-    width: fit-content;
-    margin: 0;
-    border-left: 2px solid var(--blue);
-    padding-left: 16px;
-    color: rgba(255, 255, 255, 0.72);
-    font-size: clamp(0.74rem, 0.78vw, 0.92rem);
-    font-weight: 900;
-    line-height: 1;
-  }
-
-  .showcase-title h1 {
-    margin: 0;
-    color: #f7f7f2;
-    font-family: Impact, "Arial Narrow", Haettenschweiler, sans-serif;
-    font-size: clamp(4.8rem, 6.8vw, 7.2rem);
-    font-weight: 900;
-    line-height: 0.86;
-    text-transform: uppercase;
-    text-shadow: 0 0 24px rgba(255, 255, 255, 0.07);
-  }
-
-  .showcase-title h1 span {
-    display: block;
-  }
-
-  .showcase-statement {
-    display: grid;
-    grid-template-columns: 2px minmax(0, 1fr);
-    gap: 18px;
-    width: min(420px, 100%);
-    margin: 0;
-    color: rgba(255, 255, 255, 0.72);
-    font-size: clamp(0.82rem, 0.86vw, 1rem);
-    font-weight: 850;
-    line-height: 1.42;
-  }
-
-  .showcase-statement span {
-    width: 2px;
-    min-height: 46px;
-    background: var(--blue);
-  }
-
-  .showcase-featured-visual {
-    margin: 0;
     overflow: hidden;
-    background: #050505;
+    box-shadow: 0 18px 60px rgba(0, 0, 0, 0.28);
   }
 
-  .showcase-featured-visual {
-    aspect-ratio: 16 / 9;
-    min-height: 360px;
-  }
-
-  .showcase-featured-visual img {
+  .funnel-featured-video img,
+  .video-card img,
+  .release-cover img {
     display: block;
     width: 100%;
-    height: 100%;
+    height: auto;
     object-fit: cover;
   }
 
-  .showcase-primary-links {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
+  .funnel-featured-video img,
+  .video-card img {
+    aspect-ratio: 16 / 9;
   }
 
-  .showcase-primary-link {
-    position: relative;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 12px 24px;
-    min-height: 132px;
-    align-content: center;
-    padding: clamp(22px, 2.8vw, 42px) clamp(16px, 2.6vw, 36px);
-    color: #ffffff;
-    text-decoration: none;
+  .funnel-featured-video span,
+  .funnel-featured-video strong,
+  .funnel-featured-video em {
+    margin-inline: 18px;
   }
 
-  .showcase-primary-link + .showcase-primary-link {
-    border-left: 1px solid var(--line);
-  }
-
-  .showcase-primary-link span,
-  .showcase-primary-link em {
-    display: block;
-    color: rgba(255, 255, 255, 0.52);
+  .funnel-featured-video span,
+  .video-card span,
+  .video-card em {
+    color: var(--text-muted);
+    font-family: "Roboto Condensed", sans-serif;
+    font-size: 12px;
     font-style: normal;
-    font-size: 0.82rem;
-    font-weight: 850;
-    line-height: 1.45;
-  }
-
-  .showcase-primary-link span {
-    grid-column: 1 / 2;
-    color: var(--blue);
-    font-size: 0.78rem;
     font-weight: 900;
-    line-height: 1;
-  }
-
-  .showcase-primary-link strong {
-    grid-column: 1 / 2;
-    color: #ffffff;
-    font-size: clamp(1.85rem, 2.8vw, 3.45rem);
-    font-weight: 900;
-    line-height: 0.95;
+    line-height: 1.2;
     text-transform: uppercase;
   }
 
-  .showcase-primary-link em {
-    grid-column: 1 / 2;
-    max-width: 420px;
+  .funnel-featured-video span {
+    margin-top: 18px;
   }
 
-  .showcase-primary-link b {
-    grid-column: 2;
-    grid-row: 1 / 4;
-    align-self: center;
+  .funnel-featured-video strong {
+    margin-top: 8px;
+    color: var(--text-primary);
+    font-size: clamp(22px, 2.2vw, 30px);
+    font-weight: 900;
+    line-height: 1.22;
+    word-break: keep-all;
   }
 
-  .showcase-primary-link b {
-    color: #ffffff;
-    font-size: 1rem;
-    transform: translateX(0);
-    transition: transform 160ms ease;
+  .funnel-featured-video em {
+    margin-top: 16px;
+    margin-bottom: 18px;
+    color: var(--ost);
   }
 
-  .showcase-primary-link:hover b,
-  .showcase-primary-link:focus-visible b {
-    transform: translateX(5px);
+  .streaming-strip,
+  .latest-videos-section,
+  .featured-release-section,
+  .series-section,
+  .story-preview-section {
+    border-top: 1px solid var(--border-subtle);
+    padding: 72px 0;
   }
 
-  .showcase-footer {
-    border-top: 1px solid var(--line);
-    padding-top: 20px;
-    color: var(--dim);
+  .streaming-strip {
+    display: grid;
+    grid-template-columns: minmax(180px, 0.28fr) minmax(0, 1fr);
+    gap: 28px;
+    align-items: start;
   }
 
-  .showcase-footer p {
-    grid-column: 1;
-    margin: 0;
-    color: rgba(255, 255, 255, 0.36);
-    font-size: 0.68rem;
-    font-weight: 800;
+  .streaming-strip h2,
+  .funnel-section-head h2,
+  .release-copy h2,
+  .story-preview-section h2 {
+    margin-top: 8px;
+    font-size: clamp(34px, 4.2vw, 56px);
+    line-height: 1;
   }
 
-  .showcase-footer nav {
-    display: flex;
-    grid-column: 2 / 4;
+  .streaming-links {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .streaming-link {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 900;
+    text-decoration: none;
+  }
+
+  .streaming-link.is-primary {
+    border-color: rgba(245, 184, 75, 0.55);
+    color: var(--text-primary);
+  }
+
+  .funnel-section-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 14px;
+    align-items: end;
+    margin-bottom: 26px;
+  }
+
+  .funnel-section-head .funnel-kicker {
+    grid-column: 1 / -1;
+  }
+
+  .funnel-section-head a {
+    color: var(--ost);
+    font-size: 14px;
+    font-weight: 900;
+    text-decoration: none;
+  }
+
+  .latest-video-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .video-card {
+    display: grid;
+    overflow: hidden;
+    min-width: 0;
+  }
+
+  .video-card span,
+  .video-card strong,
+  .video-card p,
+  .video-card em {
+    margin-inline: 14px;
+  }
+
+  .video-card span {
+    margin-top: 14px;
+  }
+
+  .video-card strong {
+    margin-top: 8px;
+    color: var(--text-primary);
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 1.3;
+    word-break: keep-all;
+  }
+
+  .video-card p {
+    margin-top: 8px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 650;
+    line-height: 1.55;
+    word-break: keep-all;
+  }
+
+  .video-card em {
+    margin-top: 14px;
+    margin-bottom: 14px;
+  }
+
+  .featured-release-section {
+    display: grid;
+    grid-template-columns: minmax(220px, 340px) minmax(0, 1fr);
+    gap: clamp(28px, 5vw, 72px);
+    align-items: center;
+  }
+
+  .release-cover {
+    display: block;
+    overflow: hidden;
+  }
+
+  .release-copy p:not(.funnel-kicker),
+  .story-preview-section p {
+    max-width: 640px;
+    margin: 18px 0 0;
+    color: var(--text-secondary);
+    font-size: 16px;
+    font-weight: 650;
+    line-height: 1.68;
+    word-break: keep-all;
+  }
+
+  .series-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .series-card {
+    display: grid;
+    min-height: 150px;
+    align-content: space-between;
+    padding: 18px;
+  }
+
+  .series-card strong {
+    color: var(--text-primary);
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1.16;
+  }
+
+  .series-card span {
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 650;
+    line-height: 1.55;
+    word-break: keep-all;
+  }
+
+  .story-preview-section {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 28px;
+    align-items: end;
+  }
+
+  .story-actions {
     justify-content: flex-end;
-    gap: clamp(42px, 6vw, 118px);
+    margin-top: 0;
   }
 
-  .showcase-footer a {
-    color: rgba(255, 255, 255, 0.46);
-    font-size: 0.7rem;
+  .funnel-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 22px;
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 900;
   }
 
-  .showcase-footer a:hover,
-  .showcase-footer a:focus-visible,
-  .showcase-primary-link:hover,
-  .showcase-primary-link:focus-visible {
-    color: #ffffff;
+  .funnel-footer nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
   }
 
-  @media (max-width: 1120px) {
-    .showcase-hero-grid {
+  .funnel-footer a {
+    color: var(--text-secondary);
+    text-decoration: none;
+  }
+
+  .mobile-sticky-cta {
+    display: none;
+  }
+
+  @media (max-width: 1024px) {
+    .funnel-hero {
+      grid-template-columns: 1fr;
+      min-height: 0;
+    }
+
+    .streaming-strip,
+    .featured-release-section,
+    .story-preview-section {
       grid-template-columns: 1fr;
     }
 
-    .showcase-featured-visual {
-      min-height: 0;
+    .latest-video-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .story-actions {
+      justify-content: flex-start;
     }
   }
 
   @media (max-width: 760px) {
-    .bg-home {
-      display: block;
-      min-height: 100svh;
-      padding: 18px;
+    .renewal-home {
+      padding: 0 18px calc(88px + env(safe-area-inset-bottom));
     }
 
-    .showcase-footer {
-      grid-template-columns: 1fr auto;
+    .funnel-hero {
+      gap: 24px;
+      padding: 94px 0 52px;
     }
 
-    .showcase-stage {
-      min-height: auto;
-      gap: 34px;
-      padding-top: 92px;
-      padding-bottom: 34px;
+    .funnel-hero h1 {
+      font-size: clamp(34px, 10.2vw, 40px);
+      line-height: 0.98;
+      overflow-wrap: anywhere;
     }
 
-    .showcase-title {
-      gap: 14px;
+    .funnel-lead {
+      max-width: 320px;
+      margin-top: 18px;
+      font-size: 15px;
+      word-break: normal;
     }
 
-    .showcase-title h1 {
-      font-size: clamp(4.2rem, 22vw, 6.6rem);
-      line-height: 0.86;
+    .funnel-hero-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      margin-top: 22px;
     }
 
-    .showcase-kicker {
-      font-size: 0.72rem;
+    .funnel-hero-actions .funnel-button {
+      width: 100%;
+      min-width: 0;
     }
 
-    .showcase-statement {
-      font-size: 0.78rem;
+    .streaming-strip,
+    .latest-videos-section,
+    .featured-release-section,
+    .series-section,
+    .story-preview-section {
+      padding: 56px 0;
     }
 
-    .showcase-featured-visual {
-      aspect-ratio: 1.65 / 1;
-      min-height: 0;
+    .streaming-links {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .showcase-primary-links {
+    .latest-video-grid,
+    .series-grid {
       grid-template-columns: 1fr;
     }
 
-    .showcase-primary-link {
-      min-height: 0;
-      padding: 24px 0;
+    .funnel-section-head {
+      grid-template-columns: 1fr;
+      align-items: start;
     }
 
-    .showcase-primary-link + .showcase-primary-link {
-      border-top: 1px solid var(--line);
-      border-left: 0;
+    .featured-release-section {
+      gap: 22px;
     }
 
-    .showcase-footer {
-      gap: 18px;
-      padding-top: 18px;
+    .release-cover {
+      max-width: 220px;
     }
 
-    .showcase-footer p,
-    .showcase-footer nav {
-      grid-column: 1 / 3;
-    }
-
-    .showcase-footer nav {
+    .story-actions {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px 26px;
-      justify-content: start;
+      grid-template-columns: 1fr;
+      gap: 10px;
     }
-  }
 
-  @media (max-width: 390px) {
-    .showcase-title h1 {
-      font-size: clamp(3.7rem, 20vw, 5rem);
+    .funnel-footer {
+      display: grid;
     }
-  }
 
-  @media (prefers-reduced-motion: reduce) {
-    .showcase-primary-link b {
-      transition: none;
+    .mobile-sticky-cta {
+      position: fixed;
+      right: 12px;
+      bottom: 12px;
+      left: 12px;
+      z-index: 50;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      min-height: 68px;
+      border: 1px solid rgba(42, 46, 61, 0.9);
+      border-radius: 8px;
+      padding: 9px;
+      background: rgba(3, 3, 10, 0.92);
+      backdrop-filter: blur(16px);
+    }
+
+    .mobile-sticky-cta a {
+      display: inline-flex;
+      min-height: 48px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 900;
+      text-decoration: none;
+    }
+
+    .mobile-sticky-cta a:first-child {
+      background: #ff0033;
+      color: #ffffff;
+    }
+
+    .mobile-sticky-cta a:last-child {
+      background: #f5b84b;
+      color: #03030a;
     }
   }
 </style>

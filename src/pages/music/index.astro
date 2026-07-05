@@ -7,7 +7,7 @@ import {
   musicArchiveStructuredData
 } from '../../data/siteContent.js';
 
-const visibleVideos = musicArchive.videos.slice(0, 4);
+const visibleVideos = musicArchive.videos.slice(0, 3);
 const videoAnchorItems = Array.from(
   new Map(
     visibleVideos.map((video) => [
@@ -27,6 +27,15 @@ const heroLinks = [
   streamingGroup?.links.find((link) => link.label === 'YouTube Music'),
   streamingGroup?.links.find((link) => link.label === 'Spotify')
 ].filter(Boolean);
+const cleanLinkGroups = musicArchive.linkHub.map((group) => {
+  const availableLinks = group.links.filter((link) => Boolean(link.href));
+
+  return {
+    ...group,
+    primaryLinks: availableLinks.slice(0, 2),
+    secondaryLinks: availableLinks.slice(2)
+  };
+});
 ---
 
 <Layout
@@ -108,16 +117,15 @@ const heroLinks = [
       </div>
 
       <div class="music-link-grid music-channel-grid">
-        {musicArchive.linkHub.map((group) => (
+        {cleanLinkGroups.map((group) => (
           <article class="music-link-card music-channel-panel" data-link-group={group.key}>
             <div>
               <p class="section-kicker">{group.kicker}</p>
               <h3>{group.title}</h3>
-              <p>{group.summary}</p>
             </div>
 
             <nav class="music-link-actions music-channel-links" aria-label={`${group.title} links`}>
-              {group.links.filter((link) => Boolean(link.href)).map((link) => (
+              {group.primaryLinks.map((link) => (
                 <a
                   class="music-channel-link"
                   href={link.href}
@@ -128,6 +136,24 @@ const heroLinks = [
                   <b aria-hidden="true">↗</b>
                 </a>
               ))}
+              {group.secondaryLinks.length > 0 && (
+                <details class="music-channel-secondary">
+                  <summary>More</summary>
+                  <div>
+                    {group.secondaryLinks.map((link) => (
+                      <a
+                        class="music-channel-link"
+                        href={link.href}
+                        target={link.href.startsWith('http') ? '_blank' : undefined}
+                        rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                      >
+                        <span class="music-link-label">{link.label}</span>
+                        <b aria-hidden="true">↗</b>
+                      </a>
+                    ))}
+                  </div>
+                </details>
+              )}
             </nav>
           </article>
         ))}
@@ -141,7 +167,7 @@ const heroLinks = [
         <span>{visibleVideos.length} recent</span>
       </div>
 
-      <nav class="music-video-anchor-strip" aria-label="영상 유형 빠른 이동">
+      <nav class="music-video-anchor-strip" aria-label="영상 유형 빠른 이동" hidden>
         {videoAnchorItems.map((item) => (
           <a href={item.href}>{item.label}</a>
         ))}
@@ -157,14 +183,6 @@ const heroLinks = [
           >
             <a class="music-video-row" href={video.href} target="_blank" rel="noopener noreferrer" data-video-card={video.videoId}>
               <span class="music-video-index">{String(index + 1).padStart(2, '0')}</span>
-              <img
-                src={video.thumbnail}
-                alt={video.thumbnailAlt}
-                width="480"
-                height="360"
-                loading="lazy"
-                decoding="async"
-              />
               <span class="music-video-date">{video.date}</span>
               <strong>{video.title}</strong>
               <p>{video.meta}</p>

@@ -9505,6 +9505,324 @@ body:has(.music-studio-page) .music-studio-source a:focus-visible {
   }
 }
 
+/* 2026-07 Music page clean pass: reduce repeated panels and keep one visual lead. */
+body:has(.music-studio-page) .music-studio-page {
+  background: #101010;
+}
+
+body:has(.music-studio-page) .music-studio-hero,
+body:has(.music-studio-page) .music-studio-section,
+body:has(.music-studio-page) .music-studio-source {
+  width: min(1120px, calc(100% - 56px));
+}
+
+body:has(.music-studio-page) .music-studio-hero {
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
+  min-height: clamp(580px, 78svh, 760px);
+  gap: clamp(34px, 5vw, 68px);
+  padding-top: clamp(104px, 12vh, 136px);
+  padding-bottom: clamp(44px, 7vh, 72px);
+}
+
+body:has(.music-studio-page) .music-studio-hero-copy h1 {
+  margin-top: 14px;
+  font-size: clamp(4.6rem, 8.8vw, 8.8rem);
+}
+
+body:has(.music-studio-page) .music-studio-hero-copy > p:not(.section-kicker) {
+  max-width: 510px;
+  margin-top: 24px;
+  color: rgba(255, 255, 255, 0.58);
+}
+
+body:has(.music-studio-page) .music-studio-meta-line {
+  margin-top: 26px;
+}
+
+body:has(.music-studio-page) .music-studio-album-panel {
+  gap: 18px;
+}
+
+body:has(.music-studio-page) .music-studio-cover-link {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+body:has(.music-studio-page) .music-studio-album-copy {
+  padding-top: 16px;
+}
+
+body:has(.music-studio-page) .music-studio-album-copy h2 {
+  font-size: clamp(1.9rem, 3.1vw, 3.4rem);
+  line-height: 1;
+}
+
+body:has(.music-studio-page) .music-studio-album-copy > p:not(.section-kicker) {
+  display: none;
+}
+
+body:has(.music-studio-page) .music-studio-album-copy dl {
+  margin-top: 18px;
+}
+
+body:has(.music-studio-page) .music-studio-album-copy dd {
+  font-size: 0.82rem;
+}
+
+body:has(.music-studio-page) .music-studio-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+  border: 0;
+}
+
+body:has(.music-studio-page) .music-studio-hero-actions a {
+  min-height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  padding: 0 12px;
+}
+
+body:has(.music-studio-page) .music-studio-hero-actions a:last-child {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  padding-left: 12px;
+}
+
+body:has(.music-studio-page) .music-studio-section {
+  padding-block: clamp(54px, 7vw, 86px);
+}
+
+body:has(.music-studio-page) .music-studio-section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: clamp(20px, 3vw, 30px);
+}
+
+body:has(.music-studio-page) .music-studio-section-head .section-kicker {
+  display: none;
+}
+
+body:has(.music-studio-page) .music-studio-section-head h2 {
+  max-width: none;
+  font-size: clamp(2.5rem, 4.4vw, 4.9rem);
+  line-height: 0.9;
+}
+
+body:has(.music-studio-page) .music-channel-grid {
+  grid-template-columns: 1fr;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+body:has(.music-studio-page) .music-channel-panel {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.38fr) minmax(0, 1fr);
+  min-height: 0;
+  align-content: normal;
+  align-items: start;
+  gap: clamp(16px, 3vw, 36px);
+  border-right: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 22px 0;
+}
+
+body:has(.music-studio-page) .music-channel-panel:last-child {
+  border-bottom: 0;
+}
+
+body:has(.music-studio-page) .music-channel-panel h3 {
+  max-width: none;
+  margin-top: 6px;
+  font-size: clamp(1.7rem, 2.7vw, 2.9rem);
+  line-height: 0.98;
+}
+
+body:has(.music-studio-page) .music-channel-links,
+body:has(.music-studio-page) .music-channel-secondary div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+}
+
+body:has(.music-studio-page) .music-channel-link,
+body:has(.music-studio-page) .music-channel-secondary summary {
+  min-height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 0 12px;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.78rem;
+}
+
+body:has(.music-studio-page) .music-channel-secondary {
+  min-width: 0;
+}
+
+body:has(.music-studio-page) .music-channel-secondary:not([open]) > div {
+  display: none;
+}
+
+body:has(.music-studio-page) .music-channel-secondary summary {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  font-family: var(--font-condensed);
+  font-weight: 950;
+  line-height: 1;
+  list-style: none;
+  text-transform: uppercase;
+}
+
+body:has(.music-studio-page) .music-channel-secondary summary::-webkit-details-marker {
+  display: none;
+}
+
+body:has(.music-studio-page) .music-channel-secondary[open] summary {
+  margin-bottom: 8px;
+  color: var(--sf-accent);
+}
+
+body:has(.music-studio-page) .music-video-anchor-strip[hidden] {
+  display: none !important;
+}
+
+body:has(.music-studio-page) .music-video-list {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+body:has(.music-studio-page) .music-video-row,
+body:has(.music-studio-page) .music-video-grid .music-video-row {
+  grid-template-columns: 44px 120px minmax(0, 1fr) 94px;
+  min-height: 0;
+  align-items: baseline;
+  gap: clamp(14px, 2vw, 24px);
+  padding: 22px 0;
+}
+
+body:has(.music-studio-page) .music-video-row img {
+  display: none;
+}
+
+body:has(.music-studio-page) .music-video-row strong {
+  grid-column: 3;
+  font-size: clamp(1.04rem, 1.35vw, 1.32rem);
+  line-height: 1.34;
+}
+
+body:has(.music-studio-page) .music-video-date {
+  grid-column: 2;
+}
+
+body:has(.music-studio-page) .music-video-row p {
+  grid-column: 3;
+  margin-top: 5px;
+  font-size: 0.86rem;
+  line-height: 1.48;
+}
+
+body:has(.music-studio-page) .music-video-row em {
+  grid-column: 4;
+  justify-self: end;
+}
+
+body:has(.music-studio-page) .music-studio-source {
+  width: min(1120px, calc(100% - 56px));
+}
+
+@media (max-width: 760px) {
+  body:has(.music-studio-page) .music-studio-hero,
+  body:has(.music-studio-page) .music-studio-section,
+  body:has(.music-studio-page) .music-studio-source {
+    width: min(100% - 28px, 1120px);
+  }
+
+  body:has(.music-studio-page) .music-studio-hero {
+    grid-template-columns: 1fr;
+    min-height: 0;
+    gap: 30px;
+    padding-top: 92px;
+    padding-bottom: 42px;
+  }
+
+  body:has(.music-studio-page) .music-studio-hero-copy h1 {
+    font-size: clamp(3.95rem, 18vw, 5.8rem);
+  }
+
+  body:has(.music-studio-page) .music-studio-album-panel {
+    grid-template-columns: 112px minmax(0, 1fr);
+    max-width: none;
+    align-items: start;
+  }
+
+  body:has(.music-studio-page) .music-studio-cover-link {
+    max-width: 112px;
+  }
+
+  body:has(.music-studio-page) .music-studio-album-copy {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  body:has(.music-studio-page) .music-studio-album-copy h2 {
+    margin-top: 8px;
+    font-size: clamp(1.75rem, 8vw, 2.4rem);
+  }
+
+  body:has(.music-studio-page) .music-studio-album-copy dl {
+    display: none;
+  }
+
+  body:has(.music-studio-page) .music-studio-hero-actions {
+    margin-top: 14px;
+  }
+
+  body:has(.music-studio-page) .music-studio-section {
+    padding-block: 42px;
+  }
+
+  body:has(.music-studio-page) .music-studio-section-head {
+    align-items: flex-start;
+  }
+
+  body:has(.music-studio-page) .music-studio-section-head h2 {
+    font-size: clamp(2.6rem, 12vw, 4.2rem);
+  }
+
+  body:has(.music-studio-page) .music-studio-section-head > span {
+    padding-top: 6px;
+  }
+
+  body:has(.music-studio-page) .music-channel-panel {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 20px 0;
+  }
+
+  body:has(.music-studio-page) .music-channel-panel h3 {
+    font-size: clamp(1.9rem, 9vw, 3rem);
+  }
+
+  body:has(.music-studio-page) .music-video-row,
+  body:has(.music-studio-page) .music-video-grid .music-video-row {
+    grid-template-columns: 32px minmax(0, 1fr);
+    gap: 10px 12px;
+    padding: 18px 0;
+  }
+
+  body:has(.music-studio-page) .music-video-index {
+    grid-column: 1;
+    grid-row: 1 / span 4;
+  }
+
+  body:has(.music-studio-page) .music-video-date,
+  body:has(.music-studio-page) .music-video-row strong,
+  body:has(.music-studio-page) .music-video-row p,
+  body:has(.music-studio-page) .music-video-row em {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
+
 @media (max-width: 760px) {
   body:has(.music-studio-page) .music-studio-hero,
   body:has(.music-studio-page) .music-studio-section,

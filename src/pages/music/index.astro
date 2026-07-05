@@ -60,14 +60,14 @@ const linkHubCount = musicArchive.linkHub.reduce((total, group) => total + group
             <h3>{group.title}</h3>
             <p>{group.summary}</p>
             <div class="music-link-actions">
-              {group.links.map((link) => (
+              {group.links.filter((link) => Boolean(link.href)).map((link) => (
                 <a
                   class="main-button main-button-muted"
                   href={link.href}
                   target={link.href.startsWith('http') ? '_blank' : undefined}
                   rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 >
-                  {link.label}
+                  <span class="music-link-label">{link.label}</span>
                 </a>
               ))}
             </div>
@@ -116,9 +116,9 @@ const linkHubCount = musicArchive.linkHub.reduce((total, group) => total + group
       </ol>
     </section>
 
-    <section class="album-source-panel reveal" aria-label="Music archive sources">
+    <section class="album-source-panel music-source-panel reveal" aria-label="Music archive sources">
       <span>출처</span>
-      {musicArchive.sources.map((source) => (
+      {musicArchive.sources.filter((source) => Boolean(source.href)).map((source) => (
         <a href={source.href} target="_blank" rel="noopener noreferrer">{source.label}</a>
       ))}
     </section>

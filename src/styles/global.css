@@ -8895,13 +8895,75 @@ body:has(.music-archive-page) .music-link-actions {
 }
 
 body:has(.music-archive-page) .music-link-actions .main-button {
+  display: flex;
   justify-content: flex-start;
+  width: 100%;
   min-height: 42px;
   border: 0;
   border-top: 1px solid var(--sf-line);
   padding: 0;
   background: transparent;
   box-shadow: none;
+  color: rgba(255, 255, 255, 0.9);
+  overflow: visible;
+  text-align: left;
+  white-space: nowrap;
+}
+
+body:has(.music-archive-page) .music-link-actions .main-button:hover,
+body:has(.music-archive-page) .music-link-actions .main-button:focus-visible {
+  border-color: var(--sf-line);
+  background: transparent;
+  color: #ffffff;
+  transform: none;
+}
+
+body:has(.music-archive-page) .music-link-actions .main-button::after {
+  flex: 0 0 auto;
+  margin-left: 2px;
+}
+
+body:has(.music-archive-page) .music-link-label {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  color: inherit;
+}
+
+body:has(.music-archive-page) .music-source-panel {
+  width: min(1180px, calc(100% - 56px));
+  margin-top: clamp(36px, 5vw, 64px);
+  border: 0;
+  border-top: 1px solid var(--sf-line);
+  border-radius: 0;
+  padding: 18px 0 0;
+  background: transparent;
+  background-image: none;
+  box-shadow: none;
+}
+
+body:has(.music-archive-page) .music-source-panel span,
+body:has(.music-archive-page) .music-source-panel a {
+  min-height: 28px;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--sf-muted);
+}
+
+body:has(.music-archive-page) .music-source-panel span {
+  color: var(--sf-accent);
+  margin-right: 14px;
+}
+
+body:has(.music-archive-page) .music-source-panel a {
+  margin-right: 22px;
+}
+
+body:has(.music-archive-page) .music-source-panel a:hover,
+body:has(.music-archive-page) .music-source-panel a:focus-visible {
+  color: #ffffff;
 }
 
 body:has(.music-archive-page) .music-video-section {

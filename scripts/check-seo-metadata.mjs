@@ -215,8 +215,8 @@ const routes = [
     name: 'home',
     file: 'index.html',
     canonical: `${siteUrl}/`,
-    title: 'SunoFox Signal Room | Anime OST Story Studio',
-    descriptionIncludes: '라디오 콘솔형 감상 경험',
+    title: 'SunoFox | Anime OST Studio',
+    descriptionIncludes: '애니메이션 감성의 OST',
     jsonLdTypes: ['Organization', 'WebSite', 'CreativeWorkSeries']
   },
   {

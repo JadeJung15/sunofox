@@ -20,6 +20,14 @@ $labelMusicArchive = [string]::Concat([char]0xC74C, [char]0xC545, " ", [char]0xC
 $labelMusicSee = -join @([char]0xC74C, [char]0xC545, " ", [char]0xBCF4, [char]0xAE30)
 $labelStudio = -join @([char]0xC2A4, [char]0xD29C, [char]0xB514, [char]0xC624)
 $labelSunoFoxDetail = "SunoFox " + [string]::Concat([char]0xC0C1, [char]0xC138, " ", [char]0xC18C, [char]0xAC1C)
+$labelHomeTitle = [string]::Concat([char]0xC218, [char]0xB178, [char]0xD3ED, [char]0xC2A4, "(SunoFox) | ", [char]0xC560, [char]0xB2C8, [char]0xBA54, [char]0xC774, [char]0xC158, " OST", [char]0xC640, " ", [char]0xC6F9, [char]0xC18C, [char]0xC124, " OST")
+$labelHomeOriginal = -join @([char]0xC624, [char]0xB9AC, [char]0xC9C0, [char]0xB110)
+$labelHomeAnimeOst = -join @([char]0xC560, [char]0xB2C8, [char]0xBA54, [char]0xC774, [char]0xC158, " OST")
+$labelLatestVideos = [string]::Concat([char]0xCD5C, [char]0xC2E0, " ", [char]0xC601, [char]0xC0C1)
+$labelListenNow = [string]::Concat([char]0xC74C, [char]0xC6D0, " ", [char]0xBC14, [char]0xB85C, " ", [char]0xB4E3, [char]0xAE30)
+$labelFeaturedOst = [string]::Concat([char]0xB300, [char]0xD45C, " OST")
+$labelExploreSeries = [string]::Concat([char]0xC2DC, [char]0xB9AC, [char]0xC988, " ", [char]0xB458, [char]0xB7EC, [char]0xBCF4, [char]0xAE30)
+$labelMusicToStory = [string]::Concat([char]0xC74C, [char]0xC545, [char]0xC5D0, [char]0xC11C, " ", [char]0xC774, [char]0xC57C, [char]0xAE30, [char]0xB85C)
 $sitemapPublicMust = @(
   "https://sunofox.com/",
   "https://sunofox.com/novels/",
@@ -57,7 +65,30 @@ $routes = @(
     Name = "home"
     Path = "/"
     File = "index.html"
-    Must = @("ANIME OST STUDIO", "home-hero-status", "home-channel-entry", "home-channel-facts", "site-footer-nav", 'data-footer-key="novels"', 'data-footer-key="music"', 'data-footer-key="profile"', 'data-footer-key="updates"', 'data-footer-key="privacy"', 'data-footer-key="terms"', "/novels/", "/music/", "/profile/", "https://sunofox.com/", "https://www.youtube.com/@sunofox", $labelMusicArchive)
+    Must = @(
+      $labelHomeTitle,
+      $labelHomeOriginal,
+      $labelHomeAnimeOst,
+      "funnel-button-youtube",
+      "funnel-button-streaming",
+      $labelLatestVideos,
+      $labelListenNow,
+      $labelFeaturedOst,
+      $labelExploreSeries,
+      $labelMusicToStory,
+      "renewal-home",
+      "funnel-hero",
+      "streaming-strip",
+      "latest-video-grid",
+      "featured-release-section",
+      "mobile-sticky-cta",
+      "https://www.youtube.com/@sunofox",
+      "https://music.youtube.com/channel/UCjPuy8z0pdzW3OVUXka0lMw",
+      "https://open.spotify.com/artist/5fzr4xqw1e0c5cI8dVj11D",
+      "/novels/",
+      "/music/",
+      "/profile/"
+    )
   },
   @{
     Name = "novels"
@@ -105,7 +136,37 @@ $routes = @(
     Name = "music"
     Path = "/music/"
     File = "music/index.html"
-    Must = @("Music Archive", "Anime OST / Story OST", "music-archive-actions", "music-video-direct-actions", "music-featured-ost-section", "music-release-card", "music-video-feature", "music-video-hub", "music-video-summary", "music-video-anchor-strip", "music-video-2KsAbBnf2Lk", "music-video-u_OwBr3Cstk", "music-video-grid", "music-story-section", 'data-video-action="latest"', 'data-video-action="channel"', 'data-video-action="playlists"', 'data-video-feature="2KsAbBnf2Lk"', 'data-video-id="2KsAbBnf2Lk"', 'data-video-card="2KsAbBnf2Lk"', 'data-video-type="Web Novel OST"', "https://www.youtube.com/@sunofox", "https://www.youtube.com/@sunofox/playlists", "https://www.youtube.com/watch?v=u_OwBr3Cstk", "https://www.youtube.com/watch?v=2KsAbBnf2Lk", "/novels/episode-006/", "https://sunofox.com/music/")
+    Must = @(
+      "Music Archive",
+      "MUSIC",
+      "ARCHIVE",
+      "music-link-hub-section",
+      "musicLinkHub",
+      "music-link-card",
+      'data-link-group="album"',
+      'data-link-group="streaming"',
+      'data-link-group="channel"',
+      "music-video-anchor-strip",
+      "music-video-xwV_wACJatw",
+      "music-video-CLHeFg8QVvc",
+      "music-video-KrfD7PD4l6k",
+      "music-video-2KsAbBnf2Lk",
+      "music-video-grid",
+      'data-video-id="xwV_wACJatw"',
+      'data-video-card="xwV_wACJatw"',
+      'data-video-type="Web Novel OST"',
+      'data-video-card="2KsAbBnf2Lk"',
+      "https://www.youtube.com/@sunofox",
+      "https://www.youtube.com/@sunofox/playlists",
+      "https://music.youtube.com/channel/UCjPuy8z0pdzW3OVUXka0lMw",
+      "https://open.spotify.com/artist/5fzr4xqw1e0c5cI8dVj11D",
+      "https://www.genie.co.kr/detail/albumInfo?axnm=87219242",
+      "https://www.youtube.com/watch?v=xwV_wACJatw",
+      "https://www.youtube.com/watch?v=CLHeFg8QVvc",
+      "https://www.youtube.com/watch?v=KrfD7PD4l6k",
+      "https://www.youtube.com/watch?v=2KsAbBnf2Lk",
+      "https://sunofox.com/music/"
+    )
   },
   @{
     Name = "album"

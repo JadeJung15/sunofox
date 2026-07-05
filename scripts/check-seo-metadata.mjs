@@ -215,8 +215,8 @@ const routes = [
     name: 'home',
     file: 'index.html',
     canonical: `${siteUrl}/`,
-    title: 'SunoFox | Anime OST Studio',
-    descriptionIncludes: '이야기 기반 Anime OST',
+    title: '수노폭스(SunoFox) | 애니메이션 OST와 웹소설 OST',
+    descriptionIncludes: '오리지널 OST와 뮤직비디오',
     jsonLdTypes: ['Organization', 'WebSite', 'CreativeWorkSeries']
   },
   {
@@ -233,6 +233,10 @@ const routes = [
     canonical: `${siteUrl}/music/`,
     title: `${musicArchive.title} | Anime OST Studio`,
     descriptionIncludes: '필모그래피',
+    image: `${siteUrl}/assets/og/sunofox-music-og.webp`,
+    imageWidth: '1200',
+    imageHeight: '630',
+    shareImageAlt: '웹소설 OST EP.04 아직 데려가지 마 공식 썸네일 기반 SunoFox Music Archive 공유 이미지',
     jsonLdTypes: ['CollectionPage', 'BreadcrumbList']
   },
   {
@@ -330,6 +334,19 @@ for (const route of routes) {
   if (route.shareImageAlt) {
     assertEqual(`${route.name} og:image:alt`, meta['og:image:alt'], route.shareImageAlt);
     assertEqual(`${route.name} twitter:image:alt`, meta['twitter:image:alt'], route.shareImageAlt);
+  }
+
+  if (route.image) {
+    assertEqual(`${route.name} og:image`, meta['og:image'], route.image);
+    assertEqual(`${route.name} twitter:image`, meta['twitter:image'], route.image);
+  }
+
+  if (route.imageWidth) {
+    assertEqual(`${route.name} og:image:width`, meta['og:image:width'], route.imageWidth);
+  }
+
+  if (route.imageHeight) {
+    assertEqual(`${route.name} og:image:height`, meta['og:image:height'], route.imageHeight);
   }
 
   if (!meta['og:image']?.startsWith(`${siteUrl}/`)) {

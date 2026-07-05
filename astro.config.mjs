@@ -23,6 +23,9 @@ const hiddenPublicPrefixes = [
 export default defineConfig({
   site: 'https://sunofox.com',
   output: 'static',
+  devToolbar: {
+    enabled: false
+  },
   integrations: [
     sitemap({
       filter: (page) => {

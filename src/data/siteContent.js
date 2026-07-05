@@ -1,8 +1,12 @@
 import {
   artistLinks,
   detectedErrorStoryOst,
+  dontTakeMeAwayYetStoryOst,
+  fadingSignalOst,
   featuredStoryOst,
+  latestChannelVideo,
   latestStoryOst,
+  sayItsOverStoryOst,
   storyOstMap,
   storyOsts
 } from './artistContent.js';
@@ -28,8 +32,11 @@ export {
   artistLinks,
   categorizedSiteUpdates,
   detectedErrorStoryOst,
+  dontTakeMeAwayYetStoryOst,
+  fadingSignalOst,
   featuredStoryOst,
   footerItems,
+  latestChannelVideo,
   latestNovelEpisode,
   latestStoryOst,
   menuItems,
@@ -40,6 +47,7 @@ export {
   pinnedUpdateNotice,
   plannedContentHubs,
   publishedNovelEpisodes,
+  sayItsOverStoryOst,
   siteUpdates,
   storyOstMap,
   storyOsts,
@@ -51,14 +59,14 @@ export function getEpisodeOst(episode = novelEpisodes[0]) {
 }
 
 export const sunofoxProfile = {
-  researchDate: '2026.06.19',
+  researchDate: '2026.07.05',
   highlights: [
     {
       key: 'video',
       label: 'YouTube / MV',
       status: `${musicArchive.videos.length}개 영상 큐레이션`,
       title: 'Anime OST Studio',
-      summary: 'YouTube에서 공개되는 Anime OST와 영상 흐름을 중심으로 스토리 IP를 확장합니다.',
+      summary: 'YouTube에서 공개되는 Anime OST, MV, 라이브 아카이브를 정리합니다.',
       href: artistLinks.youtube,
       cta: 'YouTube'
     },
@@ -103,14 +111,14 @@ export const sunofoxProfile = {
       kicker: 'CHANNEL',
       title: 'SunoFox Anime OST Studio',
       summary:
-        '유튜브 채널은 애니메이션 감성의 오리지널 음악과 웹소설 OST를 공개하는 중심 채널입니다. 공개 채널 소개 기준으로 매주 수요일과 일요일 17:15(KST)에 새 이야기와 선율을 정기적으로 공개하는 운영 흐름을 사용합니다.',
+        '유튜브 채널은 애니메이션 감성의 오리지널 음악, OST, MV를 공개하는 중심 채널입니다. 공식 최신 피드 기준으로 매주 수요일과 일요일 17:15(KST)에 새 음악과 영상을 정기적으로 공개하는 운영 흐름을 사용합니다.',
       facts: [
         { label: '채널명', value: 'SunoFox / 수노폭스' },
         { label: '핸들', value: '@SunoFox' },
-        { label: '규모', value: '구독자 약 4.18K명 · 영상 131편' },
-        { label: '누적 조회', value: '90만+ 회 공개 스냅샷 기준' },
+        { label: '규모', value: '구독자 약 4.28K명 · 영상 137편' },
+        { label: '누적 조회', value: '92만+ 회 보조 스냅샷 기준' },
         { label: '업로드', value: '수 · 일 17:15 KST' },
-        { label: '최근 IP', value: latestStoryOst.title }
+        { label: '최근 공개', value: latestChannelVideo.title }
       ],
       videos: musicArchive.videos.slice(0, 4).map((video) => ({
         ...video,
@@ -148,7 +156,7 @@ export const sunofoxProfile = {
       kicker: 'STREAMING',
       title: '국내외 음악 플랫폼 연결',
       summary:
-        '수노폭스는 유튜브와 주요 음원 플랫폼을 함께 사용합니다. 웹소설로 확장된 현재 구조에서는 OST 감상과 작품 정보를 한 곳에서 이어 보도록 연결합니다.',
+        '수노폭스는 유튜브와 주요 음원 플랫폼을 함께 사용합니다. 음악 아카이브에서는 앨범, 스트리밍, 채널 링크를 한 곳에서 이어 보도록 연결합니다.',
       facts: [
         { label: '국내', value: 'Melon, Bugs, FLO, VIBE, KakaoMusic' },
         { label: '글로벌', value: 'YouTube Music, Spotify, Apple Music, TIDAL, SoundCloud' },

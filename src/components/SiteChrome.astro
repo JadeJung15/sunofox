@@ -6,11 +6,11 @@ const { active = 'home' } = Astro.props;
 
 <header class="site-header" aria-label="SunoFox header">
   <a class:list={['site-logo', active === 'home' && 'is-current']} href="/" aria-label="SunoFox home">
-    <span>SunoFox</span>
+    {Array.from('SUNOFOX').map((letter) => <span aria-hidden="true">{letter}</span>)}
   </a>
 
   <button id="menuButton" class="menu-trigger" type="button" aria-expanded="false" aria-controls="overlayMenu" aria-label="전체 메뉴 열기">
-    <span class="menu-trigger-label">MENU</span>
+    <span class="menu-trigger-label">메뉴</span>
     <span class="menu-trigger-lines" aria-hidden="true">
       <span></span>
       <span></span>
@@ -56,7 +56,7 @@ const { active = 'home' } = Astro.props;
       menuButton?.setAttribute('aria-label', isOpen ? '전체 메뉴 닫기' : '전체 메뉴 열기');
       overlayMenu?.setAttribute('aria-hidden', String(!isOpen));
       overlayMenu?.toggleAttribute('inert', !isOpen);
-      if (menuLabel) menuLabel.textContent = isOpen ? 'CLOSE' : 'MENU';
+      if (menuLabel) menuLabel.textContent = isOpen ? '닫기' : '메뉴';
 
       if (!overlayMenu) return;
 

@@ -4988,6 +4988,29 @@ body {
   background: var(--sf-auth-line);
 }
 
+.sf-auth-body:not(.sf-admin-body) .sf-auth-card .sf-social-status-note {
+  display: -webkit-box;
+  overflow: hidden;
+  max-width: 100%;
+  margin: 0;
+  padding: 8px 10px;
+  border: 1px solid #bfdbfe;
+  border-left: 4px solid var(--sf-auth-accent);
+  border-radius: 8px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-size: 0.78rem;
+  font-weight: 750;
+  line-height: 1.45;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-card .sf-social-status-note:empty,
+.sf-auth-body:not(.sf-admin-body) .sf-auth-card .sf-social-status-note[hidden] {
+  display: none;
+}
+
 .sf-auth-body:not(.sf-admin-body) .sf-auth-form {
   gap: 12px;
 }
@@ -5074,6 +5097,21 @@ body {
     padding: 26px;
   }
 
+  .sf-auth-login:not(.sf-admin-body) .sf-auth-stage .sf-auth-brand,
+  .sf-auth-signup:not(.sf-admin-body) .sf-auth-stage .sf-auth-brand {
+    order: 1;
+  }
+
+  .sf-auth-login:not(.sf-admin-body) .sf-auth-stage .sf-auth-card,
+  .sf-auth-signup:not(.sf-admin-body) .sf-auth-stage .sf-auth-card {
+    order: 2;
+  }
+
+  .sf-auth-login:not(.sf-admin-body) .sf-auth-copy,
+  .sf-auth-signup:not(.sf-admin-body) .sf-auth-copy {
+    order: 3;
+  }
+
   .sf-auth-body:not(.sf-admin-body) .sf-auth-stage .sf-auth-card,
   .sf-auth-body:not(.sf-admin-body) .sf-auth-card {
     max-width: none;
@@ -5106,5 +5144,28 @@ body {
   .sf-auth-body:not(.sf-admin-body) .sf-auth-stage .sf-auth-card,
   .sf-auth-body:not(.sf-admin-body) .sf-auth-card {
     padding: 18px 14px;
+  }
+
+  .sf-auth-login:not(.sf-admin-body) .sf-auth-card h2,
+  .sf-auth-signup:not(.sf-admin-body) .sf-auth-card h2 {
+    font-size: 1.86rem;
+  }
+
+  .sf-auth-login:not(.sf-admin-body) .sf-auth-card-head,
+  .sf-auth-signup:not(.sf-admin-body) .sf-auth-card-head {
+    padding-bottom: 12px;
+  }
+
+  .sf-auth-login:not(.sf-admin-body) .sf-social-button,
+  .sf-auth-signup:not(.sf-admin-body) .sf-social-button,
+  .sf-auth-login:not(.sf-admin-body) .sf-auth-form button,
+  .sf-auth-signup:not(.sf-admin-body) .sf-auth-form button {
+    min-height: 46px;
+  }
+
+  .sf-auth-login:not(.sf-admin-body) .sf-auth-card .sf-social-status-note,
+  .sf-auth-signup:not(.sf-admin-body) .sf-auth-card .sf-social-status-note {
+    padding: 7px 9px;
+    font-size: 0.74rem;
   }
 }

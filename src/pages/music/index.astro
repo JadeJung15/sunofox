@@ -20,6 +20,13 @@ const videoAnchorItems = Array.from(
   ).values()
 );
 const linkHubCount = musicArchive.linkHub.reduce((total, group) => total + group.links.length, 0);
+const albumGroup = musicArchive.linkHub.find((group) => group.key === 'album');
+const streamingGroup = musicArchive.linkHub.find((group) => group.key === 'streaming');
+const heroLinks = [
+  albumGroup?.links.find((link) => link.href === archiveAlbum.href),
+  streamingGroup?.links.find((link) => link.label === 'YouTube Music'),
+  streamingGroup?.links.find((link) => link.label === 'Spotify')
+].filter(Boolean);
 ---
 
 <Layout
@@ -34,52 +41,103 @@ const linkHubCount = musicArchive.linkHub.reduce((total, group) => total + group
 >
   <SiteChrome active="music" />
 
-  <main id="main-content" class="site-main music-archive-page">
-    <section class="music-archive-hero music-archive-hero-quiet reveal" aria-labelledby="musicArchiveTitle">
-      <div class="music-archive-copy">
-        <p class="section-kicker">YOUTUBE / ANIME OST</p>
+  <main id="main-content" class="site-main music-archive-page music-studio-page">
+    <section class="music-studio-hero reveal" aria-labelledby="musicArchiveTitle">
+      <div class="music-studio-hero-copy">
+        <p class="section-kicker">SUNOFOX MUSIC</p>
         <h1 id="musicArchiveTitle"><span>MUSIC</span><span>ARCHIVE</span></h1>
-        <p>
-          앨범, 주요 스트리밍 채널, YouTube 링크만 간결하게 정리했습니다.
-        </p>
-        <span>Album · Streaming · YouTube · 확인 기준 {musicArchive.researchDate}</span>
+        <p>{musicArchive.summary}</p>
+        <div class="music-studio-meta-line" aria-label="Music archive summary">
+          <span>Album</span>
+          <span>Streaming</span>
+          <span>YouTube</span>
+          <span>Updated {musicArchive.researchDate}</span>
+        </div>
       </div>
+
+      <aside class="music-studio-album-panel" aria-label={`${archiveAlbum.title} album`}>
+        <a class="music-studio-cover-link" href={archiveAlbum.href} aria-label={`${archiveAlbum.title} 상세 보기`}>
+          <img
+            src={archiveAlbum.image}
+            alt={archiveAlbum.imageAlt}
+            width="1600"
+            height="1600"
+            loading="eager"
+            decoding="async"
+          />
+        </a>
+
+        <div class="music-studio-album-copy">
+          <p class="section-kicker">{archiveAlbum.type}</p>
+          <h2>{archiveAlbum.title}</h2>
+          <p>{archiveAlbum.summary}</p>
+          <dl>
+            <div>
+              <dt>Release</dt>
+              <dd>{archiveAlbum.releaseDate}</dd>
+            </div>
+            <div>
+              <dt>Tracks</dt>
+              <dd>{archiveAlbum.tracks.length}</dd>
+            </div>
+            <div>
+              <dt>Direction</dt>
+              <dd>{archiveAlbum.direction}</dd>
+            </div>
+          </dl>
+          <div class="music-studio-hero-actions">
+            {heroLinks.map((link) => (
+              <a
+                href={link.href}
+                target={link.href.startsWith('http') ? '_blank' : undefined}
+                rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      </aside>
     </section>
 
-    <section id="musicLinkHub" class="music-link-hub-section reveal" aria-labelledby="musicLinkHubTitle">
-      <div class="novel-section-head">
+    <section id="musicLinkHub" class="music-link-hub-section music-studio-section reveal" aria-labelledby="musicLinkHubTitle">
+      <div class="music-studio-section-head">
         <p class="section-kicker">LINK HUB</p>
-        <h2 id="musicLinkHubTitle">Music Links</h2>
+        <h2 id="musicLinkHubTitle">Listen & Follow</h2>
         <span>{linkHubCount} links</span>
       </div>
 
-      <div class="music-link-grid">
+      <div class="music-link-grid music-channel-grid">
         {musicArchive.linkHub.map((group) => (
-          <article class="music-link-card" data-link-group={group.key}>
-            <p class="section-kicker">{group.kicker}</p>
-            <h3>{group.title}</h3>
-            <p>{group.summary}</p>
-            <div class="music-link-actions">
+          <article class="music-link-card music-channel-panel" data-link-group={group.key}>
+            <div>
+              <p class="section-kicker">{group.kicker}</p>
+              <h3>{group.title}</h3>
+              <p>{group.summary}</p>
+            </div>
+
+            <nav class="music-link-actions music-channel-links" aria-label={`${group.title} links`}>
               {group.links.filter((link) => Boolean(link.href)).map((link) => (
                 <a
-                  class="main-button main-button-muted"
+                  class="music-channel-link"
                   href={link.href}
                   target={link.href.startsWith('http') ? '_blank' : undefined}
                   rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 >
                   <span class="music-link-label">{link.label}</span>
+                  <b aria-hidden="true">↗</b>
                 </a>
               ))}
-            </div>
+            </nav>
           </article>
         ))}
       </div>
     </section>
 
-    <section class="music-video-section reveal" aria-labelledby="musicVideoTitle">
-      <div class="novel-section-head">
-        <p class="section-kicker">최근 영상</p>
-        <h2 id="musicVideoTitle">Recent Videos</h2>
+    <section class="music-video-section music-studio-section reveal" aria-labelledby="musicVideoTitle">
+      <div class="music-studio-section-head">
+        <p class="section-kicker">YOUTUBE</p>
+        <h2 id="musicVideoTitle">Recent OST</h2>
         <span>{visibleVideos.length} recent</span>
       </div>
 
@@ -89,15 +147,16 @@ const linkHubCount = musicArchive.linkHub.reduce((total, group) => total + group
         ))}
       </nav>
 
-      <ol class="music-video-grid">
-        {visibleVideos.map((video) => (
+      <ol class="music-video-grid music-video-list">
+        {visibleVideos.map((video, index) => (
           <li
             id={`music-video-${video.videoId}`}
             data-video-id={video.videoId}
             data-video-type={video.type}
             data-video-date={video.date}
           >
-            <a href={video.href} target="_blank" rel="noopener noreferrer" data-video-card={video.videoId}>
+            <a class="music-video-row" href={video.href} target="_blank" rel="noopener noreferrer" data-video-card={video.videoId}>
+              <span class="music-video-index">{String(index + 1).padStart(2, '0')}</span>
               <img
                 src={video.thumbnail}
                 alt={video.thumbnailAlt}
@@ -106,7 +165,7 @@ const linkHubCount = musicArchive.linkHub.reduce((total, group) => total + group
                 loading="lazy"
                 decoding="async"
               />
-              <span>{video.date}</span>
+              <span class="music-video-date">{video.date}</span>
               <strong>{video.title}</strong>
               <p>{video.meta}</p>
               <em>{video.type}</em>
@@ -116,7 +175,7 @@ const linkHubCount = musicArchive.linkHub.reduce((total, group) => total + group
       </ol>
     </section>
 
-    <section class="album-source-panel music-source-panel reveal" aria-label="Music archive sources">
+    <section class="music-studio-source music-source-panel reveal" aria-label="Music archive sources">
       <span>출처</span>
       {musicArchive.sources.filter((source) => Boolean(source.href)).map((source) => (
         <a href={source.href} target="_blank" rel="noopener noreferrer">{source.label}</a>

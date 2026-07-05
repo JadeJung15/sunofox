@@ -43,8 +43,8 @@ export const detectedErrorStoryOst = {
   href: artistLinks.detectedErrorOst,
   youtubeHref: 'https://www.youtube.com/watch?v=2KsAbBnf2Lk',
   videoId: '2KsAbBnf2Lk',
-  thumbnail: '/assets/brand/sunofox-cover-detected-error-v2.webp',
-  thumbnailAlt: '웹소설 OST EP.02 감지된 오류를 상징하는 깨진 시계와 찢어진 베일 커버',
+  thumbnail: '/assets/home/detected-error-thumbnail.jpg',
+  thumbnailAlt: '웹소설 OST EP.02 감지된 오류 공식 썸네일과 붉은 드레스의 악녀 캐릭터',
   publishedAt: '2026-06-17T08:15:18+00:00',
   summary:
     '아델라인이 예정된 몰락을 벗어난 뒤, 멈춘 시계와 원작 보정이 시작되는 순간을 담은 두 번째 웹소설 OST입니다.'

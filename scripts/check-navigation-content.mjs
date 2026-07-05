@@ -7,13 +7,13 @@ const siteContentPath = path.join(rootDir, 'src', 'data', 'siteContent.js');
 const errors = [];
 
 const expectedMenuItems = [
-  { key: 'home', label: 'Watch', href: '/' },
-  { key: 'music', label: 'Listen', href: '/music/#musicLinkHub' },
-  { key: 'archive', label: 'OST Archive', href: '/music/' },
-  { key: 'novels', label: 'Story IP', href: '/novels/' },
-  { key: 'profile', label: 'About', href: '/profile/' },
-  { key: 'updates', label: 'Updates', href: '/updates/' },
-  { key: 'studio', label: 'Studio', href: '/login?next=/mv-studio' }
+  { key: 'home', label: '영상 보기', href: '/' },
+  { key: 'music', label: '음원 듣기', href: '/music/#musicLinkHub' },
+  { key: 'archive', label: 'OST 아카이브', href: '/music/' },
+  { key: 'novels', label: '스토리', href: '/novels/' },
+  { key: 'profile', label: '소개', href: '/profile/' },
+  { key: 'updates', label: '업데이트', href: '/updates/' },
+  { key: 'studio', label: '제작실', href: '/login?next=/mv-studio' }
 ];
 
 const expectedFooterItems = [
@@ -80,7 +80,7 @@ if (!Array.isArray(menuItems)) {
     assertEqual(`${label} href`, item.href, expected.href);
     assertSiteRoute(`${label} href`, item.href);
 
-    if (item.key === 'archive' && item.label !== 'OST Archive') {
+    if (item.key === 'archive' && !item.label.includes('OST')) {
       fail(`${label} label: archive label must keep OST meaning visible`);
     }
   });

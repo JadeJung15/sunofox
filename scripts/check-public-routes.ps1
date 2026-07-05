@@ -20,6 +20,14 @@ $labelMusicArchive = [string]::Concat([char]0xC74C, [char]0xC545, " ", [char]0xC
 $labelMusicSee = -join @([char]0xC74C, [char]0xC545, " ", [char]0xBCF4, [char]0xAE30)
 $labelStudio = -join @([char]0xC2A4, [char]0xD29C, [char]0xB514, [char]0xC624)
 $labelSunoFoxDetail = "SunoFox " + [string]::Concat([char]0xC0C1, [char]0xC138, " ", [char]0xC18C, [char]0xAC1C)
+$labelHomeTitle = [string]::Concat([char]0xC218, [char]0xB178, [char]0xD3ED, [char]0xC2A4, "(SunoFox) | ", [char]0xC560, [char]0xB2C8, [char]0xBA54, [char]0xC774, [char]0xC158, " OST", [char]0xC640, " ", [char]0xC6F9, [char]0xC18C, [char]0xC124, " OST")
+$labelHomeOriginal = -join @([char]0xC624, [char]0xB9AC, [char]0xC9C0, [char]0xB110)
+$labelHomeAnimeOst = -join @([char]0xC560, [char]0xB2C8, [char]0xBA54, [char]0xC774, [char]0xC158, " OST")
+$labelLatestVideos = [string]::Concat([char]0xCD5C, [char]0xC2E0, " ", [char]0xC601, [char]0xC0C1)
+$labelListenNow = [string]::Concat([char]0xC74C, [char]0xC6D0, " ", [char]0xBC14, [char]0xB85C, " ", [char]0xB4E3, [char]0xAE30)
+$labelFeaturedOst = [string]::Concat([char]0xB300, [char]0xD45C, " OST")
+$labelExploreSeries = [string]::Concat([char]0xC2DC, [char]0xB9AC, [char]0xC988, " ", [char]0xB458, [char]0xB7EC, [char]0xBCF4, [char]0xAE30)
+$labelMusicToStory = [string]::Concat([char]0xC74C, [char]0xC545, [char]0xC5D0, [char]0xC11C, " ", [char]0xC774, [char]0xC57C, [char]0xAE30, [char]0xB85C)
 $sitemapPublicMust = @(
   "https://sunofox.com/",
   "https://sunofox.com/novels/",
@@ -58,15 +66,16 @@ $routes = @(
     Path = "/"
     File = "index.html"
     Must = @(
-      "SunoFox | Anime OST &amp; Web Novel OST",
-      "Original Anime OST Music by SunoFox",
+      $labelHomeTitle,
+      $labelHomeOriginal,
+      $labelHomeAnimeOst,
       "funnel-button-youtube",
       "funnel-button-streaming",
-      "Latest Videos",
-      "Streaming Links",
-      "Featured OST",
-      "Explore Series",
-      "Music to Story IP",
+      $labelLatestVideos,
+      $labelListenNow,
+      $labelFeaturedOst,
+      $labelExploreSeries,
+      $labelMusicToStory,
       "renewal-home",
       "funnel-hero",
       "streaming-strip",

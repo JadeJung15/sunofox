@@ -13,6 +13,15 @@ import {
 
 const latestVideos = musicArchive.videos.slice(0, 4);
 const featuredVideo = latestStoryOst;
+const videoTypeLabels = {
+  'Web Novel OST': '웹소설 OST',
+  'Live Archive': '라이브 아카이브',
+  'Anime OP': '애니메이션 오프닝',
+  'Anime OST': '애니메이션 OST',
+  'Isekai Anime OP': '이세계 애니메이션 오프닝',
+  'Dark Fantasy OST': '다크 판타지 OST'
+};
+const getVideoTypeLabel = (type) => videoTypeLabels[type] || type;
 const streamingLinks = [
   { label: 'YouTube Music', href: artistLinks.youtubeMusic, priority: 'primary' },
   { label: 'Spotify', href: artistLinks.spotify, priority: 'primary' },
@@ -25,17 +34,17 @@ const streamingLinks = [
 ];
 const seriesItems = [
   {
-    title: 'Web Novel OST',
+    title: '웹소설 OST',
     text: '웹소설 장면을 위한 보컬 OST와 캐릭터 테마.',
     href: featuredStoryOst.youtubeHref
   },
   {
-    title: 'Anime OP',
+    title: '애니메이션 오프닝',
     text: '애니메이션 오프닝처럼 빠르게 진입하는 곡과 영상.',
     href: musicArchive.videos.find((video) => video.type.includes('Anime OP'))?.href || artistLinks.youtube
   },
   {
-    title: 'Live Archive',
+    title: '라이브 아카이브',
     text: '공개곡과 비공개곡을 이어 듣는 긴 호흡의 플레이리스트.',
     href: musicArchive.videos.find((video) => video.type === 'Live Archive')?.href || artistLinks.youtubePlaylists
   }
@@ -43,28 +52,31 @@ const seriesItems = [
 ---
 
 <Layout
-  title="SunoFox | Anime OST & Web Novel OST"
+  title="수노폭스(SunoFox) | 애니메이션 OST와 웹소설 OST"
   description="SunoFox는 애니메이션 장면을 위한 오리지널 OST와 뮤직비디오를 만들고, YouTube와 주요 음원 플랫폼으로 공개하는 음악 채널/스튜디오입니다."
   image={`https://sunofox.com${featuredVideo.thumbnail}`}
   imageAlt={featuredVideo.thumbnailAlt}
   imageWidth={1200}
   imageHeight={675}
-  keywords="SunoFox, Anime OST, Web Novel OST, YouTube Music, Spotify, 애니메이션 OST, 웹소설 OST"
+  keywords="수노폭스, 애니메이션 OST, 웹소설 OST, 오리지널 OST, SunoFox, Anime OST, YouTube Music, Spotify"
   jsonLd={structuredData}
 >
   <SiteChrome active="home" />
 
   <main id="main-content" class="renewal-home" aria-labelledby="homeTitle">
-    <section id="watch" class="funnel-hero" aria-label="SunoFox Anime OST hero">
+    <section id="watch" class="funnel-hero" aria-label="수노폭스 애니메이션 OST 대표 영역">
       <div class="funnel-hero-copy">
-        <p class="funnel-kicker">ANIME OST / MUSIC VIDEO STUDIO</p>
-        <h1 id="homeTitle">Original Anime OST Music by SunoFox</h1>
+        <p class="funnel-kicker">애니메이션 OST / 뮤직비디오 스튜디오</p>
+        <h1 id="homeTitle">
+          <span>오리지널</span>
+          <span>애니메이션 OST</span>
+        </h1>
         <p class="funnel-lead">
           애니메이션 장면을 위한 오리지널 OST와 뮤직비디오를 만듭니다.
         </p>
-        <div class="funnel-hero-actions" aria-label="Primary actions">
+        <div class="funnel-hero-actions" aria-label="주요 이동">
           <a class="funnel-button funnel-button-youtube" href={artistLinks.youtubeSubscribe} target="_blank" rel="noopener noreferrer">
-            YouTube 구독하기
+            유튜브 구독하기
           </a>
           <a class="funnel-button funnel-button-streaming" href="#listen">
             음원 바로 듣기
@@ -84,18 +96,18 @@ const seriesItems = [
           loading="eager"
           decoding="async"
         />
-        <span>{featuredVideo.type}</span>
+        <span>{getVideoTypeLabel(featuredVideo.type)}</span>
         <strong>{featuredVideo.title}</strong>
-        <em>Watch on YouTube</em>
+        <em>유튜브에서 보기</em>
       </a>
     </section>
 
     <section id="listen" class="streaming-strip" aria-labelledby="listenTitle">
       <div>
-        <p class="funnel-kicker">LISTEN EVERYWHERE</p>
-        <h2 id="listenTitle">Streaming Links</h2>
+        <p class="funnel-kicker">주요 음원 플랫폼</p>
+        <h2 id="listenTitle">음원 바로 듣기</h2>
       </div>
-      <nav class="streaming-links" aria-label="Streaming platforms">
+      <nav class="streaming-links" aria-label="음원 플랫폼">
         {streamingLinks.map((link) => (
           <a class:list={['streaming-link', link.priority === 'primary' && 'is-primary']} href={link.href} target="_blank" rel="noopener noreferrer">
             {link.label}
@@ -106,16 +118,16 @@ const seriesItems = [
 
     <section id="latest" class="latest-videos-section" aria-labelledby="latestTitle">
       <div class="funnel-section-head">
-        <p class="funnel-kicker">LATEST OST & MV</p>
-        <h2 id="latestTitle">Latest Videos</h2>
-        <a href={artistLinks.youtube} target="_blank" rel="noopener noreferrer">YouTube 채널</a>
+        <p class="funnel-kicker">최신 OST/MV</p>
+        <h2 id="latestTitle">최신 영상</h2>
+        <a href={artistLinks.youtube} target="_blank" rel="noopener noreferrer">유튜브 채널</a>
       </div>
 
       <div class="latest-video-grid">
         {latestVideos.map((video, index) => (
           <a class:list={['video-card', index === 0 && 'is-featured']} href={video.href} target="_blank" rel="noopener noreferrer">
             <img src={video.thumbnail} alt={video.thumbnailAlt} width="640" height="360" loading={index === 0 ? 'eager' : 'lazy'} decoding="async" />
-            <span>{video.type}</span>
+            <span>{getVideoTypeLabel(video.type)}</span>
             <strong>{video.title}</strong>
             <p>{video.meta}</p>
             <em>{video.date}</em>
@@ -129,11 +141,11 @@ const seriesItems = [
         <img src={archiveAlbum.image} alt={archiveAlbum.imageAlt} width="1600" height="1600" loading="lazy" decoding="async" />
       </a>
       <div class="release-copy">
-        <p class="funnel-kicker">FEATURED OST</p>
+        <p class="funnel-kicker">대표 OST</p>
         <h2 id="releaseTitle">{archiveAlbum.title}</h2>
         <p>{archiveAlbum.summary}</p>
         <div class="release-actions">
-          <a class="funnel-button funnel-button-streaming" href={archiveAlbum.externalHref} target="_blank" rel="noopener noreferrer">Genie 앨범</a>
+          <a class="funnel-button funnel-button-streaming" href={archiveAlbum.externalHref} target="_blank" rel="noopener noreferrer">지니 앨범</a>
           <a class="funnel-button funnel-button-ghost" href={artistLinks.youtubeMusic} target="_blank" rel="noopener noreferrer">YouTube Music</a>
           <a class="funnel-button funnel-button-ghost" href={artistLinks.spotify} target="_blank" rel="noopener noreferrer">Spotify</a>
         </div>
@@ -142,8 +154,8 @@ const seriesItems = [
 
     <section class="series-section" aria-labelledby="seriesTitle">
       <div class="funnel-section-head">
-        <p class="funnel-kicker">SERIES</p>
-        <h2 id="seriesTitle">Explore Series</h2>
+        <p class="funnel-kicker">시리즈</p>
+        <h2 id="seriesTitle">시리즈 둘러보기</h2>
       </div>
       <div class="series-grid">
         {seriesItems.map((item) => (
@@ -157,29 +169,29 @@ const seriesItems = [
 
     <section class="story-preview-section" aria-labelledby="storyTitle">
       <div>
-        <p class="funnel-kicker">MUSIC TO STORY IP</p>
+        <p class="funnel-kicker">음악에서 이야기로</p>
         <h2 id="storyTitle">{novelProject.title}</h2>
         <p>{novelProject.shortSummary}</p>
       </div>
       <div class="story-actions">
         <a class="funnel-button funnel-button-ghost" href={latestStoryOst.youtubeHref} target="_blank" rel="noopener noreferrer">OST 감상</a>
         <a class="funnel-button funnel-button-ghost" href={novelProject.season.startHref}>1화 읽기</a>
-        <a class="funnel-button funnel-button-ghost" href="/novels/">Story IP 보기</a>
+        <a class="funnel-button funnel-button-ghost" href="/novels/">웹소설 보기</a>
       </div>
     </section>
 
-    <footer class="funnel-footer" aria-label="SunoFox public footer">
+    <footer class="funnel-footer" aria-label="수노폭스 공개 사이트 하단">
       <span>© SUNOFOX</span>
-      <nav aria-label="Footer links">
-        <a href={artistLinks.youtube} target="_blank" rel="noopener noreferrer">YouTube</a>
-        <a href="/music/">OST Archive</a>
-        <a href="/updates/">Updates</a>
-        <a href="/profile/">About</a>
+      <nav aria-label="하단 링크">
+        <a href={artistLinks.youtube} target="_blank" rel="noopener noreferrer">유튜브</a>
+        <a href="/music/">OST 아카이브</a>
+        <a href="/updates/">업데이트</a>
+        <a href="/profile/">소개</a>
       </nav>
     </footer>
 
-    <nav class="mobile-sticky-cta" aria-label="Mobile primary actions">
-      <a href={artistLinks.youtubeSubscribe} target="_blank" rel="noopener noreferrer">YouTube 구독</a>
+    <nav class="mobile-sticky-cta" aria-label="모바일 주요 이동">
+      <a href={artistLinks.youtubeSubscribe} target="_blank" rel="noopener noreferrer">유튜브 구독</a>
       <a href="#listen">음원 듣기</a>
     </nav>
   </main>
@@ -202,6 +214,8 @@ const seriesItems = [
     background: rgba(3, 3, 10, 0.92);
     color: #f8fafc;
     backdrop-filter: blur(16px);
+    box-sizing: border-box;
+    max-width: 100vw;
   }
 
   :global(body:has(.renewal-home) .site-logo),
@@ -302,6 +316,12 @@ const seriesItems = [
     margin-top: 18px;
     font-size: clamp(52px, 6.8vw, 86px);
     line-height: 0.95;
+    overflow-wrap: break-word;
+    word-break: keep-all;
+  }
+
+  .funnel-hero h1 span {
+    display: block;
   }
 
   .funnel-lead {
@@ -649,6 +669,31 @@ const seriesItems = [
   }
 
   @media (max-width: 760px) {
+    :global(body:has(.renewal-home) .site-header) {
+      padding: 10px 16px;
+    }
+
+    :global(body:has(.renewal-home) .menu-trigger) {
+      position: fixed;
+      top: 10px;
+      right: 16px;
+      z-index: 85;
+      display: inline-flex;
+      flex: 0 0 auto;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    :global(body:has(.renewal-home) .menu-trigger-label) {
+      display: inline;
+      font-size: 12px;
+      line-height: 1;
+    }
+
+    :global(body:has(.renewal-home) .menu-trigger-lines) {
+      width: 28px;
+    }
+
     .renewal-home {
       padding: 0 18px calc(88px + env(safe-area-inset-bottom));
     }
@@ -659,9 +704,11 @@ const seriesItems = [
     }
 
     .funnel-hero h1 {
+      max-width: 100%;
       font-size: clamp(34px, 10.2vw, 40px);
       line-height: 0.98;
-      overflow-wrap: anywhere;
+      overflow-wrap: break-word;
+      word-break: keep-all;
     }
 
     .funnel-lead {

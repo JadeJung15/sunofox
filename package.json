@@ -27,12 +27,15 @@
     "deploy:preview": "npm run build && wrangler pages deploy dist --project-name sf-studio --branch astro-redesign",
     "deploy:production": "npm run build && wrangler pages deploy dist --project-name sf-studio --branch main"
   },
+  "engines": {
+    "node": ">=20.3.0"
+  },
   "dependencies": {
-    "@astrojs/sitemap": "latest",
+    "@astrojs/sitemap": "3.7.3",
     "@tailwindcss/vite": "4.1.17",
-    "astro": "latest",
+    "astro": "5.18.2",
     "tailwindcss": "4.1.17",
-    "wrangler": "latest"
+    "wrangler": "4.80.0"
   },
   "devDependencies": {}
 }

@@ -13,6 +13,7 @@ SunoFox 공식 사이트는 YouTube에서 공개되는 Anime OST와 웹소설 OS
 | 패키지 매니저 | npm |
 | Cloudflare Pages 프로젝트 | `sf-studio` |
 | 빌드 출력 | `dist` |
+| 운영 배포 방식 | GitHub Actions에서 `main` push 시 Cloudflare Pages Direct Upload |
 | 공개 사이트 방향 | YouTube 중심 Anime OST Studio, 웹소설 OST, Story IP, 음악 아카이브, 스튜디오 진입 |
 | 접근 모델 | 공개 사이트 + SF Studio 자체 승인/로그인 |
 
@@ -128,6 +129,32 @@ OST와 YouTube 연결은 `src/data/artistContent.js`의 `artistLinks`, `featured
 
 `lint`와 `test`는 별도 테스트 프레임워크 없이 현재 운영 검증 스크립트를 standalone으로 실행하는 alias입니다.
 
+## GitHub Actions Auto Deploy
+
+`main` 브랜치에 push되면 GitHub Actions가 빌드와 검증을 실행한 뒤 Cloudflare Pages production에 배포합니다.
+
+| 항목 | 값 |
+|---|---|
+| workflow | `.github/workflows/cloudflare-pages-production.yml` |
+| trigger | `push` to `main`, manual `workflow_dispatch` |
+| runner | `windows-latest` |
+| Node.js | `22` |
+| install | `npm ci` |
+| verify | `npm run test` |
+| deploy action | `cloudflare/wrangler-action@v4` |
+| wrangler | `4.80.0` |
+| deploy command | `wrangler pages deploy dist --project-name=sf-studio --branch=main` |
+
+GitHub repository의 `Settings > Secrets and variables > Actions`에 아래 secrets가 필요합니다.
+
+| Secret | 용도 |
+|---|---|
+| `CLOUDFLARE_API_TOKEN` | Cloudflare Pages 배포 권한이 있는 API token |
+| `CLOUDFLARE_ACCOUNT_ID` | Cloudflare account id |
+
+`CLOUDFLARE_API_TOKEN`은 repo에 저장하지 않습니다. Cloudflare dashboard에서 생성한 뒤 GitHub Actions secret으로만 등록합니다.
+`GITHUB_TOKEN`은 GitHub Actions가 자동 제공하며 별도 등록하지 않습니다.
+
 ## Deployment Checklist
 
 production 반영 전 기본 순서입니다.
@@ -142,11 +169,17 @@ production 반영 전 기본 순서입니다.
 8. `git add ...`
 9. `git commit -m "..."`
 10. `git push origin main`
-11. `npx wrangler pages deploy dist --project-name sf-studio --branch main`
+11. GitHub Actions `Deploy Cloudflare Pages Production` 성공 확인
 12. `npx wrangler pages deployment list --project-name sf-studio`
 13. `npm run check:production`
 14. `npm run check:production-seo`
 15. 운영 URL HTTP 200과 핵심 문자열 확인
+
+수동 복구 배포가 필요할 때만 아래 명령을 사용합니다.
+
+```powershell
+npm run deploy:production
+```
 
 `check:content`는 `src/data/siteContent.js`의 `novelEpisodes`와 `src/pages/novels/episode-00N.md` frontmatter의 title, canonical, publishedAt, readTime, 이전/다음 링크, 공유 제목/설명/태그를 비교합니다. 또한 `/novels/`의 `readingPath`가 공개 회차를 빠짐없이 덮고 각 구간의 첫 화로 연결되는지 확인하며, 공개 데이터에 없는 에피소드 route 파일이 실수로 배포되지 않도록 실패 처리합니다. 세계관/캐릭터 카드의 `id`와 `/novels/#...` 앵커도 함께 검증합니다.
 `check:korean-reader`는 에피소드 본문과 시스템 문구에 영어 문장이 들어갈 경우 같은 줄에 한글 설명 또는 괄호 병기가 있는지 확인합니다.

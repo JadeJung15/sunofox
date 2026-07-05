@@ -119,6 +119,7 @@ const {
   artistLinks,
   archiveAlbum,
   featuredStoryOst,
+  latestChannelVideo,
   latestStoryOst,
   musicArchive,
   storyOsts
@@ -135,6 +136,12 @@ for (const field of ['date', 'title', 'englishTitle', 'type', 'href', 'youtubeHr
 assertYoutubeVideo('featuredStoryOst', {
   ...featuredStoryOst,
   meta: featuredStoryOst?.englishTitle
+});
+
+assertYoutubeVideo('latestChannelVideo', {
+  ...latestChannelVideo,
+  href: latestChannelVideo?.youtubeHref || latestChannelVideo?.href,
+  meta: latestChannelVideo?.englishTitle
 });
 
 const storyOstKeys = new Set();
@@ -248,8 +255,12 @@ assertArray('musicArchive.videos', musicArchive?.videos).forEach((video, index) 
   }
 });
 
-if (musicArchive?.videos?.[0]?.videoId !== latestStoryOst?.videoId) {
-  fail('musicArchive.videos[0]: must be the latest story OST');
+if (musicArchive?.videos?.[0]?.videoId !== latestChannelVideo?.videoId) {
+  fail('musicArchive.videos[0]: must be the latest channel video');
+}
+
+if (!musicArchive?.videos?.some((video) => video.videoId === latestStoryOst?.videoId)) {
+  fail('musicArchive.videos: must include latest story OST');
 }
 
 if (!musicArchive?.videos?.some((video) => video.videoId === featuredStoryOst?.videoId)) {
@@ -271,7 +282,12 @@ assertArray('musicArchive.videoHub.facts', musicArchive?.videoHub?.facts, { min:
 });
 
 const videoHubLinkHrefs = new Set((musicArchive?.videoHub?.links || []).map((link) => link.href));
-for (const requiredHref of [artistLinks?.youtube, artistLinks?.youtubePlaylists, featuredStoryOst?.youtubeHref]) {
+for (const requiredHref of [
+  artistLinks?.youtube,
+  artistLinks?.youtubePlaylists,
+  latestChannelVideo?.youtubeHref,
+  featuredStoryOst?.youtubeHref
+]) {
   if (!videoHubLinkHrefs.has(requiredHref)) {
     fail(`musicArchive.videoHub.links: missing required href "${requiredHref || '(empty)'}"`);
   }

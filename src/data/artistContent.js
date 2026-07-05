@@ -15,13 +15,16 @@ export const artistLinks = {
   linktree: 'https://linktr.ee/sunofox',
   soundcloud: 'https://soundcloud.com/sunopogseu',
   featuredOst: 'https://youtu.be/u_OwBr3Cstk?si=Vs1Y6xQ1jpSfmm53',
-  detectedErrorOst: 'https://youtu.be/2KsAbBnf2Lk'
+  detectedErrorOst: 'https://youtu.be/2KsAbBnf2Lk',
+  sayItsOverOst: 'https://www.youtube.com/watch?v=CLHeFg8QVvc',
+  dontTakeMeAwayYetOst: 'https://www.youtube.com/watch?v=xwV_wACJatw',
+  fadingSignalOst: 'https://www.youtube.com/watch?v=KrfD7PD4l6k'
 };
 
 export const featuredStoryOst = {
   key: 'villainess-page-one-main',
   date: '2026.06.14',
-  title: '웹소설 OST｜악녀는 첫 장에서 웃었다',
+  title: '웹소설 OST EP.01｜악녀는 첫 장에서 웃었다',
   englishTitle: 'The Villainess Smiled on Page One',
   type: 'Web Novel OST',
   href: artistLinks.featuredOst,
@@ -50,7 +53,61 @@ export const detectedErrorStoryOst = {
     '아델라인이 예정된 몰락을 벗어난 뒤, 멈춘 시계와 원작 보정이 시작되는 순간을 담은 두 번째 웹소설 OST입니다.'
 };
 
-export const latestStoryOst = detectedErrorStoryOst;
+export const sayItsOverStoryOst = {
+  key: 'villainess-page-one-say-its-over',
+  date: '2026.06.28',
+  title: '웹소설 OST EP.03｜끝났다고 말해',
+  englishTitle: 'Say It’s Over',
+  type: 'Web Novel OST',
+  href: artistLinks.sayItsOverOst,
+  youtubeHref: artistLinks.sayItsOverOst,
+  videoId: 'CLHeFg8QVvc',
+  thumbnail: '/assets/home/say-its-over-thumbnail.jpg',
+  thumbnailAlt: '웹소설 OST EP.03 끝났다고 말해 공식 썸네일과 재판장에 선 악녀 캐릭터',
+  publishedAt: '2026-06-28T08:15:38+00:00',
+  summary:
+    '원작의 재판장 앞에서 끝났다고 말해야 하는 순간, 아델라인의 분노와 결심을 검붉은 록 감정선으로 압축한 세 번째 OST입니다.'
+};
 
-export const storyOsts = [featuredStoryOst, detectedErrorStoryOst];
+export const dontTakeMeAwayYetStoryOst = {
+  key: 'villainess-page-one-dont-take-me-away-yet',
+  date: '2026.07.01',
+  title: '웹소설 OST EP.04｜아직 데려가지 마',
+  englishTitle: 'Don’t Take Me Away Yet',
+  type: 'Web Novel OST',
+  href: artistLinks.dontTakeMeAwayYetOst,
+  youtubeHref: artistLinks.dontTakeMeAwayYetOst,
+  videoId: 'xwV_wACJatw',
+  thumbnail: '/assets/home/dont-take-me-away-yet-thumbnail.jpg',
+  thumbnailAlt: '웹소설 OST EP.04 아직 데려가지 마 공식 썸네일과 사슬에 묶인 악녀 캐릭터',
+  publishedAt: '2026-07-01T08:15:31+00:00',
+  summary:
+    '구속 직전의 아델라인이 아직 끝나지 않은 이야기를 붙잡는 장면을 다크 판타지 애니메이션 OST 톤으로 밀어붙인 최신 공개곡입니다.'
+};
+
+export const fadingSignalOst = {
+  key: 'fading-signal',
+  date: '2026.06.24',
+  title: '이별 Emotional Pop｜신호가 희미해져',
+  englishTitle: 'Fading Signal',
+  type: 'Emotional Pop',
+  href: artistLinks.fadingSignalOst,
+  youtubeHref: artistLinks.fadingSignalOst,
+  videoId: 'KrfD7PD4l6k',
+  thumbnail: '/assets/home/fading-signal-thumbnail.jpg',
+  thumbnailAlt: '이별 Emotional Pop 신호가 희미해져 공식 썸네일과 비 온 뒤 길 위에 선 인물',
+  publishedAt: '2026-06-24T08:15:36+00:00',
+  summary:
+    '채널의 평소 OST 결에서 살짝 벗어나, 이별 이후 희미해지는 신호를 일렉트로닉 록과 드림 팝 질감으로 담은 감정곡입니다.'
+};
+
+export const latestStoryOst = dontTakeMeAwayYetStoryOst;
+export const latestChannelVideo = dontTakeMeAwayYetStoryOst;
+
+export const storyOsts = [
+  featuredStoryOst,
+  detectedErrorStoryOst,
+  sayItsOverStoryOst,
+  dontTakeMeAwayYetStoryOst
+];
 export const storyOstMap = Object.fromEntries(storyOsts.map((ost) => [ost.key, ost]));

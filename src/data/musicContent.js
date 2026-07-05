@@ -1,4 +1,11 @@
-import { artistLinks, featuredStoryOst, latestStoryOst } from './artistContent.js';
+import {
+  artistLinks,
+  detectedErrorStoryOst,
+  fadingSignalOst,
+  featuredStoryOst,
+  latestChannelVideo,
+  sayItsOverStoryOst
+} from './artistContent.js';
 
 export const archiveAlbum = {
   title: 'ARCHIVE vol.1',
@@ -50,13 +57,13 @@ export const archiveAlbum = {
 export const musicArchive = {
   title: 'SunoFox Music Archive',
   href: '/music/',
-  researchDate: '2026.06.19',
+  researchDate: '2026.07.05',
   summary:
-    '앨범, 주요 스트리밍 채널, YouTube OST와 MV를 빠르게 여는 SunoFox 음악 필모그래피 링크 허브입니다.',
+    '앨범, 주요 스트리밍 채널, YouTube 최신 OST와 MV를 빠르게 여는 SunoFox 음악 필모그래피 링크 허브입니다.',
   facts: [
     { label: '앨범', value: 'ARCHIVE vol.1' },
     { label: '스트리밍', value: '13 links' },
-    { label: '영상', value: '8편' },
+    { label: '영상', value: '최신 9편 큐레이션' },
     { label: '채널', value: 'YouTube / MV' }
   ],
   flow: [
@@ -117,15 +124,48 @@ export const musicArchive = {
   ],
   videos: [
     {
-      date: latestStoryOst.date,
-      title: latestStoryOst.title,
-      meta: `${latestStoryOst.englishTitle}｜악녀는 첫 장에서 웃었다`,
-      type: latestStoryOst.type,
-      href: latestStoryOst.youtubeHref,
-      videoId: latestStoryOst.videoId,
-      thumbnail: latestStoryOst.thumbnail,
-      thumbnailAlt: latestStoryOst.thumbnailAlt,
-      publishedAt: latestStoryOst.publishedAt
+      date: latestChannelVideo.date,
+      title: latestChannelVideo.title,
+      meta: `${latestChannelVideo.englishTitle}｜악녀는 첫 장에서 웃었다`,
+      type: latestChannelVideo.type,
+      href: latestChannelVideo.youtubeHref,
+      videoId: latestChannelVideo.videoId,
+      thumbnail: latestChannelVideo.thumbnail,
+      thumbnailAlt: latestChannelVideo.thumbnailAlt,
+      publishedAt: latestChannelVideo.publishedAt
+    },
+    {
+      date: sayItsOverStoryOst.date,
+      title: sayItsOverStoryOst.title,
+      meta: `${sayItsOverStoryOst.englishTitle}｜악녀는 첫 장에서 웃었다`,
+      type: sayItsOverStoryOst.type,
+      href: sayItsOverStoryOst.youtubeHref,
+      videoId: sayItsOverStoryOst.videoId,
+      thumbnail: sayItsOverStoryOst.thumbnail,
+      thumbnailAlt: sayItsOverStoryOst.thumbnailAlt,
+      publishedAt: sayItsOverStoryOst.publishedAt
+    },
+    {
+      date: fadingSignalOst.date,
+      title: fadingSignalOst.title,
+      meta: `${fadingSignalOst.englishTitle}｜Electronic Rock x Dream Pop`,
+      type: fadingSignalOst.type,
+      href: fadingSignalOst.youtubeHref,
+      videoId: fadingSignalOst.videoId,
+      thumbnail: fadingSignalOst.thumbnail,
+      thumbnailAlt: fadingSignalOst.thumbnailAlt,
+      publishedAt: fadingSignalOst.publishedAt
+    },
+    {
+      date: detectedErrorStoryOst.date,
+      title: detectedErrorStoryOst.title,
+      meta: `${detectedErrorStoryOst.englishTitle}｜악녀는 첫 장에서 웃었다`,
+      type: detectedErrorStoryOst.type,
+      href: detectedErrorStoryOst.youtubeHref,
+      videoId: detectedErrorStoryOst.videoId,
+      thumbnail: detectedErrorStoryOst.thumbnail,
+      thumbnailAlt: detectedErrorStoryOst.thumbnailAlt,
+      publishedAt: detectedErrorStoryOst.publishedAt
     },
     {
       date: '2026.06.14',
@@ -181,44 +221,22 @@ export const musicArchive = {
       thumbnail: '/assets/home/story-universe.jpg',
       thumbnailAlt: '어두운 밤의 성과 도시 불빛이 보이는 도망친 왕녀 Anime OP 썸네일',
       publishedAt: '2026-06-03T08:00:31+00:00'
-    },
-    {
-      date: '2026.05.31',
-      title: '말 안 하면 끝이야',
-      meta: 'If We Don’t Say It',
-      type: 'Anime OST',
-      href: 'https://www.youtube.com/watch?v=_DebZ1_3lpQ',
-      videoId: '_DebZ1_3lpQ',
-      thumbnail: '/assets/home/popular-last-greeting.jpg',
-      thumbnailAlt: '도시의 밤하늘과 따뜻한 불빛이 보이는 Anime OST 썸네일',
-      publishedAt: '2026-05-31T08:15:04+00:00'
-    },
-    {
-      date: '2026.05.24',
-      title: '검은 새벽의 왕녀',
-      meta: 'Princess of the Black Dawn',
-      type: 'Dark Fantasy OST',
-      href: 'https://www.youtube.com/watch?v=JZY3Lew_ZD8',
-      videoId: 'JZY3Lew_ZD8',
-      thumbnail: '/assets/home/popular-unbreakable.jpg',
-      thumbnailAlt: '푸른 새벽의 도시 실루엣이 보이는 다크 판타지 OST 썸네일',
-      publishedAt: '2026-05-24T08:15:00+00:00'
     }
   ],
   videoHub: {
     title: 'YouTube / MV 영상 허브',
     summary:
-      '공개 OST, 라이브 아카이브, 애니메이션 OP 감성 영상을 한 곳에서 보고 YouTube 채널과 재생목록으로 이어 봅니다.',
+      '공식 YouTube 피드 기준 최신 공개 OST, 감정곡, 라이브 아카이브, 애니메이션 OP 감성 영상을 한 곳에서 보고 채널과 재생목록으로 이어 봅니다.',
     facts: [
       { label: '대표 영상', value: featuredStoryOst.title },
-      { label: '최근 영상', value: latestStoryOst.title },
-      { label: '최근 큐레이션', value: 'OST · Live Archive · Anime OP' },
+      { label: '최근 영상', value: latestChannelVideo.title },
+      { label: '최근 큐레이션', value: 'Web Novel OST · Emotional Pop · Anime OP' },
       { label: '주요 이동', value: 'YouTube 채널 · 재생목록 · 최신 영상' }
     ],
     links: [
       { label: 'YouTube 채널', href: artistLinks.youtube },
       { label: '재생목록 보기', href: artistLinks.youtubePlaylists },
-      { label: '최신 OST 감상', href: latestStoryOst.youtubeHref },
+      { label: '최신 영상 감상', href: latestChannelVideo.youtubeHref },
       { label: '대표 OST 감상', href: featuredStoryOst.youtubeHref }
     ]
   },

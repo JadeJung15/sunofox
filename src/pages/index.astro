@@ -5,6 +5,7 @@ import {
   archiveAlbum,
   artistLinks,
   featuredStoryOst,
+  latestChannelVideo,
   latestStoryOst,
   musicArchive,
   novelProject,
@@ -12,12 +13,13 @@ import {
 } from '../data/siteContent.js';
 
 const latestVideos = musicArchive.videos.slice(0, 4);
-const featuredVideo = latestStoryOst;
+const featuredVideo = latestChannelVideo;
 const videoTypeLabels = {
   'Web Novel OST': '웹소설 OST',
   'Live Archive': '라이브 아카이브',
   'Anime OP': '애니메이션 오프닝',
   'Anime OST': '애니메이션 OST',
+  'Emotional Pop': '이별 감성 팝',
   'Isekai Anime OP': '이세계 애니메이션 오프닝',
   'Dark Fantasy OST': '다크 판타지 OST'
 };
@@ -727,6 +729,12 @@ const seriesItems = [
     .funnel-hero-actions .funnel-button {
       width: 100%;
       min-width: 0;
+    }
+
+    .funnel-featured-video span,
+    .funnel-featured-video strong,
+    .funnel-featured-video em {
+      display: none;
     }
 
     .streaming-strip,

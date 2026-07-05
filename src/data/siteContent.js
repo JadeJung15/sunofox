@@ -1,8 +1,12 @@
 import {
   artistLinks,
   detectedErrorStoryOst,
+  dontTakeMeAwayYetStoryOst,
+  fadingSignalOst,
   featuredStoryOst,
+  latestChannelVideo,
   latestStoryOst,
+  sayItsOverStoryOst,
   storyOstMap,
   storyOsts
 } from './artistContent.js';
@@ -28,8 +32,11 @@ export {
   artistLinks,
   categorizedSiteUpdates,
   detectedErrorStoryOst,
+  dontTakeMeAwayYetStoryOst,
+  fadingSignalOst,
   featuredStoryOst,
   footerItems,
+  latestChannelVideo,
   latestNovelEpisode,
   latestStoryOst,
   menuItems,
@@ -40,6 +47,7 @@ export {
   pinnedUpdateNotice,
   plannedContentHubs,
   publishedNovelEpisodes,
+  sayItsOverStoryOst,
   siteUpdates,
   storyOstMap,
   storyOsts,
@@ -51,7 +59,7 @@ export function getEpisodeOst(episode = novelEpisodes[0]) {
 }
 
 export const sunofoxProfile = {
-  researchDate: '2026.06.19',
+  researchDate: '2026.07.05',
   highlights: [
     {
       key: 'video',
@@ -103,14 +111,14 @@ export const sunofoxProfile = {
       kicker: 'CHANNEL',
       title: 'SunoFox Anime OST Studio',
       summary:
-        '유튜브 채널은 애니메이션 감성의 오리지널 음악, OST, MV를 공개하는 중심 채널입니다. 공개 채널 소개 기준으로 매주 수요일과 일요일 17:15(KST)에 새 음악과 영상을 정기적으로 공개하는 운영 흐름을 사용합니다.',
+        '유튜브 채널은 애니메이션 감성의 오리지널 음악, OST, MV를 공개하는 중심 채널입니다. 공식 최신 피드 기준으로 매주 수요일과 일요일 17:15(KST)에 새 음악과 영상을 정기적으로 공개하는 운영 흐름을 사용합니다.',
       facts: [
         { label: '채널명', value: 'SunoFox / 수노폭스' },
         { label: '핸들', value: '@SunoFox' },
-        { label: '규모', value: '구독자 약 4.18K명 · 영상 131편' },
-        { label: '누적 조회', value: '90만+ 회 공개 스냅샷 기준' },
+        { label: '규모', value: '구독자 약 4.28K명 · 영상 137편' },
+        { label: '누적 조회', value: '92만+ 회 보조 스냅샷 기준' },
         { label: '업로드', value: '수 · 일 17:15 KST' },
-        { label: '최근 공개', value: latestStoryOst.title }
+        { label: '최근 공개', value: latestChannelVideo.title }
       ],
       videos: musicArchive.videos.slice(0, 4).map((video) => ({
         ...video,

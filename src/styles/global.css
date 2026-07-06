@@ -8048,14 +8048,22 @@ body:has(.anime-home).menu-open .menu-trigger::before {
 }
 
 body:has(.anime-home) .site-footer {
+  grid-template-columns: 1fr;
+  justify-items: center;
   border-top: 1px solid rgba(255, 247, 251, 0.16);
+  padding-block: 28px;
   background: #050509;
   color: #aa9ab4;
+  text-align: center;
 }
 
 body:has(.anime-home) .site-footer span,
 body:has(.anime-home) .site-footer a {
   color: #aa9ab4;
+}
+
+body:has(.anime-home) .site-footer-nav {
+  display: none;
 }
 
 body:has(.anime-home) .poster-social a {
@@ -8073,15 +8081,12 @@ body:has(.anime-home) .site-footer a:focus-visible {
     grid-template-columns: 1fr;
     justify-items: center;
     gap: 12px;
-    padding: 30px 14px;
+    padding: 26px 14px;
     text-align: center;
   }
 
   body:has(.anime-home) .site-footer-nav {
-    display: grid;
-    grid-template-columns: repeat(3, auto);
-    justify-content: center;
-    gap: 4px 14px;
+    display: none;
   }
 
   body:has(.anime-home) .site-footer a {

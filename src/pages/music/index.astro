@@ -241,11 +241,22 @@ const musicHeroFacts = [
                   <li>{track.position}. {track.title}</li>
                 ))}
               </ol>
-              <div class="music-release-actions">
-                <a class="main-button" href={release.href}>상세 보기</a>
+              <div class="music-release-platforms" aria-label={`${release.title} 감상 링크`}>
                 {release.links.map((link) => (
-                  <a class="main-button main-button-muted" href={link.href} target="_blank" rel="noopener noreferrer">{link.label}</a>
+                  <a
+                    class:list={['music-platform-link', link.platform && `is-${link.platform}`]}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${release.title} ${link.label}에서 듣기`}
+                  >
+                    <span aria-hidden="true">{link.icon}</span>
+                    <strong>{link.label}</strong>
+                  </a>
                 ))}
+              </div>
+              <div class="music-release-actions">
+                <a class="main-button" href={release.href}>앨범 상세</a>
               </div>
             </div>
           </article>

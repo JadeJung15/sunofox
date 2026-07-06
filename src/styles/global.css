@@ -3618,35 +3618,47 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
 
 .music-release-cover {
   position: relative;
-  display: grid;
-  min-height: 360px;
-  align-items: end;
+  display: block;
+  aspect-ratio: 1;
+  min-height: 0;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  background:
-    linear-gradient(145deg, rgba(255, 10, 91, 0.12), transparent 44%),
-    rgba(0, 0, 0, 0.24);
-  padding: 18px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.24);
+  padding: 0;
 }
 
 .music-release-cover img {
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  width: min(44%, 164px);
-  height: auto;
-  opacity: 0.36;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 1;
+  transition: transform 180ms ease, filter 180ms ease;
 }
 
 .music-release-cover span {
-  position: relative;
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  display: inline-flex;
+  min-height: 30px;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  background: rgba(5, 5, 9, 0.72);
+  padding: 0 10px;
   color: #ffffff;
-  font-family: var(--font-condensed);
-  font-size: clamp(42px, 6vw, 72px);
-  font-weight: 950;
-  letter-spacing: 0;
-  line-height: 0.92;
-  text-transform: uppercase;
+  font-size: 12px;
+  font-weight: 850;
+  line-height: 1;
+  backdrop-filter: blur(12px);
+}
+
+.music-release-cover:hover img,
+.music-release-cover:focus-visible img {
+  filter: saturate(1.08) contrast(1.04);
+  transform: scale(1.025);
 }
 
 .music-release-copy {
@@ -3734,6 +3746,83 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 24px;
+}
+
+.music-release-platforms,
+.album-platform-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 22px;
+}
+
+.music-platform-link {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 5px 13px 5px 6px;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 850;
+  text-decoration: none;
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.music-platform-link > span {
+  display: inline-grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 950;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.music-platform-link > strong {
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  white-space: nowrap;
+}
+
+.music-platform-link:hover,
+.music-platform-link:focus-visible {
+  border-color: rgba(255, 255, 255, 0.34);
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-1px);
+}
+
+.music-platform-link.is-spotify > span {
+  background: #1db954;
+  color: #06130a;
+}
+
+.music-platform-link.is-apple > span {
+  background: #f5f5f7;
+  color: #111111;
+}
+
+.music-platform-link.is-youtube-music > span {
+  background: #ff0033;
+  color: #ffffff;
+}
+
+.music-platform-link.is-genie > span {
+  background: #12a8ff;
+  color: #ffffff;
+}
+
+.music-platform-link.is-bugs > span {
+  background: #ff4f2e;
+  color: #ffffff;
 }
 
 .music-video-grid {
@@ -4115,40 +4204,34 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
 .album-cover-mark {
   position: relative;
   display: grid;
-  min-height: 430px;
-  align-content: end;
-  overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.13);
-  background:
-    linear-gradient(145deg, rgba(255, 10, 91, 0.12), transparent 42%),
-    rgba(255, 255, 255, 0.025);
-  padding: 28px;
+  gap: 12px;
+  align-content: start;
+  min-height: 0;
+  margin: 0;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  padding: 0;
 }
 
 .album-cover-mark img {
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  width: min(42%, 178px);
-  height: auto;
-  opacity: 0.34;
-}
-
-.album-cover-mark span,
-.album-cover-mark strong {
-  position: relative;
   display: block;
-  color: #ffffff;
-  font-family: var(--font-condensed);
-  font-size: clamp(54px, 8vw, 108px);
-  font-weight: 950;
-  letter-spacing: 0;
-  line-height: 0.88;
-  text-transform: uppercase;
+  width: 100%;
+  max-width: 512px;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 8px;
+  opacity: 1;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
 }
 
-.album-cover-mark strong {
-  color: var(--pink);
+.album-cover-mark figcaption {
+  color: var(--subtle);
+  font-size: 12px;
+  font-weight: 850;
+  line-height: 1.45;
 }
 
 .album-detail-copy h1 {
@@ -6274,15 +6357,15 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   }
 
   .music-release-cover {
-    min-height: 282px;
+    min-height: 0;
   }
 
   .music-release-cover img {
-    width: 126px;
+    width: 100%;
   }
 
   .music-release-cover span {
-    font-size: clamp(38px, 13vw, 56px);
+    font-size: 12px;
   }
 
   .music-video-hub,
@@ -6355,17 +6438,23 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   }
 
   .album-cover-mark {
-    min-height: 292px;
-    padding: 22px;
+    min-height: 0;
+    padding: 0;
   }
 
   .album-cover-mark img {
-    width: 126px;
+    width: min(100%, 420px);
   }
 
-  .album-cover-mark span,
-  .album-cover-mark strong {
-    font-size: clamp(48px, 15vw, 68px);
+  .album-platform-links,
+  .music-release-platforms {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .music-platform-link {
+    width: 100%;
+    justify-content: flex-start;
   }
 
   .album-detail-copy h1 {
@@ -8028,7 +8117,7 @@ body.menu-open .menu-trigger:focus-visible .menu-trigger-lines span:last-child {
 }
 
 .music-release-cover {
-  min-height: 300px;
+  min-height: 0;
 }
 
 @media (max-width: 760px) {
@@ -8215,19 +8304,17 @@ body.menu-open .menu-trigger:focus-visible .menu-trigger-lines span:last-child {
   }
 
   .music-release-cover {
-    min-height: 104px;
-    padding: 12px;
+    min-height: 0;
+    padding: 0;
   }
 
   .music-release-cover img {
-    top: 12px;
-    right: 12px;
-    width: 72px;
+    width: 100%;
   }
 
   .music-release-cover span {
-    font-size: 1.18rem;
-    line-height: 1.12;
+    font-size: 12px;
+    line-height: 1;
   }
 
   .music-release-copy dl,
@@ -9439,8 +9526,9 @@ body:has(.music-archive-page) .site-footer a {
   }
 }
 
-/* Match /music to the home anime poster concept while keeping the page music-only. */
-body:has(.anime-home):has(.music-archive-page) {
+/* Match music pages to the home anime poster concept while keeping the pages music-only. */
+body:has(.anime-home):has(.music-archive-page),
+body:has(.anime-home):has(.album-detail-page) {
   --sf-paper: #050509;
   --sf-surface: #0b0d13;
   --sf-surface-muted: #11141d;
@@ -9686,6 +9774,113 @@ body:has(.anime-home):has(.music-archive-page) .site-footer {
 
 body:has(.anime-home):has(.music-archive-page) .site-footer span,
 body:has(.anime-home):has(.music-archive-page) .site-footer a {
+  color: rgba(255, 247, 251, 0.58);
+}
+
+body:has(.anime-home):has(.album-detail-page) .site-main,
+body:has(.anime-home):has(.album-detail-page) .album-detail-page {
+  background:
+    radial-gradient(circle at 18% 0%, rgba(255, 10, 91, 0.18), transparent 32rem),
+    radial-gradient(circle at 86% 18%, rgba(246, 184, 106, 0.08), transparent 30rem),
+    linear-gradient(180deg, #050509 0%, #090a10 52%, #050509 100%);
+  color: var(--anime-ink);
+}
+
+body:has(.anime-home):has(.album-detail-page) .album-detail-page {
+  padding-top: 104px;
+}
+
+body:has(.anime-home):has(.album-detail-page) .site-header {
+  background: rgba(5, 5, 9, 0.68);
+  border-bottom-color: rgba(255, 247, 251, 0.1);
+  backdrop-filter: blur(18px);
+}
+
+body:has(.anime-home):has(.album-detail-page) .site-logo,
+body:has(.anime-home):has(.album-detail-page) .menu-trigger {
+  color: rgba(255, 247, 251, 0.86);
+}
+
+body:has(.anime-home):has(.album-detail-page) .menu-trigger::before {
+  border-color: rgba(255, 247, 251, 0.16);
+  background: rgba(5, 5, 9, 0.36);
+}
+
+body:has(.anime-home):has(.album-detail-page) .menu-trigger-lines span {
+  background: rgba(255, 247, 251, 0.9);
+}
+
+body:has(.anime-home):has(.album-detail-page) .album-detail-hero,
+body:has(.anime-home):has(.album-detail-page) .album-note-section,
+body:has(.anime-home):has(.album-detail-page) .album-track-section,
+body:has(.anime-home):has(.album-detail-page) .album-source-panel {
+  border-color: rgba(255, 247, 251, 0.12);
+}
+
+body:has(.anime-home):has(.album-detail-page) .album-cover-mark img,
+body:has(.anime-home):has(.album-detail-page) .album-track-grid li,
+body:has(.anime-home):has(.album-detail-page) .album-source-panel {
+  border-color: rgba(255, 247, 251, 0.16);
+  background:
+    linear-gradient(145deg, rgba(255, 111, 159, 0.12), transparent 52%),
+    rgba(5, 5, 9, 0.58);
+  color: var(--anime-ink);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.24);
+}
+
+body:has(.anime-home):has(.album-detail-page) .album-detail-copy h1,
+body:has(.anime-home):has(.album-detail-page) .album-note-section h2,
+body:has(.anime-home):has(.album-detail-page) .album-track-section h2,
+body:has(.anime-home):has(.album-detail-page) .album-meta-grid dd,
+body:has(.anime-home):has(.album-detail-page) .album-track-grid strong {
+  color: var(--anime-ink);
+}
+
+body:has(.anime-home):has(.album-detail-page) .album-detail-summary,
+body:has(.anime-home):has(.album-detail-page) .album-note-copy p,
+body:has(.anime-home):has(.album-detail-page) .album-track-grid em,
+body:has(.anime-home):has(.album-detail-page) .album-cover-mark figcaption {
+  color: var(--anime-muted);
+}
+
+body:has(.anime-home):has(.album-detail-page) .album-back-link,
+body:has(.anime-home):has(.album-detail-page) .album-meta-grid dt,
+body:has(.anime-home):has(.album-detail-page) .album-source-panel a {
+  color: var(--anime-soft);
+}
+
+body:has(.anime-home):has(.album-detail-page) .section-kicker,
+body:has(.anime-home):has(.album-detail-page) .album-track-grid span,
+body:has(.anime-home):has(.album-detail-page) .album-source-panel span {
+  color: var(--anime-accent);
+}
+
+body:has(.anime-home):has(.album-detail-page) .main-button-muted {
+  border-color: rgba(255, 247, 251, 0.18);
+  background: rgba(255, 247, 251, 0.06);
+  color: var(--anime-ink);
+}
+
+body:has(.anime-home):has(.album-detail-page) .music-platform-link {
+  border-color: rgba(255, 247, 251, 0.16);
+  background: rgba(5, 5, 9, 0.54);
+  color: var(--anime-ink);
+}
+
+body:has(.anime-home):has(.album-detail-page) .music-platform-link:hover,
+body:has(.anime-home):has(.album-detail-page) .music-platform-link:focus-visible {
+  border-color: rgba(255, 111, 159, 0.52);
+  background: rgba(255, 111, 159, 0.12);
+}
+
+body:has(.anime-home):has(.album-detail-page) .site-footer {
+  border-top-color: rgba(255, 247, 251, 0.1);
+  background: #050509;
+  color: rgba(255, 247, 251, 0.54);
+}
+
+body:has(.anime-home):has(.album-detail-page) .site-footer span,
+body:has(.anime-home):has(.album-detail-page) .site-footer a {
   color: rgba(255, 247, 251, 0.58);
 }
 

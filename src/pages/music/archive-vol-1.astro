@@ -16,15 +16,14 @@ import { archiveAlbum, archiveAlbumStructuredData } from '../../data/siteContent
 >
   <SiteChrome active="music" />
 
-  <main id="main-content" class="site-main album-detail-page">
+  <main id="main-content" class="site-main anime-home album-detail-page">
     <section class="album-detail-hero reveal" aria-labelledby="albumTitle">
       <a class="album-back-link" href="/music/">음악 아카이브</a>
 
-      <div class="album-cover-mark" aria-hidden="true">
+      <figure class="album-cover-mark">
         <img src={archiveAlbum.image} alt={archiveAlbum.imageAlt} width="512" height="512" loading="eager" decoding="async" />
-        <span>ARCHIVE</span>
-        <strong>VOL.1</strong>
-      </div>
+        <figcaption>{archiveAlbum.type} · {archiveAlbum.releaseDate}</figcaption>
+      </figure>
 
       <div class="album-detail-copy">
         <p class="section-kicker">앨범 기록</p>
@@ -40,12 +39,23 @@ import { archiveAlbum, archiveAlbumStructuredData } from '../../data/siteContent
           ))}
         </dl>
 
-        <div class="album-detail-actions">
+        <nav class="album-platform-links" aria-label={`${archiveAlbum.title} 감상 링크`}>
           {archiveAlbum.links.map((link) => (
-            <a class="main-button main-button-muted" href={link.href} target="_blank" rel="noopener noreferrer">{link.label}</a>
+            <a
+              class:list={['music-platform-link', link.platform && `is-${link.platform}`]}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${archiveAlbum.title} ${link.label}에서 듣기`}
+            >
+              <span aria-hidden="true">{link.icon}</span>
+              <strong>{link.label}</strong>
+            </a>
           ))}
-          <a class="main-button main-button-muted" href="/music/">아카이브 홈</a>
-          <a class="main-button" href="/novels/">웹소설 보기</a>
+        </nav>
+
+        <div class="album-detail-actions">
+          <a class="main-button main-button-muted" href="/music/">음악 아카이브</a>
         </div>
       </div>
     </section>

@@ -214,11 +214,19 @@ assertLink('archiveAlbum externalHref', archiveAlbum?.externalHref);
 assertLink('archiveAlbum bugsHref', archiveAlbum?.bugsHref);
 assertLink('archiveAlbum image', archiveAlbum?.image);
 
+if (archiveAlbum?.image !== '/assets/music/archive-vol-1-cover.jpg') {
+  fail(`archiveAlbum image: expected actual album cover, got "${archiveAlbum?.image || '(empty)'}"`);
+}
+
 const albumLinkHrefs = new Set();
-assertArray('archiveAlbum.links', archiveAlbum?.links, { min: 2 }).forEach((link, index) => {
+const albumLinkLabels = new Set();
+assertArray('archiveAlbum.links', archiveAlbum?.links, { min: 5 }).forEach((link, index) => {
   assertPresent(`archiveAlbum.links[${index}] label`, link.label);
   assertLink(`archiveAlbum.links[${index}] href`, link.href);
+  assertPresent(`archiveAlbum.links[${index}] platform`, link.platform);
+  assertPresent(`archiveAlbum.links[${index}] icon`, link.icon);
   albumLinkHrefs.add(link.href);
+  albumLinkLabels.add(link.label);
 });
 
 if (!albumLinkHrefs.has(archiveAlbum?.externalHref)) {
@@ -227,6 +235,12 @@ if (!albumLinkHrefs.has(archiveAlbum?.externalHref)) {
 
 if (!albumLinkHrefs.has(archiveAlbum?.bugsHref)) {
   fail('archiveAlbum.links: must include archiveAlbum.bugsHref');
+}
+
+for (const requiredLabel of ['Spotify', 'Apple Music', 'YouTube Music', 'Genie', 'Bugs']) {
+  if (!albumLinkLabels.has(requiredLabel)) {
+    fail(`archiveAlbum.links: missing platform label "${requiredLabel}"`);
+  }
 }
 
 const trackTitles = new Set();

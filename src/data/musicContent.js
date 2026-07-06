@@ -10,13 +10,16 @@ import {
 
 const youtubeThumbnail = (videoId) => `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
 const youtubeThumbnailAlt = (title) => `${title} YouTube 영상 썸네일`;
+const archiveAlbumGenieHref = 'https://www.genie.co.kr/detail/albumInfo?axnm=87219242';
+const archiveAlbumBugsHref = 'https://music.bugs.co.kr/album/4140343?wl_ref=list_ab_03_ar';
+const archiveAlbumYoutubeMusicHref = 'https://music.youtube.com/browse/MPREb_pzfCLxy73cP';
 
 export const archiveAlbum = {
   title: 'ARCHIVE vol.1',
   artist: 'SunoFox / 수노폭스',
   href: '/music/archive-vol-1/',
-  externalHref: 'https://www.genie.co.kr/detail/albumInfo?axnm=87219242',
-  bugsHref: artistLinks.bugs,
+  externalHref: archiveAlbumGenieHref,
+  bugsHref: archiveAlbumBugsHref,
   releaseDate: '2026.02.09',
   isoDate: '2026-02-09',
   type: '정규 앨범',
@@ -24,8 +27,8 @@ export const archiveAlbum = {
   distributor: 'mixtape.so',
   agency: 'SNFX',
   direction: '오리지널 트랙 아카이브',
-  image: '/assets/sunofox-app-icon-512.png',
-  imageAlt: 'SunoFox 로고를 활용한 ARCHIVE vol.1 상세 페이지 대표 이미지',
+  image: '/assets/music/archive-vol-1-cover.jpg',
+  imageAlt: 'SunoFox ARCHIVE vol.1 실제 앨범 커버',
   summary:
     'SunoFox가 제작해온 오리지널 트랙을 기록의 형태로 정리한 첫 정규 아카이브입니다.',
   intro: [
@@ -53,8 +56,11 @@ export const archiveAlbum = {
     { position: '09', title: 'The Devil Walks Tonight' }
   ],
   links: [
-    { label: 'Genie 앨범', href: 'https://www.genie.co.kr/detail/albumInfo?axnm=87219242' },
-    { label: 'Bugs 아티스트', href: artistLinks.bugs }
+    { label: 'Spotify', href: artistLinks.spotify, platform: 'spotify', icon: 'S' },
+    { label: 'Apple Music', href: artistLinks.appleMusic, platform: 'apple', icon: 'A' },
+    { label: 'YouTube Music', href: archiveAlbumYoutubeMusicHref, platform: 'youtube-music', icon: 'YT' },
+    { label: 'Genie', href: archiveAlbumGenieHref, platform: 'genie', icon: 'G' },
+    { label: 'Bugs', href: archiveAlbumBugsHref, platform: 'bugs', icon: 'B' }
   ]
 };
 
@@ -237,6 +243,6 @@ export const musicArchive = {
     { label: '유튜브 최신 피드', href: 'https://www.youtube.com/feeds/videos.xml?channel_id=UC8M-2aXbknDT3tDcN1PMvuQ' },
     { label: 'Playboard 스냅샷', href: 'https://playboard.co/en/channel/UC8M-2aXbknDT3tDcN1PMvuQ' },
     { label: 'Genie 앨범', href: archiveAlbum.externalHref },
-    { label: 'Bugs 아티스트', href: archiveAlbum.bugsHref }
+    { label: 'Bugs 앨범', href: archiveAlbum.bugsHref }
   ]
 };

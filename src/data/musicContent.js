@@ -52,29 +52,29 @@ export const musicArchive = {
   href: '/music/',
   researchDate: '2026.06.19',
   summary:
-    '수노폭스가 공개한 앨범, 유튜브 OST, 웹소설 OST를 필모그래피처럼 이어 보는 Anime OST 기록 페이지입니다.',
+    '수노폭스가 공개한 앨범, 유튜브 OST, 웹소설 OST를 필모그래피처럼 이어 보는 애니 OST 기록 페이지입니다.',
   facts: [
-    { label: '채널', value: 'SunoFox Anime OST Studio' },
+    { label: '채널', value: 'SunoFox 애니 OST 스튜디오' },
     { label: '규모', value: '구독자 약 4.18K명 · 영상 131편' },
     { label: '누적 조회', value: '90만+ 회 공개 스냅샷 기준' },
     { label: '업로드', value: '수 · 일 17:15 KST' },
-    { label: '장르', value: 'Anime OST, J-Pop Rock, Game Soundtrack' },
+    { label: '장르', value: '애니 OST, J-Pop Rock, 게임 사운드트랙' },
     { label: '최근 IP', value: '웹소설 OST EP.02까지 공개' }
   ],
   flow: [
     {
       step: '01',
-      title: 'Music',
+      title: '음악',
       text: '애니메이션 OST와 게임 사운드트랙 감성의 오리지널 음악을 먼저 공개합니다.'
     },
     {
       step: '02',
-      title: 'Scene',
+      title: '장면',
       text: '곡의 정서와 제목을 장면, 캐릭터, 사건의 방향으로 정리합니다.'
     },
     {
       step: '03',
-      title: 'Novel',
+      title: '소설',
       text: '선별된 감정선을 웹소설과 OST 패키지로 확장합니다.'
     }
   ],
@@ -170,25 +170,25 @@ export const musicArchive = {
     }
   ],
   videoHub: {
-    title: 'YouTube / MV 영상 허브',
+    title: '유튜브 / MV 영상 허브',
     summary:
-      '웹소설 OST, 라이브 아카이브, 애니메이션 OP 감성 영상을 한 곳에서 보고 YouTube 채널과 재생목록으로 이어 봅니다.',
+      '웹소설 OST, 라이브 아카이브, 애니메이션 OP 감성 영상을 한 곳에서 보고 유튜브 채널과 재생목록으로 이어 봅니다.',
     facts: [
       { label: '대표 영상', value: featuredStoryOst.title },
       { label: '최근 영상', value: latestStoryOst.title },
-      { label: '최근 큐레이션', value: 'Web Novel OST · Live Archive · Anime OP' },
-      { label: '주요 이동', value: 'YouTube 채널 · 재생목록 · 대표 OST' }
+      { label: '최근 큐레이션', value: '웹소설 OST · 라이브 아카이브 · 애니 OP' },
+      { label: '주요 이동', value: '유튜브 채널 · 재생목록 · 대표 OST' }
     ],
     links: [
-      { label: 'YouTube 채널', href: artistLinks.youtube },
+      { label: '유튜브 채널', href: artistLinks.youtube },
       { label: '재생목록 보기', href: artistLinks.youtubePlaylists },
       { label: '최신 OST 감상', href: latestStoryOst.youtubeHref },
       { label: '대표 OST 감상', href: featuredStoryOst.youtubeHref }
     ]
   },
   sources: [
-    { label: 'YouTube 채널', href: artistLinks.youtube },
-    { label: 'YouTube 최신 피드', href: 'https://www.youtube.com/feeds/videos.xml?channel_id=UC8M-2aXbknDT3tDcN1PMvuQ' },
+    { label: '유튜브 채널', href: artistLinks.youtube },
+    { label: '유튜브 최신 피드', href: 'https://www.youtube.com/feeds/videos.xml?channel_id=UC8M-2aXbknDT3tDcN1PMvuQ' },
     { label: 'Playboard 스냅샷', href: 'https://playboard.co/en/channel/UC8M-2aXbknDT3tDcN1PMvuQ' },
     { label: 'Genie 앨범', href: archiveAlbum.externalHref },
     { label: 'Bugs 아티스트', href: archiveAlbum.bugsHref }

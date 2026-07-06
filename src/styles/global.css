@@ -6571,6 +6571,12 @@ body.page-enter {
   color: var(--sf-ink) !important;
 }
 
+html:has(.anime-home),
+body.page-enter:has(.anime-home) {
+  background: #050509 !important;
+  color: #fff7fb !important;
+}
+
 .custom-cursor,
 .star-field,
 .mobile-vertical-mark,
@@ -7654,5 +7660,22 @@ body:has(.anime-home) .site-footer a:focus-visible {
 @media (max-width: 520px) {
   body:has(.anime-home) .site-header {
     width: min(100vw, 390px);
+  }
+}
+
+@media (max-width: 760px) {
+  .music-archive-hero {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .music-archive-copy {
+    min-width: 0;
+  }
+
+  .music-archive-copy h1 {
+    max-width: 100%;
+    overflow-wrap: normal;
+    word-break: keep-all;
   }
 }

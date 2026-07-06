@@ -55,12 +55,12 @@ export const sunofoxProfile = {
   highlights: [
     {
       key: 'video',
-      label: 'YouTube / MV',
+      label: '유튜브 / MV',
       status: `${musicArchive.videos.length}개 영상 큐레이션`,
-      title: 'Anime OST Studio',
-      summary: 'YouTube에서 공개되는 Anime OST와 영상 흐름을 중심으로 스토리 IP를 확장합니다.',
+      title: '애니 OST 스튜디오',
+      summary: '유튜브에서 공개되는 애니 OST와 영상 흐름을 중심으로 스토리 IP를 확장합니다.',
       href: artistLinks.youtube,
-      cta: 'YouTube'
+      cta: '유튜브'
     },
     {
       key: 'music',
@@ -73,7 +73,7 @@ export const sunofoxProfile = {
     },
     {
       key: 'novel',
-      label: 'Story IP',
+      label: '스토리 IP',
       status: '1~6화 미니시즌 완결',
       title: novelProject.title,
       summary: '음악에서 시작한 장면을 로맨스 판타지 웹소설로 확장한 첫 공개 작품입니다.',
@@ -99,9 +99,9 @@ export const sunofoxProfile = {
   tabs: [
     {
       id: 'youtube',
-      label: 'YouTube',
-      kicker: 'CHANNEL',
-      title: 'SunoFox Anime OST Studio',
+      label: '유튜브',
+      kicker: '채널',
+      title: 'SunoFox 유튜브 채널',
       summary:
         '유튜브 채널은 애니메이션 감성의 오리지널 음악과 웹소설 OST를 공개하는 중심 채널입니다. 공개 채널 소개 기준으로 매주 수요일과 일요일 17:15(KST)에 새 이야기와 선율을 정기적으로 공개하는 운영 흐름을 사용합니다.',
       facts: [
@@ -117,14 +117,14 @@ export const sunofoxProfile = {
         stats: video.type
       })),
       links: [
-        { label: 'YouTube 채널', href: artistLinks.youtube },
+        { label: '유튜브 채널', href: artistLinks.youtube },
         { label: '재생목록', href: artistLinks.youtubePlaylists }
       ]
     },
     {
       id: 'discography',
-      label: 'Discography',
-      kicker: 'ARCHIVE',
+      label: '디스코그래피',
+      kicker: '아카이브',
       title: 'ARCHIVE vol.1',
       summary:
         `${archiveAlbum.releaseDate} 공개된 정규 앨범입니다. 공개 음원 플랫폼 정보 기준으로 SunoFox가 제작한 오리지널 트랙을 감정과 사운드의 기록으로 정리한 아카이브 프로젝트입니다.`,
@@ -144,8 +144,8 @@ export const sunofoxProfile = {
     },
     {
       id: 'platforms',
-      label: 'Platforms',
-      kicker: 'STREAMING',
+      label: '플랫폼',
+      kicker: '스트리밍',
       title: '국내외 음악 플랫폼 연결',
       summary:
         '수노폭스는 유튜브와 주요 음원 플랫폼을 함께 사용합니다. 웹소설로 확장된 현재 구조에서는 OST 감상과 작품 정보를 한 곳에서 이어 보도록 연결합니다.',
@@ -167,8 +167,8 @@ export const sunofoxProfile = {
     },
     {
       id: 'story',
-      label: 'Story IP',
-      kicker: 'MUSIC TO NOVEL',
+      label: '스토리 IP',
+      kicker: '음악에서 소설로',
       title: '음악에서 웹소설로 확장',
       summary:
         'SunoFox의 현재 사이트 구조는 음악 채널에서 출발한 감정선을 웹소설과 OST 아카이브로 연결합니다. 첫 웹소설 프로젝트는 《악녀는 첫 장에서 웃었다》입니다.',

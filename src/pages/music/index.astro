@@ -31,14 +31,14 @@ const latestVideoDate = latestStoryVideo?.date || musicArchive.researchDate;
 const oldestVideoDate = musicArchive.videos.at(-1)?.date || latestVideoDate;
 const musicHeroActions = [
   { label: '최신 영상 감상', href: latestStoryVideo.href, external: true, primary: true },
-  { label: 'YouTube 채널', href: artistLinks.youtube, external: true },
+  { label: '유튜브 채널', href: artistLinks.youtube, external: true },
   { label: '재생목록', href: artistLinks.youtubePlaylists, external: true },
-  { label: 'Story IP', href: '/novels/' },
+  { label: '스토리 IP', href: '/novels/' },
   { label: '대표 OST', href: featuredStoryOst.href, external: true }
 ];
 const videoDirectActions = [
   { key: 'latest', label: '최신 영상 감상', href: latestStoryVideo.href, external: true, primary: true },
-  { key: 'channel', label: 'YouTube 채널', href: artistLinks.youtube, external: true },
+  { key: 'channel', label: '유튜브 채널', href: artistLinks.youtube, external: true },
   { key: 'playlists', label: '재생목록 보기', href: artistLinks.youtubePlaylists, external: true }
 ];
 const videoSummaryItems = [
@@ -66,14 +66,14 @@ const videoSummaryItems = [
       <a class="album-back-link" href="/profile/#discography">SunoFox 소개</a>
 
       <div class="music-archive-copy">
-        <p class="section-kicker">YOUTUBE / ANIME OST</p>
-        <h1 id="musicArchiveTitle">Anime OST / Story OST <span class="headline-lock">허브</span></h1>
+        <p class="section-kicker">음악 아카이브</p>
+        <h1 id="musicArchiveTitle">음악 아카이브</h1>
         <p>
-          YouTube에서 공개되는 Anime OST, 웹소설 OST, 라이브 아카이브를 한 곳에서 이어 봅니다.
+          유튜브에서 공개되는 애니 OST, 웹소설 OST, 라이브 아카이브를 한 곳에서 이어 봅니다.
           음악 아카이브는 SunoFox의 영상 중심 IP 흐름을 정리하는 공개 허브입니다.
         </p>
         <span>최신 OST {latestStoryVideo.date} · 확인 기준 {musicArchive.researchDate}</span>
-        <div class="music-archive-actions" aria-label="Music archive quick actions">
+        <div class="music-archive-actions" aria-label="음악 아카이브 빠른 이동">
           {musicHeroActions.map((action) => (
             <a
               class:list={['main-button', !action.primary && 'main-button-muted']}
@@ -99,9 +99,9 @@ const videoSummaryItems = [
 
     <section class="music-flow-section reveal" aria-labelledby="musicFlowTitle">
       <div class="novel-section-head">
-        <p class="section-kicker">STORY IP FLOW</p>
+        <p class="section-kicker">스토리 IP 흐름</p>
         <h2 id="musicFlowTitle">음악에서 IP로 이어지는 방식</h2>
-        <span>3 steps</span>
+        <span>3단계</span>
       </div>
 
       <div class="music-flow-grid">
@@ -190,11 +190,11 @@ const videoSummaryItems = [
     <section class="music-video-section reveal" aria-labelledby="musicVideoTitle">
       <div class="novel-section-head">
         <p class="section-kicker">영상 허브</p>
-        <h2 id="musicVideoTitle">YouTube / MV</h2>
+        <h2 id="musicVideoTitle">유튜브 / MV</h2>
         <span>{musicArchive.videos.length}편</span>
       </div>
 
-      <div class="music-video-direct-actions" aria-label="YouTube direct actions">
+      <div class="music-video-direct-actions" aria-label="유튜브 바로가기">
         {videoDirectActions.map((action) => (
           <a
             class:list={['main-button', !action.primary && 'main-button-muted']}
@@ -208,7 +208,7 @@ const videoSummaryItems = [
         ))}
       </div>
 
-      <div class="music-video-hub" aria-label="YouTube and MV hub">
+      <div class="music-video-hub" aria-label="유튜브 및 MV 허브">
         <a
           class="music-video-feature"
           href={primaryVideo.href}
@@ -252,7 +252,7 @@ const videoSummaryItems = [
         </div>
       </div>
 
-      <dl class="music-video-summary" aria-label="YouTube and MV summary">
+      <dl class="music-video-summary" aria-label="유튜브 및 MV 요약">
         {videoSummaryItems.map((item) => (
           <div>
             <dt>{item.label}</dt>
@@ -296,7 +296,7 @@ const videoSummaryItems = [
 
     <section class="music-story-section reveal" aria-labelledby="musicStoryTitle">
       <div>
-        <p class="section-kicker">STORY IP</p>
+        <p class="section-kicker">스토리 IP</p>
         <h2 id="musicStoryTitle">웹소설로 이어진 첫 작품</h2>
       </div>
       <div>

@@ -511,7 +511,7 @@ export const siteUpdates = [
 ];
 
 export const pinnedUpdateNotice = {
-  kicker: 'PINNED NOTICE',
+  kicker: '중요 공지',
   title: '1~6화 미니시즌 완결 공개',
   summary:
     '《악녀는 첫 장에서 웃었다》는 현재 1~6화 미니시즌 완결 상태입니다. 처음 방문한 독자는 1화부터 정주행하거나 완결화에서 첫 장의 결말을 확인할 수 있습니다.',

@@ -27,6 +27,7 @@ $labelLatestOst = [string]::Concat([char]0xCD5C, [char]0xC2E0, " OST ", [char]0x
 $labelYoutubeListen = "YouTube" + [string]::Concat([char]0xC5D0, [char]0xC11C, " ", [char]0xB4E3, [char]0xAE30)
 $labelDontTakeMeAway = -join @([char]0xC544, [char]0xC9C1, " ", [char]0xB370, [char]0xB824, [char]0xAC00, [char]0xC9C0, " ", [char]0xB9C8)
 $labelSayItsOver = -join @([char]0xB05D, [char]0xB0AC, [char]0xB2E4, [char]0xACE0, " ", [char]0xB9D0, [char]0xD574)
+$labelNovelSee = -join @([char]0xC6F9, [char]0xC18C, [char]0xC124, " ", [char]0xBCF4, [char]0xAE30)
 $sitemapPublicMust = @(
   "https://sunofox.com/",
   "https://sunofox.com/novels/",
@@ -121,7 +122,7 @@ $routes = @(
     Path = "/music/archive-vol-1/"
     File = "music/archive-vol-1/index.html"
     Must = @("ARCHIVE vol.1", "anime-home", "/assets/music/archive-vol-1-cover.jpg", "album-platform-links", "music-platform-link", "Spotify", "Apple Music", "YouTube Music", "Genie", "Bugs", "https://sunofox.com/music/archive-vol-1/")
-    MustNot = @("/assets/sunofox-app-icon-512.png", "웹소설 보기")
+    MustNot = @("/assets/sunofox-app-icon-512.png", $labelNovelSee)
   },
   @{
     Name = "profile"

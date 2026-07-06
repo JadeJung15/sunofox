@@ -9438,3 +9438,294 @@ body:has(.music-archive-page) .site-footer a {
     grid-template-columns: 1fr;
   }
 }
+
+/* Match /music to the home anime poster concept while keeping the page music-only. */
+body:has(.anime-home):has(.music-archive-page) {
+  --sf-paper: #050509;
+  --sf-surface: #0b0d13;
+  --sf-surface-muted: #11141d;
+  --sf-ink: #fff7fb;
+  --sf-muted: #d8cfdd;
+  --sf-soft: #aa9ab4;
+  --sf-line: rgba(255, 247, 251, 0.16);
+  --sf-line-strong: rgba(255, 111, 159, 0.42);
+  --sf-accent: #ff6f9f;
+  --sf-accent-soft: rgba(255, 111, 159, 0.14);
+  --sf-rose: #ff0a5b;
+  --anime-bg: #050509;
+  --anime-ink: #fff7fb;
+  --anime-muted: #d8cfdd;
+  --anime-soft: #aa9ab4;
+  --anime-line: rgba(255, 247, 251, 0.16);
+  --anime-accent: #ff6f9f;
+  --anime-title-soft: #f1e7f3;
+  --anime-warm: #f6b86a;
+  background: #050509;
+  color: #fff7fb;
+}
+
+body:has(.anime-home):has(.music-archive-page) .site-main,
+body:has(.anime-home):has(.music-archive-page) .music-archive-page {
+  background:
+    radial-gradient(circle at 18% 0%, rgba(255, 10, 91, 0.18), transparent 32rem),
+    radial-gradient(circle at 86% 18%, rgba(246, 184, 106, 0.08), transparent 30rem),
+    linear-gradient(180deg, #050509 0%, #090a10 52%, #050509 100%);
+  color: var(--anime-ink);
+}
+
+body:has(.anime-home):has(.music-archive-page) .music-archive-page {
+  padding: 0 0 56px;
+}
+
+body:has(.anime-home):has(.music-archive-page) .music-archive-hero {
+  position: relative;
+  min-height: min(760px, 82svh);
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+  gap: 56px;
+  align-items: end;
+  overflow: hidden;
+  border-bottom: 0;
+  padding: 112px max(20px, calc((100vw - 1120px) / 2)) 72px;
+  isolation: isolate;
+}
+
+body:has(.anime-home):has(.music-archive-page) .music-archive-hero::before,
+body:has(.anime-home):has(.music-archive-page) .music-archive-hero::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  display: block;
+  content: "";
+  pointer-events: none;
+}
+
+body:has(.anime-home):has(.music-archive-page) .music-archive-hero::before {
+  background:
+    radial-gradient(circle at 72% 32%, rgba(255, 111, 159, 0.13), transparent 28rem),
+    linear-gradient(90deg, rgba(5, 5, 9, 0.96), rgba(5, 5, 9, 0.72) 46%, rgba(5, 5, 9, 0.2)),
+    linear-gradient(180deg, rgba(5, 5, 9, 0.1), rgba(5, 5, 9, 0.9));
+}
+
+body:has(.anime-home):has(.music-archive-page) .music-archive-hero::after {
+  background:
+    linear-gradient(rgba(255, 247, 251, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 247, 251, 0.028) 1px, transparent 1px);
+  background-size: 56px 56px, 56px 56px;
+  opacity: 0.45;
+}
+
+body:has(.anime-home):has(.music-archive-page) .music-archive-copy {
+  gap: 18px;
+}
+
+body:has(.anime-home):has(.music-archive-page) .music-archive-copy h1 {
+  max-width: 9ch;
+  color: var(--anime-ink);
+  font-size: clamp(4.4rem, 8vw, 7.4rem);
+  line-height: 0.86;
+  overflow-wrap: normal;
+  word-break: keep-all;
+  text-shadow: 0 0 34px rgba(255, 111, 159, 0.24);
+}
+
+body:has(.anime-home):has(.music-archive-page) .music-archive-copy p:not(.section-kicker) {
+  max-width: 420px;
+  color: var(--anime-muted);
+  font-size: 1.08rem;
+  font-weight: 680;
+  line-height: 1.75;
+}
+
+body:has(.anime-home):has(.music-archive-page) .music-archive-copy > span {
+  color: var(--anime-soft);
+}
+
+body:has(.anime-home):has(.music-archive-page) .section-kicker,
+body:has(.anime-home):has(.music-archive-page) .music-archive-copy .section-kicker,
+body:has(.anime-home):has(.music-archive-page) .music-now-label {
+  color: var(--anime-warm);
+}
+
+body:has(.anime-home):has(.music-archive-page) .main-button,
+body:has(.anime-home):has(.music-archive-page) .music-archive-actions .main-button {
+  border-color: var(--anime-line);
+  border-radius: 999px;
+  background: rgba(5, 5, 9, 0.36);
+  color: var(--anime-ink);
+  backdrop-filter: blur(12px);
+}
+
+body:has(.anime-home):has(.music-archive-page) .main-button:not(.main-button-muted),
+body:has(.anime-home):has(.music-archive-page) .music-archive-actions .main-button:not(.main-button-muted) {
+  border-color: var(--anime-accent);
+  background: var(--anime-accent);
+  color: #1d0711;
+}
+
+body:has(.anime-home):has(.music-archive-page) .main-button:hover,
+body:has(.anime-home):has(.music-archive-page) .main-button:focus-visible,
+body:has(.anime-home):has(.music-archive-page) .music-archive-actions .main-button:hover,
+body:has(.anime-home):has(.music-archive-page) .music-archive-actions .main-button:focus-visible {
+  border-color: var(--anime-accent);
+  background: rgba(255, 111, 159, 0.12);
+  color: var(--anime-ink);
+  transform: translateY(-1px);
+}
+
+body:has(.anime-home):has(.music-archive-page) .main-button:not(.main-button-muted):hover,
+body:has(.anime-home):has(.music-archive-page) .main-button:not(.main-button-muted):focus-visible,
+body:has(.anime-home):has(.music-archive-page) .music-archive-actions .main-button:not(.main-button-muted):hover,
+body:has(.anime-home):has(.music-archive-page) .music-archive-actions .main-button:not(.main-button-muted):focus-visible {
+  background: var(--anime-accent);
+  color: #1d0711;
+}
+
+body:has(.anime-home):has(.music-archive-page) .music-video-section,
+body:has(.anime-home):has(.music-archive-page) .music-release-section,
+body:has(.anime-home):has(.music-archive-page) .album-source-panel {
+  border-color: rgba(255, 247, 251, 0.12);
+}
+
+body:has(.anime-home):has(.music-archive-page) .music-hero-player,
+body:has(.anime-home):has(.music-archive-page) .music-video-summary div,
+body:has(.anime-home):has(.music-archive-page) .music-release-card,
+body:has(.anime-home):has(.music-archive-page) .music-release-cover,
+body:has(.anime-home):has(.music-archive-page) .music-video-grid a,
+body:has(.anime-home):has(.music-archive-page) .music-video-hub,
+body:has(.anime-home):has(.music-archive-page) .music-video-feature,
+body:has(.anime-home):has(.music-archive-page) .album-source-panel {
+  border-color: rgba(255, 247, 251, 0.16);
+  background:
+    linear-gradient(145deg, rgba(255, 111, 159, 0.12), transparent 52%),
+    rgba(5, 5, 9, 0.58);
+  color: var(--anime-ink);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.24);
+  backdrop-filter: blur(18px);
+}
+
+body:has(.anime-home):has(.music-archive-page) .music-hero-player {
+  border-color: rgba(255, 247, 251, 0.18);
+  background:
+    linear-gradient(145deg, rgba(255, 111, 159, 0.16), transparent 52%),
+    rgba(5, 5, 9, 0.48);
+}
+
+body:has(.anime-home):has(.music-archive-page) .music-hero-player:hover,
+body:has(.anime-home):has(.music-archive-page) .music-hero-player:focus-visible,
+body:has(.anime-home):has(.music-archive-page) .music-video-grid a:hover,
+body:has(.anime-home):has(.music-archive-page) .music-video-grid a:focus-visible,
+body:has(.anime-home):has(.music-archive-page) .music-video-feature:hover,
+body:has(.anime-home):has(.music-archive-page) .music-video-feature:focus-visible {
+  border-color: rgba(255, 111, 159, 0.56);
+  background:
+    linear-gradient(145deg, rgba(255, 111, 159, 0.2), transparent 52%),
+    rgba(5, 5, 9, 0.58);
+}
+
+body:has(.anime-home):has(.music-archive-page) .music-play-icon {
+  border-color: rgba(255, 247, 251, 0.2);
+  background: var(--anime-accent);
+  box-shadow: 0 14px 34px rgba(255, 111, 159, 0.22);
+}
+
+body:has(.anime-home):has(.music-archive-page) .music-play-icon::before {
+  border-left-color: #1d0711;
+}
+
+body:has(.anime-home):has(.music-archive-page) .music-track strong,
+body:has(.anime-home):has(.music-archive-page) .music-video-grid strong,
+body:has(.anime-home):has(.music-archive-page) .music-video-feature strong,
+body:has(.anime-home):has(.music-archive-page) .music-video-hub-copy h3,
+body:has(.anime-home):has(.music-archive-page) .music-release-copy h3,
+body:has(.anime-home):has(.music-archive-page) .novel-section-head h2 {
+  color: var(--anime-ink);
+}
+
+body:has(.anime-home):has(.music-archive-page) .music-track small,
+body:has(.anime-home):has(.music-archive-page) .music-video-grid p,
+body:has(.anime-home):has(.music-archive-page) .music-video-feature p,
+body:has(.anime-home):has(.music-archive-page) .music-video-hub-copy p,
+body:has(.anime-home):has(.music-archive-page) .music-release-copy strong {
+  color: var(--anime-muted);
+}
+
+body:has(.anime-home):has(.music-archive-page) .music-progress {
+  background: rgba(255, 247, 251, 0.13);
+}
+
+body:has(.anime-home):has(.music-archive-page) .music-progress span {
+  background: linear-gradient(90deg, var(--anime-accent), var(--anime-warm));
+}
+
+body:has(.anime-home):has(.music-archive-page) .music-listen-link {
+  border-bottom-color: rgba(255, 111, 159, 0.6);
+  color: var(--anime-accent);
+}
+
+body:has(.anime-home):has(.music-archive-page) .music-video-anchor-strip a,
+body:has(.anime-home):has(.music-archive-page) .music-video-grid em,
+body:has(.anime-home):has(.music-archive-page) .music-video-feature em,
+body:has(.anime-home):has(.music-archive-page) .music-release-cover span {
+  border-color: rgba(255, 247, 251, 0.16);
+  background: rgba(5, 5, 9, 0.58);
+  color: var(--anime-warm);
+}
+
+body:has(.anime-home):has(.music-archive-page) .music-video-anchor-strip a:hover,
+body:has(.anime-home):has(.music-archive-page) .music-video-anchor-strip a:focus-visible {
+  border-color: rgba(255, 111, 159, 0.44);
+  background: rgba(255, 111, 159, 0.12);
+  color: var(--anime-ink);
+}
+
+body:has(.anime-home):has(.music-archive-page) .site-footer {
+  border-top-color: rgba(255, 247, 251, 0.1);
+  background: #050509;
+  color: rgba(255, 247, 251, 0.54);
+}
+
+body:has(.anime-home):has(.music-archive-page) .site-footer span,
+body:has(.anime-home):has(.music-archive-page) .site-footer a {
+  color: rgba(255, 247, 251, 0.58);
+}
+
+@media (max-width: 980px) {
+  body:has(.anime-home):has(.music-archive-page) .music-archive-hero {
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
+    gap: 32px;
+  }
+
+  body:has(.anime-home):has(.music-archive-page) .music-archive-copy h1 {
+    font-size: 6.8rem;
+  }
+}
+
+@media (max-width: 760px) {
+  body:has(.anime-home):has(.music-archive-page) .music-archive-hero {
+    min-height: 78svh;
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 92px 14px 28px;
+  }
+
+  body:has(.anime-home):has(.music-archive-page) .music-archive-copy h1 {
+    max-width: 8ch;
+    font-size: 4.45rem;
+    line-height: 0.88;
+  }
+
+  body:has(.anime-home):has(.music-archive-page) .music-archive-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  body:has(.anime-home):has(.music-archive-page) .music-archive-actions .main-button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 380px) {
+  body:has(.anime-home):has(.music-archive-page) .music-archive-copy h1 {
+    font-size: 3.85rem;
+  }
+}

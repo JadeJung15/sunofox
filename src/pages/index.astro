@@ -107,6 +107,7 @@ const latestEpisodeLabel = `${latestNovelEpisode.label} · ${latestNovelEpisode.
     --anime-soft: #aa9ab4;
     --anime-line: rgba(255, 247, 251, 0.16);
     --anime-accent: #ff6f9f;
+    --anime-title-soft: #f1e7f3;
     --anime-warm: #f6b86a;
     min-height: 100svh;
     overflow: hidden;
@@ -204,6 +205,10 @@ const latestEpisodeLabel = `${latestNovelEpisode.label} · ${latestNovelEpisode.
 
   .poster-content h1 span:last-child {
     color: var(--anime-accent);
+  }
+
+  .poster-content h1 span:first-child {
+    color: var(--anime-title-soft);
   }
 
   .poster-lead {

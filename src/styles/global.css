@@ -7594,6 +7594,52 @@ body:has(.anime-home) .menu-trigger-lines span {
   background: #ffffff;
 }
 
+body:has(.anime-home) .overlay-menu {
+  background:
+    linear-gradient(180deg, rgba(5, 5, 9, 0.97), rgba(8, 7, 12, 0.94));
+  color: #fff7fb;
+  backdrop-filter: blur(18px);
+}
+
+body:has(.anime-home) .overlay-menu-inner {
+  width: min(760px, calc(100vw - 40px));
+}
+
+body:has(.anime-home) .overlay-nav {
+  gap: 6px;
+}
+
+body:has(.anime-home) .overlay-nav a,
+body:has(.anime-home) .overlay-nav a.overlay-nav-secondary {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  padding-block: 6px;
+  color: #fff7fb;
+  line-height: 1.08;
+}
+
+body:has(.anime-home) .overlay-nav a.overlay-nav-secondary {
+  color: #d8cfdd;
+}
+
+body:has(.anime-home) .overlay-nav a:hover,
+body:has(.anime-home) .overlay-nav a:focus-visible,
+body:has(.anime-home) .overlay-nav a.is-current {
+  color: #ff6f9f;
+}
+
+body:has(.anime-home) .overlay-nav a::before {
+  background: #ff6f9f;
+}
+
+body:has(.anime-home) .menu-trigger:hover::before,
+body:has(.anime-home) .menu-trigger:focus-visible::before,
+body:has(.anime-home).menu-open .menu-trigger::before {
+  border-color: rgba(255, 247, 251, 0.24);
+  background: rgba(5, 8, 12, 0.72);
+}
+
 body:has(.anime-home) .site-footer {
   border-top: 1px solid rgba(255, 247, 251, 0.16);
   background: #050509;
@@ -7625,9 +7671,19 @@ body:has(.anime-home) .site-footer a:focus-visible {
     justify-content: center;
     gap: 4px 14px;
   }
+
+  body:has(.anime-home) .site-footer a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+  }
 }
 
 @media (max-width: 820px) {
+  body:has(.anime-home) .site-logo {
+    min-height: 44px;
+  }
+
   body:has(.anime-home) .menu-trigger {
     position: fixed !important;
     top: 10px !important;
@@ -7648,12 +7704,23 @@ body:has(.anime-home) .site-footer a:focus-visible {
     backdrop-filter: blur(10px);
   }
 
+  body:has(.anime-home).menu-open .menu-trigger {
+    border-color: rgba(255, 247, 251, 0.24);
+    background: rgba(5, 8, 12, 0.86) !important;
+  }
+
   body:has(.anime-home) .menu-trigger-lines {
     display: grid !important;
   }
 
   body:has(.anime-home) .menu-trigger-lines span {
     background: #ffffff !important;
+  }
+
+  body:has(.anime-home) .overlay-nav a,
+  body:has(.anime-home) .overlay-nav a.overlay-nav-secondary {
+    min-height: 44px;
+    padding-block: 6px;
   }
 }
 

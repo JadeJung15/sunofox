@@ -42,10 +42,20 @@ const { active = 'home' } = Astro.props;
     const menuButton = document.getElementById('menuButton');
     const overlayMenu = document.getElementById('overlayMenu');
     const menuLabel = menuButton?.querySelector('.menu-trigger-label');
+    const mainContent = document.getElementById('main-content');
     const overlayLinks = Array.from(document.querySelectorAll('#overlayMenu a'));
+    const getMenuFocusItems = () => [menuButton, ...overlayLinks].filter((item) => !item?.hasAttribute('disabled'));
 
     if (menuButton?.dataset.siteChromeBound === 'true') return;
     if (menuButton) menuButton.dataset.siteChromeBound = 'true';
+
+    function setMainContentDisabled(disabled) {
+      if (!mainContent) return;
+
+      mainContent.toggleAttribute('inert', disabled);
+      mainContent.setAttribute('aria-hidden', String(disabled));
+      if (!disabled) mainContent.removeAttribute('aria-hidden');
+    }
 
     function setMenu(open, options = {}) {
       const isOpen = Boolean(open);
@@ -57,6 +67,7 @@ const { active = 'home' } = Astro.props;
       overlayMenu?.setAttribute('aria-hidden', String(!isOpen));
       overlayMenu?.toggleAttribute('inert', !isOpen);
       if (menuLabel) menuLabel.textContent = isOpen ? '닫기' : '메뉴';
+      setMainContentDisabled(isOpen);
 
       if (!overlayMenu) return;
 
@@ -92,7 +103,33 @@ const { active = 'home' } = Astro.props;
     });
 
     window.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape') setMenu(false);
+      const isOpen = document.body.classList.contains('menu-open');
+      if (!isOpen) return;
+
+      if (event.key === 'Escape') {
+        setMenu(false);
+        return;
+      }
+
+      if (event.key !== 'Tab') return;
+
+      const focusItems = getMenuFocusItems();
+      if (focusItems.length === 0) return;
+
+      const firstItem = focusItems[0];
+      const lastItem = focusItems[focusItems.length - 1];
+      const activeItem = document.activeElement;
+
+      if (event.shiftKey && activeItem === firstItem) {
+        event.preventDefault();
+        lastItem?.focus({ preventScroll: true });
+        return;
+      }
+
+      if (!event.shiftKey && activeItem === lastItem) {
+        event.preventDefault();
+        firstItem?.focus({ preventScroll: true });
+      }
     });
 
     const revealItems = document.querySelectorAll('.reveal');

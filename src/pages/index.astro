@@ -443,9 +443,10 @@ const latestEpisodeLabel = `${latestNovelEpisode.label} · ${latestNovelEpisode.
     flex-wrap: wrap;
     gap: 6px 10px;
     min-width: 0;
+    min-height: 44px;
     align-items: center;
     border-bottom: 1px solid rgba(255, 247, 251, 0.12);
-    padding: 12px 0 2px;
+    padding: 10px 0 4px;
     backdrop-filter: blur(18px);
   }
 
@@ -471,7 +472,7 @@ const latestEpisodeLabel = `${latestNovelEpisode.label} · ${latestNovelEpisode.
 
   .poster-social a {
     display: inline-flex;
-    min-height: 34px;
+    min-height: 44px;
     align-items: center;
   }
 
@@ -588,7 +589,36 @@ const latestEpisodeLabel = `${latestNovelEpisode.label} · ${latestNovelEpisode.
     }
 
     .poster-content {
-      padding-top: 20svh;
+      padding-top: 16svh;
+    }
+
+    .poster-now {
+      grid-template-columns: 42px minmax(0, 1fr);
+      gap: 8px;
+      padding: 14px;
+    }
+
+    .poster-play-icon {
+      width: 42px;
+      height: 42px;
+    }
+
+    .poster-play-icon::before {
+      border-top-width: 8px;
+      border-bottom-width: 8px;
+      border-left-width: 12px;
+    }
+
+    .poster-track {
+      gap: 4px;
+    }
+
+    .poster-track strong {
+      font-size: 1rem;
+    }
+
+    .poster-listen-link {
+      min-height: 28px;
     }
   }
 

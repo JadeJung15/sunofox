@@ -82,6 +82,11 @@ export async function onRequest(context) {
     return googleVerificationResponse();
   }
 
+  if (url.pathname.startsWith('/mv-studio/extensions/')) {
+    url.pathname = url.pathname.replace('/mv-studio/extensions/', '/extensions/');
+    return Response.redirect(url.toString(), 302);
+  }
+
   const isProtectedAdminPath = url.pathname === '/admin' ||
     url.pathname === '/admin.html' ||
     url.pathname.startsWith('/admin/');

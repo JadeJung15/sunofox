@@ -8240,6 +8240,188 @@ body.menu-open .menu-trigger:focus-visible .menu-trigger-lines span:last-child {
   }
 }
 
+/* Keep /music visually aligned with the dark anime OST home concept. */
+body:has(.music-archive-page) {
+  color-scheme: dark;
+  --bg: #050509;
+  --panel: #0b0d13;
+  --panel-soft: #11141d;
+  --line: rgba(255, 247, 251, 0.13);
+  --line-strong: rgba(255, 111, 159, 0.42);
+  --text: #fff7fb;
+  --muted: rgba(255, 247, 251, 0.66);
+  --subtle: rgba(255, 247, 251, 0.42);
+  --pink: #ff0a5b;
+  --pink-soft: rgba(255, 10, 91, 0.18);
+  --sf-paper: #050509;
+  --sf-surface: #0b0d13;
+  --sf-surface-muted: #11141d;
+  --sf-ink: #fff7fb;
+  --sf-muted: rgba(255, 247, 251, 0.66);
+  --sf-soft: rgba(255, 247, 251, 0.48);
+  --sf-line: rgba(255, 247, 251, 0.13);
+  --sf-line-strong: rgba(255, 111, 159, 0.42);
+  --sf-accent: #ff6f9f;
+  --sf-accent-soft: rgba(255, 111, 159, 0.14);
+  --sf-rose: #ff0a5b;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(255, 10, 91, 0.2), transparent 34rem),
+    linear-gradient(180deg, #050509 0%, #090a10 48%, #050509 100%);
+  color: var(--sf-ink);
+}
+
+body:has(.music-archive-page) .site-main,
+body:has(.music-archive-page) .music-archive-page {
+  background:
+    radial-gradient(circle at 18% 0%, rgba(255, 10, 91, 0.16), transparent 30rem),
+    radial-gradient(circle at 88% 22%, rgba(255, 111, 159, 0.1), transparent 28rem),
+    linear-gradient(180deg, #050509 0%, #090a10 54%, #050509 100%);
+  color: var(--sf-ink);
+}
+
+body:has(.music-archive-page) .site-header {
+  border-bottom: 1px solid rgba(255, 247, 251, 0.08);
+  background: rgba(5, 8, 12, 0.82);
+  backdrop-filter: blur(16px);
+}
+
+body:has(.music-archive-page) .site-logo,
+body:has(.music-archive-page) .menu-trigger {
+  color: var(--sf-ink);
+}
+
+body:has(.music-archive-page) .site-logo:hover,
+body:has(.music-archive-page) .site-logo.is-current {
+  color: var(--sf-accent);
+}
+
+body:has(.music-archive-page) .menu-trigger::before {
+  border-color: rgba(255, 247, 251, 0.14);
+  background: rgba(5, 8, 12, 0.72);
+}
+
+body:has(.music-archive-page) .menu-trigger-lines span {
+  background: var(--sf-ink);
+}
+
+body:has(.music-archive-page) .menu-trigger:hover::before,
+body:has(.music-archive-page) .menu-trigger:focus-visible::before,
+body:has(.music-archive-page).menu-open .menu-trigger::before {
+  border-color: rgba(255, 111, 159, 0.44);
+  background: rgba(17, 20, 29, 0.92);
+}
+
+body:has(.music-archive-page) .overlay-menu {
+  background:
+    radial-gradient(circle at 18% 8%, rgba(255, 10, 91, 0.18), transparent 32rem),
+    rgba(5, 8, 12, 0.98);
+}
+
+body:has(.music-archive-page) .overlay-nav a,
+body:has(.music-archive-page) .overlay-nav a.overlay-nav-secondary {
+  color: var(--sf-ink);
+}
+
+body:has(.music-archive-page) .overlay-nav a:hover,
+body:has(.music-archive-page) .overlay-nav a:focus-visible,
+body:has(.music-archive-page) .overlay-nav a.is-current {
+  color: var(--sf-accent);
+}
+
+body:has(.music-archive-page) .music-archive-hero,
+body:has(.music-archive-page) .music-video-section,
+body:has(.music-archive-page) .music-release-section {
+  border-color: rgba(255, 247, 251, 0.12);
+}
+
+body:has(.music-archive-page) .music-featured-ost-section,
+body:has(.music-archive-page) .music-story-section,
+body:has(.music-archive-page) .album-source-panel {
+  border-color: rgba(255, 247, 251, 0.13);
+  background:
+    linear-gradient(135deg, rgba(255, 10, 91, 0.12), transparent 48%),
+    rgba(11, 13, 19, 0.86);
+}
+
+body:has(.music-archive-page) .music-hero-player,
+body:has(.music-archive-page) .music-archive-facts div,
+body:has(.music-archive-page) .music-video-summary div,
+body:has(.music-archive-page) .music-release-card,
+body:has(.music-archive-page) .music-release-cover,
+body:has(.music-archive-page) .music-video-grid a,
+body:has(.music-archive-page) .music-video-hub,
+body:has(.music-archive-page) .music-video-feature {
+  border-color: rgba(255, 247, 251, 0.13);
+  background:
+    linear-gradient(145deg, rgba(255, 10, 91, 0.11), transparent 48%),
+    rgba(11, 13, 19, 0.88);
+  color: var(--sf-ink);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.24);
+}
+
+body:has(.music-archive-page) .music-hero-player:hover,
+body:has(.music-archive-page) .music-hero-player:focus-visible,
+body:has(.music-archive-page) .music-video-grid a:hover,
+body:has(.music-archive-page) .music-video-grid a:focus-visible,
+body:has(.music-archive-page) .music-video-feature:hover,
+body:has(.music-archive-page) .music-video-feature:focus-visible {
+  border-color: rgba(255, 111, 159, 0.5);
+  background:
+    linear-gradient(145deg, rgba(255, 10, 91, 0.18), transparent 48%),
+    rgba(17, 20, 29, 0.94);
+}
+
+body:has(.music-archive-page) .music-hero-player img,
+body:has(.music-archive-page) .music-video-grid img,
+body:has(.music-archive-page) .music-video-feature img,
+body:has(.music-archive-page) .music-featured-thumb img,
+body:has(.music-archive-page) .music-release-cover img {
+  border-color: rgba(255, 247, 251, 0.12);
+  background: #090a10;
+}
+
+body:has(.music-archive-page) .music-video-anchor-strip a {
+  border-color: rgba(255, 111, 159, 0.28);
+  background: rgba(255, 10, 91, 0.08);
+  color: var(--sf-accent);
+}
+
+body:has(.music-archive-page) .music-video-anchor-strip a:hover,
+body:has(.music-archive-page) .music-video-anchor-strip a:focus-visible {
+  border-color: rgba(255, 111, 159, 0.58);
+  background: rgba(255, 10, 91, 0.14);
+  color: #ffffff;
+}
+
+body:has(.music-archive-page) .main-button {
+  border-color: rgba(255, 247, 251, 0.2);
+  background: rgba(255, 247, 251, 0.05);
+  color: var(--sf-ink);
+}
+
+body:has(.music-archive-page) .main-button:not(.main-button-muted),
+body:has(.music-archive-page) .main-button:hover,
+body:has(.music-archive-page) .main-button:focus-visible {
+  border-color: var(--sf-rose);
+  background: var(--sf-rose);
+  color: #ffffff;
+}
+
+body:has(.music-archive-page) .main-button-muted {
+  color: rgba(255, 247, 251, 0.72);
+}
+
+body:has(.music-archive-page) .site-footer {
+  border-top-color: rgba(255, 247, 251, 0.1);
+  background: #050509;
+  color: rgba(255, 247, 251, 0.54);
+}
+
+body:has(.music-archive-page) .site-footer span,
+body:has(.music-archive-page) .site-footer a {
+  color: rgba(255, 247, 251, 0.58);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

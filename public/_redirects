@@ -6,6 +6,7 @@
 /novel/ /novels 301
 /studio /mv-studio 301
 /studio/ /mv-studio 301
+/mv-studio/extensions/* /extensions/:splat 200
 /mv-studio/* /mv-studio.html 200
 /privacy.html /privacy/ 301
 /terms.html /terms/ 301

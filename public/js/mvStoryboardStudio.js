@@ -15,7 +15,7 @@
   const ACCESS_KEY = 'webling_mv_studio_access_v1';
   const WORKFLOW_COLLAPSE_KEY = 'webling_mv_studio_workflow_collapsed_v2';
   const REQUIRED_MJ_BRIDGE_VERSION = '1.5.23';
-  const MJ_BRIDGE_DOWNLOAD_URL = './extensions/sf-midjourney-bridge-v1.5.23.zip';
+  const MJ_BRIDGE_DOWNLOAD_URL = '/extensions/sf-midjourney-bridge-v1.5.23.zip';
   const DEFAULT_GROK_FILL_DELAY_MS = 10000;
   const DEFAULT_GROK_SUBMIT_DELAY_MS = 7000;
   const DEFAULT_GROK_BACK_DELAY_MS = 5000;

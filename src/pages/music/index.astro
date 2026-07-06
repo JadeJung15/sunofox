@@ -29,10 +29,7 @@ const latestVideoDate = primaryVideo?.date || musicArchive.researchDate;
 const oldestVideoDate = musicArchive.videos.at(-1)?.date || latestVideoDate;
 const musicHeroActions = [
   { label: '최신 영상 감상', href: primaryVideo.href, external: true, primary: true },
-  { label: '유튜브 채널', href: artistLinks.youtube, external: true },
-  { label: '재생목록', href: artistLinks.youtubePlaylists, external: true },
-  { label: '스토리 IP', href: '/novels/' },
-  { label: '대표 OST', href: featuredStoryOst.href, external: true }
+  { label: '앨범 보기', href: archiveAlbum.href }
 ];
 const videoDirectActions = [
   { key: 'latest', label: '최신 영상 감상', href: primaryVideo.href, external: true, primary: true },
@@ -42,7 +39,11 @@ const videoDirectActions = [
 const videoSummaryItems = [
   { label: '영상 수', value: `${musicArchive.videos.length}편` },
   { label: '최근 공개', value: latestVideoDate },
-  { label: '대표 분류', value: videoTypes.join(' · ') },
+  { label: '대표 분류', value: videoTypes.join(' · ') }
+];
+const musicHeroFacts = [
+  { label: '최신 공개', value: latestVideoDate },
+  { label: '영상', value: `${musicArchive.videos.length}편` },
   { label: '기록 범위', value: `${oldestVideoDate} - ${latestVideoDate}` }
 ];
 ---
@@ -61,14 +62,11 @@ const videoSummaryItems = [
 
   <main id="main-content" class="site-main music-archive-page">
     <section class="music-archive-hero reveal" aria-labelledby="musicArchiveTitle">
-      <a class="album-back-link" href="/profile/#discography">SunoFox 소개</a>
-
       <div class="music-archive-copy">
         <p class="section-kicker">음악 아카이브</p>
-        <h1 id="musicArchiveTitle">음악 아카이브</h1>
+        <h1 id="musicArchiveTitle">Music Archive</h1>
         <p>
-          유튜브에서 공개되는 애니 OST, 웹소설 OST, 라이브 아카이브를 한 곳에서 이어 봅니다.
-          음악 아카이브는 SunoFox의 영상 중심 IP 흐름을 정리하는 공개 허브입니다.
+          최신 공개 영상과 웹소설 OST를 빠르게 듣는 SunoFox 음악 허브입니다.
         </p>
         <span>최신 영상 {latestVideoDate} · 확인 기준 {musicArchive.researchDate}</span>
         <div class="music-archive-actions" aria-label="음악 아카이브 빠른 이동">
@@ -85,8 +83,29 @@ const videoSummaryItems = [
         </div>
       </div>
 
+      <a
+        class="music-hero-player"
+        href={primaryVideo.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`${primaryVideo.title} YouTube에서 듣기`}
+      >
+        <img
+          src={primaryVideo.thumbnail}
+          alt={primaryVideo.thumbnailAlt}
+          width="480"
+          height="360"
+          loading="eager"
+          decoding="async"
+        />
+        <span>지금 재생 중</span>
+        <strong>{primaryVideo.title}</strong>
+        <p>{primaryVideo.meta}</p>
+        <em>YouTube에서 듣기</em>
+      </a>
+
       <dl class="music-archive-facts">
-        {musicArchive.facts.map((fact) => (
+        {musicHeroFacts.map((fact) => (
           <div>
             <dt>{fact.label}</dt>
             <dd>{fact.value}</dd>
@@ -95,100 +114,10 @@ const videoSummaryItems = [
       </dl>
     </section>
 
-    <section class="music-flow-section reveal" aria-labelledby="musicFlowTitle">
-      <div class="novel-section-head">
-        <p class="section-kicker">스토리 IP 흐름</p>
-        <h2 id="musicFlowTitle">음악에서 IP로 이어지는 방식</h2>
-        <span>3단계</span>
-      </div>
-
-      <div class="music-flow-grid">
-        {musicArchive.flow.map((item) => (
-          <article>
-            <span>{item.step}</span>
-            <strong>{item.title}</strong>
-            <p>{item.text}</p>
-          </article>
-        ))}
-      </div>
-    </section>
-
-    <section class="music-featured-ost-section reveal" aria-labelledby="musicFeaturedOstTitle">
-      <a class="music-featured-thumb" href={featuredStoryOst.href} target="_blank" rel="noopener noreferrer" aria-label={`${featuredStoryOst.title} 감상하기`}>
-        <img
-          src={featuredStoryOst.thumbnail}
-          alt={featuredStoryOst.thumbnailAlt}
-          width="480"
-          height="360"
-          loading="lazy"
-          decoding="async"
-        />
-      </a>
-      <div class="music-featured-copy">
-        <p class="section-kicker">대표 OST</p>
-        <h2 id="musicFeaturedOstTitle">{featuredStoryOst.title}</h2>
-        <p>{featuredStoryOst.summary}</p>
-        <div class="music-story-actions">
-          <a class="main-button" href={featuredStoryOst.href} target="_blank" rel="noopener noreferrer">OST 감상</a>
-          <a class="main-button main-button-muted" href="/novels/">작품 정보</a>
-          <a class="main-button main-button-muted" href={currentEpisode.href}>{currentEpisode.label} 읽기</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="music-release-section reveal" aria-labelledby="musicReleaseTitle">
-      <div class="novel-section-head">
-        <p class="section-kicker">앨범 기록</p>
-        <h2 id="musicReleaseTitle">공개 앨범</h2>
-        <span>{musicArchive.releases.length} release</span>
-      </div>
-
-      <div class="music-release-grid">
-        {musicArchive.releases.map((release) => (
-          <article class="music-release-card">
-            <a class="music-release-cover" href={release.href} aria-label={`${release.title} 상세 보기`}>
-              <img src={release.image} alt={release.imageAlt} width="512" height="512" loading="lazy" decoding="async" />
-              <span>{release.type}</span>
-            </a>
-            <div class="music-release-copy">
-              <p>{release.releaseDate}</p>
-              <h3>{release.title}</h3>
-              <strong>{release.summary}</strong>
-              <dl>
-                <div>
-                  <dt>수록</dt>
-                  <dd>{release.tracks.length}곡</dd>
-                </div>
-                <div>
-                  <dt>기획/발매</dt>
-                  <dd>{release.agency} / {release.distributor}</dd>
-                </div>
-                <div>
-                  <dt>장르</dt>
-                  <dd>{release.genre}</dd>
-                </div>
-              </dl>
-              <ol>
-                {release.tracks.slice(0, 5).map((track) => (
-                  <li>{track.position}. {track.title}</li>
-                ))}
-              </ol>
-              <div class="music-release-actions">
-                <a class="main-button" href={release.href}>상세 보기</a>
-                {release.links.map((link) => (
-                  <a class="main-button main-button-muted" href={link.href} target="_blank" rel="noopener noreferrer">{link.label}</a>
-                ))}
-              </div>
-            </div>
-          </article>
-        ))}
-      </div>
-    </section>
-
     <section class="music-video-section reveal" aria-labelledby="musicVideoTitle">
       <div class="novel-section-head">
-        <p class="section-kicker">영상 허브</p>
-        <h2 id="musicVideoTitle">유튜브 / MV</h2>
+        <p class="section-kicker">최신 영상</p>
+        <h2 id="musicVideoTitle">YouTube / MV</h2>
         <span>{musicArchive.videos.length}편</span>
       </div>
 
@@ -231,21 +160,12 @@ const videoSummaryItems = [
         </a>
 
         <div class="music-video-hub-copy">
-          <p class="section-kicker">영상 큐레이션</p>
-          <h3>{musicArchive.videoHub.title}</h3>
-          <p>{musicArchive.videoHub.summary}</p>
-          <dl>
-            {musicArchive.videoHub.facts.map((fact) => (
-              <div>
-                <dt>{fact.label}</dt>
-                <dd>{fact.value}</dd>
-              </div>
-            ))}
-          </dl>
+          <p class="section-kicker">최신 공개 영상</p>
+          <h3>{primaryVideo.title}</h3>
+          <p>{primaryVideo.meta}</p>
           <div class="music-video-hub-actions">
-            {musicArchive.videoHub.links.map((link) => (
-              <a class="main-button main-button-muted" href={link.href} target="_blank" rel="noopener noreferrer" data-video-hub-link={link.label}>{link.label}</a>
-            ))}
+            <a class="main-button" href={primaryVideo.href} target="_blank" rel="noopener noreferrer" data-video-hub-link="최신 OST 감상">최신 OST 감상</a>
+            <a class="main-button main-button-muted" href={artistLinks.youtubePlaylists} target="_blank" rel="noopener noreferrer" data-video-hub-link="재생목록 보기">재생목록 보기</a>
           </div>
         </div>
       </div>
@@ -290,6 +210,78 @@ const videoSummaryItems = [
           </li>
         ))}
       </ol>
+    </section>
+
+    <section class="music-release-section reveal" aria-labelledby="musicReleaseTitle">
+      <div class="novel-section-head">
+        <p class="section-kicker">앨범 기록</p>
+        <h2 id="musicReleaseTitle">공개 앨범</h2>
+        <span>{musicArchive.releases.length} release</span>
+      </div>
+
+      <div class="music-release-grid">
+        {musicArchive.releases.map((release) => (
+          <article class="music-release-card">
+            <a class="music-release-cover" href={release.href} aria-label={`${release.title} 상세 보기`}>
+              <img src={release.image} alt={release.imageAlt} width="512" height="512" loading="lazy" decoding="async" />
+              <span>{release.type}</span>
+            </a>
+            <div class="music-release-copy">
+              <p>{release.releaseDate}</p>
+              <h3>{release.title}</h3>
+              <strong>{release.summary}</strong>
+              <dl>
+                <div>
+                  <dt>수록</dt>
+                  <dd>{release.tracks.length}곡</dd>
+                </div>
+                <div>
+                  <dt>기획/발매</dt>
+                  <dd>{release.agency} / {release.distributor}</dd>
+                </div>
+                <div>
+                  <dt>장르</dt>
+                  <dd>{release.genre}</dd>
+                </div>
+              </dl>
+              <ol>
+                {release.tracks.slice(0, 3).map((track) => (
+                  <li>{track.position}. {track.title}</li>
+                ))}
+              </ol>
+              <div class="music-release-actions">
+                <a class="main-button" href={release.href}>상세 보기</a>
+                {release.links.map((link) => (
+                  <a class="main-button main-button-muted" href={link.href} target="_blank" rel="noopener noreferrer">{link.label}</a>
+                ))}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="music-featured-ost-section reveal" aria-labelledby="musicFeaturedOstTitle">
+      <a class="music-featured-thumb" href={featuredStoryOst.href} target="_blank" rel="noopener noreferrer" aria-label={`${featuredStoryOst.title} 감상하기`}>
+        <img
+          src={featuredStoryOst.thumbnail}
+          alt={featuredStoryOst.thumbnailAlt}
+          width="480"
+          height="360"
+          loading="lazy"
+          decoding="async"
+        />
+      </a>
+      <div class="music-featured-copy">
+        <p class="section-kicker">대표 OST</p>
+        <h2 id="musicFeaturedOstTitle">{featuredStoryOst.title}</h2>
+        <p>{featuredStoryOst.summary}</p>
+        <div class="music-story-actions">
+          <a class="main-button" href={featuredStoryOst.href} target="_blank" rel="noopener noreferrer">OST 감상</a>
+          <a class="main-button main-button-muted" href="/novels/">작품 정보</a>
+          <a class="main-button main-button-muted" href={currentEpisode.href}>{currentEpisode.label} 읽기</a>
+        </div>
+      </div>
     </section>
 
     <section class="music-story-section reveal" aria-labelledby="musicStoryTitle">

@@ -8,6 +8,9 @@ import {
   sayItsOverStoryOst
 } from './artistContent.js';
 
+const youtubeThumbnail = (videoId) => `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+const youtubeThumbnailAlt = (title) => `${title} YouTube 영상 썸네일`;
+
 export const archiveAlbum = {
   title: 'ARCHIVE vol.1',
   artist: 'SunoFox / 수노폭스',
@@ -60,30 +63,30 @@ export const musicArchive = {
   href: '/music/',
   researchDate: '2026.07.06',
   summary:
-    '수노폭스가 공개한 앨범, 유튜브 OST, 웹소설 OST를 필모그래피처럼 이어 보는 애니 OST 기록 페이지입니다.',
+    '수노폭스가 공개한 앨범과 YouTube OST/MV를 필모그래피처럼 이어 보는 애니 OST 음악 기록 페이지입니다.',
   facts: [
     { label: '채널', value: 'SunoFox 애니 OST 스튜디오' },
     { label: '규모', value: '공개 채널 스냅샷 기준 업데이트' },
     { label: '누적 조회', value: '공개 조회 시점 기준 변동' },
     { label: '업로드', value: '수 · 일 17:15 KST' },
     { label: '장르', value: '애니 OST, J-Pop Rock, 게임 사운드트랙' },
-    { label: '최근 IP', value: '웹소설 OST EP.04까지 공개' }
+    { label: '최근 OST', value: '웹소설 OST EP.04까지 공개' }
   ],
   flow: [
     {
       step: '01',
-      title: '음악',
-      text: '애니메이션 OST와 게임 사운드트랙 감성의 오리지널 음악을 먼저 공개합니다.'
+      title: '신곡',
+      text: '애니메이션 OST와 게임 사운드트랙 감성의 오리지널 음악을 최신순으로 정리합니다.'
     },
     {
       step: '02',
-      title: '장면',
-      text: '곡의 정서와 제목을 장면, 캐릭터, 사건의 방향으로 정리합니다.'
+      title: '영상',
+      text: 'YouTube에 공개된 OST/MV를 같은 썸네일과 링크 기준으로 연결합니다.'
     },
     {
       step: '03',
-      title: '소설',
-      text: '선별된 감정선을 웹소설과 OST 패키지로 확장합니다.'
+      title: '앨범',
+      text: '공개 음원 플랫폼의 정규 앨범 기록을 함께 보관합니다.'
     }
   ],
   releases: [archiveAlbum],
@@ -95,8 +98,8 @@ export const musicArchive = {
       type: latestChannelVideo.type,
       href: latestChannelVideo.youtubeHref,
       videoId: latestChannelVideo.videoId,
-      thumbnail: latestChannelVideo.thumbnail,
-      thumbnailAlt: latestChannelVideo.thumbnailAlt,
+      thumbnail: youtubeThumbnail(latestChannelVideo.videoId),
+      thumbnailAlt: youtubeThumbnailAlt(latestChannelVideo.title),
       publishedAt: latestChannelVideo.publishedAt
     },
     {
@@ -106,8 +109,8 @@ export const musicArchive = {
       type: latestStoryOst.type,
       href: latestStoryOst.youtubeHref,
       videoId: latestStoryOst.videoId,
-      thumbnail: latestStoryOst.thumbnail,
-      thumbnailAlt: latestStoryOst.thumbnailAlt,
+      thumbnail: youtubeThumbnail(latestStoryOst.videoId),
+      thumbnailAlt: youtubeThumbnailAlt(latestStoryOst.title),
       publishedAt: latestStoryOst.publishedAt
     },
     {
@@ -117,8 +120,8 @@ export const musicArchive = {
       type: sayItsOverStoryOst.type,
       href: sayItsOverStoryOst.youtubeHref,
       videoId: sayItsOverStoryOst.videoId,
-      thumbnail: sayItsOverStoryOst.thumbnail,
-      thumbnailAlt: sayItsOverStoryOst.thumbnailAlt,
+      thumbnail: youtubeThumbnail(sayItsOverStoryOst.videoId),
+      thumbnailAlt: youtubeThumbnailAlt(sayItsOverStoryOst.title),
       publishedAt: sayItsOverStoryOst.publishedAt
     },
     {
@@ -128,8 +131,8 @@ export const musicArchive = {
       type: fadingSignalVideo.type,
       href: fadingSignalVideo.youtubeHref,
       videoId: fadingSignalVideo.videoId,
-      thumbnail: fadingSignalVideo.thumbnail,
-      thumbnailAlt: fadingSignalVideo.thumbnailAlt,
+      thumbnail: youtubeThumbnail(fadingSignalVideo.videoId),
+      thumbnailAlt: youtubeThumbnailAlt(fadingSignalVideo.title),
       publishedAt: fadingSignalVideo.publishedAt
     },
     {
@@ -139,8 +142,8 @@ export const musicArchive = {
       type: detectedErrorStoryOst.type,
       href: detectedErrorStoryOst.youtubeHref,
       videoId: detectedErrorStoryOst.videoId,
-      thumbnail: detectedErrorStoryOst.thumbnail,
-      thumbnailAlt: detectedErrorStoryOst.thumbnailAlt,
+      thumbnail: youtubeThumbnail(detectedErrorStoryOst.videoId),
+      thumbnailAlt: youtubeThumbnailAlt(detectedErrorStoryOst.title),
       publishedAt: detectedErrorStoryOst.publishedAt
     },
     {
@@ -150,8 +153,8 @@ export const musicArchive = {
       type: featuredStoryOst.type,
       href: featuredStoryOst.youtubeHref,
       videoId: featuredStoryOst.videoId,
-      thumbnail: featuredStoryOst.thumbnail,
-      thumbnailAlt: featuredStoryOst.thumbnailAlt,
+      thumbnail: youtubeThumbnail(featuredStoryOst.videoId),
+      thumbnailAlt: youtubeThumbnailAlt(featuredStoryOst.title),
       publishedAt: featuredStoryOst.publishedAt
     },
     {
@@ -161,8 +164,8 @@ export const musicArchive = {
       type: 'Anime OP',
       href: 'https://www.youtube.com/watch?v=jCtym0WLKms',
       videoId: 'jCtym0WLKms',
-      thumbnail: '/assets/home/release-awakening.jpg',
-      thumbnailAlt: '별빛 도시와 추상적인 사운드 궤적이 보이는 Anime OP 썸네일',
+      thumbnail: youtubeThumbnail('jCtym0WLKms'),
+      thumbnailAlt: youtubeThumbnailAlt('별의 심연 Anime OP'),
       publishedAt: '2026-06-10T08:15:34+00:00'
     },
     {
@@ -172,8 +175,8 @@ export const musicArchive = {
       type: 'Anime OST',
       href: 'https://www.youtube.com/watch?v=5LNUxXm28CY',
       videoId: '5LNUxXm28CY',
-      thumbnail: '/assets/home/popular-reviver.jpg',
-      thumbnailAlt: '밤하늘 아래 도시 실루엣과 별빛이 보이는 각성 Anime OST 썸네일',
+      thumbnail: youtubeThumbnail('5LNUxXm28CY'),
+      thumbnailAlt: youtubeThumbnailAlt('覚醒 Anime OST'),
       publishedAt: '2026-06-07T08:15:14+00:00'
     },
     {
@@ -183,8 +186,8 @@ export const musicArchive = {
       type: 'Isekai Anime OP',
       href: 'https://www.youtube.com/watch?v=8LgtlhxlG9I',
       videoId: '8LgtlhxlG9I',
-      thumbnail: '/assets/home/story-universe.jpg',
-      thumbnailAlt: '어두운 밤의 성과 도시 불빛이 보이는 도망친 왕녀 Anime OP 썸네일',
+      thumbnail: youtubeThumbnail('8LgtlhxlG9I'),
+      thumbnailAlt: youtubeThumbnailAlt('도망친 왕녀는 오늘도 살아남는다'),
       publishedAt: '2026-06-03T08:00:31+00:00'
     },
     {
@@ -194,8 +197,8 @@ export const musicArchive = {
       type: 'Anime OST',
       href: 'https://www.youtube.com/watch?v=_DebZ1_3lpQ',
       videoId: '_DebZ1_3lpQ',
-      thumbnail: '/assets/home/popular-last-greeting.jpg',
-      thumbnailAlt: '도시의 밤하늘과 따뜻한 불빛이 보이는 Anime OST 썸네일',
+      thumbnail: youtubeThumbnail('_DebZ1_3lpQ'),
+      thumbnailAlt: youtubeThumbnailAlt('말 안 하면 끝이야'),
       publishedAt: '2026-05-31T08:15:04+00:00'
     },
     {
@@ -205,15 +208,15 @@ export const musicArchive = {
       type: 'Dark Fantasy OST',
       href: 'https://www.youtube.com/watch?v=JZY3Lew_ZD8',
       videoId: 'JZY3Lew_ZD8',
-      thumbnail: '/assets/home/popular-unbreakable.jpg',
-      thumbnailAlt: '푸른 새벽의 도시 실루엣이 보이는 다크 판타지 OST 썸네일',
+      thumbnail: youtubeThumbnail('JZY3Lew_ZD8'),
+      thumbnailAlt: youtubeThumbnailAlt('검은 새벽의 왕녀'),
       publishedAt: '2026-05-24T08:15:00+00:00'
     }
   ],
   videoHub: {
     title: '유튜브 / MV 영상 허브',
     summary:
-      '웹소설 OST, 라이브 아카이브, 애니메이션 OP 감성 영상을 한 곳에서 보고 유튜브 채널과 재생목록으로 이어 봅니다.',
+      'YouTube에 공개된 OST, MV, 애니메이션 OP 감성 영상을 한 곳에서 보고 채널과 재생목록으로 이어 봅니다.',
     facts: [
       { label: '대표 영상', value: featuredStoryOst.title },
       { label: '최근 영상', value: latestChannelVideo.title },

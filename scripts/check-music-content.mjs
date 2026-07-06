@@ -94,6 +94,13 @@ function assertThumbnail(label, thumbnail, videoId) {
   }
 }
 
+function assertExactYoutubeThumbnail(label, thumbnail, videoId) {
+  const expected = `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+  if (thumbnail !== expected) {
+    fail(`${label} thumbnail: expected the YouTube video thumbnail "${expected}"`);
+  }
+}
+
 async function fetchLatestYoutubeVideoId() {
   const feedUrl = 'https://www.youtube.com/feeds/videos.xml?channel_id=UC8M-2aXbknDT3tDcN1PMvuQ';
 
@@ -263,6 +270,7 @@ let previousVideoPublishedAt = Number.POSITIVE_INFINITY;
 assertArray('musicArchive.videos', musicArchive?.videos).forEach((video, index) => {
   const label = `musicArchive.videos[${index}]`;
   assertYoutubeVideo(label, video);
+  assertExactYoutubeThumbnail(label, video.thumbnail, video.videoId);
 
   if (videoIds.has(video.videoId)) {
     fail(`${label} videoId: duplicate video id "${video.videoId}"`);

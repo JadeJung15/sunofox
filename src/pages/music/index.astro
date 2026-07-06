@@ -12,6 +12,7 @@ import {
 } from '../../data/siteContent.js';
 
 const currentEpisode = latestNovelEpisode;
+const keyVisual = '/assets/release-desk/mask-good-girl.jpg';
 const primaryVideo = musicArchive.videos[0];
 const videoTypes = Array.from(new Set(musicArchive.videos.map((video) => video.type))).slice(0, 4);
 const videoAnchorItems = Array.from(
@@ -28,7 +29,7 @@ const videoAnchorItems = Array.from(
 const latestVideoDate = primaryVideo?.date || musicArchive.researchDate;
 const oldestVideoDate = musicArchive.videos.at(-1)?.date || latestVideoDate;
 const musicHeroActions = [
-  { label: '최신 영상 감상', href: primaryVideo.href, external: true, primary: true },
+  { label: '최신 OST 듣기', href: primaryVideo.href, external: true, primary: true },
   { label: '앨범 보기', href: archiveAlbum.href }
 ];
 const videoDirectActions = [
@@ -60,13 +61,24 @@ const musicHeroFacts = [
 >
   <SiteChrome active="music" />
 
-  <main id="main-content" class="site-main music-archive-page">
+  <main id="main-content" class="site-main anime-home music-archive-page">
     <section class="music-archive-hero reveal" aria-labelledby="musicArchiveTitle">
+      <img
+        class="music-archive-bg"
+        src={keyVisual}
+        alt="Mask of a Good Girl OST를 상징하는 SunoFox 애니메이션 키비주얼"
+        width="1200"
+        height="900"
+        loading="eager"
+        decoding="async"
+        fetchpriority="high"
+      />
+
       <div class="music-archive-copy">
         <p class="section-kicker">음악 아카이브</p>
         <h1 id="musicArchiveTitle">Music Archive</h1>
         <p>
-          최신 공개 영상과 웹소설 OST를 빠르게 듣는 SunoFox 음악 허브입니다.
+          최신 OST를 빠르게 듣는 음악 허브입니다.
         </p>
         <span>최신 영상 {latestVideoDate} · 확인 기준 {musicArchive.researchDate}</span>
         <div class="music-archive-actions" aria-label="음악 아카이브 빠른 이동">
@@ -90,18 +102,14 @@ const musicHeroFacts = [
         rel="noopener noreferrer"
         aria-label={`${primaryVideo.title} YouTube에서 듣기`}
       >
-        <img
-          src={primaryVideo.thumbnail}
-          alt={primaryVideo.thumbnailAlt}
-          width="480"
-          height="360"
-          loading="eager"
-          decoding="async"
-        />
-        <span>지금 재생 중</span>
-        <strong>{primaryVideo.title}</strong>
-        <p>{primaryVideo.meta}</p>
-        <em>YouTube에서 듣기</em>
+        <span class="music-play-icon" aria-hidden="true"></span>
+        <span class="music-track">
+          <span class="music-now-label">지금 재생 중 · 최신 공개 영상</span>
+          <strong>{primaryVideo.title}</strong>
+          <small>{primaryVideo.meta}</small>
+        </span>
+        <span class="music-progress" aria-hidden="true"><span></span></span>
+        <span class="music-listen-link">YouTube에서 듣기</span>
       </a>
 
       <dl class="music-archive-facts">

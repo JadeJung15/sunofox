@@ -155,17 +155,6 @@ export const musicArchive = {
       publishedAt: featuredStoryOst.publishedAt
     },
     {
-      date: '2026.06.11',
-      title: 'SunoFox Anime OST Radio Live',
-      meta: '89곡 전체 플레이리스트 · 공개곡 + 비공개곡 포함',
-      type: 'Live Archive',
-      href: 'https://www.youtube.com/watch?v=AtijgVi5NFU',
-      videoId: 'AtijgVi5NFU',
-      thumbnail: '/assets/home/hero-anime-city.jpg',
-      thumbnailAlt: '별이 뜬 애니메이션 도시와 관측소가 보이는 SunoFox 라디오 라이브 썸네일',
-      publishedAt: '2026-06-10T21:00:45+00:00'
-    },
-    {
       date: '2026.06.10',
       title: '별의 심연 Anime OP',
       meta: '明けない空を越えて — Beyond the Unbroken Dawn',

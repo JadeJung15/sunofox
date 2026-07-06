@@ -12,7 +12,6 @@ import {
 } from '../../data/siteContent.js';
 
 const currentEpisode = latestNovelEpisode;
-const keyVisual = '/assets/release-desk/mask-good-girl.jpg';
 const primaryVideo = musicArchive.videos[0];
 const videoTypes = Array.from(new Set(musicArchive.videos.map((video) => video.type))).slice(0, 4);
 const videoAnchorItems = Array.from(
@@ -61,19 +60,8 @@ const musicHeroFacts = [
 >
   <SiteChrome active="music" />
 
-  <main id="main-content" class="site-main anime-home music-archive-page">
+  <main id="main-content" class="site-main music-archive-page">
     <section class="music-archive-hero reveal" aria-labelledby="musicArchiveTitle">
-      <img
-        class="music-archive-bg"
-        src={keyVisual}
-        alt="Mask of a Good Girl OST를 상징하는 SunoFox 애니메이션 키비주얼"
-        width="1200"
-        height="900"
-        loading="eager"
-        decoding="async"
-        fetchpriority="high"
-      />
-
       <div class="music-archive-copy">
         <p class="section-kicker">음악 아카이브</p>
         <h1 id="musicArchiveTitle">Music Archive</h1>
@@ -222,9 +210,9 @@ const musicHeroFacts = [
 
     <section class="music-release-section reveal" aria-labelledby="musicReleaseTitle">
       <div class="novel-section-head">
-        <p class="section-kicker">앨범 기록</p>
-        <h2 id="musicReleaseTitle">공개 앨범</h2>
-        <span>{musicArchive.releases.length} release</span>
+        <p class="section-kicker">앨범</p>
+        <h2 id="musicReleaseTitle">{archiveAlbum.title}</h2>
+        <span>{archiveAlbum.type}</span>
       </div>
 
       <div class="music-release-grid">

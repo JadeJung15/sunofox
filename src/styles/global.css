@@ -9108,3 +9108,333 @@ body:has(.anime-home):has(.music-archive-page) .site-logo {
     word-break: keep-all;
   }
 }
+
+/* /music correction: dark archive tone without the home poster image or pink-heavy accents. */
+body:has(.music-archive-page) {
+  --bg: #050509;
+  --panel: #0b0d13;
+  --panel-soft: #11141d;
+  --line: rgba(255, 247, 235, 0.13);
+  --line-strong: rgba(246, 184, 106, 0.38);
+  --text: #fff7eb;
+  --muted: rgba(255, 247, 235, 0.68);
+  --subtle: rgba(255, 247, 235, 0.46);
+  --pink: #f6b86a;
+  --pink-soft: rgba(246, 184, 106, 0.14);
+  --sf-paper: #050509;
+  --sf-surface: #0b0d13;
+  --sf-surface-muted: #11141d;
+  --sf-ink: #fff7eb;
+  --sf-muted: rgba(255, 247, 235, 0.68);
+  --sf-soft: rgba(255, 247, 235, 0.5);
+  --sf-line: rgba(255, 247, 235, 0.13);
+  --sf-line-strong: rgba(246, 184, 106, 0.38);
+  --sf-accent: #f6b86a;
+  --sf-accent-soft: rgba(246, 184, 106, 0.14);
+  --sf-rose: #d98972;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(246, 184, 106, 0.12), transparent 28rem),
+    linear-gradient(180deg, #050509 0%, #090a10 56%, #050509 100%);
+  color: var(--sf-ink);
+}
+
+body:has(.music-archive-page) .site-main,
+body:has(.music-archive-page) .music-archive-page {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(246, 184, 106, 0.1), transparent 30rem),
+    radial-gradient(circle at 88% 18%, rgba(217, 137, 114, 0.08), transparent 28rem),
+    linear-gradient(180deg, #050509 0%, #090a10 54%, #050509 100%);
+  color: var(--sf-ink);
+}
+
+body:has(.music-archive-page) .music-archive-page {
+  padding: 78px 0 56px;
+}
+
+body:has(.music-archive-page) .music-archive-hero,
+body:has(.music-archive-page) .music-video-section,
+body:has(.music-archive-page) .music-release-section,
+body:has(.music-archive-page) .music-featured-ost-section,
+body:has(.music-archive-page) .music-story-section,
+body:has(.music-archive-page) .album-source-panel {
+  width: min(1120px, calc(100% - 40px));
+  margin-right: auto;
+  margin-left: auto;
+}
+
+body:has(.music-archive-page) .music-archive-hero {
+  display: grid;
+  min-height: auto;
+  grid-template-columns: minmax(0, 1.08fr) minmax(280px, 0.62fr);
+  gap: 36px;
+  align-items: center;
+  overflow: visible;
+  border-bottom: 1px solid rgba(255, 247, 235, 0.12);
+  padding: 44px 0 34px;
+  isolation: auto;
+}
+
+body:has(.music-archive-page) .music-archive-hero::before,
+body:has(.music-archive-page) .music-archive-hero::after,
+body:has(.music-archive-page) .music-archive-bg {
+  display: none;
+}
+
+body:has(.music-archive-page) .music-archive-copy {
+  gap: 16px;
+  padding-top: 0;
+}
+
+body:has(.music-archive-page) .music-archive-copy h1 {
+  max-width: 100%;
+  color: #fff7eb;
+  font-size: clamp(3.45rem, 8vw, 6.8rem);
+  line-height: 0.92;
+  text-shadow: 0 0 28px rgba(246, 184, 106, 0.16);
+}
+
+body:has(.music-archive-page) .music-archive-copy p:not(.section-kicker) {
+  max-width: 440px;
+  color: rgba(255, 247, 235, 0.74);
+}
+
+body:has(.music-archive-page) .section-kicker,
+body:has(.music-archive-page) .music-archive-copy .section-kicker,
+body:has(.music-archive-page) .music-now-label {
+  color: var(--sf-accent);
+}
+
+body:has(.music-archive-page) .music-archive-actions .main-button,
+body:has(.music-archive-page) .main-button {
+  border-color: rgba(255, 247, 235, 0.18);
+  background: rgba(255, 247, 235, 0.05);
+  color: var(--sf-ink);
+}
+
+body:has(.music-archive-page) .music-archive-actions .main-button:not(.main-button-muted),
+body:has(.music-archive-page) .main-button:not(.main-button-muted) {
+  border-color: var(--sf-accent);
+  background: var(--sf-accent);
+  color: #17100b;
+}
+
+body:has(.music-archive-page) .music-archive-actions .main-button:hover,
+body:has(.music-archive-page) .music-archive-actions .main-button:focus-visible,
+body:has(.music-archive-page) .main-button:hover,
+body:has(.music-archive-page) .main-button:focus-visible {
+  border-color: rgba(246, 184, 106, 0.64);
+  background: rgba(246, 184, 106, 0.14);
+  color: #fff7eb;
+  transform: translateY(-1px);
+}
+
+body:has(.music-archive-page) .music-archive-actions .main-button:not(.main-button-muted):hover,
+body:has(.music-archive-page) .music-archive-actions .main-button:not(.main-button-muted):focus-visible,
+body:has(.music-archive-page) .main-button:not(.main-button-muted):hover,
+body:has(.music-archive-page) .main-button:not(.main-button-muted):focus-visible {
+  background: #ffd08d;
+  color: #17100b;
+}
+
+body:has(.music-archive-page) .site-header {
+  border-bottom: 1px solid rgba(255, 247, 235, 0.08);
+  background: rgba(5, 8, 12, 0.86);
+  backdrop-filter: blur(16px);
+}
+
+body:has(.music-archive-page) .site-logo,
+body:has(.music-archive-page) .menu-trigger {
+  color: var(--sf-ink);
+}
+
+body:has(.music-archive-page) .site-logo:hover,
+body:has(.music-archive-page) .site-logo.is-current,
+body:has(.music-archive-page) .overlay-nav a:hover,
+body:has(.music-archive-page) .overlay-nav a:focus-visible,
+body:has(.music-archive-page) .overlay-nav a.is-current {
+  color: var(--sf-accent);
+}
+
+body:has(.music-archive-page) .menu-trigger::before {
+  border-color: rgba(255, 247, 235, 0.14);
+  background: rgba(5, 8, 12, 0.72);
+}
+
+body:has(.music-archive-page) .menu-trigger:hover::before,
+body:has(.music-archive-page) .menu-trigger:focus-visible::before,
+body:has(.music-archive-page).menu-open .menu-trigger::before {
+  border-color: rgba(246, 184, 106, 0.44);
+  background: rgba(17, 20, 29, 0.92);
+}
+
+body:has(.music-archive-page) .menu-trigger-lines span {
+  background: var(--sf-ink);
+}
+
+body:has(.music-archive-page) .overlay-menu {
+  background:
+    radial-gradient(circle at 18% 8%, rgba(246, 184, 106, 0.14), transparent 30rem),
+    rgba(5, 8, 12, 0.98);
+}
+
+body:has(.music-archive-page) .music-hero-player,
+body:has(.music-archive-page) .music-archive-facts div,
+body:has(.music-archive-page) .music-video-summary div,
+body:has(.music-archive-page) .music-release-card,
+body:has(.music-archive-page) .music-release-cover,
+body:has(.music-archive-page) .music-video-grid a,
+body:has(.music-archive-page) .music-video-hub,
+body:has(.music-archive-page) .music-video-feature,
+body:has(.music-archive-page) .music-featured-ost-section,
+body:has(.music-archive-page) .music-story-section,
+body:has(.music-archive-page) .album-source-panel {
+  border-color: rgba(255, 247, 235, 0.13);
+  background:
+    linear-gradient(145deg, rgba(246, 184, 106, 0.08), transparent 48%),
+    rgba(11, 13, 19, 0.9);
+  color: var(--sf-ink);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.22);
+}
+
+body:has(.music-archive-page) .music-hero-player {
+  background:
+    linear-gradient(145deg, rgba(246, 184, 106, 0.13), transparent 54%),
+    rgba(5, 5, 9, 0.54);
+}
+
+body:has(.music-archive-page) .music-hero-player:hover,
+body:has(.music-archive-page) .music-hero-player:focus-visible,
+body:has(.music-archive-page) .music-video-grid a:hover,
+body:has(.music-archive-page) .music-video-grid a:focus-visible,
+body:has(.music-archive-page) .music-video-feature:hover,
+body:has(.music-archive-page) .music-video-feature:focus-visible {
+  border-color: rgba(246, 184, 106, 0.5);
+  background:
+    linear-gradient(145deg, rgba(246, 184, 106, 0.13), transparent 48%),
+    rgba(17, 20, 29, 0.94);
+}
+
+body:has(.music-archive-page) .music-play-icon {
+  border-color: rgba(255, 247, 235, 0.18);
+  background: var(--sf-accent);
+  box-shadow: 0 14px 34px rgba(246, 184, 106, 0.2);
+}
+
+body:has(.music-archive-page) .music-play-icon::before {
+  border-left-color: #17100b;
+}
+
+body:has(.music-archive-page) .music-track strong,
+body:has(.music-archive-page) .music-video-grid strong,
+body:has(.music-archive-page) .music-video-feature strong,
+body:has(.music-archive-page) .music-video-hub-copy h3,
+body:has(.music-archive-page) .music-release-copy h3,
+body:has(.music-archive-page) .music-featured-copy h2,
+body:has(.music-archive-page) .music-story-section h2,
+body:has(.music-archive-page) .novel-section-head h2 {
+  color: #fff7eb;
+}
+
+body:has(.music-archive-page) .music-track small,
+body:has(.music-archive-page) .music-video-grid p,
+body:has(.music-archive-page) .music-video-feature p,
+body:has(.music-archive-page) .music-video-hub-copy p,
+body:has(.music-archive-page) .music-release-copy strong,
+body:has(.music-archive-page) .music-story-section p,
+body:has(.music-archive-page) .music-featured-copy p {
+  color: rgba(255, 247, 235, 0.7);
+}
+
+body:has(.music-archive-page) .music-progress {
+  background: rgba(255, 247, 235, 0.12);
+}
+
+body:has(.music-archive-page) .music-progress span {
+  background: linear-gradient(90deg, var(--sf-accent), #d98972);
+}
+
+body:has(.music-archive-page) .music-listen-link {
+  border-bottom-color: rgba(246, 184, 106, 0.6);
+  color: var(--sf-accent);
+}
+
+body:has(.music-archive-page) .music-video-anchor-strip a,
+body:has(.music-archive-page) .music-video-grid em,
+body:has(.music-archive-page) .music-video-feature em,
+body:has(.music-archive-page) .music-release-cover span {
+  border-color: rgba(246, 184, 106, 0.28);
+  background: rgba(246, 184, 106, 0.1);
+  color: var(--sf-accent);
+}
+
+body:has(.music-archive-page) .music-video-anchor-strip a:hover,
+body:has(.music-archive-page) .music-video-anchor-strip a:focus-visible {
+  border-color: rgba(246, 184, 106, 0.58);
+  background: rgba(246, 184, 106, 0.16);
+  color: #fff7eb;
+}
+
+body:has(.music-archive-page) .music-release-grid {
+  grid-template-columns: 1fr;
+}
+
+body:has(.music-archive-page) .music-release-card {
+  grid-template-columns: minmax(180px, 280px) minmax(0, 1fr);
+}
+
+body:has(.music-archive-page) .music-release-actions {
+  justify-content: flex-start;
+}
+
+body:has(.music-archive-page) .site-footer {
+  border-top-color: rgba(255, 247, 235, 0.1);
+  background: #050509;
+  color: rgba(255, 247, 235, 0.56);
+}
+
+body:has(.music-archive-page) .site-footer span,
+body:has(.music-archive-page) .site-footer a {
+  color: rgba(255, 247, 235, 0.58);
+}
+
+@media (max-width: 760px) {
+  body:has(.music-archive-page) .music-archive-page {
+    padding-top: 70px;
+  }
+
+  body:has(.music-archive-page) .music-archive-hero {
+    min-height: auto;
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 28px 0 28px;
+  }
+
+  body:has(.music-archive-page) .music-archive-copy {
+    gap: 14px;
+    padding-top: 0;
+  }
+
+  body:has(.music-archive-page) .music-archive-copy h1 {
+    max-width: 100%;
+    font-size: clamp(3.2rem, 18vw, 4.5rem);
+    line-height: 0.94;
+  }
+
+  body:has(.music-archive-page) .music-archive-copy p:not(.section-kicker) {
+    font-size: 0.98rem;
+    line-height: 1.65;
+  }
+
+  body:has(.music-archive-page) .music-archive-hero,
+  body:has(.music-archive-page) .music-video-section,
+  body:has(.music-archive-page) .music-release-section,
+  body:has(.music-archive-page) .music-featured-ost-section,
+  body:has(.music-archive-page) .music-story-section,
+  body:has(.music-archive-page) .album-source-panel {
+    width: calc(100% - 28px);
+  }
+
+  body:has(.music-archive-page) .music-release-card {
+    grid-template-columns: 1fr;
+  }
+}

@@ -2,7 +2,6 @@
 import SiteChrome from '../components/SiteChrome.astro';
 import Layout from '../layouts/Layout.astro';
 import {
-  artistLinks,
   latestChannelVideo,
   latestNovelEpisode,
   musicArchive,
@@ -89,10 +88,6 @@ const latestEpisodeLabel = `${latestNovelEpisode.label} · ${latestNovelEpisode.
         <strong>{latestEpisodeLabel}</strong>
       </a>
     </section>
-
-    <section class="poster-social reveal" aria-label="SunoFox 외부 및 보조 링크">
-      <a href={artistLinks.youtube} target="_blank" rel="noopener noreferrer">유튜브</a>
-    </section>
   </main>
 </Layout>
 
@@ -157,8 +152,7 @@ const latestEpisodeLabel = `${latestNovelEpisode.label} · ${latestNovelEpisode.
   }
 
   .poster-shell,
-  .poster-panel,
-  .poster-social {
+  .poster-panel {
     width: min(1120px, calc(100% - 40px));
     margin: 0 auto;
   }
@@ -312,8 +306,7 @@ const latestEpisodeLabel = `${latestNovelEpisode.label} · ${latestNovelEpisode.
 
   .poster-now-label,
   .poster-links span,
-  .poster-latest span,
-  .poster-social a {
+  .poster-latest span {
     color: var(--anime-soft);
     font-size: 0.78rem;
     font-weight: 860;
@@ -459,25 +452,6 @@ const latestEpisodeLabel = `${latestNovelEpisode.label} · ${latestNovelEpisode.
     overflow-wrap: anywhere;
   }
 
-  .poster-social {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px 16px;
-    justify-content: center;
-    padding: 26px 0 46px;
-  }
-
-  .poster-social a {
-    display: inline-flex;
-    min-height: 44px;
-    align-items: center;
-  }
-
-  .poster-social a:hover,
-  .poster-social a:focus-visible {
-    color: var(--anime-accent);
-  }
-
   @media (max-width: 980px) {
     .poster-shell {
       grid-template-columns: minmax(0, 1fr) minmax(260px, 320px);
@@ -507,8 +481,7 @@ const latestEpisodeLabel = `${latestNovelEpisode.label} · ${latestNovelEpisode.
     }
 
     .poster-shell,
-    .poster-panel,
-    .poster-social {
+    .poster-panel {
       width: calc(100% - 28px);
     }
 
@@ -573,10 +546,6 @@ const latestEpisodeLabel = `${latestNovelEpisode.label} · ${latestNovelEpisode.
     .poster-links a {
       min-height: 96px;
       padding: 14px;
-    }
-
-    .poster-social {
-      padding-bottom: 34px;
     }
   }
 

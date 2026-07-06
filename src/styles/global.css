@@ -8066,11 +8066,6 @@ body:has(.anime-home) .site-footer-nav {
   display: none;
 }
 
-body:has(.anime-home) .poster-social a {
-  min-width: 44px;
-  justify-content: center;
-}
-
 body:has(.anime-home) .site-footer a:hover,
 body:has(.anime-home) .site-footer a:focus-visible {
   color: #ff6f9f;

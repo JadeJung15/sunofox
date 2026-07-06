@@ -64,8 +64,8 @@ $routes = @(
     Name = "home"
     Path = "/"
     File = "index.html"
-    Must = @($labelAnimeOstStudio, $labelNowPlaying, $labelLatestOst, $labelYoutubeListen, $labelMusicArchive, $labelChannelIntro, "Mask of a Good Girl", "lToGxsOiXK0", "anime-home", "poster-home", "poster-hero", "poster-bg", "poster-now", "poster-play-icon", "poster-track", "poster-progress", "poster-listen-link", "poster-panel", "poster-links", "poster-latest", "poster-social", "/assets/release-desk/mask-good-girl.jpg", "site-footer-nav", 'data-footer-key="novels"', 'data-footer-key="music"', 'data-footer-key="profile"', 'data-footer-key="privacy"', 'data-footer-key="terms"', "/novels/", "/music/", "/profile/", "https://sunofox.com/", "https://www.youtube.com/@sunofox", $labelMusicArchive)
-    MustNot = @("/updates/", 'data-footer-key="updates"')
+    Must = @($labelAnimeOstStudio, $labelNowPlaying, $labelLatestOst, $labelYoutubeListen, $labelMusicArchive, $labelChannelIntro, "Mask of a Good Girl", "lToGxsOiXK0", "anime-home", "poster-home", "poster-hero", "poster-bg", "poster-now", "poster-play-icon", "poster-track", "poster-progress", "poster-listen-link", "poster-panel", "poster-links", "poster-latest", "/assets/release-desk/mask-good-girl.jpg", "site-footer-nav", 'data-footer-key="novels"', 'data-footer-key="music"', 'data-footer-key="profile"', 'data-footer-key="privacy"', 'data-footer-key="terms"', "/novels/", "/music/", "/profile/", "https://sunofox.com/", $labelMusicArchive)
+    MustNot = @("/updates/", 'data-footer-key="updates"', "poster-social")
   },
   @{
     Name = "novels"

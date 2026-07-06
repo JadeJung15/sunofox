@@ -137,6 +137,34 @@ assert(aliasParsed.cuts[1].midjourneyPrompt.includes('open palace door'), 'image
 assert(aliasParsed.cuts[1].grokPrompt.includes('fast light sweep'), 'video_prompt alias 파싱 실패');
 assert(!aliasParsed.issues.length, `alias 샘플에 예상 밖 검증 메시지가 있습니다: ${aliasParsed.issues.join(' / ')}`);
 
+const frameTimeSample = `---
+sf_studio_md_version: 2
+project: 30fps Timecode Test
+audio_length: 00:00:10:15
+total_cuts: 1
+---
+
+## Cut 01
+time: 00:00:00:00 - 00:00:05:15
+duration: 5.50s
+lyric: 테스트
+scene: 30fps 프레임 타임코드 확인
+use: main
+
+### Midjourney Prompt
+anime heroine in glass hallway --ar 16:9 --niji 7
+
+### Grok Prompt
+Slow forward camera movement.
+`;
+
+const frameTimeParsed = tools.parseStudioMarkdownImport(frameTimeSample);
+assert(frameTimeParsed.kind === 'workflow-md', '30fps timecode 샘플이 Workflow MD로 판별되지 않았습니다.');
+assert(frameTimeParsed.cuts.length === 1, `30fps timecode 샘플 컷 수가 1이 아닙니다: ${frameTimeParsed.cuts.length}`);
+assert(!frameTimeParsed.issues.length, `30fps timecode 샘플에 예상 밖 검증 메시지가 있습니다: ${frameTimeParsed.issues.join(' / ')}`);
+assert(frameTimeParsed.cuts[0].timeRange.end === 5.5, `30fps timecode 종료값 파싱 실패: ${frameTimeParsed.cuts[0].timeRange.end}`);
+assert(frameTimeParsed.stats.audioLengthSeconds === 10.5, `30fps audio_length 파싱 실패: ${frameTimeParsed.stats.audioLengthSeconds}`);
+
 const mjExtract = tools.workflowPromptsFromCuts(parsed.cuts, 'midjourney');
 const grokExtract = tools.workflowPromptsFromCuts(parsed.cuts, 'grok');
 const csv = tools.workflowCutlistCsvFromCuts(parsed.cuts);

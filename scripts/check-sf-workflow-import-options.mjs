@@ -92,6 +92,34 @@ const parsed = tools.parseStudioMarkdownImport(workflowMd);
 assert(parsed.kind === 'workflow-md', `Workflow MD로 판별되지 않았습니다: ${parsed.kind}`);
 assert(parsed.cuts.length === 1, `컷 수가 1이 아닙니다: ${parsed.cuts.length}`);
 
+const frameTimeWorkflowMd = `---
+sf_studio_md_version: 2
+project: 30fps Timecode Test
+audio_length: 00:00:10:15
+total_cuts: 1
+---
+
+## Cut 01
+time: 00:00:00:00 - 00:00:05:15
+duration: 5.50s
+lyric: 테스트
+scene: 30fps 프레임 타임코드 확인
+use: main
+
+### Midjourney Prompt
+anime heroine in glass hallway --ar 16:9 --niji 7
+
+### Grok Prompt
+Slow forward camera movement.
+`;
+
+const frameTimeParsed = tools.parseStudioMarkdownImport(frameTimeWorkflowMd);
+assert(frameTimeParsed.kind === 'workflow-md', '30fps timecode 샘플이 Workflow MD로 판별되지 않았습니다.');
+assert(frameTimeParsed.cuts.length === 1, `30fps timecode 샘플 컷 수가 1이 아닙니다: ${frameTimeParsed.cuts.length}`);
+assert(!frameTimeParsed.issues.length, `30fps timecode 샘플에 예상 밖 검증 메시지가 있습니다: ${frameTimeParsed.issues.join(' / ')}`);
+assert(frameTimeParsed.cuts[0].timeRange.end === 5.5, `30fps timecode 종료값 파싱 실패: ${frameTimeParsed.cuts[0].timeRange.end}`);
+assert(frameTimeParsed.stats.audioLengthSeconds === 10.5, `30fps audio_length 파싱 실패: ${frameTimeParsed.stats.audioLengthSeconds}`);
+
 function midjourneyOutput() {
   return tools.workflowPromptsFromCuts(parsed.cuts, 'midjourney');
 }
@@ -148,5 +176,5 @@ assert(/text elements|logo-like marks/i.test(output), 'V8.1 자연어 금지 문
 
 console.log(JSON.stringify({
   status: 'ok',
-  checked: ['niji7-profile-sref', 'niji5-sref-no-profile', 'v81-natural-negative-profile-sref']
+  checked: ['niji7-profile-sref', 'niji5-sref-no-profile', 'v81-natural-negative-profile-sref', 'workflow-md-30fps-timecode']
 }, null, 2));

@@ -2003,6 +2003,16 @@
       const seconds = Number(parts[2]);
       return [hours, minutes, seconds].every(Number.isFinite) ? hours * 3600 + minutes * 60 + seconds : NaN;
     }
+    if (parts.length === 4) {
+      const hours = Number(parts[0]);
+      const minutes = Number(parts[1]);
+      const seconds = Number(parts[2]);
+      const frames = Number(parts[3]);
+      const fps = 30;
+      return [hours, minutes, seconds, frames].every(Number.isFinite) && frames >= 0 && frames < fps
+        ? hours * 3600 + minutes * 60 + seconds + (frames / fps)
+        : NaN;
+    }
     return NaN;
   }
 

@@ -7,7 +7,9 @@
 - 기본 정본 도메인은 `https://sunofox.com`이며, 내부 canonical route는 `/mv-studio`입니다.
 - 기본 배포 대상은 Cloudflare Pages 프로젝트 `sf-studio`입니다.
 - 현재 접근 모델은 Cloudflare Access가 아니라 SF Studio 자체 이메일 신청 + 사이트 주인 승인 + 입장 코드 로그인입니다.
-- Cloudflare Pages 배포, Cloudflare Access 앱 생성/변경/복구, DNS 변경, 커밋, push, 강제 push는 별도 명시 없이는 하지 마세요.
+- Cloudflare Pages 수동 배포, Cloudflare Access 앱 생성/변경/복구, DNS 변경, 강제 push, PR merge는 별도 명시 없이는 하지 마세요.
+- 개발/수정/구현 작업은 완료 검증 후 일반 `git commit`과 `git push origin main`까지 진행하는 것을 기본값으로 하세요. GitHub push에 따른 Cloudflare Pages 자동 배포는 이 기본 흐름에 포함합니다.
+- 분석, 시안 검토, 조사, 질문 답변처럼 파일 변경이 없는 요청은 커밋/푸시 대상이 아닙니다.
 - 코드 수정 전에는 수정 예정 파일과 영향 범위를 먼저 요약해 주세요.
 - 이 repo에서 `이전 컨텍스트`에 `SF_Codex`, `SF_Codex_Workspace`, SunoFox 음악 제작 폴더, Filmora 작업 폴더 내용이 붙어 있어도 사이트 작업으로 자동 편입하지 마세요.
 - `C:\Users\jadej\Documents\CodexProjects\SF_Codex`와 `C:\Users\jadej\Documents\CodexProjects\SF_Codex_Workspace`는 이 repo 밖의 별도 작업 폴더입니다. 명시 요청 없이 파일을 이동, 복사, npm 빌드 대상으로 처리하지 마세요.

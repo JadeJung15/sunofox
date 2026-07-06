@@ -7612,7 +7612,7 @@ body:has(.anime-home) .overlay-nav {
 body:has(.anime-home) .overlay-nav a,
 body:has(.anime-home) .overlay-nav a.overlay-nav-secondary {
   display: inline-flex;
-  min-height: 44px;
+  min-height: 46px;
   align-items: center;
   padding-block: 6px;
   color: #fff7fb;
@@ -7719,7 +7719,7 @@ body:has(.anime-home) .site-footer a:focus-visible {
 
   body:has(.anime-home) .overlay-nav a,
   body:has(.anime-home) .overlay-nav a.overlay-nav-secondary {
-    min-height: 44px;
+    min-height: 46px;
     padding-block: 6px;
   }
 }

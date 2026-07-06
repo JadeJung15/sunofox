@@ -2153,17 +2153,20 @@
   }
 
   function stripImportedManagedParams(value) {
-    return String(value || '')
+    return stripMidjourneyProfileParams(value)
       .replace(/[ \t]*--niji\s+\d+\b/gi, '')
       .replace(/[ \t]*--v\s+\S+/gi, '')
       .replace(/[ \t]*--version\s+\S+/gi, '')
-      .replace(/[ \t]*--profile\s+\S+/gi, '')
       .replace(/[ \t]*--sref\s+.*?(?=\s--|$)/gi, '')
       .split('\n')
       .map((line) => line.replace(/^[ \t]+(?=--)/, '').trimEnd())
       .join('\n')
       .replace(/\n{3,}/g, '\n\n')
       .trim();
+  }
+
+  function stripMidjourneyProfileParams(value) {
+    return String(value || '').replace(/[ \t]*--profile(?:[ \t]+(?!--)[^\s]+)*/gi, '');
   }
 
   function inferImportedShotType(label, prompt) {
@@ -6103,13 +6106,12 @@
     const config = promptVariantConfigs[variantKey] || promptVariantConfigs.niji7;
     const direction = currentDirection();
     const version = config.nijiVersion || sanitizeNijiVersion(direction.nijiVersion);
-    const base = String(cut.midjourneyPrompt || '')
+    const base = stripMidjourneyProfileParams(String(cut.midjourneyPrompt || '')
       .replace(/\s*--niji\s+\d+/gi, '')
       .replace(/\s*--ar\s+\S+/gi, '')
       .replace(/\s*--stylize\s+\d+/gi, '')
       .replace(/\s*--s\s+\d+/gi, '')
-      .replace(/\s*--chaos\s+\d+/gi, '')
-      .replace(/\s*--profile\s+\S+/gi, '')
+      .replace(/\s*--chaos\s+\d+/gi, ''))
       .trim();
     return `${base} ${midjourneyParamsFor({ ...direction, nijiVersion: version }, { stylize: config.stylize, chaos: config.chaos })}`;
   }
@@ -7679,7 +7681,7 @@
       .replace(/signboard/gi, 'blank display board with no writing')
       .replace(/poster[s]?/gi, 'blank torn paper panels with no writing')
       .replace(/first letter of the title/gi, 'abstract light shape') : base;
-    const cleaned = sceneCleaned
+    const cleaned = stripMidjourneyProfileParams(sceneCleaned)
       .replace(/\s*--no\b[\s\S]*$/i, '')
       .replace(/\s*--niji\s+\d+/gi, '')
       .replace(/\s*--ar\s+\S+/gi, '')
@@ -7687,7 +7689,6 @@
       .replace(/\s*--stylize\s+\d+/gi, '')
       .replace(/\s*--s\s+\d+/gi, '')
       .replace(/\s*--chaos\s+\d+/gi, '')
-      .replace(/\s*--profile\s+\S+/gi, '')
       .replace(/\s*--raw\b/gi, '')
       .replace(/\braw\b/gi, '')
       .replace(/\s+,/g, ',')
@@ -7734,10 +7735,13 @@
   function sanitizeMidjourneyProfile(value) {
     return String(value || '')
       .trim()
-      .replace(/^--profile\s+/i, '')
-      .replace(/[^\w-]/g, '')
-      .replace(/^--+/, '')
-      .slice(0, 64);
+      .replace(/(?:^|\s)--profile\b/gi, ' ')
+      .replace(/[^\w\s-]/g, ' ')
+      .replace(/(?:^|\s)--+/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .slice(0, 160)
+      .trim();
   }
 
   function sanitizeMidjourneySref(value) {
@@ -7761,7 +7765,7 @@
       value = `${value}\n--niji ${version}`;
     }
 
-    value = value.replace(/[ \t]*--profile\s+\S+/gi, '');
+    value = stripMidjourneyProfileParams(value);
     if (version === '7' && profile) {
       value = `${value.trim()} --profile ${profile}`;
     }

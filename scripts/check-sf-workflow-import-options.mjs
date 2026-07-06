@@ -79,7 +79,7 @@ scene: 별빛 법정이 열리는 도입
 use: main
 
 ### midjourney_prompt
-dark fantasy anime courtroom, cinematic frame --niji 5 --profile oldProfile --sref oldRef --ar 16:9 --no text, logo
+dark fantasy anime courtroom, cinematic frame --niji 5 --profile oldProfile oldSecond --sref oldRef --ar 16:9 --no text, logo
 
 ### grok_prompt
 Use this image as the source. Push in slowly with soft starlight motion.
@@ -131,16 +131,16 @@ function countParam(output, name) {
 tools.setImportOptionsForTest({
   importModelMode: 'niji7',
   importApplyProfile: true,
-  importProfile: 'newProfile',
+  importProfile: ' --profile newProfile altCode ',
   importApplySref: true,
   importSref: '12345'
 });
 
 let output = midjourneyOutput();
 assert(/--niji\s+7\b/i.test(output), 'Niji 7 옵션이 적용되지 않았습니다.');
-assert(/--profile\s+newProfile\b/i.test(output), 'Profile 옵션이 적용되지 않았습니다.');
+assert(/--profile\s+newProfile\s+altCode\b/i.test(output), '띄어쓰기 포함 Profile 옵션이 적용되지 않았습니다.');
 assert(/--sref\s+12345\b/i.test(output), 'SREF 옵션이 적용되지 않았습니다.');
-assert(!/oldProfile|oldRef/i.test(output), '기존 Profile/SREF가 제거되지 않았습니다.');
+assert(!/oldProfile|oldSecond|oldRef/i.test(output), '기존 Profile/SREF가 제거되지 않았습니다.');
 assert(countParam(output, 'niji') === 1, '--niji가 중복되었거나 누락되었습니다.');
 assert(countParam(output, 'profile') === 1, '--profile이 중복되었거나 누락되었습니다.');
 assert(countParam(output, 'sref') === 1, '--sref가 중복되었거나 누락되었습니다.');
@@ -148,7 +148,7 @@ assert(countParam(output, 'sref') === 1, '--sref가 중복되었거나 누락되
 tools.setImportOptionsForTest({
   importModelMode: 'niji5',
   importApplyProfile: true,
-  importProfile: 'newProfile',
+  importProfile: 'newProfile altCode',
   importApplySref: true,
   importSref: '12345'
 });
@@ -161,14 +161,14 @@ assert(/--sref\s+12345\b/i.test(output), 'Niji 5 SREF 옵션이 적용되지 않
 tools.setImportOptionsForTest({
   importModelMode: 'v81',
   importApplyProfile: true,
-  importProfile: 'newProfile',
+  importProfile: 'newProfile altCode',
   importApplySref: true,
   importSref: '12345'
 });
 
 output = midjourneyOutput();
 assert(/--v\s+8\.1\b/i.test(output), 'V8.1 옵션이 적용되지 않았습니다.');
-assert(/--profile\s+newProfile\b/i.test(output), 'V8.1 Profile 옵션이 적용되지 않았습니다.');
+assert(/--profile\s+newProfile\s+altCode\b/i.test(output), 'V8.1 띄어쓰기 포함 Profile 옵션이 적용되지 않았습니다.');
 assert(/--sref\s+12345\b/i.test(output), 'V8.1 SREF 옵션이 적용되지 않았습니다.');
 assert(!/\b--niji\b/i.test(output), 'V8.1 출력에 --niji가 남아 있습니다.');
 assert(!/\b--no\b/i.test(output), 'V8.1 출력에는 --no 대신 자연어 금지 문장이 필요합니다.');
@@ -176,5 +176,5 @@ assert(/text elements|logo-like marks/i.test(output), 'V8.1 자연어 금지 문
 
 console.log(JSON.stringify({
   status: 'ok',
-  checked: ['niji7-profile-sref', 'niji5-sref-no-profile', 'v81-natural-negative-profile-sref', 'workflow-md-30fps-timecode']
+  checked: ['niji7-profile-spaces-sref', 'niji5-sref-no-profile', 'v81-natural-negative-profile-spaces-sref', 'workflow-md-30fps-timecode']
 }, null, 2));

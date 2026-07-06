@@ -150,8 +150,8 @@
               </label>
               <label class="mv-field">
                 <span>가져온 컷 Profile 코드</span>
-                <input id="mv-import-profile" type="text" placeholder="예: 6u688xc" autocomplete="off" spellcheck="false">
-                <small>비워두면 Niji 7 선택 시 기본값 6u688xc를 사용합니다. Niji 5에서는 자동 제외됩니다.</small>
+                <input id="mv-import-profile" type="text" placeholder="예: 6u688xc profile2" autocomplete="off" spellcheck="false">
+                <small>여러 Profile 코드는 띄어쓰기로 구분합니다. 비워두면 Niji 7 선택 시 기본값 6u688xc를 사용합니다. Niji 5에서는 자동 제외됩니다.</small>
               </label>
               <label class="mv-switch-row">
                 <input id="mv-import-apply-sref" type="checkbox">
@@ -444,7 +444,7 @@
               </label>
               <label class="mv-field">
                 <span>MJ Profile</span>
-                <input id="mv-mj-profile" type="text" value="6u688xc" placeholder="6u688xc" autocomplete="off" spellcheck="false">
+                <input id="mv-mj-profile" type="text" value="6u688xc" placeholder="6u688xc profile2" autocomplete="off" spellcheck="false">
                 <small>Niji 5 선택 시 전송 프롬프트에서 Profile 코드는 자동으로 제외됩니다.</small>
               </label>
               <label class="mv-field">
@@ -643,6 +643,6 @@
     </main>
   </div>
 
-  <script src="./js/mvStoryboardStudio.js?v=20260701-workflow-import-options"></script>
+  <script src="./js/mvStoryboardStudio.js?v=20260706-profile-spaces"></script>
 </body>
 </html>

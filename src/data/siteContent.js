@@ -16,18 +16,10 @@ import {
   novelProject,
   publishedNovelEpisodes
 } from './novelContent.js';
-import {
-  categorizedSiteUpdates,
-  pinnedUpdateNotice,
-  plannedContentHubs,
-  siteUpdates,
-  updateCategories
-} from './updatesContent.js';
 
 export {
   archiveAlbum,
   artistLinks,
-  categorizedSiteUpdates,
   detectedErrorStoryOst,
   featuredStoryOst,
   footerItems,
@@ -39,13 +31,9 @@ export {
   nextNovelEpisode,
   novelEpisodes,
   novelProject,
-  pinnedUpdateNotice,
-  plannedContentHubs,
   publishedNovelEpisodes,
-  siteUpdates,
   storyOstMap,
-  storyOsts,
-  updateCategories
+  storyOsts
 };
 
 export function getEpisodeOst(episode = novelEpisodes[0]) {
@@ -95,8 +83,7 @@ export const sunofoxProfile = {
   quickActions: [
     { label: '소설 정주행', href: novelProject.season.startHref },
     { label: '완결화 보기', href: novelProject.season.finalHref },
-    { label: '음악 아카이브', href: musicArchive.href },
-    { label: '업데이트', href: '/updates/' }
+    { label: '음악 아카이브', href: musicArchive.href }
   ],
   tabs: [
     {
@@ -199,7 +186,6 @@ export const sunofoxProfile = {
 
 const siteUrl = 'https://sunofox.com';
 const novelUrl = `${siteUrl}/novels/`;
-const updatesUrl = `${siteUrl}/updates/`;
 const novelCoverUrl = `${siteUrl}${novelProject.coverImage}`;
 const musicArchiveUrl = `${siteUrl}${musicArchive.href}`;
 const archiveUrl = `${siteUrl}${archiveAlbum.href}`;
@@ -546,28 +532,6 @@ export const novelStructuredData = {
       { name: novelProject.title, url: novelUrl }
     ])
   ]
-};
-
-export const siteUpdatesStructuredData = {
-  '@context': 'https://schema.org',
-  '@type': 'CollectionPage',
-  '@id': `${updatesUrl}#updates`,
-  name: 'SunoFox Updates',
-  url: updatesUrl,
-  description: 'SunoFox 공식 사이트의 웹소설, OST, Music Archive, 운영 개선 이력을 정리한 업데이트 로그입니다.',
-  inLanguage: 'ko-KR',
-  isPartOf: { '@id': `${siteUrl}/#website` },
-  publisher: { '@id': `${siteUrl}/#organization` },
-  mainEntity: {
-    '@type': 'ItemList',
-    numberOfItems: siteUpdates.length,
-    itemListElement: siteUpdates.map((item, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      name: item.title,
-      description: item.summary
-    }))
-  }
 };
 
 export const episodeStructuredData = createEpisodeStructuredData(novelEpisodes[0]);

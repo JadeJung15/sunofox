@@ -206,8 +206,7 @@ const {
   archiveAlbum,
   musicArchive,
   novelProject,
-  publishedNovelEpisodes,
-  siteUpdates
+  publishedNovelEpisodes
 } = siteContentModule;
 
 const routes = [
@@ -251,14 +250,6 @@ const routes = [
     descriptionIncludes: '이야기 기반 Anime OST',
     jsonLdTypes: ['Organization', 'WebSite']
   },
-  {
-    name: 'updates',
-    file: 'updates/index.html',
-    canonical: `${siteUrl}/updates/`,
-    title: 'SunoFox Updates | Official Log',
-    descriptionIncludes: '업데이트 로그',
-    jsonLdTypes: ['CollectionPage']
-  }
 ];
 
 for (const episode of publishedNovelEpisodes) {
@@ -399,10 +390,6 @@ for (const route of routes) {
   } else {
     assertEqual(`${route.name} og:type`, meta['og:type'], 'website');
   }
-}
-
-if (!Array.isArray(siteUpdates) || siteUpdates.length === 0) {
-  fail('siteUpdates must contain at least one update for /updates/ SEO context.');
 }
 
 if (errors.length > 0) {

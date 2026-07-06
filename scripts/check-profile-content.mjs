@@ -116,7 +116,7 @@ assertUnique('sunofoxProfile.highlights key', highlightKeys);
   assertLink(`${label} href`, item.href);
 });
 
-assertArray('sunofoxProfile.quickActions', sunofoxProfile?.quickActions, { min: 4 }).forEach((action, index) => {
+assertArray('sunofoxProfile.quickActions', sunofoxProfile?.quickActions, { min: 3 }).forEach((action, index) => {
   assertPresent(`sunofoxProfile.quickActions[${index}] label`, action.label);
   assertLink(`sunofoxProfile.quickActions[${index}] href`, action.href);
 });
@@ -207,11 +207,6 @@ if (!sunofoxProfile?.quickActions?.some((action) => action.href === novelProject
 const musicQuickAction = sunofoxProfile?.quickActions?.find((action) => action.href === musicArchive.href);
 if (musicQuickAction?.label !== '음악 아카이브') {
   fail('sunofoxProfile.quickActions music label: must be "음악 아카이브"');
-}
-
-const updatesQuickAction = sunofoxProfile?.quickActions?.find((action) => action.href === '/updates/');
-if (updatesQuickAction?.label !== '업데이트') {
-  fail('sunofoxProfile.quickActions updates label: must be "업데이트"');
 }
 
 assertArray('sunofoxProfile.sources', sunofoxProfile?.sources, { min: 3 }).forEach((source, index) => {

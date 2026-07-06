@@ -35,7 +35,6 @@ $sitemapPublicMust = @(
   "https://sunofox.com/music/",
   "https://sunofox.com/music/archive-vol-1/",
   "https://sunofox.com/profile/",
-  "https://sunofox.com/updates/",
   "https://sunofox.com/privacy/",
   "https://sunofox.com/terms/"
 )
@@ -55,6 +54,7 @@ $sitemapForbiddenMustNot = @(
   "https://sunofox.com/contact",
   "https://sunofox.com/live",
   "https://sunofox.com/biography",
+  "https://sunofox.com/updates/",
   "https://sunofox.com/goods",
   "https://sunofox.com/404"
 )
@@ -64,7 +64,8 @@ $routes = @(
     Name = "home"
     Path = "/"
     File = "index.html"
-    Must = @($labelAnimeOstStudio, $labelNowPlaying, $labelLatestOst, $labelYoutubeListen, $labelMusicArchive, $labelChannelIntro, "Mask of a Good Girl", "lToGxsOiXK0", "anime-home", "poster-home", "poster-hero", "poster-bg", "poster-now", "poster-play-icon", "poster-track", "poster-progress", "poster-listen-link", "poster-panel", "poster-links", "poster-latest", "poster-social", "/assets/release-desk/mask-good-girl.jpg", "site-footer-nav", 'data-footer-key="novels"', 'data-footer-key="music"', 'data-footer-key="profile"', 'data-footer-key="updates"', 'data-footer-key="privacy"', 'data-footer-key="terms"', "/novels/", "/music/", "/updates/", "/profile/", "https://sunofox.com/", "https://www.youtube.com/@sunofox", $labelMusicArchive)
+    Must = @($labelAnimeOstStudio, $labelNowPlaying, $labelLatestOst, $labelYoutubeListen, $labelMusicArchive, $labelChannelIntro, "Mask of a Good Girl", "lToGxsOiXK0", "anime-home", "poster-home", "poster-hero", "poster-bg", "poster-now", "poster-play-icon", "poster-track", "poster-progress", "poster-listen-link", "poster-panel", "poster-links", "poster-latest", "poster-social", "/assets/release-desk/mask-good-girl.jpg", "site-footer-nav", 'data-footer-key="novels"', 'data-footer-key="music"', 'data-footer-key="profile"', 'data-footer-key="privacy"', 'data-footer-key="terms"', "/novels/", "/music/", "/profile/", "https://sunofox.com/", "https://www.youtube.com/@sunofox", $labelMusicArchive)
+    MustNot = @("/updates/", 'data-footer-key="updates"')
   },
   @{
     Name = "novels"
@@ -124,13 +125,8 @@ $routes = @(
     Name = "profile"
     Path = "/profile/"
     File = "profile/index.html"
-    Must = @($labelSunoFoxDetail, "profile-snapshot-section", "profile-snapshot-card", "profile-current-actions", "/novels/", "/music/", "/updates/", "https://sunofox.com/profile/")
-  },
-  @{
-    Name = "updates"
-    Path = "/updates/"
-    File = "updates/index.html"
-    Must = @("SunoFox Updates", "updates-pinned-section", "updates-pinned-actions", "updates-hub-section", "updates-hub-grid", "updates-category-notice", "updates-category-section", "updates-category-grid", "content-roadmap", "updates-roadmap-section", "updates-roadmap-card", "updates-roadmap-visibility", "updates-roadmap-next", "updates-roadmap-checklist", "updates-roadmap-disabled", 'data-hub-key="commerce"', 'data-hub-key="community"', 'data-hub-checklist="commerce"', 'data-hub-checklist="community"', 'data-hub-state="waiting"', "/novels/", "/music/", "https://sunofox.com/updates/")
+    Must = @($labelSunoFoxDetail, "profile-snapshot-section", "profile-snapshot-card", "profile-current-actions", "/novels/", "/music/", "https://sunofox.com/profile/")
+    MustNot = @("/updates/")
   },
   @{
     Name = "not-found"

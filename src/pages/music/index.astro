@@ -6,7 +6,6 @@ import {
   archiveAlbum,
   featuredStoryOst,
   latestNovelEpisode,
-  latestStoryOst,
   musicArchive,
   musicArchiveStructuredData,
   novelProject
@@ -14,7 +13,6 @@ import {
 
 const currentEpisode = latestNovelEpisode;
 const primaryVideo = musicArchive.videos[0];
-const latestStoryVideo = musicArchive.videos.find((video) => video.videoId === latestStoryOst.videoId) || primaryVideo;
 const videoTypes = Array.from(new Set(musicArchive.videos.map((video) => video.type))).slice(0, 4);
 const videoAnchorItems = Array.from(
   new Map(
@@ -27,17 +25,17 @@ const videoAnchorItems = Array.from(
     ])
   ).values()
 );
-const latestVideoDate = latestStoryVideo?.date || musicArchive.researchDate;
+const latestVideoDate = primaryVideo?.date || musicArchive.researchDate;
 const oldestVideoDate = musicArchive.videos.at(-1)?.date || latestVideoDate;
 const musicHeroActions = [
-  { label: '최신 영상 감상', href: latestStoryVideo.href, external: true, primary: true },
+  { label: '최신 영상 감상', href: primaryVideo.href, external: true, primary: true },
   { label: '유튜브 채널', href: artistLinks.youtube, external: true },
   { label: '재생목록', href: artistLinks.youtubePlaylists, external: true },
   { label: '스토리 IP', href: '/novels/' },
   { label: '대표 OST', href: featuredStoryOst.href, external: true }
 ];
 const videoDirectActions = [
-  { key: 'latest', label: '최신 영상 감상', href: latestStoryVideo.href, external: true, primary: true },
+  { key: 'latest', label: '최신 영상 감상', href: primaryVideo.href, external: true, primary: true },
   { key: 'channel', label: '유튜브 채널', href: artistLinks.youtube, external: true },
   { key: 'playlists', label: '재생목록 보기', href: artistLinks.youtubePlaylists, external: true }
 ];
@@ -72,7 +70,7 @@ const videoSummaryItems = [
           유튜브에서 공개되는 애니 OST, 웹소설 OST, 라이브 아카이브를 한 곳에서 이어 봅니다.
           음악 아카이브는 SunoFox의 영상 중심 IP 흐름을 정리하는 공개 허브입니다.
         </p>
-        <span>최신 OST {latestStoryVideo.date} · 확인 기준 {musicArchive.researchDate}</span>
+        <span>최신 영상 {latestVideoDate} · 확인 기준 {musicArchive.researchDate}</span>
         <div class="music-archive-actions" aria-label="음악 아카이브 빠른 이동">
           {musicHeroActions.map((action) => (
             <a

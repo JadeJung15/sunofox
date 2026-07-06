@@ -3,8 +3,8 @@ import SiteChrome from '../components/SiteChrome.astro';
 import Layout from '../layouts/Layout.astro';
 import {
   artistLinks,
+  latestChannelVideo,
   latestNovelEpisode,
-  latestStoryOst,
   musicArchive,
   novelProject,
   structuredData
@@ -24,8 +24,8 @@ const latestEpisodeLabel = `${latestNovelEpisode.label} · ${latestNovelEpisode.
 <Layout
   title="SunoFox | Anime OST Studio"
   description="SunoFox는 애니메이션 감성의 OST, 웹소설, 영상 제작 흐름을 단순하고 아름답게 연결하는 공식 홈입니다."
-  image={`https://sunofox.com${latestStoryOst.thumbnail}`}
-  imageAlt={latestStoryOst.thumbnailAlt}
+  image="https://sunofox.com/assets/release-desk/mask-good-girl.jpg"
+  imageAlt={latestChannelVideo.thumbnailAlt}
   imageWidth={1200}
   imageHeight={675}
   jsonLd={structuredData}
@@ -51,17 +51,17 @@ const latestEpisodeLabel = `${latestNovelEpisode.label} · ${latestNovelEpisode.
           <h1 id="posterHomeTitle"><span>Suno</span><span>Fox</span></h1>
           <p class="poster-lead">감정을 노래하고, 이야기를 장면으로 남깁니다.</p>
           <div class="poster-actions" aria-label="SunoFox 주요 링크">
-            <a class="poster-button poster-button-primary" href={latestStoryOst.youtubeHref} target="_blank" rel="noopener noreferrer">최신 OST 듣기</a>
+            <a class="poster-button poster-button-primary" href={latestChannelVideo.youtubeHref} target="_blank" rel="noopener noreferrer">최신 OST 듣기</a>
             <a class="poster-button" href={novelProject.season.startHref}>소설 보기</a>
           </div>
         </div>
 
-        <a class="poster-now" href={latestStoryOst.youtubeHref} target="_blank" rel="noopener noreferrer" aria-label={`${latestStoryOst.title} YouTube에서 듣기`}>
+        <a class="poster-now" href={latestChannelVideo.youtubeHref} target="_blank" rel="noopener noreferrer" aria-label={`${latestChannelVideo.title} YouTube에서 듣기`}>
           <span class="poster-play-icon" aria-hidden="true"></span>
           <span class="poster-track">
-            <span class="poster-now-label">지금 재생 중 · 스토리 OST</span>
-            <strong>{latestStoryOst.title}</strong>
-            <small>{latestStoryOst.englishTitle} · {latestStoryOst.date} · 미니시즌 완결</small>
+            <span class="poster-now-label">지금 재생 중 · 최신 공개 영상</span>
+            <strong>{latestChannelVideo.title}</strong>
+            <small>{latestChannelVideo.englishTitle} · {latestChannelVideo.date} · Anime OST</small>
           </span>
           <span class="poster-progress" aria-hidden="true"><span></span></span>
           <span class="poster-listen-link">YouTube에서 듣기</span>

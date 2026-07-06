@@ -94,6 +94,23 @@ function assertThumbnail(label, thumbnail, videoId) {
   }
 }
 
+async function fetchLatestYoutubeVideoId() {
+  const feedUrl = 'https://www.youtube.com/feeds/videos.xml?channel_id=UC8M-2aXbknDT3tDcN1PMvuQ';
+
+  try {
+    const response = await fetch(feedUrl);
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const xml = await response.text();
+    return xml.match(/<yt:videoId>([^<]+)<\/yt:videoId>/)?.[1] || '';
+  } catch (error) {
+    console.warn(`Music content check warning: could not verify YouTube RSS latest video (${error.message}).`);
+    return '';
+  }
+}
+
 function assertYoutubeVideo(label, video) {
   for (const field of ['date', 'title', 'meta', 'type', 'href', 'videoId', 'thumbnail', 'thumbnailAlt', 'publishedAt']) {
     assertPresent(`${label} ${field}`, video[field]);
@@ -119,6 +136,7 @@ const {
   artistLinks,
   archiveAlbum,
   featuredStoryOst,
+  latestChannelVideo,
   latestStoryOst,
   musicArchive,
   storyOsts
@@ -130,11 +148,23 @@ for (const [key, href] of Object.entries(artistLinks || {})) {
 
 for (const field of ['date', 'title', 'englishTitle', 'type', 'href', 'youtubeHref', 'videoId', 'thumbnail', 'thumbnailAlt', 'publishedAt', 'summary']) {
   assertPresent(`featuredStoryOst ${field}`, featuredStoryOst?.[field]);
+  assertPresent(`latestChannelVideo ${field}`, latestChannelVideo?.[field]);
+  assertPresent(`latestStoryOst ${field}`, latestStoryOst?.[field]);
 }
 
 assertYoutubeVideo('featuredStoryOst', {
   ...featuredStoryOst,
   meta: featuredStoryOst?.englishTitle
+});
+
+assertYoutubeVideo('latestChannelVideo', {
+  ...latestChannelVideo,
+  meta: latestChannelVideo?.englishTitle
+});
+
+assertYoutubeVideo('latestStoryOst', {
+  ...latestStoryOst,
+  meta: latestStoryOst?.englishTitle
 });
 
 const storyOstKeys = new Set();
@@ -248,12 +278,16 @@ assertArray('musicArchive.videos', musicArchive?.videos).forEach((video, index) 
   }
 });
 
-if (musicArchive?.videos?.[0]?.videoId !== latestStoryOst?.videoId) {
-  fail('musicArchive.videos[0]: must be the latest story OST');
+if (musicArchive?.videos?.[0]?.videoId !== latestChannelVideo?.videoId) {
+  fail('musicArchive.videos[0]: must be the latest channel video');
 }
 
 if (!musicArchive?.videos?.some((video) => video.videoId === featuredStoryOst?.videoId)) {
   fail('musicArchive.videos: must include featured story OST');
+}
+
+if (!musicArchive?.videos?.some((video) => video.videoId === latestStoryOst?.videoId)) {
+  fail('musicArchive.videos: must include latest story OST');
 }
 
 assertArray('musicArchive.videoHub.links', musicArchive?.videoHub?.links).forEach((link, index) => {
@@ -271,7 +305,7 @@ assertArray('musicArchive.videoHub.facts', musicArchive?.videoHub?.facts, { min:
 });
 
 const videoHubLinkHrefs = new Set((musicArchive?.videoHub?.links || []).map((link) => link.href));
-for (const requiredHref of [artistLinks?.youtube, artistLinks?.youtubePlaylists, featuredStoryOst?.youtubeHref]) {
+for (const requiredHref of [artistLinks?.youtube, artistLinks?.youtubePlaylists, latestChannelVideo?.youtubeHref, latestStoryOst?.youtubeHref, featuredStoryOst?.youtubeHref]) {
   if (!videoHubLinkHrefs.has(requiredHref)) {
     fail(`musicArchive.videoHub.links: missing required href "${requiredHref || '(empty)'}"`);
   }
@@ -281,6 +315,15 @@ assertArray('musicArchive.sources', musicArchive?.sources).forEach((source, inde
   assertPresent(`musicArchive.sources[${index}] label`, source.label);
   assertLink(`musicArchive.sources[${index}] href`, source.href);
 });
+
+const rssLatestVideoId = await fetchLatestYoutubeVideoId();
+if (rssLatestVideoId && latestChannelVideo?.videoId !== rssLatestVideoId) {
+  fail(`latestChannelVideo videoId: expected YouTube RSS latest "${rssLatestVideoId}", got "${latestChannelVideo?.videoId || '(empty)'}"`);
+}
+
+if (rssLatestVideoId && musicArchive?.videos?.[0]?.videoId !== rssLatestVideoId) {
+  fail(`musicArchive.videos[0] videoId: expected YouTube RSS latest "${rssLatestVideoId}", got "${musicArchive?.videos?.[0]?.videoId || '(empty)'}"`);
+}
 
 if (errors.length > 0) {
   console.error('Music content check failed:');

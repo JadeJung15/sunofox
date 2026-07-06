@@ -25,6 +25,8 @@ $labelNowPlaying = -join @([char]0xC9C0, [char]0xAE08, " ", [char]0xC7AC, [char]
 $labelChannelIntro = [string]::Concat([char]0xCC44, [char]0xB110, " ", [char]0xC18C, [char]0xAC1C)
 $labelLatestOst = [string]::Concat([char]0xCD5C, [char]0xC2E0, " OST ", [char]0xB4E3, [char]0xAE30)
 $labelYoutubeListen = "YouTube" + [string]::Concat([char]0xC5D0, [char]0xC11C, " ", [char]0xB4E3, [char]0xAE30)
+$labelDontTakeMeAway = -join @([char]0xC544, [char]0xC9C1, " ", [char]0xB370, [char]0xB824, [char]0xAC00, [char]0xC9C0, " ", [char]0xB9C8)
+$labelSayItsOver = -join @([char]0xB05D, [char]0xB0AC, [char]0xB2E4, [char]0xACE0, " ", [char]0xB9D0, [char]0xD574)
 $sitemapPublicMust = @(
   "https://sunofox.com/",
   "https://sunofox.com/novels/",
@@ -62,7 +64,7 @@ $routes = @(
     Name = "home"
     Path = "/"
     File = "index.html"
-    Must = @($labelAnimeOstStudio, $labelNowPlaying, $labelLatestOst, $labelYoutubeListen, $labelMusicArchive, $labelChannelIntro, "anime-home", "poster-home", "poster-hero", "poster-bg", "poster-now", "poster-play-icon", "poster-track", "poster-progress", "poster-listen-link", "poster-panel", "poster-links", "poster-latest", "poster-social", "/assets/release-desk/mask-good-girl.jpg", "site-footer-nav", 'data-footer-key="novels"', 'data-footer-key="music"', 'data-footer-key="profile"', 'data-footer-key="updates"', 'data-footer-key="privacy"', 'data-footer-key="terms"', "/novels/", "/music/", "/updates/", "/profile/", "https://sunofox.com/", "https://www.youtube.com/@sunofox", $labelMusicArchive)
+    Must = @($labelAnimeOstStudio, $labelNowPlaying, $labelLatestOst, $labelYoutubeListen, $labelMusicArchive, $labelChannelIntro, "Mask of a Good Girl", "lToGxsOiXK0", "anime-home", "poster-home", "poster-hero", "poster-bg", "poster-now", "poster-play-icon", "poster-track", "poster-progress", "poster-listen-link", "poster-panel", "poster-links", "poster-latest", "poster-social", "/assets/release-desk/mask-good-girl.jpg", "site-footer-nav", 'data-footer-key="novels"', 'data-footer-key="music"', 'data-footer-key="profile"', 'data-footer-key="updates"', 'data-footer-key="privacy"', 'data-footer-key="terms"', "/novels/", "/music/", "/updates/", "/profile/", "https://sunofox.com/", "https://www.youtube.com/@sunofox", $labelMusicArchive)
   },
   @{
     Name = "novels"
@@ -110,7 +112,7 @@ $routes = @(
     Name = "music"
     Path = "/music/"
     File = "music/index.html"
-    Must = @("Music Archive", $labelMusicArchive, "music-archive-actions", "music-video-direct-actions", "music-featured-ost-section", "music-release-card", "music-video-feature", "music-video-hub", "music-video-summary", "music-video-anchor-strip", "music-video-2KsAbBnf2Lk", "music-video-u_OwBr3Cstk", "music-video-grid", "music-story-section", 'data-video-action="latest"', 'data-video-action="channel"', 'data-video-action="playlists"', 'data-video-feature="2KsAbBnf2Lk"', 'data-video-id="2KsAbBnf2Lk"', 'data-video-card="2KsAbBnf2Lk"', 'data-video-type="Web Novel OST"', "https://www.youtube.com/@sunofox", "https://www.youtube.com/@sunofox/playlists", "https://www.youtube.com/watch?v=u_OwBr3Cstk", "https://www.youtube.com/watch?v=2KsAbBnf2Lk", "/novels/episode-006/", "https://sunofox.com/music/")
+    Must = @("Music Archive", $labelMusicArchive, "music-archive-actions", "music-video-direct-actions", "music-featured-ost-section", "music-release-card", "music-video-feature", "music-video-hub", "music-video-summary", "music-video-anchor-strip", "music-video-lToGxsOiXK0", "music-video-xwV_wACJatw", "music-video-CLHeFg8QVvc", "music-video-2KsAbBnf2Lk", "music-video-u_OwBr3Cstk", "music-video-grid", "music-story-section", 'data-video-action="latest"', 'data-video-action="channel"', 'data-video-action="playlists"', 'data-video-feature="lToGxsOiXK0"', 'data-video-id="lToGxsOiXK0"', 'data-video-card="lToGxsOiXK0"', 'data-video-type="Anime OST"', "Mask of a Good Girl", $labelDontTakeMeAway, $labelSayItsOver, "https://www.youtube.com/@sunofox", "https://www.youtube.com/@sunofox/playlists", "https://www.youtube.com/watch?v=lToGxsOiXK0", "https://www.youtube.com/watch?v=xwV_wACJatw", "https://www.youtube.com/watch?v=CLHeFg8QVvc", "https://www.youtube.com/watch?v=u_OwBr3Cstk", "https://www.youtube.com/watch?v=2KsAbBnf2Lk", "/novels/episode-006/", "https://sunofox.com/music/")
   },
   @{
     Name = "album"

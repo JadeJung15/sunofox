@@ -86,7 +86,7 @@ const siteContentModule = await import(`${pathToFileURL(siteContentPath).href}?m
 const {
   archiveAlbum,
   artistLinks,
-  latestStoryOst,
+  latestChannelVideo,
   musicArchive,
   novelProject,
   sunofoxProfile
@@ -173,8 +173,8 @@ if (youtubeTab?.links?.[0]?.href !== artistLinks.youtube) {
   fail('sunofoxProfile.tabs.youtube links: first link must point to artistLinks.youtube');
 }
 
-if (youtubeTab?.videos?.[0]?.videoId !== latestStoryOst?.videoId) {
-  fail('sunofoxProfile.tabs.youtube videos: first video must be latestStoryOst');
+if (youtubeTab?.videos?.[0]?.videoId !== latestChannelVideo?.videoId) {
+  fail('sunofoxProfile.tabs.youtube videos: first video must be latestChannelVideo');
 }
 
 const expectedYoutubeVideoIds = musicArchive.videos.slice(0, 4).map((video) => video.videoId).join('|');

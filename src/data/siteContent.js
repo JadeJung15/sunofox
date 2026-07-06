@@ -2,6 +2,7 @@ import {
   artistLinks,
   detectedErrorStoryOst,
   featuredStoryOst,
+  latestChannelVideo,
   latestStoryOst,
   storyOstMap,
   storyOsts
@@ -30,6 +31,7 @@ export {
   detectedErrorStoryOst,
   featuredStoryOst,
   footerItems,
+  latestChannelVideo,
   latestNovelEpisode,
   latestStoryOst,
   menuItems,
@@ -51,7 +53,7 @@ export function getEpisodeOst(episode = novelEpisodes[0]) {
 }
 
 export const sunofoxProfile = {
-  researchDate: '2026.06.19',
+  researchDate: '2026.07.06',
   highlights: [
     {
       key: 'video',
@@ -107,10 +109,11 @@ export const sunofoxProfile = {
       facts: [
         { label: '채널명', value: 'SunoFox / 수노폭스' },
         { label: '핸들', value: '@SunoFox' },
-        { label: '규모', value: '구독자 약 4.18K명 · 영상 131편' },
-        { label: '누적 조회', value: '90만+ 회 공개 스냅샷 기준' },
+        { label: '규모', value: '공개 채널 스냅샷 기준 업데이트' },
+        { label: '누적 조회', value: '공개 조회 시점 기준 변동' },
         { label: '업로드', value: '수 · 일 17:15 KST' },
-        { label: '최근 IP', value: latestStoryOst.title }
+        { label: '채널 최신', value: latestChannelVideo.title },
+        { label: '최근 웹소설 OST', value: latestStoryOst.title }
       ],
       videos: musicArchive.videos.slice(0, 4).map((video) => ({
         ...video,

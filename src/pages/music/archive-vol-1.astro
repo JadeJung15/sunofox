@@ -88,11 +88,5 @@ import { archiveAlbum, archiveAlbumStructuredData } from '../../data/siteContent
       </ol>
     </section>
 
-    <section class="album-source-panel reveal" aria-label="앨범 출처">
-      <span>출처</span>
-      {archiveAlbum.links.map((link) => (
-        <a href={link.href} target="_blank" rel="noopener noreferrer">{link.label}</a>
-      ))}
-    </section>
   </main>
 </Layout>

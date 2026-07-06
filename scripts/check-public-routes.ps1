@@ -115,14 +115,14 @@ $routes = @(
     Path = "/music/"
     File = "music/index.html"
     Must = @("Music Archive", $labelMusicArchive, "anime-home", "music-archive-actions", "music-video-direct-actions", "music-release-card", "music-release-platforms", "music-platform-link", "/assets/music/archive-vol-1-cover.jpg", "Spotify", "Apple Music", "YouTube Music", "music-video-feature", "music-video-hub", "music-video-summary", "music-video-anchor-strip", "music-video-lToGxsOiXK0", "music-video-xwV_wACJatw", "music-video-CLHeFg8QVvc", "music-video-2KsAbBnf2Lk", "music-video-u_OwBr3Cstk", "music-video-grid", 'data-video-action="latest"', 'data-video-action="channel"', 'data-video-action="playlists"', 'data-video-feature="lToGxsOiXK0"', 'data-video-id="lToGxsOiXK0"', 'data-video-card="lToGxsOiXK0"', 'data-video-type="Anime OST"', "Mask of a Good Girl", $labelDontTakeMeAway, $labelSayItsOver, "https://www.youtube.com/@sunofox", "https://www.youtube.com/@sunofox/playlists", "https://www.youtube.com/watch?v=lToGxsOiXK0", "https://www.youtube.com/watch?v=xwV_wACJatw", "https://www.youtube.com/watch?v=CLHeFg8QVvc", "https://www.youtube.com/watch?v=u_OwBr3Cstk", "https://www.youtube.com/watch?v=2KsAbBnf2Lk", "https://i.ytimg.com/vi/lToGxsOiXK0/hqdefault.jpg", "https://sunofox.com/music/")
-    MustNot = @("music-featured-ost-section", "music-story-section", "/novels/episode-006/", "Live Archive", "Radio Live")
+    MustNot = @("album-source-panel", "music-featured-ost-section", "music-story-section", "/novels/episode-006/", "Live Archive", "Radio Live")
   },
   @{
     Name = "album"
     Path = "/music/archive-vol-1/"
     File = "music/archive-vol-1/index.html"
     Must = @("ARCHIVE vol.1", "anime-home", "/assets/music/archive-vol-1-cover.jpg", "album-platform-links", "music-platform-link", "Spotify", "Apple Music", "YouTube Music", "Genie", "Bugs", "https://sunofox.com/music/archive-vol-1/")
-    MustNot = @("/assets/sunofox-app-icon-512.png", $labelNovelSee)
+    MustNot = @("album-source-panel", "/assets/sunofox-app-icon-512.png", $labelNovelSee)
   },
   @{
     Name = "profile"

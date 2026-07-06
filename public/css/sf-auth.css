@@ -2856,6 +2856,7 @@ body {
   background:
     linear-gradient(145deg, rgba(255, 255, 255, 0.076), rgba(255, 255, 255, 0.018)),
     rgba(3, 3, 10, 0.84);
+  background-color: rgba(3, 3, 10, 0.84);
   box-shadow: 0 28px 86px rgba(0, 0, 0, 0.58);
   backdrop-filter: blur(16px);
 }
@@ -2984,7 +2985,7 @@ body {
 
 .sf-auth-body:not(.sf-admin-body) .sf-auth-links a {
   justify-content: center;
-  min-height: 38px;
+  min-height: 44px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.28);
   color: rgba(255, 255, 255, 0.76);
 }
@@ -3052,7 +3053,7 @@ body {
   }
 
   .sf-auth-stage .sf-auth-brand {
-    min-height: 38px;
+    min-height: 44px;
     font-size: 16px;
   }
 
@@ -3200,7 +3201,7 @@ body {
   .sf-auth-body:not(.sf-admin-body) .sf-auth-links a,
   .sf-auth-result-actions a {
     justify-content: center;
-    min-height: 36px;
+    min-height: 44px;
   }
 }
 
@@ -5063,8 +5064,14 @@ body {
 }
 
 .sf-auth-body:not(.sf-admin-body) .sf-auth-links a {
-  min-height: 36px;
+  min-height: 44px;
   padding: 0 12px;
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-social-status-note,
+.sf-auth-body:not(.sf-admin-body) .sf-auth-footnote,
+.sf-auth-body:not(.sf-admin-body) .sf-auth-form small {
+  color: #526071 !important;
 }
 
 @media (max-width: 920px) {

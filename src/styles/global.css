@@ -7462,6 +7462,268 @@ body.menu-open .menu-trigger:focus-visible .menu-trigger-lines span:last-child {
   background: rgba(255, 254, 250, 0.94);
 }
 
+/* 2026-07 mobile readability pass for light public pages. */
+.category-content.profile-layout {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.profile-copy {
+  min-width: 0;
+  max-width: min(100%, 760px);
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+}
+
+.profile-copy h2 {
+  color: var(--sf-ink);
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.profile-copy a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+}
+
+.novel-reader-header h1,
+.novel-reader-summary dd,
+.novel-reader-progress > div,
+.novel-reader-progress > div strong,
+.novel-reader-index h2,
+.novel-reader-index-links strong,
+.novel-reader-ost-copy h2,
+.novel-reader-completion h2,
+.novel-season-copy h3,
+.novel-season-facts dd,
+.novel-episode-row strong,
+.novel-world-grid strong,
+.novel-character-grid h3,
+.novel-ost-panel h2,
+.music-flow-grid strong,
+.music-featured-copy h2,
+.music-release-copy h3,
+.music-release-copy dd,
+.music-video-summary dd,
+.music-video-feature strong,
+.music-video-hub-copy h3,
+.music-video-hub-copy dd,
+.music-video-grid strong,
+.music-story-section h2,
+.about-route-grid strong,
+.profile-snapshot-head h2,
+.profile-snapshot-card strong,
+.profile-detail-head h2,
+.profile-detail-panel-copy h3,
+.profile-fact-grid dd,
+.profile-video-list strong,
+.album-cover-mark span,
+.album-cover-mark strong,
+.album-detail-copy h1,
+.album-meta-grid dd,
+.album-note-section h2,
+.album-track-section h2,
+.album-track-grid strong,
+.updates-log-copy h3,
+.updates-category-head span,
+.updates-category-grid a {
+  color: var(--sf-ink);
+}
+
+.novel-reader-body p,
+.novel-reader-completion p:not(.section-kicker),
+.novel-season-copy p,
+.novel-episode-row p,
+.novel-world-summary,
+.novel-world-grid p,
+.novel-character-grid p,
+.novel-ost-panel p,
+.profile-video-list p,
+.music-flow-grid p,
+.music-featured-copy p:not(.section-kicker),
+.music-release-copy > strong,
+.music-video-grid p,
+.music-video-hub-copy p:not(.section-kicker),
+.music-story-section p,
+.music-video-feature p,
+.profile-snapshot-head p:not(.section-kicker),
+.profile-snapshot-card p,
+.about-route-grid p,
+.profile-detail-head p:not(.section-kicker),
+.profile-detail-panel-copy p:not(.section-kicker),
+.updates-log-copy p,
+.album-note-copy p {
+  color: var(--sf-muted);
+}
+
+.novel-reader-quicklinks a,
+.novel-reader-index-links a,
+.novel-reader-actions .main-button,
+.novel-reader-ost-actions .main-button,
+.novel-reader-completion-actions .main-button,
+.updates-log-actions .micro-button,
+.profile-current-actions .micro-button,
+.profile-source-actions .main-button,
+.profile-source-strip a,
+.album-source-panel a,
+.music-video-anchor-strip a {
+  min-height: 44px;
+}
+
+.novel-reader-summary div,
+.novel-reader-index-links a,
+.novel-reader-completion,
+.profile-video-list a,
+.music-flow-grid article,
+.music-release-card,
+.music-release-cover,
+.music-video-grid a,
+.music-video-hub,
+.music-video-feature,
+.about-route-grid a,
+.profile-snapshot-card,
+.profile-detail-tabs a,
+.album-track-grid li,
+.updates-roadmap-card,
+.updates-category-grid article {
+  border-color: var(--sf-line);
+  background: rgba(255, 254, 250, 0.94);
+}
+
+.novel-reader-progress-bar {
+  border-color: var(--sf-line);
+  background: #e6e9ed;
+}
+
+.novel-reader-progress > div span,
+.novel-reader-summary dt,
+.novel-season-facts dt,
+.novel-episode-row small,
+.novel-world-grid small,
+.novel-character-grid small,
+.profile-video-list span,
+.profile-video-list em,
+.music-archive-facts dt,
+.music-release-copy dt,
+.music-video-feature span,
+.music-video-grid span,
+.music-video-hub-copy dt,
+.music-video-summary dt,
+.profile-snapshot-card small,
+.profile-snapshot-card em,
+.profile-detail-head > span,
+.profile-detail-tabs a,
+.profile-fact-grid dt,
+.about-route-grid span,
+.updates-roadmap-card > span:first-child,
+.updates-roadmap-checklist span,
+.updates-log-meta time,
+.updates-category-grid time,
+.album-meta-grid dt,
+.album-track-grid em {
+  color: var(--sf-soft);
+}
+
+.music-archive-facts dd {
+  color: var(--sf-ink);
+}
+
+.music-release-copy li {
+  color: var(--sf-muted);
+}
+
+.music-release-cover span,
+.music-video-feature em,
+.music-video-grid em,
+.profile-snapshot-card span,
+.about-route-grid .about-route-private span {
+  color: var(--sf-rose);
+}
+
+.profile-track-list {
+  color: var(--sf-muted);
+}
+
+.updates-roadmap-card .updates-roadmap-next,
+.updates-roadmap-checklist li {
+  color: var(--sf-muted);
+}
+
+.about-route-grid a.about-route-private strong,
+.profile-snapshot-card.is-private-tool strong {
+  color: var(--sf-ink);
+}
+
+.about-route-grid a.about-route-private span,
+.profile-snapshot-card.is-private-tool span,
+.profile-snapshot-card.is-private-tool em {
+  color: var(--sf-rose);
+}
+
+.novel-episode-meta span,
+.novel-episode-tags i,
+.updates-log-meta span,
+.updates-category-head strong {
+  border-color: rgba(180, 59, 86, 0.34);
+  background: #fff1f5;
+  color: var(--sf-rose);
+}
+
+.novel-episode-row.is-latest b,
+.novel-episode-row b,
+.reader-latest-badge {
+  color: var(--sf-rose);
+}
+
+.novel-world-summary blockquote,
+.novel-ost-thumb span {
+  color: var(--sf-muted);
+}
+
+.novel-card-anchor,
+.novel-world-grid a.novel-card-anchor,
+.novel-character-grid a.novel-card-anchor {
+  display: inline-flex;
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(31, 95, 149, 0.24);
+  border-radius: 8px;
+  background: #eef5fb;
+  padding: 0 12px;
+  color: var(--sf-accent);
+  line-height: 1.25;
+}
+
+.updates-category-grid a {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+}
+
+.overlay-nav a,
+.overlay-nav a.overlay-nav-secondary,
+.site-logo,
+.menu-trigger,
+.site-footer a {
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+}
+
+.overlay-nav a,
+.overlay-nav a.overlay-nav-secondary {
+  display: inline-flex;
+  padding-inline: 8px;
+}
+
+.site-footer a {
+  display: inline-flex;
+  justify-content: center;
+}
+
 @media (max-width: 960px) {
   .hero-stage-landing {
     grid-template-columns: 1fr;
@@ -7533,6 +7795,69 @@ body.menu-open .menu-trigger:focus-visible .menu-trigger-lines span:last-child {
   .updates-page .category-hero h1 {
     font-size: 2.25rem;
   }
+
+  .category-page,
+  .music-archive-page,
+  .album-detail-page,
+  .novel-reader-page {
+    padding-top: 58px;
+  }
+
+  .category-hero,
+  .music-archive-hero,
+  .album-detail-hero {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+
+  .category-content {
+    padding-top: 24px;
+  }
+
+  .novel-list-toolbar,
+  .novel-season-status,
+  .novel-reading-path,
+  .music-featured-ost-section,
+  .music-story-section,
+  .profile-source-strip,
+  .album-note-section,
+  .updates-pinned-section {
+    margin-top: 28px;
+  }
+
+  .updates-log-list li {
+    padding: 20px 0;
+  }
+
+  .updates-category-grid li {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 10px 0;
+  }
+}
+
+.novel-list-toolbar-copy h3,
+.novel-list-featured strong,
+.novel-list-summary dd,
+.novel-reading-path-head h3,
+.novel-reading-card strong,
+.novel-detail-info h2,
+.novel-world-grid strong,
+.novel-character-grid h3,
+.novel-ost-panel h2,
+.novel-reader-jumpbar strong {
+  color: var(--sf-ink);
+}
+
+.novel-list-toolbar-copy > p:last-child,
+.novel-list-featured small,
+.novel-reading-card p,
+.novel-detail-info p,
+.novel-detail-info blockquote,
+.novel-keyword-row span,
+.novel-ost-thumb span,
+.novel-reader-quicklinks a {
+  color: var(--sf-muted);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -7651,6 +7976,11 @@ body:has(.anime-home) .site-footer a {
   color: #aa9ab4;
 }
 
+body:has(.anime-home) .poster-social a {
+  min-width: 44px;
+  justify-content: center;
+}
+
 body:has(.anime-home) .site-footer a:hover,
 body:has(.anime-home) .site-footer a:focus-visible {
   color: #ff6f9f;
@@ -7674,6 +8004,7 @@ body:has(.anime-home) .site-footer a:focus-visible {
 
   body:has(.anime-home) .site-footer a {
     display: inline-flex;
+    min-width: 44px;
     min-height: 44px;
     align-items: center;
   }

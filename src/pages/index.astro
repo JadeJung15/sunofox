@@ -13,10 +13,10 @@ import {
 const keyVisual = '/assets/release-desk/mask-good-girl.jpg';
 
 const posterLinks = [
-  { label: 'OST', title: latestStoryOst.title, href: latestStoryOst.youtubeHref, external: true },
-  { label: 'Story', title: novelProject.title, href: novelProject.season.startHref },
-  { label: 'Archive', title: musicArchive.title, href: musicArchive.href },
-  { label: 'Studio', title: 'MV Studio', href: '/login?next=/mv-studio' }
+  { label: '채널', title: 'SunoFox 유튜브', href: artistLinks.youtube, external: true },
+  { label: '소설', title: novelProject.title, href: novelProject.season.startHref },
+  { label: '음악', title: '음악 아카이브', href: musicArchive.href },
+  { label: '스튜디오', title: 'MV 스튜디오', href: '/login?next=/mv-studio' }
 ];
 
 const latestEpisodeLabel = `${latestNovelEpisode.label} · ${latestNovelEpisode.title}`;
@@ -47,24 +47,24 @@ const latestEpisodeLabel = `${latestNovelEpisode.label} · ${latestNovelEpisode.
       />
 
       <div class="poster-content">
-        <p class="poster-kicker">ANIME OST STUDIO</p>
+        <p class="poster-kicker">애니 OST 스튜디오</p>
         <h1 id="posterHomeTitle">SunoFox</h1>
         <p class="poster-lead">감정을 노래하고, 이야기를 장면으로 남깁니다.</p>
-        <div class="poster-actions" aria-label="SunoFox primary links">
+        <div class="poster-actions" aria-label="SunoFox 주요 링크">
           <a class="poster-button poster-button-primary" href={latestStoryOst.youtubeHref} target="_blank" rel="noopener noreferrer">OST 듣기</a>
           <a class="poster-button" href={novelProject.season.startHref}>소설 보기</a>
         </div>
       </div>
 
       <a class="poster-now" href={latestStoryOst.youtubeHref} target="_blank" rel="noopener noreferrer">
-        <span>NOW PLAYING</span>
+        <span>지금 재생 중</span>
         <strong>{latestStoryOst.title}</strong>
         <small>{latestStoryOst.englishTitle} · {latestStoryOst.date}</small>
       </a>
     </section>
 
-    <section class="poster-panel reveal" aria-label="SunoFox featured routes">
-      <nav class="poster-links" aria-label="SunoFox main links">
+    <section class="poster-panel reveal" aria-label="SunoFox 추천 경로">
+      <nav class="poster-links" aria-label="SunoFox 주요 경로">
         {posterLinks.map((item) => (
           <a
             href={item.href}
@@ -78,17 +78,17 @@ const latestEpisodeLabel = `${latestNovelEpisode.label} · ${latestNovelEpisode.
       </nav>
 
       <a class="poster-story" href={latestNovelEpisode.href}>
-        <span>{novelProject.title}</span>
+        <span>최근 회차</span>
         <strong>{latestEpisodeLabel}</strong>
       </a>
     </section>
 
-    <section class="poster-social reveal" aria-label="SunoFox external links">
-      <a href={artistLinks.youtube} target="_blank" rel="noopener noreferrer">YouTube</a>
-      <a href="/music/">{musicArchive.title}</a>
-      <a href="/updates/">Updates</a>
-      <a href="/profile/">Profile</a>
-      <a href="https://sunofox.com/">sunofox.com</a>
+    <section class="poster-social reveal" aria-label="SunoFox 외부 및 보조 링크">
+      <a href={artistLinks.youtube} target="_blank" rel="noopener noreferrer">유튜브</a>
+      <a href="/music/">음악 아카이브</a>
+      <a href="/updates/">업데이트</a>
+      <a href="/profile/">채널 소개</a>
+      <a href="https://sunofox.com/">공식 도메인</a>
     </section>
   </main>
 </Layout>
@@ -149,7 +149,7 @@ const latestEpisodeLabel = `${latestNovelEpisode.label} · ${latestNovelEpisode.
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: 64% 42%;
+    object-position: 60% 42%;
     filter: saturate(1.08) contrast(1.05);
   }
 
@@ -354,7 +354,7 @@ const latestEpisodeLabel = `${latestNovelEpisode.label} · ${latestNovelEpisode.
     }
 
     .poster-bg {
-      object-position: 62% 32%;
+      object-position: 54% 50%;
     }
 
     .poster-content,

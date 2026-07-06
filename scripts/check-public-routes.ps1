@@ -20,6 +20,11 @@ $labelMusicArchive = [string]::Concat([char]0xC74C, [char]0xC545, " ", [char]0xC
 $labelMusicSee = -join @([char]0xC74C, [char]0xC545, " ", [char]0xBCF4, [char]0xAE30)
 $labelStudio = -join @([char]0xC2A4, [char]0xD29C, [char]0xB514, [char]0xC624)
 $labelSunoFoxDetail = "SunoFox " + [string]::Concat([char]0xC0C1, [char]0xC138, " ", [char]0xC18C, [char]0xAC1C)
+$labelAnimeOstStudio = -join @([char]0xC560, [char]0xB2C8, " OST ", [char]0xC2A4, [char]0xD29C, [char]0xB514, [char]0xC624)
+$labelNowPlaying = -join @([char]0xC9C0, [char]0xAE08, " ", [char]0xC7AC, [char]0xC0DD, " ", [char]0xC911)
+$labelSunoFoxYoutube = "SunoFox " + [string]::Concat([char]0xC720, [char]0xD29C, [char]0xBE0C)
+$labelChannelIntro = [string]::Concat([char]0xCC44, [char]0xB110, " ", [char]0xC18C, [char]0xAC1C)
+$labelOfficialDomain = [string]::Concat([char]0xACF5, [char]0xC2DD, " ", [char]0xB3C4, [char]0xBA54, [char]0xC778)
 $sitemapPublicMust = @(
   "https://sunofox.com/",
   "https://sunofox.com/novels/",
@@ -57,7 +62,7 @@ $routes = @(
     Name = "home"
     Path = "/"
     File = "index.html"
-    Must = @("ANIME OST STUDIO", "anime-home", "poster-home", "poster-hero", "poster-bg", "poster-now", "poster-panel", "poster-links", "poster-story", "poster-social", "/assets/release-desk/mask-good-girl.jpg", "site-footer-nav", 'data-footer-key="novels"', 'data-footer-key="music"', 'data-footer-key="profile"', 'data-footer-key="updates"', 'data-footer-key="privacy"', 'data-footer-key="terms"', "/novels/", "/music/", "/updates/", "/profile/", "https://sunofox.com/", "https://www.youtube.com/@sunofox", $labelMusicArchive)
+    Must = @($labelAnimeOstStudio, $labelNowPlaying, $labelSunoFoxYoutube, $labelMusicArchive, $labelChannelIntro, $labelOfficialDomain, "anime-home", "poster-home", "poster-hero", "poster-bg", "poster-now", "poster-panel", "poster-links", "poster-story", "poster-social", "/assets/release-desk/mask-good-girl.jpg", "site-footer-nav", 'data-footer-key="novels"', 'data-footer-key="music"', 'data-footer-key="profile"', 'data-footer-key="updates"', 'data-footer-key="privacy"', 'data-footer-key="terms"', "/novels/", "/music/", "/updates/", "/profile/", "https://sunofox.com/", "https://www.youtube.com/@sunofox", $labelMusicArchive)
   },
   @{
     Name = "novels"

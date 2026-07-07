@@ -10030,25 +10030,25 @@ body:has(.anime-home):has(.music-archive-page) .music-video-anchor-strip a {
 
 body:has(.anime-home):has(.music-archive-page) .music-video-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
+  gap: 14px;
   margin-top: 18px;
 }
 
 body:has(.anime-home):has(.music-archive-page) .music-video-grid a {
   display: grid;
-  grid-template-columns: 104px minmax(0, 1fr);
-  gap: 4px 14px;
+  grid-template-columns: 1fr;
+  gap: 8px;
   min-height: 0;
-  align-content: center;
+  align-content: start;
   padding: 10px;
 }
 
 body:has(.anime-home):has(.music-archive-page) .music-video-grid img {
-  grid-row: 1 / span 4;
   width: 100%;
-  aspect-ratio: 1;
+  aspect-ratio: 16 / 9;
   margin-bottom: 0;
   border-radius: 6px;
+  object-fit: cover;
 }
 
 body:has(.anime-home):has(.music-archive-page) .music-video-grid span {
@@ -10063,7 +10063,7 @@ body:has(.anime-home):has(.music-archive-page) .music-video-grid strong {
 
 body:has(.anime-home):has(.music-archive-page) .music-video-grid p {
   display: -webkit-box;
-  margin-top: 2px;
+  margin-top: 0;
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -10109,6 +10109,7 @@ body:has(.anime-home):has(.music-archive-page) .music-release-copy dl div {
 }
 
 body:has(.anime-home):has(.music-archive-page) .music-release-copy ol {
+  display: none;
   gap: 6px 14px;
   margin-top: 16px;
 }
@@ -10202,18 +10203,19 @@ body:has(.anime-home):has(.album-detail-page) .album-track-grid li {
   }
 
   body:has(.anime-home):has(.music-archive-page) .music-video-hub {
+    display: grid;
     padding: 12px;
   }
 
   body:has(.anime-home):has(.music-archive-page) .music-video-feature {
-    grid-template-columns: 96px minmax(0, 1fr);
-    gap: 5px 12px;
+    grid-template-columns: 1fr;
+    gap: 8px;
     align-items: center;
   }
 
   body:has(.anime-home):has(.music-archive-page) .music-video-feature img {
-    grid-row: 1 / span 4;
-    aspect-ratio: 1;
+    grid-row: auto;
+    aspect-ratio: 16 / 9;
     margin-bottom: 0;
   }
 
@@ -10230,18 +10232,38 @@ body:has(.anime-home):has(.album-detail-page) .album-track-grid li {
   }
 
   body:has(.anime-home):has(.music-archive-page) .music-video-grid a {
-    grid-template-columns: 82px minmax(0, 1fr);
-    min-height: 96px;
-    gap: 3px 10px;
-    padding: 9px;
+    grid-template-columns: 1fr;
+    min-height: 0;
+    gap: 8px;
+    padding: 10px;
+  }
+
+  body:has(.anime-home):has(.music-archive-page) .music-video-grid img {
+    grid-row: auto;
+    aspect-ratio: 16 / 9;
   }
 
   body:has(.anime-home):has(.music-archive-page) .music-video-grid strong {
     font-size: 0.9rem;
   }
 
-  body:has(.anime-home):has(.music-archive-page) .music-release-copy ol {
-    grid-template-columns: 1fr;
+  body:has(.anime-home):has(.music-archive-page) .music-release-card {
+    gap: 12px;
+    padding: 12px;
+  }
+
+  body:has(.anime-home):has(.music-archive-page) .music-release-copy h3 {
+    font-size: clamp(1.8rem, 9vw, 2.6rem);
+  }
+
+  body:has(.anime-home):has(.music-archive-page) .music-release-copy > strong {
+    margin-top: 10px;
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  body:has(.anime-home):has(.music-archive-page) .music-release-copy dl {
+    margin-top: 12px;
   }
 
   body:has(.anime-home):has(.album-detail-page) .album-detail-page {

@@ -90,6 +90,14 @@ assertBlockIncludes('.novel-reader-topbar a', ['min-width: 44px;', 'min-height: 
 assertBlockIncludes('.album-back-link', ['display: inline-flex;', 'min-height: 44px;']);
 assertBlockIncludes('body:has(.anime-home) .site-header', ['width: 100%;', 'max-width: 100%;']);
 assertBlockExcludes('body:has(.anime-home) .site-header', ['100vw']);
+assertBlockIncludes(
+  'body:has(.anime-home):has(.music-archive-page) .music-video-grid img',
+  ['aspect-ratio: 16 / 9;', 'object-fit: cover;']
+);
+assertBlockIncludes(
+  'body:has(.anime-home):has(.music-archive-page) .music-release-copy ol',
+  ['display: none;']
+);
 
 if (mobileMediaIndex !== -1) {
   assertBlockIncludes('.main-button', ['min-height: 44px;'], { after: mobileMediaIndex });

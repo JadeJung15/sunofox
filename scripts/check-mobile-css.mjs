@@ -59,6 +59,19 @@ function assertBlockIncludes(selector, expected, options = {}) {
   }
 }
 
+function assertBlockExcludes(selector, forbidden, options = {}) {
+  const blocks = blocksFor(selector, options);
+  if (blocks.length === 0) {
+    fail(`${selector}: missing CSS block`);
+    return;
+  }
+
+  const offenders = blocks.filter((block) => forbidden.some((needle) => block.includes(needle)));
+  if (offenders.length > 0) {
+    fail(`${selector}: expected CSS blocks to exclude ${forbidden.map((needle) => `"${needle}"`).join(', ')}`);
+  }
+}
+
 function assertContains(label, needle) {
   if (!css.includes(needle)) {
     fail(`${label}: expected CSS to include "${needle}"`);
@@ -75,6 +88,8 @@ assertBlockIncludes('.main-button', ['min-height: 46px;']);
 assertBlockIncludes('.micro-button', ['min-height: 44px;']);
 assertBlockIncludes('.novel-reader-topbar a', ['min-width: 44px;', 'min-height: 44px;']);
 assertBlockIncludes('.album-back-link', ['display: inline-flex;', 'min-height: 44px;']);
+assertBlockIncludes('body:has(.anime-home) .site-header', ['width: 100%;', 'max-width: 100%;']);
+assertBlockExcludes('body:has(.anime-home) .site-header', ['100vw']);
 
 if (mobileMediaIndex !== -1) {
   assertBlockIncludes('.main-button', ['min-height: 44px;'], { after: mobileMediaIndex });

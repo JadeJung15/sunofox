@@ -134,13 +134,13 @@ $routes = @(
   },
   @{
     Name = "login"
-    Path = "/login.html"
+    Path = "/login"
     File = "login.html"
     Must = @("sf-auth-body", "sf-auth-login", "PRIVATE ACCESS", "MEMBER GATE", "sf-social-auth", "sf-auth-form", "ENTER SITE", "MY ACCOUNT", "/css/sf-auth.")
   },
   @{
     Name = "signup"
-    Path = "/signup.html"
+    Path = "/signup"
     File = "signup.html"
     Must = @("sf-auth-body", "sf-auth-signup", "MEMBER JOIN", "PROFILE START", "sf-social-auth", "sf-auth-form", "CREATE ACCOUNT", "sf-auth-result-panel", "/css/sf-auth.")
   },

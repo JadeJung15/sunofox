@@ -25,9 +25,7 @@ const htmlFiles = [
   'account.html',
   'account/index.html',
   'login.html',
-  'login/index.html',
   'signup.html',
-  'signup/index.html'
 ];
 
 const versioned = new Map();

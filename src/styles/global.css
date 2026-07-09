@@ -7684,6 +7684,13 @@ body.menu-open .menu-trigger:focus-visible .menu-trigger-lines span:last-child {
     font-size: 0.95rem;
     line-height: 1.72;
   }
+
+  .legal-page .profile-copy a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+    vertical-align: middle;
+  }
 }
 
 .novel-reader-header h1,

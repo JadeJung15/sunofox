@@ -511,7 +511,7 @@ if (musicMobileMediaIndex !== -1) {
   );
   assertBlockIncludes(
     'body:has(.anime-home):has(.profile-page) .profile-source-actions .main-button:last-child:nth-child(odd)',
-    ['grid-column: 1 / -1;'],
+    ['grid-column: 1 / -1;', 'justify-content: flex-start;', 'text-align: left;'],
     { after: musicMobileMediaIndex }
   );
   assertBlockIncludes(

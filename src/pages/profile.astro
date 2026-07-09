@@ -134,6 +134,17 @@ import { artistLinks, novelProject, structuredData, sunofoxProfile } from '../da
                   {tab.videos.map((video) => (
                     <li>
                       <a href={video.href} target="_blank" rel="noopener noreferrer">
+                        {video.thumbnail && (
+                          <img
+                            class="profile-video-thumb"
+                            src={video.thumbnail}
+                            alt={video.thumbnailAlt || `${video.title} 썸네일`}
+                            width="480"
+                            height="360"
+                            loading="eager"
+                            decoding="async"
+                          />
+                        )}
                         <span>{video.date}</span>
                         <strong>{video.title}</strong>
                         <p>{video.meta}</p>

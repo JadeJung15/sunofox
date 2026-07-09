@@ -152,7 +152,7 @@ for (const id of requiredTabIds) {
     assertArray(`${label}.videos`, tab.videos, { min: 1 }).forEach((video, videoIndex) => {
       const videoLabel = `${label}.videos[${videoIndex}]`;
 
-      for (const field of ['date', 'title', 'href', 'videoId', 'stats']) {
+      for (const field of ['date', 'title', 'href', 'videoId', 'thumbnail', 'thumbnailAlt', 'stats']) {
         assertPresent(`${videoLabel} ${field}`, video[field]);
       }
 

@@ -3314,13 +3314,24 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
 }
 
 .profile-video-list a {
-  display: block;
+  display: grid;
+  gap: 10px;
+  align-content: start;
   height: 100%;
   border: 1px solid rgba(255, 255, 255, 0.11);
   background: rgba(255, 255, 255, 0.025);
-  padding: 16px;
+  padding: 10px;
   color: inherit;
   transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.profile-video-thumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  object-fit: cover;
 }
 
 .profile-video-list a:hover,
@@ -3338,7 +3349,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
 
 .profile-video-list strong {
   display: block;
-  margin-top: 12px;
+  margin-top: 0;
   color: #ffffff;
   font-size: 18px;
   font-weight: 900;
@@ -3347,7 +3358,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
 }
 
 .profile-video-list p {
-  margin: 10px 0 0;
+  margin: 0;
   color: var(--muted);
   font-size: 14px;
   font-weight: 650;
@@ -3356,7 +3367,7 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
 
 .profile-video-list em {
   display: block;
-  margin-top: 12px;
+  margin-top: 0;
   color: rgba(255, 255, 255, 0.54);
   font-size: 12px;
   font-style: normal;
@@ -10996,6 +11007,11 @@ body:has(.anime-home):has(.profile-page) .profile-video-list a {
   box-shadow: 0 20px 58px rgba(0, 0, 0, 0.2);
 }
 
+body:has(.anime-home):has(.profile-page) .profile-video-thumb {
+  border-color: rgba(255, 247, 251, 0.14);
+  background: rgba(5, 5, 9, 0.72);
+}
+
 body:has(.anime-home):has(.profile-page) .about-route-grid a:hover,
 body:has(.anime-home):has(.profile-page) .about-route-grid a:focus-visible,
 body:has(.anime-home):has(.profile-page) .profile-snapshot-card:hover,
@@ -11329,6 +11345,30 @@ body:has(.anime-home):has(.profile-page) .profile-source-note {
 
   body:has(.anime-home):has(.profile-page) .profile-video-list ol {
     grid-template-columns: 1fr;
+  }
+
+  body:has(.anime-home):has(.profile-page) .profile-video-list a {
+    gap: 8px;
+    padding: 10px;
+  }
+
+  body:has(.anime-home):has(.profile-page) .profile-video-thumb {
+    aspect-ratio: 16 / 9;
+  }
+
+  body:has(.anime-home):has(.profile-page) .profile-video-list strong,
+  body:has(.anime-home):has(.profile-page) .profile-video-list p {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+  }
+
+  body:has(.anime-home):has(.profile-page) .profile-video-list strong {
+    -webkit-line-clamp: 2;
+  }
+
+  body:has(.anime-home):has(.profile-page) .profile-video-list p {
+    -webkit-line-clamp: 2;
   }
 
   body:has(.anime-home):has(.profile-page) .profile-source-actions {

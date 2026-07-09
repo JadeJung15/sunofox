@@ -72,7 +72,7 @@ $routes = @(
     Name = "novels"
     Path = "/novels/"
     File = "novels/index.html"
-    Must = @("EPISODES", "novel-list-toolbar", "novel-list-toolbar-copy", "READ ORDER", "novel-list-featured", "novel-list-actions", "novel-list-summary", "novel-season-status", "novel-season-facts", "novel-season-actions", "novel-reading-path", "novel-reading-card", "novel-episode-tags", "/novels/episode-001/", "/novels/episode-003/", "/novels/episode-005/", "/novels/episode-006/", "novel-world-section", "novel-character-section", "novel-anchor-strip", "novel-card-anchor", "world-palace", "character-adelaine", "BreadcrumbList", "https://sunofox.com/novels/")
+    Must = @("anime-home", "novel-list-page", "EPISODES", "novel-list-toolbar", "novel-list-toolbar-copy", "READ ORDER", "novel-list-featured", "novel-list-actions", "novel-list-summary", "novel-season-status", "novel-season-facts", "novel-season-actions", "novel-reading-path", "novel-reading-card", "novel-episode-tags", "/novels/episode-001/", "/novels/episode-003/", "/novels/episode-005/", "/novels/episode-006/", "novel-world-section", "novel-character-section", "novel-anchor-strip", "novel-card-anchor", "world-palace", "character-adelaine", "BreadcrumbList", "https://sunofox.com/novels/")
   },
   @{
     Name = "episode-001"

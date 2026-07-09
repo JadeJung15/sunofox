@@ -161,6 +161,16 @@ if (musicMobileMediaIndex !== -1) {
     ['display: flex;', 'flex-wrap: nowrap;', 'overflow-x: auto;', 'scrollbar-width: none;'],
     { after: musicMobileMediaIndex }
   );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-list-page) .novel-detail-tabs',
+    ['display: flex;', 'flex-wrap: nowrap;', 'overflow-x: auto;', 'scrollbar-width: none;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-list-page) .novel-list-actions',
+    ['display: flex;', 'flex-wrap: nowrap;', 'overflow-x: auto;', 'scrollbar-width: none;'],
+    { after: musicMobileMediaIndex }
+  );
 }
 
 assertContains('body horizontal overflow guard', 'overflow-x: hidden;');

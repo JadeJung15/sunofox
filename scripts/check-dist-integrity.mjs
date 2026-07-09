@@ -17,9 +17,18 @@ const protectedSourcePrefixes = [
 
 const errors = [];
 const checkedTargets = new Set();
+const studioEntrySourceFiles = [
+  'mv-studio.html',
+  'public/mv-studio.html',
+  'public/_sf-studio-entry'
+];
 
 function normalizeSlash(value) {
   return value.replaceAll(path.sep, '/');
+}
+
+function normalizeNewlines(value) {
+  return value.replace(/\r\n/g, '\n');
 }
 
 async function collectFiles(dir) {
@@ -157,6 +166,24 @@ function isProtectedSource(sitePath) {
 await stat(distDir).catch(() => {
   errors.push('dist directory is missing. Run npm run build before npm run check:dist.');
 });
+
+const studioEntrySources = await Promise.all(
+  studioEntrySourceFiles.map(async (file) => {
+    const content = await readFile(path.join(rootDir, file), 'utf8').catch((error) => {
+      errors.push(`${file}: failed to read Studio entry source (${error.message})`);
+      return null;
+    });
+    return { file, content };
+  })
+);
+const canonicalStudioEntry = normalizeNewlines(studioEntrySources[0]?.content || '');
+if (canonicalStudioEntry !== null && canonicalStudioEntry !== undefined) {
+  for (const source of studioEntrySources.slice(1)) {
+    if (source.content !== null && normalizeNewlines(source.content) !== canonicalStudioEntry) {
+      errors.push(`${source.file}: must stay in sync with ${studioEntrySourceFiles[0]}`);
+    }
+  }
+}
 
 const distFiles = errors.length === 0 ? await collectFiles(distDir) : [];
 const fileSet = new Set(distFiles.map(sitePathFromFile));

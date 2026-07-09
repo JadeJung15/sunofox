@@ -28,9 +28,9 @@
         <span>SUNOFOX</span>
       </a>
       <div class="sf-auth-copy">
-        <span class="sf-auth-kicker">PRIVATE ACCESS</span>
-        <h1 id="sf-login-title" class="sf-auth-title"><span>PRIVATE</span><span>ACCESS</span></h1>
-        <p>승인 계정은 웹소설 업데이트와 계정 관리를 이용할 수 있고, SF Studio는 사이트 소유자 전용으로 운영됩니다.</p>
+        <span class="sf-auth-kicker" data-login-hero-kicker>PRIVATE ACCESS</span>
+        <h1 id="sf-login-title" class="sf-auth-title" data-login-hero-title><span>PRIVATE</span><span>ACCESS</span></h1>
+        <p data-login-hero-copy>승인 계정은 웹소설 업데이트와 계정 관리를 이용할 수 있고, SF Studio는 사이트 소유자 전용으로 운영됩니다.</p>
         <div class="sf-auth-route" aria-label="Access steps">
           <span>01 MEMBER REQUEST</span>
           <span>02 OWNER APPROVAL</span>
@@ -44,9 +44,9 @@
       </div>
       <div class="sf-auth-card">
         <div class="sf-auth-card-head">
-          <span class="sf-auth-kicker">MEMBER GATE</span>
-          <h2>입장하기</h2>
-          <p>이메일 비밀번호 또는 Google/Kakao 계정으로 로그인해 주세요.</p>
+          <span class="sf-auth-kicker" data-login-kicker>MEMBER GATE</span>
+          <h2 data-login-title>입장하기</h2>
+          <p data-login-copy>이메일 비밀번호 또는 Google/Kakao 계정으로 로그인해 주세요.</p>
         </div>
         <div class="sf-social-auth" aria-label="소셜 로그인">
           <a class="sf-social-button is-google" href="/api/auth/oauth/start?provider=google" data-oauth-provider="google">Google로 계속하기</a>
@@ -66,7 +66,7 @@
             <span>소유자 코드 <small>선택</small></span>
             <input id="sf-login-code" name="code" type="password" inputmode="numeric" autocomplete="one-time-code" placeholder="OWNER ENTRY CODE">
           </label>
-          <button type="submit">ENTER SITE</button>
+          <button type="submit" data-login-submit>ENTER SITE</button>
         </form>
         <div id="sf-auth-message" class="sf-auth-message" hidden></div>
         <p class="sf-auth-footnote">계정이 없다면 바로 회원가입을 진행해 주세요.<br>가입 후 MY ACCOUNT에서 닉네임을 언제든 수정할 수 있습니다.</p>

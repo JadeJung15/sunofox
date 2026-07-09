@@ -136,7 +136,7 @@ $routes = @(
     Name = "login"
     Path = "/login"
     File = "login.html"
-    Must = @("sf-auth-body", "sf-auth-login", "PRIVATE ACCESS", "MEMBER GATE", "sf-social-auth", "sf-auth-form", "ENTER SITE", "MY ACCOUNT", "/css/sf-auth.")
+    Must = @("sf-auth-body", "sf-auth-login", "PRIVATE ACCESS", "MEMBER GATE", "sf-social-auth", "sf-auth-form", "ENTER SITE", "MY ACCOUNT", "data-login-hero-title", "data-login-hero-copy", "data-login-title", "data-login-submit", "/css/sf-auth.")
   },
   @{
     Name = "signup"

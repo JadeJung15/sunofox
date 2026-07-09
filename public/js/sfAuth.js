@@ -116,6 +116,30 @@
     return params.get('next') || '/';
   }
 
+  function isStudioNext() {
+    const next = getNext();
+    return next === '/mv-studio' || next.startsWith('/mv-studio/');
+  }
+
+  function applyLoginContext() {
+    if (page !== 'login' || !isStudioNext()) return;
+    document.body?.classList.add('is-studio-login');
+    const kicker = document.querySelector('[data-login-kicker]');
+    const title = document.querySelector('[data-login-title]');
+    const copy = document.querySelector('[data-login-copy]');
+    const submit = document.querySelector('[data-login-submit]');
+    const heroKicker = document.querySelector('[data-login-hero-kicker]');
+    const heroTitle = document.querySelector('[data-login-hero-title]');
+    const heroCopy = document.querySelector('[data-login-hero-copy]');
+    if (heroKicker) heroKicker.textContent = 'OWNER WORKSPACE';
+    if (heroTitle) heroTitle.innerHTML = '<span>STUDIO</span><span>ACCESS</span>';
+    if (heroCopy) heroCopy.textContent = 'SF Studio는 사이트 소유자 전용 작업실입니다. 로그인 후 제작 도구로 바로 이동합니다.';
+    if (kicker) kicker.textContent = 'OWNER STUDIO';
+    if (title) title.textContent = 'SF Studio 입장';
+    if (copy) copy.textContent = '소유자 계정으로 로그인하면 SF Studio 작업실로 바로 이동합니다.';
+    if (submit) submit.textContent = 'ENTER STUDIO';
+  }
+
   function getOAuthStatusMessage() {
     const status = new URLSearchParams(window.location.search).get('oauth') || '';
     const messages = {
@@ -265,6 +289,7 @@
 
   function bindLogin() {
     const form = document.getElementById('sf-login-form');
+    applyLoginContext();
     updateOAuthProviderStatus();
     const oauthStatus = getOAuthStatusMessage();
     if (oauthStatus) {

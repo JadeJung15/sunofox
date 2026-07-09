@@ -31,10 +31,10 @@ export const archiveAlbum = {
   image: '/assets/music/archive-vol-1-cover.jpg',
   imageAlt: 'SunoFox ARCHIVE vol.1 실제 앨범 커버',
   summary:
-    'SunoFox가 제작해온 오리지널 트랙을 기록의 형태로 정리한 첫 정규 아카이브입니다.',
+    'SunoFox 수노폭스가 제작해온 오리지널 트랙을 기록의 형태로 정리한 첫 정규 아카이브입니다.',
   intro: [
     'ARCHIVE vol.1은 하나의 완결된 이야기보다 제작 시점마다 남은 감정과 사운드의 흔적을 보존하는 앨범입니다.',
-    '수록곡은 애니메이션 OST, 게임 사운드트랙, 전자 음악의 질감을 오가며 SunoFox 특유의 장면 중심 감정선을 남깁니다.',
+    '수록곡은 애니메이션 OST, 게임 사운드트랙, 전자 음악의 질감을 오가며 SunoFox 수노폭스 특유의 장면 중심 감정선을 남깁니다.',
     '웹소설로 확장되는 현재 구조에서는 음악이 먼저 장면을 만들고, 그 장면이 캐릭터와 사건으로 이어지는 출발점 역할을 합니다.'
   ],
   facts: [
@@ -66,11 +66,11 @@ export const archiveAlbum = {
 };
 
 export const musicArchive = {
-  title: 'SunoFox Music Archive',
+  title: 'SunoFox 수노폭스 Music Archive',
   href: '/music/',
   researchDate: '2026.07.09',
   summary:
-    '수노폭스가 공개한 앨범과 YouTube OST/MV를 필모그래피처럼 이어 보는 애니 OST 음악 기록 페이지입니다.',
+    'SunoFox 수노폭스가 공개한 앨범과 YouTube OST/MV를 필모그래피처럼 이어 보는 애니 OST 음악 기록 페이지입니다.',
   facts: [
     { label: '채널', value: 'SunoFox 애니 OST 스튜디오' },
     { label: '규모', value: '공개 채널 스냅샷 기준 업데이트' },

@@ -19,7 +19,7 @@ export const novelProject = {
   shortSummary:
     '몰락해야 했던 악녀 아델라인이 성녀의 베일 사건을 뒤집고 공개 재판을 요구하며 원작의 첫 장을 깨뜨립니다.',
   musicToNovel:
-    'SunoFox 음악에서 시작한 감정선을 웹소설 연재로 확장합니다.',
+    'SunoFox 수노폭스 음악에서 시작한 감정선을 웹소설 연재로 확장합니다.',
   ost: featuredStoryOst,
   systemLine: 'The story has detected an error. (이야기가 오류를 감지했습니다.)',
   keywords: ['악녀 빙의', '원작 붕괴', '공개 재판', '성녀의 베일', '시스템 오류'],

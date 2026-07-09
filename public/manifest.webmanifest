@@ -1,7 +1,7 @@
 {
-  "name": "SunoFox Official Website",
+  "name": "SunoFox 수노폭스 Official Website",
   "short_name": "SunoFox",
-  "description": "음악에서 시작한 감정을 웹소설과 스튜디오 작업으로 확장하는 SunoFox 공식 사이트입니다.",
+  "description": "음악에서 시작한 감정을 웹소설과 스튜디오 작업으로 확장하는 SunoFox 수노폭스 공식 사이트입니다.",
   "id": "/",
   "start_url": "/",
   "scope": "/",

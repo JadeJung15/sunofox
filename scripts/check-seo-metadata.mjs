@@ -8,6 +8,7 @@ const distDir = path.join(rootDir, 'dist');
 const episodeDir = path.join(rootDir, 'src', 'pages', 'novels');
 const siteContentPath = path.join(rootDir, 'src', 'data', 'siteContent.js');
 const siteUrl = 'https://sunofox.com';
+const siteName = 'SunoFox 수노폭스';
 const errors = [];
 const validOgImageTypes = new Set(['image/jpeg', 'image/png', 'image/webp']);
 const baseUrlArg = process.argv.find((arg) => arg.startsWith('--base-url='));
@@ -214,7 +215,7 @@ const routes = [
     name: 'home',
     file: 'index.html',
     canonical: `${siteUrl}/`,
-    title: 'SunoFox | Anime OST Studio',
+    title: `${siteName} | Anime OST Studio`,
     descriptionIncludes: '애니메이션 감성의 OST',
     jsonLdTypes: ['Organization', 'WebSite', 'CreativeWorkSeries']
   },
@@ -222,7 +223,7 @@ const routes = [
     name: 'novels',
     file: 'novels/index.html',
     canonical: `${siteUrl}/novels/`,
-    title: `${novelProject.title} | SunoFox`,
+    title: `${novelProject.title} | ${siteName}`,
     descriptionIncludes: '몰락해야 했던 악녀',
     jsonLdTypes: ['CreativeWorkSeries', 'BreadcrumbList']
   },
@@ -238,7 +239,7 @@ const routes = [
     name: 'album',
     file: 'music/archive-vol-1/index.html',
     canonical: `${siteUrl}${archiveAlbum.href}`,
-    title: `${archiveAlbum.title} | SunoFox`,
+    title: `${archiveAlbum.title} | ${siteName}`,
     descriptionIncludes: '오리지널 트랙',
     jsonLdTypes: ['MusicAlbum', 'BreadcrumbList']
   },
@@ -246,7 +247,7 @@ const routes = [
     name: 'profile',
     file: 'profile/index.html',
     canonical: `${siteUrl}/profile/`,
-    title: 'SunoFox 소개 | Anime OST Studio',
+    title: `${siteName} 소개 | Anime OST Studio`,
     descriptionIncludes: '이야기 기반 Anime OST',
     jsonLdTypes: ['Organization', 'WebSite']
   },
@@ -261,7 +262,7 @@ for (const episode of publishedNovelEpisodes) {
     name: `episode-${number}`,
     file: `novels/episode-${number}/index.html`,
     canonical: `${siteUrl}${episode.href}`,
-    title: `${frontmatter.title} | SunoFox`,
+    title: `${frontmatter.title} | ${siteName}`,
     shareTitle: episode.shareTitle,
     shareDescription: episode.shareDescription,
     descriptionIncludes: episode.shareDescription?.slice(0, 20) || frontmatter.description?.slice(0, 20) || episode.title,
@@ -286,7 +287,7 @@ for (const route of routes) {
   assertEqual(`${route.name} canonical`, head.canonical, route.canonical);
   assertEqual(`${route.name} og:url`, meta['og:url'], route.canonical);
   assertEqual(`${route.name} og:title`, meta['og:title'], route.shareTitle || route.title);
-  assertEqual(`${route.name} og:site_name`, meta['og:site_name'], 'SunoFox');
+  assertEqual(`${route.name} og:site_name`, meta['og:site_name'], siteName);
   assertEqual(`${route.name} og:locale`, meta['og:locale'], 'ko_KR');
   assertEqual(`${route.name} twitter:title`, meta['twitter:title'], route.shareTitle || route.title);
   assertEqual(`${route.name} twitter:card`, meta['twitter:card'], 'summary_large_image');

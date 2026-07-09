@@ -57,7 +57,7 @@ export const sunofoxProfile = {
       label: '음악 아카이브',
       status: `${archiveAlbum.releaseDate} 공개`,
       title: archiveAlbum.title,
-      summary: 'SunoFox의 오리지널 트랙과 대표 OST를 한 곳에서 이어 보는 음악 아카이브입니다.',
+      summary: 'SunoFox 수노폭스의 오리지널 트랙과 대표 OST를 한 곳에서 이어 보는 음악 아카이브입니다.',
       href: musicArchive.href,
       cta: '음악 보기'
     },
@@ -117,7 +117,7 @@ export const sunofoxProfile = {
       kicker: '아카이브',
       title: 'ARCHIVE vol.1',
       summary:
-        `${archiveAlbum.releaseDate} 공개된 정규 앨범입니다. 공개 음원 플랫폼 정보 기준으로 SunoFox가 제작한 오리지널 트랙을 감정과 사운드의 기록으로 정리한 아카이브 프로젝트입니다.`,
+        `${archiveAlbum.releaseDate} 공개된 정규 앨범입니다. 공개 음원 플랫폼 정보 기준으로 SunoFox 수노폭스가 제작한 오리지널 트랙을 감정과 사운드의 기록으로 정리한 아카이브 프로젝트입니다.`,
       facts: [
         { label: '발매일', value: archiveAlbum.releaseDate },
         { label: '형태', value: archiveAlbum.type },
@@ -138,7 +138,7 @@ export const sunofoxProfile = {
       kicker: '스트리밍',
       title: '국내외 음악 플랫폼 연결',
       summary:
-        '수노폭스는 유튜브와 주요 음원 플랫폼을 함께 사용합니다. 웹소설로 확장된 현재 구조에서는 OST 감상과 작품 정보를 한 곳에서 이어 보도록 연결합니다.',
+        'SunoFox 수노폭스는 유튜브와 주요 음원 플랫폼을 함께 사용합니다. 웹소설로 확장된 현재 구조에서는 OST 감상과 작품 정보를 한 곳에서 이어 보도록 연결합니다.',
       facts: [
         { label: '국내', value: 'Melon, Bugs, FLO, VIBE, KakaoMusic' },
         { label: '글로벌', value: 'YouTube Music, Spotify, Apple Music, TIDAL, SoundCloud' },
@@ -161,7 +161,7 @@ export const sunofoxProfile = {
       kicker: '음악에서 소설로',
       title: '음악에서 웹소설로 확장',
       summary:
-        'SunoFox의 현재 사이트 구조는 음악 채널에서 출발한 감정선을 웹소설과 OST 아카이브로 연결합니다. 첫 웹소설 프로젝트는 《악녀는 첫 장에서 웃었다》입니다.',
+        'SunoFox 수노폭스의 현재 사이트 구조는 음악 채널에서 출발한 감정선을 웹소설과 OST 아카이브로 연결합니다. 첫 웹소설 프로젝트는 《악녀는 첫 장에서 웃었다》입니다.',
       facts: [
         { label: '첫 작품', value: novelProject.title },
         { label: '장르', value: novelProject.genre },
@@ -275,7 +275,7 @@ export const structuredData = {
     {
       '@type': 'Organization',
       '@id': `${siteUrl}/#organization`,
-      name: 'SunoFox',
+      name: 'SunoFox 수노폭스',
       url: `${siteUrl}/`,
       logo: `${siteUrl}/assets/sunofox-app-icon-512.png`,
       sameAs: [
@@ -358,7 +358,7 @@ export const structuredData = {
     {
       '@type': 'WebSite',
       '@id': `${siteUrl}/#website`,
-      name: 'SunoFox',
+      name: 'SunoFox 수노폭스',
       url: `${siteUrl}/`,
       inLanguage: 'ko-KR',
       publisher: { '@id': `${siteUrl}/#organization` }

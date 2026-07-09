@@ -178,7 +178,7 @@ $routes = @(
     Path = "/__sunofox_not_found_probe__/"
     File = "404.html"
     ExpectedStatus = 404
-    Must = @("not-found-page", "not-found-panel", "not-found-actions", $labelMusicArchive, "https://sunofox.com/404.html", "/novels/", "/music/", "noindex, follow")
+    Must = @("anime-home", "not-found-page", "not-found-hero", "not-found-panel", "not-found-actions", "not-found-secondary-links", $labelMusicArchive, "https://sunofox.com/404.html", "/", "/novels/", "/music/", "/profile/", "noindex, follow")
   },
   @{
     Name = "sitemap-index"

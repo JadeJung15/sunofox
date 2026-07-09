@@ -144,6 +144,18 @@ assertBlockIncludes(
   'body:has(.anime-home):has(.novel-episode-page) .novel-reader-body p',
   ['color: rgba(255, 247, 251, 0.86);', 'line-height: 2.05;']
 );
+assertBlockIncludes(
+  'body:has(.anime-home):has(.not-found-page) .not-found-page',
+  ['background:', 'linear-gradient(180deg, #050509 0%, #090a10 54%, #050509 100%);']
+);
+assertBlockIncludes(
+  'body:has(.anime-home):has(.not-found-page) .not-found-actions .main-button',
+  ['min-height: 48px;', 'border-radius: 8px;']
+);
+assertBlockIncludes(
+  'body:has(.anime-home):has(.not-found-page) .not-found-secondary-links a',
+  ['min-height: 44px;']
+);
 
 if (mobileMediaIndex !== -1) {
   assertBlockIncludes('.main-button', ['min-height: 44px;'], { after: mobileMediaIndex });
@@ -260,6 +272,11 @@ if (musicMobileMediaIndex !== -1) {
   assertBlockIncludes(
     'body:has(.anime-home):has(.novel-episode-page) .novel-reader-jumpbar',
     ['display: flex;', 'flex-wrap: nowrap;', 'overflow-x: auto;', 'scrollbar-width: none;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.not-found-page) .not-found-page',
+    ['padding: 86px 14px 46px;'],
     { after: musicMobileMediaIndex }
   );
 }

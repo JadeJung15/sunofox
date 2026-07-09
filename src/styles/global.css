@@ -9286,6 +9286,221 @@ body:has(.anime-home) .site-footer a:focus-visible {
   }
 }
 
+/* 404 keeps the same dark anime chrome as the public home/music surfaces. */
+body:has(.anime-home):has(.not-found-page) {
+  --sf-paper: #050509;
+  --sf-surface: #0b0d13;
+  --sf-surface-muted: #11141d;
+  --sf-ink: #fff7fb;
+  --sf-muted: #d8cfdd;
+  --sf-soft: #aa9ab4;
+  --sf-line: rgba(255, 247, 251, 0.16);
+  --sf-line-strong: rgba(255, 111, 159, 0.42);
+  --sf-accent: #ff6f9f;
+  --sf-accent-soft: rgba(255, 111, 159, 0.14);
+  --anime-bg: #050509;
+  --anime-ink: #fff7fb;
+  --anime-muted: #d8cfdd;
+  --anime-soft: #aa9ab4;
+  --anime-line: rgba(255, 247, 251, 0.16);
+  --anime-accent: #ff6f9f;
+  --anime-warm: #f6b86a;
+  background: #050509;
+  color: #fff7fb;
+}
+
+body:has(.anime-home):has(.not-found-page) .site-main,
+body:has(.anime-home):has(.not-found-page) .not-found-page {
+  min-height: 100svh;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(255, 111, 159, 0.18), transparent 28rem),
+    radial-gradient(circle at 88% 12%, rgba(246, 184, 106, 0.1), transparent 26rem),
+    linear-gradient(180deg, #050509 0%, #090a10 54%, #050509 100%);
+  color: var(--anime-ink);
+}
+
+body:has(.anime-home):has(.not-found-page) .not-found-page {
+  display: grid;
+  align-content: center;
+  gap: clamp(18px, 3.4vw, 34px);
+  padding: 96px clamp(18px, 6vw, 72px) 72px;
+}
+
+body:has(.anime-home):has(.not-found-page) .not-found-hero,
+body:has(.anime-home):has(.not-found-page) .not-found-panel {
+  width: min(100%, 1040px);
+  margin-inline: auto;
+}
+
+body:has(.anime-home):has(.not-found-page) .not-found-hero {
+  min-height: 0;
+  border-bottom: 1px solid rgba(255, 247, 251, 0.14);
+  padding: 0 0 clamp(18px, 3vw, 30px);
+}
+
+body:has(.anime-home):has(.not-found-page) .not-found-hero h1 {
+  max-width: 760px;
+  margin-top: 14px;
+  color: var(--anime-ink);
+  font-size: clamp(3.8rem, 9.4vw, 8.2rem);
+  line-height: 0.94;
+  overflow-wrap: normal;
+  word-break: keep-all;
+}
+
+body:has(.anime-home):has(.not-found-page) .not-found-hero p:last-child {
+  max-width: 620px;
+  margin-top: 22px;
+  color: var(--anime-muted);
+  font-size: clamp(1rem, 1.6vw, 1.16rem);
+  line-height: 1.72;
+}
+
+body:has(.anime-home):has(.not-found-page) .not-found-panel {
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 360px);
+  align-items: stretch;
+  gap: 18px;
+  border: 1px solid rgba(255, 247, 251, 0.14);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(255, 111, 159, 0.1), transparent 58%),
+    rgba(5, 5, 9, 0.62);
+  padding: clamp(16px, 3vw, 24px);
+  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.3);
+}
+
+body:has(.anime-home):has(.not-found-page) .not-found-copy {
+  min-width: 0;
+}
+
+body:has(.anime-home):has(.not-found-page) .not-found-panel h2 {
+  max-width: 620px;
+  color: var(--anime-ink);
+  font-size: clamp(2.2rem, 5vw, 4.6rem);
+  line-height: 0.98;
+  overflow-wrap: normal;
+  word-break: keep-all;
+}
+
+body:has(.anime-home):has(.not-found-page) .not-found-panel p:not(.section-kicker) {
+  max-width: 520px;
+  color: var(--anime-muted);
+  font-size: 0.98rem;
+  line-height: 1.72;
+}
+
+body:has(.anime-home):has(.not-found-page) .not-found-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-content: start;
+  gap: 8px;
+  justify-content: stretch;
+}
+
+body:has(.anime-home):has(.not-found-page) .not-found-actions .main-button {
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+  justify-content: space-between;
+  border-color: rgba(255, 247, 251, 0.18);
+  border-radius: 8px;
+  background: rgba(255, 247, 251, 0.06);
+  color: var(--anime-ink);
+}
+
+body:has(.anime-home):has(.not-found-page) .not-found-actions .main-button-primary {
+  border-color: rgba(255, 111, 159, 0.72);
+  background: var(--anime-accent);
+  color: #050509;
+}
+
+body:has(.anime-home):has(.not-found-page) .not-found-actions .main-button:hover,
+body:has(.anime-home):has(.not-found-page) .not-found-actions .main-button:focus-visible {
+  border-color: rgba(255, 111, 159, 0.56);
+  background: rgba(255, 111, 159, 0.16);
+  color: var(--anime-ink);
+  transform: translateY(-1px);
+}
+
+body:has(.anime-home):has(.not-found-page) .not-found-actions .main-button-primary:hover,
+body:has(.anime-home):has(.not-found-page) .not-found-actions .main-button-primary:focus-visible {
+  background: #ff86ae;
+  color: #050509;
+}
+
+body:has(.anime-home):has(.not-found-page) .not-found-secondary-links {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  border-top: 1px solid rgba(255, 247, 251, 0.12);
+  padding-top: 14px;
+}
+
+body:has(.anime-home):has(.not-found-page) .not-found-secondary-links a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  color: var(--anime-soft);
+  font-size: 0.9rem;
+  font-weight: 850;
+  text-decoration: none;
+}
+
+body:has(.anime-home):has(.not-found-page) .not-found-secondary-links a:hover,
+body:has(.anime-home):has(.not-found-page) .not-found-secondary-links a:focus-visible {
+  color: var(--anime-accent);
+}
+
+body:has(.anime-home):has(.not-found-page) .site-logo {
+  color: var(--anime-accent);
+}
+
+@media (max-width: 760px) {
+  body:has(.anime-home):has(.not-found-page) .not-found-page {
+    align-content: start;
+    gap: 16px;
+    padding: 86px 14px 46px;
+  }
+
+  body:has(.anime-home):has(.not-found-page) .not-found-hero {
+    padding-bottom: 20px;
+  }
+
+  body:has(.anime-home):has(.not-found-page) .not-found-hero h1 {
+    font-size: clamp(3rem, 14vw, 4.1rem);
+  }
+
+  body:has(.anime-home):has(.not-found-page) .not-found-hero p:last-child {
+    margin-top: 18px;
+    font-size: 0.98rem;
+  }
+
+  body:has(.anime-home):has(.not-found-page) .not-found-panel {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 14px;
+  }
+
+  body:has(.anime-home):has(.not-found-page) .not-found-panel h2 {
+    font-size: clamp(2rem, 10vw, 2.8rem);
+  }
+
+  body:has(.anime-home):has(.not-found-page) .not-found-panel p:not(.section-kicker) {
+    margin-top: 12px;
+    font-size: 0.92rem;
+  }
+
+  body:has(.anime-home):has(.not-found-page) .not-found-actions {
+    grid-template-columns: 1fr;
+  }
+
+  body:has(.anime-home):has(.not-found-page) .not-found-secondary-links {
+    justify-content: center;
+    gap: 4px 14px;
+  }
+}
+
 body:has(.anime-home):has(.music-archive-page) .site-logo {
   color: #ff6f9f;
 }

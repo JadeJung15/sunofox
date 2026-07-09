@@ -83,6 +83,11 @@ if (mobileMediaIndex === -1) {
   fail('mobile media query @media (max-width: 640px): missing');
 }
 
+const musicMobileMediaIndex = css.indexOf('@media (max-width: 760px)');
+if (musicMobileMediaIndex === -1) {
+  fail('music mobile media query @media (max-width: 760px): missing');
+}
+
 assertBlockIncludes('.menu-trigger', ['min-width: 44px;', 'min-height: 44px;']);
 assertBlockIncludes('.main-button', ['min-height: 46px;']);
 assertBlockIncludes('.micro-button', ['min-height: 44px;']);
@@ -118,8 +123,19 @@ if (mobileMediaIndex !== -1) {
   assertBlockIncludes('.profile-current-actions .micro-button', ['min-width: 0;'], { after: mobileMediaIndex });
   assertBlockIncludes('.music-archive-actions', ['grid-template-columns: repeat(2, minmax(0, 1fr));'], { after: mobileMediaIndex });
   assertBlockIncludes('.music-archive-actions .main-button', ['width: 100%;', 'min-width: 0;'], { after: mobileMediaIndex });
-  assertBlockIncludes('.music-video-direct-actions', ['grid-template-columns: 1fr;'], { after: mobileMediaIndex });
-  assertBlockIncludes('.music-video-direct-actions .main-button', ['width: 100%;'], { after: mobileMediaIndex });
+}
+
+if (musicMobileMediaIndex !== -1) {
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.music-archive-page) .music-video-direct-actions',
+    ['display: flex;', 'flex-wrap: nowrap;', 'overflow-x: auto;', 'scrollbar-width: none;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.music-archive-page) .music-video-direct-actions .main-button',
+    ['flex: 0 0 auto;', 'width: auto;', 'min-height: 44px;', 'white-space: nowrap;'],
+    { after: musicMobileMediaIndex }
+  );
 }
 
 assertContains('body horizontal overflow guard', 'overflow-x: hidden;');

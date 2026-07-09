@@ -10260,6 +10260,28 @@ body:has(.anime-home):has(.album-detail-page) .album-track-grid li {
     font-size: 0.72rem;
   }
 
+  body:has(.anime-home):has(.music-archive-page) .music-video-direct-actions {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body:has(.anime-home):has(.music-archive-page) .music-video-direct-actions::-webkit-scrollbar {
+    display: none;
+  }
+
+  body:has(.anime-home):has(.music-archive-page) .music-video-direct-actions .main-button {
+    flex: 0 0 auto;
+    width: auto;
+    min-height: 44px;
+    padding-inline: 15px;
+    white-space: nowrap;
+  }
+
   body:has(.anime-home):has(.music-archive-page) .music-video-feature {
     grid-template-columns: 1fr;
     gap: 8px;

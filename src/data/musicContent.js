@@ -5,6 +5,7 @@ import {
   featuredStoryOst,
   latestChannelVideo,
   latestStoryOst,
+  maskGoodGirlVideo,
   sayItsOverStoryOst
 } from './artistContent.js';
 
@@ -67,7 +68,7 @@ export const archiveAlbum = {
 export const musicArchive = {
   title: 'SunoFox Music Archive',
   href: '/music/',
-  researchDate: '2026.07.06',
+  researchDate: '2026.07.09',
   summary:
     '수노폭스가 공개한 앨범과 YouTube OST/MV를 필모그래피처럼 이어 보는 애니 OST 음악 기록 페이지입니다.',
   facts: [
@@ -100,13 +101,24 @@ export const musicArchive = {
     {
       date: latestChannelVideo.date,
       title: latestChannelVideo.title,
-      meta: `${latestChannelVideo.englishTitle}｜Dark J-Pop x Cinematic Rock`,
+      meta: `${latestChannelVideo.englishTitle}｜Dark Electro Waltz x Chamber Breakbeat`,
       type: latestChannelVideo.type,
       href: latestChannelVideo.youtubeHref,
       videoId: latestChannelVideo.videoId,
       thumbnail: youtubeThumbnail(latestChannelVideo.videoId),
       thumbnailAlt: youtubeThumbnailAlt(latestChannelVideo.title),
       publishedAt: latestChannelVideo.publishedAt
+    },
+    {
+      date: maskGoodGirlVideo.date,
+      title: maskGoodGirlVideo.title,
+      meta: `${maskGoodGirlVideo.englishTitle}｜Dark J-Pop x Cinematic Rock`,
+      type: maskGoodGirlVideo.type,
+      href: maskGoodGirlVideo.youtubeHref,
+      videoId: maskGoodGirlVideo.videoId,
+      thumbnail: youtubeThumbnail(maskGoodGirlVideo.videoId),
+      thumbnailAlt: youtubeThumbnailAlt(maskGoodGirlVideo.title),
+      publishedAt: maskGoodGirlVideo.publishedAt
     },
     {
       date: latestStoryOst.date,

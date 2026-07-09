@@ -103,6 +103,10 @@ assertBlockIncludes(
   'body:has(.anime-home):has(.music-archive-page) .music-release-copy ol',
   ['display: none;']
 );
+assertBlockIncludes(
+  'body:has(.anime-home):has(.novel-episode-page) .novel-reader-body p',
+  ['color: rgba(255, 247, 251, 0.86);', 'line-height: 2.05;']
+);
 
 if (mobileMediaIndex !== -1) {
   assertBlockIncludes('.main-button', ['min-height: 44px;'], { after: mobileMediaIndex });
@@ -168,6 +172,21 @@ if (musicMobileMediaIndex !== -1) {
   );
   assertBlockIncludes(
     'body:has(.anime-home):has(.novel-list-page) .novel-list-actions',
+    ['display: flex;', 'flex-wrap: nowrap;', 'overflow-x: auto;', 'scrollbar-width: none;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-episode-page) .novel-reader-topbar',
+    ['overflow-x: auto;', 'scrollbar-width: none;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-episode-page) .novel-reader-quicklinks',
+    ['display: flex;', 'flex-wrap: nowrap;', 'overflow-x: auto;', 'scrollbar-width: none;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-episode-page) .novel-reader-jumpbar',
     ['display: flex;', 'flex-wrap: nowrap;', 'overflow-x: auto;', 'scrollbar-width: none;'],
     { after: musicMobileMediaIndex }
   );

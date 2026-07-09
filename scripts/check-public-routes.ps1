@@ -8,6 +8,7 @@ $ErrorActionPreference = "Stop"
 Add-Type -AssemblyName System.Net.Http
 
 $episodeArticleMetaMust = @('"@type":"Article"', '"abstract":', '"timeRequired":')
+$episodeThemeMust = @("anime-home", "novel-episode-page")
 $episodeNavigationMust = @(
   'data-reader-action="quick-body"',
   'data-reader-action="quick-index"',
@@ -65,7 +66,7 @@ $routes = @(
     Name = "home"
     Path = "/"
     File = "index.html"
-    Must = @($labelAnimeOstStudio, $labelNowPlaying, $labelLatestOst, $labelYoutubeListen, $labelMusicArchive, $labelChannelIntro, "Mask of a Good Girl", "lToGxsOiXK0", "anime-home", "poster-home", "poster-hero", "poster-bg", "poster-now", "poster-play-icon", "poster-track", "poster-progress", "poster-listen-link", "poster-panel", "poster-links", "poster-latest", "/assets/release-desk/mask-good-girl.jpg", "site-footer-nav", 'data-footer-key="novels"', 'data-footer-key="music"', 'data-footer-key="profile"', 'data-footer-key="privacy"', 'data-footer-key="terms"', "/novels/", "/music/", "/profile/", "https://sunofox.com/", $labelMusicArchive)
+    Must = @($labelAnimeOstStudio, $labelNowPlaying, $labelLatestOst, $labelYoutubeListen, $labelMusicArchive, $labelChannelIntro, "Glass Night Rose", "sQ7tSgFiauE", "Mask of a Good Girl", "anime-home", "poster-home", "poster-hero", "poster-bg", "poster-now", "poster-play-icon", "poster-track", "poster-progress", "poster-listen-link", "poster-panel", "poster-links", "poster-latest", "/assets/release-desk/mask-good-girl.jpg", "site-footer-nav", 'data-footer-key="novels"', 'data-footer-key="music"', 'data-footer-key="profile"', 'data-footer-key="privacy"', 'data-footer-key="terms"', "/novels/", "/music/", "/profile/", "https://sunofox.com/", $labelMusicArchive)
     MustNot = @("/updates/", 'data-footer-key="updates"', "poster-social")
   },
   @{
@@ -78,43 +79,43 @@ $routes = @(
     Name = "episode-001"
     Path = "/novels/episode-001/"
     File = "novels/episode-001/index.html"
-    Must = @("EPISODE 01", "novel-reader-summary", "novel-reader-progress", "novel-reader-quicklinks", "episodeBody", "episodeIndex", "episodeOst", "novel-reader-jumpbar", "novel-reader-index", "novel-reader-actions", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-001/") + $episodeArticleMetaMust + $episodeNavigationMust + @('data-reader-action="jump-previous-disabled"', 'data-reader-action="jump-next"', 'data-reader-action="action-next"', '"timeRequired":"PT12M"')
+    Must = @("EPISODE 01", "novel-reader-summary", "novel-reader-progress", "novel-reader-quicklinks", "episodeBody", "episodeIndex", "episodeOst", "novel-reader-jumpbar", "novel-reader-index", "novel-reader-actions", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-001/") + $episodeThemeMust + $episodeArticleMetaMust + $episodeNavigationMust + @('data-reader-action="jump-previous-disabled"', 'data-reader-action="jump-next"', 'data-reader-action="action-next"', '"timeRequired":"PT12M"')
   },
   @{
     Name = "episode-002"
     Path = "/novels/episode-002/"
     File = "novels/episode-002/index.html"
-    Must = @("EPISODE 02", "novel-reader-summary", "novel-reader-progress", "novel-reader-quicklinks", "episodeBody", "episodeIndex", "episodeOst", "novel-reader-jumpbar", "novel-reader-index", "novel-reader-actions", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-002/") + $episodeArticleMetaMust + $episodeNavigationMust + @('data-reader-action="jump-previous"', 'data-reader-action="jump-next"', 'data-reader-action="action-previous"', 'data-reader-action="action-next"', '"timeRequired":"PT11M"')
+    Must = @("EPISODE 02", "novel-reader-summary", "novel-reader-progress", "novel-reader-quicklinks", "episodeBody", "episodeIndex", "episodeOst", "novel-reader-jumpbar", "novel-reader-index", "novel-reader-actions", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-002/") + $episodeThemeMust + $episodeArticleMetaMust + $episodeNavigationMust + @('data-reader-action="jump-previous"', 'data-reader-action="jump-next"', 'data-reader-action="action-previous"', 'data-reader-action="action-next"', '"timeRequired":"PT11M"')
   },
   @{
     Name = "episode-003"
     Path = "/novels/episode-003/"
     File = "novels/episode-003/index.html"
-    Must = @("EPISODE 03", "novel-reader-summary", "novel-reader-progress", "novel-reader-quicklinks", "episodeBody", "episodeIndex", "episodeOst", "novel-reader-jumpbar", "novel-reader-index", "novel-reader-actions", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-003/") + $episodeArticleMetaMust + $episodeNavigationMust + @('data-reader-action="jump-previous"', 'data-reader-action="jump-next"', 'data-reader-action="action-previous"', 'data-reader-action="action-next"', '"timeRequired":"PT5M"')
+    Must = @("EPISODE 03", "novel-reader-summary", "novel-reader-progress", "novel-reader-quicklinks", "episodeBody", "episodeIndex", "episodeOst", "novel-reader-jumpbar", "novel-reader-index", "novel-reader-actions", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-003/") + $episodeThemeMust + $episodeArticleMetaMust + $episodeNavigationMust + @('data-reader-action="jump-previous"', 'data-reader-action="jump-next"', 'data-reader-action="action-previous"', 'data-reader-action="action-next"', '"timeRequired":"PT5M"')
   },
   @{
     Name = "episode-004"
     Path = "/novels/episode-004/"
     File = "novels/episode-004/index.html"
-    Must = @("EPISODE 04", "novel-reader-summary", "novel-reader-progress", "novel-reader-quicklinks", "episodeBody", "episodeIndex", "episodeOst", "novel-reader-jumpbar", "novel-reader-index", "novel-reader-actions", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-004/") + $episodeArticleMetaMust + $episodeNavigationMust + @('data-reader-action="jump-previous"', 'data-reader-action="jump-next"', 'data-reader-action="action-previous"', 'data-reader-action="action-next"', '"timeRequired":"PT5M"')
+    Must = @("EPISODE 04", "novel-reader-summary", "novel-reader-progress", "novel-reader-quicklinks", "episodeBody", "episodeIndex", "episodeOst", "novel-reader-jumpbar", "novel-reader-index", "novel-reader-actions", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-004/") + $episodeThemeMust + $episodeArticleMetaMust + $episodeNavigationMust + @('data-reader-action="jump-previous"', 'data-reader-action="jump-next"', 'data-reader-action="action-previous"', 'data-reader-action="action-next"', '"timeRequired":"PT5M"')
   },
   @{
     Name = "episode-005"
     Path = "/novels/episode-005/"
     File = "novels/episode-005/index.html"
-    Must = @("EPISODE 05", "novel-reader-summary", "novel-reader-progress", "novel-reader-quicklinks", "episodeBody", "episodeIndex", "episodeOst", "novel-reader-jumpbar", "novel-reader-index", "novel-reader-actions", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-005/") + $episodeArticleMetaMust + $episodeNavigationMust + @('data-reader-action="jump-previous"', 'data-reader-action="jump-next"', 'data-reader-action="action-previous"', 'data-reader-action="action-next"', '"timeRequired":"PT5M"')
+    Must = @("EPISODE 05", "novel-reader-summary", "novel-reader-progress", "novel-reader-quicklinks", "episodeBody", "episodeIndex", "episodeOst", "novel-reader-jumpbar", "novel-reader-index", "novel-reader-actions", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-005/") + $episodeThemeMust + $episodeArticleMetaMust + $episodeNavigationMust + @('data-reader-action="jump-previous"', 'data-reader-action="jump-next"', 'data-reader-action="action-previous"', 'data-reader-action="action-next"', '"timeRequired":"PT5M"')
   },
   @{
     Name = "episode-006"
     Path = "/novels/episode-006/"
     File = "novels/episode-006/index.html"
-    Must = @("EPISODE 06", "data-reader-state=""season-final""", 'data-reader-state="season-complete"', "novel-reader-summary", "novel-reader-progress", "novel-reader-quicklinks", "episodeBody", "episodeIndex", "episodeOst", "novel-reader-jumpbar", "novel-reader-index", "novel-reader-actions", "novel-reader-completion", "novel-reader-completion-actions", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-006/") + $episodeArticleMetaMust + $episodeNavigationMust + @('data-reader-action="jump-previous"', 'data-reader-action="jump-next-disabled"', 'data-reader-action="action-previous"', 'data-reader-action="action-next-disabled"', 'data-reader-action="completion-list"', 'data-reader-action="completion-music"', 'data-reader-action="completion-profile"', '"timeRequired":"PT5M"')
+    Must = @("EPISODE 06", "data-reader-state=""season-final""", 'data-reader-state="season-complete"', "novel-reader-summary", "novel-reader-progress", "novel-reader-quicklinks", "episodeBody", "episodeIndex", "episodeOst", "novel-reader-jumpbar", "novel-reader-index", "novel-reader-actions", "novel-reader-completion", "novel-reader-completion-actions", "article:published_time", "BreadcrumbList", "https://sunofox.com/novels/episode-006/") + $episodeThemeMust + $episodeArticleMetaMust + $episodeNavigationMust + @('data-reader-action="jump-previous"', 'data-reader-action="jump-next-disabled"', 'data-reader-action="action-previous"', 'data-reader-action="action-next-disabled"', 'data-reader-action="completion-list"', 'data-reader-action="completion-music"', 'data-reader-action="completion-profile"', '"timeRequired":"PT5M"')
   },
   @{
     Name = "music"
     Path = "/music/"
     File = "music/index.html"
-    Must = @("Music Archive", $labelMusicArchive, "anime-home", "music-archive-actions", "music-video-direct-actions", "music-release-card", "music-release-platforms", "music-platform-link", "/assets/music/archive-vol-1-cover.jpg", "Spotify", "Apple Music", "YouTube Music", "music-video-feature", "music-video-hub", "music-video-summary", "music-video-anchor-strip", "music-video-lToGxsOiXK0", "music-video-xwV_wACJatw", "music-video-CLHeFg8QVvc", "music-video-2KsAbBnf2Lk", "music-video-u_OwBr3Cstk", "music-video-grid", 'data-video-action="latest"', 'data-video-action="channel"', 'data-video-action="playlists"', 'data-video-feature="lToGxsOiXK0"', 'data-video-id="lToGxsOiXK0"', 'data-video-card="lToGxsOiXK0"', 'data-video-type="Anime OST"', "Mask of a Good Girl", $labelDontTakeMeAway, $labelSayItsOver, "https://www.youtube.com/@sunofox", "https://www.youtube.com/@sunofox/playlists", "https://www.youtube.com/watch?v=lToGxsOiXK0", "https://www.youtube.com/watch?v=xwV_wACJatw", "https://www.youtube.com/watch?v=CLHeFg8QVvc", "https://www.youtube.com/watch?v=u_OwBr3Cstk", "https://www.youtube.com/watch?v=2KsAbBnf2Lk", "https://i.ytimg.com/vi/lToGxsOiXK0/hqdefault.jpg", "https://sunofox.com/music/")
+    Must = @("Music Archive", $labelMusicArchive, "anime-home", "music-archive-actions", "music-video-direct-actions", "music-release-card", "music-release-platforms", "music-platform-link", "/assets/music/archive-vol-1-cover.jpg", "Spotify", "Apple Music", "YouTube Music", "music-video-feature", "music-video-hub", "music-video-summary", "music-video-anchor-strip", "music-video-sQ7tSgFiauE", "music-video-lToGxsOiXK0", "music-video-xwV_wACJatw", "music-video-CLHeFg8QVvc", "music-video-2KsAbBnf2Lk", "music-video-u_OwBr3Cstk", "music-video-grid", 'data-video-action="latest"', 'data-video-action="channel"', 'data-video-action="playlists"', 'data-video-feature="sQ7tSgFiauE"', 'data-video-id="sQ7tSgFiauE"', 'data-video-card="sQ7tSgFiauE"', 'data-video-type="Anime OST"', "Glass Night Rose", "Mask of a Good Girl", $labelDontTakeMeAway, $labelSayItsOver, "https://www.youtube.com/@sunofox", "https://www.youtube.com/@sunofox/playlists", "https://www.youtube.com/watch?v=sQ7tSgFiauE", "https://www.youtube.com/watch?v=lToGxsOiXK0", "https://www.youtube.com/watch?v=xwV_wACJatw", "https://www.youtube.com/watch?v=CLHeFg8QVvc", "https://www.youtube.com/watch?v=u_OwBr3Cstk", "https://www.youtube.com/watch?v=2KsAbBnf2Lk", "https://i.ytimg.com/vi/sQ7tSgFiauE/hqdefault.jpg", "https://i.ytimg.com/vi/lToGxsOiXK0/hqdefault.jpg", "https://sunofox.com/music/")
     MustNot = @("album-source-panel", "music-featured-ost-section", "music-story-section", "/novels/episode-006/", "Live Archive", "Radio Live")
   },
   @{

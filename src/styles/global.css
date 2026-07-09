@@ -11058,6 +11058,28 @@ body:has(.anime-home):has(.novel-list-page) .novel-ost-thumb {
   border-radius: 8px;
 }
 
+body:has(.anime-home):has(.novel-list-page) .main-button:not(.main-button-muted),
+body:has(.anime-home):has(.novel-list-page) .micro-button:not(.micro-button-muted),
+body:has(.anime-home):has(.novel-episode-page) .main-button:not(.main-button-muted),
+body:has(.anime-home):has(.novel-episode-page) .micro-button:not(.micro-button-muted) {
+  border-color: var(--anime-ink);
+  background: var(--anime-ink);
+  color: #050509;
+}
+
+body:has(.anime-home):has(.novel-list-page) .main-button:not(.main-button-muted):hover,
+body:has(.anime-home):has(.novel-list-page) .main-button:not(.main-button-muted):focus-visible,
+body:has(.anime-home):has(.novel-list-page) .micro-button:not(.micro-button-muted):hover,
+body:has(.anime-home):has(.novel-list-page) .micro-button:not(.micro-button-muted):focus-visible,
+body:has(.anime-home):has(.novel-episode-page) .main-button:not(.main-button-muted):hover,
+body:has(.anime-home):has(.novel-episode-page) .main-button:not(.main-button-muted):focus-visible,
+body:has(.anime-home):has(.novel-episode-page) .micro-button:not(.micro-button-muted):hover,
+body:has(.anime-home):has(.novel-episode-page) .micro-button:not(.micro-button-muted):focus-visible {
+  border-color: var(--anime-accent);
+  background: var(--anime-accent);
+  color: #050509;
+}
+
 @media (max-width: 760px) {
   body:has(.anime-home):has(.novel-list-page) .novel-list-page {
     padding: 76px 14px 56px;
@@ -11153,5 +11175,345 @@ body:has(.anime-home):has(.novel-list-page) .novel-ost-thumb {
   body:has(.anime-home):has(.novel-list-page) .novel-ost-panel h2 {
     font-size: clamp(1.85rem, 8.4vw, 2.35rem);
     line-height: 1.05;
+  }
+}
+
+body:has(.anime-home):has(.novel-episode-page) {
+  --sf-paper: #050509;
+  --sf-surface: #0b0d13;
+  --sf-surface-muted: #11141d;
+  --sf-ink: #fff7fb;
+  --sf-muted: #d8cfdd;
+  --sf-soft: #aa9ab4;
+  --sf-line: rgba(255, 247, 251, 0.16);
+  --sf-line-strong: rgba(255, 111, 159, 0.42);
+  --sf-accent: #ff6f9f;
+  --sf-accent-soft: rgba(255, 111, 159, 0.14);
+  --sf-rose: #ff0a5b;
+  --anime-bg: #050509;
+  --anime-ink: #fff7fb;
+  --anime-muted: #d8cfdd;
+  --anime-soft: #aa9ab4;
+  --anime-line: rgba(255, 247, 251, 0.16);
+  --anime-accent: #ff6f9f;
+  --anime-title-soft: #f1e7f3;
+  --anime-warm: #f6b86a;
+  background: #050509;
+  color: #fff7fb;
+}
+
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-page {
+  padding: 78px 0 78px;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(255, 10, 91, 0.16), transparent 30rem),
+    radial-gradient(circle at 84% 24%, rgba(246, 184, 106, 0.08), transparent 30rem),
+    linear-gradient(180deg, #050509 0%, #090a10 54%, #050509 100%);
+  color: var(--anime-ink);
+}
+
+body:has(.anime-home):has(.novel-episode-page) .novel-reader {
+  width: min(900px, calc(100% - 40px));
+}
+
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-topbar {
+  top: 72px;
+  border-color: rgba(255, 247, 251, 0.12);
+  background: rgba(5, 5, 9, 0.76);
+  padding: 10px max(20px, calc((100vw - 900px) / 2));
+  backdrop-filter: blur(18px);
+}
+
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-topbar a,
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-topbar span {
+  color: var(--anime-muted);
+  letter-spacing: 0.1em;
+}
+
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-topbar a:hover,
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-topbar a:focus-visible {
+  color: var(--anime-accent);
+}
+
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-header {
+  border-bottom-color: rgba(255, 247, 251, 0.12);
+  padding: 44px 0 34px;
+}
+
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-back {
+  margin-bottom: 24px;
+}
+
+body:has(.anime-home):has(.novel-episode-page) .section-kicker {
+  color: var(--anime-warm);
+}
+
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-header h1 {
+  color: var(--anime-ink);
+  font-size: clamp(3.25rem, 7vw, 5.8rem);
+  letter-spacing: 0;
+  line-height: 0.98;
+}
+
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-subtitle {
+  color: var(--anime-muted);
+}
+
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-meta {
+  color: var(--anime-soft);
+  letter-spacing: 0.12em;
+}
+
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-summary {
+  gap: 10px;
+  border: 0;
+}
+
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-summary div,
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-index-links a,
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-jumpbar > a,
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-jumpbar > span,
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-quicklinks a,
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-completion {
+  border-color: rgba(255, 247, 251, 0.16);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(255, 111, 159, 0.09), transparent 58%),
+    rgba(5, 5, 9, 0.56);
+  color: var(--anime-ink);
+}
+
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-summary dt,
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-progress > div span,
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-index-links span,
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-jumpbar span span,
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-jumpbar a span {
+  color: var(--anime-soft);
+}
+
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-summary dd,
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-progress > div,
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-progress > div strong,
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-index h2,
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-index-links strong,
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-jumpbar strong,
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-ost-copy h2,
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-completion h2 {
+  color: var(--anime-ink);
+  letter-spacing: 0;
+}
+
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-progress-bar {
+  border-color: rgba(255, 247, 251, 0.14);
+  background: rgba(255, 247, 251, 0.1);
+}
+
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-progress-bar i {
+  background: linear-gradient(90deg, var(--anime-accent), var(--anime-warm));
+}
+
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-quicklinks a:hover,
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-quicklinks a:focus-visible,
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-index-links a:hover,
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-index-links a:focus-visible,
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-jumpbar > a:hover,
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-jumpbar > a:focus-visible {
+  border-color: rgba(255, 111, 159, 0.48);
+  background:
+    linear-gradient(145deg, rgba(255, 111, 159, 0.16), transparent 58%),
+    rgba(5, 5, 9, 0.66);
+  color: var(--anime-ink);
+}
+
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-index-links a.is-current {
+  border-color: rgba(255, 111, 159, 0.56);
+  background:
+    linear-gradient(145deg, rgba(255, 111, 159, 0.18), transparent 58%),
+    rgba(5, 5, 9, 0.7);
+}
+
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-body {
+  max-width: 660px;
+  padding: 48px 0 16px;
+}
+
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-body p {
+  color: rgba(255, 247, 251, 0.86);
+  font-size: clamp(1.04rem, 1.25vw, 1.13rem);
+  font-weight: 500;
+  line-height: 2.05;
+}
+
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-index,
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-ost,
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-actions {
+  border-color: rgba(255, 247, 251, 0.12);
+}
+
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-ost-thumb {
+  border-color: rgba(255, 247, 251, 0.16);
+  border-radius: 8px;
+}
+
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-ost-thumb img {
+  border-radius: 8px;
+}
+
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-ost-thumb span {
+  border-color: rgba(255, 247, 251, 0.28);
+  background: rgba(5, 5, 9, 0.72);
+  color: var(--anime-muted);
+}
+
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-ost-copy p:not(.section-kicker),
+body:has(.anime-home):has(.novel-episode-page) .novel-reader-completion p:not(.section-kicker) {
+  color: var(--anime-muted);
+}
+
+body:has(.anime-home):has(.novel-episode-page) .site-footer {
+  border-top-color: rgba(255, 247, 251, 0.1);
+  background: #050509;
+  color: rgba(255, 247, 251, 0.54);
+}
+
+body:has(.anime-home):has(.novel-episode-page) .site-footer span,
+body:has(.anime-home):has(.novel-episode-page) .site-footer a {
+  color: rgba(255, 247, 251, 0.58);
+}
+
+@media (max-width: 760px) {
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-page {
+    padding: 72px 14px 62px;
+  }
+
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader {
+    width: 100%;
+  }
+
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-topbar {
+    top: 64px;
+    gap: 18px;
+    margin-inline: -14px;
+    overflow-x: auto;
+    padding: 8px 14px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-topbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-topbar a,
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-topbar span {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-header {
+    padding: 24px 0 28px;
+  }
+
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-back {
+    margin-bottom: 22px;
+  }
+
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-header h1 {
+    font-size: clamp(2.5rem, 12vw, 3.45rem);
+    line-height: 1;
+  }
+
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-subtitle {
+    margin-top: 16px;
+    font-size: 0.98rem;
+  }
+
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-meta {
+    gap: 8px 12px;
+    margin-top: 22px;
+  }
+
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-summary div {
+    padding: 12px;
+  }
+
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-progress {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-quicklinks,
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-jumpbar {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-quicklinks::-webkit-scrollbar,
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-jumpbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-quicklinks a {
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 104px;
+    white-space: nowrap;
+  }
+
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-jumpbar > a,
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-jumpbar > span {
+    flex: 0 0 min(74vw, 280px);
+  }
+
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-body {
+    max-width: 100%;
+    padding: 34px 0 12px;
+  }
+
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-body p {
+    margin-bottom: 1.35rem;
+    font-size: 1rem;
+    line-height: 2;
+  }
+
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-index {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-index-links {
+    grid-template-columns: 1fr;
+  }
+
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-index-links a {
+    min-height: 64px;
+  }
+
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-ost {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-ost-copy h2,
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-completion h2 {
+    font-size: clamp(1.85rem, 8.4vw, 2.35rem);
+  }
+
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-ost-actions,
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-completion-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-actions {
+    display: grid;
+    grid-template-columns: 1fr;
   }
 }

@@ -14,12 +14,29 @@ export const artistLinks = {
   tidal: 'https://tidal.com/artist/73947996/u',
   linktree: 'https://linktr.ee/sunofox',
   soundcloud: 'https://soundcloud.com/sunopogseu',
+  glassNightRose: 'https://youtu.be/sQ7tSgFiauE',
   maskGoodGirl: 'https://youtu.be/lToGxsOiXK0',
   dontTakeMeAwayOst: 'https://youtu.be/xwV_wACJatw',
   sayItsOverOst: 'https://youtu.be/CLHeFg8QVvc',
   fadingSignal: 'https://youtu.be/KrfD7PD4l6k',
   featuredOst: 'https://youtu.be/u_OwBr3Cstk?si=Vs1Y6xQ1jpSfmm53',
   detectedErrorOst: 'https://youtu.be/2KsAbBnf2Lk'
+};
+
+export const glassNightRoseVideo = {
+  key: 'glass-night-rose',
+  date: '2026.07.08',
+  title: '유리 밤의 장미 — Glass Night Rose',
+  englishTitle: 'Glass Night Rose',
+  type: 'Anime OST',
+  href: artistLinks.glassNightRose,
+  youtubeHref: 'https://www.youtube.com/watch?v=sQ7tSgFiauE',
+  videoId: 'sQ7tSgFiauE',
+  thumbnail: 'https://i.ytimg.com/vi/sQ7tSgFiauE/hqdefault.jpg',
+  thumbnailAlt: '유리 밤의 장미 Glass Night Rose를 상징하는 사교회 입장 Anime OST 썸네일',
+  publishedAt: '2026-07-08T08:15:09+00:00',
+  summary:
+    '사교회 입장 장면의 긴장과 붉은 장미 이미지를 Dark Electro Waltz x Chamber Breakbeat로 밀어붙이는 Anime OST입니다.'
 };
 
 export const maskGoodGirlVideo = {
@@ -118,7 +135,7 @@ export const fadingSignalVideo = {
     '선명했던 목소리와 기억이 신호처럼 멀어지는 순간을 담은 Emotional Pop x Electronic Rock 아카이브 트랙입니다.'
 };
 
-export const latestChannelVideo = maskGoodGirlVideo;
+export const latestChannelVideo = glassNightRoseVideo;
 export const latestStoryOst = dontTakeMeAwayStoryOst;
 
 export const storyOsts = [

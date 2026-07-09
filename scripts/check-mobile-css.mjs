@@ -14,31 +14,35 @@ function fail(message) {
   errors.push(message);
 }
 
-function findBlockStart(selector, fromIndex = 0) {
-  const selectorIndex = css.indexOf(selector, fromIndex);
+function findBlockStartIn(source, selector, fromIndex = 0) {
+  const selectorIndex = source.indexOf(selector, fromIndex);
   if (selectorIndex === -1) return null;
 
-  const braceIndex = css.indexOf('{', selectorIndex);
+  const braceIndex = source.indexOf('{', selectorIndex);
   if (braceIndex === -1) return null;
 
   return { selectorIndex, braceIndex };
 }
 
-function blocksFor(selector, { after = 0 } = {}) {
+function findBlockStart(selector, fromIndex = 0) {
+  return findBlockStartIn(css, selector, fromIndex);
+}
+
+function blocksForIn(source, selector, { after = 0 } = {}) {
   const blocks = [];
   let searchIndex = after;
 
-  while (searchIndex < css.length) {
-    const start = findBlockStart(selector, searchIndex);
+  while (searchIndex < source.length) {
+    const start = findBlockStartIn(source, selector, searchIndex);
     if (!start) break;
 
     let depth = 0;
-    for (let index = start.braceIndex; index < css.length; index += 1) {
-      const char = css[index];
+    for (let index = start.braceIndex; index < source.length; index += 1) {
+      const char = source[index];
       if (char === '{') depth += 1;
       if (char === '}') depth -= 1;
       if (depth === 0) {
-        blocks.push(css.slice(start.braceIndex + 1, index).trim());
+        blocks.push(source.slice(start.braceIndex + 1, index).trim());
         searchIndex = index + 1;
         break;
       }
@@ -46,6 +50,10 @@ function blocksFor(selector, { after = 0 } = {}) {
   }
 
   return blocks;
+}
+
+function blocksFor(selector, { after = 0 } = {}) {
+  return blocksForIn(css, selector, { after });
 }
 
 function assertBlockIncludes(selector, expected, options = {}) {
@@ -86,6 +94,19 @@ function assertAuthContains(label, needle) {
   }
 }
 
+function assertAuthBlockIncludes(selector, expected, options = {}) {
+  const blocks = blocksForIn(authCss, selector, options);
+  if (blocks.length === 0) {
+    fail(`${selector}: missing auth CSS block`);
+    return;
+  }
+
+  const hasMatchingBlock = blocks.some((block) => expected.every((needle) => block.includes(needle)));
+  if (!hasMatchingBlock) {
+    fail(`${selector}: expected one auth CSS block to include ${expected.map((needle) => `"${needle}"`).join(', ')}`);
+  }
+}
+
 const mobileMediaIndex = css.indexOf('@media (max-width: 640px)');
 if (mobileMediaIndex === -1) {
   fail('mobile media query @media (max-width: 640px): missing');
@@ -94,6 +115,12 @@ if (mobileMediaIndex === -1) {
 const musicMobileMediaIndex = css.indexOf('@media (max-width: 760px)');
 if (musicMobileMediaIndex === -1) {
   fail('music mobile media query @media (max-width: 760px): missing');
+}
+
+const authAnimeIndex = authCss.indexOf('Final anime auth alignment');
+const authMobileMediaIndex = authAnimeIndex === -1 ? -1 : authCss.indexOf('@media (max-width: 640px)', authAnimeIndex);
+if (authMobileMediaIndex === -1) {
+  fail('auth mobile media query after final anime pass: missing');
 }
 
 assertBlockIncludes('.menu-trigger', ['min-width: 44px;', 'min-height: 44px;']);
@@ -208,9 +235,30 @@ assertContains('footer mobile wrapping', '.site-footer-nav');
 assertContains('novel anchor scroll offset', 'scroll-margin-top: 96px;');
 assertAuthContains('auth anime pass', 'Final anime auth alignment');
 assertAuthContains('auth dark color scheme', 'color-scheme: dark;');
-assertAuthContains('auth mobile status compression', '.sf-auth-body:not(.sf-admin-body) .sf-auth-status-list {\n    display: none;');
 assertAuthContains('auth mobile route scroll', 'scrollbar-width: none;');
-assertAuthContains('auth form touch targets', '.sf-auth-body:not(.sf-admin-body) .sf-auth-form input,\n  .sf-auth-body:not(.sf-admin-body) .sf-auth-form textarea,\n  .sf-auth-body:not(.sf-admin-body) .sf-auth-form button,');
+
+if (authMobileMediaIndex !== -1) {
+  assertAuthBlockIncludes(
+    '.sf-auth-body:not(.sf-admin-body) .sf-auth-status-list',
+    ['display: none;'],
+    { after: authMobileMediaIndex }
+  );
+  assertAuthBlockIncludes(
+    '.sf-auth-body:not(.sf-admin-body) .sf-auth-form input',
+    ['min-height: 46px;'],
+    { after: authMobileMediaIndex }
+  );
+  assertAuthBlockIncludes(
+    '.sf-auth-body:not(.sf-admin-body) .sf-auth-form textarea',
+    ['min-height: 46px;'],
+    { after: authMobileMediaIndex }
+  );
+  assertAuthBlockIncludes(
+    '.sf-auth-body:not(.sf-admin-body) .sf-auth-form button',
+    ['min-height: 46px;'],
+    { after: authMobileMediaIndex }
+  );
+}
 
 if (errors.length > 0) {
   console.error('Mobile CSS check failed:');

@@ -24,7 +24,7 @@ export const archiveAlbum = {
   releaseDate: '2026.02.09',
   isoDate: '2026-02-09',
   type: '정규 앨범',
-  genre: '뉴에이지 / 뉴에이지',
+  genre: '뉴에이지',
   distributor: 'mixtape.so',
   agency: 'SNFX',
   direction: '오리지널 트랙 아카이브',
@@ -41,7 +41,7 @@ export const archiveAlbum = {
     { label: '발매일', value: '2026.02.09' },
     { label: '형태', value: '정규 앨범' },
     { label: '수록', value: '9곡' },
-    { label: '장르', value: '뉴에이지 / 뉴에이지' },
+    { label: '장르', value: '뉴에이지' },
     { label: '기획사', value: 'SNFX' },
     { label: '발매사', value: 'mixtape.so' }
   ],

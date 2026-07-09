@@ -118,7 +118,16 @@
 
   function isStudioNext() {
     const next = getNext();
-    return next === '/mv-studio' || next.startsWith('/mv-studio/');
+    try {
+      const url = new URL(next, window.location.origin);
+      return url.pathname === '/mv-studio' ||
+        url.pathname === '/mv-studio.html' ||
+        url.pathname.startsWith('/mv-studio/');
+    } catch {
+      return next === '/mv-studio' ||
+        next === '/mv-studio.html' ||
+        next.startsWith('/mv-studio/');
+    }
   }
 
   function applyLoginContext() {

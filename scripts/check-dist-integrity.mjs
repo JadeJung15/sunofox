@@ -6,6 +6,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
 const distDir = path.join(rootDir, 'dist');
 const siteOrigin = 'https://sunofox.com';
+const authScriptPath = path.join(rootDir, 'public', 'js', 'sfAuth.js');
 const protectedSourcePrefixes = [
   '/_sf-studio-entry',
   '/account',
@@ -183,6 +184,15 @@ if (canonicalStudioEntry !== null && canonicalStudioEntry !== undefined) {
       errors.push(`${source.file}: must stay in sync with ${studioEntrySourceFiles[0]}`);
     }
   }
+}
+
+const authScript = await readFile(authScriptPath, 'utf8').catch((error) => {
+  errors.push(`public/js/sfAuth.js: failed to read auth script (${error.message})`);
+  return '';
+});
+
+if (!authScript.includes("url.pathname === '/mv-studio.html'")) {
+  errors.push('public/js/sfAuth.js: /mv-studio.html must use the Studio login context');
 }
 
 const distFiles = errors.length === 0 ? await collectFiles(distDir) : [];

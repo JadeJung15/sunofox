@@ -156,7 +156,7 @@ $routes = @(
     Name = "signup"
     Path = "/signup"
     File = "signup.html"
-    Must = @("sf-auth-body", "sf-auth-signup", "MEMBER JOIN", "PROFILE START", "sf-social-auth", "sf-auth-form", "CREATE ACCOUNT", "sf-auth-result-panel", "/css/sf-auth.")
+    Must = @("sf-auth-body", "sf-auth-signup", "MEMBER JOIN", "PROFILE START", "sf-social-auth", "sf-auth-form", "sf-signup-email", "sf-signup-nickname", "sf-signup-password", "sf-signup-password-confirm", "sf-signup-note", "CREATE ACCOUNT", "sf-auth-result-panel", "data-signup-result-actions", "/css/sf-auth.")
   },
   @{
     Name = "account"

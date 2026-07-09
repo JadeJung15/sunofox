@@ -136,6 +136,21 @@ if (musicMobileMediaIndex !== -1) {
     ['flex: 0 0 auto;', 'width: auto;', 'min-height: 44px;', 'white-space: nowrap;'],
     { after: musicMobileMediaIndex }
   );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.album-detail-page) .album-platform-links',
+    ['grid-template-columns: repeat(2, minmax(0, 1fr));', 'gap: 8px;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.album-detail-page) .album-platform-links .music-platform-link',
+    ['width: auto;', 'min-width: 0;', 'min-height: 42px;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.album-detail-page) .album-track-grid li',
+    ['grid-template-columns: 34px minmax(0, 1fr);', 'min-height: 64px;'],
+    { after: musicMobileMediaIndex }
+  );
 }
 
 assertContains('body horizontal overflow guard', 'overflow-x: hidden;');

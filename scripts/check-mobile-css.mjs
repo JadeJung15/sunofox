@@ -380,6 +380,11 @@ if (musicMobileMediaIndex !== -1) {
     { after: musicMobileMediaIndex }
   );
   assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-episode-page) .novel-reader-back',
+    ['width: fit-content;', 'min-width: 96px;', 'margin-bottom: 16px;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
     'body:has(.anime-home):has(.novel-episode-page) .novel-reader-quicklinks',
     ['display: flex;', 'flex-wrap: nowrap;', 'overflow-x: auto;', 'scrollbar-width: none;'],
     { after: musicMobileMediaIndex }
@@ -387,6 +392,31 @@ if (musicMobileMediaIndex !== -1) {
   assertBlockIncludes(
     'body:has(.anime-home):has(.novel-episode-page) .novel-reader-jumpbar',
     ['display: flex;', 'flex-wrap: nowrap;', 'overflow-x: auto;', 'scrollbar-width: none;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-episode-page) .novel-reader-body',
+    ['max-width: 100%;', 'padding: 24px 0 12px;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-episode-page) .novel-reader-actions',
+    ['grid-template-columns: repeat(2, minmax(0, 1fr));', 'padding-top: 22px;', 'margin-top: 24px;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-episode-page) .novel-reader-completion-actions',
+    ['grid-template-columns: repeat(2, minmax(0, 1fr));', 'gap: 8px;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-episode-page) .novel-reader-ost-actions .main-button:first-child',
+    ['grid-column: 1 / -1;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-episode-page) .novel-reader-completion-actions .main-button:first-child',
+    ['grid-column: 1 / -1;'],
     { after: musicMobileMediaIndex }
   );
   assertBlockIncludes(

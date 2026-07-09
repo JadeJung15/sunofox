@@ -11947,11 +11947,14 @@ body:has(.anime-home):has(.novel-episode-page) .site-footer a {
   }
 
   body:has(.anime-home):has(.novel-episode-page) .novel-reader-header {
-    padding: 24px 0 28px;
+    padding: 20px 0 24px;
   }
 
   body:has(.anime-home):has(.novel-episode-page) .novel-reader-back {
-    margin-bottom: 22px;
+    width: fit-content;
+    min-width: 96px;
+    margin-bottom: 16px;
+    padding-inline: 14px;
   }
 
   body:has(.anime-home):has(.novel-episode-page) .novel-reader-header h1 {
@@ -12011,7 +12014,7 @@ body:has(.anime-home):has(.novel-episode-page) .site-footer a {
 
   body:has(.anime-home):has(.novel-episode-page) .novel-reader-body {
     max-width: 100%;
-    padding: 34px 0 12px;
+    padding: 24px 0 12px;
   }
 
   body:has(.anime-home):has(.novel-episode-page) .novel-reader-body p {
@@ -12046,11 +12049,33 @@ body:has(.anime-home):has(.novel-episode-page) .site-footer a {
   body:has(.anime-home):has(.novel-episode-page) .novel-reader-ost-actions,
   body:has(.anime-home):has(.novel-episode-page) .novel-reader-completion-actions {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
   }
 
   body:has(.anime-home):has(.novel-episode-page) .novel-reader-actions {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    padding-top: 22px;
+    margin-top: 24px;
+  }
+
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-actions [data-reader-action="action-previous"],
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-actions [data-reader-action="action-next"],
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-actions .novel-next-disabled,
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-ost-actions .main-button:first-child,
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-completion-actions .main-button:first-child {
+    grid-column: 1 / -1;
+  }
+
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-ost-actions .main-button,
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-actions .main-button,
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-completion-actions .main-button {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    padding-inline: 10px;
+    font-size: 0.78rem;
   }
 }

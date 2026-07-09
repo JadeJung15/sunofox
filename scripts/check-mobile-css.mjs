@@ -401,7 +401,7 @@ if (musicMobileMediaIndex !== -1) {
   );
   assertBlockIncludes(
     'body:has(.anime-home):has(.album-detail-page) .album-platform-links .music-platform-link:last-child:nth-child(odd)',
-    ['grid-column: 1 / -1;', 'justify-content: center;'],
+    ['grid-column: 1 / -1;', 'justify-content: flex-start;'],
     { after: musicMobileMediaIndex }
   );
   assertBlockIncludes(

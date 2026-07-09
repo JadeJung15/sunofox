@@ -10687,6 +10687,11 @@ body:has(.anime-home):has(.album-detail-page) .album-track-section > .novel-sect
     padding: 12px;
   }
 
+  body:has(.anime-home):has(.music-archive-page) .music-release-cover {
+    width: min(64vw, 220px);
+    justify-self: center;
+  }
+
   body:has(.anime-home):has(.music-archive-page) .music-release-copy h3 {
     font-size: clamp(1.8rem, 9vw, 2.6rem);
   }
@@ -10699,6 +10704,27 @@ body:has(.anime-home):has(.album-detail-page) .album-track-section > .novel-sect
 
   body:has(.anime-home):has(.music-archive-page) .music-release-copy dl {
     margin-top: 12px;
+  }
+
+  body:has(.anime-home):has(.music-archive-page) .music-release-platforms {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  body:has(.anime-home):has(.music-archive-page) .music-release-platforms .music-platform-link {
+    width: auto;
+    min-width: 0;
+    min-height: 44px;
+    justify-content: flex-start;
+    padding: 6px 10px 6px 6px;
+    font-size: 0.76rem;
+  }
+
+  body:has(.anime-home):has(.music-archive-page) .music-release-platforms .music-platform-link > strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   body:has(.anime-home):has(.album-detail-page) .album-detail-page {

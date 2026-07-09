@@ -154,6 +154,18 @@ assertBlockIncludes(
   ['display: none;']
 );
 assertBlockIncludes(
+  'body:has(.anime-home):has(.music-archive-page) .music-release-cover',
+  ['width: min(64vw, 220px);', 'justify-self: center;']
+);
+assertBlockIncludes(
+  'body:has(.anime-home):has(.music-archive-page) .music-release-platforms',
+  ['grid-template-columns: repeat(2, minmax(0, 1fr));', 'margin-top: 14px;']
+);
+assertBlockIncludes(
+  'body:has(.anime-home):has(.music-archive-page) .music-release-platforms .music-platform-link',
+  ['min-height: 44px;', 'font-size: 0.76rem;']
+);
+assertBlockIncludes(
   'body:has(.anime-home):has(.novel-episode-page) .novel-reader-body p',
   ['color: rgba(255, 247, 251, 0.86);', 'line-height: 2.05;']
 );

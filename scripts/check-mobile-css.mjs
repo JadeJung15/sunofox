@@ -738,6 +738,11 @@ assertAuthBlockIncludes(
   ['min-height: 44px;', 'border-radius: 8px;'],
   { after: authAdminIndex }
 );
+assertAuthBlockIncludes(
+  '.sf-admin-body .sf-admin-panel',
+  ['scroll-margin-top: 88px;'],
+  { after: authAdminIndex }
+);
 
 if (authMobileMediaIndex !== -1) {
   assertAuthBlockIncludes(
@@ -865,6 +870,11 @@ if (authAdminMobileIndex !== -1) {
   assertAuthBlockIncludes(
     '.sf-admin-body .sf-admin-jump-nav',
     ['grid-template-columns: repeat(2, minmax(0, 1fr));'],
+    { after: authAdminMobileIndex }
+  );
+  assertAuthBlockIncludes(
+    '.sf-admin-body .sf-admin-panel',
+    ['scroll-margin-top: 84px;'],
     { after: authAdminMobileIndex }
   );
 }

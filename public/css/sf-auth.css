@@ -5751,6 +5751,7 @@ body {
 
 .sf-admin-body .sf-admin-panel {
   padding: clamp(16px, 3vw, 24px);
+  scroll-margin-top: 88px;
 }
 
 .sf-admin-body .sf-admin-key-form,
@@ -5806,6 +5807,10 @@ body {
   .sf-admin-body .sf-admin-head,
   .sf-admin-body .sf-admin-panel {
     padding: 14px;
+  }
+
+  .sf-admin-body .sf-admin-panel {
+    scroll-margin-top: 84px;
   }
 
   .sf-admin-body .sf-admin-head {

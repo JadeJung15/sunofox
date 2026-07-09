@@ -5987,6 +5987,20 @@ body {
     border-radius: 8px;
   }
 
+  .sf-auth-account:not(.sf-admin-body) .sf-account-login-state {
+    gap: 8px;
+    padding: 14px;
+  }
+
+  .sf-auth-account:not(.sf-admin-body) .sf-account-login-state strong {
+    font-size: 1rem;
+    letter-spacing: 0;
+  }
+
+  .sf-auth-account:not(.sf-admin-body) .sf-account-login-state p {
+    display: none;
+  }
+
   .sf-auth-body:not(.sf-admin-body) .sf-auth-links {
     gap: 6px;
   }

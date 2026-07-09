@@ -556,6 +556,16 @@ if (authMobileMediaIndex !== -1) {
     ['width: 100%;', 'min-height: 44px;', 'border-radius: 8px;'],
     { after: authMobileMediaIndex }
   );
+  assertAuthBlockIncludes(
+    '.sf-auth-account:not(.sf-admin-body) .sf-account-login-state',
+    ['gap: 8px;', 'padding: 14px;'],
+    { after: authMobileMediaIndex }
+  );
+  assertAuthBlockIncludes(
+    '.sf-auth-account:not(.sf-admin-body) .sf-account-login-state p',
+    ['display: none;'],
+    { after: authMobileMediaIndex }
+  );
 }
 
 if (authAdminMobileIndex !== -1) {

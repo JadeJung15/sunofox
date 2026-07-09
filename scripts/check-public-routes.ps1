@@ -133,6 +133,18 @@ $routes = @(
     MustNot = @("/updates/")
   },
   @{
+    Name = "login"
+    Path = "/login.html"
+    File = "login.html"
+    Must = @("sf-auth-body", "sf-auth-login", "PRIVATE ACCESS", "MEMBER GATE", "sf-social-auth", "sf-auth-form", "ENTER SITE", "MY ACCOUNT", "/css/sf-auth.")
+  },
+  @{
+    Name = "signup"
+    Path = "/signup.html"
+    File = "signup.html"
+    Must = @("sf-auth-body", "sf-auth-signup", "MEMBER JOIN", "PROFILE START", "sf-social-auth", "sf-auth-form", "CREATE ACCOUNT", "sf-auth-result-panel", "/css/sf-auth.")
+  },
+  @{
     Name = "not-found"
     Path = "/__sunofox_not_found_probe__/"
     File = "404.html"

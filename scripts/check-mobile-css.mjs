@@ -5,7 +5,9 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
 const cssPath = path.join(rootDir, 'src', 'styles', 'global.css');
+const authCssPath = path.join(rootDir, 'public', 'css', 'sf-auth.css');
 const css = await readFile(cssPath, 'utf8');
+const authCss = await readFile(authCssPath, 'utf8');
 const errors = [];
 
 function fail(message) {
@@ -75,6 +77,12 @@ function assertBlockExcludes(selector, forbidden, options = {}) {
 function assertContains(label, needle) {
   if (!css.includes(needle)) {
     fail(`${label}: expected CSS to include "${needle}"`);
+  }
+}
+
+function assertAuthContains(label, needle) {
+  if (!authCss.includes(needle)) {
+    fail(`${label}: expected auth CSS to include "${needle}"`);
   }
 }
 
@@ -198,6 +206,11 @@ assertContains('reader title wrapping', '.novel-reader-header h1');
 assertContains('music title wrapping', '.music-video-grid strong');
 assertContains('footer mobile wrapping', '.site-footer-nav');
 assertContains('novel anchor scroll offset', 'scroll-margin-top: 96px;');
+assertAuthContains('auth anime pass', 'Final anime auth alignment');
+assertAuthContains('auth dark color scheme', 'color-scheme: dark;');
+assertAuthContains('auth mobile status compression', '.sf-auth-body:not(.sf-admin-body) .sf-auth-status-list {\n    display: none;');
+assertAuthContains('auth mobile route scroll', 'scrollbar-width: none;');
+assertAuthContains('auth form touch targets', '.sf-auth-body:not(.sf-admin-body) .sf-auth-form input,\n  .sf-auth-body:not(.sf-admin-body) .sf-auth-form textarea,\n  .sf-auth-body:not(.sf-admin-body) .sf-auth-form button,');
 
 if (errors.length > 0) {
   console.error('Mobile CSS check failed:');

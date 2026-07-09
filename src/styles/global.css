@@ -11804,47 +11804,40 @@ body:has(.anime-home):has(.novel-episode-page) .micro-button:not(.micro-button-m
   }
 
   body:has(.anime-home):has(.novel-list-page) .novel-detail-tabs {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    padding-bottom: 12px;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  body:has(.anime-home):has(.novel-list-page) .novel-detail-tabs::-webkit-scrollbar {
-    display: none;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    padding-bottom: 0;
+    overflow-x: visible;
   }
 
   body:has(.anime-home):has(.novel-list-page) .novel-detail-tabs a {
-    flex: 0 0 auto;
-    width: auto;
-    padding-inline: 14px;
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    justify-content: center;
+    padding-inline: 10px;
     white-space: nowrap;
   }
 
   body:has(.anime-home):has(.novel-list-page) .novel-list-actions {
-    display: flex;
-    flex-wrap: nowrap;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  body:has(.anime-home):has(.novel-list-page) .novel-list-actions::-webkit-scrollbar {
-    display: none;
+    overflow-x: visible;
   }
 
   body:has(.anime-home):has(.novel-list-page) .novel-list-actions .micro-button {
-    flex: 0 0 auto;
-    width: auto;
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    justify-content: center;
     padding-inline: 12px;
     white-space: nowrap;
   }
 
   body:has(.anime-home):has(.novel-list-page) .novel-list-actions .micro-button:first-child {
-    grid-column: auto;
+    grid-column: 1 / -1;
   }
 
   body:has(.anime-home):has(.novel-list-page) .novel-season-facts {
@@ -11864,31 +11857,23 @@ body:has(.anime-home):has(.novel-episode-page) .micro-button:not(.micro-button-m
   }
 
   body:has(.anime-home):has(.novel-list-page) .novel-reading-grid {
-    display: flex;
-    gap: 10px;
-    margin-inline: -14px;
-    padding-inline: 14px;
-    padding-bottom: 4px;
-    overflow-x: auto;
-    scroll-snap-type: x proximity;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  body:has(.anime-home):has(.novel-list-page) .novel-reading-grid::-webkit-scrollbar {
-    display: none;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-inline: 0;
+    padding-inline: 0;
+    padding-bottom: 0;
+    overflow-x: visible;
   }
 
   body:has(.anime-home):has(.novel-list-page) .novel-reading-card {
-    flex: 0 0 min(82vw, 320px);
-    min-height: 128px;
-    padding: 14px;
-    scroll-snap-align: start;
+    min-height: 0;
+    padding: 12px;
   }
 
   body:has(.anime-home):has(.novel-list-page) .novel-reading-card strong {
-    margin-top: 12px;
-    font-size: 1.15rem;
+    margin-top: 8px;
+    font-size: 1.02rem;
   }
 
   body:has(.anime-home):has(.novel-list-page) .novel-reading-card p {
@@ -11925,26 +11910,25 @@ body:has(.anime-home):has(.novel-episode-page) .micro-button:not(.micro-button-m
   }
 
   body:has(.anime-home):has(.novel-list-page) .novel-anchor-strip {
-    display: flex;
-    flex-wrap: nowrap;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
     margin-bottom: 14px;
-    padding-bottom: 4px;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  body:has(.anime-home):has(.novel-list-page) .novel-anchor-strip::-webkit-scrollbar {
-    display: none;
+    padding-bottom: 0;
+    overflow-x: visible;
   }
 
   body:has(.anime-home):has(.novel-list-page) .novel-anchor-strip a {
-    flex: 0 0 auto;
+    width: 100%;
+    min-width: 0;
     min-height: 40px;
     padding-inline: 12px;
-    white-space: nowrap;
+    white-space: normal;
     text-align: left;
+  }
+
+  body:has(.anime-home):has(.novel-list-page) .novel-anchor-strip a:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
   }
 
   body:has(.anime-home):has(.novel-list-page) .novel-section-head h2,

@@ -506,7 +506,7 @@ if (musicMobileMediaIndex !== -1) {
   );
   assertBlockIncludes(
     'body:has(.anime-home):has(.novel-list-page) .novel-detail-tabs',
-    ['display: flex;', 'flex-wrap: nowrap;', 'overflow-x: auto;', 'scrollbar-width: none;'],
+    ['display: grid;', 'grid-template-columns: repeat(3, minmax(0, 1fr));', 'overflow-x: visible;'],
     { after: musicMobileMediaIndex }
   );
   assertBlockIncludes(
@@ -526,7 +526,12 @@ if (musicMobileMediaIndex !== -1) {
   );
   assertBlockIncludes(
     'body:has(.anime-home):has(.novel-list-page) .novel-list-actions',
-    ['display: flex;', 'flex-wrap: nowrap;', 'overflow-x: auto;', 'scrollbar-width: none;'],
+    ['display: grid;', 'grid-template-columns: repeat(2, minmax(0, 1fr));', 'overflow-x: visible;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-list-page) .novel-list-actions .micro-button:first-child',
+    ['grid-column: 1 / -1;'],
     { after: musicMobileMediaIndex }
   );
   assertBlockIncludes(
@@ -536,12 +541,12 @@ if (musicMobileMediaIndex !== -1) {
   );
   assertBlockIncludes(
     'body:has(.anime-home):has(.novel-list-page) .novel-reading-grid',
-    ['display: flex;', 'overflow-x: auto;', 'scrollbar-width: none;'],
+    ['display: grid;', 'grid-template-columns: 1fr;', 'overflow-x: visible;'],
     { after: musicMobileMediaIndex }
   );
   assertBlockIncludes(
     'body:has(.anime-home):has(.novel-list-page) .novel-reading-card',
-    ['flex: 0 0 min(82vw, 320px);', 'min-height: 128px;', 'scroll-snap-align: start;'],
+    ['min-height: 0;', 'padding: 12px;'],
     { after: musicMobileMediaIndex }
   );
   assertBlockIncludes(
@@ -551,7 +556,12 @@ if (musicMobileMediaIndex !== -1) {
   );
   assertBlockIncludes(
     'body:has(.anime-home):has(.novel-list-page) .novel-anchor-strip',
-    ['display: flex;', 'flex-wrap: nowrap;', 'overflow-x: auto;', 'scrollbar-width: none;'],
+    ['display: grid;', 'grid-template-columns: repeat(2, minmax(0, 1fr));', 'overflow-x: visible;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-list-page) .novel-anchor-strip a:last-child:nth-child(odd)',
+    ['grid-column: 1 / -1;'],
     { after: musicMobileMediaIndex }
   );
   assertBlockIncludes(

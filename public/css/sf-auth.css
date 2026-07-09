@@ -5307,7 +5307,9 @@ body {
 
 .sf-auth-body:not(.sf-admin-body) .sf-social-button,
 .sf-auth-body:not(.sf-admin-body) .sf-auth-links a,
+.sf-auth-body:not(.sf-admin-body) .sf-auth-links button,
 .sf-auth-body:not(.sf-admin-body) .sf-auth-result-actions a {
+  appearance: none;
   display: inline-flex;
   min-height: 44px;
   align-items: center;
@@ -5316,9 +5318,12 @@ body {
   border-radius: 8px;
   background: rgba(5, 5, 9, 0.52);
   color: var(--sf-auth-ink);
+  cursor: pointer;
+  font-family: inherit;
   font-size: 0.86rem;
   font-weight: 900;
   letter-spacing: 0;
+  padding: 0 14px;
   text-decoration: none;
   text-transform: none;
   box-shadow: none;
@@ -5328,11 +5333,22 @@ body {
 .sf-auth-body:not(.sf-admin-body) .sf-social-button:focus-visible,
 .sf-auth-body:not(.sf-admin-body) .sf-auth-links a:hover,
 .sf-auth-body:not(.sf-admin-body) .sf-auth-links a:focus-visible,
+.sf-auth-body:not(.sf-admin-body) .sf-auth-links button:hover,
+.sf-auth-body:not(.sf-admin-body) .sf-auth-links button:focus-visible,
 .sf-auth-body:not(.sf-admin-body) .sf-auth-result-actions a:hover,
 .sf-auth-body:not(.sf-admin-body) .sf-auth-result-actions a:focus-visible {
   border-color: var(--sf-auth-line-strong);
   background: var(--sf-auth-accent-soft);
   color: var(--sf-auth-ink);
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-links button[hidden] {
+  display: none !important;
+}
+
+.sf-auth-body:not(.sf-admin-body) .sf-auth-links button:disabled {
+  cursor: wait;
+  opacity: 0.6;
 }
 
 .sf-auth-body:not(.sf-admin-body) .sf-auth-divider {
@@ -5511,6 +5527,7 @@ body {
   .sf-auth-body:not(.sf-admin-body) .sf-auth-form button,
   .sf-auth-body:not(.sf-admin-body) .sf-social-button,
   .sf-auth-body:not(.sf-admin-body) .sf-auth-links a,
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-links button,
   .sf-auth-body:not(.sf-admin-body) .sf-auth-result-actions a {
     min-height: 46px;
   }
@@ -5599,6 +5616,7 @@ body {
   .sf-auth-body:not(.sf-admin-body) .sf-auth-form button,
   .sf-auth-body:not(.sf-admin-body) .sf-social-button,
   .sf-auth-body:not(.sf-admin-body) .sf-auth-links a,
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-links button,
   .sf-auth-body:not(.sf-admin-body) .sf-auth-result-actions a {
     min-height: 44px;
   }

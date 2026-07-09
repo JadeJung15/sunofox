@@ -145,6 +145,18 @@ $routes = @(
     Must = @("sf-auth-body", "sf-auth-signup", "MEMBER JOIN", "PROFILE START", "sf-social-auth", "sf-auth-form", "CREATE ACCOUNT", "sf-auth-result-panel", "/css/sf-auth.")
   },
   @{
+    Name = "account"
+    Path = "/account"
+    File = "account/index.html"
+    Must = @("/account.html", "https://sunofox.com/account", "window.location.replace")
+  },
+  @{
+    Name = "account-html"
+    Path = "/account.html"
+    File = "account.html"
+    Must = @("sf-auth-body", "sf-auth-account", "MY ACCOUNT", "PROFILE SETTINGS", "data-account-login-state", "data-auth-logout hidden", "LOGIN TO EDIT", "/css/sf-auth.")
+  },
+  @{
     Name = "not-found"
     Path = "/__sunofox_not_found_probe__/"
     File = "404.html"

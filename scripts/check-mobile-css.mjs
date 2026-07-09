@@ -320,6 +320,15 @@ if (authMobileMediaIndex !== -1) {
     { after: authMobileMediaIndex }
   );
   assertAuthBlockIncludes(
+    '.sf-auth-body:not(.sf-admin-body) .sf-auth-links button',
+    ['min-height: 44px;'],
+    { after: authMobileMediaIndex }
+  );
+  assertAuthBlockIncludes(
+    '.sf-auth-body:not(.sf-admin-body) .sf-auth-links button[hidden]',
+    ['display: none !important;']
+  );
+  assertAuthBlockIncludes(
     '.sf-auth-signup:not(.sf-admin-body) .sf-auth-form textarea',
     ['height: 56px;', 'min-height: 54px;'],
     { after: authMobileMediaIndex }

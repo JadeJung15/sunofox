@@ -257,6 +257,12 @@
     });
   }
 
+  function setLogoutVisible(visible) {
+    document.querySelectorAll('[data-auth-logout]').forEach((button) => {
+      button.hidden = !visible;
+    });
+  }
+
   function bindLogin() {
     const form = document.getElementById('sf-login-form');
     updateOAuthProviderStatus();
@@ -408,6 +414,7 @@
     const form = document.getElementById('sf-account-form');
     const loginState = document.querySelector('[data-account-login-state]');
     const providers = document.querySelector('[data-account-providers]');
+    setLogoutVisible(false);
     if (form) form.hidden = true;
     if (loginState) loginState.hidden = true;
     if (providers) providers.hidden = true;
@@ -427,6 +434,7 @@
       if (nickname) nickname.value = user.nickname || user.name || '';
       if (form) form.hidden = false;
       if (loginState) loginState.hidden = true;
+      setLogoutVisible(true);
       setMessage('프로필 정보를 불러왔습니다.', 'success');
     } catch (error) {
       if (message) message.hidden = true;
@@ -434,6 +442,7 @@
       if (form) form.hidden = true;
       if (loginState) loginState.hidden = false;
       if (providers) providers.hidden = true;
+      setLogoutVisible(false);
     }
   }
 

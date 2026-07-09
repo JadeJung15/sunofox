@@ -12154,22 +12154,31 @@ body:has(.anime-home):has(.novel-episode-page) .site-footer a {
 
   body:has(.anime-home):has(.novel-episode-page) .novel-reader-topbar {
     top: 64px;
-    gap: 18px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) auto minmax(48px, 0.6fr);
+    gap: 8px;
     margin-inline: -14px;
-    overflow-x: auto;
+    overflow-x: visible;
     padding: 8px 14px;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  body:has(.anime-home):has(.novel-episode-page) .novel-reader-topbar::-webkit-scrollbar {
-    display: none;
   }
 
   body:has(.anime-home):has(.novel-episode-page) .novel-reader-topbar a,
   body:has(.anime-home):has(.novel-episode-page) .novel-reader-topbar span {
-    flex: 0 0 auto;
+    min-width: 0;
+    overflow: hidden;
+    text-align: center;
+    text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-topbar a:first-child {
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-topbar a:last-child {
+    justify-content: flex-end;
+    text-align: right;
   }
 
   body:has(.anime-home):has(.novel-episode-page) .novel-reader-header {
@@ -12214,28 +12223,43 @@ body:has(.anime-home):has(.novel-episode-page) .site-footer a {
 
   body:has(.anime-home):has(.novel-episode-page) .novel-reader-quicklinks,
   body:has(.anime-home):has(.novel-episode-page) .novel-reader-jumpbar {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
+    display: grid;
+    gap: 8px;
+    overflow-x: visible;
   }
 
-  body:has(.anime-home):has(.novel-episode-page) .novel-reader-quicklinks::-webkit-scrollbar,
-  body:has(.anime-home):has(.novel-episode-page) .novel-reader-jumpbar::-webkit-scrollbar {
-    display: none;
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-quicklinks {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    overflow-x: visible;
   }
 
-  body:has(.anime-home):has(.novel-episode-page) .novel-reader-quicklinks a {
-    flex: 0 0 auto;
-    width: auto;
-    min-width: 104px;
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-jumpbar {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    overflow-x: visible;
+  }
+
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-quicklinks a,
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-jumpbar > a,
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-jumpbar > span {
+    width: 100%;
+    min-width: 0;
     white-space: nowrap;
   }
 
   body:has(.anime-home):has(.novel-episode-page) .novel-reader-jumpbar > a,
   body:has(.anime-home):has(.novel-episode-page) .novel-reader-jumpbar > span {
-    flex: 0 0 min(74vw, 280px);
+    width: 100%;
+    min-width: 0;
+    min-height: 58px;
+    padding: 10px;
+  }
+
+  body:has(.anime-home):has(.novel-episode-page) .novel-reader-jumpbar strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   body:has(.anime-home):has(.novel-episode-page) .novel-reader-body {

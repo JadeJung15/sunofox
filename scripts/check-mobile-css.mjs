@@ -386,17 +386,32 @@ if (musicMobileMediaIndex !== -1) {
   );
   assertBlockIncludes(
     'body:has(.anime-home):has(.album-detail-page) .album-platform-links .music-platform-link',
-    ['width: auto;', 'min-width: 0;', 'min-height: 44px;'],
+    ['width: 100%;', 'min-width: 0;', 'min-height: 44px;'],
     { after: musicMobileMediaIndex }
   );
   assertBlockIncludes(
-    'body:has(.anime-home):has(.album-detail-page) .album-platform-links .music-platform-link:nth-child(3)',
+    'body:has(.anime-home):has(.album-detail-page) .album-platform-links .music-platform-link:last-child:nth-child(odd)',
     ['grid-column: 1 / -1;', 'justify-content: center;'],
     { after: musicMobileMediaIndex }
   );
   assertBlockIncludes(
+    'body:has(.anime-home):has(.album-detail-page) .album-track-grid',
+    ['grid-template-columns: repeat(2, minmax(0, 1fr));', 'gap: 8px;', 'margin-top: 16px;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
     'body:has(.anime-home):has(.album-detail-page) .album-track-grid li',
-    ['grid-template-columns: 30px minmax(0, 1fr);', 'min-height: 54px;'],
+    ['grid-template-columns: 24px minmax(0, 1fr);', 'min-height: 58px;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.album-detail-page) .album-track-grid li:last-child:nth-child(odd)',
+    ['grid-column: 1 / -1;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.album-detail-page) .album-track-grid strong',
+    ['overflow-wrap: anywhere;', 'font-size: 0.86rem;', 'line-height: 1.22;'],
     { after: musicMobileMediaIndex }
   );
   assertBlockIncludes(

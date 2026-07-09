@@ -9740,6 +9740,42 @@ body:has(.anime-home):has(.music-archive-page) .music-release-copy strong {
   color: var(--anime-muted);
 }
 
+body:has(.anime-home):has(.music-archive-page) .music-video-section > .novel-section-head,
+body:has(.anime-home):has(.music-archive-page) .music-release-section > .novel-section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 6px 14px;
+  margin-bottom: 16px;
+}
+
+body:has(.anime-home):has(.music-archive-page) .music-video-section > .novel-section-head .section-kicker,
+body:has(.anime-home):has(.music-archive-page) .music-release-section > .novel-section-head .section-kicker {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+body:has(.anime-home):has(.music-archive-page) .music-video-section > .novel-section-head h2,
+body:has(.anime-home):has(.music-archive-page) .music-release-section > .novel-section-head h2 {
+  grid-column: 1;
+  margin: 0;
+  font-size: clamp(2rem, 4.5vw, 3.3rem);
+  line-height: 0.98;
+}
+
+body:has(.anime-home):has(.music-archive-page) .music-video-section > .novel-section-head span,
+body:has(.anime-home):has(.music-archive-page) .music-release-section > .novel-section-head span {
+  justify-self: end;
+  border: 1px solid rgba(255, 247, 251, 0.14);
+  border-radius: 999px;
+  padding: 7px 10px;
+  background: rgba(5, 5, 9, 0.42);
+  color: var(--anime-soft);
+  font-size: 0.78rem;
+  font-weight: 850;
+  line-height: 1;
+}
+
 body:has(.anime-home):has(.music-archive-page) .music-progress {
   background: rgba(255, 247, 251, 0.13);
 }
@@ -10205,6 +10241,23 @@ body:has(.anime-home):has(.album-detail-page) .album-track-grid li {
   body:has(.anime-home):has(.music-archive-page) .music-video-hub {
     display: grid;
     padding: 12px;
+  }
+
+  body:has(.anime-home):has(.music-archive-page) .music-video-section > .novel-section-head,
+  body:has(.anime-home):has(.music-archive-page) .music-release-section > .novel-section-head {
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  body:has(.anime-home):has(.music-archive-page) .music-video-section > .novel-section-head h2,
+  body:has(.anime-home):has(.music-archive-page) .music-release-section > .novel-section-head h2 {
+    font-size: clamp(1.75rem, 8vw, 2.35rem);
+    line-height: 1;
+  }
+
+  body:has(.anime-home):has(.music-archive-page) .music-video-section > .novel-section-head span,
+  body:has(.anime-home):has(.music-archive-page) .music-release-section > .novel-section-head span {
+    font-size: 0.72rem;
   }
 
   body:has(.anime-home):has(.music-archive-page) .music-video-feature {

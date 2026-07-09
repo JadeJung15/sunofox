@@ -5981,6 +5981,12 @@ body {
     line-height: 1.45;
   }
 
+  .sf-account-login-state a {
+    width: 100%;
+    min-height: 44px;
+    border-radius: 8px;
+  }
+
   .sf-auth-body:not(.sf-admin-body) .sf-auth-links {
     gap: 6px;
   }

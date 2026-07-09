@@ -420,6 +420,11 @@ if (authMobileMediaIndex !== -1) {
     ['height: 64px;', 'min-height: 62px;', 'line-height: 1.45;'],
     { after: authMobileMediaIndex }
   );
+  assertAuthBlockIncludes(
+    '.sf-account-login-state a',
+    ['width: 100%;', 'min-height: 44px;', 'border-radius: 8px;'],
+    { after: authMobileMediaIndex }
+  );
 }
 
 if (authAdminMobileIndex !== -1) {

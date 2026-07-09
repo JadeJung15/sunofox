@@ -719,17 +719,17 @@ assertAuthContains('auth dark color scheme', 'color-scheme: dark;');
 assertAuthContains('auth mobile route scroll', 'scrollbar-width: none;');
 assertAuthBlockIncludes(
   '.sf-auth-login:not(.sf-admin-body) .sf-auth-copy > p',
-  ['-webkit-line-clamp: 1;', 'overflow-wrap: break-word;', 'word-break: keep-all;'],
+  ['-webkit-line-clamp: 2;', 'overflow-wrap: break-word;', 'word-break: keep-all;'],
   { after: authFocusMobileIndex }
 );
 assertAuthBlockIncludes(
   '.sf-auth-signup:not(.sf-admin-body) .sf-auth-copy > p',
-  ['display: -webkit-box;', '-webkit-line-clamp: 1;', 'overflow-wrap: break-word;', 'word-break: keep-all;'],
+  ['-webkit-line-clamp: 3;'],
   { after: authFocusMobileIndex }
 );
 assertAuthBlockIncludes(
   '.sf-auth-account:not(.sf-admin-body) .sf-auth-copy > p',
-  ['display: -webkit-box;', '-webkit-line-clamp: 1;', 'overflow-wrap: break-word;', 'word-break: keep-all;'],
+  ['display: -webkit-box;', '-webkit-line-clamp: 2;', 'overflow-wrap: break-word;', 'word-break: keep-all;'],
   { after: authFocusMobileIndex }
 );
 assertAuthBlockIncludes(

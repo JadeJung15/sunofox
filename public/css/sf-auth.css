@@ -6110,12 +6110,16 @@ body {
     max-width: 100%;
     overflow: hidden;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
+    -webkit-line-clamp: 2;
     color: rgba(255, 247, 251, 0.84);
     font-size: 0.84rem;
     line-height: 1.45;
     overflow-wrap: break-word;
     word-break: keep-all;
+  }
+
+  .sf-auth-signup:not(.sf-admin-body) .sf-auth-copy > p {
+    -webkit-line-clamp: 3;
   }
 
   .sf-auth-body:not(.sf-admin-body) .sf-auth-stage .sf-auth-card,

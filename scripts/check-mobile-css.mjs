@@ -595,6 +595,11 @@ assertAuthBlockIncludes(
   { after: authCompactMobileIndex }
 );
 assertAuthBlockIncludes(
+  '.sf-auth-body:not(.sf-admin-body) .sf-auth-stage',
+  ['border: 0;', 'background: transparent;', 'box-shadow: none;', 'padding: 0;'],
+  { after: authCompactMobileIndex }
+);
+assertAuthBlockIncludes(
   '.sf-auth-body:not(.sf-admin-body) .sf-auth-links',
   ['grid-template-columns: repeat(2, minmax(0, 1fr));', 'gap: 6px;'],
   { after: authNarrowMobileIndex }
@@ -658,7 +663,7 @@ if (authMobileMediaIndex !== -1) {
   );
   assertAuthBlockIncludes(
     '.sf-auth-body:not(.sf-admin-body) .sf-auth-stage',
-    ['gap: 10px;', 'padding: 14px 12px;'],
+    ['gap: 12px;', 'border: 0;', 'background: transparent;', 'padding: 0;'],
     { after: authMobileMediaIndex }
   );
   assertAuthBlockIncludes(

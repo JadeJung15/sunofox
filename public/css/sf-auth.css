@@ -5890,8 +5890,12 @@ body {
   }
 
   .sf-auth-body:not(.sf-admin-body) .sf-auth-stage {
-    gap: 10px;
-    padding: 14px 12px;
+    gap: 12px;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+    overflow: visible;
   }
 
   .sf-auth-body:not(.sf-admin-body) .sf-auth-stage .sf-auth-brand {

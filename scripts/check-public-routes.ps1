@@ -149,12 +149,15 @@ $routes = @(
     Path = "/account"
     File = "account/index.html"
     Must = @("/account.html", "https://sunofox.com/account", "window.location.replace")
+    RemoteMust = @("sf-auth-body", "sf-auth-account", "MY ACCOUNT", "PROFILE SETTINGS", "data-account-login-state", "data-auth-logout hidden", "LOGIN TO EDIT", "/css/sf-auth.")
   },
   @{
     Name = "account-html"
     Path = "/account.html"
     File = "account.html"
     Must = @("sf-auth-body", "sf-auth-account", "MY ACCOUNT", "PROFILE SETTINGS", "data-account-login-state", "data-auth-logout hidden", "LOGIN TO EDIT", "/css/sf-auth.")
+    RemoteExpectedStatus = 308
+    RemoteMust = @()
   },
   @{
     Name = "not-found"
@@ -194,6 +197,10 @@ function Get-ExpectedStatus {
   param(
     [hashtable]$Route
   )
+
+  if ([string]::IsNullOrWhiteSpace($BaseUrl) -eq $false -and $Route.ContainsKey("RemoteExpectedStatus")) {
+    return [int]$Route["RemoteExpectedStatus"]
+  }
 
   if ([string]::IsNullOrWhiteSpace($BaseUrl) -eq $false -and $Route.ContainsKey("ExpectedStatus")) {
     return [int]$Route["ExpectedStatus"]
@@ -337,20 +344,30 @@ $results = foreach ($route in $routes) {
   try {
     $payload = Get-RouteContent -Route $route
     $expectedStatus = Get-ExpectedStatus -Route $route
+    $mustList = if ([string]::IsNullOrWhiteSpace($BaseUrl) -eq $false -and $route.ContainsKey("RemoteMust")) {
+      $route["RemoteMust"]
+    } else {
+      $route["Must"]
+    }
+    $mustNotList = if ([string]::IsNullOrWhiteSpace($BaseUrl) -eq $false -and $route.ContainsKey("RemoteMustNot")) {
+      $route["RemoteMustNot"]
+    } elseif ($route.ContainsKey("MustNot")) {
+      $route["MustNot"]
+    } else {
+      @()
+    }
     $missing = @()
     $unexpected = @()
 
-    foreach ($needle in $route["Must"]) {
+    foreach ($needle in $mustList) {
       if ($payload.Content -notmatch [regex]::Escape($needle)) {
         $missing += $needle
       }
     }
 
-    if ($route.ContainsKey("MustNot")) {
-      foreach ($needle in $route["MustNot"]) {
-        if ($payload.Content -match [regex]::Escape($needle)) {
-          $unexpected += $needle
-        }
+    foreach ($needle in $mustNotList) {
+      if ($payload.Content -match [regex]::Escape($needle)) {
+        $unexpected += $needle
       }
     }
 

@@ -424,12 +424,17 @@ if (musicMobileMediaIndex !== -1) {
   );
   assertBlockIncludes(
     'body:has(.anime-home):has(.profile-page) .profile-source-actions',
-    ['display: grid;', 'grid-template-columns: repeat(2, minmax(0, 1fr));', 'gap: 8px;'],
+    ['display: flex;', 'flex-wrap: nowrap;', 'overflow-x: auto;', 'scrollbar-width: none;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.profile-page) .profile-source-actions::-webkit-scrollbar',
+    ['display: none;'],
     { after: musicMobileMediaIndex }
   );
   assertBlockIncludes(
     'body:has(.anime-home):has(.profile-page) .profile-source-actions .main-button',
-    ['width: 100%;', 'min-width: 0;', 'font-size: 0.78rem;'],
+    ['flex: 0 0 auto;', 'width: auto;', 'min-height: 44px;', 'white-space: nowrap;'],
     { after: musicMobileMediaIndex }
   );
   assertBlockIncludes(

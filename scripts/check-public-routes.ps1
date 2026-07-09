@@ -137,12 +137,14 @@ $routes = @(
     Path = "/privacy/"
     File = "privacy/index.html"
     Must = @("legal-page", "PRIVACY POLICY", "Collected Information", "Submitted Information", "sunofox.official@gmail.com", "https://sunofox.com/privacy/")
+    RemoteMust = @("legal-page", "PRIVACY POLICY", "Collected Information", "Submitted Information", "email-protection", "__cf_email__", "https://sunofox.com/privacy/")
   },
   @{
     Name = "terms"
     Path = "/terms/"
     File = "terms/index.html"
     Must = @("legal-page", "TERMS", "Service Use", "Studio Access", "sunofox.official@gmail.com", "https://sunofox.com/terms/")
+    RemoteMust = @("legal-page", "TERMS", "Service Use", "Studio Access", "email-protection", "__cf_email__", "https://sunofox.com/terms/")
   },
   @{
     Name = "login"

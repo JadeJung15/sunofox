@@ -350,8 +350,28 @@ if (musicMobileMediaIndex !== -1) {
     { after: musicMobileMediaIndex }
   );
   assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-list-page) .novel-info-list',
+    ['grid-template-columns: repeat(2, minmax(0, 1fr));', 'margin-top: 18px;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-list-page) .novel-platform-actions',
+    ['grid-template-columns: repeat(2, minmax(0, 1fr));', 'margin-top: 18px;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-list-page) .novel-platform-actions .main-button:first-child',
+    ['grid-column: 1 / -1;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
     'body:has(.anime-home):has(.novel-list-page) .novel-list-actions',
     ['display: flex;', 'flex-wrap: nowrap;', 'overflow-x: auto;', 'scrollbar-width: none;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-list-page) .novel-season-facts',
+    ['grid-template-columns: repeat(3, minmax(0, 1fr));', 'padding: 12px 0 0;'],
     { after: musicMobileMediaIndex }
   );
   assertBlockIncludes(

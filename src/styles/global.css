@@ -11611,13 +11611,38 @@ body:has(.anime-home):has(.novel-episode-page) .micro-button:not(.micro-button-m
     font-size: 0.98rem;
   }
 
+  body:has(.anime-home):has(.novel-list-page) .novel-info-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 12px;
+    margin-top: 18px;
+  }
+
+  body:has(.anime-home):has(.novel-list-page) .novel-info-list div {
+    min-width: 0;
+    padding: 12px 0;
+  }
+
+  body:has(.anime-home):has(.novel-list-page) .novel-info-list dd {
+    overflow-wrap: break-word;
+  }
+
   body:has(.anime-home):has(.novel-list-page) .novel-platform-actions {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 18px;
   }
 
   body:has(.anime-home):has(.novel-list-page) .novel-platform-actions .main-button {
     width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    padding-inline: 10px;
+    font-size: 0.78rem;
+  }
+
+  body:has(.anime-home):has(.novel-list-page) .novel-platform-actions .main-button:first-child {
+    grid-column: 1 / -1;
   }
 
   body:has(.anime-home):has(.novel-list-page) .novel-detail-tabs {
@@ -11662,6 +11687,22 @@ body:has(.anime-home):has(.novel-episode-page) .micro-button:not(.micro-button-m
 
   body:has(.anime-home):has(.novel-list-page) .novel-list-actions .micro-button:first-child {
     grid-column: auto;
+  }
+
+  body:has(.anime-home):has(.novel-list-page) .novel-season-facts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    border-left: 0;
+    border-top: 1px solid rgba(255, 247, 251, 0.12);
+    padding: 12px 0 0;
+  }
+
+  body:has(.anime-home):has(.novel-list-page) .novel-season-facts div {
+    padding: 0;
+  }
+
+  body:has(.anime-home):has(.novel-list-page) .novel-season-facts dd {
+    overflow-wrap: break-word;
   }
 
   body:has(.anime-home):has(.novel-list-page) .novel-section-head h2,

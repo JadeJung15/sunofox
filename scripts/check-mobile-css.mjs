@@ -194,6 +194,10 @@ assertBlockIncludes(
   ['min-height: 44px;']
 );
 assertBlockIncludes(
+  'body:has(.anime-home):has(.not-found-page) .not-found-hero h1',
+  ['font-size: clamp(3.1rem, 8vw, 6.4rem);']
+);
+assertBlockIncludes(
   'body:has(.anime-home):has(.profile-page) .category-hero p:last-child',
   ['overflow-wrap: break-word;', 'word-break: keep-all;']
 );
@@ -427,6 +431,16 @@ if (musicMobileMediaIndex !== -1) {
   assertBlockIncludes(
     'body:has(.anime-home):has(.not-found-page) .not-found-page',
     ['padding: 86px 14px 46px;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.not-found-page) .not-found-hero h1',
+    ['font-size: clamp(2.45rem, 11vw, 3.25rem);'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.not-found-page) .not-found-panel h2',
+    ['font-size: clamp(1.7rem, 8.2vw, 2.2rem);'],
     { after: musicMobileMediaIndex }
   );
 }

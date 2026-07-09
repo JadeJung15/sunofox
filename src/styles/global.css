@@ -9329,8 +9329,8 @@ body:has(.anime-home):has(.not-found-page) .not-found-page {
 body:has(.anime-home):has(.not-found-page) .not-found-page {
   display: grid;
   align-content: center;
-  gap: clamp(18px, 3.4vw, 34px);
-  padding: 96px clamp(18px, 6vw, 72px) 72px;
+  gap: clamp(16px, 3vw, 28px);
+  padding: 92px clamp(18px, 6vw, 72px) 64px;
 }
 
 body:has(.anime-home):has(.not-found-page) .not-found-hero,
@@ -9349,15 +9349,15 @@ body:has(.anime-home):has(.not-found-page) .not-found-hero h1 {
   max-width: 760px;
   margin-top: 14px;
   color: var(--anime-ink);
-  font-size: clamp(3.8rem, 9.4vw, 8.2rem);
-  line-height: 0.94;
+  font-size: clamp(3.1rem, 8vw, 6.4rem);
+  line-height: 0.96;
   overflow-wrap: normal;
   word-break: keep-all;
 }
 
 body:has(.anime-home):has(.not-found-page) .not-found-hero p:last-child {
   max-width: 620px;
-  margin-top: 22px;
+  margin-top: 18px;
   color: var(--anime-muted);
   font-size: clamp(1rem, 1.6vw, 1.16rem);
   line-height: 1.72;
@@ -9383,8 +9383,8 @@ body:has(.anime-home):has(.not-found-page) .not-found-copy {
 body:has(.anime-home):has(.not-found-page) .not-found-panel h2 {
   max-width: 620px;
   color: var(--anime-ink);
-  font-size: clamp(2.2rem, 5vw, 4.6rem);
-  line-height: 0.98;
+  font-size: clamp(2rem, 4.4vw, 3.8rem);
+  line-height: 1;
   overflow-wrap: normal;
   word-break: keep-all;
 }
@@ -9475,12 +9475,14 @@ body:has(.anime-home):has(.not-found-page) .site-logo {
   }
 
   body:has(.anime-home):has(.not-found-page) .not-found-hero h1 {
-    font-size: clamp(3rem, 14vw, 4.1rem);
+    font-size: clamp(2.45rem, 11vw, 3.25rem);
+    line-height: 1;
   }
 
   body:has(.anime-home):has(.not-found-page) .not-found-hero p:last-child {
-    margin-top: 18px;
-    font-size: 0.98rem;
+    margin-top: 14px;
+    font-size: 0.94rem;
+    line-height: 1.68;
   }
 
   body:has(.anime-home):has(.not-found-page) .not-found-panel {
@@ -9490,11 +9492,12 @@ body:has(.anime-home):has(.not-found-page) .site-logo {
   }
 
   body:has(.anime-home):has(.not-found-page) .not-found-panel h2 {
-    font-size: clamp(2rem, 10vw, 2.8rem);
+    font-size: clamp(1.7rem, 8.2vw, 2.2rem);
+    line-height: 1.05;
   }
 
   body:has(.anime-home):has(.not-found-page) .not-found-panel p:not(.section-kicker) {
-    margin-top: 12px;
+    margin-top: 10px;
     font-size: 0.92rem;
   }
 

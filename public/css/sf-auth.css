@@ -5928,6 +5928,12 @@ body {
     word-break: keep-all;
   }
 
+  .sf-auth-signup:not(.sf-admin-body) .sf-auth-copy > p {
+    -webkit-line-clamp: 3;
+    overflow-wrap: break-word;
+    word-break: keep-all;
+  }
+
   .sf-auth-body:not(.sf-admin-body) .sf-auth-stage .sf-auth-card,
   .sf-auth-body:not(.sf-admin-body) .sf-auth-card {
     gap: 10px;
@@ -5970,8 +5976,9 @@ body {
   }
 
   .sf-auth-signup:not(.sf-admin-body) .sf-auth-form textarea {
-    height: 56px;
-    min-height: 54px;
+    height: 64px;
+    min-height: 62px;
+    line-height: 1.45;
   }
 
   .sf-auth-body:not(.sf-admin-body) .sf-auth-links {

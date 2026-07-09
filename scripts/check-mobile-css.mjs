@@ -335,6 +335,11 @@ assertAuthBlockIncludes(
   { after: authCompactMobileIndex }
 );
 assertAuthBlockIncludes(
+  '.sf-auth-signup:not(.sf-admin-body) .sf-auth-copy > p',
+  ['-webkit-line-clamp: 3;', 'overflow-wrap: break-word;', 'word-break: keep-all;'],
+  { after: authCompactMobileIndex }
+);
+assertAuthBlockIncludes(
   '.sf-admin-body',
   ['--sf-admin-bg: #050509;', 'color-scheme: dark;'],
   { after: authAdminIndex }
@@ -412,7 +417,7 @@ if (authMobileMediaIndex !== -1) {
   );
   assertAuthBlockIncludes(
     '.sf-auth-signup:not(.sf-admin-body) .sf-auth-form textarea',
-    ['height: 56px;', 'min-height: 54px;'],
+    ['height: 64px;', 'min-height: 62px;', 'line-height: 1.45;'],
     { after: authMobileMediaIndex }
   );
 }

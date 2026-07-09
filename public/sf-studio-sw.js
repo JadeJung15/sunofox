@@ -1,8 +1,8 @@
-const SF_STUDIO_CACHE = 'sf-studio-20260614-music-to-novel';
+const SF_STUDIO_CACHE = 'sf-studio-20260710-mobile-home';
 const SF_STUDIO_ASSETS = [
   '/manifest.webmanifest',
   '/css/style.css?v=20260607-auth',
-  '/css/mv-storyboard.css?v=20260607-auth',
+  '/css/mv-storyboard.css?v=20260710-mobile-home',
   '/js/mvStoryboardStudio.js?v=20260701-workflow-import-options',
   '/assets/sunofox-logo-black.png',
   '/assets/novels/villainess-page-one-cover.jpg',

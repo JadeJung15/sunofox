@@ -7,6 +7,9 @@ const rootDir = path.resolve(__dirname, '..');
 const distDir = path.join(rootDir, 'dist');
 const siteOrigin = 'https://sunofox.com';
 const authScriptPath = path.join(rootDir, 'public', 'js', 'sfAuth.js');
+const studioScriptPath = path.join(rootDir, 'public', 'js', 'mvStoryboardStudio.js');
+const studioSwPath = path.join(rootDir, 'public', 'sf-studio-sw.js');
+const studioAssetVersion = '20260710-mobile-home';
 const protectedSourcePrefixes = [
   '/_sf-studio-entry',
   '/account',
@@ -184,6 +187,10 @@ if (canonicalStudioEntry !== null && canonicalStudioEntry !== undefined) {
       errors.push(`${source.file}: must stay in sync with ${studioEntrySourceFiles[0]}`);
     }
   }
+
+  if (!canonicalStudioEntry.includes(`mv-storyboard.css?v=${studioAssetVersion}`)) {
+    errors.push(`mv-studio.html: Studio storyboard CSS must use ${studioAssetVersion}`);
+  }
 }
 
 const authScript = await readFile(authScriptPath, 'utf8').catch((error) => {
@@ -193,6 +200,23 @@ const authScript = await readFile(authScriptPath, 'utf8').catch((error) => {
 
 if (!authScript.includes("url.pathname === '/mv-studio.html'")) {
   errors.push('public/js/sfAuth.js: /mv-studio.html must use the Studio login context');
+}
+
+const studioScript = await readFile(studioScriptPath, 'utf8').catch((error) => {
+  errors.push(`public/js/mvStoryboardStudio.js: failed to read Studio script (${error.message})`);
+  return '';
+});
+const studioSw = await readFile(studioSwPath, 'utf8').catch((error) => {
+  errors.push(`public/sf-studio-sw.js: failed to read Studio service worker (${error.message})`);
+  return '';
+});
+
+if (!studioScript.includes(`/sf-studio-sw.js?v=${studioAssetVersion}`)) {
+  errors.push(`public/js/mvStoryboardStudio.js: service worker registration must use ${studioAssetVersion}`);
+}
+
+if (!studioSw.includes(`sf-studio-${studioAssetVersion}`) || !studioSw.includes(`mv-storyboard.css?v=${studioAssetVersion}`)) {
+  errors.push(`public/sf-studio-sw.js: cache key and storyboard CSS asset must use ${studioAssetVersion}`);
 }
 
 const distFiles = errors.length === 0 ? await collectFiles(distDir) : [];

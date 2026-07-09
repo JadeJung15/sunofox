@@ -6,8 +6,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
 const cssPath = path.join(rootDir, 'src', 'styles', 'global.css');
 const authCssPath = path.join(rootDir, 'public', 'css', 'sf-auth.css');
+const mvCssPath = path.join(rootDir, 'public', 'css', 'mv-storyboard.css');
 const css = await readFile(cssPath, 'utf8');
 const authCss = await readFile(authCssPath, 'utf8');
+const mvCss = await readFile(mvCssPath, 'utf8');
 const errors = [];
 
 function fail(message) {
@@ -107,6 +109,19 @@ function assertAuthBlockIncludes(selector, expected, options = {}) {
   }
 }
 
+function assertMvBlockIncludes(selector, expected, options = {}) {
+  const blocks = blocksForIn(mvCss, selector, options);
+  if (blocks.length === 0) {
+    fail(`${selector}: missing MV Studio CSS block`);
+    return;
+  }
+
+  const hasMatchingBlock = blocks.some((block) => expected.every((needle) => block.includes(needle)));
+  if (!hasMatchingBlock) {
+    fail(`${selector}: expected one MV Studio CSS block to include ${expected.map((needle) => `"${needle}"`).join(', ')}`);
+  }
+}
+
 const mobileMediaIndex = css.indexOf('@media (max-width: 640px)');
 if (mobileMediaIndex === -1) {
   fail('mobile media query @media (max-width: 640px): missing');
@@ -142,6 +157,10 @@ if (authAdminIndex === -1) {
 }
 if (authAdminMobileIndex === -1) {
   fail('admin mobile media query after readability pass: missing');
+}
+const mvMobileMediaIndex = mvCss.indexOf('@media (max-width: 760px)');
+if (mvMobileMediaIndex === -1) {
+  fail('MV Studio mobile media query @media (max-width: 760px): missing');
 }
 
 assertBlockIncludes('.menu-trigger', ['min-width: 44px;', 'min-height: 44px;']);
@@ -766,6 +785,54 @@ if (authAdminMobileIndex !== -1) {
     '.sf-admin-body .sf-admin-jump-nav',
     ['grid-template-columns: repeat(2, minmax(0, 1fr));'],
     { after: authAdminMobileIndex }
+  );
+}
+
+if (mvMobileMediaIndex !== -1) {
+  assertMvBlockIncludes(
+    '.mv-topbar',
+    ['flex-direction: row;', 'gap: 8px;', 'margin-bottom: 8px;'],
+    { after: mvMobileMediaIndex }
+  );
+  assertMvBlockIncludes(
+    '.mv-top-actions',
+    ['gap: 6px;', 'margin-left: auto;', 'width: auto;'],
+    { after: mvMobileMediaIndex }
+  );
+  assertMvBlockIncludes(
+    '.mv-creator,\n  .mv-version,\n  .mv-top-actions a[data-studio-route="home"]',
+    ['display: none;'],
+    { after: mvMobileMediaIndex }
+  );
+  assertMvBlockIncludes(
+    '.mv-section-nav',
+    ['display: flex;', 'overflow-x: auto;', 'scrollbar-width: none;'],
+    { after: mvMobileMediaIndex }
+  );
+  assertMvBlockIncludes(
+    '.mv-section-nav a,\n  .mv-section-slot',
+    ['flex: 0 0 120px;', 'min-height: 46px;', 'scroll-snap-align: start;'],
+    { after: mvMobileMediaIndex }
+  );
+  assertMvBlockIncludes(
+    '.mv-section-nav a span,\n  .mv-section-slot span',
+    ['display: none;'],
+    { after: mvMobileMediaIndex }
+  );
+  assertMvBlockIncludes(
+    '.mv-category-home',
+    ['min-height: auto;', 'padding: 30px 16px 46px;'],
+    { after: mvMobileMediaIndex }
+  );
+  assertMvBlockIncludes(
+    '.mv-gpts-links a',
+    ['min-height: 72px;', 'padding: 12px;'],
+    { after: mvMobileMediaIndex }
+  );
+  assertMvBlockIncludes(
+    '.mv-top-actions a,\n  .mv-install-button,\n  .mv-logout-button',
+    ['flex: 0 0 auto;', 'min-height: 40px;', 'padding-inline: 10px;'],
+    { after: mvMobileMediaIndex }
   );
 }
 

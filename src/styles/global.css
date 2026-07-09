@@ -11770,32 +11770,33 @@ body:has(.anime-home):has(.novel-episode-page) .micro-button:not(.micro-button-m
 
   body:has(.anime-home):has(.novel-list-page) .novel-detail-hero {
     min-height: 0;
-    gap: 20px;
+    gap: 16px;
   }
 
   body:has(.anime-home):has(.novel-list-page) .novel-detail-cover {
-    width: min(72vw, 250px);
+    width: min(62vw, 220px);
   }
 
   body:has(.anime-home):has(.novel-list-page) .novel-detail-copy h1 {
-    font-size: clamp(2.5rem, 12vw, 3.45rem);
+    font-size: clamp(2.35rem, 10.8vw, 3.15rem);
     line-height: 1;
   }
 
   body:has(.anime-home):has(.novel-list-page) .novel-detail-summary {
-    margin-top: 16px;
-    font-size: 0.98rem;
+    margin-top: 12px;
+    font-size: 0.94rem;
+    line-height: 1.62;
   }
 
   body:has(.anime-home):has(.novel-list-page) .novel-info-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0 12px;
-    margin-top: 18px;
+    margin-top: 14px;
   }
 
   body:has(.anime-home):has(.novel-list-page) .novel-info-list div {
     min-width: 0;
-    padding: 12px 0;
+    padding: 9px 0;
   }
 
   body:has(.anime-home):has(.novel-list-page) .novel-info-list dd {
@@ -11806,7 +11807,7 @@ body:has(.anime-home):has(.novel-episode-page) .micro-button:not(.micro-button-m
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
-    margin-top: 18px;
+    margin-top: 14px;
   }
 
   body:has(.anime-home):has(.novel-list-page) .novel-platform-actions .main-button {

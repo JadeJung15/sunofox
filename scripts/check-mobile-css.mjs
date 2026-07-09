@@ -521,12 +521,22 @@ if (musicMobileMediaIndex !== -1) {
   );
   assertBlockIncludes(
     'body:has(.anime-home):has(.novel-list-page) .novel-info-list',
-    ['grid-template-columns: repeat(2, minmax(0, 1fr));', 'margin-top: 18px;'],
+    ['grid-template-columns: repeat(2, minmax(0, 1fr));', 'margin-top: 14px;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-list-page) .novel-detail-cover',
+    ['width: min(62vw, 220px);'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-list-page) .novel-detail-summary',
+    ['margin-top: 12px;', 'font-size: 0.94rem;', 'line-height: 1.62;'],
     { after: musicMobileMediaIndex }
   );
   assertBlockIncludes(
     'body:has(.anime-home):has(.novel-list-page) .novel-platform-actions',
-    ['grid-template-columns: repeat(2, minmax(0, 1fr));', 'margin-top: 18px;'],
+    ['grid-template-columns: repeat(2, minmax(0, 1fr));', 'margin-top: 14px;'],
     { after: musicMobileMediaIndex }
   );
   assertBlockIncludes(

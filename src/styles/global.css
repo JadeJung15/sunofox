@@ -12201,29 +12201,29 @@ body:has(.anime-home):has(.novel-episode-page) .site-footer a {
   }
 
   body:has(.anime-home):has(.novel-episode-page) .novel-reader-header {
-    padding: 20px 0 24px;
+    padding: 16px 0 20px;
   }
 
   body:has(.anime-home):has(.novel-episode-page) .novel-reader-back {
     width: fit-content;
     min-width: 96px;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     padding-inline: 14px;
   }
 
   body:has(.anime-home):has(.novel-episode-page) .novel-reader-header h1 {
-    font-size: clamp(2.5rem, 12vw, 3.45rem);
+    font-size: clamp(2.35rem, 11vw, 3.2rem);
     line-height: 1;
   }
 
   body:has(.anime-home):has(.novel-episode-page) .novel-reader-subtitle {
-    margin-top: 16px;
-    font-size: 0.98rem;
+    margin-top: 12px;
+    font-size: 0.95rem;
   }
 
   body:has(.anime-home):has(.novel-episode-page) .novel-reader-meta {
     gap: 8px 12px;
-    margin-top: 22px;
+    margin-top: 16px;
   }
 
   body:has(.anime-home):has(.novel-episode-page) .novel-reader-summary {
@@ -12232,18 +12232,18 @@ body:has(.anime-home):has(.novel-episode-page) .site-footer a {
   }
 
   body:has(.anime-home):has(.novel-episode-page) .novel-reader-summary div {
-    padding: 12px;
+    padding: 10px;
   }
 
   body:has(.anime-home):has(.novel-episode-page) .novel-reader-progress {
     grid-template-columns: 1fr;
-    gap: 8px;
+    gap: 6px;
   }
 
   body:has(.anime-home):has(.novel-episode-page) .novel-reader-quicklinks,
   body:has(.anime-home):has(.novel-episode-page) .novel-reader-jumpbar {
     display: grid;
-    gap: 8px;
+    gap: 6px;
     overflow-x: visible;
   }
 
@@ -12271,7 +12271,7 @@ body:has(.anime-home):has(.novel-episode-page) .site-footer a {
   body:has(.anime-home):has(.novel-episode-page) .novel-reader-jumpbar > span {
     width: 100%;
     min-width: 0;
-    min-height: 58px;
+    min-height: 52px;
     padding: 10px;
   }
 
@@ -12283,7 +12283,7 @@ body:has(.anime-home):has(.novel-episode-page) .site-footer a {
 
   body:has(.anime-home):has(.novel-episode-page) .novel-reader-body {
     max-width: 100%;
-    padding: 24px 0 12px;
+    padding: 20px 0 12px;
   }
 
   body:has(.anime-home):has(.novel-episode-page) .novel-reader-body p {

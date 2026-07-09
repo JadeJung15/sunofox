@@ -596,7 +596,22 @@ if (musicMobileMediaIndex !== -1) {
   );
   assertBlockIncludes(
     'body:has(.anime-home):has(.novel-episode-page) .novel-reader-back',
-    ['width: fit-content;', 'min-width: 96px;', 'margin-bottom: 16px;'],
+    ['width: fit-content;', 'min-width: 96px;', 'margin-bottom: 12px;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-episode-page) .novel-reader-header',
+    ['padding: 16px 0 20px;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-episode-page) .novel-reader-subtitle',
+    ['margin-top: 12px;', 'font-size: 0.95rem;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-episode-page) .novel-reader-meta',
+    ['margin-top: 16px;'],
     { after: musicMobileMediaIndex }
   );
   assertBlockIncludes(
@@ -611,7 +626,7 @@ if (musicMobileMediaIndex !== -1) {
   );
   assertBlockIncludes(
     'body:has(.anime-home):has(.novel-episode-page) .novel-reader-jumpbar > a',
-    ['width: 100%;', 'min-width: 0;', 'min-height: 58px;'],
+    ['width: 100%;', 'min-width: 0;', 'min-height: 52px;'],
     { after: musicMobileMediaIndex }
   );
   assertBlockIncludes(
@@ -621,7 +636,7 @@ if (musicMobileMediaIndex !== -1) {
   );
   assertBlockIncludes(
     'body:has(.anime-home):has(.novel-episode-page) .novel-reader-body',
-    ['max-width: 100%;', 'padding: 24px 0 12px;'],
+    ['max-width: 100%;', 'padding: 20px 0 12px;'],
     { after: musicMobileMediaIndex }
   );
   assertBlockIncludes(

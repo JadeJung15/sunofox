@@ -121,6 +121,7 @@ const authAnimeIndex = authCss.indexOf('Final anime auth alignment');
 const authMobileMediaIndex = authAnimeIndex === -1 ? -1 : authCss.indexOf('@media (max-width: 640px)', authAnimeIndex);
 const authCompactMobileIndex = authCss.indexOf('Final compact auth mobile pass');
 const authNarrowMobileIndex = authCompactMobileIndex === -1 ? -1 : authCss.indexOf('@media (max-width: 400px)', authCompactMobileIndex);
+const authFocusMobileIndex = authCss.indexOf('mobile auth focus pass');
 if (authMobileMediaIndex === -1) {
   fail('auth mobile media query after final anime pass: missing');
 }
@@ -129,6 +130,9 @@ if (authCompactMobileIndex === -1) {
 }
 if (authNarrowMobileIndex === -1) {
   fail('auth narrow mobile media query after final compact pass: missing');
+}
+if (authFocusMobileIndex === -1) {
+  fail('auth mobile focus pass: missing');
 }
 
 const authAdminIndex = authCss.indexOf('Final admin console readability pass');
@@ -586,17 +590,23 @@ assertContains('footer mobile wrapping', '.site-footer-nav');
 assertContains('novel anchor scroll offset', 'scroll-margin-top: 96px;');
 assertAuthContains('auth anime pass', 'Final anime auth alignment');
 assertAuthContains('auth compact mobile pass', 'Final compact auth mobile pass');
+assertAuthContains('auth mobile focus pass', 'mobile auth focus pass');
 assertAuthContains('auth dark color scheme', 'color-scheme: dark;');
 assertAuthContains('auth mobile route scroll', 'scrollbar-width: none;');
 assertAuthBlockIncludes(
   '.sf-auth-login:not(.sf-admin-body) .sf-auth-copy > p',
-  ['-webkit-line-clamp: 2;', 'overflow-wrap: break-word;', 'word-break: keep-all;'],
-  { after: authCompactMobileIndex }
+  ['-webkit-line-clamp: 1;', 'overflow-wrap: break-word;', 'word-break: keep-all;'],
+  { after: authFocusMobileIndex }
 );
 assertAuthBlockIncludes(
   '.sf-auth-signup:not(.sf-admin-body) .sf-auth-copy > p',
-  ['display: -webkit-box;', '-webkit-line-clamp: 2;', 'overflow-wrap: break-word;', 'word-break: keep-all;'],
-  { after: authCompactMobileIndex }
+  ['display: -webkit-box;', '-webkit-line-clamp: 1;', 'overflow-wrap: break-word;', 'word-break: keep-all;'],
+  { after: authFocusMobileIndex }
+);
+assertAuthBlockIncludes(
+  '.sf-auth-account:not(.sf-admin-body) .sf-auth-copy > p',
+  ['display: -webkit-box;', '-webkit-line-clamp: 1;', 'overflow-wrap: break-word;', 'word-break: keep-all;'],
+  { after: authFocusMobileIndex }
 );
 assertAuthBlockIncludes(
   '.sf-auth-body:not(.sf-admin-body) .sf-auth-stage .sf-auth-brand',
@@ -705,14 +715,14 @@ if (authMobileMediaIndex !== -1) {
     { after: authMobileMediaIndex }
   );
   assertAuthBlockIncludes(
-    '.sf-auth-signup:not(.sf-admin-body) .sf-social-auth',
-    ['grid-template-columns: repeat(2, minmax(0, 1fr));', 'gap: 6px;'],
-    { after: authMobileMediaIndex }
+    '.sf-auth-body:not(.sf-admin-body) .sf-social-auth',
+    ['display: none;'],
+    { after: authFocusMobileIndex }
   );
   assertAuthBlockIncludes(
-    '.sf-auth-signup:not(.sf-admin-body) .sf-social-button',
-    ['padding: 0 8px;', 'font-size: 0.78rem;', 'white-space: nowrap;'],
-    { after: authMobileMediaIndex }
+    '.sf-auth-body:not(.sf-admin-body) .sf-auth-divider',
+    ['display: none;'],
+    { after: authFocusMobileIndex }
   );
   assertAuthBlockIncludes(
     '.sf-account-login-state a',

@@ -210,6 +210,10 @@ assertBlockIncludes(
   ['display: none;']
 );
 assertBlockIncludes(
+  'body:has(.anime-home):has(.music-archive-page) .music-video-section',
+  ['scroll-margin-top: 96px;']
+);
+assertBlockIncludes(
   'body:has(.anime-home):has(.music-archive-page) .music-release-cover',
   ['width: min(64vw, 220px);', 'justify-self: center;']
 );
@@ -318,6 +322,11 @@ if (musicMobileMediaIndex !== -1) {
   assertBlockIncludes(
     'body:has(.anime-home):has(.music-archive-page) .music-video-hub',
     ['display: grid;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.music-archive-page) .music-video-section',
+    ['scroll-margin-top: 84px;'],
     { after: musicMobileMediaIndex }
   );
   assertBlockIncludes(

@@ -10406,6 +10406,11 @@ body:has(.anime-home):has(.music-archive-page) .music-video-direct-actions {
   margin: 16px 0 0;
 }
 
+body:has(.anime-home):has(.music-archive-page) .music-video-section,
+body:has(.anime-home):has(.music-archive-page) .music-release-section {
+  scroll-margin-top: 96px;
+}
+
 body:has(.anime-home):has(.music-archive-page) .site-logo,
 body:has(.anime-home):has(.album-detail-page) .site-logo {
   color: var(--anime-accent);
@@ -10710,6 +10715,11 @@ body:has(.anime-home):has(.album-detail-page) .album-track-section > .novel-sect
   body:has(.anime-home):has(.music-archive-page) .music-video-hub {
     display: grid;
     padding: 12px;
+  }
+
+  body:has(.anime-home):has(.music-archive-page) .music-video-section,
+  body:has(.anime-home):has(.music-archive-page) .music-release-section {
+    scroll-margin-top: 84px;
   }
 
   body:has(.anime-home):has(.music-archive-page) .music-video-section > .novel-section-head,

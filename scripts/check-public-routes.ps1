@@ -122,8 +122,8 @@ $routes = @(
     Name = "album"
     Path = "/music/archive-vol-1/"
     File = "music/archive-vol-1/index.html"
-    Must = @("ARCHIVE vol.1", "anime-home", "/assets/music/archive-vol-1-cover.jpg", "album-platform-links", "music-platform-link", "Spotify", "Apple Music", "YouTube Music", "Genie", "Bugs", "https://sunofox.com/music/archive-vol-1/")
-    MustNot = @("album-source-panel", "/assets/sunofox-app-icon-512.png", $labelNovelSee)
+    Must = @("ARCHIVE vol.1", "anime-home", "album-back-link", "/assets/music/archive-vol-1-cover.jpg", "album-platform-links", "music-platform-link", "Spotify", "Apple Music", "YouTube Music", "Genie", "Bugs", "https://sunofox.com/music/archive-vol-1/")
+    MustNot = @("album-source-panel", "album-detail-actions", "/assets/sunofox-app-icon-512.png", $labelNovelSee)
   },
   @{
     Name = "profile"

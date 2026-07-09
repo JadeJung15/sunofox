@@ -4295,13 +4295,6 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   line-height: 1.4;
 }
 
-.album-detail-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 28px;
-}
-
 .album-note-section {
   display: grid;
   grid-template-columns: minmax(220px, 0.34fr) minmax(0, 1fr);
@@ -6485,15 +6478,6 @@ body.menu-open .overlay-nav a:nth-child(12) { animation-delay: 222ms; }
   .album-note-section,
   .album-track-grid {
     grid-template-columns: 1fr;
-  }
-
-  .album-detail-actions {
-    display: grid;
-    grid-template-columns: 1fr;
-  }
-
-  .album-detail-actions .main-button {
-    width: 100%;
   }
 
   .album-note-section {
@@ -10560,10 +10544,6 @@ body:has(.anime-home):has(.album-detail-page) .album-platform-links {
   gap: 8px;
   margin-top: 18px;
   margin-bottom: 6px;
-}
-
-body:has(.anime-home):has(.album-detail-page) .album-detail-actions {
-  margin-top: 18px;
 }
 
 body:has(.anime-home):has(.album-detail-page) .album-note-section {

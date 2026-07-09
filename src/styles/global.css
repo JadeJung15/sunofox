@@ -10702,12 +10702,12 @@ body:has(.anime-home):has(.album-detail-page) .album-track-section > .novel-sect
   }
 
   body:has(.anime-home):has(.album-detail-page) .album-detail-page {
-    padding-top: 76px;
+    padding-top: 68px;
   }
 
   body:has(.anime-home):has(.album-detail-page) .album-detail-hero {
-    gap: 24px;
-    padding-bottom: 34px;
+    gap: 18px;
+    padding-bottom: 30px;
   }
 
   body:has(.anime-home):has(.album-detail-page) .album-cover-mark {
@@ -10715,7 +10715,7 @@ body:has(.anime-home):has(.album-detail-page) .album-track-section > .novel-sect
   }
 
   body:has(.anime-home):has(.album-detail-page) .album-cover-mark img {
-    max-width: min(100%, 320px);
+    max-width: min(78vw, 280px);
   }
 
   body:has(.anime-home):has(.album-detail-page) .album-detail-summary {
@@ -10733,14 +10733,14 @@ body:has(.anime-home):has(.album-detail-page) .album-track-section > .novel-sect
   body:has(.anime-home):has(.album-detail-page) .album-platform-links .music-platform-link {
     width: auto;
     min-width: 0;
-    min-height: 42px;
-    padding: 5px 9px 5px 5px;
+    min-height: 44px;
+    padding: 6px 10px 6px 6px;
     font-size: 0.76rem;
   }
 
   body:has(.anime-home):has(.album-detail-page) .album-platform-links .music-platform-link > span {
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
     flex: 0 0 auto;
   }
 

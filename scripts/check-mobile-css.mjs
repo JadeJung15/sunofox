@@ -200,7 +200,7 @@ if (musicMobileMediaIndex !== -1) {
   );
   assertBlockIncludes(
     'body:has(.anime-home):has(.album-detail-page) .album-cover-mark img',
-    ['max-width: min(100%, 320px);'],
+    ['max-width: min(78vw, 280px);'],
     { after: musicMobileMediaIndex }
   );
   assertBlockIncludes(
@@ -210,7 +210,7 @@ if (musicMobileMediaIndex !== -1) {
   );
   assertBlockIncludes(
     'body:has(.anime-home):has(.album-detail-page) .album-platform-links .music-platform-link',
-    ['width: auto;', 'min-width: 0;', 'min-height: 42px;'],
+    ['width: auto;', 'min-width: 0;', 'min-height: 44px;'],
     { after: musicMobileMediaIndex }
   );
   assertBlockIncludes(

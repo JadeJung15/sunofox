@@ -154,6 +154,14 @@ assertBlockIncludes(
   ['color: rgba(255, 247, 251, 0.86);', 'line-height: 2.05;']
 );
 assertBlockIncludes(
+  '.novel-reader-header h1',
+  ['overflow-wrap: anywhere;', 'word-break: keep-all;']
+);
+assertBlockIncludes(
+  '.novel-reader-ost-thumb img',
+  ['aspect-ratio: 16 / 9;', 'object-fit: cover;']
+);
+assertBlockIncludes(
   'body:has(.anime-home):has(.not-found-page) .not-found-page',
   ['background:', 'linear-gradient(180deg, #050509 0%, #090a10 54%, #050509 100%);']
 );
@@ -192,6 +200,11 @@ if (mobileMediaIndex !== -1) {
   assertBlockIncludes('.novel-anchor-strip a', ['min-height: 44px;', 'text-align: center;'], { after: mobileMediaIndex });
   assertBlockIncludes('.novel-reader-ost-actions', ['grid-template-columns: 1fr;'], { after: mobileMediaIndex });
   assertBlockIncludes('.novel-reader-ost-actions .main-button', ['width: 100%;'], { after: mobileMediaIndex });
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-episode-page) .novel-reader-ost',
+    ['grid-template-columns: 1fr;', 'gap: 16px;'],
+    { after: mobileMediaIndex }
+  );
   assertBlockIncludes('.novel-reader-actions .main-button', ['overflow-wrap: anywhere;'], { after: mobileMediaIndex });
   assertBlockIncludes('.profile-current-actions', ['grid-template-columns: repeat(2, minmax(0, 1fr));'], { after: mobileMediaIndex });
   assertBlockIncludes('.profile-current-actions .micro-button', ['min-width: 0;'], { after: mobileMediaIndex });

@@ -4321,7 +4321,13 @@ body {
   margin: 0;
 }
 
-.sf-account-login-state a {
+.sf-account-login-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sf-account-login-actions a {
   display: inline-flex;
   width: fit-content;
   align-items: center;
@@ -4335,6 +4341,11 @@ body {
   letter-spacing: 0.14em;
   padding: 0 16px;
   text-decoration: none;
+}
+
+.sf-account-login-secondary {
+  border-color: rgba(255, 255, 255, 0.14);
+  color: rgba(255, 255, 255, 0.82);
 }
 
 /* Final polish: keep auth pages compact on mobile and align admin badges. */
@@ -6000,15 +6011,25 @@ body {
     line-height: 1.45;
   }
 
-  .sf-account-login-state a {
-    width: 100%;
-    min-height: 44px;
-    border-radius: 8px;
-  }
-
   .sf-auth-account:not(.sf-admin-body) .sf-account-login-state {
     gap: 8px;
     padding: 14px;
+  }
+
+  .sf-auth-account:not(.sf-admin-body) .sf-account-login-actions {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(72px, 0.6fr);
+    gap: 6px;
+  }
+
+  .sf-auth-account:not(.sf-admin-body) .sf-account-login-actions a {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    border-radius: 8px;
+    padding: 0 8px;
+    text-align: center;
+    white-space: nowrap;
   }
 
   .sf-auth-account:not(.sf-admin-body) .sf-auth-shell,

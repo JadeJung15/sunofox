@@ -820,8 +820,13 @@ if (authMobileMediaIndex !== -1) {
     { after: authFocusMobileIndex }
   );
   assertAuthBlockIncludes(
-    '.sf-account-login-state a',
-    ['width: 100%;', 'min-height: 44px;', 'border-radius: 8px;'],
+    '.sf-auth-account:not(.sf-admin-body) .sf-account-login-actions',
+    ['display: grid;', 'grid-template-columns: minmax(0, 1.4fr) minmax(72px, 0.6fr);', 'gap: 6px;'],
+    { after: authMobileMediaIndex }
+  );
+  assertAuthBlockIncludes(
+    '.sf-auth-account:not(.sf-admin-body) .sf-account-login-actions a',
+    ['width: 100%;', 'min-width: 0;', 'min-height: 44px;', 'border-radius: 8px;'],
     { after: authMobileMediaIndex }
   );
   assertAuthBlockIncludes(

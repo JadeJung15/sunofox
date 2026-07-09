@@ -163,13 +163,13 @@ $routes = @(
     Path = "/account"
     File = "account/index.html"
     Must = @("/account.html", "https://sunofox.com/account", "window.location.replace")
-    RemoteMust = @("sf-auth-body", "sf-auth-account", "MY ACCOUNT", "PROFILE SETTINGS", "data-account-login-state", "data-auth-logout hidden", "LOGIN TO EDIT", "/css/sf-auth.")
+    RemoteMust = @("sf-auth-body", "sf-auth-account", "MY ACCOUNT", "PROFILE SETTINGS", "data-account-login-state", "sf-account-login-actions", "data-auth-logout hidden", "LOGIN TO EDIT", "/signup", "/css/sf-auth.")
   },
   @{
     Name = "account-html"
     Path = "/account.html"
     File = "account.html"
-    Must = @("sf-auth-body", "sf-auth-account", "MY ACCOUNT", "PROFILE SETTINGS", "data-account-login-state", "data-auth-logout hidden", "LOGIN TO EDIT", "/css/sf-auth.")
+    Must = @("sf-auth-body", "sf-auth-account", "MY ACCOUNT", "PROFILE SETTINGS", "data-account-login-state", "sf-account-login-actions", "data-auth-logout hidden", "LOGIN TO EDIT", "/signup", "/css/sf-auth.")
     RemoteExpectedStatus = 308
     RemoteMust = @()
   },

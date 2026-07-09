@@ -50,7 +50,10 @@
         <div class="sf-account-login-state" data-account-login-state hidden>
           <strong>로그인이 필요합니다.</strong>
           <p>로그인 후 수정할 수 있습니다.</p>
-          <a href="/login?next=%2Faccount">LOGIN TO EDIT</a>
+          <div class="sf-account-login-actions" aria-label="계정 편집 시작">
+            <a class="sf-account-login-primary" href="/login?next=%2Faccount">LOGIN TO EDIT</a>
+            <a class="sf-account-login-secondary" href="/signup">JOIN</a>
+          </div>
         </div>
         <form id="sf-account-form" class="sf-auth-form" hidden>
           <label>

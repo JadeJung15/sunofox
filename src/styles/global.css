@@ -11262,8 +11262,56 @@ body:has(.anime-home):has(.profile-page) .profile-source-note {
     letter-spacing: 0;
   }
 
+  body:has(.anime-home):has(.profile-page) .profile-track-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    columns: auto;
+    padding: 0;
+    list-style: none;
+    counter-reset: profile-track;
+    font-size: 0.86rem;
+  }
+
+  body:has(.anime-home):has(.profile-page) .profile-track-list li {
+    display: grid;
+    grid-template-columns: 2ch minmax(0, 1fr);
+    gap: 8px;
+    min-height: 42px;
+    align-items: center;
+    border: 1px solid rgba(255, 247, 251, 0.14);
+    border-radius: 8px;
+    margin: 0;
+    padding: 8px 10px;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+  }
+
+  body:has(.anime-home):has(.profile-page) .profile-track-list li::before {
+    counter-increment: profile-track;
+    content: counter(profile-track, decimal-leading-zero);
+    color: var(--anime-accent);
+    font-family: var(--font-condensed);
+    font-weight: 950;
+    line-height: 1;
+  }
+
   body:has(.anime-home):has(.profile-page) .profile-video-list ol {
     grid-template-columns: 1fr;
+  }
+
+  body:has(.anime-home):has(.profile-page) .profile-source-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  body:has(.anime-home):has(.profile-page) .profile-source-actions .main-button {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    padding-inline: 10px;
+    font-size: 0.78rem;
   }
 }
 

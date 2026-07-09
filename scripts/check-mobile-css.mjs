@@ -231,7 +231,17 @@ if (mobileMediaIndex !== -1) {
   assertBlockIncludes('.novel-reader-ost-actions .main-button', ['width: 100%;'], { after: mobileMediaIndex });
   assertBlockIncludes(
     'body:has(.anime-home):has(.novel-episode-page) .novel-reader-ost',
-    ['grid-template-columns: 1fr;', 'gap: 16px;'],
+    ['grid-template-columns: 92px minmax(0, 1fr);', 'gap: 12px;', 'padding: 18px 0;'],
+    { after: mobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-episode-page) .novel-reader-index-links',
+    ['grid-template-columns: repeat(2, minmax(0, 1fr));', 'gap: 8px;'],
+    { after: mobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-episode-page) .novel-reader-ost-actions',
+    ['grid-column: 1 / -1;'],
     { after: mobileMediaIndex }
   );
   assertBlockIncludes('.novel-reader-actions .main-button', ['overflow-wrap: anywhere;'], { after: mobileMediaIndex });
@@ -500,6 +510,31 @@ if (musicMobileMediaIndex !== -1) {
   assertBlockIncludes(
     'body:has(.anime-home):has(.novel-episode-page) .novel-reader-actions',
     ['grid-template-columns: repeat(2, minmax(0, 1fr));', 'padding-top: 22px;', 'margin-top: 24px;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-episode-page) .novel-reader-index-links',
+    ['grid-template-columns: repeat(2, minmax(0, 1fr));', 'gap: 8px;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-episode-page) .novel-reader-index-links strong',
+    ['-webkit-line-clamp: 2;', 'font-size: 0.84rem;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-episode-page) .novel-reader-ost',
+    ['grid-template-columns: 92px minmax(0, 1fr);', 'gap: 12px;', 'padding: 18px 0;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-episode-page) .novel-reader-ost-thumb span',
+    ['display: none;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-episode-page) .novel-reader-ost-actions',
+    ['grid-column: 1 / -1;'],
     { after: musicMobileMediaIndex }
   );
   assertBlockIncludes(

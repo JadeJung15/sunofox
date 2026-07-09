@@ -716,8 +716,18 @@ if (authMobileMediaIndex !== -1) {
     { after: authMobileMediaIndex }
   );
   assertAuthBlockIncludes(
+    '.sf-auth-account:not(.sf-admin-body) .sf-auth-shell',
+    ['min-height: auto;'],
+    { after: authMobileMediaIndex }
+  );
+  assertAuthBlockIncludes(
+    '.sf-auth-account:not(.sf-admin-body) .sf-auth-stage',
+    ['min-height: auto;'],
+    { after: authMobileMediaIndex }
+  );
+  assertAuthBlockIncludes(
     '.sf-auth-account:not(.sf-admin-body) .sf-account-login-state p',
-    ['display: none;'],
+    ['display: block;', 'font-size: 0.84rem;', 'line-height: 1.45;'],
     { after: authMobileMediaIndex }
   );
 }

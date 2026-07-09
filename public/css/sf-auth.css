@@ -6011,13 +6011,21 @@ body {
     padding: 14px;
   }
 
+  .sf-auth-account:not(.sf-admin-body) .sf-auth-shell,
+  .sf-auth-account:not(.sf-admin-body) .sf-auth-stage {
+    min-height: auto;
+  }
+
   .sf-auth-account:not(.sf-admin-body) .sf-account-login-state strong {
     font-size: 1rem;
     letter-spacing: 0;
   }
 
   .sf-auth-account:not(.sf-admin-body) .sf-account-login-state p {
-    display: none;
+    display: block;
+    color: var(--sf-auth-muted);
+    font-size: 0.84rem;
+    line-height: 1.45;
   }
 
   .sf-auth-body:not(.sf-admin-body) .sf-auth-links {

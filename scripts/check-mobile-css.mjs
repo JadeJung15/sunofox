@@ -586,7 +586,7 @@ assertAuthBlockIncludes(
 );
 assertAuthBlockIncludes(
   '.sf-auth-signup:not(.sf-admin-body) .sf-auth-copy > p',
-  ['-webkit-line-clamp: 3;', 'overflow-wrap: break-word;', 'word-break: keep-all;'],
+  ['display: -webkit-box;', '-webkit-line-clamp: 2;', 'overflow-wrap: break-word;', 'word-break: keep-all;'],
   { after: authCompactMobileIndex }
 );
 assertAuthBlockIncludes(
@@ -692,7 +692,17 @@ if (authMobileMediaIndex !== -1) {
   );
   assertAuthBlockIncludes(
     '.sf-auth-signup:not(.sf-admin-body) .sf-auth-form textarea',
-    ['height: 64px;', 'min-height: 62px;', 'line-height: 1.45;'],
+    ['height: 56px;', 'min-height: 56px;', 'line-height: 1.45;'],
+    { after: authMobileMediaIndex }
+  );
+  assertAuthBlockIncludes(
+    '.sf-auth-signup:not(.sf-admin-body) .sf-social-auth',
+    ['grid-template-columns: repeat(2, minmax(0, 1fr));', 'gap: 6px;'],
+    { after: authMobileMediaIndex }
+  );
+  assertAuthBlockIncludes(
+    '.sf-auth-signup:not(.sf-admin-body) .sf-social-button',
+    ['padding: 0 8px;', 'font-size: 0.78rem;', 'white-space: nowrap;'],
     { after: authMobileMediaIndex }
   );
   assertAuthBlockIncludes(

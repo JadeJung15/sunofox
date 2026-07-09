@@ -16,11 +16,34 @@ function fail(message) {
   errors.push(message);
 }
 
-function findBlockStartIn(source, selector, fromIndex = 0) {
-  const selectorIndex = source.indexOf(selector, fromIndex);
-  if (selectorIndex === -1) return null;
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
 
-  const braceIndex = source.indexOf('{', selectorIndex);
+function findSelectorMatchIn(source, selector, fromIndex = 0) {
+  const selectorPattern = selector.trim().split(/\s+/).map(escapeRegExp).join('\\s+');
+  const selectorRegex = new RegExp(selectorPattern, 'g');
+  selectorRegex.lastIndex = fromIndex;
+
+  let match = selectorRegex.exec(source);
+  while (match) {
+    const nextChar = source[match.index + match[0].length] ?? '';
+    if (nextChar === '{' || nextChar === ',' || /\s/.test(nextChar)) {
+      return match;
+    }
+
+    match = selectorRegex.exec(source);
+  }
+
+  return null;
+}
+
+function findBlockStartIn(source, selector, fromIndex = 0) {
+  const selectorMatch = findSelectorMatchIn(source, selector, fromIndex);
+  if (!selectorMatch) return null;
+
+  const selectorIndex = selectorMatch.index;
+  const braceIndex = source.indexOf('{', selectorIndex + selectorMatch[0].length);
   if (braceIndex === -1) return null;
 
   return { selectorIndex, braceIndex };
@@ -49,6 +72,8 @@ function blocksForIn(source, selector, { after = 0 } = {}) {
         break;
       }
     }
+
+    if (searchIndex <= start.braceIndex) break;
   }
 
   return blocks;

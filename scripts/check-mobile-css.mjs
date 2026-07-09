@@ -120,11 +120,15 @@ if (musicMobileMediaIndex === -1) {
 const authAnimeIndex = authCss.indexOf('Final anime auth alignment');
 const authMobileMediaIndex = authAnimeIndex === -1 ? -1 : authCss.indexOf('@media (max-width: 640px)', authAnimeIndex);
 const authCompactMobileIndex = authCss.indexOf('Final compact auth mobile pass');
+const authNarrowMobileIndex = authCompactMobileIndex === -1 ? -1 : authCss.indexOf('@media (max-width: 400px)', authCompactMobileIndex);
 if (authMobileMediaIndex === -1) {
   fail('auth mobile media query after final anime pass: missing');
 }
 if (authCompactMobileIndex === -1) {
   fail('auth compact mobile pass: missing');
+}
+if (authNarrowMobileIndex === -1) {
+  fail('auth narrow mobile media query after final compact pass: missing');
 }
 
 const authAdminIndex = authCss.indexOf('Final admin console readability pass');
@@ -445,6 +449,26 @@ assertAuthBlockIncludes(
   '.sf-auth-signup:not(.sf-admin-body) .sf-auth-copy > p',
   ['-webkit-line-clamp: 3;', 'overflow-wrap: break-word;', 'word-break: keep-all;'],
   { after: authCompactMobileIndex }
+);
+assertAuthBlockIncludes(
+  '.sf-auth-body:not(.sf-admin-body) .sf-auth-stage .sf-auth-brand',
+  ['min-height: 44px;'],
+  { after: authCompactMobileIndex }
+);
+assertAuthBlockIncludes(
+  '.sf-auth-body:not(.sf-admin-body) .sf-auth-links',
+  ['grid-template-columns: repeat(2, minmax(0, 1fr));', 'gap: 6px;'],
+  { after: authNarrowMobileIndex }
+);
+assertAuthBlockIncludes(
+  '.sf-auth-login:not(.sf-admin-body) .sf-auth-links a:first-child',
+  ['grid-column: 1 / -1;'],
+  { after: authNarrowMobileIndex }
+);
+assertAuthBlockIncludes(
+  '.sf-auth-body:not(.sf-admin-body) .sf-auth-result-actions',
+  ['grid-template-columns: 1fr;'],
+  { after: authNarrowMobileIndex }
 );
 assertAuthBlockIncludes(
   '.sf-admin-body',

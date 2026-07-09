@@ -5895,7 +5895,7 @@ body {
   }
 
   .sf-auth-body:not(.sf-admin-body) .sf-auth-stage .sf-auth-brand {
-    min-height: 40px;
+    min-height: 44px;
   }
 
   .sf-auth-body:not(.sf-admin-body) .sf-auth-brand-mark {
@@ -5998,7 +5998,23 @@ body {
 }
 
 @media (max-width: 400px) {
-  .sf-auth-body:not(.sf-admin-body) .sf-auth-links,
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .sf-auth-login:not(.sf-admin-body) .sf-auth-links a:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-auth-links a {
+    width: 100%;
+    min-width: 0;
+    padding: 0 8px;
+    font-size: 0.8rem;
+  }
+
   .sf-auth-body:not(.sf-admin-body) .sf-auth-result-actions {
     display: grid;
     grid-template-columns: 1fr;

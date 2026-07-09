@@ -278,7 +278,8 @@ if (mobileMediaIndex !== -1) {
   assertBlockIncludes('.novel-episode-row > span', ['width: 42px;', 'min-height: 42px;', 'justify-content: center;'], { after: mobileMediaIndex });
   assertBlockIncludes('.novel-anchor-strip', ['grid-template-columns: 1fr;'], { after: mobileMediaIndex });
   assertBlockIncludes('.novel-anchor-strip a', ['min-height: 44px;', 'text-align: center;'], { after: mobileMediaIndex });
-  assertBlockIncludes('.legal-page .profile-copy a', ['display: inline-flex;', 'min-height: 44px;', 'vertical-align: middle;'], { after: mobileMediaIndex });
+  assertBlockIncludes('.legal-page .profile-copy a', ['display: inline;', 'min-height: 0;', 'overflow-wrap: anywhere;', 'vertical-align: middle;'], { after: mobileMediaIndex });
+  assertBlockIncludes('.legal-page .profile-copy p:last-child', ['border-top: 1px solid rgba(255, 247, 251, 0.1);', 'padding-top: 12px;'], { after: mobileMediaIndex });
   assertBlockIncludes('.novel-reader-ost-actions', ['grid-template-columns: 1fr;'], { after: mobileMediaIndex });
   assertBlockIncludes('.novel-reader-ost-actions .main-button', ['width: 100%;'], { after: mobileMediaIndex });
   assertBlockIncludes(

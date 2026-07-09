@@ -7681,10 +7681,16 @@ body.menu-open .menu-trigger:focus-visible .menu-trigger-lines span:last-child {
   }
 
   .legal-page .profile-copy a {
-    display: inline-flex;
-    min-height: 44px;
-    align-items: center;
+    display: inline;
+    min-height: 0;
+    overflow-wrap: anywhere;
     vertical-align: middle;
+  }
+
+  .legal-page .profile-copy p:last-child {
+    margin-top: 12px;
+    border-top: 1px solid rgba(255, 247, 251, 0.1);
+    padding-top: 12px;
   }
 }
 

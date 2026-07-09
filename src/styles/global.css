@@ -10199,6 +10199,7 @@ body:has(.anime-home):has(.album-detail-page) .album-meta-grid div {
 body:has(.anime-home):has(.album-detail-page) .album-platform-links {
   gap: 8px;
   margin-top: 18px;
+  margin-bottom: 6px;
 }
 
 body:has(.anime-home):has(.album-detail-page) .album-detail-actions {
@@ -10386,11 +10387,24 @@ body:has(.anime-home):has(.album-detail-page) .album-track-section > .novel-sect
     padding-bottom: 34px;
   }
 
+  body:has(.anime-home):has(.album-detail-page) .album-cover-mark {
+    justify-items: start;
+  }
+
+  body:has(.anime-home):has(.album-detail-page) .album-cover-mark img {
+    max-width: min(100%, 320px);
+  }
+
+  body:has(.anime-home):has(.album-detail-page) .album-detail-summary {
+    margin-top: 14px;
+  }
+
   body:has(.anime-home):has(.album-detail-page) .album-platform-links {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
-    margin-top: 16px;
+    margin-top: 14px;
+    margin-bottom: 4px;
   }
 
   body:has(.anime-home):has(.album-detail-page) .album-platform-links .music-platform-link {
@@ -10429,16 +10443,16 @@ body:has(.anime-home):has(.album-detail-page) .album-track-section > .novel-sect
 
   body:has(.anime-home):has(.album-detail-page) .album-track-grid li {
     display: grid;
-    grid-template-columns: 34px minmax(0, 1fr);
-    column-gap: 10px;
-    min-height: 64px;
+    grid-template-columns: 30px minmax(0, 1fr);
+    column-gap: 8px;
+    min-height: 54px;
     align-items: center;
-    padding: 12px;
+    padding: 10px 12px;
   }
 
   body:has(.anime-home):has(.album-detail-page) .album-track-grid li > span {
-    grid-row: 1 / span 2;
-    align-self: start;
+    grid-row: auto;
+    align-self: center;
   }
 
   body:has(.anime-home):has(.album-detail-page) .album-track-grid strong {
@@ -10447,8 +10461,7 @@ body:has(.anime-home):has(.album-detail-page) .album-track-section > .novel-sect
   }
 
   body:has(.anime-home):has(.album-detail-page) .album-track-grid em {
-    margin-top: 4px;
-    font-size: 0.72rem;
+    display: none;
   }
 }
 

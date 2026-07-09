@@ -30,15 +30,6 @@ import { archiveAlbum, archiveAlbumStructuredData } from '../../data/siteContent
         <h1 id="albumTitle">{archiveAlbum.title}</h1>
         <p class="album-detail-summary">{archiveAlbum.summary}</p>
 
-        <dl class="album-meta-grid">
-          {archiveAlbum.facts.map((fact) => (
-            <div>
-              <dt>{fact.label}</dt>
-              <dd>{fact.value}</dd>
-            </div>
-          ))}
-        </dl>
-
         <nav class="album-platform-links" aria-label={`${archiveAlbum.title} 감상 링크`}>
           {archiveAlbum.links.map((link) => (
             <a
@@ -53,6 +44,15 @@ import { archiveAlbum, archiveAlbumStructuredData } from '../../data/siteContent
             </a>
           ))}
         </nav>
+
+        <dl class="album-meta-grid">
+          {archiveAlbum.facts.map((fact) => (
+            <div>
+              <dt>{fact.label}</dt>
+              <dd>{fact.value}</dd>
+            </div>
+          ))}
+        </dl>
 
         <div class="album-detail-actions">
           <a class="main-button main-button-muted" href="/music/">음악 아카이브</a>

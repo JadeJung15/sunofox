@@ -147,6 +147,10 @@ assertBlockIncludes('.novel-reader-topbar a', ['min-width: 44px;', 'min-height: 
 assertBlockIncludes('.album-back-link', ['display: inline-flex;', 'min-height: 44px;']);
 assertBlockIncludes('.legal-page .profile-copy h2', ['font-size: clamp(1rem, 2.1vw, 1.3rem);', 'text-transform: none;']);
 assertBlockIncludes('.legal-page .profile-copy a', ['display: inline;', 'min-height: 0;']);
+assertBlockIncludes('body:has(.legal-page)', ['--sf-paper: #050509;', 'background: #050509;', 'color: #fff7fb;']);
+assertBlockIncludes('body:has(.legal-page) .site-main.legal-page', ['linear-gradient(180deg, #050509 0%, #090a10 54%, #050509 100%);']);
+assertBlockIncludes('body:has(.legal-page) .profile-copy', ['border-color: rgba(255, 247, 251, 0.16);', 'rgba(5, 5, 9, 0.64);']);
+assertBlockIncludes('body:has(.legal-page) .site-footer', ['background: #050509;']);
 assertBlockIncludes('body:has(.anime-home) .site-header', ['width: 100%;', 'max-width: 100%;']);
 assertBlockExcludes('body:has(.anime-home) .site-header', ['100vw']);
 assertBlockIncludes(

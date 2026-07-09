@@ -7688,6 +7688,92 @@ body.menu-open .menu-trigger:focus-visible .menu-trigger-lines span:last-child {
   }
 }
 
+/* 2026-07 legal dark alignment: keep document clarity inside the public anime tone. */
+body:has(.legal-page) {
+  --sf-paper: #050509;
+  --sf-surface: rgba(5, 5, 9, 0.72);
+  --sf-ink: #fff7fb;
+  --sf-muted: #d8cfdd;
+  --sf-soft: #aa9ab4;
+  --sf-line: rgba(255, 247, 251, 0.16);
+  background: #050509;
+  color: #fff7fb;
+}
+
+body:has(.legal-page) .site-main.legal-page {
+  background:
+    radial-gradient(circle at 18% 0%, rgba(255, 10, 91, 0.16), transparent 30rem),
+    radial-gradient(circle at 88% 14%, rgba(246, 184, 106, 0.08), transparent 28rem),
+    linear-gradient(180deg, #050509 0%, #090a10 54%, #050509 100%);
+}
+
+body:has(.legal-page) .site-header {
+  border-bottom-color: rgba(255, 247, 251, 0.1);
+  background: rgba(5, 5, 9, 0.76);
+  backdrop-filter: blur(18px);
+}
+
+body:has(.legal-page) .site-logo,
+body:has(.legal-page) .menu-trigger {
+  color: rgba(255, 247, 251, 0.9);
+}
+
+body:has(.legal-page) .menu-trigger::before {
+  border-color: rgba(255, 247, 251, 0.16);
+  background: rgba(5, 5, 9, 0.38);
+}
+
+body:has(.legal-page) .menu-trigger-lines span {
+  background: rgba(255, 247, 251, 0.92);
+}
+
+body:has(.legal-page) .category-hero {
+  border-bottom-color: rgba(255, 247, 251, 0.12);
+}
+
+body:has(.legal-page) .section-kicker {
+  color: #f6b86a;
+}
+
+body:has(.legal-page) .category-hero h1,
+body:has(.legal-page) .profile-copy h2 {
+  color: #fff7fb;
+  letter-spacing: 0;
+}
+
+body:has(.legal-page) .category-hero p:last-child,
+body:has(.legal-page) .profile-copy p {
+  color: #d8cfdd;
+}
+
+body:has(.legal-page) .profile-copy {
+  border-color: rgba(255, 247, 251, 0.16);
+  background:
+    linear-gradient(145deg, rgba(255, 111, 159, 0.1), transparent 52%),
+    rgba(5, 5, 9, 0.64);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.24);
+}
+
+body:has(.legal-page) .profile-copy a {
+  color: #fff7fb;
+  text-decoration-color: rgba(255, 111, 159, 0.7);
+}
+
+body:has(.legal-page) .profile-copy p:last-child {
+  color: #aa9ab4;
+}
+
+body:has(.legal-page) .site-footer {
+  border-top-color: rgba(255, 247, 251, 0.1);
+  background: #050509;
+  color: rgba(255, 247, 251, 0.54);
+}
+
+body:has(.legal-page) .site-footer span,
+body:has(.legal-page) .site-footer a {
+  color: rgba(255, 247, 251, 0.58);
+}
+
 .novel-reader-header h1,
 .novel-reader-summary dd,
 .novel-reader-progress > div,

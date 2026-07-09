@@ -249,6 +249,46 @@ if (musicMobileMediaIndex !== -1) {
     { after: musicMobileMediaIndex }
   );
   assertBlockIncludes(
+    'body:has(.anime-home):has(.music-archive-page) .music-video-hub',
+    ['display: grid;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.music-archive-page) .music-video-grid',
+    ['grid-template-columns: 1fr;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.music-archive-page) .music-video-grid a',
+    ['grid-template-columns: 1fr;', 'min-height: 0;', 'gap: 8px;', 'padding: 10px;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.music-archive-page) .music-video-grid img',
+    ['grid-row: auto;', 'aspect-ratio: 16 / 9;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.music-archive-page) .music-release-card',
+    ['gap: 12px;', 'padding: 12px;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.music-archive-page) .music-release-copy h3',
+    ['font-size: clamp(1.8rem, 9vw, 2.6rem);'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.music-archive-page) .music-release-copy > strong',
+    ['margin-top: 10px;', 'font-size: 0.88rem;', 'line-height: 1.5;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.music-archive-page) .music-release-copy dl',
+    ['margin-top: 12px;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
     'body:has(.anime-home):has(.album-detail-page) .album-cover-mark img',
     ['max-width: min(78vw, 280px);'],
     { after: musicMobileMediaIndex }

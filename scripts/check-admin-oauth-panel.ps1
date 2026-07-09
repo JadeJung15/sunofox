@@ -27,9 +27,10 @@ $adminHtml = Join-Path $DistDir "admin.html"
 $adminIndexHtml = Join-Path $DistDir "admin/index.html"
 
 Assert-FileContains $adminHtml 'id="admin-oauth"' "admin OAuth panel in /admin.html"
-Assert-FileContains $adminIndexHtml 'id="admin-oauth"' "admin OAuth panel in /admin/index.html"
 Assert-FileContains $adminHtml 'id="sf-admin-oauth-status"' "OAuth status container in /admin.html"
-Assert-FileContains $adminIndexHtml 'data-admin-refresh="oauth"' "OAuth refresh button in /admin/index.html"
+Assert-FileContains $adminHtml 'data-admin-refresh="oauth"' "OAuth refresh button in /admin.html"
+Assert-FileContains $adminIndexHtml '/admin.html' "admin route redirect target in /admin/index.html"
+Assert-FileContains $adminIndexHtml 'window.location.replace' "admin route redirect script in /admin/index.html"
 
 $adminMarkup = Get-Content -Path $adminHtml -Raw
 $cssMatch = [regex]::Match($adminMarkup, 'href="(?<href>/css/sf-auth\.[^"]+\.css)"')

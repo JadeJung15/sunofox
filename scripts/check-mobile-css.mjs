@@ -123,6 +123,15 @@ if (authMobileMediaIndex === -1) {
   fail('auth mobile media query after final anime pass: missing');
 }
 
+const authAdminIndex = authCss.indexOf('Final admin console readability pass');
+const authAdminMobileIndex = authAdminIndex === -1 ? -1 : authCss.indexOf('@media (max-width: 720px)', authAdminIndex);
+if (authAdminIndex === -1) {
+  fail('admin console readability pass: missing');
+}
+if (authAdminMobileIndex === -1) {
+  fail('admin mobile media query after readability pass: missing');
+}
+
 assertBlockIncludes('.menu-trigger', ['min-width: 44px;', 'min-height: 44px;']);
 assertBlockIncludes('.main-button', ['min-height: 46px;']);
 assertBlockIncludes('.micro-button', ['min-height: 44px;']);
@@ -291,6 +300,26 @@ assertAuthContains('auth anime pass', 'Final anime auth alignment');
 assertAuthContains('auth compact mobile pass', 'Final compact auth mobile pass');
 assertAuthContains('auth dark color scheme', 'color-scheme: dark;');
 assertAuthContains('auth mobile route scroll', 'scrollbar-width: none;');
+assertAuthBlockIncludes(
+  '.sf-admin-body',
+  ['--sf-admin-bg: #050509;', 'color-scheme: dark;'],
+  { after: authAdminIndex }
+);
+assertAuthBlockIncludes(
+  '.sf-admin-body .sf-admin-head',
+  ['border: 1px solid var(--sf-admin-line);', 'border-radius: 8px;'],
+  { after: authAdminIndex }
+);
+assertAuthBlockIncludes(
+  '.sf-admin-body .sf-admin-head h1',
+  ['color: var(--sf-admin-ink);', 'letter-spacing: 0;'],
+  { after: authAdminIndex }
+);
+assertAuthBlockIncludes(
+  '.sf-admin-body .sf-admin-head-actions a',
+  ['min-height: 44px;', 'border-radius: 8px;'],
+  { after: authAdminIndex }
+);
 
 if (authMobileMediaIndex !== -1) {
   assertAuthBlockIncludes(
@@ -351,6 +380,24 @@ if (authMobileMediaIndex !== -1) {
     '.sf-auth-signup:not(.sf-admin-body) .sf-auth-form textarea',
     ['height: 56px;', 'min-height: 54px;'],
     { after: authMobileMediaIndex }
+  );
+}
+
+if (authAdminMobileIndex !== -1) {
+  assertAuthBlockIncludes(
+    '.sf-admin-body .sf-admin-shell',
+    ['width: min(100% - 20px, 560px);', 'padding: 10px 0 48px;'],
+    { after: authAdminMobileIndex }
+  );
+  assertAuthBlockIncludes(
+    '.sf-admin-body .sf-admin-dashboard-meta',
+    ['display: none;'],
+    { after: authAdminMobileIndex }
+  );
+  assertAuthBlockIncludes(
+    '.sf-admin-body .sf-admin-jump-nav',
+    ['grid-template-columns: repeat(2, minmax(0, 1fr));'],
+    { after: authAdminMobileIndex }
   );
 }
 

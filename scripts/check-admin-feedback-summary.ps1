@@ -40,12 +40,11 @@ function Assert-RegexMatch {
 $adminHtml = Join-Path $DistDir "admin.html"
 $adminIndexHtml = Join-Path $DistDir "admin/index.html"
 
-Assert-FileContains $adminHtml 'id="sf-admin-community-filter-summary"' "post filter summary in /admin.html"
-Assert-FileContains $adminHtml 'id="sf-admin-comment-filter-summary"' "comment filter summary in /admin.html"
-Assert-FileContains $adminHtml 'id="sf-admin-report-filter-summary"' "report filter summary in /admin.html"
-Assert-FileContains $adminIndexHtml 'id="sf-admin-community-filter-summary"' "post filter summary in /admin/index.html"
-Assert-FileContains $adminIndexHtml 'id="sf-admin-comment-filter-summary"' "comment filter summary in /admin/index.html"
-Assert-FileContains $adminIndexHtml 'id="sf-admin-report-filter-summary"' "report filter summary in /admin/index.html"
+Assert-FileContains $adminHtml 'id="sf-admin-user-filter-summary"' "member filter summary in /admin.html"
+Assert-FileContains $adminHtml 'id="sf-admin-user-filter"' "member filter form in /admin.html"
+Assert-FileContains $adminHtml 'id="sf-admin-users"' "member list container in /admin.html"
+Assert-FileContains $adminIndexHtml '/admin.html' "admin route redirect target in /admin/index.html"
+Assert-FileContains $adminIndexHtml 'window.location.replace' "admin route redirect script in /admin/index.html"
 
 $adminMarkup = Get-Content -Path $adminHtml -Raw
 $cssMatch = [regex]::Match($adminMarkup, 'href="(?<href>/css/sf-auth\.[^"]+\.css)"')
@@ -66,10 +65,9 @@ $jsContent = Get-Content -Path $jsFile -Raw
 
 Assert-FileContains $jsFile 'appendAdminResultFeedback' "admin feedback helper"
 Assert-FileContains $jsFile 'dataset.feedback' "admin feedback temporary state"
-Assert-FileContains $jsFile '방금' "admin feedback Korean copy"
-Assert-FileContains $jsFile 'sf-admin-community-filter-summary' "post feedback target"
-Assert-FileContains $jsFile 'sf-admin-comment-filter-summary' "comment feedback target"
-Assert-FileContains $jsFile 'sf-admin-report-filter-summary' "report feedback target"
+Assert-FileContains $jsFile 'sf-admin-user-filter-summary' "member feedback target"
+Assert-FileContains $jsFile '회원 데이터를 불러오는 중입니다.' "member loading feedback copy"
+Assert-FileContains $jsFile '회원 데이터를 불러오지 못했습니다.' "member failure feedback copy"
 
 Assert-RegexMatch $cssContent '\.sf-admin-filter-summary\[data-feedback=?["'']?true["'']?\]' "filter feedback CSS state"
 Assert-RegexMatch $cssContent '\.sf-admin-body \.sf-admin-filter-summary\[data-feedback=?["'']?true["'']?\]' "dark admin feedback CSS state"

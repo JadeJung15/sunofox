@@ -269,28 +269,59 @@ assertContains('music title wrapping', '.music-video-grid strong');
 assertContains('footer mobile wrapping', '.site-footer-nav');
 assertContains('novel anchor scroll offset', 'scroll-margin-top: 96px;');
 assertAuthContains('auth anime pass', 'Final anime auth alignment');
+assertAuthContains('auth compact mobile pass', 'Final compact auth mobile pass');
 assertAuthContains('auth dark color scheme', 'color-scheme: dark;');
 assertAuthContains('auth mobile route scroll', 'scrollbar-width: none;');
 
 if (authMobileMediaIndex !== -1) {
+  assertAuthBlockIncludes(
+    '.sf-auth-body:not(.sf-admin-body) .sf-auth-title',
+    ['display: none;'],
+    { after: authMobileMediaIndex }
+  );
+  assertAuthBlockIncludes(
+    '.sf-auth-body:not(.sf-admin-body) .sf-auth-route',
+    ['display: none;'],
+    { after: authMobileMediaIndex }
+  );
   assertAuthBlockIncludes(
     '.sf-auth-body:not(.sf-admin-body) .sf-auth-status-list',
     ['display: none;'],
     { after: authMobileMediaIndex }
   );
   assertAuthBlockIncludes(
+    '.sf-auth-body:not(.sf-admin-body) .sf-auth-card-head p',
+    ['display: none;'],
+    { after: authMobileMediaIndex }
+  );
+  assertAuthBlockIncludes(
+    '.sf-auth-body:not(.sf-admin-body) .sf-social-status-note',
+    ['display: none;'],
+    { after: authMobileMediaIndex }
+  );
+  assertAuthBlockIncludes(
+    '.sf-auth-body:not(.sf-admin-body) .sf-auth-stage',
+    ['gap: 10px;', 'padding: 14px 12px;'],
+    { after: authMobileMediaIndex }
+  );
+  assertAuthBlockIncludes(
     '.sf-auth-body:not(.sf-admin-body) .sf-auth-form input',
-    ['min-height: 46px;'],
+    ['min-height: 44px;'],
     { after: authMobileMediaIndex }
   );
   assertAuthBlockIncludes(
     '.sf-auth-body:not(.sf-admin-body) .sf-auth-form textarea',
-    ['min-height: 46px;'],
+    ['min-height: 44px;'],
     { after: authMobileMediaIndex }
   );
   assertAuthBlockIncludes(
     '.sf-auth-body:not(.sf-admin-body) .sf-auth-form button',
-    ['min-height: 46px;'],
+    ['min-height: 44px;'],
+    { after: authMobileMediaIndex }
+  );
+  assertAuthBlockIncludes(
+    '.sf-auth-signup:not(.sf-admin-body) .sf-auth-form textarea',
+    ['height: 56px;', 'min-height: 54px;'],
     { after: authMobileMediaIndex }
   );
 }

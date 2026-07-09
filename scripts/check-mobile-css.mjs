@@ -128,6 +128,8 @@ assertBlockIncludes('.main-button', ['min-height: 46px;']);
 assertBlockIncludes('.micro-button', ['min-height: 44px;']);
 assertBlockIncludes('.novel-reader-topbar a', ['min-width: 44px;', 'min-height: 44px;']);
 assertBlockIncludes('.album-back-link', ['display: inline-flex;', 'min-height: 44px;']);
+assertBlockIncludes('.legal-page .profile-copy h2', ['font-size: clamp(1rem, 2.1vw, 1.3rem);', 'text-transform: none;']);
+assertBlockIncludes('.legal-page .profile-copy a', ['display: inline;', 'min-height: 0;']);
 assertBlockIncludes('body:has(.anime-home) .site-header', ['width: 100%;', 'max-width: 100%;']);
 assertBlockExcludes('body:has(.anime-home) .site-header', ['100vw']);
 assertBlockIncludes(

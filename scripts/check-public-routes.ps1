@@ -133,6 +133,18 @@ $routes = @(
     MustNot = @("/updates/", "profile-source-strip", "profile-source-note")
   },
   @{
+    Name = "privacy"
+    Path = "/privacy/"
+    File = "privacy/index.html"
+    Must = @("legal-page", "PRIVACY POLICY", "Collected Information", "Submitted Information", "sunofox.official@gmail.com", "https://sunofox.com/privacy/")
+  },
+  @{
+    Name = "terms"
+    Path = "/terms/"
+    File = "terms/index.html"
+    Must = @("legal-page", "TERMS", "Service Use", "Studio Access", "sunofox.official@gmail.com", "https://sunofox.com/terms/")
+  },
+  @{
     Name = "login"
     Path = "/login"
     File = "login.html"

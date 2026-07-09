@@ -7578,6 +7578,114 @@ body.menu-open .menu-trigger:focus-visible .menu-trigger-lines span:last-child {
   align-items: center;
 }
 
+/* Legal pages use the public chrome but need document-scale typography. */
+.legal-page .category-hero {
+  padding-bottom: 34px;
+}
+
+.legal-page .category-hero h1 {
+  max-width: 760px;
+  font-size: clamp(2.9rem, 7vw, 5.8rem);
+  line-height: 1.02;
+}
+
+.legal-page .category-hero p:last-child {
+  max-width: 680px;
+}
+
+.legal-page .category-content {
+  padding-top: 28px;
+  padding-bottom: clamp(48px, 8vw, 84px);
+}
+
+.legal-page .profile-copy {
+  display: grid;
+  width: min(100%, 720px);
+  max-width: 720px;
+  gap: 12px;
+  border: 1px solid var(--sf-line);
+  border-radius: 8px;
+  background: var(--sf-surface);
+  padding: clamp(18px, 4vw, 32px);
+}
+
+.legal-page .profile-copy h2 {
+  margin: 16px 0 0;
+  color: var(--sf-ink);
+  font-family: inherit;
+  font-size: clamp(1rem, 2.1vw, 1.3rem);
+  font-weight: 900;
+  line-height: 1.22;
+  text-transform: none;
+}
+
+.legal-page .profile-copy h2:first-child {
+  margin-top: 0;
+}
+
+.legal-page .profile-copy p {
+  max-width: none;
+  margin: 0;
+  color: var(--sf-muted);
+  font-size: 1rem;
+  line-height: 1.82;
+  overflow-wrap: anywhere;
+  word-break: keep-all;
+}
+
+.legal-page .profile-copy p:last-child {
+  margin-top: 8px;
+  color: var(--sf-soft);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.legal-page .profile-copy a {
+  display: inline;
+  min-height: 0;
+  color: var(--sf-ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+@media (max-width: 760px) {
+  .legal-page .category-hero {
+    padding-top: 34px;
+    padding-bottom: 26px;
+  }
+
+  .legal-page .category-hero h1 {
+    font-size: clamp(2.35rem, 12vw, 3.2rem);
+  }
+
+  .legal-page .category-hero p:last-child {
+    margin-top: 18px;
+    font-size: 0.98rem;
+    line-height: 1.68;
+  }
+
+  .legal-page .category-content {
+    width: min(100% - 28px, 560px);
+    padding-top: 18px;
+  }
+
+  .legal-page .profile-copy {
+    gap: 10px;
+    padding: 16px 14px;
+  }
+
+  .legal-page .profile-copy h2 {
+    margin-top: 14px;
+    font-size: 1rem;
+    line-height: 1.24;
+  }
+
+  .legal-page .profile-copy p {
+    font-size: 0.95rem;
+    line-height: 1.72;
+  }
+}
+
 .novel-reader-header h1,
 .novel-reader-summary dd,
 .novel-reader-progress > div,

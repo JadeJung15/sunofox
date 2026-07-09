@@ -119,8 +119,12 @@ if (musicMobileMediaIndex === -1) {
 
 const authAnimeIndex = authCss.indexOf('Final anime auth alignment');
 const authMobileMediaIndex = authAnimeIndex === -1 ? -1 : authCss.indexOf('@media (max-width: 640px)', authAnimeIndex);
+const authCompactMobileIndex = authCss.indexOf('Final compact auth mobile pass');
 if (authMobileMediaIndex === -1) {
   fail('auth mobile media query after final anime pass: missing');
+}
+if (authCompactMobileIndex === -1) {
+  fail('auth compact mobile pass: missing');
 }
 
 const authAdminIndex = authCss.indexOf('Final admin console readability pass');
@@ -325,6 +329,11 @@ assertAuthContains('auth anime pass', 'Final anime auth alignment');
 assertAuthContains('auth compact mobile pass', 'Final compact auth mobile pass');
 assertAuthContains('auth dark color scheme', 'color-scheme: dark;');
 assertAuthContains('auth mobile route scroll', 'scrollbar-width: none;');
+assertAuthBlockIncludes(
+  '.sf-auth-login:not(.sf-admin-body) .sf-auth-copy > p',
+  ['-webkit-line-clamp: 2;', 'overflow-wrap: break-word;', 'word-break: keep-all;'],
+  { after: authCompactMobileIndex }
+);
 assertAuthBlockIncludes(
   '.sf-admin-body',
   ['--sf-admin-bg: #050509;', 'color-scheme: dark;'],

@@ -5922,6 +5922,12 @@ body {
     line-height: 1.45;
   }
 
+  .sf-auth-login:not(.sf-admin-body) .sf-auth-copy > p {
+    -webkit-line-clamp: 2;
+    overflow-wrap: break-word;
+    word-break: keep-all;
+  }
+
   .sf-auth-body:not(.sf-admin-body) .sf-auth-stage .sf-auth-card,
   .sf-auth-body:not(.sf-admin-body) .sf-auth-card {
     gap: 10px;

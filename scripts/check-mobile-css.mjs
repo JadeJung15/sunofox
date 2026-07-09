@@ -801,6 +801,16 @@ if (authMobileMediaIndex !== -1) {
   );
   assertAuthBlockIncludes(
     '.sf-auth-body:not(.sf-admin-body) .sf-social-auth',
+    ['display: grid;', 'grid-template-columns: repeat(2, minmax(0, 1fr));', 'gap: 6px;'],
+    { after: authFocusMobileIndex }
+  );
+  assertAuthBlockIncludes(
+    '.sf-auth-body:not(.sf-admin-body) .sf-social-button',
+    ['min-width: 0;', 'justify-content: center;', 'white-space: normal;'],
+    { after: authFocusMobileIndex }
+  );
+  assertAuthBlockIncludes(
+    '.sf-auth-body:not(.sf-admin-body) .sf-social-button.is-disabled',
     ['display: none;'],
     { after: authFocusMobileIndex }
   );

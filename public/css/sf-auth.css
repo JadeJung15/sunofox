@@ -6106,7 +6106,39 @@ body {
     font-size: clamp(1.55rem, 7.4vw, 1.95rem);
   }
 
-  .sf-auth-body:not(.sf-admin-body) .sf-social-auth,
+  .sf-auth-body:not(.sf-admin-body) .sf-social-auth {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-social-button {
+    min-width: 0;
+    justify-content: center;
+    padding: 0 8px;
+    font-size: 0.76rem;
+    line-height: 1.15;
+    text-align: center;
+    white-space: normal;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-social-button::before {
+    width: 24px;
+    height: 24px;
+    flex: 0 0 24px;
+    font-size: 0.68rem;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-social-button.is-disabled,
+  .sf-auth-body:not(.sf-admin-body) .sf-social-button[aria-disabled="true"] {
+    display: none;
+  }
+
+  .sf-auth-body:not(.sf-admin-body) .sf-social-auth:has(.sf-social-button.is-disabled):not(:has(.sf-social-button:not(.is-disabled))),
+  .sf-auth-body:not(.sf-admin-body) .sf-social-auth:has(.sf-social-button[aria-disabled="true"]):not(:has(.sf-social-button:not([aria-disabled="true"]))) {
+    display: none;
+  }
+
   .sf-auth-body:not(.sf-admin-body) .sf-auth-divider {
     display: none;
   }

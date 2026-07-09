@@ -11305,6 +11305,8 @@ body:has(.anime-home):has(.novel-list-page) .novel-detail-copy h1 {
   font-size: clamp(3.2rem, 7.4vw, 6.5rem);
   letter-spacing: 0;
   line-height: 0.96;
+  overflow-wrap: break-word;
+  word-break: keep-all;
 }
 
 body:has(.anime-home):has(.novel-list-page) .novel-platform-en {
@@ -11350,6 +11352,8 @@ body:has(.anime-home):has(.novel-list-page) .novel-character-grid h3,
 body:has(.anime-home):has(.novel-list-page) .novel-ost-panel h2 {
   color: var(--anime-ink);
   letter-spacing: 0;
+  overflow-wrap: break-word;
+  word-break: keep-all;
 }
 
 body:has(.anime-home):has(.novel-list-page) .novel-detail-summary,
@@ -11363,6 +11367,8 @@ body:has(.anime-home):has(.novel-list-page) .novel-world-grid p,
 body:has(.anime-home):has(.novel-list-page) .novel-character-grid p,
 body:has(.anime-home):has(.novel-list-page) .novel-ost-panel p {
   color: var(--anime-muted);
+  overflow-wrap: break-word;
+  word-break: keep-all;
 }
 
 body:has(.anime-home):has(.novel-list-page) .novel-info-list dt,

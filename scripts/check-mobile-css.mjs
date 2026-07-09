@@ -169,6 +169,14 @@ assertBlockIncludes(
   'body:has(.anime-home):has(.profile-page) .category-hero p:last-child',
   ['overflow-wrap: break-word;', 'word-break: keep-all;']
 );
+assertBlockIncludes(
+  'body:has(.anime-home):has(.novel-list-page) .novel-detail-summary',
+  ['overflow-wrap: break-word;', 'word-break: keep-all;']
+);
+assertBlockIncludes(
+  'body:has(.anime-home):has(.novel-list-page) .novel-episode-row strong',
+  ['overflow-wrap: break-word;', 'word-break: keep-all;']
+);
 
 if (mobileMediaIndex !== -1) {
   assertBlockIncludes('.main-button', ['min-height: 44px;'], { after: mobileMediaIndex });

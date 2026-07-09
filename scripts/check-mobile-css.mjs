@@ -165,6 +165,10 @@ assertBlockIncludes(
   'body:has(.anime-home):has(.not-found-page) .not-found-secondary-links a',
   ['min-height: 44px;']
 );
+assertBlockIncludes(
+  'body:has(.anime-home):has(.profile-page) .category-hero p:last-child',
+  ['overflow-wrap: break-word;', 'word-break: keep-all;']
+);
 
 if (mobileMediaIndex !== -1) {
   assertBlockIncludes('.main-button', ['min-height: 44px;'], { after: mobileMediaIndex });

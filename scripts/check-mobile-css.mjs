@@ -198,6 +198,10 @@ assertBlockIncludes(
   ['font-size: clamp(3.1rem, 8vw, 6.4rem);']
 );
 assertBlockIncludes(
+  'body:has(.anime-home):has(.album-detail-page) .album-back-link',
+  ['min-height: 44px;', 'border-radius: 999px;', 'padding-inline: 13px;']
+);
+assertBlockIncludes(
   'body:has(.anime-home):has(.profile-page) .category-hero p:last-child',
   ['overflow-wrap: break-word;', 'word-break: keep-all;']
 );
@@ -321,6 +325,11 @@ if (musicMobileMediaIndex !== -1) {
   assertBlockIncludes(
     'body:has(.anime-home):has(.album-detail-page) .album-platform-links .music-platform-link',
     ['width: auto;', 'min-width: 0;', 'min-height: 44px;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.album-detail-page) .album-platform-links .music-platform-link:nth-child(3)',
+    ['grid-column: 1 / -1;', 'justify-content: center;'],
     { after: musicMobileMediaIndex }
   );
   assertBlockIncludes(

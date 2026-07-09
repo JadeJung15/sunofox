@@ -10221,6 +10221,22 @@ body:has(.anime-home):has(.album-detail-page) .album-source-panel a {
   color: var(--anime-soft);
 }
 
+body:has(.anime-home):has(.album-detail-page) .album-back-link {
+  min-height: 44px;
+  border: 1px solid rgba(255, 247, 251, 0.14);
+  border-radius: 999px;
+  background: rgba(5, 5, 9, 0.34);
+  padding-inline: 13px;
+  letter-spacing: 0.08em;
+}
+
+body:has(.anime-home):has(.album-detail-page) .album-back-link:hover,
+body:has(.anime-home):has(.album-detail-page) .album-back-link:focus-visible {
+  border-color: rgba(255, 111, 159, 0.44);
+  background: rgba(255, 111, 159, 0.12);
+  color: var(--anime-ink);
+}
+
 body:has(.anime-home):has(.album-detail-page) .section-kicker,
 body:has(.anime-home):has(.album-detail-page) .album-track-grid span,
 body:has(.anime-home):has(.album-detail-page) .album-source-panel span {
@@ -10800,6 +10816,11 @@ body:has(.anime-home):has(.album-detail-page) .album-track-section > .novel-sect
     min-height: 44px;
     padding: 6px 10px 6px 6px;
     font-size: 0.76rem;
+  }
+
+  body:has(.anime-home):has(.album-detail-page) .album-platform-links .music-platform-link:nth-child(3) {
+    grid-column: 1 / -1;
+    justify-content: center;
   }
 
   body:has(.anime-home):has(.album-detail-page) .album-platform-links .music-platform-link > span {

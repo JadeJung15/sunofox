@@ -11776,6 +11776,90 @@ body:has(.anime-home):has(.novel-episode-page) .micro-button:not(.micro-button-m
     overflow-wrap: break-word;
   }
 
+  body:has(.anime-home):has(.novel-list-page) .novel-reading-grid {
+    display: flex;
+    gap: 10px;
+    margin-inline: -14px;
+    padding-inline: 14px;
+    padding-bottom: 4px;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body:has(.anime-home):has(.novel-list-page) .novel-reading-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  body:has(.anime-home):has(.novel-list-page) .novel-reading-card {
+    flex: 0 0 min(82vw, 320px);
+    min-height: 128px;
+    padding: 14px;
+    scroll-snap-align: start;
+  }
+
+  body:has(.anime-home):has(.novel-list-page) .novel-reading-card strong {
+    margin-top: 12px;
+    font-size: 1.15rem;
+  }
+
+  body:has(.anime-home):has(.novel-list-page) .novel-reading-card p {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  body:has(.anime-home):has(.novel-list-page) .novel-episode-row {
+    gap: 10px;
+    padding: 14px 12px;
+  }
+
+  body:has(.anime-home):has(.novel-list-page) .novel-episode-row strong {
+    font-size: 1.05rem;
+  }
+
+  body:has(.anime-home):has(.novel-list-page) .novel-episode-row p {
+    display: -webkit-box;
+    margin-top: 5px;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  body:has(.anime-home):has(.novel-list-page) .novel-episode-meta {
+    gap: 5px;
+    margin-top: 8px;
+  }
+
+  body:has(.anime-home):has(.novel-list-page) .novel-episode-tags {
+    display: none;
+  }
+
+  body:has(.anime-home):has(.novel-list-page) .novel-anchor-strip {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px;
+    margin-bottom: 14px;
+    padding-bottom: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body:has(.anime-home):has(.novel-list-page) .novel-anchor-strip::-webkit-scrollbar {
+    display: none;
+  }
+
+  body:has(.anime-home):has(.novel-list-page) .novel-anchor-strip a {
+    flex: 0 0 auto;
+    min-height: 40px;
+    padding-inline: 12px;
+    white-space: nowrap;
+    text-align: left;
+  }
+
   body:has(.anime-home):has(.novel-list-page) .novel-section-head h2,
   body:has(.anime-home):has(.novel-list-page) .novel-detail-info h2,
   body:has(.anime-home):has(.novel-list-page) .novel-world-grid strong,

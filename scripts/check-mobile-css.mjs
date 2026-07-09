@@ -453,6 +453,26 @@ if (musicMobileMediaIndex !== -1) {
     { after: musicMobileMediaIndex }
   );
   assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-list-page) .novel-reading-grid',
+    ['display: flex;', 'overflow-x: auto;', 'scrollbar-width: none;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-list-page) .novel-reading-card',
+    ['flex: 0 0 min(82vw, 320px);', 'min-height: 128px;', 'scroll-snap-align: start;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-list-page) .novel-episode-tags',
+    ['display: none;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.novel-list-page) .novel-anchor-strip',
+    ['display: flex;', 'flex-wrap: nowrap;', 'overflow-x: auto;', 'scrollbar-width: none;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
     'body:has(.anime-home):has(.novel-episode-page) .novel-reader-topbar',
     ['overflow-x: auto;', 'scrollbar-width: none;'],
     { after: musicMobileMediaIndex }

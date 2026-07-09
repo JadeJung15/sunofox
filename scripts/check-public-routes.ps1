@@ -128,7 +128,7 @@ $routes = @(
     Name = "profile"
     Path = "/profile/"
     File = "profile/index.html"
-    Must = @($labelSunoFoxDetail, "profile-snapshot-section", "profile-snapshot-card", "profile-current-actions", "/novels/", "/music/", "https://sunofox.com/profile/")
+    Must = @($labelSunoFoxDetail, "anime-home", "profile-page", "profile-snapshot-section", "profile-snapshot-card", "profile-current-actions", "/novels/", "/music/", "https://sunofox.com/profile/")
     MustNot = @("/updates/")
   },
   @{

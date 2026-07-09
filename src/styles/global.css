@@ -10451,3 +10451,376 @@ body:has(.anime-home):has(.album-detail-page) .album-track-section > .novel-sect
     font-size: 0.72rem;
   }
 }
+
+body:has(.anime-home):has(.profile-page) {
+  --sf-paper: #050509;
+  --sf-surface: #0b0d13;
+  --sf-surface-muted: #11141d;
+  --sf-ink: #fff7fb;
+  --sf-muted: #d8cfdd;
+  --sf-soft: #aa9ab4;
+  --sf-line: rgba(255, 247, 251, 0.16);
+  --sf-line-strong: rgba(255, 111, 159, 0.42);
+  --sf-accent: #ff6f9f;
+  --sf-accent-soft: rgba(255, 111, 159, 0.14);
+  --sf-rose: #ff0a5b;
+  --anime-bg: #050509;
+  --anime-ink: #fff7fb;
+  --anime-muted: #d8cfdd;
+  --anime-soft: #aa9ab4;
+  --anime-line: rgba(255, 247, 251, 0.16);
+  --anime-accent: #ff6f9f;
+  --anime-title-soft: #f1e7f3;
+  --anime-warm: #f6b86a;
+  background: #050509;
+  color: #fff7fb;
+}
+
+body:has(.anime-home):has(.profile-page) .profile-page {
+  padding-top: 92px;
+  background:
+    linear-gradient(180deg, rgba(255, 111, 159, 0.12), transparent 220px),
+    linear-gradient(90deg, rgba(255, 111, 159, 0.08), transparent 34%),
+    #050509;
+}
+
+body:has(.anime-home):has(.profile-page) .site-footer {
+  border-top-color: rgba(255, 247, 251, 0.1);
+  background: #050509;
+  color: rgba(255, 247, 251, 0.54);
+}
+
+body:has(.anime-home):has(.profile-page) .site-footer span,
+body:has(.anime-home):has(.profile-page) .site-footer a {
+  color: rgba(255, 247, 251, 0.58);
+}
+
+body:has(.anime-home):has(.profile-page) .category-hero,
+body:has(.anime-home):has(.profile-page) .category-content,
+body:has(.anime-home):has(.profile-page) .profile-snapshot-section,
+body:has(.anime-home):has(.profile-page) .profile-detail-section {
+  width: min(1120px, calc(100% - 40px));
+}
+
+body:has(.anime-home):has(.profile-page) .category-hero {
+  display: grid;
+  min-height: 58svh;
+  align-content: end;
+  border-bottom-color: rgba(255, 247, 251, 0.12);
+  padding: 64px 0 38px;
+}
+
+body:has(.anime-home):has(.profile-page) .category-hero h1 {
+  max-width: 8ch;
+  color: var(--anime-ink);
+  font-size: clamp(4.4rem, 11vw, 8.8rem);
+  letter-spacing: 0;
+  line-height: 0.88;
+  text-transform: none;
+}
+
+body:has(.anime-home):has(.profile-page) .category-hero p:last-child {
+  max-width: 620px;
+  margin-top: 22px;
+  color: var(--anime-muted);
+  font-size: clamp(1rem, 1.5vw, 1.22rem);
+  font-weight: 750;
+  line-height: 1.72;
+}
+
+body:has(.anime-home):has(.profile-page) .section-kicker,
+body:has(.anime-home):has(.profile-page) .profile-section-label {
+  color: var(--anime-warm);
+}
+
+body:has(.anime-home):has(.profile-page) .category-content {
+  max-width: min(1120px, calc(100% - 40px));
+  padding-top: 34px;
+}
+
+body:has(.anime-home):has(.profile-page) .about-lead {
+  max-width: 760px;
+  color: var(--anime-ink);
+  font-size: clamp(1.15rem, 2.2vw, 1.95rem);
+  line-height: 1.5;
+}
+
+body:has(.anime-home):has(.profile-page) .about-line-list,
+body:has(.anime-home):has(.profile-page) .profile-detail-section,
+body:has(.anime-home):has(.profile-page) .profile-snapshot-section,
+body:has(.anime-home):has(.profile-page) .profile-detail-tabs,
+body:has(.anime-home):has(.profile-page) .profile-source-strip {
+  border-color: rgba(255, 247, 251, 0.12);
+}
+
+body:has(.anime-home):has(.profile-page) .about-line-list li {
+  border-color: rgba(255, 247, 251, 0.1);
+  color: var(--anime-muted);
+}
+
+body:has(.anime-home):has(.profile-page) .about-route-grid a,
+body:has(.anime-home):has(.profile-page) .profile-snapshot-card,
+body:has(.anime-home):has(.profile-page) .profile-detail-panel,
+body:has(.anime-home):has(.profile-page) .profile-video-list a {
+  border-color: rgba(255, 247, 251, 0.16);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(255, 111, 159, 0.12), transparent 52%),
+    rgba(5, 5, 9, 0.58);
+  color: var(--anime-ink);
+  box-shadow: 0 20px 58px rgba(0, 0, 0, 0.2);
+}
+
+body:has(.anime-home):has(.profile-page) .about-route-grid a:hover,
+body:has(.anime-home):has(.profile-page) .about-route-grid a:focus-visible,
+body:has(.anime-home):has(.profile-page) .profile-snapshot-card:hover,
+body:has(.anime-home):has(.profile-page) .profile-snapshot-card:focus-visible,
+body:has(.anime-home):has(.profile-page) .profile-video-list a:hover,
+body:has(.anime-home):has(.profile-page) .profile-video-list a:focus-visible {
+  border-color: rgba(255, 111, 159, 0.52);
+  background:
+    linear-gradient(145deg, rgba(255, 111, 159, 0.18), transparent 52%),
+    rgba(5, 5, 9, 0.62);
+}
+
+body:has(.anime-home):has(.profile-page) .about-route-grid a {
+  min-height: 178px;
+  align-content: start;
+  padding: 18px;
+}
+
+body:has(.anime-home):has(.profile-page) .about-route-grid strong,
+body:has(.anime-home):has(.profile-page) .profile-snapshot-head h2,
+body:has(.anime-home):has(.profile-page) .profile-snapshot-card strong,
+body:has(.anime-home):has(.profile-page) .profile-detail-head h2,
+body:has(.anime-home):has(.profile-page) .profile-detail-panel-copy h3,
+body:has(.anime-home):has(.profile-page) .profile-fact-grid dd,
+body:has(.anime-home):has(.profile-page) .profile-video-list strong {
+  color: var(--anime-ink);
+  letter-spacing: 0;
+}
+
+body:has(.anime-home):has(.profile-page) .about-route-grid span,
+body:has(.anime-home):has(.profile-page) .profile-snapshot-card span {
+  color: var(--anime-accent);
+}
+
+body:has(.anime-home):has(.profile-page) .about-route-grid p,
+body:has(.anime-home):has(.profile-page) .profile-snapshot-head p:not(.section-kicker),
+body:has(.anime-home):has(.profile-page) .profile-snapshot-card p,
+body:has(.anime-home):has(.profile-page) .profile-detail-head p:not(.section-kicker),
+body:has(.anime-home):has(.profile-page) .profile-detail-panel-copy p:not(.section-kicker),
+body:has(.anime-home):has(.profile-page) .profile-video-list p {
+  color: var(--anime-muted);
+}
+
+body:has(.anime-home):has(.profile-page) .profile-snapshot-section,
+body:has(.anime-home):has(.profile-page) .profile-detail-section {
+  margin-top: 54px;
+}
+
+body:has(.anime-home):has(.profile-page) .profile-snapshot-head,
+body:has(.anime-home):has(.profile-page) .profile-detail-head {
+  gap: 14px;
+}
+
+body:has(.anime-home):has(.profile-page) .profile-snapshot-head h2,
+body:has(.anime-home):has(.profile-page) .profile-detail-head h2 {
+  font-size: clamp(2.35rem, 6vw, 5.2rem);
+  line-height: 0.98;
+  text-transform: none;
+}
+
+body:has(.anime-home):has(.profile-page) .profile-snapshot-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+body:has(.anime-home):has(.profile-page) .profile-snapshot-card {
+  min-height: 230px;
+  padding: 16px;
+}
+
+body:has(.anime-home):has(.profile-page) .profile-snapshot-card strong {
+  margin-top: 18px;
+  font-size: clamp(1.28rem, 2vw, 1.8rem);
+}
+
+body:has(.anime-home):has(.profile-page) .profile-snapshot-card small,
+body:has(.anime-home):has(.profile-page) .profile-snapshot-card em,
+body:has(.anime-home):has(.profile-page) .profile-detail-head > span,
+body:has(.anime-home):has(.profile-page) .profile-detail-tabs a,
+body:has(.anime-home):has(.profile-page) .profile-fact-grid dt,
+body:has(.anime-home):has(.profile-page) .profile-video-list span,
+body:has(.anime-home):has(.profile-page) .profile-video-list em {
+  color: var(--anime-soft);
+}
+
+body:has(.anime-home):has(.profile-page) .profile-current-actions {
+  border-bottom-color: rgba(255, 247, 251, 0.12);
+}
+
+body:has(.anime-home):has(.profile-page) .profile-current-actions .micro-button,
+body:has(.anime-home):has(.profile-page) .profile-source-actions .main-button,
+body:has(.anime-home):has(.profile-page) .profile-source-strip a,
+body:has(.anime-home):has(.profile-page) .profile-detail-tabs a {
+  border-color: rgba(255, 247, 251, 0.14);
+  background: rgba(5, 5, 9, 0.42);
+  color: var(--anime-soft);
+}
+
+body:has(.anime-home):has(.profile-page) .profile-current-actions .micro-button:hover,
+body:has(.anime-home):has(.profile-page) .profile-current-actions .micro-button:focus-visible,
+body:has(.anime-home):has(.profile-page) .profile-source-actions .main-button:hover,
+body:has(.anime-home):has(.profile-page) .profile-source-actions .main-button:focus-visible,
+body:has(.anime-home):has(.profile-page) .profile-source-strip a:hover,
+body:has(.anime-home):has(.profile-page) .profile-source-strip a:focus-visible,
+body:has(.anime-home):has(.profile-page) .profile-detail-tabs a:hover,
+body:has(.anime-home):has(.profile-page) .profile-detail-tabs a:focus-visible {
+  border-color: rgba(255, 111, 159, 0.46);
+  background: rgba(255, 111, 159, 0.12);
+  color: var(--anime-ink);
+}
+
+body:has(.anime-home):has(.profile-page) .profile-detail-panel {
+  border-bottom-color: rgba(255, 247, 251, 0.12);
+  padding: 22px;
+}
+
+body:has(.anime-home):has(.profile-page) .profile-fact-grid {
+  border-top-color: rgba(255, 247, 251, 0.12);
+}
+
+body:has(.anime-home):has(.profile-page) .profile-fact-grid div {
+  border-bottom-color: rgba(255, 247, 251, 0.1);
+}
+
+body:has(.anime-home):has(.profile-page) .profile-track-list {
+  border-top-color: rgba(255, 247, 251, 0.12);
+  color: var(--anime-muted);
+}
+
+body:has(.anime-home):has(.profile-page) .profile-video-list {
+  border-top-color: rgba(255, 247, 251, 0.12);
+}
+
+body:has(.anime-home):has(.profile-page) .profile-source-note {
+  color: rgba(255, 247, 251, 0.46);
+}
+
+@media (max-width: 760px) {
+  body:has(.anime-home):has(.profile-page) .profile-page {
+    padding-top: 76px;
+  }
+
+  body:has(.anime-home):has(.profile-page) .category-hero,
+  body:has(.anime-home):has(.profile-page) .category-content,
+  body:has(.anime-home):has(.profile-page) .profile-snapshot-section,
+  body:has(.anime-home):has(.profile-page) .profile-detail-section {
+    width: min(100% - 28px, 1120px);
+  }
+
+  body:has(.anime-home):has(.profile-page) .category-hero {
+    min-height: 48svh;
+    padding: 54px 0 28px;
+  }
+
+  body:has(.anime-home):has(.profile-page) .category-hero h1 {
+    font-size: clamp(3.4rem, 16vw, 4.85rem);
+    line-height: 0.9;
+  }
+
+  body:has(.anime-home):has(.profile-page) .category-hero p:last-child {
+    margin-top: 18px;
+    font-size: 1rem;
+  }
+
+  body:has(.anime-home):has(.profile-page) .category-content {
+    padding-top: 26px;
+  }
+
+  body:has(.anime-home):has(.profile-page) .about-lead {
+    font-size: 1.08rem;
+    line-height: 1.62;
+  }
+
+  body:has(.anime-home):has(.profile-page) .about-route-grid a {
+    min-height: 132px;
+    padding: 16px;
+  }
+
+  body:has(.anime-home):has(.profile-page) .about-route-grid strong {
+    margin-top: 14px;
+    font-size: clamp(1.7rem, 9vw, 2.4rem);
+  }
+
+  body:has(.anime-home):has(.profile-page) .profile-snapshot-section,
+  body:has(.anime-home):has(.profile-page) .profile-detail-section {
+    margin-top: 38px;
+    padding-top: 26px;
+  }
+
+  body:has(.anime-home):has(.profile-page) .profile-snapshot-head h2,
+  body:has(.anime-home):has(.profile-page) .profile-detail-head h2 {
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+
+  body:has(.anime-home):has(.profile-page) .profile-snapshot-grid {
+    grid-template-columns: 1fr;
+  }
+
+  body:has(.anime-home):has(.profile-page) .profile-snapshot-card {
+    min-height: 0;
+    padding: 16px;
+  }
+
+  body:has(.anime-home):has(.profile-page) .profile-current-actions {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 18px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body:has(.anime-home):has(.profile-page) .profile-current-actions::-webkit-scrollbar {
+    display: none;
+  }
+
+  body:has(.anime-home):has(.profile-page) .profile-current-actions .micro-button {
+    flex: 0 0 auto;
+    width: auto;
+    padding-inline: 12px;
+    white-space: nowrap;
+  }
+
+  body:has(.anime-home):has(.profile-page) .profile-detail-tabs {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 12px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body:has(.anime-home):has(.profile-page) .profile-detail-tabs a {
+    flex: 0 0 auto;
+    width: auto;
+    padding-inline: 12px;
+    white-space: nowrap;
+  }
+
+  body:has(.anime-home):has(.profile-page) .profile-detail-panel {
+    padding: 16px;
+  }
+
+  body:has(.anime-home):has(.profile-page) .profile-detail-panel-copy h3 {
+    font-size: clamp(1.85rem, 9vw, 2.55rem);
+    letter-spacing: 0;
+  }
+
+  body:has(.anime-home):has(.profile-page) .profile-video-list ol {
+    grid-template-columns: 1fr;
+  }
+}

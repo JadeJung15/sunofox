@@ -245,6 +245,26 @@ if (musicMobileMediaIndex !== -1) {
     { after: musicMobileMediaIndex }
   );
   assertBlockIncludes(
+    'body:has(.anime-home):has(.album-detail-page) .album-back-link',
+    ['border-radius: 999px;', 'padding-inline: 12px;', 'font-size: 0.72rem;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.album-detail-page) .album-cover-mark',
+    ['justify-items: center;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.album-detail-page) .album-meta-grid',
+    ['grid-template-columns: repeat(2, minmax(0, 1fr));', 'margin-top: 18px;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.album-detail-page) .album-meta-grid dd',
+    ['overflow-wrap: break-word;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
     'body:has(.anime-home):has(.album-detail-page) .album-platform-links',
     ['grid-template-columns: repeat(2, minmax(0, 1fr));', 'gap: 8px;'],
     { after: musicMobileMediaIndex }

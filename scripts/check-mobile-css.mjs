@@ -206,6 +206,31 @@ if (musicMobileMediaIndex !== -1) {
     { after: musicMobileMediaIndex }
   );
   assertBlockIncludes(
+    'body:has(.anime-home):has(.profile-page) .category-hero',
+    ['min-height: 32svh;', 'padding: 28px 0 22px;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.profile-page) .about-route-grid a',
+    ['grid-template-columns: 42px minmax(0, 1fr);', 'min-height: 86px;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.profile-page) .about-route-grid p',
+    ['-webkit-line-clamp: 2;', 'font-size: 0.82rem;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.profile-page) .about-line-list',
+    ['display: none;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
+    'body:has(.anime-home):has(.profile-page) .profile-snapshot-card p',
+    ['-webkit-line-clamp: 2;'],
+    { after: musicMobileMediaIndex }
+  );
+  assertBlockIncludes(
     'body:has(.anime-home):has(.profile-page) .profile-detail-tabs',
     ['display: flex;', 'flex-wrap: nowrap;', 'overflow-x: auto;', 'scrollbar-width: none;'],
     { after: musicMobileMediaIndex }

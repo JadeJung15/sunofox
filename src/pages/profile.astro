@@ -155,16 +155,6 @@ import { artistLinks, novelProject, structuredData, sunofoxProfile } from '../da
           </article>
         ))}
       </div>
-
-      <div class="profile-source-strip" aria-label="SunoFox public sources">
-        <span>출처</span>
-        {sunofoxProfile.sources.map((source) => (
-          <a href={source.href} target="_blank" rel="noopener noreferrer">{source.label}</a>
-        ))}
-      </div>
-      <p class="profile-source-note">
-        채널 구독자, 조회수, 영상 수처럼 변동되는 지표는 공개 조회 시점 기준입니다.
-      </p>
     </section>
   </main>
 </Layout>

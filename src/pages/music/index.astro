@@ -142,7 +142,8 @@ const musicHeroFacts = [
             alt={primaryVideo.thumbnailAlt}
             width="480"
             height="360"
-            loading="lazy"
+            loading="eager"
+            fetchpriority="high"
             decoding="async"
           />
           <span>{primaryVideo.date}</span>
@@ -177,7 +178,7 @@ const musicHeroFacts = [
       </nav>
 
       <ol class="music-video-grid">
-        {musicArchive.videos.map((video) => (
+        {musicArchive.videos.map((video, index) => (
           <li
             id={`music-video-${video.videoId}`}
             data-video-id={video.videoId}
@@ -190,7 +191,8 @@ const musicHeroFacts = [
                 alt={video.thumbnailAlt}
                 width="480"
                 height="360"
-                loading="lazy"
+                loading="eager"
+                fetchpriority={index === 0 ? 'high' : undefined}
                 decoding="async"
               />
               <span>{video.date}</span>
@@ -214,7 +216,7 @@ const musicHeroFacts = [
         {musicArchive.releases.map((release) => (
           <article class="music-release-card">
             <a class="music-release-cover" href={release.href} aria-label={`${release.title} 상세 보기`}>
-              <img src={release.image} alt={release.imageAlt} width="512" height="512" loading="lazy" decoding="async" />
+              <img src={release.image} alt={release.imageAlt} width="512" height="512" loading="eager" decoding="async" />
               <span>{release.type}</span>
             </a>
             <div class="music-release-copy">

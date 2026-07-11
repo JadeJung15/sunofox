@@ -3,6 +3,7 @@ import {
   getAdminEmail,
   getLoginCode,
   getUser,
+  isProtectedStudioPath,
   json,
   normalizeEmail,
   normalizeNickname,
@@ -69,6 +70,14 @@ export async function onRequestPost(context) {
       ok: false,
       message: user.password ? '비밀번호가 올바르지 않습니다.' : '소유자 코드가 올바르지 않습니다.'
     }, { status: 401 });
+  }
+
+  if (isProtectedStudioPath(next) && email !== adminEmail) {
+    return json({
+      ok: false,
+      status: 'owner-required',
+      message: '오너 스튜디오는 등록된 제작자 전용 계정으로만 이용할 수 있습니다.'
+    }, { status: 403 });
   }
 
   if (!user.nickname || !user.provider) {

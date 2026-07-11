@@ -82,6 +82,7 @@ for (const path of [
   'functions/api/community/posts/index.js',
   'functions/api/community/comments/index.js',
   'functions/api/community/reactions/index.js',
+  'functions/api/community/reports/index.js',
   'functions/api/posts/index.js',
   'functions/api/contact/index.js'
 ]) assert.equal(await missing(path), true, `${path} must be removed so production returns 404`);

@@ -291,7 +291,8 @@ export async function createSessionCookie(request, env, session) {
 
 export async function createOAuthStateCookie(request, env, state) {
   const expiresAt = Date.now() + OAUTH_STATE_TTL_SECONDS * 1000;
-  const payload = base64UrlEncode(JSON.stringify({ state, exp: expiresAt }));
+  const statePayload = state && typeof state === 'object' ? state : { state };
+  const payload = base64UrlEncode(JSON.stringify({ ...statePayload, exp: expiresAt }));
   const signature = await sign(payload, getSessionSecret(env));
   const secure = new URL(request.url).protocol === 'https:' ? '; Secure' : '';
   return `${OAUTH_STATE_COOKIE}=${payload}.${signature}; Path=/; Max-Age=${OAUTH_STATE_TTL_SECONDS}; HttpOnly; SameSite=Lax${secure}`;
@@ -301,18 +302,22 @@ export function clearOAuthStateCookie() {
   return `${OAUTH_STATE_COOKIE}=; Path=/; Max-Age=0; HttpOnly; SameSite=Lax`;
 }
 
-export async function verifyOAuthState(request, env, state) {
+export async function readOAuthState(request, env, state) {
   const value = getCookieValue(request, OAUTH_STATE_COOKIE);
   const [payload, signature] = value.split('.');
-  if (!payload || !signature || !state) return false;
+  if (!payload || !signature || !state) return null;
   const expected = await sign(payload, getSessionSecret(env));
-  if (signature !== expected) return false;
+  if (signature !== expected) return null;
   try {
     const data = JSON.parse(new TextDecoder().decode(base64UrlDecode(payload)));
-    return data.state === state && data.exp && Date.now() <= data.exp;
+    return data.state === state && data.exp && Date.now() <= data.exp ? data : null;
   } catch {
-    return false;
+    return null;
   }
+}
+
+export async function verifyOAuthState(request, env, state) {
+  return Boolean(await readOAuthState(request, env, state));
 }
 
 export function clearSessionCookie() {

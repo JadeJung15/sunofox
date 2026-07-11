@@ -205,6 +205,13 @@
   async function updateOAuthProviderStatus() {
     const buttons = [...document.querySelectorAll('[data-oauth-provider]')];
     if (!buttons.length) return;
+    buttons.forEach((button) => {
+      const oauthUrl = new URL(button.getAttribute('href') || '/', window.location.origin);
+      oauthUrl.searchParams.set('next', getNext());
+      const oauthHref = `${oauthUrl.pathname}${oauthUrl.search}${oauthUrl.hash}`;
+      button.setAttribute('href', oauthHref);
+      button.dataset.oauthHref = oauthHref;
+    });
     const root = buttons[0].closest('.sf-social-auth');
     const note = ensureOAuthStatusNote(root);
     buttons.forEach((button) => {

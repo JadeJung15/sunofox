@@ -8,9 +8,9 @@ import {
   kvListUsers,
   normalizeEmail,
   normalizeNickname,
+  readOAuthState,
   saveUser,
   safeRedirectPath,
-  verifyOAuthState
 } from './auth.js';
 
 function randomState() {
@@ -95,6 +95,7 @@ export async function startOAuth(context, provider) {
 
   const requestUrl = new URL(context.request.url);
   const state = randomState();
+  const next = safeRedirectPath(requestUrl.searchParams.get('next') || '/account');
   const redirectUri = `${requestUrl.origin}/api/auth/oauth/${provider}/callback`;
   const authUrl = new URL(config.authUrl);
   authUrl.searchParams.set('client_id', config.clientId);
@@ -106,7 +107,7 @@ export async function startOAuth(context, provider) {
     authUrl.searchParams.set('access_type', 'online');
     authUrl.searchParams.set('prompt', 'select_account');
   }
-  const stateCookie = await createOAuthStateCookie(context.request, context.env, state);
+  const stateCookie = await createOAuthStateCookie(context.request, context.env, { state, next });
   const headers = new Headers({ location: authUrl.toString() });
   headers.append('set-cookie', stateCookie);
   return new Response(null, { status: 302, headers });
@@ -286,11 +287,12 @@ export async function handleOAuthCallback(context, provider) {
   const requestUrl = new URL(context.request.url);
   const code = requestUrl.searchParams.get('code') || '';
   const state = requestUrl.searchParams.get('state') || '';
+  const oauthState = await readOAuthState(context.request, context.env, state);
   const redirectUri = `${requestUrl.origin}/api/auth/oauth/${provider}/callback`;
   const baseHeaders = new Headers();
   baseHeaders.append('set-cookie', clearOAuthStateCookie());
 
-  if (!code || !(await verifyOAuthState(context.request, context.env, state))) {
+  if (!code || !oauthState) {
     const target = loginRedirect(context.request, 'state-error');
     baseHeaders.set('location', target.toString());
     return new Response(null, { status: 302, headers: baseHeaders });
@@ -310,7 +312,7 @@ export async function handleOAuthCallback(context, provider) {
       email: user.email,
       role: normalizeEmail(user.email) === getAdminEmail(context.env) ? 'owner' : 'member'
     });
-    const target = new URL(safeRedirectPath(requestUrl.searchParams.get('next') || '/account'), requestUrl.origin);
+    const target = new URL(safeRedirectPath(oauthState.next || '/account'), requestUrl.origin);
     baseHeaders.append('set-cookie', sessionCookie);
     baseHeaders.set('location', target.toString());
     return new Response(null, { status: 302, headers: baseHeaders });

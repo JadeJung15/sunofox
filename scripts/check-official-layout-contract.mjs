@@ -11,6 +11,11 @@ assert.match(
   /body:has\(\.official-home\)\{[^}]*background:#050509!important/,
   'official home must force the page canvas to the dark brand background'
 );
+assert.match(
+  shell,
+  /\.site-header\{[^}]*pointer-events:auto;?/,
+  'official header must remain interactive over the legacy non-interactive header rule'
+);
 assert.doesNotMatch(
   home,
   /\.chapter\s*\{[^}]*scroll-margin-top:/,

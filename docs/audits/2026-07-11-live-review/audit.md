@@ -52,6 +52,8 @@
 
 위 발견 사항은 같은 날 모두 수정했습니다. 수정 후 기준 이미지와 구현 화면을 하나의 비교 이미지로 합쳐 재검토했고, 1440px·1024px·768px·390px에서 가로 넘침과 잘린 텍스트가 없으며 콘솔 경고·오류도 0건임을 확인했습니다.
 
+운영 재검증 중에는 레거시 `.site-header { pointer-events:none }` 규칙이 보이는 메뉴의 클릭을 막는 문제도 추가로 발견해, 최종 셸에서 `pointer-events:auto`로 명시적으로 복구하고 회귀 계약에 포함했습니다.
+
 - 데스크톱 비교: `../../design-references/comparison-desktop-improved.png`
 - 모바일 비교: `../../design-references/comparison-mobile-improved.png`
 - 최종 판정: 저장소 루트 `design-qa.md`의 `final result: passed`

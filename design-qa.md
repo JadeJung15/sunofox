@@ -53,6 +53,7 @@ Implementation evidence:
 - Balanced all four production-flow description measures.
 - Increased mobile navigation readability and target height.
 - Added `scripts/check-official-layout-contract.mjs` so these regressions fail the test suite.
+- Restored `pointer-events:auto` on the official header after interaction QA found the legacy shell rule made visible navigation non-interactive.
 - Rechecked the combined desktop/mobile comparisons and intermediate responsive widths after the fixes.
 - Browser console warning/error count: 0.
 - No actionable P0, P1, or P2 visual differences remain. Real artwork/title variation is the approved content exception.

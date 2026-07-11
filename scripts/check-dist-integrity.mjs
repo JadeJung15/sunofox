@@ -6,17 +6,13 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(__dirname, '..');
 const distDir = path.join(rootDir, 'dist');
 const siteOrigin = 'https://sunofox.com';
-const authScriptPath = path.join(rootDir, 'public', 'js', 'sfAuth.js');
 const studioScriptPath = path.join(rootDir, 'public', 'js', 'mvStoryboardStudio.js');
 const studioSwPath = path.join(rootDir, 'public', 'sf-studio-sw.js');
 const studioAssetVersion = '20260710-mobile-home';
 const protectedSourcePrefixes = [
   '/_sf-studio-entry',
-  '/account',
-  '/admin',
   '/login',
-  '/mv-studio',
-  '/signup'
+  '/mv-studio'
 ];
 
 const errors = [];
@@ -191,15 +187,6 @@ if (canonicalStudioEntry !== null && canonicalStudioEntry !== undefined) {
   if (!canonicalStudioEntry.includes(`mv-storyboard.css?v=${studioAssetVersion}`)) {
     errors.push(`mv-studio.html: Studio storyboard CSS must use ${studioAssetVersion}`);
   }
-}
-
-const authScript = await readFile(authScriptPath, 'utf8').catch((error) => {
-  errors.push(`public/js/sfAuth.js: failed to read auth script (${error.message})`);
-  return '';
-});
-
-if (!authScript.includes("url.pathname === '/mv-studio.html'")) {
-  errors.push('public/js/sfAuth.js: /mv-studio.html must use the Studio login context');
 }
 
 const studioScript = await readFile(studioScriptPath, 'utf8').catch((error) => {

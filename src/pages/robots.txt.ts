@@ -4,10 +4,8 @@ const disallowPaths = [
   '/account',
   '/admin',
   '/api/',
-  '/community-post',
   '/login',
-  '/mv-studio',
-  '/signup'
+  '/mv-studio'
 ];
 
 export const GET: APIRoute = ({ site }) => {

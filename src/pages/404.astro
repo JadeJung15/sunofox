@@ -6,7 +6,7 @@ import { featuredStoryOst, latestNovelEpisode, novelProject } from '../data/site
 
 <Layout
   title="페이지를 찾을 수 없습니다 | SunoFox 수노폭스"
-  description="요청한 SunoFox 수노폭스 페이지를 찾을 수 없습니다. 소설 목록, 최신화, 음악 아카이브, SunoFox 소개로 이동할 수 있습니다."
+  description="요청한 SunoFox 수노폭스 페이지를 찾을 수 없습니다. 공식 홈, 소설, 필모그래피로 이동할 수 있습니다."
   canonical="https://sunofox.com/404.html"
   image={`https://sunofox.com${novelProject.coverImage}`}
   imageAlt={novelProject.coverAlt}
@@ -27,19 +27,19 @@ import { featuredStoryOst, latestNovelEpisode, novelProject } from '../data/site
       <div class="not-found-copy">
         <p class="section-kicker">SUGGESTED PATH</p>
         <h2>다음 장면으로 이동</h2>
-        <p>현재 공개 중인 음악 아카이브와 스토리 보드로 바로 이동할 수 있습니다.</p>
+        <p>현재 공개 중인 소설과 대표 필모그래피로 바로 이동할 수 있습니다.</p>
       </div>
 
       <div class="not-found-actions">
         <a class="main-button main-button-primary" href="/">홈으로 돌아가기</a>
-        <a class="main-button main-button-muted" href="/music/">음악 아카이브</a>
+        <a class="main-button main-button-muted" href="/#filmography">필모그래피</a>
         <a class="main-button main-button-muted" href="/novels/">소설 보러가기</a>
       </div>
 
       <nav class="not-found-secondary-links" aria-label="SunoFox secondary 404 links">
         <a href={latestNovelEpisode.href}>최신화</a>
         <a href={featuredStoryOst.href} target="_blank" rel="noopener noreferrer">OST 감상</a>
-        <a href="/profile/">채널 소개</a>
+        <a href="/#about">채널 소개</a>
       </nav>
     </section>
   </main>

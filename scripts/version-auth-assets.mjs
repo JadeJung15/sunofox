@@ -19,14 +19,7 @@ const assets = [
   }
 ];
 
-const htmlFiles = [
-  'admin.html',
-  'admin/index.html',
-  'account.html',
-  'account/index.html',
-  'login.html',
-  'signup.html',
-];
+const htmlFiles = ['login.html'];
 
 const versioned = new Map();
 

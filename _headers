@@ -30,22 +30,6 @@
   Cache-Control: no-store
   X-Robots-Tag: noindex, nofollow
 
-/signup.html
-  Cache-Control: no-store
-  X-Robots-Tag: noindex, nofollow
-
-/signup
-  Cache-Control: no-store
-  X-Robots-Tag: noindex, nofollow
-
-/admin.html
-  Cache-Control: no-store
-  X-Robots-Tag: noindex, nofollow
-
-/admin
-  Cache-Control: no-store
-  X-Robots-Tag: noindex, nofollow
-
 /mv-studio
   Cache-Control: no-store
   X-Robots-Tag: noindex, nofollow

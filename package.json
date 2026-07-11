@@ -5,19 +5,15 @@
     "build": "astro build && node scripts/version-auth-assets.mjs",
     "lint": "npm run build && npm run check:seo && npm run check:a11y",
     "test": "npm run build && npm run check",
-    "check:admin-oauth": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-admin-oauth-panel.ps1",
-    "check:admin-feedback": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-admin-feedback-summary.ps1",
-    "check": "npm run check:content && npm run check:korean-reader && npm run check:music && npm run check:profile && npm run check:navigation && npm run check:workflow-import && npm run check:owner-studio-login && npm run check:owner-studio-oauth && npm run check:dist && npm run check:seo && npm run check:a11y && npm run check:mobile-css && npm run check:public-routes",
+    "check": "npm run check:content && npm run check:korean-reader && npm run check:official-site && npm run check:navigation && npm run check:workflow-import && npm run check:owner-studio-oauth && npm run check:dist && npm run check:seo && npm run check:a11y && npm run check:mobile-css && npm run check:public-routes",
     "check:public-routes": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-public-routes.ps1",
     "check:production": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-public-routes.ps1 -BaseUrl https://sunofox.com",
     "check:production-seo": "node scripts/check-seo-metadata.mjs --base-url=https://sunofox.com",
     "check:content": "node scripts/check-content-consistency.mjs",
     "check:korean-reader": "node scripts/check-korean-reader-support.mjs",
-    "check:music": "node scripts/check-music-content.mjs",
-    "check:profile": "node scripts/check-profile-content.mjs",
+    "check:official-site": "node scripts/check-official-site-contract.mjs",
     "check:navigation": "node scripts/check-navigation-content.mjs",
     "check:workflow-import": "node scripts/check-sf-workflow-import-options.mjs",
-    "check:owner-studio-login": "node scripts/check-owner-studio-login.mjs",
     "check:owner-studio-oauth": "node scripts/check-owner-studio-oauth.mjs",
     "check:dist": "node scripts/check-dist-integrity.mjs",
     "check:seo": "node scripts/check-seo-metadata.mjs",
@@ -33,10 +29,10 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "3.7.3",
+    "@phosphor-icons/web": "2.1.2",
     "@tailwindcss/vite": "4.1.17",
     "astro": "5.18.2",
     "tailwindcss": "4.1.17",
     "wrangler": "4.80.0"
-  },
-  "devDependencies": {}
+  }
 }

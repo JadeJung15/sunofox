@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import '../styles/official-shell.css';
+import '@phosphor-icons/web/bold';
 import { footerItems } from '../data/navigationContent.js';
 
 const {
@@ -79,14 +81,15 @@ const imageType = image.match(/\.jpe?g($|\?)/i)
     <link rel="apple-touch-icon" href="/assets/sunofox-app-icon-192.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800;900&family=Noto+Serif+KR:wght@500;600;700&display=swap" rel="stylesheet" />
     {jsonLdString && <script type="application/ld+json" set:html={jsonLdString} />}
     <slot name="head" />
   </head>
-  <body class="page-enter min-h-screen overflow-x-hidden bg-[#03030a] text-white">
+  <body class="page-enter min-h-screen overflow-x-hidden bg-[#050509] text-white">
     <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
     <slot />
     <footer class="site-footer" aria-label="SunoFox footer">
+      <strong>SunoFox</strong>
       <span>© 2026 SunoFox. All rights reserved.</span>
       <nav class="site-footer-nav" aria-label="Footer navigation">
         {footerItems.map((item) => (

@@ -7,18 +7,14 @@ const siteContentPath = path.join(rootDir, 'src', 'data', 'siteContent.js');
 const errors = [];
 
 const expectedMenuItems = [
-  { key: 'home', label: '홈', href: '/' },
-  { key: 'music', label: '음악 아카이브', href: '/music/' },
-  { key: 'novels', label: '스토리 보드', href: '/novels/' },
-  { key: 'profile', label: '채널 소개', href: '/profile/' },
-  { key: 'studio', label: '오너 스튜디오', href: '/login?next=/mv-studio' }
+  { key: 'novel', label: '소설', href: '/#novel' },
+  { key: 'about', label: '채널 소개', href: '/#about' },
+  { key: 'filmography', label: '필모그래피', href: '/#filmography' },
+  { key: 'studio', label: '스튜디오', href: '/login?next=/mv-studio' }
 ];
 
 const expectedFooterItems = [
-  { key: 'music', label: '음악 아카이브', href: '/music/' },
-  { key: 'novels', label: '스토리 보드', href: '/novels/' },
-  { key: 'profile', label: '채널 소개', href: '/profile/' },
-  { key: 'privacy', label: '개인정보', href: '/privacy/' },
+  { key: 'privacy', label: '개인정보처리방침', href: '/privacy/' },
   { key: 'terms', label: '이용약관', href: '/terms/' }
 ];
 
@@ -83,10 +79,6 @@ if (!Array.isArray(menuItems)) {
   });
 
   const studioItem = menuItems.find((item) => item.key === 'studio');
-  if (studioItem?.secondary !== true) {
-    fail('menuItems studio: must remain secondary because it is a private tool entry');
-  }
-
   if (studioItem?.href?.startsWith('/login') !== true) {
     fail('menuItems studio: must enter through the login route, not direct public Studio content');
   }

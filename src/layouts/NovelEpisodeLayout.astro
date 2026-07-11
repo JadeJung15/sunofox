@@ -5,7 +5,6 @@ import {
   createEpisodeStructuredData,
   getEpisodeOst,
   latestNovelEpisode,
-  musicArchive,
   novelEpisodes,
   novelProject
 } from '../data/siteContent.js';
@@ -77,8 +76,8 @@ const episodeProgressPercent = publishedEpisodes.length > 0
 const episodeProgressStyle = `--episode-progress: ${episodeProgressPercent}%`;
 const completionActions = [
   { label: '소설 목록', href: backHref, action: 'completion-list' },
-  { label: '음악 아카이브', href: musicArchive.href, action: 'completion-music' },
-  { label: 'SunoFox 소개', href: '/profile/', action: 'completion-profile' }
+  { label: '필모그래피', href: '/#filmography', action: 'completion-music' },
+  { label: 'SunoFox 소개', href: '/#about', action: 'completion-profile' }
 ];
 ---
 
@@ -229,7 +228,7 @@ const completionActions = [
 
         <div class="novel-reader-ost-actions" aria-label="Episode OST links">
           <a class="main-button" href={currentEpisodeOst.href} target="_blank" rel="noopener noreferrer" data-reader-action="ost-primary">OST 감상</a>
-          <a class="main-button main-button-muted" href={musicArchive.href} data-reader-action="music-archive">음악 아카이브</a>
+          <a class="main-button main-button-muted" href="/#filmography" data-reader-action="music-archive">필모그래피</a>
           <a class="main-button main-button-muted" href={backHref} data-reader-action="work-info">작품 정보</a>
         </div>
       </section>

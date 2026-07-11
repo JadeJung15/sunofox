@@ -204,8 +204,6 @@ async function readHtml(route) {
 
 const siteContentModule = await import(`${pathToFileURL(siteContentPath).href}?mtime=${Date.now()}`);
 const {
-  archiveAlbum,
-  musicArchive,
   novelProject,
   publishedNovelEpisodes
 } = siteContentModule;
@@ -215,9 +213,9 @@ const routes = [
     name: 'home',
     file: 'index.html',
     canonical: `${siteUrl}/`,
-    title: `${siteName} | Anime OST Studio`,
+    title: 'SunoFox 수노폭스 | Anime OST Story Studio',
     descriptionIncludes: '애니메이션 감성의 OST',
-    jsonLdTypes: ['Organization', 'WebSite', 'CreativeWorkSeries']
+    jsonLdTypes: ['Organization', 'WebSite', 'ItemList']
   },
   {
     name: 'novels',
@@ -226,30 +224,6 @@ const routes = [
     title: `${novelProject.title} | ${siteName}`,
     descriptionIncludes: '몰락해야 했던 악녀',
     jsonLdTypes: ['CreativeWorkSeries', 'BreadcrumbList']
-  },
-  {
-    name: 'music',
-    file: 'music/index.html',
-    canonical: `${siteUrl}/music/`,
-    title: `${musicArchive.title} | Anime OST Studio`,
-    descriptionIncludes: '필모그래피',
-    jsonLdTypes: ['CollectionPage', 'BreadcrumbList']
-  },
-  {
-    name: 'album',
-    file: 'music/archive-vol-1/index.html',
-    canonical: `${siteUrl}${archiveAlbum.href}`,
-    title: `${archiveAlbum.title} | ${siteName}`,
-    descriptionIncludes: '오리지널 트랙',
-    jsonLdTypes: ['MusicAlbum', 'BreadcrumbList']
-  },
-  {
-    name: 'profile',
-    file: 'profile/index.html',
-    canonical: `${siteUrl}/profile/`,
-    title: `${siteName} 소개 | Anime OST Studio`,
-    descriptionIncludes: '이야기 기반 Anime OST',
-    jsonLdTypes: ['Organization', 'WebSite']
   },
 ];
 

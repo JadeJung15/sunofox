@@ -6,7 +6,7 @@
 - 이 폴더는 SF Studio 단독 정적 사이트입니다. WEBLING 제작부 분석 사이트, production, defect, return-defect, BO, Firebase, Firestore 기능을 섞지 마세요.
 - 기본 정본 도메인은 `https://sunofox.com`이며, 내부 canonical route는 `/mv-studio`입니다.
 - 기본 배포 대상은 Cloudflare Pages 프로젝트 `sf-studio`입니다.
-- 현재 접근 모델은 Cloudflare Access가 아니라 SF Studio 자체 이메일 신청 + 사이트 주인 승인 + 입장 코드 로그인입니다.
+- 현재 접근 모델은 Cloudflare Access가 아니라 `SF_STUDIO_ADMIN_EMAIL`과 정확히 일치하는 단일 오너 Google 계정 로그인입니다. 회원가입, 승인 대기, 이메일/비밀번호, 입장 코드, Kakao 로그인은 사용하지 않습니다.
 - Cloudflare Pages 수동 배포, Cloudflare Access 앱 생성/변경/복구, DNS 변경, 강제 push, PR merge는 별도 명시 없이는 하지 마세요.
 - 개발/수정/구현 작업은 완료 검증 후 일반 `git commit`과 `git push origin main`까지 진행하는 것을 기본값으로 하세요. GitHub push에 따른 Cloudflare Pages 자동 배포는 이 기본 흐름에 포함합니다.
 - 분석, 시안 검토, 조사, 질문 답변처럼 파일 변경이 없는 요청은 커밋/푸시 대상이 아닙니다.

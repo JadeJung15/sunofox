@@ -1,6 +1,6 @@
 # SunoFox Official Site
 
-SunoFox 공식 사이트는 YouTube에서 공개되는 Anime OST와 웹소설 OST를 음악 아카이브, Story IP, 제작 스튜디오 흐름으로 확장하는 Cloudflare Pages 기반 정적 사이트입니다.
+SunoFox 공식 사이트는 Anime OST, 웹소설, 필모그래피를 한 페이지에서 소개하고 내부 제작 스튜디오로 연결하는 Cloudflare Pages 기반 브랜드 사이트입니다.
 
 ## Current Production
 
@@ -14,8 +14,8 @@ SunoFox 공식 사이트는 YouTube에서 공개되는 Anime OST와 웹소설 OS
 | Cloudflare Pages 프로젝트 | `sf-studio` |
 | 빌드 출력 | `dist` |
 | 운영 배포 방식 | GitHub Actions에서 `main` push 시 Cloudflare Pages Direct Upload |
-| 공개 사이트 방향 | YouTube 중심 Anime OST Studio, 웹소설 OST, Story IP, 음악 아카이브, 스튜디오 진입 |
-| 접근 모델 | 공개 사이트 + SF Studio 자체 승인/로그인 |
+| 공개 사이트 방향 | `/` 단일 페이지의 소설·채널 소개·필모그래피·스튜디오 진입 |
+| 접근 모델 | 공개 사이트 + 단일 오너 Google 계정 로그인 |
 
 ## Public Routes
 
@@ -23,17 +23,14 @@ SunoFox 공식 사이트는 YouTube에서 공개되는 Anime OST와 웹소설 OS
 
 | Route | 용도 | 소스 |
 |---|---|---|
-| `/` | SunoFox 메인, 공개 회차 상태와 소설/음악/스튜디오 CTA | `src/pages/index.astro` |
-| `/novels/` | 웹소설 작품/회차 목록 | `src/pages/novels.astro` |
+| `/` | SunoFox 공식 소개, 소설·채널·필모그래피·스튜디오 앵커 | `src/pages/index.astro` |
+| `/novels/` | 대표 웹소설 소개와 6개 회차 목록 | `src/pages/novels.astro` |
 | `/novels/episode-001/` | 1화 | `src/pages/novels/episode-001.md` |
 | `/novels/episode-002/` | 2화 | `src/pages/novels/episode-002.md` |
 | `/novels/episode-003/` | 3화 | `src/pages/novels/episode-003.md` |
 | `/novels/episode-004/` | 4화 | `src/pages/novels/episode-004.md` |
 | `/novels/episode-005/` | 5화 | `src/pages/novels/episode-005.md` |
 | `/novels/episode-006/` | 6화 | `src/pages/novels/episode-006.md` |
-| `/music/` | Music Archive | `src/pages/music/index.astro` |
-| `/music/archive-vol-1/` | ARCHIVE vol.1 앨범 상세 | `src/pages/music/archive-vol-1.astro` |
-| `/profile/` | SunoFox 소개/필모그래피 | `src/pages/profile.astro` |
 | `/privacy/` | 개인정보 처리방침 | `src/pages/privacy.astro` |
 | `/terms/` | 이용약관 | `src/pages/terms.astro` |
 | `/404.html` | custom 404 fallback | `src/pages/404.astro` |
@@ -48,12 +45,9 @@ SunoFox 공식 사이트는 YouTube에서 공개되는 Anime OST와 웹소설 OS
 | Route | 용도 | 주의 |
 |---|---|---|
 | `/mv-studio` | 관리자 전용 제작 공간 | 구조 변경 금지, noindex 유지 |
-| `/login` | 자체 로그인 | 인증 구조 변경 금지 |
-| `/signup` | 입장 신청 | 인증 구조 변경 금지 |
-| `/admin` | 승인/관리 화면 | 관리자 기능 변경 금지 |
-| `/account` | 계정/입장 상태 | 인증 흐름 변경 금지, robots noindex/Disallow 유지 |
-| `/api/auth/*` | 인증 API | 대규모 변경 금지 |
-| `/api/community/*` | 레거시 커뮤니티 API | 삭제/DB 변경 금지 |
+| `/login` | 오너 Google 로그인 | Google OAuth와 안전한 `next` 유지 |
+| `/api/auth/oauth/*` | OAuth 시작·상태·Google 콜백 | 서명 state와 오너 이메일 검증 유지 |
+| `/api/auth/me`, `/api/auth/logout` | Studio 세션 확인·종료 | no-store 유지 |
 
 ## Core Files
 
@@ -61,15 +55,15 @@ SunoFox 공식 사이트는 YouTube에서 공개되는 Anime OST와 웹소설 OS
 |---|---|---|
 | 공통 레이아웃 | `src/layouts/Layout.astro` | title, description, canonical, OG, Twitter card, footer |
 | 에피소드 레이아웃 | `src/layouts/NovelEpisodeLayout.astro` | 본문, OST, 이전/다음/목록 이동 |
-| 헤더/메뉴 | `src/components/SiteChrome.astro` | 고정 헤더와 오버레이 메뉴 |
+| 헤더/메뉴 | `src/components/SiteChrome.astro` | 고정 헤더와 네 개 메뉴 |
 | 사이트 데이터 집계 | `src/data/siteContent.js` | 프로필, JSON-LD 및 하위 데이터 re-export |
 | 아티스트/OST 링크 데이터 | `src/data/artistContent.js` | YouTube, 음원 플랫폼, 대표 웹소설 OST 링크 |
 | 음악 아카이브 데이터 | `src/data/musicContent.js` | 앨범, 음악 아카이브, YouTube/MV 허브 목록 |
 | 웹소설 데이터 | `src/data/novelContent.js` | 작품 정보, 세계관, 인물, 에피소드 목록 |
-| 메뉴 데이터 | `src/data/navigationContent.js` | 공개 overlay menu 항목 |
-| 전역 스타일 | `src/styles/global.css` | 모든 공개 페이지 UI |
+| 메뉴 데이터 | `src/data/navigationContent.js` | 공개 메뉴 네 개와 법적 푸터 링크 |
+| 전역 스타일 | `src/styles/global.css`, `src/styles/official-shell.css` | 기존 페이지와 공식 단일 페이지 셸 |
 | 정적 assets | `public/assets/` | 커버, 아이콘, 앨범 이미지 |
-| Cloudflare 설정 | `wrangler.jsonc` | Pages output, KV/D1 binding, vars |
+| Cloudflare 설정 | `wrangler.jsonc` | Pages output과 오너 이메일 변수 |
 | headers/redirects | `_headers`, `_redirects`, `public/_headers`, `public/_redirects` | Cloudflare Pages 헤더/리다이렉트 |
 
 ## Operation Docs
@@ -196,14 +190,13 @@ npm run deploy:production
 
 `check:content`는 `src/data/siteContent.js`의 `novelEpisodes`와 `src/pages/novels/episode-00N.md` frontmatter의 title, canonical, publishedAt, readTime, 이전/다음 링크, 공유 제목/설명/태그를 비교합니다. 또한 `/novels/`의 `readingPath`가 공개 회차를 빠짐없이 덮고 각 구간의 첫 화로 연결되는지 확인하며, 공개 데이터에 없는 에피소드 route 파일이 실수로 배포되지 않도록 실패 처리합니다. 세계관/캐릭터 카드의 `id`와 `/novels/#...` 앵커도 함께 검증합니다.
 `check:korean-reader`는 에피소드 본문과 시스템 문구에 영어 문장이 들어갈 경우 같은 줄에 한글 설명 또는 괄호 병기가 있는지 확인합니다.
-`check:music`은 대표 OST, YouTube/MV 영상 목록, 영상 허브 요약/필수 링크, ARCHIVE vol.1 트랙 순서, 영상 ID와 썸네일 URL의 일치 여부를 확인합니다.
-`check:profile`은 SunoFox 소개 페이지의 허브 카드, quick action, 필모그래피 탭, YouTube 영상 링크, 출처 링크가 기본 구조를 유지하는지 확인합니다.
-`check:navigation`은 오버레이 메뉴의 `홈`, `음악`, `스토리 보드`, `채널 소개`, `오너 스튜디오` 라벨과 내부 canonical href, compact hierarchy를 확인하고, 푸터의 `음악`, `스토리 보드`, `채널 소개`, `개인정보`, `이용약관` 링크 순서도 함께 검증합니다.
-`check:dist`는 빌드된 공개 HTML/CSS/manifest의 내부 링크, 이미지, asset 경로가 `dist` 안에 실제 존재하는지 확인합니다. 보호/운영 HTML인 `/mv-studio`, `/login`, `/signup`, `/admin`, `/account` 계열은 구조 변경 승인 범위와 분리해 제외합니다.
-`check:seo`는 홈, 작품 목록, 1~6화 상세, Music Archive, 앨범 상세, Profile의 title, description, canonical, OG/Twitter card, 회차별 공유 문구, JSON-LD 기본 타입을 확인합니다.
+`check:official-site`는 홈 앵커, 메뉴 네 개, 필모그래피 여섯 개, 리다이렉트, 제거 라우트/API, Google 전용 로그인과 Wrangler 바인딩 제거를 확인합니다.
+`check:navigation`은 `소설`, `채널 소개`, `필모그래피`, `스튜디오` 링크와 법적 푸터 링크 두 개를 확인합니다.
+`check:dist`는 빌드된 공개 HTML/CSS/manifest의 내부 링크, 이미지, asset 경로가 `dist` 안에 실제 존재하는지 확인합니다.
+`check:seo`는 홈, 작품 목록, 1~6화 상세의 title, description, canonical, OG/Twitter card, 회차별 공유 문구, JSON-LD 기본 타입을 확인합니다.
 `check:a11y`는 공개 HTML의 lang, viewport, h1, 이미지 alt, 링크/버튼 접근 가능한 이름, 새 탭 링크 rel 값을 확인합니다.
-`check:mobile-css`는 모바일에서 메뉴, CTA, 소설 탭, 회차 이동, 에피소드/음악 보조 링크, 음악 아카이브 버튼이 최소 터치 영역과 줄바꿈 방어 규칙을 유지하는지 확인합니다.
-`check:public-routes`는 홈, 작품 목록, 1~6화 상세, Music Archive, 앨범 상세, Profile, custom 404, sitemap-index, legacy sitemap, sitemap, robots의 sitemap 연결과 보호 경로 Disallow 정책을 확인합니다. 에피소드 상세는 본문/전체 회차/OST 내부 이동, 이전/다음/목록/OST 하단 이동 마커를 함께 확인합니다. 로컬 `dist` 검증에서는 `_headers`의 `/robots.txt` 블록이 `Cache-Control`, `CDN-Cache-Control`, `Cloudflare-CDN-Cache-Control`로 짧은 재검증 정책을 유지하는지도 함께 확인합니다. `robots.txt`는 `/account`, `/admin`, `/api/`, `/login`, `/signup`, `/mv-studio`를 Disallow해야 합니다. `sitemap-0.xml`에는 공개 URL이 포함되어야 하고 `/admin`, `/api/`, `/login`, `/signup`, `/mv-studio`, `/account`, `/updates`, 레거시 커뮤니티/뉴스/미디어/굿즈 계열 URL은 포함되면 실패합니다. 운영 URL 모드에서는 존재하지 않는 probe URL이 홈 fallback 200이 아니라 404로 응답하는지도 확인합니다.
+`check:mobile-css`는 390px 단일 열, 2×2 제작 흐름, 2열 포스터, 로그인 터치 영역과 reduced motion을 확인합니다.
+`check:public-routes`는 홈, 작품 목록, 1~6화, 법적 문서, 로그인, sitemap, robots와 기존 URL 리다이렉트를 확인합니다. 운영 URL 모드에서는 제거 API의 404도 함께 확인합니다.
 `check:production-seo`는 같은 SEO 검증 기준을 운영 도메인 HTML에 적용해 배포 후 title, description, OG/Twitter card, JSON-LD 반영 여부를 확인합니다.
 작품 목록과 에피소드 상세는 Breadcrumb JSON-LD, 에피소드는 article publish meta도 함께 검증합니다.
 모바일 검증 시 공개 CTA, 작품 탭, footer 링크는 44px 안팎의 터치 영역을 유지해야 합니다.
@@ -214,10 +207,8 @@ npm run deploy:production
 https://sunofox.com/
 https://sunofox.com/novels/
 https://sunofox.com/novels/episode-006/
-https://sunofox.com/music/
-https://sunofox.com/music/archive-vol-1/
-https://sunofox.com/profile/
-https://sunofox.com/__sunofox_not_found_probe__/
+https://sunofox.com/#filmography
+https://sunofox.com/login?next=/mv-studio
 https://sunofox.com/sitemap.xml
 https://sunofox.com/sitemap-0.xml
 https://sunofox.com/robots.txt
@@ -229,7 +220,7 @@ https://sunofox.com/robots.txt
 
 - README/문서 최신화
 - 공개 라우트 문구/CTA 개선
-- `/music/`, `/novels/`, 에피소드 페이지 접근성 개선
+- `/`, `/novels/`, 에피소드 페이지 접근성 개선
 - SEO/meta/alt/JSON-LD 보강
 - 모바일 레이아웃 소규모 개선
 - 에피소드 추가 체크리스트 작성
@@ -242,7 +233,7 @@ https://sunofox.com/robots.txt
 - 환경변수/API 키/시크릿 추가, 삭제, 출력
 - DB 또는 외부 CMS 도입
 - 인증/로그인/관리자/Functions 대규모 변경
-- `/mv-studio`, `/login`, `/signup`, `/admin` 구조 변경
+- `/mv-studio`, `/login`, OAuth 구조 변경
 - 기존 공개 URL 변경
 - 콘텐츠 대량 삭제
 - 에피소드 본문 대량 변환

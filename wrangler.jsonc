@@ -2,19 +2,6 @@
   "name": "sf-studio",
   "pages_build_output_dir": "dist",
   "compatibility_date": "2026-06-07",
-  "kv_namespaces": [
-    {
-      "binding": "SF_STUDIO_AUTH",
-      "id": "643e40247e1547648f1579999d2326f2"
-    }
-  ],
-  "d1_databases": [
-    {
-      "binding": "SF_COMMUNITY_DB",
-      "database_name": "sf_community",
-      "database_id": "679ce7dc-173c-4ef1-a1d6-03c931ec8281"
-    }
-  ],
   "vars": {
     "SF_STUDIO_ADMIN_EMAIL": "jadejung15@gmail.com"
   }

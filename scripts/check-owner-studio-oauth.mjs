@@ -1,7 +1,6 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
 
-import { handleOAuthCallback, startOAuth } from '../functions/_shared/oauth.js';
+import { getOAuthProviderStatus, handleOAuthCallback, startOAuth } from '../functions/_shared/oauth.js';
 
 const ownerEmail = 'owner-google-check@example.com';
 const env = {
@@ -11,63 +10,71 @@ const env = {
   SF_GOOGLE_CLIENT_SECRET: 'google-client-secret'
 };
 
-const startResponse = await startOAuth({
-  request: new Request('https://sunofox.com/api/auth/oauth/start?provider=google&next=%2Fmv-studio'),
+async function start(next = '/mv-studio') {
+  const response = await startOAuth({ request: new Request(`https://sunofox.com/api/auth/oauth/start?provider=google&next=${encodeURIComponent(next)}`), env }, 'google');
+  const location = new URL(response.headers.get('location'));
+  return { response, state: location.searchParams.get('state'), cookie: response.headers.get('set-cookie').split(';', 1)[0] };
+}
+
+async function callback({ email, next = '/mv-studio', stateOverride = '' }) {
+  const started = await start(next);
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async (url) => {
+    if (String(url).includes('oauth2.googleapis.com/token')) return Response.json({ access_token: 'google-access-token' });
+    if (String(url).includes('openidconnect.googleapis.com/v1/userinfo')) return Response.json({ sub: 'google-id', email, name: 'Owner' });
+    throw new Error(`Unexpected OAuth request: ${url}`);
+  };
+  try {
+    return await handleOAuthCallback({
+      request: new Request(`https://sunofox.com/api/auth/oauth/google/callback?code=oauth-code&state=${encodeURIComponent(stateOverride || started.state)}`, { headers: { cookie: started.cookie } }),
+      env
+    }, 'google');
+  } finally {
+    globalThis.fetch = originalFetch;
+  }
+}
+
+const ownerResponse = await callback({ email: ownerEmail, next: '/privacy/' });
+assert.equal(ownerResponse.status, 302);
+assert.equal(ownerResponse.headers.get('location'), 'https://sunofox.com/mv-studio', 'owner Google login must always enter Studio');
+assert.match(ownerResponse.headers.get('set-cookie') || '', /sf_studio_session=/, 'owner login must create a secure Studio session');
+assert.match(ownerResponse.headers.get('set-cookie') || '', /HttpOnly/);
+assert.match(ownerResponse.headers.get('set-cookie') || '', /SameSite=Lax/);
+assert.match(ownerResponse.headers.get('set-cookie') || '', /Secure/);
+
+const outsiderResponse = await callback({ email: 'outsider@example.com' });
+assert.equal(outsiderResponse.status, 302);
+assert.match(outsiderResponse.headers.get('location') || '', /oauth=owner-required/, 'non-owner Google login must explain owner-only access');
+assert.doesNotMatch(outsiderResponse.headers.get('set-cookie') || '', /sf_studio_session=/, 'non-owner login must not create a session');
+
+const tamperedStart = await start();
+const tamperedResponse = await handleOAuthCallback({
+  request: new Request('https://sunofox.com/api/auth/oauth/google/callback?code=oauth-code&state=tampered', { headers: { cookie: tamperedStart.cookie } }),
   env
 }, 'google');
-assert.equal(startResponse.status, 302, 'Google OAuth should start with a redirect');
+assert.match(tamperedResponse.headers.get('location') || '', /oauth=state-error/, 'tampered state must be rejected');
+assert.doesNotMatch(tamperedResponse.headers.get('set-cookie') || '', /sf_studio_session=/);
 
-const googleLocation = new URL(startResponse.headers.get('location'));
-const state = googleLocation.searchParams.get('state');
-const stateCookie = startResponse.headers.get('set-cookie');
-assert.ok(state, 'Google OAuth should send a state value');
-assert.match(stateCookie || '', /sf_oauth_state=/, 'Google OAuth should store signed state');
-
-const originalFetch = globalThis.fetch;
-globalThis.fetch = async (url) => {
-  if (String(url).includes('oauth2.googleapis.com/token')) {
-    return Response.json({ access_token: 'google-access-token' });
-  }
-  if (String(url).includes('openidconnect.googleapis.com/v1/userinfo')) {
-    return Response.json({
-      sub: 'google-owner-id',
-      email: ownerEmail,
-      name: 'Owner',
-      given_name: 'Owner'
-    });
-  }
-  throw new Error(`Unexpected OAuth request: ${url}`);
-};
-
-let callbackResponse;
+const expiredStart = await start();
+const realDateNow = Date.now;
+Date.now = () => realDateNow() + (11 * 60 * 1000);
+let expiredResponse;
 try {
-  callbackResponse = await handleOAuthCallback({
-    request: new Request(`https://sunofox.com/api/auth/oauth/google/callback?code=oauth-code&state=${encodeURIComponent(state)}`, {
-      headers: { cookie: stateCookie.split(';', 1)[0] }
-    }),
+  expiredResponse = await handleOAuthCallback({
+    request: new Request(`https://sunofox.com/api/auth/oauth/google/callback?code=oauth-code&state=${encodeURIComponent(expiredStart.state)}`, { headers: { cookie: expiredStart.cookie } }),
     env
   }, 'google');
 } finally {
-  globalThis.fetch = originalFetch;
+  Date.now = realDateNow;
 }
+assert.match(expiredResponse.headers.get('location') || '', /oauth=state-error/, 'expired state must be rejected');
+assert.doesNotMatch(expiredResponse.headers.get('set-cookie') || '', /sf_studio_session=/);
 
-assert.equal(callbackResponse.status, 302, 'Google OAuth callback should redirect');
-assert.equal(
-  callbackResponse.headers.get('location'),
-  'https://sunofox.com/mv-studio',
-  'owner Google login should restore the requested Studio destination'
-);
-assert.match(
-  callbackResponse.headers.get('set-cookie') || '',
-  /sf_studio_session=/,
-  'owner Google login should create a Studio session'
-);
+const unsafeResponse = await callback({ email: ownerEmail, next: 'https://evil.example/steal' });
+assert.equal(unsafeResponse.headers.get('location'), 'https://sunofox.com/mv-studio', 'external next must never be followed');
 
-const authScript = await readFile(new URL('../public/js/sfAuth.js', import.meta.url), 'utf8');
-assert.match(
-  authScript,
-  /searchParams\.set\(['"]next['"],\s*getNext\(\)\)/,
-  'login OAuth buttons should forward the current next destination'
-);
+const unsupported = await startOAuth({ request: new Request('https://sunofox.com/api/auth/oauth/start?provider=kakao'), env }, 'kakao');
+assert.match(unsupported.headers.get('location') || '', /oauth=unsupported/);
+assert.deepEqual(Object.keys(getOAuthProviderStatus(env)), ['google'], 'OAuth status must expose Google only');
 
-console.log('Owner Studio OAuth check passed: login button destination and Google callback redirect.');
+console.log('Owner Studio OAuth check passed: owner entry, non-owner denial, state integrity, secure cookies, and safe destination.');

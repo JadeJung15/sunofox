@@ -63,10 +63,11 @@ if ([string]::IsNullOrWhiteSpace($BaseUrl)) {
     foreach ($rule in $redirects) {
       $response = $client.GetAsync("$($BaseUrl.TrimEnd('/'))$($rule.Path)").GetAwaiter().GetResult()
       $location = [string]$response.Headers.Location
-      $results += [pscustomobject]@{ Name='redirect'; Path=$rule.Path; Status=[int]$response.StatusCode; Pass=([int]$response.StatusCode -eq $rule.Status -and $location -like "*$($rule.Location)*"); Missing=if($location -like "*$($rule.Location)*") {''} else {$rule.Location}; Unexpected=$location }
+      $decodedLocation = [uri]::UnescapeDataString($location)
+      $results += [pscustomobject]@{ Name='redirect'; Path=$rule.Path; Status=[int]$response.StatusCode; Pass=([int]$response.StatusCode -eq $rule.Status -and $decodedLocation -like "*$($rule.Location)*"); Missing=if($decodedLocation -like "*$($rule.Location)*") {''} else {$rule.Location}; Unexpected=$location }
       $response.Dispose()
     }
-    foreach ($path in @('/api/auth/signup','/api/auth/login','/api/auth/profile','/api/admin/users','/api/community/posts','/api/posts','/api/contact')) {
+    foreach ($path in @('/api/auth/signup','/api/auth/login','/api/auth/profile','/api/admin/users','/api/community/posts','/api/community/reports','/api/posts','/api/contact')) {
       $response = $client.GetAsync("$($BaseUrl.TrimEnd('/'))$path").GetAwaiter().GetResult()
       $results += [pscustomobject]@{ Name='retired-api'; Path=$path; Status=[int]$response.StatusCode; Pass=([int]$response.StatusCode -eq 404); Missing='404'; Unexpected='' }
       $response.Dispose()

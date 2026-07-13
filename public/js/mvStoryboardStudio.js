@@ -4527,9 +4527,9 @@
           <button data-action="toggle-cut-drawer" aria-controls="mv-console-cut-column" aria-expanded="false" type="button">컷 목록 열기</button>
           <button data-action="toggle-context-sheet" aria-controls="mv-console-context-column" aria-expanded="false" type="button">이미지 보관함 열기</button>
         </div>
-        <aside id="mv-console-cut-column" class="mv-assist-panel mv-cut-list-panel mv-console-cut-column" aria-label="컷 목록">
+        <aside id="mv-console-cut-column" class="mv-assist-panel mv-cut-list-panel mv-console-cut-column" role="region" aria-labelledby="mv-console-cut-heading" aria-hidden="true" inert tabindex="-1">
           <div class="mv-cut-list-head">
-            <span class="mv-kicker">후보 리스트 (${state.storyboard.cuts.length})</span>
+            <span id="mv-console-cut-heading" class="mv-kicker">후보 리스트 (${state.storyboard.cuts.length})</span>
             <div class="mv-cut-search">
               <input id="mv-cut-search" type="search" placeholder="후보 검색" value="${escapeAttr(state.search || '')}">
             </div>
@@ -4626,9 +4626,9 @@
           </div>` : '<p class="mv-tip">일관성 기준 꺼짐 · 캐릭터, 그림체, 세계관 고정 문장을 제외하고 컷별 장면 중심으로 생성합니다.</p>'}`}
         </section>
 
-        <section id="mv-console-context-column" class="mv-file-panel mv-console-context-column" aria-label="이미지 보관함">
+        <section id="mv-console-context-column" class="mv-file-panel mv-console-context-column" role="region" aria-labelledby="mv-console-context-heading" aria-hidden="true" inert tabindex="-1">
           <div>
-            <span class="mv-kicker">이미지 보관함</span>
+            <span id="mv-console-context-heading" class="mv-kicker">이미지 보관함</span>
             <p class="mv-tip">Midjourney에서 선택한 이미지를 한 번에 드롭하세요. 순서는 임시 배치만 하고, 최종 순서는 편집 단계에서 정합니다.</p>
           </div>
           <label class="mv-drop-zone mv-bulk-drop-zone mv-candidate-drop-zone" data-bulk-drop data-start-cut="${cut.number}">
@@ -4651,28 +4651,59 @@
   function mobileWorkspaceContext(context = {}) {
     return {
       body: context.body || document.body,
-      root: context.root || els.result
+      root: context.root || els.result,
+      isMobile: context.isMobile,
+      viewportWidth: context.viewportWidth,
+      activeElement: context.activeElement
     };
   }
 
-  function setMobileWorkspacePanels(next = {}, context = {}) {
+  function syncMobilePanelAccessibility(panel, open, mobile, focusOpen) {
+    if (!panel) return;
+    const hidden = mobile && !open;
+    panel.inert = hidden;
+    panel.toggleAttribute('inert', hidden);
+    panel.setAttribute('aria-hidden', String(hidden));
+    if (!mobile || !open || !focusOpen) return;
+    const focusable = panel.querySelector('button:not([disabled]), input:not([type="file"]):not([disabled]), select:not([disabled]), textarea:not([disabled]), a[href]');
+    (focusable || panel).focus?.();
+  }
+
+  function setMobileWorkspacePanels(next = {}, context = {}, options = {}) {
     const target = mobileWorkspaceContext(context);
+    const previousCutOpen = target.body?.classList.contains('mv-cut-drawer-open') || false;
+    const previousContextOpen = target.body?.classList.contains('mv-context-sheet-open') || false;
     const cutOpen = Boolean(next.cut);
     const contextOpen = !cutOpen && Boolean(next.context);
+    const viewportWidth = target.viewportWidth ?? window.innerWidth;
+    const mobile = typeof target.isMobile === 'boolean' ? target.isMobile : viewportWidth <= 1180;
     target.body?.classList.toggle('mv-cut-drawer-open', cutOpen);
     target.body?.classList.toggle('mv-context-sheet-open', contextOpen);
     target.body?.classList.toggle('mv-mobile-panel-open', cutOpen || contextOpen);
     const cutButton = target.root?.querySelector('[data-action="toggle-cut-drawer"]');
     const contextButton = target.root?.querySelector('[data-action="toggle-context-sheet"]');
+    const cutPanel = target.root?.querySelector('#mv-console-cut-column');
+    const contextPanel = target.root?.querySelector('#mv-console-context-column');
     cutButton?.setAttribute('aria-expanded', String(cutOpen));
     contextButton?.setAttribute('aria-expanded', String(contextOpen));
     if (cutButton) cutButton.textContent = cutOpen ? '컷 목록 닫기' : '컷 목록 열기';
     if (contextButton) contextButton.textContent = contextOpen ? '이미지 보관함 닫기' : '이미지 보관함 열기';
+    if (options.releaseFocus && !cutOpen && !contextOpen) {
+      const activeElement = target.activeElement || document.activeElement;
+      const activePanel = previousCutOpen ? cutPanel : previousContextOpen ? contextPanel : null;
+      if (activeElement && activePanel?.contains?.(activeElement)) activeElement.blur?.();
+    }
+    syncMobilePanelAccessibility(cutPanel, cutOpen, mobile, options.focusOpen);
+    syncMobilePanelAccessibility(contextPanel, contextOpen, mobile, options.focusOpen);
+    if (options.restoreFocus && !cutOpen && !contextOpen) {
+      const restorePanel = options.restorePanel || (previousCutOpen ? 'cut' : previousContextOpen ? 'context' : '');
+      (restorePanel === 'cut' ? cutButton : restorePanel === 'context' ? contextButton : null)?.focus?.();
+    }
     return { cut: cutOpen, context: contextOpen };
   }
 
-  function closeMobileWorkspacePanels(context = {}) {
-    return setMobileWorkspacePanels({ cut: false, context: false }, context);
+  function closeMobileWorkspacePanels(context = {}, options = {}) {
+    return setMobileWorkspacePanels({ cut: false, context: false }, context, options);
   }
 
   function mobileWorkspacePanelsOpen(context = {}) {
@@ -4685,7 +4716,7 @@
 
   function closeMobilePanelsForRoute(routeKey, context = {}) {
     if (routeKey === 'storyboard' || !mobileWorkspacePanelsOpen(context)) return false;
-    closeMobileWorkspacePanels(context);
+    closeMobileWorkspacePanels(context, { releaseFocus: true });
     return true;
   }
 
@@ -4696,20 +4727,22 @@
     return setMobileWorkspacePanels({
       cut: panel === 'cut' ? !cutOpen : false,
       context: panel === 'context' ? !contextOpen : false
-    }, target);
+    }, target, { focusOpen: true, restoreFocus: true, restorePanel: panel });
   }
 
   function handleMobileWorkspaceEscape(event, context = {}) {
     if (event?.key !== 'Escape' || !mobileWorkspacePanelsOpen(context)) return false;
+    const target = mobileWorkspaceContext(context);
+    const restorePanel = target.body?.classList.contains('mv-cut-drawer-open') ? 'cut' : 'context';
     event.preventDefault?.();
-    closeMobileWorkspacePanels(context);
+    closeMobileWorkspacePanels(context, { restoreFocus: true, restorePanel });
     return true;
   }
 
   function handleMobileWorkspaceResize(event, context = {}) {
     const viewportWidth = event?.currentTarget?.innerWidth ?? window.innerWidth;
     if (viewportWidth <= 1180 || !mobileWorkspacePanelsOpen(context)) return false;
-    closeMobileWorkspacePanels(context);
+    closeMobileWorkspacePanels({ ...context, isMobile: false, viewportWidth });
     return true;
   }
 
@@ -4781,6 +4814,7 @@
       startGrokTest(cutNumber || state.assistCut);
     }
     if (action === 'assist-cut') {
+      const restoreCutDrawerFocus = document.body.classList.contains('mv-cut-drawer-open');
       closeMobileWorkspacePanels();
       state.assistCut = cutNumber;
       state.selectedCut = cutNumber;
@@ -4788,6 +4822,7 @@
       syncActiveTabButtons();
       saveProject('auto');
       renderAssist();
+      if (restoreCutDrawerFocus) els.result?.querySelector('[data-action="toggle-cut-drawer"]')?.focus?.();
     }
     if (action === 'prompt-target') {
       setPromptTarget(button.dataset.target);

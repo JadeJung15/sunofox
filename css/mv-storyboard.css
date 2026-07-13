@@ -5153,3 +5153,19 @@
   border-radius: 0;
   margin: 0;
 }
+
+/* Creator Console desktop collision override. */
+@media (min-width: 1181px) {
+  .mv-assist-board.mv-console-workspace {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  .mv-studio:not(.is-basic) .mv-console-workspace > .mv-console-cut-column {
+    max-height: calc(100vh - 180px);
+    overflow: auto;
+    position: sticky;
+    top: 16px;
+  }
+}

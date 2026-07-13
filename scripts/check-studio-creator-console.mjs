@@ -30,8 +30,10 @@ for (const marker of [
   'data-action="toggle-context-sheet"',
   'aria-controls="mv-console-context-column"',
   'id="mv-console-cut-column"',
+  'role="region" aria-labelledby="mv-console-cut-heading" aria-hidden="true" inert tabindex="-1"',
   'class="mv-assist-panel mv-console-canvas-column"',
   'id="mv-console-context-column"',
+  'role="region" aria-labelledby="mv-console-context-heading" aria-hidden="true" inert tabindex="-1"',
   'function setMobileWorkspacePanels(',
   'function closeMobileWorkspacePanels(',
   'function toggleMobileWorkspacePanel(',
@@ -50,7 +52,7 @@ for (const marker of [
   'body.mv-mobile-panel-open',
   'max-height: 72vh'
 ]) assert.ok(css.includes(marker), `missing storyboard workspace CSS marker: ${marker}`);
-assert.match(js, /if \(action === 'assist-cut'\) \{\s*closeMobileWorkspacePanels\(\);/, 'cut selection must close mobile workspace panels');
+assert.match(js, /if \(action === 'assist-cut'\) \{[\s\S]*?const restoreCutDrawerFocus = [^;]+;[\s\S]*?closeMobileWorkspacePanels\(\);[\s\S]*?renderAssist\(\);[\s\S]*?restoreCutDrawerFocus[\s\S]*?toggle-cut-drawer[\s\S]*?focus/, 'cut selection must restore focus to the newly rendered drawer trigger');
 assert.ok(js.includes('closeMobilePanelsForRoute(state.studioRoute)'), 'route changes must use the mobile panel cleanup helper');
 assert.match(js, /if \(event\.key === 'Escape'\) \{\s*handleMobileWorkspaceEscape\(event\);/, 'Escape must use the mobile panel cleanup helper');
 assert.ok(js.includes("window.addEventListener('resize', handleMobileWorkspaceResize)"), 'desktop resize cleanup must be registered');
@@ -65,6 +67,12 @@ assert.match(cutDrawerRule, /inset:\s*60px 0 64px 0;/, 'mobile cut drawer must f
 assert.match(cutDrawerRule, /position:\s*fixed;/, 'mobile cut drawer must use fixed workspace positioning');
 assert.doesNotMatch(cutDrawerRule, /max-width|translateX/, 'mobile cut drawer must not retain the narrow sliding rail layout');
 assert.match(mobileWorkspaceCss, /body\.mv-cut-drawer-open\s+\.mv-console-cut-column\s*\{\s*display:\s*block;/, 'open mobile cut drawer must become visible');
+const legacyDesktopAssistIndex = css.lastIndexOf('/* v6.7.137 sticky storyboard workspace. */');
+const creatorDesktopOverrideIndex = css.lastIndexOf('/* Creator Console desktop collision override. */');
+assert.ok(creatorDesktopOverrideIndex > legacyDesktopAssistIndex, 'Creator Console desktop collision override must follow legacy assist rules');
+const creatorDesktopOverride = css.slice(creatorDesktopOverrideIndex);
+assert.match(creatorDesktopOverride, /\.mv-assist-board\.mv-console-workspace\s*\{[\s\S]*?height:\s*auto\s*!important;[\s\S]*?max-height:\s*none\s*!important;[\s\S]*?overflow:\s*visible\s*!important;/, 'Creator Console desktop workspace must override legacy clipping');
+assert.match(creatorDesktopOverride, /\.mv-studio:not\(\.is-basic\)\s+\.mv-console-workspace\s*>\s*\.mv-console-cut-column\s*\{[\s\S]*?overflow:\s*auto;/, 'advanced desktop cut column must retain internal scrolling');
 for (const [label, source] of [['sf-studio-sw.js', sw], ['public/sf-studio-sw.js', publicSw]]) {
   for (const marker of [`sf-studio-${assetVersion}`, `mv-storyboard.css?v=${assetVersion}`, `mvStoryboardStudio.js?v=${assetVersion}`]) assert.ok(source.includes(marker), `${label} missing asset version: ${marker}`);
 }
@@ -134,43 +142,83 @@ const mobileClassList = {
   contains(name) { return mobileClasses.has(name); }
 };
 const mobileButtons = {
-  cut: { attributes: {}, textContent: '', setAttribute(name, value) { this.attributes[name] = String(value); } },
-  context: { attributes: {}, textContent: '', setAttribute(name, value) { this.attributes[name] = String(value); } }
+  cut: { attributes: {}, textContent: '', focusCount: 0, setAttribute(name, value) { this.attributes[name] = String(value); }, focus() { this.focusCount += 1; } },
+  context: { attributes: {}, textContent: '', focusCount: 0, setAttribute(name, value) { this.attributes[name] = String(value); }, focus() { this.focusCount += 1; } }
 };
+const makeMobilePanel = () => ({
+  attributes: {},
+  inert: false,
+  focusCount: 0,
+  firstFocusable: { focusCount: 0, focus() { this.focusCount += 1; } },
+  setAttribute(name, value) { this.attributes[name] = String(value); },
+  removeAttribute(name) { delete this.attributes[name]; },
+  toggleAttribute(name, enabled) { enabled ? this.attributes[name] = '' : delete this.attributes[name]; },
+  querySelector() { return this.firstFocusable; },
+  focus() { this.focusCount += 1; }
+});
+const mobilePanels = {
+  cut: makeMobilePanel(),
+  context: makeMobilePanel()
+};
+const mobileActiveElement = { blurCount: 0, blur() { this.blurCount += 1; } };
+mobilePanels.cut.contains = (element) => element === mobileActiveElement;
+mobilePanels.context.contains = () => false;
 const mobileWorkspaceContext = {
   body: { classList: mobileClassList },
+  isMobile: true,
+  activeElement: null,
   root: {
     querySelector(selector) {
       if (selector.includes('toggle-cut-drawer')) return mobileButtons.cut;
       if (selector.includes('toggle-context-sheet')) return mobileButtons.context;
+      if (selector === '#mv-console-cut-column') return mobilePanels.cut;
+      if (selector === '#mv-console-context-column') return mobilePanels.context;
       return null;
     }
   }
 };
-savedProjectTools.setMobileWorkspacePanels({ cut: true, context: false }, mobileWorkspaceContext);
+savedProjectTools.setMobileWorkspacePanels({ cut: false, context: false }, mobileWorkspaceContext);
+assert.equal(mobilePanels.cut.inert, true, 'closed cut drawer must be inert');
+assert.equal(mobilePanels.cut.attributes['aria-hidden'], 'true', 'closed cut drawer must be hidden from accessibility tree');
+assert.equal(mobilePanels.context.inert, true, 'closed context sheet must be inert');
+assert.equal(mobilePanels.context.attributes['aria-hidden'], 'true', 'closed context sheet must be hidden from accessibility tree');
+savedProjectTools.setMobileWorkspacePanels({ cut: true, context: false }, mobileWorkspaceContext, { focusOpen: true });
 assert.equal(mobileClassList.contains('mv-cut-drawer-open'), true, 'cut drawer state must add its body class');
 assert.equal(mobileClassList.contains('mv-context-sheet-open'), false, 'closed context sheet must omit its body class');
 assert.equal(mobileClassList.contains('mv-mobile-panel-open'), true, 'any open mobile panel must lock body scrolling');
 assert.equal(mobileButtons.cut.attributes['aria-expanded'], 'true', 'cut drawer trigger must expose expanded state');
 assert.equal(mobileButtons.context.attributes['aria-expanded'], 'false', 'context trigger must expose collapsed state');
 assert.equal(mobileButtons.cut.textContent, '컷 목록 닫기', 'open cut drawer trigger must use its close label');
+assert.equal(mobilePanels.cut.inert, false, 'open cut drawer must not be inert');
+assert.equal(mobilePanels.cut.attributes['aria-hidden'], 'false', 'open cut drawer must be exposed to accessibility tree');
+assert.equal(mobilePanels.cut.firstFocusable.focusCount, 1, 'opening cut drawer must focus its first control');
+assert.equal(mobilePanels.context.inert, true, 'opening cut drawer must keep context sheet inert');
 savedProjectTools.toggleMobileWorkspacePanel('context', mobileWorkspaceContext);
 assert.equal(mobileClassList.contains('mv-cut-drawer-open'), false, 'opening context sheet must close the cut drawer');
 assert.equal(mobileClassList.contains('mv-context-sheet-open'), true, 'context toggle must open the context sheet');
-savedProjectTools.closeMobileWorkspacePanels(mobileWorkspaceContext);
+assert.equal(mobilePanels.cut.inert, true, 'opening context sheet must make cut drawer inert');
+assert.equal(mobilePanels.cut.attributes['aria-hidden'], 'true', 'opening context sheet must hide cut drawer from accessibility tree');
+assert.equal(mobilePanels.context.inert, false, 'opening context sheet must remove inert');
+assert.equal(mobilePanels.context.attributes['aria-hidden'], 'false', 'opening context sheet must expose it to accessibility tree');
+assert.equal(mobilePanels.context.firstFocusable.focusCount, 1, 'opening context sheet must focus its first control');
+savedProjectTools.closeMobileWorkspacePanels(mobileWorkspaceContext, { restoreFocus: true, restorePanel: 'context' });
 assert.equal(mobileClassList.contains('mv-cut-drawer-open'), false, 'close helper must close the cut drawer');
 assert.equal(mobileClassList.contains('mv-context-sheet-open'), false, 'close helper must close the context sheet');
 assert.equal(mobileClassList.contains('mv-mobile-panel-open'), false, 'close helper must release body scrolling');
 assert.equal(mobileButtons.cut.attributes['aria-expanded'], 'false', 'close helper must reset cut trigger state');
 assert.equal(mobileButtons.context.attributes['aria-expanded'], 'false', 'close helper must reset context trigger state');
+assert.equal(mobileButtons.context.focusCount, 1, 'closing context sheet must restore focus to its trigger');
 
 savedProjectTools.setMobileWorkspacePanels({ cut: true }, mobileWorkspaceContext);
 assert.equal(savedProjectTools.closeMobilePanelsForRoute('storyboard', mobileWorkspaceContext), false, 'storyboard route must preserve its open mobile panel');
 assert.equal(mobileClassList.contains('mv-cut-drawer-open'), true, 'storyboard route must keep the drawer open');
+mobileWorkspaceContext.activeElement = mobileActiveElement;
 assert.equal(savedProjectTools.closeMobilePanelsForRoute('help', mobileWorkspaceContext), true, 'leaving storyboard must report panel cleanup');
 assert.equal(mobileClassList.contains('mv-cut-drawer-open'), false, 'route cleanup must remove the drawer body class');
 assert.equal(mobileButtons.cut.attributes['aria-expanded'], 'false', 'route cleanup must reset drawer aria-expanded');
 assert.equal(mobileButtons.cut.textContent, '컷 목록 열기', 'route cleanup must reset drawer label');
+assert.equal(mobileActiveElement.blurCount, 1, 'route cleanup must release focus held inside a panel that becomes inert');
+mobileWorkspaceContext.activeElement = null;
 
 savedProjectTools.setMobileWorkspacePanels({ context: true }, mobileWorkspaceContext);
 let escapePrevented = 0;
@@ -180,6 +228,7 @@ assert.equal(escapePrevented, 1, 'Escape must prevent default when it closes a p
 assert.equal(mobileClassList.contains('mv-context-sheet-open'), false, 'Escape must remove the context body class');
 assert.equal(mobileButtons.context.attributes['aria-expanded'], 'false', 'Escape must reset context aria-expanded');
 assert.equal(mobileButtons.context.textContent, '이미지 보관함 열기', 'Escape must reset context trigger label');
+assert.equal(mobileButtons.context.focusCount, 2, 'Escape must restore focus to the context trigger');
 
 savedProjectTools.setMobileWorkspacePanels({ cut: true }, mobileWorkspaceContext);
 assert.equal(savedProjectTools.handleMobileWorkspaceResize({ currentTarget: { innerWidth: 1180 } }, mobileWorkspaceContext), false, 'mobile resize must preserve the open panel');
@@ -188,6 +237,10 @@ assert.equal(savedProjectTools.handleMobileWorkspaceResize({ currentTarget: { in
 assert.equal(mobileClassList.contains('mv-cut-drawer-open'), false, 'desktop resize must remove the drawer body class');
 assert.equal(mobileButtons.cut.attributes['aria-expanded'], 'false', 'desktop resize must reset drawer aria-expanded');
 assert.equal(mobileButtons.cut.textContent, '컷 목록 열기', 'desktop resize must reset drawer label');
+assert.equal(mobilePanels.cut.inert, false, 'desktop resize must expose the visible cut column');
+assert.equal(mobilePanels.cut.attributes['aria-hidden'], 'false', 'desktop resize must return cut column to accessibility tree');
+assert.equal(mobilePanels.context.inert, false, 'desktop resize must expose the visible context column');
+assert.equal(mobilePanels.context.attributes['aria-hidden'], 'false', 'desktop resize must return context column to accessibility tree');
 const emptyPreview = savedProjectTools.importPreviewData('');
 assert.equal(emptyPreview.title, '—', 'empty preview must use the empty project title');
 assert.equal(emptyPreview.cutCount, 0, 'empty preview must contain no cuts');

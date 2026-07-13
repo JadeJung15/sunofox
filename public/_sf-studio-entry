@@ -22,7 +22,7 @@
   <link rel="icon" href="./assets/sf-studio-icon-192.png">
   <link rel="canonical" href="https://sunofox.com/mv-studio">
   <link rel="stylesheet" href="./css/style.css?v=20260607-auth">
-  <link rel="stylesheet" href="./css/mv-storyboard.css?v=20260710-mobile-home">
+  <link rel="stylesheet" href="./css/mv-storyboard.css?v=20260713-creator-console">
 </head>
 <body class="mv-standalone-body">
   <section class="mv-lock-screen" id="mv-lock-screen" aria-label="SF Studio 로그인 확인" hidden>
@@ -36,40 +36,48 @@
   </section>
 
   <div class="mv-page-shell" id="mv-private-content" hidden>
-    <header class="mv-topbar">
-      <a class="mv-brand mv-sunofox-brand mv-text-brand" href="/mv-studio" data-studio-route="home" aria-label="SunoFox STUDIO 홈으로 이동">
-        <span>SunoFox</span>
-        <strong>STUDIO</strong>
-      </a>
-      <div class="mv-top-actions">
-        <span class="mv-creator">Created by sunofox</span>
-        <button class="mv-install-button" id="mv-install-app" type="button" hidden>앱 설치</button>
-        <span class="mv-version">SF Studio</span>
-        <a href="/mv-studio" data-studio-route="home">SF Studio 홈</a>
-        <button class="mv-logout-button" id="mv-auth-logout" type="button">로그아웃</button>
-      </div>
-    </header>
+    <div class="mv-console-shell">
+      <aside class="mv-console-rail" aria-label="SF Studio 주요 메뉴">
+        <a class="mv-console-logo" href="/mv-studio" data-studio-route="home" aria-label="SF Studio 홈으로 이동">
+          <span>SF</span>
+          <strong>Studio</strong>
+        </a>
+        <nav class="mv-console-nav" aria-label="SF Studio 카테고리">
+          <a class="active" href="/mv-studio" data-studio-route="home">
+            <strong>SF 홈</strong>
+            <span>기능 선택</span>
+          </a>
+          <a href="/mv-studio/storyboard" data-studio-route="storyboard">
+            <strong>콘티 제작</strong>
+            <span>30컷 작업실</span>
+          </a>
+          <a href="/mv-studio/import" data-studio-route="import">
+            <strong>Workflow MD 가져오기</strong>
+            <span>MJ/Grok 원문</span>
+          </a>
+          <a href="/mv-studio/help" data-studio-route="help">
+            <strong>사용방법</strong>
+            <span>작업 순서</span>
+          </a>
+        </nav>
+      </aside>
 
-    <nav class="mv-section-nav" aria-label="SF Studio 카테고리">
-      <a class="active" href="/mv-studio" data-studio-route="home">
-        <strong>SF 홈</strong>
-        <span>기능 선택</span>
-      </a>
-      <a href="/mv-studio/storyboard" data-studio-route="storyboard">
-        <strong>콘티 제작</strong>
-        <span>30컷 작업실</span>
-      </a>
-      <a href="/mv-studio/import" data-studio-route="import">
-        <strong>Workflow MD 가져오기</strong>
-        <span>MJ/Grok 원문</span>
-      </a>
-      <a href="/mv-studio/help" data-studio-route="help">
-        <strong>사용방법</strong>
-        <span>작업 순서</span>
-      </a>
-    </nav>
+      <div class="mv-console-main">
+        <header class="mv-console-commandbar">
+          <div class="mv-console-project">
+            <strong id="mv-console-project-title">SF Studio</strong>
+            <span id="mv-console-project-state">저장된 작업 확인 중</span>
+          </div>
+          <div class="mv-top-actions">
+            <span class="mv-creator">Created by sunofox</span>
+            <button class="mv-install-button" id="mv-install-app" type="button" hidden>앱 설치</button>
+            <span class="mv-version">SF Studio</span>
+            <button class="mv-logout-button" id="mv-auth-logout" type="button">로그아웃</button>
+          </div>
+        </header>
 
-    <main id="view-mv-storyboard" class="mv-storyboard-view">
+        <div class="mv-console-content">
+          <main id="view-mv-storyboard" class="mv-storyboard-view">
       <section class="hero-section mv-hero">
         <span class="mv-page-kicker">PRIVATE CREATOR WORKSPACE</span>
         <h1 class="glitch-title">SF 스튜디오</h1>
@@ -637,9 +645,12 @@
           <div class="mv-result" id="mv-result" hidden></div>
         </section>
       </div>
-    </main>
+          </main>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <script src="./js/mvStoryboardStudio.js?v=20260706-profile-spaces"></script>
+  <script src="./js/mvStoryboardStudio.js?v=20260713-creator-console"></script>
 </body>
 </html>

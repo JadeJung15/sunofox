@@ -1345,7 +1345,7 @@
   function setupPwaInstallPrompt() {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker
-        .register('/sf-studio-sw.js?v=20260710-mobile-home', { updateViaCache: 'none' })
+        .register('/sf-studio-sw.js?v=20260713-creator-console', { updateViaCache: 'none' })
         .then((registration) => registration.update().catch(() => {}))
         .catch((error) => {
           console.warn('[SF Studio] service worker registration failed', error);

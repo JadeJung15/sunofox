@@ -8,7 +8,7 @@ const distDir = path.join(rootDir, 'dist');
 const siteOrigin = 'https://sunofox.com';
 const studioScriptPath = path.join(rootDir, 'public', 'js', 'mvStoryboardStudio.js');
 const studioSwPath = path.join(rootDir, 'public', 'sf-studio-sw.js');
-const studioAssetVersion = '20260710-mobile-home';
+const studioAssetVersion = '20260713-creator-console';
 const protectedSourcePrefixes = [
   '/_sf-studio-entry',
   '/login',

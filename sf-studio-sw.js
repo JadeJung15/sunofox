@@ -1,12 +1,12 @@
-const SF_STUDIO_CACHE = 'sf-studio-20260710-mobile-home';
+const SF_STUDIO_CACHE = 'sf-studio-20260713-creator-console';
 const SF_STUDIO_ASSETS = [
   '/manifest.webmanifest',
   '/css/style.css?v=20260607-fanpage',
   '/css/sf-home.css?v=20260607-nav-platforms-5',
   '/css/sf-category.css?v=20260607-categories',
-  '/css/mv-storyboard.css?v=20260710-mobile-home',
+  '/css/mv-storyboard.css?v=20260713-creator-console',
   '/js/sfLinkHub.js?v=20260607-nav-platforms',
-  '/js/mvStoryboardStudio.js?v=20260624-workflow-mj-hotfix',
+  '/js/mvStoryboardStudio.js?v=20260713-creator-console',
   '/assets/sunofox-logo-black.png',
   '/assets/home/hero-anime-city.jpg?v=20260607-art2',
   '/assets/home/release-awakening.jpg?v=20260607-art2',

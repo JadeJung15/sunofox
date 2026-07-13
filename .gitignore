@@ -5,6 +5,8 @@ output/
 dist/
 node_modules/
 reports/
+.worktrees/
+.superpowers/
 
 .env
 .env.*

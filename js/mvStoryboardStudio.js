@@ -3676,8 +3676,9 @@
       cut !== null
       && typeof cut === 'object'
       && !Array.isArray(cut)
-      && Number.isFinite(Number(cut.number))
-      && Number(cut.number) > 0
+      && typeof cut.number === 'number'
+      && Number.isFinite(cut.number)
+      && cut.number > 0
     ));
   }
 

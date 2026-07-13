@@ -84,7 +84,10 @@ for (const [label, raw] of [
   ['invalid JSON', '{invalid'],
   ['string cuts', JSON.stringify({ storyboard: { cuts: '12' } })],
   ['object length cuts', JSON.stringify({ storyboard: { cuts: { length: 2 } } })],
-  ['null cut', JSON.stringify({ storyboard: { cuts: [null] } })]
+  ['null cut', JSON.stringify({ storyboard: { cuts: [null] } })],
+  ['string cut number', JSON.stringify({ storyboard: { cuts: [{ number: '1' }] } })],
+  ['spaced string cut number', JSON.stringify({ storyboard: { cuts: [{ number: ' 2 ' }] } })],
+  ['boolean cut number', JSON.stringify({ storyboard: { cuts: [{ number: true }] } })]
 ]) {
   assert.equal(readStoredProject(raw), null, `${label} must be rejected`);
 }

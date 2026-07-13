@@ -5346,3 +5346,208 @@
     top: 16px;
   }
 }
+
+/* Creator Console dark surface completion. */
+.mv-console-shell {
+  color-scheme: dark;
+}
+
+.mv-home-heading .mv-page-kicker,
+.mv-import-studio .mv-page-kicker,
+.mv-help-studio .mv-page-kicker {
+  background: var(--mv-console-raised);
+  border-color: var(--mv-console-border);
+  color: var(--mv-console-bridge);
+}
+
+.mv-import-hero,
+.mv-import-studio .mv-workflow-card,
+.mv-help-studio .mv-workflow-card,
+.mv-storyboard-view .mv-hero,
+.mv-storyboard-view .mv-panel,
+.mv-console-workspace .mv-assist-panel,
+.mv-console-workspace .mv-file-panel,
+.mv-console-shell .mv-local-compose,
+.mv-console-shell .mv-tools-drawer,
+.mv-console-shell .mv-simple-guide,
+.mv-console-shell .mv-bridge-install,
+.mv-console-shell .mv-option-box,
+.mv-console-shell .mv-costume-box,
+.mv-console-shell .mv-paste-box,
+.mv-console-shell .mv-advanced-options[open],
+.mv-console-shell .mv-project-prompts article,
+.mv-console-shell .mv-gallery-summary,
+.mv-console-shell .mv-source-banner,
+.mv-console-shell .mv-cut-detail,
+.mv-console-shell .mv-progress-card,
+.mv-console-shell .mv-workflow-cut-detail,
+.mv-console-shell .mv-simple-shortcuts,
+.mv-console-shell .mv-grok-complete,
+.mv-console-shell .mv-quality-card li,
+.mv-console-shell .mv-variant-grid article,
+.mv-console-shell .mv-gallery-card {
+  background: var(--mv-console-panel);
+  border-color: var(--mv-console-border);
+  color: var(--mv-console-text);
+}
+
+.mv-console-shell .mv-switch-row,
+.mv-console-shell .mv-import-options,
+.mv-console-shell .mv-template-box,
+.mv-console-shell .mv-tabs,
+.mv-console-shell .mv-storage-state:not(.is-saved),
+.mv-console-shell .mv-workflow-metrics span,
+.mv-console-shell .mv-status-filter button,
+.mv-console-shell .mv-assist-setup-details,
+.mv-console-shell .mv-shortcut-details,
+.mv-console-shell .mv-toggle-grid button,
+.mv-console-shell .mv-history-item,
+.mv-console-shell .mv-filename-row strong,
+.mv-console-shell .mv-cut-list button,
+.mv-console-shell .mv-command-card,
+.mv-console-shell .mv-simple-card,
+.mv-console-shell .mv-help-steps li,
+.mv-console-shell .mv-help-list li,
+.mv-console-shell .mv-workflow-steps li,
+.mv-console-shell .mv-cut-rail button,
+.mv-console-shell .mv-two-column > div,
+.mv-console-shell .mv-board-chips span,
+.mv-console-shell .mv-cut-badges b,
+.mv-console-shell .mv-flow-timeline button,
+.mv-console-shell .mv-prompt-toggle,
+.mv-console-shell .mv-candidate-board,
+.mv-console-shell .mv-workflow-cut-info span,
+.mv-console-shell .mv-workflow-scene,
+.mv-console-shell .mv-workflow-edit-note,
+.mv-console-shell .mv-workflow-prompt-grid article,
+.mv-console-shell .mv-drop-zone,
+.mv-console-shell .mv-gallery-drop-zone {
+  background: var(--mv-console-raised);
+  border-color: var(--mv-console-border);
+  color: var(--mv-console-text);
+}
+
+.mv-console-shell input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+.mv-console-shell textarea,
+.mv-console-shell select,
+.mv-console-shell .mv-field input,
+.mv-console-shell .mv-field textarea,
+.mv-console-shell .mv-field select,
+.mv-console-shell .mv-costume-note,
+.mv-console-shell .mv-grok-range-fields input,
+.mv-console-shell .mv-note-field textarea {
+  background: var(--mv-console-canvas);
+  border-color: var(--mv-console-border);
+  color: var(--mv-console-text);
+}
+
+.mv-console-shell input::placeholder,
+.mv-console-shell textarea::placeholder {
+  color: var(--mv-console-muted);
+  opacity: 0.82;
+}
+
+.mv-console-shell .mv-ghost-btn,
+.mv-console-shell .mv-toolbar-actions button,
+.mv-console-shell .mv-toolbar-actions a,
+.mv-console-shell .mv-input-meta button,
+.mv-console-shell .mv-chip-grid button,
+.mv-console-shell .mv-small-btn,
+.mv-console-shell .mv-status-row button,
+.mv-console-shell .mv-file-btn,
+.mv-console-shell .mv-remove-file,
+.mv-console-shell .mv-tabs button.active,
+.mv-console-shell .mv-prompt-toggle button.active,
+.mv-console-shell .mv-advanced-options summary::after,
+.mv-console-shell .mv-collapsible summary::after,
+.mv-console-shell .mv-assist-setup-summary::after,
+.mv-console-shell .mv-shortcut-summary::after,
+.mv-console-commandbar .mv-creator,
+.mv-console-commandbar .mv-version,
+.mv-console-commandbar .mv-install-button,
+.mv-console-commandbar .mv-logout-button {
+  background: var(--mv-console-raised);
+  border-color: var(--mv-console-border);
+  color: var(--mv-console-text);
+}
+
+.mv-console-shell .mv-ghost-btn:hover,
+.mv-console-shell .mv-toolbar-actions button:hover:not(:disabled),
+.mv-console-shell .mv-toolbar-actions a:hover,
+.mv-console-shell .mv-input-meta button:hover,
+.mv-console-shell .mv-chip-grid button:hover,
+.mv-console-shell .mv-small-btn:hover,
+.mv-console-shell .mv-status-row button:hover,
+.mv-console-shell .mv-file-btn:hover,
+.mv-console-shell .mv-remove-file:hover {
+  background: rgba(93, 216, 228, 0.12);
+  border-color: var(--mv-console-bridge);
+  color: var(--mv-console-text);
+}
+
+.mv-import-hero h2,
+.mv-storyboard-view .mv-hero .glitch-title,
+.mv-console-shell .mv-panel-head h2,
+.mv-console-shell .mv-flow-title strong,
+.mv-console-shell .mv-simple-guide strong,
+.mv-console-shell .mv-import-options strong,
+.mv-console-shell .mv-bridge-install strong,
+.mv-console-shell .mv-option-box h3,
+.mv-console-shell .mv-costume-box h3,
+.mv-console-shell .mv-advanced-options summary span,
+.mv-console-shell .mv-collapsible summary span,
+.mv-console-shell .mv-help-list strong,
+.mv-console-shell .mv-assist-setup-title strong,
+.mv-console-shell .mv-shortcut-summary strong {
+  color: var(--mv-console-text);
+}
+
+.mv-import-hero p,
+.mv-storyboard-view .mv-hero .desc,
+.mv-console-shell .mv-flow-title span,
+.mv-console-shell .mv-panel-head span,
+.mv-console-shell .mv-field span,
+.mv-console-shell .mv-kicker,
+.mv-console-shell .mv-simple-guide small,
+.mv-console-shell .mv-import-options small,
+.mv-console-shell .mv-bridge-install p,
+.mv-console-shell .mv-bridge-install ol,
+.mv-console-shell .mv-switch-row small,
+.mv-console-shell .mv-help-steps,
+.mv-console-shell .mv-help-list,
+.mv-console-shell .mv-help-list span,
+.mv-console-shell .mv-import-checklist ol,
+.mv-console-shell .mv-empty,
+.mv-console-shell .mv-cut-list .mv-cut-main span,
+.mv-console-shell .mv-workflow-cut-info span,
+.mv-console-shell .mv-workflow-scene,
+.mv-console-shell .mv-workflow-edit-note {
+  color: var(--mv-console-muted);
+}
+
+.mv-console-shell .mv-empty strong,
+.mv-console-shell .mv-workflow-cut-detail h3,
+.mv-console-shell .mv-workflow-prompt-grid strong {
+  color: var(--mv-console-text);
+}
+
+.mv-console-shell .mv-cut-list .mv-cut-main strong {
+  color: var(--mv-console-bridge);
+}
+
+.mv-console-shell .mv-current-prompt,
+.mv-studio.is-basic .mv-current-prompt,
+.mv-console-shell .mv-current-prompt code,
+.mv-console-shell .mv-project-prompts code,
+.mv-console-shell .mv-bridge-install code {
+  background: var(--mv-console-canvas);
+  border-color: var(--mv-console-border);
+  color: var(--mv-console-text);
+}
+
+.mv-console-shell .mv-progress-card,
+.mv-console-shell .mv-toolbar,
+.mv-console-shell .mv-assist-setup-details[open] .mv-assist-setup-summary,
+.mv-console-shell .mv-shortcut-details[open] .mv-shortcut-summary {
+  border-color: var(--mv-console-border);
+}

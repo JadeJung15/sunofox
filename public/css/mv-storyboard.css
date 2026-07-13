@@ -2,7 +2,16 @@
   --mv-current-prompt-code-height: clamp(220px, 32vh, 340px);
   --mv-project-prompt-code-height: 180px;
   --mv-range-prompt-code-height: 168px;
-  background: #ffffff;
+  --mv-console-canvas: #080b11;
+  --mv-console-panel: #111722;
+  --mv-console-raised: #171f2d;
+  --mv-console-border: #293449;
+  --mv-console-text: #f5f7fb;
+  --mv-console-muted: #96a2b4;
+  --mv-console-action: #8b78f6;
+  --mv-console-bridge: #5dd8e4;
+  --mv-console-saved: #68dca4;
+  background: var(--mv-console-canvas);
   color: #111827;
   margin: 0;
 }
@@ -15,8 +24,145 @@
   margin: 0 auto;
   max-width: none;
   min-height: 100vh;
-  padding: 14px 18px 28px;
+  padding: 0;
   width: 100%;
+}
+
+.mv-console-shell {
+  background: var(--mv-console-canvas);
+  display: grid;
+  grid-template-columns: 78px minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.mv-console-rail {
+  background: var(--mv-console-panel);
+  border-right: 1px solid var(--mv-console-border);
+  box-sizing: border-box;
+  color: var(--mv-console-text);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 12px 8px;
+}
+
+.mv-console-logo {
+  align-items: center;
+  color: var(--mv-console-text);
+  display: grid;
+  gap: 1px;
+  justify-items: center;
+  min-height: 52px;
+  text-decoration: none;
+}
+
+.mv-console-logo span {
+  color: var(--mv-console-bridge);
+  font-size: 20px;
+  font-weight: 950;
+}
+
+.mv-console-logo strong {
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.mv-console-nav {
+  display: grid;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.mv-console-nav a {
+  align-content: center;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  color: var(--mv-console-muted);
+  display: grid;
+  gap: 3px;
+  min-height: 58px;
+  padding: 7px 4px;
+  text-align: center;
+  text-decoration: none;
+  transition: background 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+}
+
+.mv-console-nav a:hover {
+  background: var(--mv-console-raised);
+  border-color: var(--mv-console-border);
+  color: var(--mv-console-text);
+}
+
+.mv-console-nav a.active {
+  background: rgba(93, 216, 228, 0.1);
+  border-color: rgba(93, 216, 228, 0.28);
+  color: var(--mv-console-bridge);
+}
+
+.mv-console-nav strong {
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.mv-console-nav span {
+  font-size: 9px;
+  line-height: 1.25;
+}
+
+.mv-console-main {
+  min-width: 0;
+}
+
+.mv-console-commandbar {
+  align-items: center;
+  background: var(--mv-console-panel);
+  border-bottom: 1px solid var(--mv-console-border);
+  color: var(--mv-console-text);
+  display: flex;
+  gap: 16px;
+  height: 60px;
+  justify-content: space-between;
+  padding: 0 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.mv-console-project {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.mv-console-project strong,
+.mv-console-project span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mv-console-project strong {
+  font-size: 14px;
+}
+
+.mv-console-project span {
+  color: var(--mv-console-saved);
+  font-size: 11px;
+}
+
+.mv-console-commandbar .mv-creator,
+.mv-console-commandbar .mv-version {
+  color: var(--mv-console-muted);
+}
+
+.mv-console-commandbar .mv-install-button,
+.mv-console-commandbar .mv-logout-button {
+  border-color: var(--mv-console-border);
+}
+
+.mv-console-content {
+  padding: 16px;
 }
 
 .mv-lock-screen {
@@ -812,9 +958,18 @@
   padding: 16px;
 }
 
-.mv-showcase-active .mv-topbar,
-.mv-showcase-active .mv-section-nav {
+.mv-showcase-active .mv-console-rail,
+.mv-showcase-active .mv-console-commandbar {
   display: none;
+}
+
+.mv-showcase-active .mv-console-shell {
+  display: block;
+  min-height: auto;
+}
+
+.mv-showcase-active .mv-console-content {
+  padding: 0;
 }
 
 .mv-showcase-surface {
@@ -3992,7 +4147,7 @@
   }
 
   .mv-page-shell {
-    padding: 12px 10px 34px;
+    padding: 0;
   }
 
   .mv-category-grid {
@@ -4100,6 +4255,59 @@
     --mv-current-prompt-code-height: 220px;
     --mv-project-prompt-code-height: 150px;
     --mv-range-prompt-code-height: 140px;
+  }
+
+  .mv-console-shell {
+    display: block;
+    padding-bottom: 68px;
+  }
+
+  .mv-console-rail {
+    border-right: 0;
+    border-top: 1px solid var(--mv-console-border);
+    box-sizing: border-box;
+    bottom: 0;
+    height: 64px;
+    left: 0;
+    min-height: 0;
+    padding: 6px 8px;
+    position: fixed;
+    right: 0;
+    z-index: 200;
+  }
+
+  .mv-console-logo {
+    display: none;
+  }
+
+  .mv-console-nav {
+    display: grid;
+    gap: 6px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin: 0;
+  }
+
+  .mv-console-nav a {
+    gap: 1px;
+    min-height: 50px;
+    padding: 4px 2px;
+  }
+
+  .mv-console-nav strong {
+    font-size: 10px;
+  }
+
+  .mv-console-nav span {
+    display: none;
+  }
+
+  .mv-console-commandbar {
+    height: 56px;
+    padding: 0 10px;
+  }
+
+  .mv-console-content {
+    padding: 10px;
   }
 
   .mv-topbar {

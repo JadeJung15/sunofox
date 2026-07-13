@@ -1,0 +1,15 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+const read = (path) => fs.readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
+const html = read('mv-studio.html');
+const publicHtml = read('public/mv-studio.html');
+const css = read('css/mv-storyboard.css');
+const publicCss = read('public/css/mv-storyboard.css');
+const js = read('js/mvStoryboardStudio.js');
+const publicJs = read('public/js/mvStoryboardStudio.js');
+assert.equal(publicHtml, html, 'public/mv-studio.html must match mv-studio.html');
+assert.equal(publicCss, css, 'public/css/mv-storyboard.css must match css/mv-storyboard.css');
+assert.equal(publicJs, js, 'public/js/mvStoryboardStudio.js must match js/mvStoryboardStudio.js');
+for (const marker of ['class="mv-console-shell"','class="mv-console-rail"','class="mv-console-commandbar"','data-studio-route="home"','data-studio-route="storyboard"','data-studio-route="import"','data-studio-route="help"']) assert.ok(html.includes(marker), `missing HTML marker: ${marker}`);
+for (const marker of ['--mv-console-canvas: #080b11','--mv-console-panel: #111722','--mv-console-action: #8b78f6','.mv-console-shell','.mv-console-rail','.mv-console-commandbar']) assert.ok(css.includes(marker), `missing CSS marker: ${marker}`);
+console.log('SF Studio Creator Console contract passed.');

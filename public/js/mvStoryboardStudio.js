@@ -2742,7 +2742,7 @@
 
   function setLoading(isLoading) {
     state.loading = isLoading;
-    setButtonBusy(els.generate, isLoading, '생성 중...');
+    els.generate.disabled = isLoading;
     els.root.querySelector('.mv-input')?.classList.toggle('is-loading', isLoading);
     syncGenerationMode();
   }
@@ -3070,7 +3070,6 @@
     if (showMessage) {
       const message = 'Grok 클립 작업은 첨부된 후보 이미지가 1개 이상 있어야 시작할 수 있습니다. 먼저 Midjourney 결과 이미지를 SF Studio에 드래그해서 첨부해 주세요.';
       showError(message);
-      toast('Grok으로 보낼 후보 이미지가 필요합니다.');
     }
     return false;
   }
@@ -3088,7 +3087,6 @@
     if (test.hasImage) return true;
     if (showMessage) {
       showError(`Grok 1컷 테스트는 첨부된 이미지가 있는 컷에서 사용할 수 있습니다. 현재 컷 또는 이전 컷에 이미지를 먼저 넣어주세요.`);
-      toast('첨부된 이미지가 필요합니다.');
     }
     return false;
   }
@@ -5526,7 +5524,6 @@
             });
             if (!result.ok) {
               showError(result.error || 'Grok 자동 작업에 실패했습니다.');
-              toast('Grok 자동 작업 중단');
               resolve(false);
               return;
             }
@@ -8325,23 +8322,6 @@
     element.textContent = '';
   }
 
-  function setButtonBusy(button, isBusy, busyLabel = '처리 중...') {
-    if (!button) return;
-    if (isBusy) {
-      if (button.__sfStudioIdleLabel === undefined) button.__sfStudioIdleLabel = button.textContent;
-      button.disabled = true;
-      button.setAttribute('aria-busy', 'true');
-      button.textContent = busyLabel;
-      return;
-    }
-    button.disabled = false;
-    button.removeAttribute('aria-busy');
-    if (button.__sfStudioIdleLabel !== undefined) {
-      button.textContent = button.__sfStudioIdleLabel;
-      delete button.__sfStudioIdleLabel;
-    }
-  }
-
   function toast(message, type = 'info', options = {}) {
     document.querySelector('.mv-toast')?.remove();
     const element = document.createElement('div');
@@ -8436,7 +8416,6 @@
       bindImportPreviewInput,
       applyFeedbackMessage,
       clearFeedbackMessage,
-      setButtonBusy,
       setMobileWorkspacePanels,
       toggleMobileWorkspacePanel,
       handleMobileWorkspaceAction,

@@ -28,9 +28,11 @@ for (const marker of ['--mv-console-canvas: #080b11','--mv-console-panel: #11172
 for (const marker of [`mv-storyboard.css?v=${assetVersion}`, `mvStoryboardStudio.js?v=${assetVersion}`]) assert.ok(html.includes(marker), `missing HTML asset version: ${marker}`);
 assert.ok(js.includes(`/sf-studio-sw.js?v=${assetVersion}`), 'Studio service worker registration must use Creator Console asset version');
 for (const marker of ['homeProjectState:','homeQuickRestore:','consoleProjectTitle:','consoleProjectState:','function syncHomeProjectState','function importPreviewData(source)','function limitedImportIssues(issues, limit = 6)','function applyImportPreviewSummary(summary, targets, createElement)','function bindImportPreviewInput(textarea, render)','function renderImportPreview()','importPreviewData','limitedImportIssues','applyImportPreviewSummary','bindImportPreviewInput']) assert.ok(js.includes(marker), `missing JS marker: ${marker}`);
-for (const marker of ['function applyFeedbackMessage(', 'function setButtonBusy(', 'applyFeedbackMessage', 'setButtonBusy']) assert.ok(js.includes(marker), `missing accessible feedback JS marker: ${marker}`);
+for (const marker of ['function applyFeedbackMessage(', 'applyFeedbackMessage']) assert.ok(js.includes(marker), `missing accessible feedback JS marker: ${marker}`);
 assert.match(js, /function showError\(message\) \{[\s\S]*?applyFeedbackMessage\(els\.error, message, 'error'\);[\s\S]*?toast\(message, 'error'/, 'error path must use assertive feedback without duplicate toast announcements');
-assert.match(js, /function setLoading\(isLoading\) \{[\s\S]*?setButtonBusy\(els\.generate, isLoading/, 'storyboard generation loading must synchronize its button accessibility state');
+assert.doesNotMatch(js, /showError\([^;]+\);\s*toast\(/, 'a production error path must not add a second toast after showError already presents the error');
+assert.doesNotMatch(js, /function setButtonBusy\(|setButtonBusy\(els\.generate|aria-busy/, 'synchronous storyboard generation must not claim an asynchronous busy state');
+assert.match(js, /function setLoading\(isLoading\) \{[\s\S]*?els\.generate\.disabled = isLoading;/, 'existing loading disable behavior must remain without the fake busy helper');
 for (const marker of [
   'class="mv-assist-board mv-console-workspace"',
   'data-action="toggle-cut-drawer"',
@@ -153,7 +155,6 @@ assert.equal(typeof savedProjectTools?.handleMobileWorkspaceEscape, 'function', 
 assert.equal(typeof savedProjectTools?.handleMobileWorkspaceResize, 'function', 'mobile workspace resize helper test hook is required');
 assert.equal(typeof savedProjectTools?.applyFeedbackMessage, 'function', 'feedback DOM helper test hook is required');
 assert.equal(typeof savedProjectTools?.clearFeedbackMessage, 'function', 'feedback clear helper test hook is required');
-assert.equal(typeof savedProjectTools?.setButtonBusy, 'function', 'busy button helper test hook is required');
 
 const makeFeedbackElement = () => ({
   textContent: 'old',
@@ -178,17 +179,6 @@ savedProjectTools.clearFeedbackMessage(queuedFeedback);
 queuedCallbacks[0]();
 assert.equal(queuedFeedback.textContent, '', 'cleared feedback must ignore a stale scheduled announcement');
 
-const busyButton = makeFeedbackElement();
-busyButton.textContent = '로컬 스토리보드 생성';
-busyButton.disabled = false;
-savedProjectTools.setButtonBusy(busyButton, true, '생성 중...');
-assert.equal(busyButton.disabled, true, 'busy helper must disable the active asynchronous button');
-assert.equal(busyButton.attributes['aria-busy'], 'true', 'busy helper must expose aria-busy');
-assert.equal(busyButton.textContent, '생성 중...', 'busy helper must expose a progress label');
-savedProjectTools.setButtonBusy(busyButton, false, '생성 중...');
-assert.equal(busyButton.disabled, false, 'busy helper must re-enable the asynchronous button');
-assert.equal(busyButton.attributes['aria-busy'], undefined, 'busy helper must clear aria-busy when complete');
-assert.equal(busyButton.textContent, '로컬 스토리보드 생성', 'busy helper must restore the original label');
 
 const mobileClasses = new Set();
 const mobileClassList = {

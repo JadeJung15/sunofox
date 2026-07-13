@@ -4652,6 +4652,7 @@
     return {
       body: context.body || document.body,
       root: context.root || els.result,
+      surface: context.surface || document,
       isMobile: context.isMobile,
       viewportWidth: context.viewportWidth,
       activeElement: context.activeElement
@@ -4664,9 +4665,25 @@
     panel.inert = hidden;
     panel.toggleAttribute('inert', hidden);
     panel.setAttribute('aria-hidden', String(hidden));
+    panel.setAttribute('role', mobile && open ? 'dialog' : 'region');
+    if (mobile && open) panel.setAttribute('aria-modal', 'true');
+    else panel.removeAttribute('aria-modal');
     if (!mobile || !open || !focusOpen) return;
     const focusable = panel.querySelector('button:not([disabled]), input:not([type="file"]):not([disabled]), select:not([disabled]), textarea:not([disabled]), a[href]');
     (focusable || panel).focus?.();
+  }
+
+  function syncMobileWorkspaceBackground(target, isolated) {
+    const workspaceSelector = '.mv-console-workspace > .mv-progress-card, .mv-console-mobile-actions, .mv-console-canvas-column';
+    const shellSelector = '.mv-console-rail, .mv-console-commandbar, .mv-studio > .mv-input, .mv-output > .mv-toolbar, .mv-output > .mv-storage-row';
+    const backgrounds = new Set([
+      ...(target.root?.querySelectorAll(workspaceSelector) || []),
+      ...(target.surface?.querySelectorAll(shellSelector) || [])
+    ]);
+    backgrounds.forEach((element) => {
+      element.inert = isolated;
+      element.toggleAttribute('inert', isolated);
+    });
   }
 
   function setMobileWorkspacePanels(next = {}, context = {}, options = {}) {
@@ -4695,6 +4712,7 @@
     }
     syncMobilePanelAccessibility(cutPanel, cutOpen, mobile, options.focusOpen);
     syncMobilePanelAccessibility(contextPanel, contextOpen, mobile, options.focusOpen);
+    syncMobileWorkspaceBackground(target, mobile && (cutOpen || contextOpen));
     if (options.restoreFocus && !cutOpen && !contextOpen) {
       const restorePanel = options.restorePanel || (previousCutOpen ? 'cut' : previousContextOpen ? 'context' : '');
       (restorePanel === 'cut' ? cutButton : restorePanel === 'context' ? contextButton : null)?.focus?.();

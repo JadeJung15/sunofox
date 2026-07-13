@@ -23,6 +23,34 @@ for (const marker of ['--mv-console-canvas: #080b11','--mv-console-panel: #11172
 for (const marker of [`mv-storyboard.css?v=${assetVersion}`, `mvStoryboardStudio.js?v=${assetVersion}`]) assert.ok(html.includes(marker), `missing HTML asset version: ${marker}`);
 assert.ok(js.includes(`/sf-studio-sw.js?v=${assetVersion}`), 'Studio service worker registration must use Creator Console asset version');
 for (const marker of ['homeProjectState:','homeQuickRestore:','consoleProjectTitle:','consoleProjectState:','function syncHomeProjectState','function importPreviewData(source)','function limitedImportIssues(issues, limit = 6)','function applyImportPreviewSummary(summary, targets, createElement)','function bindImportPreviewInput(textarea, render)','function renderImportPreview()','importPreviewData','limitedImportIssues','applyImportPreviewSummary','bindImportPreviewInput']) assert.ok(js.includes(marker), `missing JS marker: ${marker}`);
+for (const marker of [
+  'class="mv-assist-board mv-console-workspace"',
+  'data-action="toggle-cut-drawer"',
+  'aria-controls="mv-console-cut-column"',
+  'data-action="toggle-context-sheet"',
+  'aria-controls="mv-console-context-column"',
+  'id="mv-console-cut-column"',
+  'class="mv-assist-panel mv-console-canvas-column"',
+  'id="mv-console-context-column"',
+  'function setMobileWorkspacePanels(',
+  'function closeMobileWorkspacePanels(',
+  'function toggleMobileWorkspacePanel('
+]) assert.ok(js.includes(marker), `missing storyboard workspace JS marker: ${marker}`);
+for (const marker of [
+  '.mv-console-mobile-actions',
+  'grid-template-columns: 220px minmax(460px, 1fr) minmax(300px, 36%)',
+  '.mv-console-cut-column',
+  '.mv-console-canvas-column',
+  '.mv-console-context-column',
+  'body.mv-cut-drawer-open',
+  'body.mv-context-sheet-open',
+  'body.mv-mobile-panel-open',
+  'max-height: 72vh'
+]) assert.ok(css.includes(marker), `missing storyboard workspace CSS marker: ${marker}`);
+assert.match(js, /if \(action === 'assist-cut'\) \{\s*closeMobileWorkspacePanels\(\);/, 'cut selection must close mobile workspace panels');
+assert.match(js, /if \(state\.studioRoute !== 'storyboard'\) closeMobileWorkspacePanels\(\);/, 'leaving the storyboard route must close mobile panels');
+assert.match(js, /if \(event\.key === 'Escape'\)[\s\S]*?closeMobileWorkspacePanels\(\);/, 'Escape must close mobile workspace panels');
+assert.ok(js.includes("window.addEventListener('resize', handleMobileWorkspaceResize)"), 'desktop resize cleanup must be registered');
 for (const [label, source] of [['sf-studio-sw.js', sw], ['public/sf-studio-sw.js', publicSw]]) {
   for (const marker of [`sf-studio-${assetVersion}`, `mv-storyboard.css?v=${assetVersion}`, `mvStoryboardStudio.js?v=${assetVersion}`]) assert.ok(source.includes(marker), `${label} missing asset version: ${marker}`);
 }
@@ -79,6 +107,45 @@ assert.equal(typeof savedProjectTools?.importPreviewData, 'function', 'import pr
 assert.equal(typeof savedProjectTools?.limitedImportIssues, 'function', 'limited import issues test hook is required');
 assert.equal(typeof savedProjectTools?.applyImportPreviewSummary, 'function', 'import preview DOM apply test hook is required');
 assert.equal(typeof savedProjectTools?.bindImportPreviewInput, 'function', 'import preview input binding test hook is required');
+assert.equal(typeof savedProjectTools?.setMobileWorkspacePanels, 'function', 'mobile workspace state helper test hook is required');
+assert.equal(typeof savedProjectTools?.toggleMobileWorkspacePanel, 'function', 'mobile workspace toggle helper test hook is required');
+assert.equal(typeof savedProjectTools?.closeMobileWorkspacePanels, 'function', 'mobile workspace close helper test hook is required');
+
+const mobileClasses = new Set();
+const mobileClassList = {
+  toggle(name, enabled) { enabled ? mobileClasses.add(name) : mobileClasses.delete(name); },
+  contains(name) { return mobileClasses.has(name); }
+};
+const mobileButtons = {
+  cut: { attributes: {}, textContent: '', setAttribute(name, value) { this.attributes[name] = String(value); } },
+  context: { attributes: {}, textContent: '', setAttribute(name, value) { this.attributes[name] = String(value); } }
+};
+const mobileWorkspaceContext = {
+  body: { classList: mobileClassList },
+  root: {
+    querySelector(selector) {
+      if (selector.includes('toggle-cut-drawer')) return mobileButtons.cut;
+      if (selector.includes('toggle-context-sheet')) return mobileButtons.context;
+      return null;
+    }
+  }
+};
+savedProjectTools.setMobileWorkspacePanels({ cut: true, context: false }, mobileWorkspaceContext);
+assert.equal(mobileClassList.contains('mv-cut-drawer-open'), true, 'cut drawer state must add its body class');
+assert.equal(mobileClassList.contains('mv-context-sheet-open'), false, 'closed context sheet must omit its body class');
+assert.equal(mobileClassList.contains('mv-mobile-panel-open'), true, 'any open mobile panel must lock body scrolling');
+assert.equal(mobileButtons.cut.attributes['aria-expanded'], 'true', 'cut drawer trigger must expose expanded state');
+assert.equal(mobileButtons.context.attributes['aria-expanded'], 'false', 'context trigger must expose collapsed state');
+assert.equal(mobileButtons.cut.textContent, '컷 목록 닫기', 'open cut drawer trigger must use its close label');
+savedProjectTools.toggleMobileWorkspacePanel('context', mobileWorkspaceContext);
+assert.equal(mobileClassList.contains('mv-cut-drawer-open'), false, 'opening context sheet must close the cut drawer');
+assert.equal(mobileClassList.contains('mv-context-sheet-open'), true, 'context toggle must open the context sheet');
+savedProjectTools.closeMobileWorkspacePanels(mobileWorkspaceContext);
+assert.equal(mobileClassList.contains('mv-cut-drawer-open'), false, 'close helper must close the cut drawer');
+assert.equal(mobileClassList.contains('mv-context-sheet-open'), false, 'close helper must close the context sheet');
+assert.equal(mobileClassList.contains('mv-mobile-panel-open'), false, 'close helper must release body scrolling');
+assert.equal(mobileButtons.cut.attributes['aria-expanded'], 'false', 'close helper must reset cut trigger state');
+assert.equal(mobileButtons.context.attributes['aria-expanded'], 'false', 'close helper must reset context trigger state');
 const emptyPreview = savedProjectTools.importPreviewData('');
 assert.equal(emptyPreview.title, '—', 'empty preview must use the empty project title');
 assert.equal(emptyPreview.cutCount, 0, 'empty preview must contain no cuts');

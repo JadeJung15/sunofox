@@ -1329,6 +1329,7 @@
     els.result.addEventListener('click', handleResultClick);
     els.result.addEventListener('input', handleResultInput);
     document.addEventListener('keydown', handleStudioShortcuts);
+    window.addEventListener('resize', handleMobileWorkspaceResize);
     state.workflowCollapsed = readWorkflowCollapsed();
     state.presets = readPresets();
     seedDefaultAnchors();
@@ -2809,6 +2810,7 @@
     if (els.importSurface) els.importSurface.hidden = !isImport;
     if (els.helpSurface) els.helpSurface.hidden = !isHelp;
     if (els.root) els.root.hidden = isHome || isImport || isHelp;
+    if (state.studioRoute !== 'storyboard') closeMobileWorkspacePanels();
   }
 
   function applyStudioRoute(routeKey, options = {}) {
@@ -2871,6 +2873,7 @@
   function setActiveTab(tab) {
     state.activeTab = !isAdvancedMode() && isAdvancedTab(tab) ? 'assist' : tab;
     state.studioRoute = routeKeyForTab(state.activeTab);
+    if (state.studioRoute !== 'storyboard') closeMobileWorkspacePanels();
     syncActiveTabButtons();
     syncStudioRouteNav();
     updateStudioRouteUrl(state.studioRoute, { replace: true });
@@ -4518,9 +4521,13 @@
     const grok = grokReadiness();
 
     els.result.innerHTML = `
-      <div class="mv-assist-board">
+      <div class="mv-assist-board mv-console-workspace">
         ${workflowOverviewHtml()}
-        <aside class="mv-assist-panel mv-cut-list-panel">
+        <div class="mv-console-mobile-actions" aria-label="모바일 작업 패널">
+          <button data-action="toggle-cut-drawer" aria-controls="mv-console-cut-column" aria-expanded="false" type="button">컷 목록 열기</button>
+          <button data-action="toggle-context-sheet" aria-controls="mv-console-context-column" aria-expanded="false" type="button">이미지 보관함 열기</button>
+        </div>
+        <aside id="mv-console-cut-column" class="mv-assist-panel mv-cut-list-panel mv-console-cut-column" aria-label="컷 목록">
           <div class="mv-cut-list-head">
             <span class="mv-kicker">후보 리스트 (${state.storyboard.cuts.length})</span>
             <div class="mv-cut-search">
@@ -4548,7 +4555,7 @@
           </div>
         </aside>
 
-        <section class="mv-assist-panel">
+        <section class="mv-assist-panel mv-console-canvas-column" aria-label="현재 컷 작업">
           <details class="mv-assist-setup-details">
             <summary class="mv-assist-setup-summary">
               <span class="mv-assist-setup-title">
@@ -4619,7 +4626,7 @@
           </div>` : '<p class="mv-tip">일관성 기준 꺼짐 · 캐릭터, 그림체, 세계관 고정 문장을 제외하고 컷별 장면 중심으로 생성합니다.</p>'}`}
         </section>
 
-        <section class="mv-file-panel">
+        <section id="mv-console-context-column" class="mv-file-panel mv-console-context-column" aria-label="이미지 보관함">
           <div>
             <span class="mv-kicker">이미지 보관함</span>
             <p class="mv-tip">Midjourney에서 선택한 이미지를 한 번에 드롭하세요. 순서는 임시 배치만 하고, 최종 순서는 편집 단계에서 정합니다.</p>
@@ -4634,7 +4641,52 @@
       </div>`;
 
     setupDropZones();
+    setMobileWorkspacePanels({
+      cut: document.body.classList.contains('mv-cut-drawer-open'),
+      context: document.body.classList.contains('mv-context-sheet-open')
+    });
     scrollActiveAssistCutIntoView();
+  }
+
+  function mobileWorkspaceContext(context = {}) {
+    return {
+      body: context.body || document.body,
+      root: context.root || els.result
+    };
+  }
+
+  function setMobileWorkspacePanels(next = {}, context = {}) {
+    const target = mobileWorkspaceContext(context);
+    const cutOpen = Boolean(next.cut);
+    const contextOpen = !cutOpen && Boolean(next.context);
+    target.body?.classList.toggle('mv-cut-drawer-open', cutOpen);
+    target.body?.classList.toggle('mv-context-sheet-open', contextOpen);
+    target.body?.classList.toggle('mv-mobile-panel-open', cutOpen || contextOpen);
+    const cutButton = target.root?.querySelector('[data-action="toggle-cut-drawer"]');
+    const contextButton = target.root?.querySelector('[data-action="toggle-context-sheet"]');
+    cutButton?.setAttribute('aria-expanded', String(cutOpen));
+    contextButton?.setAttribute('aria-expanded', String(contextOpen));
+    if (cutButton) cutButton.textContent = cutOpen ? '컷 목록 닫기' : '컷 목록 열기';
+    if (contextButton) contextButton.textContent = contextOpen ? '이미지 보관함 닫기' : '이미지 보관함 열기';
+    return { cut: cutOpen, context: contextOpen };
+  }
+
+  function closeMobileWorkspacePanels(context = {}) {
+    return setMobileWorkspacePanels({ cut: false, context: false }, context);
+  }
+
+  function toggleMobileWorkspacePanel(panel, context = {}) {
+    const target = mobileWorkspaceContext(context);
+    const cutOpen = target.body?.classList.contains('mv-cut-drawer-open') || false;
+    const contextOpen = target.body?.classList.contains('mv-context-sheet-open') || false;
+    return setMobileWorkspacePanels({
+      cut: panel === 'cut' ? !cutOpen : false,
+      context: panel === 'context' ? !contextOpen : false
+    }, target);
+  }
+
+  function handleMobileWorkspaceResize() {
+    if (window.innerWidth > 1180) closeMobileWorkspacePanels();
   }
 
   function scrollActiveAssistCutIntoView() {
@@ -4649,6 +4701,14 @@
     if (!button) return;
     const action = button.dataset.action;
     const cutNumber = Number(button.dataset.cut || 0);
+    if (action === 'toggle-cut-drawer') {
+      toggleMobileWorkspacePanel('cut');
+      return;
+    }
+    if (action === 'toggle-context-sheet') {
+      toggleMobileWorkspacePanel('context');
+      return;
+    }
     if (action === 'select-cut') {
       state.selectedCut = cutNumber;
       saveProject('auto');
@@ -4697,6 +4757,7 @@
       startGrokTest(cutNumber || state.assistCut);
     }
     if (action === 'assist-cut') {
+      closeMobileWorkspacePanels();
       state.assistCut = cutNumber;
       state.selectedCut = cutNumber;
       state.activeTab = 'assist';
@@ -7258,6 +7319,14 @@
   }
 
   function handleStudioShortcuts(event) {
+    if (event.key === 'Escape') {
+      const panelOpen = document.body.classList.contains('mv-cut-drawer-open') || document.body.classList.contains('mv-context-sheet-open');
+      if (panelOpen) {
+        event.preventDefault();
+        closeMobileWorkspacePanels();
+      }
+      return;
+    }
     if (!state.storyboard?.cuts?.length) return;
     const target = event.target;
     const tag = target?.tagName?.toLowerCase();
@@ -8226,6 +8295,9 @@
       limitedImportIssues,
       applyImportPreviewSummary,
       bindImportPreviewInput,
+      setMobileWorkspacePanels,
+      toggleMobileWorkspacePanel,
+      closeMobileWorkspacePanels,
       workflowPromptsFromCuts,
       workflowCutlistCsvFromCuts,
       setImportOptionsForTest,

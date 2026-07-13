@@ -16,6 +16,134 @@
   margin: 0;
 }
 
+/* Creator Console storyboard workspace. */
+.mv-console-mobile-actions {
+  display: none;
+}
+
+@media (min-width: 1181px) {
+  .mv-console-workspace,
+  .mv-studio.is-basic .mv-console-workspace {
+    background: var(--mv-console-canvas);
+    gap: 12px;
+    grid-template-columns: 220px minmax(460px, 1fr) minmax(300px, 36%) !important;
+    padding: 12px;
+  }
+
+  .mv-console-workspace > .mv-progress-card {
+    grid-column: 1 / -1;
+  }
+
+  .mv-console-workspace > .mv-console-cut-column,
+  .mv-console-workspace > .mv-console-canvas-column,
+  .mv-console-workspace > .mv-console-context-column {
+    background: var(--mv-console-panel);
+    border: 1px solid var(--mv-console-border);
+    border-radius: 16px;
+    color: var(--mv-console-text);
+  }
+
+  .mv-console-workspace > .mv-console-canvas-column,
+  .mv-studio.is-basic .mv-console-workspace > .mv-console-canvas-column,
+  .mv-console-workspace > .mv-console-context-column,
+  .mv-studio.is-basic .mv-console-workspace > .mv-console-context-column {
+    min-height: 960px !important;
+  }
+
+  .mv-console-workspace .mv-current-prompt,
+  .mv-console-workspace .mv-current-prompt code {
+    background: var(--mv-console-canvas);
+    border-color: var(--mv-console-border);
+    color: var(--mv-console-text);
+  }
+}
+
+@media (max-width: 1180px) {
+  .mv-console-workspace,
+  .mv-studio.is-basic .mv-console-workspace {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: 1fr;
+  }
+
+  .mv-console-mobile-actions {
+    display: grid;
+    gap: 8px;
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 0 12px;
+  }
+
+  .mv-console-mobile-actions button {
+    background: var(--mv-console-raised);
+    border: 1px solid var(--mv-console-border);
+    border-radius: 12px;
+    color: var(--mv-console-text);
+    cursor: pointer;
+    font: inherit;
+    font-weight: 800;
+    min-height: 44px;
+    padding: 8px 12px;
+  }
+
+  .mv-console-workspace > .mv-console-canvas-column {
+    background: var(--mv-console-panel);
+    border: 1px solid var(--mv-console-border);
+    border-radius: 16px;
+    color: var(--mv-console-text);
+    margin: 0 12px;
+  }
+
+  .mv-console-workspace > .mv-console-cut-column {
+    background: var(--mv-console-panel);
+    border: 0;
+    border-radius: 0 16px 16px 0;
+    bottom: 64px;
+    color: var(--mv-console-text);
+    inset-inline-start: 0;
+    max-width: min(88vw, 360px);
+    overflow: auto;
+    position: fixed;
+    top: 60px;
+    transform: translateX(-105%);
+    transition: transform 180ms ease;
+    width: 100%;
+    z-index: 120;
+  }
+
+  .mv-console-workspace > .mv-console-context-column {
+    background: var(--mv-console-panel);
+    border: 1px solid var(--mv-console-border);
+    border-radius: 18px 18px 0 0;
+    bottom: 64px;
+    color: var(--mv-console-text);
+    left: 0;
+    max-height: 72vh;
+    overflow: auto;
+    position: fixed;
+    right: 0;
+    transform: translateY(calc(100% + 72px));
+    transition: transform 180ms ease;
+    z-index: 121;
+  }
+
+  body.mv-cut-drawer-open .mv-console-cut-column,
+  body.mv-context-sheet-open .mv-console-context-column {
+    transform: translate(0);
+  }
+
+  body.mv-mobile-panel-open {
+    overflow: hidden;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mv-console-cut-column,
+  .mv-console-context-column {
+    transition: none !important;
+  }
+}
+
 .mv-standalone-body [hidden] {
   display: none !important;
 }

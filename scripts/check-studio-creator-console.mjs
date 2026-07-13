@@ -20,7 +20,7 @@ for (const marker of ['class="mv-console-shell"','class="mv-console-rail"','clas
 for (const marker of ['--mv-console-canvas: #080b11','--mv-console-panel: #111722','--mv-console-raised: #171f2d','--mv-console-border: #293449','--mv-console-text: #f5f7fb','--mv-console-muted: #96a2b4','--mv-console-action: #8b78f6','--mv-console-bridge: #5dd8e4','--mv-console-saved: #68dca4','.mv-console-shell','.mv-console-rail','.mv-console-commandbar','grid-template-columns: 78px minmax(0, 1fr)','height: 60px','padding: 16px','@media (max-width: 760px)','height: 64px','grid-template-columns: repeat(4, minmax(0, 1fr))','height: 56px']) assert.ok(css.includes(marker), `missing CSS marker: ${marker}`);
 for (const marker of [`mv-storyboard.css?v=${assetVersion}`, `mvStoryboardStudio.js?v=${assetVersion}`]) assert.ok(html.includes(marker), `missing HTML asset version: ${marker}`);
 assert.ok(js.includes(`/sf-studio-sw.js?v=${assetVersion}`), 'Studio service worker registration must use Creator Console asset version');
-for (const marker of ['homeProjectState:','homeQuickRestore:','consoleProjectTitle:','consoleProjectState:','function syncHomeProjectState','function importPreviewData(source)','function renderImportPreview()','importPreviewData']) assert.ok(js.includes(marker), `missing JS marker: ${marker}`);
+for (const marker of ['homeProjectState:','homeQuickRestore:','consoleProjectTitle:','consoleProjectState:','function syncHomeProjectState','function importPreviewData(source)','function limitedImportIssues(issues, limit = 6)','function renderImportPreview()','importPreviewData','limitedImportIssues']) assert.ok(js.includes(marker), `missing JS marker: ${marker}`);
 for (const [label, source] of [['sf-studio-sw.js', sw], ['public/sf-studio-sw.js', publicSw]]) {
   for (const marker of [`sf-studio-${assetVersion}`, `mv-storyboard.css?v=${assetVersion}`, `mvStoryboardStudio.js?v=${assetVersion}`]) assert.ok(source.includes(marker), `${label} missing asset version: ${marker}`);
 }
@@ -74,6 +74,7 @@ vm.runInNewContext(js, sandbox, { filename: 'js/mvStoryboardStudio.js' });
 const savedProjectTools = sandbox.window.SFStudioImportTools;
 assert.equal(typeof savedProjectTools?.readSavedProjectForTest, 'function', 'saved project read test hook is required');
 assert.equal(typeof savedProjectTools?.importPreviewData, 'function', 'import preview summary test hook is required');
+assert.equal(typeof savedProjectTools?.limitedImportIssues, 'function', 'limited import issues test hook is required');
 const emptyPreview = savedProjectTools.importPreviewData('');
 assert.equal(emptyPreview.title, '—', 'empty preview must use the empty project title');
 assert.equal(emptyPreview.cutCount, 0, 'empty preview must contain no cuts');
@@ -106,8 +107,19 @@ project: 오류 프로젝트
 scene: 필수 필드 누락
 `);
 assert.equal(invalidWorkflowPreview.cutCount, 1, 'invalid workflow preview must preserve valid cut headings');
-assert.ok(invalidWorkflowPreview.issueCount > 0, 'invalid workflow preview must expose parser issues');
+assert.equal(invalidWorkflowPreview.issueCount, 3, 'invalid one-cut workflow must contain three unique issues');
+assert.equal(JSON.stringify(invalidWorkflowPreview.issues), JSON.stringify([
+  'Cut 01: time 값이 없습니다.',
+  'Cut 01: Midjourney 프롬프트가 없습니다.',
+  'Cut 01: Grok 프롬프트가 없습니다.'
+]), 'cut issues must use the same canonical display as global workflow issues');
 assert.ok(invalidWorkflowPreview.issues.every((issue) => typeof issue === 'string'), 'preview issues must be strings');
+
+const limitedIssues = savedProjectTools.limitedImportIssues([
+  '오류 1', '오류 2', '오류 3', '오류 4', '오류 5', '오류 6', '오류 7'
+]);
+assert.equal(limitedIssues.length, 6, 'limited issue list must never exceed six entries');
+assert.equal(limitedIssues[5], '외 2개', 'limited issue list must summarize all remaining errors');
 
 const legacyPreview = savedProjectTools.importPreviewData(`## Cut 01
 \`\`\`text

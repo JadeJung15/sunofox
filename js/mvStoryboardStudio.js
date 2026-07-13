@@ -1739,9 +1739,16 @@
 
     const imported = parseStudioMarkdownImport(text);
     const cutCount = Array.isArray(imported?.cuts) ? imported.cuts.length : 0;
+    const cutIssueValues = (imported?.cuts || []).flatMap((cut) => {
+      const cutIssues = cut?.workflowIssues || cut?.issues || [];
+      return (Array.isArray(cutIssues) ? cutIssues : [cutIssues])
+        .flat(Infinity)
+        .filter((issue) => typeof issue === 'string' && issue.trim())
+        .map((issue) => `Cut ${pad(cut.number)}: ${issue.trim()}`);
+    });
     const issueValues = [
       ...(Array.isArray(imported?.issues) ? imported.issues : []),
-      ...((imported?.cuts || []).flatMap((cut) => cut?.workflowIssues || cut?.issues || []))
+      ...cutIssueValues
     ]
       .flat(Infinity)
       .filter((issue) => typeof issue === 'string' && issue.trim())
@@ -1758,6 +1765,15 @@
     };
   }
 
+  function limitedImportIssues(issues, limit = 6) {
+    const values = Array.isArray(issues) ? issues : [];
+    const maxItems = Math.max(0, Number(limit) || 0);
+    if (!maxItems) return [];
+    if (values.length <= maxItems) return values.slice();
+    const visibleCount = maxItems - 1;
+    return [...values.slice(0, visibleCount), `외 ${values.length - visibleCount}개`];
+  }
+
   function renderImportPreview() {
     if (!els.importPreviewStatus || !els.importPreviewMeta || !els.importPreviewIssues) return;
     const preview = importPreviewData(els.gptMarkdownText?.value || '');
@@ -1768,16 +1784,11 @@
       <div><dt>오류</dt><dd>${preview.issueCount}</dd></div>
     `;
     els.importPreviewIssues.replaceChildren();
-    preview.issues.slice(0, 6).forEach((issue) => {
+    limitedImportIssues(preview.issues).forEach((issue) => {
       const item = document.createElement('li');
       item.textContent = issue;
       els.importPreviewIssues.appendChild(item);
     });
-    if (preview.issues.length > 6) {
-      const item = document.createElement('li');
-      item.textContent = `외 ${preview.issues.length - 6}개`;
-      els.importPreviewIssues.appendChild(item);
-    }
   }
 
   function parseWorkflowMarkdown(text) {
@@ -8179,6 +8190,7 @@
       parseStudioMarkdownImport,
       parseWorkflowMarkdown,
       importPreviewData,
+      limitedImportIssues,
       workflowPromptsFromCuts,
       workflowCutlistCsvFromCuts,
       setImportOptionsForTest,

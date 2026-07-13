@@ -2810,7 +2810,7 @@
     if (els.importSurface) els.importSurface.hidden = !isImport;
     if (els.helpSurface) els.helpSurface.hidden = !isHelp;
     if (els.root) els.root.hidden = isHome || isImport || isHelp;
-    if (state.studioRoute !== 'storyboard') closeMobileWorkspacePanels();
+    closeMobilePanelsForRoute(state.studioRoute);
   }
 
   function applyStudioRoute(routeKey, options = {}) {
@@ -2873,7 +2873,7 @@
   function setActiveTab(tab) {
     state.activeTab = !isAdvancedMode() && isAdvancedTab(tab) ? 'assist' : tab;
     state.studioRoute = routeKeyForTab(state.activeTab);
-    if (state.studioRoute !== 'storyboard') closeMobileWorkspacePanels();
+    closeMobilePanelsForRoute(state.studioRoute);
     syncActiveTabButtons();
     syncStudioRouteNav();
     updateStudioRouteUrl(state.studioRoute, { replace: true });
@@ -4675,6 +4675,20 @@
     return setMobileWorkspacePanels({ cut: false, context: false }, context);
   }
 
+  function mobileWorkspacePanelsOpen(context = {}) {
+    const target = mobileWorkspaceContext(context);
+    return Boolean(
+      target.body?.classList.contains('mv-cut-drawer-open') ||
+      target.body?.classList.contains('mv-context-sheet-open')
+    );
+  }
+
+  function closeMobilePanelsForRoute(routeKey, context = {}) {
+    if (routeKey === 'storyboard' || !mobileWorkspacePanelsOpen(context)) return false;
+    closeMobileWorkspacePanels(context);
+    return true;
+  }
+
   function toggleMobileWorkspacePanel(panel, context = {}) {
     const target = mobileWorkspaceContext(context);
     const cutOpen = target.body?.classList.contains('mv-cut-drawer-open') || false;
@@ -4685,8 +4699,18 @@
     }, target);
   }
 
-  function handleMobileWorkspaceResize() {
-    if (window.innerWidth > 1180) closeMobileWorkspacePanels();
+  function handleMobileWorkspaceEscape(event, context = {}) {
+    if (event?.key !== 'Escape' || !mobileWorkspacePanelsOpen(context)) return false;
+    event.preventDefault?.();
+    closeMobileWorkspacePanels(context);
+    return true;
+  }
+
+  function handleMobileWorkspaceResize(event, context = {}) {
+    const viewportWidth = event?.currentTarget?.innerWidth ?? window.innerWidth;
+    if (viewportWidth <= 1180 || !mobileWorkspacePanelsOpen(context)) return false;
+    closeMobileWorkspacePanels(context);
+    return true;
   }
 
   function scrollActiveAssistCutIntoView() {
@@ -7320,11 +7344,7 @@
 
   function handleStudioShortcuts(event) {
     if (event.key === 'Escape') {
-      const panelOpen = document.body.classList.contains('mv-cut-drawer-open') || document.body.classList.contains('mv-context-sheet-open');
-      if (panelOpen) {
-        event.preventDefault();
-        closeMobileWorkspacePanels();
-      }
+      handleMobileWorkspaceEscape(event);
       return;
     }
     if (!state.storyboard?.cuts?.length) return;
@@ -8298,6 +8318,9 @@
       setMobileWorkspacePanels,
       toggleMobileWorkspacePanel,
       closeMobileWorkspacePanels,
+      closeMobilePanelsForRoute,
+      handleMobileWorkspaceEscape,
+      handleMobileWorkspaceResize,
       workflowPromptsFromCuts,
       workflowCutlistCsvFromCuts,
       setImportOptionsForTest,

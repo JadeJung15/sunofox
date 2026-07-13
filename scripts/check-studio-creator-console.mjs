@@ -34,7 +34,10 @@ for (const marker of [
   'id="mv-console-context-column"',
   'function setMobileWorkspacePanels(',
   'function closeMobileWorkspacePanels(',
-  'function toggleMobileWorkspacePanel('
+  'function toggleMobileWorkspacePanel(',
+  'function closeMobilePanelsForRoute(',
+  'function handleMobileWorkspaceEscape(',
+  'function handleMobileWorkspaceResize('
 ]) assert.ok(js.includes(marker), `missing storyboard workspace JS marker: ${marker}`);
 for (const marker of [
   '.mv-console-mobile-actions',
@@ -48,9 +51,20 @@ for (const marker of [
   'max-height: 72vh'
 ]) assert.ok(css.includes(marker), `missing storyboard workspace CSS marker: ${marker}`);
 assert.match(js, /if \(action === 'assist-cut'\) \{\s*closeMobileWorkspacePanels\(\);/, 'cut selection must close mobile workspace panels');
-assert.match(js, /if \(state\.studioRoute !== 'storyboard'\) closeMobileWorkspacePanels\(\);/, 'leaving the storyboard route must close mobile panels');
-assert.match(js, /if \(event\.key === 'Escape'\)[\s\S]*?closeMobileWorkspacePanels\(\);/, 'Escape must close mobile workspace panels');
+assert.ok(js.includes('closeMobilePanelsForRoute(state.studioRoute)'), 'route changes must use the mobile panel cleanup helper');
+assert.match(js, /if \(event\.key === 'Escape'\) \{\s*handleMobileWorkspaceEscape\(event\);/, 'Escape must use the mobile panel cleanup helper');
 assert.ok(js.includes("window.addEventListener('resize', handleMobileWorkspaceResize)"), 'desktop resize cleanup must be registered');
+const creatorConsoleCssStart = css.indexOf('/* Creator Console storyboard workspace. */');
+const mobileWorkspaceCssStart = css.indexOf('@media (max-width: 1180px)', creatorConsoleCssStart);
+const mobileWorkspaceCssEnd = css.indexOf('@media (prefers-reduced-motion: reduce)', mobileWorkspaceCssStart);
+assert.ok(creatorConsoleCssStart >= 0 && mobileWorkspaceCssStart > creatorConsoleCssStart && mobileWorkspaceCssEnd > mobileWorkspaceCssStart, 'Creator Console mobile workspace media block must be bounded');
+const mobileWorkspaceCss = css.slice(mobileWorkspaceCssStart, mobileWorkspaceCssEnd);
+const cutDrawerRule = mobileWorkspaceCss.match(/\.mv-console-workspace\s*>\s*\.mv-console-cut-column\s*\{([\s\S]*?)\}/)?.[1] || '';
+assert.match(cutDrawerRule, /display:\s*none;/, 'closed mobile cut drawer must be removed from focus and layout');
+assert.match(cutDrawerRule, /inset:\s*60px 0 64px 0;/, 'mobile cut drawer must fill the workspace between app bars');
+assert.match(cutDrawerRule, /position:\s*fixed;/, 'mobile cut drawer must use fixed workspace positioning');
+assert.doesNotMatch(cutDrawerRule, /max-width|translateX/, 'mobile cut drawer must not retain the narrow sliding rail layout');
+assert.match(mobileWorkspaceCss, /body\.mv-cut-drawer-open\s+\.mv-console-cut-column\s*\{\s*display:\s*block;/, 'open mobile cut drawer must become visible');
 for (const [label, source] of [['sf-studio-sw.js', sw], ['public/sf-studio-sw.js', publicSw]]) {
   for (const marker of [`sf-studio-${assetVersion}`, `mv-storyboard.css?v=${assetVersion}`, `mvStoryboardStudio.js?v=${assetVersion}`]) assert.ok(source.includes(marker), `${label} missing asset version: ${marker}`);
 }
@@ -110,6 +124,9 @@ assert.equal(typeof savedProjectTools?.bindImportPreviewInput, 'function', 'impo
 assert.equal(typeof savedProjectTools?.setMobileWorkspacePanels, 'function', 'mobile workspace state helper test hook is required');
 assert.equal(typeof savedProjectTools?.toggleMobileWorkspacePanel, 'function', 'mobile workspace toggle helper test hook is required');
 assert.equal(typeof savedProjectTools?.closeMobileWorkspacePanels, 'function', 'mobile workspace close helper test hook is required');
+assert.equal(typeof savedProjectTools?.closeMobilePanelsForRoute, 'function', 'mobile workspace route cleanup helper test hook is required');
+assert.equal(typeof savedProjectTools?.handleMobileWorkspaceEscape, 'function', 'mobile workspace Escape helper test hook is required');
+assert.equal(typeof savedProjectTools?.handleMobileWorkspaceResize, 'function', 'mobile workspace resize helper test hook is required');
 
 const mobileClasses = new Set();
 const mobileClassList = {
@@ -146,6 +163,31 @@ assert.equal(mobileClassList.contains('mv-context-sheet-open'), false, 'close he
 assert.equal(mobileClassList.contains('mv-mobile-panel-open'), false, 'close helper must release body scrolling');
 assert.equal(mobileButtons.cut.attributes['aria-expanded'], 'false', 'close helper must reset cut trigger state');
 assert.equal(mobileButtons.context.attributes['aria-expanded'], 'false', 'close helper must reset context trigger state');
+
+savedProjectTools.setMobileWorkspacePanels({ cut: true }, mobileWorkspaceContext);
+assert.equal(savedProjectTools.closeMobilePanelsForRoute('storyboard', mobileWorkspaceContext), false, 'storyboard route must preserve its open mobile panel');
+assert.equal(mobileClassList.contains('mv-cut-drawer-open'), true, 'storyboard route must keep the drawer open');
+assert.equal(savedProjectTools.closeMobilePanelsForRoute('help', mobileWorkspaceContext), true, 'leaving storyboard must report panel cleanup');
+assert.equal(mobileClassList.contains('mv-cut-drawer-open'), false, 'route cleanup must remove the drawer body class');
+assert.equal(mobileButtons.cut.attributes['aria-expanded'], 'false', 'route cleanup must reset drawer aria-expanded');
+assert.equal(mobileButtons.cut.textContent, '컷 목록 열기', 'route cleanup must reset drawer label');
+
+savedProjectTools.setMobileWorkspacePanels({ context: true }, mobileWorkspaceContext);
+let escapePrevented = 0;
+const escapeEvent = { key: 'Escape', preventDefault() { escapePrevented += 1; } };
+assert.equal(savedProjectTools.handleMobileWorkspaceEscape(escapeEvent, mobileWorkspaceContext), true, 'Escape must report closing an open panel');
+assert.equal(escapePrevented, 1, 'Escape must prevent default when it closes a panel');
+assert.equal(mobileClassList.contains('mv-context-sheet-open'), false, 'Escape must remove the context body class');
+assert.equal(mobileButtons.context.attributes['aria-expanded'], 'false', 'Escape must reset context aria-expanded');
+assert.equal(mobileButtons.context.textContent, '이미지 보관함 열기', 'Escape must reset context trigger label');
+
+savedProjectTools.setMobileWorkspacePanels({ cut: true }, mobileWorkspaceContext);
+assert.equal(savedProjectTools.handleMobileWorkspaceResize({ currentTarget: { innerWidth: 1180 } }, mobileWorkspaceContext), false, 'mobile resize must preserve the open panel');
+assert.equal(mobileClassList.contains('mv-cut-drawer-open'), true, 'mobile width must keep the drawer open');
+assert.equal(savedProjectTools.handleMobileWorkspaceResize({ currentTarget: { innerWidth: 1181 } }, mobileWorkspaceContext), true, 'desktop resize must report panel cleanup');
+assert.equal(mobileClassList.contains('mv-cut-drawer-open'), false, 'desktop resize must remove the drawer body class');
+assert.equal(mobileButtons.cut.attributes['aria-expanded'], 'false', 'desktop resize must reset drawer aria-expanded');
+assert.equal(mobileButtons.cut.textContent, '컷 목록 열기', 'desktop resize must reset drawer label');
 const emptyPreview = savedProjectTools.importPreviewData('');
 assert.equal(emptyPreview.title, '—', 'empty preview must use the empty project title');
 assert.equal(emptyPreview.cutCount, 0, 'empty preview must contain no cuts');

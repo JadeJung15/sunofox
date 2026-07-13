@@ -97,17 +97,12 @@
   .mv-console-workspace > .mv-console-cut-column {
     background: var(--mv-console-panel);
     border: 0;
-    border-radius: 0 16px 16px 0;
-    bottom: 64px;
+    border-radius: 0;
     color: var(--mv-console-text);
-    inset-inline-start: 0;
-    max-width: min(88vw, 360px);
+    display: none;
+    inset: 60px 0 64px 0;
     overflow: auto;
     position: fixed;
-    top: 60px;
-    transform: translateX(-105%);
-    transition: transform 180ms ease;
-    width: 100%;
     z-index: 120;
   }
 
@@ -127,7 +122,10 @@
     z-index: 121;
   }
 
-  body.mv-cut-drawer-open .mv-console-cut-column,
+  body.mv-cut-drawer-open .mv-console-cut-column {
+    display: block;
+  }
+
   body.mv-context-sheet-open .mv-console-context-column {
     transform: translate(0);
   }

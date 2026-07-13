@@ -163,6 +163,57 @@ assert.equal(typeof savedProjectTools?.handleMobileWorkspaceEscape, 'function', 
 assert.equal(typeof savedProjectTools?.handleMobileWorkspaceResize, 'function', 'mobile workspace resize helper test hook is required');
 assert.equal(typeof savedProjectTools?.applyFeedbackMessage, 'function', 'feedback DOM helper test hook is required');
 assert.equal(typeof savedProjectTools?.clearFeedbackMessage, 'function', 'feedback clear helper test hook is required');
+assert.equal(typeof savedProjectTools?.bindHomeResumeButton, 'function', 'home resume button binding test hook is required');
+
+const homeResumeButton = {
+  clickHandler: null,
+  addEventListener(type, handler) {
+    if (type === 'click') this.clickHandler = handler;
+  },
+  click() {
+    return this.clickHandler?.({ type: 'click' });
+  }
+};
+const resumeState = {
+  route: 'home',
+  pathname: '/mv-studio',
+  storyboard: null,
+  renderCount: 0,
+  errorCount: 0
+};
+savedProjectTools.bindHomeResumeButton(homeResumeButton, {
+  loadProject() {
+    const payload = savedProjectTools.readSavedProjectForTest();
+    if (!payload) {
+      resumeState.errorCount += 1;
+      return false;
+    }
+    resumeState.storyboard = payload.storyboard;
+    return true;
+  },
+  applyStudioRoute(routeKey, options) {
+    resumeState.route = routeKey;
+    if (options?.push) resumeState.pathname = `/mv-studio/${routeKey}`;
+    if (resumeState.storyboard && routeKey === 'storyboard') resumeState.renderCount += 1;
+  }
+});
+storage.set('webling_mv_studio_saved_project_v1', JSON.stringify({ storyboard: { cuts: [{ number: 1 }] } }));
+homeResumeButton.click();
+assert.equal(resumeState.route, 'storyboard', 'home resume click must transition to the storyboard route');
+assert.equal(resumeState.pathname, '/mv-studio/storyboard', 'home resume click must update the storyboard URL');
+assert.equal(resumeState.storyboard?.cuts?.length, 1, 'home resume click must restore the saved storyboard');
+assert.equal(resumeState.renderCount, 1, 'home resume click must render the restored storyboard');
+
+resumeState.route = 'home';
+resumeState.pathname = '/mv-studio';
+resumeState.storyboard = null;
+resumeState.renderCount = 0;
+storage.set('webling_mv_studio_saved_project_v1', JSON.stringify({ storyboard: { cuts: [{ number: '1' }] } }));
+homeResumeButton.click();
+assert.equal(resumeState.route, 'home', 'invalid home resume data must keep the home route');
+assert.equal(resumeState.pathname, '/mv-studio', 'invalid home resume data must keep the home URL');
+assert.equal(resumeState.renderCount, 0, 'invalid home resume data must not render storyboard output');
+assert.equal(resumeState.errorCount, 1, 'invalid home resume data must preserve load error feedback');
 
 const makeFeedbackElement = () => ({
   textContent: 'old',

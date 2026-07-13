@@ -1209,7 +1209,7 @@
     els.downloadMd.addEventListener('click', downloadMarkdown);
     els.downloadCsv.addEventListener('click', downloadCsv);
     els.quickRestore?.addEventListener('click', loadProject);
-    els.homeQuickRestore?.addEventListener('click', loadProject);
+    bindHomeResumeButton(els.homeQuickRestore);
     els.applyTemplate?.addEventListener('click', applySelectedProjectTemplate);
     els.savePreset?.addEventListener('click', saveCurrentPreset);
     els.applyPreset?.addEventListener('click', applySelectedPreset);
@@ -3652,7 +3652,7 @@
     if (!payload) {
       showError('불러올 저장 작업이 없습니다.');
       updateStorageState();
-      return;
+      return false;
     }
 
     revokeObjectUrls();
@@ -3763,6 +3763,21 @@
     applyStudioRoute(state.studioRoute, { replace: true, reveal: false, persist: false });
     restoreSavedImages(payload);
     toast('저장된 작업을 불러왔습니다.');
+    return true;
+  }
+
+  function resumeHomeProject(options = {}) {
+    const restoreProject = options.loadProject || loadProject;
+    const applyRoute = options.applyStudioRoute || applyStudioRoute;
+    if (!restoreProject()) return false;
+    applyRoute('storyboard', { push: true, reveal: true, persist: false });
+    return true;
+  }
+
+  function bindHomeResumeButton(button, options = {}) {
+    const handler = () => resumeHomeProject(options);
+    button?.addEventListener('click', handler);
+    return handler;
   }
 
   function readSavedProject() {
@@ -8423,6 +8438,7 @@
       closeMobilePanelsForRoute,
       handleMobileWorkspaceEscape,
       handleMobileWorkspaceResize,
+      bindHomeResumeButton,
       workflowPromptsFromCuts,
       workflowCutlistCsvFromCuts,
       setImportOptionsForTest,

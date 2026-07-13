@@ -57,6 +57,56 @@ assert.match(
   'desktop production descriptions must share a consistent two-line measure'
 );
 assert.match(
+  home,
+  /\.official-hero\s*\{[^}]*min-height:680px;/,
+  'desktop hero must preserve the selected compact cinematic height'
+);
+assert.match(
+  home,
+  /\.chapter\s*\{[^}]*min-height:0;[^}]*padding:24px 0;/,
+  'desktop chapters must use the selected compact vertical rhythm'
+);
+assert.match(
+  home,
+  /\.chapter-image\s*\{[^}]*height:440px;/,
+  'desktop narrative imagery must preserve the selected balanced proportion'
+);
+assert.match(
+  home,
+  /\.about-image\s*\{[^}]*height:350px;/,
+  'desktop channel image must preserve the selected compact proportion'
+);
+assert.match(
+  home,
+  /\.filmography-grid\s*\{[^}]*grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/,
+  'desktop filmography must use the selected three-column reading layout'
+);
+assert.match(
+  home,
+  /\.work-card strong\s*\{[^}]*font-size:18px;/,
+  'desktop filmography titles must remain comfortably readable'
+);
+assert.match(
+  home,
+  /\.work-card span\s*\{[^}]*font-size:13px;/,
+  'desktop filmography metadata must remain comfortably readable'
+);
+assert.match(
+  home,
+  /\.studio-section\s*\{[^}]*padding:24px 0 40px;/,
+  'desktop Studio chapter must preserve the selected compact closing rhythm'
+);
+assert.match(
+  home,
+  /src="\/assets\/release-desk\/cozy-drift\.jpg" alt="SF Studio 헤드폰과 제작 데스크"/,
+  'Studio panel must use the selected warm headphone visual'
+);
+assert.match(
+  home,
+  /등록된 제작자 전용/,
+  'Studio entry panel must clearly identify its producer-only audience'
+);
+assert.match(
   shell,
   /@media\(max-width:600px\)[\s\S]*\.site-nav a\{[^}]*min-height:44px;[^}]*font-size:10px;/,
   'mobile navigation must keep readable text and 44px touch targets'

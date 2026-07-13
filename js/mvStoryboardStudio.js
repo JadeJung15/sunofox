@@ -4528,6 +4528,7 @@
           <button data-action="toggle-context-sheet" aria-controls="mv-console-context-column" aria-expanded="false" type="button">이미지 보관함 열기</button>
         </div>
         <aside id="mv-console-cut-column" class="mv-assist-panel mv-cut-list-panel mv-console-cut-column" role="region" aria-labelledby="mv-console-cut-heading" aria-hidden="true" inert tabindex="-1">
+          <button class="mv-console-panel-close" data-action="close-cut-drawer" aria-label="컷 목록 닫기" type="button">닫기</button>
           <div class="mv-cut-list-head">
             <span id="mv-console-cut-heading" class="mv-kicker">후보 리스트 (${state.storyboard.cuts.length})</span>
             <div class="mv-cut-search">
@@ -4627,6 +4628,7 @@
         </section>
 
         <section id="mv-console-context-column" class="mv-file-panel mv-console-context-column" role="region" aria-labelledby="mv-console-context-heading" aria-hidden="true" inert tabindex="-1">
+          <button class="mv-console-panel-close" data-action="close-context-sheet" aria-label="이미지 보관함 닫기" type="button">닫기</button>
           <div>
             <span id="mv-console-context-heading" class="mv-kicker">이미지 보관함</span>
             <p class="mv-tip">Midjourney에서 선택한 이미지를 한 번에 드롭하세요. 순서는 임시 배치만 하고, 최종 순서는 편집 단계에서 정합니다.</p>
@@ -4748,6 +4750,26 @@
     }, target, { focusOpen: true, restoreFocus: true, restorePanel: panel });
   }
 
+  function handleMobileWorkspaceAction(action, context = {}) {
+    if (action === 'toggle-cut-drawer') {
+      toggleMobileWorkspacePanel('cut', context);
+      return true;
+    }
+    if (action === 'toggle-context-sheet') {
+      toggleMobileWorkspacePanel('context', context);
+      return true;
+    }
+    if (action === 'close-cut-drawer') {
+      closeMobileWorkspacePanels(context, { restoreFocus: true, restorePanel: 'cut' });
+      return true;
+    }
+    if (action === 'close-context-sheet') {
+      closeMobileWorkspacePanels(context, { restoreFocus: true, restorePanel: 'context' });
+      return true;
+    }
+    return false;
+  }
+
   function handleMobileWorkspaceEscape(event, context = {}) {
     if (event?.key !== 'Escape' || !mobileWorkspacePanelsOpen(context)) return false;
     const target = mobileWorkspaceContext(context);
@@ -4776,14 +4798,7 @@
     if (!button) return;
     const action = button.dataset.action;
     const cutNumber = Number(button.dataset.cut || 0);
-    if (action === 'toggle-cut-drawer') {
-      toggleMobileWorkspacePanel('cut');
-      return;
-    }
-    if (action === 'toggle-context-sheet') {
-      toggleMobileWorkspacePanel('context');
-      return;
-    }
+    if (handleMobileWorkspaceAction(action)) return;
     if (action === 'select-cut') {
       state.selectedCut = cutNumber;
       saveProject('auto');
@@ -8370,6 +8385,7 @@
       bindImportPreviewInput,
       setMobileWorkspacePanels,
       toggleMobileWorkspacePanel,
+      handleMobileWorkspaceAction,
       closeMobileWorkspacePanels,
       closeMobilePanelsForRoute,
       handleMobileWorkspaceEscape,

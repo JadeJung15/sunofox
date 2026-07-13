@@ -29,6 +29,8 @@ for (const marker of [
   'aria-controls="mv-console-cut-column"',
   'data-action="toggle-context-sheet"',
   'aria-controls="mv-console-context-column"',
+  'data-action="close-cut-drawer" aria-label="컷 목록 닫기"',
+  'data-action="close-context-sheet" aria-label="이미지 보관함 닫기"',
   'id="mv-console-cut-column"',
   'role="region" aria-labelledby="mv-console-cut-heading" aria-hidden="true" inert tabindex="-1"',
   'class="mv-assist-panel mv-console-canvas-column"',
@@ -38,6 +40,7 @@ for (const marker of [
   'function syncMobileWorkspaceBackground(',
   'function closeMobileWorkspacePanels(',
   'function toggleMobileWorkspacePanel(',
+  'function handleMobileWorkspaceAction(',
   'function closeMobilePanelsForRoute(',
   'function handleMobileWorkspaceEscape(',
   'function handleMobileWorkspaceResize('
@@ -68,6 +71,8 @@ assert.match(cutDrawerRule, /inset:\s*60px 0 64px 0;/, 'mobile cut drawer must f
 assert.match(cutDrawerRule, /position:\s*fixed;/, 'mobile cut drawer must use fixed workspace positioning');
 assert.doesNotMatch(cutDrawerRule, /max-width|translateX/, 'mobile cut drawer must not retain the narrow sliding rail layout');
 assert.match(mobileWorkspaceCss, /body\.mv-cut-drawer-open\s+\.mv-console-cut-column\s*\{\s*display:\s*block;/, 'open mobile cut drawer must become visible');
+assert.match(css, /\.mv-console-panel-close\s*\{[\s\S]*?display:\s*none;/, 'mobile panel close controls must be hidden on desktop');
+assert.match(mobileWorkspaceCss, /\.mv-console-panel-close\s*\{[\s\S]*?display:\s*inline-flex;[\s\S]*?min-height:\s*44px;/, 'mobile panel close controls must be visible and touch safe');
 const legacyDesktopAssistIndex = css.lastIndexOf('/* v6.7.137 sticky storyboard workspace. */');
 const creatorDesktopOverrideIndex = css.lastIndexOf('/* Creator Console desktop collision override. */');
 assert.ok(creatorDesktopOverrideIndex > legacyDesktopAssistIndex, 'Creator Console desktop collision override must follow legacy assist rules');
@@ -133,6 +138,7 @@ assert.equal(typeof savedProjectTools?.bindImportPreviewInput, 'function', 'impo
 assert.equal(typeof savedProjectTools?.setMobileWorkspacePanels, 'function', 'mobile workspace state helper test hook is required');
 assert.equal(typeof savedProjectTools?.toggleMobileWorkspacePanel, 'function', 'mobile workspace toggle helper test hook is required');
 assert.equal(typeof savedProjectTools?.closeMobileWorkspacePanels, 'function', 'mobile workspace close helper test hook is required');
+assert.equal(typeof savedProjectTools?.handleMobileWorkspaceAction, 'function', 'mobile workspace delegated action helper test hook is required');
 assert.equal(typeof savedProjectTools?.closeMobilePanelsForRoute, 'function', 'mobile workspace route cleanup helper test hook is required');
 assert.equal(typeof savedProjectTools?.handleMobileWorkspaceEscape, 'function', 'mobile workspace Escape helper test hook is required');
 assert.equal(typeof savedProjectTools?.handleMobileWorkspaceResize, 'function', 'mobile workspace resize helper test hook is required');
@@ -230,7 +236,15 @@ assert.equal(mobilePanels.context.inert, true, 'opening cut drawer must keep con
 assert.ok(allMobileBackgrounds().every((item) => item.inert === true), 'open cut drawer must isolate all background workspace and shell controls');
 assert.equal(mobilePanels.cut.attributes.role, 'dialog', 'open mobile cut drawer must use dialog semantics');
 assert.equal(mobilePanels.cut.attributes['aria-modal'], 'true', 'open mobile cut drawer must announce modal isolation');
-savedProjectTools.toggleMobileWorkspacePanel('context', mobileWorkspaceContext);
+assert.equal(savedProjectTools.handleMobileWorkspaceAction('close-cut-drawer', mobileWorkspaceContext), true, 'internal cut close action must be handled');
+assert.equal(mobileClassList.contains('mv-cut-drawer-open'), false, 'internal cut close action must remove its body class');
+assert.equal(mobilePanels.cut.inert, true, 'internal cut close action must make its panel inert');
+assert.equal(mobilePanels.cut.attributes['aria-hidden'], 'true', 'internal cut close action must hide its panel from accessibility tree');
+assert.ok(allMobileBackgrounds().every((item) => item.inert === false), 'internal cut close action must restore background controls');
+assert.equal(mobileButtons.cut.focusCount, 1, 'internal cut close action must restore its external trigger focus');
+
+savedProjectTools.setMobileWorkspacePanels({ cut: true }, mobileWorkspaceContext);
+savedProjectTools.setMobileWorkspacePanels({ context: true }, mobileWorkspaceContext, { focusOpen: true });
 assert.equal(mobileClassList.contains('mv-cut-drawer-open'), false, 'opening context sheet must close the cut drawer');
 assert.equal(mobileClassList.contains('mv-context-sheet-open'), true, 'context toggle must open the context sheet');
 assert.equal(mobilePanels.cut.inert, true, 'opening context sheet must make cut drawer inert');
@@ -241,13 +255,13 @@ assert.equal(mobilePanels.context.firstFocusable.focusCount, 1, 'opening context
 assert.ok(allMobileBackgrounds().every((item) => item.inert === true), 'open context sheet must keep all background workspace and shell controls isolated');
 assert.equal(mobilePanels.context.attributes.role, 'dialog', 'open mobile context sheet must use dialog semantics');
 assert.equal(mobilePanels.context.attributes['aria-modal'], 'true', 'open mobile context sheet must announce modal isolation');
-savedProjectTools.closeMobileWorkspacePanels(mobileWorkspaceContext, { restoreFocus: true, restorePanel: 'context' });
+assert.equal(savedProjectTools.handleMobileWorkspaceAction('close-context-sheet', mobileWorkspaceContext), true, 'internal context close action must be handled');
 assert.equal(mobileClassList.contains('mv-cut-drawer-open'), false, 'close helper must close the cut drawer');
 assert.equal(mobileClassList.contains('mv-context-sheet-open'), false, 'close helper must close the context sheet');
 assert.equal(mobileClassList.contains('mv-mobile-panel-open'), false, 'close helper must release body scrolling');
 assert.equal(mobileButtons.cut.attributes['aria-expanded'], 'false', 'close helper must reset cut trigger state');
 assert.equal(mobileButtons.context.attributes['aria-expanded'], 'false', 'close helper must reset context trigger state');
-assert.equal(mobileButtons.context.focusCount, 1, 'closing context sheet must restore focus to its trigger');
+assert.equal(mobileButtons.context.focusCount, 1, 'internal context close action must restore focus to its trigger');
 assert.ok(allMobileBackgrounds().every((item) => item.inert === false), 'closing panels must restore background workspace and shell controls');
 assert.equal(mobilePanels.context.attributes.role, 'region', 'closed context panel must return to desktop-safe region semantics');
 assert.equal(mobilePanels.context.attributes['aria-modal'], undefined, 'closed context panel must remove aria-modal');

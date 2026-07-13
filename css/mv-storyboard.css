@@ -21,6 +21,10 @@
   display: none;
 }
 
+.mv-console-panel-close {
+  display: none;
+}
+
 @media (min-width: 1181px) {
   .mv-console-workspace,
   .mv-studio.is-basic .mv-console-workspace {
@@ -83,6 +87,23 @@
     font: inherit;
     font-weight: 800;
     min-height: 44px;
+    padding: 8px 12px;
+  }
+
+  .mv-console-panel-close {
+    align-items: center;
+    background: var(--mv-console-raised);
+    border: 1px solid var(--mv-console-border);
+    border-radius: 12px;
+    color: var(--mv-console-text);
+    cursor: pointer;
+    display: inline-flex;
+    font: inherit;
+    font-weight: 800;
+    justify-content: center;
+    justify-self: end;
+    min-height: 44px;
+    min-width: 56px;
     padding: 8px 12px;
   }
 

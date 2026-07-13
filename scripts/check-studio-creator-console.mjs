@@ -19,10 +19,18 @@ assert.equal(publicJs, js, 'public/js/mvStoryboardStudio.js must match js/mvStor
 for (const marker of ['class="mv-console-shell"','class="mv-console-rail"','class="mv-console-commandbar"','data-studio-route="home"','data-studio-route="storyboard"','data-studio-route="import"','data-studio-route="help"','class="mv-home-resume-card"','id="mv-home-project-state"','id="mv-home-quick-restore"','class="mv-home-start-grid"','id="mv-import-preview"','id="mv-import-preview-status"','id="mv-import-preview-meta"','id="mv-import-preview-issues"','https://chatgpt.com/g/g-69f6ccaad32c8191a04a7d0a850be300-anime-ost-mv-cutscene-prompt-builder','https://chatgpt.com/g/g-69f19263544881919eb0c78f0153e8c6-sunopogseu-ost-sseomneil','https://chatgpt.com/g/g-69e396ce2fa08191a9dfd1a3445875f6-sunofox-eobrodeu-seteu']) assert.ok(html.includes(marker), `missing HTML marker: ${marker}`);
 assert.ok(html.includes('id="mv-import-preview-status" aria-live="polite"'), 'import preview status must own the polite live region');
 assert.ok(!/<section[^>]*id="mv-import-preview"[^>]*aria-live=/i.test(html), 'import preview section must not announce every DOM change');
+const helpTopics = [...html.matchAll(/<details class="mv-help-troubleshoot" data-help-topic="([^"]+)"( open)?>/g)];
+assert.deepEqual(helpTopics.map((match) => match[1]), ['workflow-import', 'media-bridge', 'saved-project', 'export-format'], 'help must cover the four required troubleshooting topics');
+assert.equal(helpTopics.filter((match) => Boolean(match[2])).length, 1, 'only the first troubleshooting item may be open by default');
+for (const marker of ['증상', '확인', '해결', 'Workflow 가져오기 실패', 'SF 미디어 브릿지 연결 또는 이미지 수집 문제', '저장 프로젝트 복구 또는 초기화', '내보내기 또는 파일 형식 문제', 'SF 미디어 브릿지 1.5.23', '/extensions/sf-midjourney-bridge-v1.5.23.zip', 'data-studio-route="import"']) assert.ok(html.includes(marker), `missing help troubleshooting marker: ${marker}`);
+for (const marker of ['화면별 역할', '앱 설치', '제출 후 Saved 화면 복귀']) assert.ok(html.includes(marker), `help must preserve existing operational guidance: ${marker}`);
 for (const marker of ['--mv-console-canvas: #080b11','--mv-console-panel: #111722','--mv-console-raised: #171f2d','--mv-console-border: #293449','--mv-console-text: #f5f7fb','--mv-console-muted: #96a2b4','--mv-console-action: #8b78f6','--mv-console-bridge: #5dd8e4','--mv-console-saved: #68dca4','.mv-console-shell','.mv-console-rail','.mv-console-commandbar','grid-template-columns: 78px minmax(0, 1fr)','height: 60px','padding: 16px','@media (max-width: 760px)','height: 64px','grid-template-columns: repeat(4, minmax(0, 1fr))','height: 56px']) assert.ok(css.includes(marker), `missing CSS marker: ${marker}`);
 for (const marker of [`mv-storyboard.css?v=${assetVersion}`, `mvStoryboardStudio.js?v=${assetVersion}`]) assert.ok(html.includes(marker), `missing HTML asset version: ${marker}`);
 assert.ok(js.includes(`/sf-studio-sw.js?v=${assetVersion}`), 'Studio service worker registration must use Creator Console asset version');
 for (const marker of ['homeProjectState:','homeQuickRestore:','consoleProjectTitle:','consoleProjectState:','function syncHomeProjectState','function importPreviewData(source)','function limitedImportIssues(issues, limit = 6)','function applyImportPreviewSummary(summary, targets, createElement)','function bindImportPreviewInput(textarea, render)','function renderImportPreview()','importPreviewData','limitedImportIssues','applyImportPreviewSummary','bindImportPreviewInput']) assert.ok(js.includes(marker), `missing JS marker: ${marker}`);
+for (const marker of ['function applyFeedbackMessage(', 'function setButtonBusy(', 'applyFeedbackMessage', 'setButtonBusy']) assert.ok(js.includes(marker), `missing accessible feedback JS marker: ${marker}`);
+assert.match(js, /function showError\(message\) \{[\s\S]*?applyFeedbackMessage\(els\.error, message, 'error'\);[\s\S]*?toast\(message, 'error'/, 'error path must use assertive feedback without duplicate toast announcements');
+assert.match(js, /function setLoading\(isLoading\) \{[\s\S]*?setButtonBusy\(els\.generate, isLoading/, 'storyboard generation loading must synchronize its button accessibility state');
 for (const marker of [
   'class="mv-assist-board mv-console-workspace"',
   'data-action="toggle-cut-drawer"',
@@ -56,6 +64,7 @@ for (const marker of [
   'body.mv-mobile-panel-open',
   'max-height: 72vh'
 ]) assert.ok(css.includes(marker), `missing storyboard workspace CSS marker: ${marker}`);
+for (const marker of ['.mv-help-troubleshoot', '.mv-console-shell :focus-visible', '@media (prefers-reduced-motion: reduce)', 'scroll-behavior: auto !important']) assert.ok(css.includes(marker), `missing help/accessibility CSS marker: ${marker}`);
 assert.match(js, /if \(action === 'assist-cut'\) \{[\s\S]*?const restoreCutDrawerFocus = [^;]+;[\s\S]*?closeMobileWorkspacePanels\(\);[\s\S]*?renderAssist\(\);[\s\S]*?restoreCutDrawerFocus[\s\S]*?toggle-cut-drawer[\s\S]*?focus/, 'cut selection must restore focus to the newly rendered drawer trigger');
 assert.ok(js.includes('closeMobilePanelsForRoute(state.studioRoute)'), 'route changes must use the mobile panel cleanup helper');
 assert.match(js, /if \(event\.key === 'Escape'\) \{\s*handleMobileWorkspaceEscape\(event\);/, 'Escape must use the mobile panel cleanup helper');
@@ -142,6 +151,44 @@ assert.equal(typeof savedProjectTools?.handleMobileWorkspaceAction, 'function', 
 assert.equal(typeof savedProjectTools?.closeMobilePanelsForRoute, 'function', 'mobile workspace route cleanup helper test hook is required');
 assert.equal(typeof savedProjectTools?.handleMobileWorkspaceEscape, 'function', 'mobile workspace Escape helper test hook is required');
 assert.equal(typeof savedProjectTools?.handleMobileWorkspaceResize, 'function', 'mobile workspace resize helper test hook is required');
+assert.equal(typeof savedProjectTools?.applyFeedbackMessage, 'function', 'feedback DOM helper test hook is required');
+assert.equal(typeof savedProjectTools?.clearFeedbackMessage, 'function', 'feedback clear helper test hook is required');
+assert.equal(typeof savedProjectTools?.setButtonBusy, 'function', 'busy button helper test hook is required');
+
+const makeFeedbackElement = () => ({
+  textContent: 'old',
+  attributes: {},
+  setAttribute(name, value) { this.attributes[name] = String(value); },
+  removeAttribute(name) { delete this.attributes[name]; }
+});
+const infoFeedback = makeFeedbackElement();
+savedProjectTools.applyFeedbackMessage(infoFeedback, '저장 완료', 'info', (callback) => callback());
+assert.equal(infoFeedback.attributes.role, 'status', 'information feedback must use status semantics');
+assert.equal(infoFeedback.attributes['aria-live'], 'polite', 'information feedback must announce politely');
+assert.equal(infoFeedback.textContent, '저장 완료', 'information feedback must update through the announcement helper');
+const errorFeedback = makeFeedbackElement();
+savedProjectTools.applyFeedbackMessage(errorFeedback, '가져오기 실패', 'error', (callback) => callback());
+assert.equal(errorFeedback.attributes.role, 'alert', 'error feedback must use alert semantics');
+assert.equal(errorFeedback.attributes['aria-live'], 'assertive', 'error feedback must announce assertively');
+assert.equal(errorFeedback.textContent, '가져오기 실패', 'error feedback must update through the announcement helper');
+const queuedFeedback = makeFeedbackElement();
+const queuedCallbacks = [];
+savedProjectTools.applyFeedbackMessage(queuedFeedback, '오래된 메시지', 'info', (callback) => queuedCallbacks.push(callback));
+savedProjectTools.clearFeedbackMessage(queuedFeedback);
+queuedCallbacks[0]();
+assert.equal(queuedFeedback.textContent, '', 'cleared feedback must ignore a stale scheduled announcement');
+
+const busyButton = makeFeedbackElement();
+busyButton.textContent = '로컬 스토리보드 생성';
+busyButton.disabled = false;
+savedProjectTools.setButtonBusy(busyButton, true, '생성 중...');
+assert.equal(busyButton.disabled, true, 'busy helper must disable the active asynchronous button');
+assert.equal(busyButton.attributes['aria-busy'], 'true', 'busy helper must expose aria-busy');
+assert.equal(busyButton.textContent, '생성 중...', 'busy helper must expose a progress label');
+savedProjectTools.setButtonBusy(busyButton, false, '생성 중...');
+assert.equal(busyButton.disabled, false, 'busy helper must re-enable the asynchronous button');
+assert.equal(busyButton.attributes['aria-busy'], undefined, 'busy helper must clear aria-busy when complete');
+assert.equal(busyButton.textContent, '로컬 스토리보드 생성', 'busy helper must restore the original label');
 
 const mobileClasses = new Set();
 const mobileClassList = {

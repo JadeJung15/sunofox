@@ -2742,7 +2742,7 @@
 
   function setLoading(isLoading) {
     state.loading = isLoading;
-    els.generate.disabled = isLoading;
+    setButtonBusy(els.generate, isLoading, '생성 중...');
     els.root.querySelector('.mv-input')?.classList.toggle('is-loading', isLoading);
     syncGenerationMode();
   }
@@ -8296,24 +8296,75 @@
     toast(`${label} 복사 완료`);
   }
 
-  function toast(message) {
+  function feedbackScheduler(callback) {
+    if (typeof window !== 'undefined' && typeof window.requestAnimationFrame === 'function') {
+      window.requestAnimationFrame(callback);
+      return;
+    }
+    setTimeout(callback, 0);
+  }
+
+  function applyFeedbackMessage(element, message, type = 'info', schedule = feedbackScheduler) {
+    if (!element) return;
+    const version = Number(element.__sfStudioFeedbackVersion || 0) + 1;
+    element.__sfStudioFeedbackVersion = version;
+    const isError = type === 'error';
+    element.setAttribute('role', isError ? 'alert' : 'status');
+    element.setAttribute('aria-live', isError ? 'assertive' : 'polite');
+    element.setAttribute('aria-atomic', 'true');
+    element.textContent = '';
+    schedule(() => {
+      if (element.__sfStudioFeedbackVersion !== version) return;
+      element.textContent = String(message || '');
+    });
+  }
+
+  function clearFeedbackMessage(element) {
+    if (!element) return;
+    element.__sfStudioFeedbackVersion = Number(element.__sfStudioFeedbackVersion || 0) + 1;
+    element.textContent = '';
+  }
+
+  function setButtonBusy(button, isBusy, busyLabel = '처리 중...') {
+    if (!button) return;
+    if (isBusy) {
+      if (button.__sfStudioIdleLabel === undefined) button.__sfStudioIdleLabel = button.textContent;
+      button.disabled = true;
+      button.setAttribute('aria-busy', 'true');
+      button.textContent = busyLabel;
+      return;
+    }
+    button.disabled = false;
+    button.removeAttribute('aria-busy');
+    if (button.__sfStudioIdleLabel !== undefined) {
+      button.textContent = button.__sfStudioIdleLabel;
+      delete button.__sfStudioIdleLabel;
+    }
+  }
+
+  function toast(message, type = 'info', options = {}) {
     document.querySelector('.mv-toast')?.remove();
     const element = document.createElement('div');
     element.className = 'mv-toast';
-    element.textContent = message;
     document.body.appendChild(element);
+    if (options.announce === false) {
+      element.setAttribute('aria-hidden', 'true');
+      element.textContent = message;
+    } else {
+      applyFeedbackMessage(element, message, type);
+    }
     window.setTimeout(() => element.remove(), 1700);
   }
 
   function showError(message) {
     els.error.hidden = false;
-    els.error.textContent = message;
-    toast(message);
+    applyFeedbackMessage(els.error, message, 'error');
+    toast(message, 'error', { announce: false });
   }
 
   function clearError() {
     els.error.hidden = true;
-    els.error.textContent = '';
+    clearFeedbackMessage(els.error);
   }
 
   function revokeObjectUrls() {
@@ -8383,6 +8434,9 @@
       limitedImportIssues,
       applyImportPreviewSummary,
       bindImportPreviewInput,
+      applyFeedbackMessage,
+      clearFeedbackMessage,
+      setButtonBusy,
       setMobileWorkspacePanels,
       toggleMobileWorkspacePanel,
       handleMobileWorkspaceAction,

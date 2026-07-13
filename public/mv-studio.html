@@ -247,68 +247,81 @@
           <a class="mv-small-btn" href="/mv-studio/import" data-studio-route="import">Workflow MD 가져오기</a>
         </header>
 
-        <div class="mv-help-grid">
-          <section class="mv-workflow-card mv-help-card">
+        <div class="mv-help-layout">
+          <section class="mv-help-troubleshooting" aria-labelledby="mv-help-troubleshooting-title">
             <div class="mv-flow-title">
-              <strong>기본 작업 순서</strong>
-              <span>처음 사용하는 경우 이 순서만 따라가면 됩니다.</span>
+              <strong id="mv-help-troubleshooting-title">문제 해결</strong>
+              <span>현재 증상과 같은 항목을 열고 확인 순서대로 점검하세요.</span>
             </div>
-            <ol class="mv-help-steps">
-              <li>MV 컷 제작 도구에서 Workflow MD 또는 기존 MJ Markdown을 만듭니다.</li>
-              <li>SF Studio의 Workflow MD 가져오기에 원문을 붙여넣습니다.</li>
-              <li>신규 Workflow MD는 컷 정보, MJ, Grok, 편집 메모를 자동 분리합니다.</li>
-              <li>기존 MJ Markdown은 필요하면 Niji 버전, Profile, SREF 옵션만 정리합니다.</li>
-              <li>가져오기 후 콘티 제작 화면에서 컷별 프롬프트와 검증 메시지를 확인합니다.</li>
-              <li>Midjourney Bridge로 현재 컷, 다음 컷, 5컷/10컷을 전송합니다.</li>
-              <li>마음에 드는 이미지를 후보 이미지 보관함에 모읍니다.</li>
-              <li>Grok 클립 작업은 이미지 선택이 끝난 뒤 진행합니다.</li>
-              <li>최종 순서는 편집 프로그램에서 음악과 가사 기준으로 직접 배치합니다.</li>
-            </ol>
+
+            <details class="mv-help-troubleshoot" data-help-topic="workflow-import" open>
+              <summary><strong>Workflow 가져오기 실패</strong><span>컷을 찾지 못하거나 검증 오류가 계속 표시될 때</span></summary>
+              <dl>
+                <div><dt>증상</dt><dd>가져오기 버튼을 눌러도 콘티가 열리지 않거나 컷 번호, time, MJ, Grok 누락 메시지가 표시됩니다.</dd></div>
+                <div><dt>확인</dt><dd><code>## Cut 01</code> 제목과 Workflow MD 원문 전체가 포함됐는지, 가져오기 미리보기의 오류 목록을 먼저 확인합니다.</dd></div>
+                <div><dt>해결</dt><dd>원본에서 누락 필드를 보완한 뒤 전체 내용을 다시 붙여넣습니다. 기존 MJ Markdown은 코드 블록이 포함된 Cut 원문을 사용하세요.</dd></div>
+              </dl>
+              <a class="mv-small-btn" href="/mv-studio/import" data-studio-route="import">Workflow MD 가져오기 열기</a>
+            </details>
+
+            <details class="mv-help-troubleshoot" data-help-topic="media-bridge">
+              <summary><strong>SF 미디어 브릿지 연결 또는 이미지 수집 문제</strong><span>전송 응답이 없거나 후보 이미지가 들어오지 않을 때</span></summary>
+              <dl>
+                <div><dt>증상</dt><dd>Midjourney 전송이 시작되지 않거나 생성된 이미지가 후보 이미지 보관함에 수집되지 않습니다.</dd></div>
+                <div><dt>확인</dt><dd>같은 Chrome에 SF 미디어 브릿지 1.5.23이 설치·활성화되어 있는지, 콘티 제작의 브릿지 상태와 대상 탭을 확인합니다.</dd></div>
+                <div><dt>해결</dt><dd>브릿지 상태 확인을 다시 실행하고 대상 Midjourney 또는 Grok 탭을 연 뒤 재시도합니다. 버전이 다르면 아래 ZIP으로 교체하세요.</dd></div>
+              </dl>
+              <a class="mv-small-btn" href="/extensions/sf-midjourney-bridge-v1.5.23.zip" download>브릿지 1.5.23 ZIP 다운로드</a>
+            </details>
+
+            <details class="mv-help-troubleshoot" data-help-topic="saved-project">
+              <summary><strong>저장 프로젝트 복구 또는 초기화</strong><span>저장 작업이 보이지 않거나 깨끗하게 다시 시작할 때</span></summary>
+              <dl>
+                <div><dt>증상</dt><dd>SF 홈에 최근 작업이 표시되지 않거나 불러온 뒤 첨부 이미지 일부가 비어 있습니다.</dd></div>
+                <div><dt>확인</dt><dd>같은 브라우저와 Google 오너 계정인지 확인하고, 콘티 제작의 저장 상태와 백업 JSON 보유 여부를 확인합니다.</dd></div>
+                <div><dt>해결</dt><dd>저장 작업 불러오기 또는 백업 불러오기를 먼저 사용합니다. 완전히 다시 시작할 때만 초기화를 누르고, 중요한 작업은 먼저 이미지 포함 백업으로 내보내세요.</dd></div>
+              </dl>
+            </details>
+
+            <details class="mv-help-troubleshoot" data-help-topic="export-format">
+              <summary><strong>내보내기 또는 파일 형식 문제</strong><span>백업, Markdown, CSV 파일이 열리지 않을 때</span></summary>
+              <dl>
+                <div><dt>증상</dt><dd>내보낸 파일에 원하는 데이터가 없거나 백업 불러오기에서 파일 형식 오류가 표시됩니다.</dd></div>
+                <div><dt>확인</dt><dd>작업 복구용은 이미지 포함 JSON 백업, 프롬프트 공유용은 Markdown, 컷리스트용은 CSV인지 목적과 확장자를 확인합니다.</dd></div>
+                <div><dt>해결</dt><dd>복구에는 SF Studio가 내보낸 JSON 원본을 수정하지 않고 사용합니다. Excel에서 CSV가 깨지면 UTF-8로 가져오고, 프롬프트 전달은 Markdown을 사용하세요.</dd></div>
+              </dl>
+            </details>
           </section>
 
-          <section class="mv-workflow-card mv-help-card">
-            <div class="mv-flow-title">
-              <strong>화면별 역할</strong>
-              <span>필요한 화면만 열어 쓰도록 단순하게 나눴습니다.</span>
-            </div>
-            <ul class="mv-help-list">
-              <li><strong>SF 홈</strong><span>외부 제작 도구와 주요 작업 화면으로 이동합니다.</span></li>
-              <li><strong>Workflow MD</strong><span>Markdown 원문을 붙여넣고 컷별 MJ/Grok/편집 메모를 분리합니다.</span></li>
-              <li><strong>콘티 제작</strong><span>컷별 전송, 후보 이미지 첨부, Grok 클립 준비를 처리합니다.</span></li>
-              <li><strong>사용방법</strong><span>작업 순서와 주의사항을 확인합니다.</span></li>
-            </ul>
-          </section>
-
-          <section class="mv-workflow-card mv-help-card">
-            <div class="mv-flow-title">
-              <strong>주의사항</strong>
-              <span>결과물이 꼬이지 않도록 아래 기준을 유지합니다.</span>
-            </div>
-            <ul class="mv-help-list">
-              <li><strong>순서 강제 금지</strong><span>Midjourney와 Grok 결과 순서는 언제든 바뀔 수 있으므로 편집 단계에서 확정합니다.</span></li>
-              <li><strong>원문 보존</strong><span>가져온 Workflow MD는 MJ/Grok 프롬프트를 자동 재작성하지 않습니다. 기존 MJ Markdown은 전송용 옵션만 정리합니다.</span></li>
-              <li><strong>이미지 후보 관리</strong><span>30컷을 넘어도 후보 컷으로 추가할 수 있습니다. 마음에 드는 결과만 모아두면 됩니다.</span></li>
-            </ul>
-          </section>
-
-          <section class="mv-workflow-card mv-help-card">
-            <div class="mv-flow-title">
-              <strong>Grok Saved 매크로</strong>
-              <span>콘티 제작 화면은 실행 버튼만 남기고, 자세한 기준은 여기서 확인합니다.</span>
-            </div>
-            <ol class="mv-help-steps">
-              <li>Grok Saved 화면에서 비디오 옵션을 먼저 맞춰 둡니다.</li>
-              <li>SF Studio에서 후보 이미지를 첨부한 뒤 이어서 제작을 실행합니다.</li>
-              <li>브릿지가 이미지와 프롬프트를 채우고 Enter를 누릅니다.</li>
-              <li>제출 후 Saved 화면 복귀가 확인되면 다음 컷을 시작합니다.</li>
-            </ol>
-            <ul class="mv-help-list">
-              <li><strong>고급 실행</strong><span>처음부터 다시, 현재 컷부터 다시, 구간 제작은 접힌 메뉴에서 사용합니다.</span></li>
-              <li><strong>구간 제작</strong><span>30컷 이상도 시작 컷과 끝 컷을 직접 입력해서 실행합니다.</span></li>
-              <li><strong>느린 환경</strong><span>입력 후, Enter 후, 복귀 후 대기 시간을 고급 옵션에서 늘릴 수 있습니다.</span></li>
-              <li><strong>앱 설치</strong><span>SF Studio는 앱처럼 설치해도 되며, 자동화에는 같은 브라우저의 SF 미디어 브릿지가 필요합니다.</span></li>
-            </ul>
-          </section>
+          <aside class="mv-help-reference" aria-label="작업 기준 빠른 참고">
+            <section class="mv-workflow-card mv-help-card">
+              <div class="mv-flow-title"><strong>기본 작업 순서</strong><span>처음 사용할 때의 빠른 기준</span></div>
+              <ol class="mv-help-steps">
+                <li>MV 컷 제작 도구에서 Workflow MD 또는 기존 MJ Markdown을 만듭니다.</li>
+                <li>Workflow MD 화면에서 원문을 가져오고 검증 메시지를 확인합니다.</li>
+                <li>콘티 제작에서 Midjourney로 보내고 후보 이미지를 모읍니다.</li>
+                <li>이미지 선택 후 Grok 클립을 만들고 최종 순서는 편집 단계에서 확정합니다.</li>
+              </ol>
+            </section>
+            <section class="mv-workflow-card mv-help-card">
+              <div class="mv-flow-title"><strong>보존 기준</strong><span>결과물이 꼬이지 않게 유지합니다.</span></div>
+              <ul class="mv-help-list">
+                <li><strong>원문 보존</strong><span>Workflow MD의 MJ/Grok 프롬프트는 자동 재작성하지 않습니다. 기존 MJ Markdown은 전송 옵션만 정리합니다.</span></li>
+                <li><strong>후보 관리</strong><span>30컷을 넘어도 후보 컷을 추가할 수 있으며 최종 영상 순서는 음악과 가사 기준으로 편집 단계에서 정합니다.</span></li>
+                <li><strong>Grok Saved</strong><span>비디오 옵션을 먼저 맞춘 뒤 이미지를 첨부합니다. 고급 실행에서는 처음부터, 현재부터, 구간 제작과 대기 시간을 조정할 수 있습니다.</span></li>
+              </ul>
+            </section>
+            <section class="mv-workflow-card mv-help-card">
+              <div class="mv-flow-title"><strong>화면별 역할</strong><span>필요한 화면과 자동화 기준</span></div>
+              <ul class="mv-help-list">
+                <li><strong>SF 홈</strong><span>외부 제작 도구와 최근 저장 작업으로 이동합니다.</span></li>
+                <li><strong>Workflow MD</strong><span>원문을 붙여넣고 컷별 MJ, Grok, 편집 메모를 분리합니다.</span></li>
+                <li><strong>콘티 제작</strong><span>컷별 전송, 후보 이미지 첨부, Grok 클립 준비를 처리합니다.</span></li>
+                <li><strong>Grok Saved 매크로</strong><span>브릿지가 이미지와 프롬프트를 채우고 Enter를 누릅니다. 제출 후 Saved 화면 복귀가 확인되면 다음 컷을 시작합니다.</span></li>
+                <li><strong>앱 설치</strong><span>SF Studio는 앱처럼 설치할 수 있으며 자동화에는 같은 브라우저의 SF 미디어 브릿지가 필요합니다.</span></li>
+              </ul>
+            </section>
+          </aside>
         </div>
       </section>
 

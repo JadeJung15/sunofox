@@ -157,8 +157,18 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html:has(.mv-console-shell) {
+    scroll-behavior: auto !important;
+  }
+
+  .mv-console-shell *,
+  .mv-console-shell *::before,
+  .mv-console-shell *::after,
   .mv-console-cut-column,
   .mv-console-context-column {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
     transition: none !important;
   }
 }
@@ -180,6 +190,12 @@
   display: grid;
   grid-template-columns: 78px minmax(0, 1fr);
   min-height: 100vh;
+}
+
+.mv-console-shell :focus-visible,
+.mv-help-studio :focus-visible {
+  outline: 3px solid var(--mv-console-bridge);
+  outline-offset: 3px;
 }
 
 .mv-console-rail {
@@ -1201,6 +1217,115 @@
     linear-gradient(135deg, #05070d 0%, #0b1020 48%, #080b12 100%);
   min-height: 100vh;
   padding: 16px;
+}
+
+.mv-help-layout {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(0, 1.3fr) minmax(300px, 0.7fr);
+}
+
+.mv-help-troubleshooting,
+.mv-help-reference {
+  display: grid;
+  gap: 12px;
+}
+
+.mv-help-troubleshooting {
+  align-content: start;
+  background: var(--mv-console-panel);
+  border: 1px solid var(--mv-console-border);
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.mv-help-troubleshooting > .mv-flow-title strong,
+.mv-help-troubleshooting > .mv-flow-title span {
+  color: var(--mv-console-text);
+}
+
+.mv-help-troubleshooting > .mv-flow-title span {
+  color: var(--mv-console-muted);
+}
+
+.mv-help-troubleshoot {
+  background: var(--mv-console-raised);
+  border: 1px solid var(--mv-console-border);
+  border-radius: 14px;
+  color: var(--mv-console-text);
+  overflow: hidden;
+}
+
+.mv-help-troubleshoot summary {
+  cursor: pointer;
+  display: grid;
+  gap: 4px;
+  list-style: none;
+  min-height: 56px;
+  padding: 14px 48px 14px 16px;
+  position: relative;
+}
+
+.mv-help-troubleshoot summary::-webkit-details-marker {
+  display: none;
+}
+
+.mv-help-troubleshoot summary::after {
+  color: var(--mv-console-bridge);
+  content: "+";
+  font-size: 22px;
+  font-weight: 900;
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.mv-help-troubleshoot[open] summary::after {
+  content: "−";
+}
+
+.mv-help-troubleshoot summary strong {
+  color: var(--mv-console-text);
+  font-size: 15px;
+}
+
+.mv-help-troubleshoot summary span {
+  color: var(--mv-console-muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.mv-help-troubleshoot dl {
+  border-top: 1px solid var(--mv-console-border);
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 14px 16px;
+}
+
+.mv-help-troubleshoot dl > div {
+  display: grid;
+  gap: 3px;
+  grid-template-columns: 46px minmax(0, 1fr);
+}
+
+.mv-help-troubleshoot dt {
+  color: var(--mv-console-bridge);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.mv-help-troubleshoot dd {
+  color: #d7deea;
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.mv-help-troubleshoot > .mv-small-btn {
+  margin: 0 16px 16px;
+  min-height: 44px;
 }
 
 .mv-showcase-active .mv-console-rail,
@@ -4407,6 +4532,10 @@
   }
 
   .mv-help-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mv-help-layout {
     grid-template-columns: 1fr;
   }
 

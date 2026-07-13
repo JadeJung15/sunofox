@@ -1136,7 +1136,7 @@
     });
     els.importGptMarkdown?.addEventListener('click', () => els.gptMarkdownFile?.click());
     els.gptMarkdownFile?.addEventListener('change', importGptMarkdownFile);
-    els.gptMarkdownText?.addEventListener('input', renderImportPreview);
+    bindImportPreviewInput(els.gptMarkdownText, renderImportPreview);
     els.importGptText?.addEventListener('click', importGptMarkdownPaste);
     els.imageStartFiles?.addEventListener('change', (event) => {
       startImageOnlyWorkflow(event.target.files);
@@ -1739,21 +1739,23 @@
 
     const imported = parseStudioMarkdownImport(text);
     const cutCount = Array.isArray(imported?.cuts) ? imported.cuts.length : 0;
-    const cutIssueValues = (imported?.cuts || []).flatMap((cut) => {
-      const cutIssues = cut?.workflowIssues || cut?.issues || [];
-      return (Array.isArray(cutIssues) ? cutIssues : [cutIssues])
-        .flat(Infinity)
-        .filter((issue) => typeof issue === 'string' && issue.trim())
-        .map((issue) => `Cut ${pad(cut.number)}: ${issue.trim()}`);
-    });
-    const issueValues = [
-      ...(Array.isArray(imported?.issues) ? imported.issues : []),
-      ...cutIssueValues
-    ]
+    const issueEntries = (Array.isArray(imported?.issues) ? imported.issues : [])
       .flat(Infinity)
-      .filter((issue) => typeof issue === 'string' && issue.trim())
-      .map((issue) => issue.trim());
-    const issues = [...new Set(issueValues)];
+      .map((issue) => ({ issue, cutNumber: null }));
+    (imported?.cuts || []).forEach((cut) => {
+      const cutIssues = cut?.workflowIssues || cut?.issues || [];
+      (Array.isArray(cutIssues) ? cutIssues : [cutIssues])
+        .flat(Infinity)
+        .forEach((issue) => issueEntries.push({ issue, cutNumber: cut.number }));
+    });
+    const canonicalIssues = new Map();
+    issueEntries.forEach(({ issue, cutNumber }) => {
+      const canonical = canonicalImportIssue(issue, cutNumber);
+      if (canonical && !canonicalIssues.has(canonical.key)) {
+        canonicalIssues.set(canonical.key, canonical.display);
+      }
+    });
+    const issues = [...canonicalIssues.values()];
     return {
       title: imported?.metadata?.project || imported?.metadata?.episode || '제목 없음',
       cutCount,
@@ -1765,6 +1767,24 @@
     };
   }
 
+  function canonicalImportIssue(issue, fallbackCutNumber = null) {
+    if (typeof issue !== 'string' || !issue.trim()) return null;
+    const value = issue.trim().replace(/\s+/g, ' ');
+    const colonPrefix = value.match(/^Cut\s+0*(\d+)\s*:\s*(.+)$/i);
+    const spacePrefix = value.match(/^Cut\s+0*(\d+)\s+(.+)$/i);
+    const prefix = colonPrefix || spacePrefix;
+    const cutNumber = prefix ? Number(prefix[1]) : Number(fallbackCutNumber);
+    let message = prefix ? prefix[2].trim() : value;
+    if (Number.isFinite(cutNumber) && cutNumber > 0) {
+      message = message.replace(/^컷\s+/, '').trim();
+      return {
+        key: `cut:${cutNumber}:${message}`,
+        display: `Cut ${pad(cutNumber)}: ${message}`
+      };
+    }
+    return { key: `global:${message}`, display: message };
+  }
+
   function limitedImportIssues(issues, limit = 6) {
     const values = Array.isArray(issues) ? issues : [];
     const maxItems = Math.max(0, Number(limit) || 0);
@@ -1774,21 +1794,34 @@
     return [...values.slice(0, visibleCount), `외 ${values.length - visibleCount}개`];
   }
 
+  function applyImportPreviewSummary(summary, targets, createElement) {
+    if (!targets?.status || !targets?.meta || !targets?.issues || typeof createElement !== 'function') return;
+    targets.status.textContent = summary.status;
+    targets.meta.innerHTML = `
+      <div><dt>프로젝트</dt><dd>${escapeHtml(summary.title)}</dd></div>
+      <div><dt>컷 수</dt><dd>${summary.cutCount}</dd></div>
+      <div><dt>오류</dt><dd>${summary.issueCount}</dd></div>
+    `;
+    targets.issues.replaceChildren();
+    limitedImportIssues(summary.issues).forEach((issue) => {
+      const item = createElement('li');
+      item.textContent = issue;
+      targets.issues.appendChild(item);
+    });
+  }
+
+  function bindImportPreviewInput(textarea, render) {
+    textarea?.addEventListener('input', render);
+  }
+
   function renderImportPreview() {
     if (!els.importPreviewStatus || !els.importPreviewMeta || !els.importPreviewIssues) return;
     const preview = importPreviewData(els.gptMarkdownText?.value || '');
-    els.importPreviewStatus.textContent = preview.status;
-    els.importPreviewMeta.innerHTML = `
-      <div><dt>프로젝트</dt><dd>${escapeHtml(preview.title)}</dd></div>
-      <div><dt>컷 수</dt><dd>${preview.cutCount}</dd></div>
-      <div><dt>오류</dt><dd>${preview.issueCount}</dd></div>
-    `;
-    els.importPreviewIssues.replaceChildren();
-    limitedImportIssues(preview.issues).forEach((issue) => {
-      const item = document.createElement('li');
-      item.textContent = issue;
-      els.importPreviewIssues.appendChild(item);
-    });
+    applyImportPreviewSummary(preview, {
+      status: els.importPreviewStatus,
+      meta: els.importPreviewMeta,
+      issues: els.importPreviewIssues
+    }, (tagName) => document.createElement(tagName));
   }
 
   function parseWorkflowMarkdown(text) {
@@ -8191,6 +8224,8 @@
       parseWorkflowMarkdown,
       importPreviewData,
       limitedImportIssues,
+      applyImportPreviewSummary,
+      bindImportPreviewInput,
       workflowPromptsFromCuts,
       workflowCutlistCsvFromCuts,
       setImportOptionsForTest,

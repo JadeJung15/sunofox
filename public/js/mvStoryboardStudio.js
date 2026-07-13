@@ -1089,6 +1089,9 @@
       importGptMarkdown: document.getElementById('mv-import-gpt-md'),
       gptMarkdownFile: document.getElementById('mv-gpt-markdown-file'),
       gptMarkdownText: document.getElementById('mv-gpt-markdown-text'),
+      importPreviewStatus: document.getElementById('mv-import-preview-status'),
+      importPreviewMeta: document.getElementById('mv-import-preview-meta'),
+      importPreviewIssues: document.getElementById('mv-import-preview-issues'),
       importApplyProfile: document.getElementById('mv-import-apply-profile'),
       importProfile: document.getElementById('mv-import-profile'),
       importApplySref: document.getElementById('mv-import-apply-sref'),
@@ -1133,6 +1136,7 @@
     });
     els.importGptMarkdown?.addEventListener('click', () => els.gptMarkdownFile?.click());
     els.gptMarkdownFile?.addEventListener('change', importGptMarkdownFile);
+    els.gptMarkdownText?.addEventListener('input', renderImportPreview);
     els.importGptText?.addEventListener('click', importGptMarkdownPaste);
     els.imageStartFiles?.addEventListener('change', (event) => {
       startImageOnlyWorkflow(event.target.files);
@@ -1189,6 +1193,7 @@
     });
     els.clearGptText?.addEventListener('click', () => {
       if (els.gptMarkdownText) els.gptMarkdownText.value = '';
+      renderImportPreview();
     });
     els.saveWork.addEventListener('click', async () => {
       const saved = saveProject('manual');
@@ -1335,6 +1340,7 @@
     syncGenerationMode();
     syncUiMode();
     syncWorkflowCollapsed();
+    renderImportPreview();
     applyStudioRoute(routeKeyFromPath(window.location.pathname), { replace: true, reveal: false });
     setupPwaInstallPrompt();
     initBridgeMessages();
@@ -1482,6 +1488,8 @@
     if (els.importProfile) els.importProfile.value = '';
     if (els.importApplySref) els.importApplySref.checked = false;
     if (els.importSref) els.importSref.value = '';
+    if (els.gptMarkdownText) els.gptMarkdownText.value = '';
+    renderImportPreview();
     syncImportModelButtons();
     if (els.batchSpeed) els.batchSpeed.value = 'fast';
     if (els.facePriority) els.facePriority.value = 'balanced';
@@ -1582,6 +1590,8 @@
     if (!file) return;
     try {
       const text = await file.text();
+      if (els.gptMarkdownText) els.gptMarkdownText.value = text;
+      renderImportPreview();
       importGptMarkdownText(text, file.name);
     } catch (error) {
       showError(`MJ Markdown 파일을 읽지 못했습니다. ${error.message || ''}`.trim());
@@ -1713,6 +1723,61 @@
         ? ''
         : 'Cut 01 형식과 ```text 코드블록을 찾지 못했습니다. Workflow MD 또는 MJ Markdown 원문 전체를 입력해 주세요.'
     };
+  }
+
+  function importPreviewData(source) {
+    const text = String(source || '');
+    if (!text.trim()) {
+      return {
+        title: '—',
+        cutCount: 0,
+        issueCount: 0,
+        status: 'Workflow MD를 입력하면 컷 구성을 검사합니다.',
+        issues: []
+      };
+    }
+
+    const imported = parseStudioMarkdownImport(text);
+    const cutCount = Array.isArray(imported?.cuts) ? imported.cuts.length : 0;
+    const issueValues = [
+      ...(Array.isArray(imported?.issues) ? imported.issues : []),
+      ...((imported?.cuts || []).flatMap((cut) => cut?.workflowIssues || cut?.issues || []))
+    ]
+      .flat(Infinity)
+      .filter((issue) => typeof issue === 'string' && issue.trim())
+      .map((issue) => issue.trim());
+    const issues = [...new Set(issueValues)];
+    return {
+      title: imported?.metadata?.project || imported?.metadata?.episode || '제목 없음',
+      cutCount,
+      issueCount: issues.length,
+      status: cutCount
+        ? `${cutCount}개 컷을 찾았습니다.`
+        : imported?.errorMessage || '가져올 수 있는 컷을 찾지 못했습니다.',
+      issues
+    };
+  }
+
+  function renderImportPreview() {
+    if (!els.importPreviewStatus || !els.importPreviewMeta || !els.importPreviewIssues) return;
+    const preview = importPreviewData(els.gptMarkdownText?.value || '');
+    els.importPreviewStatus.textContent = preview.status;
+    els.importPreviewMeta.innerHTML = `
+      <div><dt>프로젝트</dt><dd>${escapeHtml(preview.title)}</dd></div>
+      <div><dt>컷 수</dt><dd>${preview.cutCount}</dd></div>
+      <div><dt>오류</dt><dd>${preview.issueCount}</dd></div>
+    `;
+    els.importPreviewIssues.replaceChildren();
+    preview.issues.slice(0, 6).forEach((issue) => {
+      const item = document.createElement('li');
+      item.textContent = issue;
+      els.importPreviewIssues.appendChild(item);
+    });
+    if (preview.issues.length > 6) {
+      const item = document.createElement('li');
+      item.textContent = `외 ${preview.issues.length - 6}개`;
+      els.importPreviewIssues.appendChild(item);
+    }
   }
 
   function parseWorkflowMarkdown(text) {
@@ -8113,6 +8178,7 @@
       parseGptMarkdownCuts,
       parseStudioMarkdownImport,
       parseWorkflowMarkdown,
+      importPreviewData,
       workflowPromptsFromCuts,
       workflowCutlistCsvFromCuts,
       setImportOptionsForTest,

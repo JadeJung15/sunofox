@@ -161,13 +161,26 @@
               <textarea id="mv-gpt-markdown-text" class="mv-gpt-markdown-input" spellcheck="false" placeholder="# MV Prompt Pack&#10;project: 끝났다고 말해 - Say It's Over&#10;audio_length: 03:22.60&#10;&#10;## Cut 01&#10;time: 00:00.00~00:03.51&#10;lyric: 끝났다고 말해&#10;scene: 오프닝 훅 / 판결 전복 시작&#10;use: main&#10;&#10;### midjourney_prompt&#10;dark royal courtroom...&#10;&#10;### grok_prompt&#10;The camera pushes quickly...&#10;&#10;### edit_note&#10;첫 가사 시작에 맞춰 바로 컷 인."></textarea>
             </label>
             <div class="mv-paste-actions mv-primary-actions">
-              <button class="mv-small-btn" id="mv-import-gpt-text" type="button">Workflow MD 가져오기</button>
+              <button class="mv-small-btn" id="mv-import-gpt-text" type="button">검증 후 작업 보드 열기</button>
               <button class="mv-small-btn" id="mv-import-gpt-md" type="button">파일 가져오기</button>
               <button class="mv-small-btn" id="mv-clear-gpt-text" type="button">비우기</button>
             </div>
           </section>
 
           <aside class="mv-import-side">
+            <section class="mv-workflow-card mv-import-preview" id="mv-import-preview" aria-live="polite">
+              <div class="mv-flow-title">
+                <strong>가져오기 미리보기</strong>
+                <span id="mv-import-preview-status">Workflow MD를 입력하면 컷 구성을 검사합니다.</span>
+              </div>
+              <dl id="mv-import-preview-meta" class="mv-import-preview-meta">
+                <div><dt>프로젝트</dt><dd>—</dd></div>
+                <div><dt>컷 수</dt><dd>0</dd></div>
+                <div><dt>오류</dt><dd>0</dd></div>
+              </dl>
+              <ul id="mv-import-preview-issues" class="mv-import-preview-issues"></ul>
+            </section>
+
             <section class="mv-workflow-card">
               <div class="mv-flow-title">
                 <strong>가져오기 옵션</strong>

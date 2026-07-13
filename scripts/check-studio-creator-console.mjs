@@ -24,6 +24,14 @@ assert.deepEqual(helpTopics.map((match) => match[1]), ['workflow-import', 'media
 assert.equal(helpTopics.filter((match) => Boolean(match[2])).length, 1, 'only the first troubleshooting item may be open by default');
 for (const marker of ['증상', '확인', '해결', 'Workflow 가져오기 실패', 'SF 미디어 브릿지 연결 또는 이미지 수집 문제', '저장 프로젝트 복구 또는 초기화', '내보내기 또는 파일 형식 문제', 'SF 미디어 브릿지 1.5.23', '/extensions/sf-midjourney-bridge-v1.5.23.zip', 'data-studio-route="import"']) assert.ok(html.includes(marker), `missing help troubleshooting marker: ${marker}`);
 for (const marker of ['화면별 역할', '앱 설치', '제출 후 Saved 화면 복귀']) assert.ok(html.includes(marker), `help must preserve existing operational guidance: ${marker}`);
+for (const marker of [
+  '기존 MJ Markdown은 필요하면 Niji 버전, Profile, SREF 옵션만 정리합니다.',
+  'Midjourney Bridge로 현재 컷, 다음 컷, 5컷/10컷을 전송합니다.',
+  '처음부터 다시, 현재 컷부터 다시, 구간 제작은 접힌 메뉴에서 사용합니다.',
+  '30컷 이상도 시작 컷과 끝 컷을 직접 입력해서 실행합니다.',
+  '입력 후, Enter 후, 복귀 후 대기 시간을 고급 옵션에서 늘릴 수 있습니다.'
+]) assert.ok(html.includes(marker), `help must preserve the exact operating standard: ${marker}`);
+assert.ok(css.includes('.mv-help-operating-reference'), 'restored operating guidance must retain readable Creator Console styling');
 for (const marker of ['--mv-console-canvas: #080b11','--mv-console-panel: #111722','--mv-console-raised: #171f2d','--mv-console-border: #293449','--mv-console-text: #f5f7fb','--mv-console-muted: #96a2b4','--mv-console-action: #8b78f6','--mv-console-bridge: #5dd8e4','--mv-console-saved: #68dca4','.mv-console-shell','.mv-console-rail','.mv-console-commandbar','grid-template-columns: 78px minmax(0, 1fr)','height: 60px','padding: 16px','@media (max-width: 760px)','height: 64px','grid-template-columns: repeat(4, minmax(0, 1fr))','height: 56px']) assert.ok(css.includes(marker), `missing CSS marker: ${marker}`);
 for (const marker of [`mv-storyboard.css?v=${assetVersion}`, `mvStoryboardStudio.js?v=${assetVersion}`]) assert.ok(html.includes(marker), `missing HTML asset version: ${marker}`);
 assert.ok(js.includes(`/sf-studio-sw.js?v=${assetVersion}`), 'Studio service worker registration must use Creator Console asset version');

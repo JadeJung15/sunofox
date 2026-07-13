@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import vm from 'node:vm';
 const read = (path) => fs.readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
 const html = read('mv-studio.html');
 const publicHtml = read('public/mv-studio.html');
@@ -23,4 +24,70 @@ for (const marker of ['homeProjectState:','homeQuickRestore:','consoleProjectTit
 for (const [label, source] of [['sf-studio-sw.js', sw], ['public/sf-studio-sw.js', publicSw]]) {
   for (const marker of [`sf-studio-${assetVersion}`, `mv-storyboard.css?v=${assetVersion}`, `mvStoryboardStudio.js?v=${assetVersion}`]) assert.ok(source.includes(marker), `${label} missing asset version: ${marker}`);
 }
+
+const storage = new Map();
+const sandbox = {
+  console,
+  setTimeout,
+  clearTimeout,
+  navigator: {},
+  localStorage: {
+    getItem: (key) => storage.get(key) ?? null,
+    setItem: (key, value) => storage.set(key, String(value)),
+    removeItem: (key) => storage.delete(key)
+  },
+  sessionStorage: {
+    getItem: () => null,
+    setItem: () => {},
+    removeItem: () => {}
+  },
+  document: {
+    addEventListener: () => {},
+    querySelector: () => null,
+    querySelectorAll: () => [],
+    getElementById: () => null,
+    createElement: () => ({ style: {}, click: () => {}, remove: () => {} }),
+    body: { appendChild: () => {} }
+  },
+  window: {
+    addEventListener: () => {},
+    removeEventListener: () => {},
+    setTimeout,
+    clearTimeout,
+    location: {
+      origin: 'http://127.0.0.1',
+      pathname: '/mv-studio',
+      search: '',
+      hash: '',
+      assign: () => {}
+    }
+  }
+};
+sandbox.window.window = sandbox.window;
+sandbox.window.document = sandbox.document;
+sandbox.window.navigator = sandbox.navigator;
+sandbox.window.localStorage = sandbox.localStorage;
+sandbox.window.sessionStorage = sandbox.sessionStorage;
+sandbox.globalThis = sandbox;
+vm.runInNewContext(js, sandbox, { filename: 'js/mvStoryboardStudio.js' });
+
+const savedProjectTools = sandbox.window.SFStudioImportTools;
+assert.equal(typeof savedProjectTools?.readSavedProjectForTest, 'function', 'saved project read test hook is required');
+const savedProjectStorageKey = 'webling_mv_studio_saved_project_v1';
+const readStoredProject = (raw) => {
+  if (raw === null) storage.delete(savedProjectStorageKey);
+  else storage.set(savedProjectStorageKey, raw);
+  return savedProjectTools.readSavedProjectForTest();
+};
+for (const [label, raw] of [
+  ['null storage', null],
+  ['invalid JSON', '{invalid'],
+  ['string cuts', JSON.stringify({ storyboard: { cuts: '12' } })],
+  ['object length cuts', JSON.stringify({ storyboard: { cuts: { length: 2 } } })],
+  ['null cut', JSON.stringify({ storyboard: { cuts: [null] } })]
+]) {
+  assert.equal(readStoredProject(raw), null, `${label} must be rejected`);
+}
+const validProject = readStoredProject(JSON.stringify({ storyboard: { cuts: [{ number: 1 }] } }));
+assert.equal(validProject?.storyboard?.cuts?.[0]?.number, 1, 'valid saved project must be returned unchanged');
 console.log('SF Studio Creator Console contract passed.');

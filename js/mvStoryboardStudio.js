@@ -3660,11 +3660,25 @@
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return null;
       const payload = JSON.parse(raw);
-      if (!payload?.storyboard?.cuts?.length) return null;
+      if (!isValidSavedProjectPayload(payload)) return null;
       return payload;
     } catch (_error) {
       return null;
     }
+  }
+
+  function isValidSavedProjectPayload(payload) {
+    if (!payload || typeof payload !== 'object' || Array.isArray(payload)) return false;
+    if (!payload.storyboard || typeof payload.storyboard !== 'object' || Array.isArray(payload.storyboard)) return false;
+    const cuts = payload.storyboard.cuts;
+    if (!Array.isArray(cuts) || cuts.length === 0) return false;
+    return cuts.every((cut) => (
+      cut !== null
+      && typeof cut === 'object'
+      && !Array.isArray(cut)
+      && Number.isFinite(Number(cut.number))
+      && Number(cut.number) > 0
+    ));
   }
 
   function updateStorageState() {
@@ -8100,7 +8114,9 @@
       parseWorkflowMarkdown,
       workflowPromptsFromCuts,
       workflowCutlistCsvFromCuts,
-      setImportOptionsForTest
+      setImportOptionsForTest,
+      isValidSavedProjectPayload,
+      readSavedProjectForTest: readSavedProject
     };
   }
 })();

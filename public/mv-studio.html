@@ -86,30 +86,57 @@
       </section>
 
       <section class="mv-category-home mv-home-like" id="mv-category-home" aria-label="SF Studio 홈">
-        <section class="mv-home-center" aria-label="SunoFox 콘텐츠 제작 워크스페이스">
-          <div class="mv-home-logo">SF STUDIO</div>
-          <p>Workflow MD 가져오기, 콘티 제작, 후보 이미지 정리, Grok 클립 준비를 한 화면에서 이어갑니다.</p>
-          <p class="mv-home-creator">sunofox</p>
-          <div class="mv-gpts-links" aria-label="SunoFox 제작 도구 바로가기">
-            <a href="https://chatgpt.com/g/g-69f6ccaad32c8191a04a7d0a850be300-anime-ost-mv-cutscene-prompt-builder" target="_blank" rel="noopener noreferrer">
-              <strong>MV 컷 제작</strong>
-              <span>Midjourney 30컷 설계</span>
+        <div class="mv-home-workspace">
+          <header class="mv-home-heading">
+            <span class="mv-page-kicker">SUNOFOX CREATOR CONSOLE</span>
+            <h1>다시 제작을 시작하세요</h1>
+            <p>마지막 프로젝트를 이어가거나 준비된 소스에서 새 제작 흐름을 시작하세요.</p>
+          </header>
+
+          <section class="mv-home-resume-card" aria-labelledby="mv-home-project-state">
+            <div>
+              <span class="mv-home-card-kicker">RECENT PROJECT</span>
+              <h2 id="mv-home-project-state" aria-live="polite">저장된 작업 확인 중</h2>
+              <p>저장된 콘티와 후보 이미지 작업을 그대로 불러옵니다.</p>
+            </div>
+            <button class="mv-primary-btn" id="mv-home-quick-restore" type="button" disabled>마지막 작업 이어하기</button>
+          </section>
+
+          <div class="mv-home-start-grid">
+            <a class="mv-home-start-card" href="/mv-studio/import" data-studio-route="import">
+              <span class="mv-home-card-kicker">IMPORT</span>
+              <strong>Workflow MD 가져오기</strong>
+              <span>정리된 컷 정보와 프롬프트를 새 프로젝트로 불러옵니다.</span>
             </a>
-            <a href="https://chatgpt.com/g/g-69f19263544881919eb0c78f0153e8c6-sunopogseu-ost-sseomneil" target="_blank" rel="noopener noreferrer">
-              <strong>썸네일 제작</strong>
-              <span>SunoFox OST 썸네일 구성</span>
-            </a>
-            <a href="https://chatgpt.com/g/g-69e396ce2fa08191a9dfd1a3445875f6-sunofox-eobrodeu-seteu" target="_blank" rel="noopener noreferrer">
-              <strong>업로드 문안 제작</strong>
-              <span>제목 · 설명 · 해시태그 정리</span>
-            </a>
+            <label class="mv-image-start-card" data-image-start-drop>
+              <input id="mv-image-start-files" type="file" accept="image/*" multiple>
+              <span class="mv-home-card-kicker">IMAGES</span>
+              <strong>이미지로 바로 시작</strong>
+              <span>결과 이미지를 한 번에 넣고 후보 이미지 보관함부터 시작합니다.</span>
+            </label>
           </div>
-          <label class="mv-image-start-card" data-image-start-drop>
-            <input id="mv-image-start-files" type="file" accept="image/*" multiple>
-            <strong>이미지로 바로 시작</strong>
-            <span>이미 만들어 둔 결과 이미지를 한 번에 넣고 후보 이미지 보관함부터 이어서 작업합니다.</span>
-          </label>
-        </section>
+
+          <section class="mv-home-secondary-tools" aria-label="SunoFox 제작 도구 바로가기">
+            <div>
+              <span class="mv-home-card-kicker">EXTERNAL TOOLS</span>
+              <h2>보조 제작 도구</h2>
+            </div>
+            <div class="mv-gpts-links">
+              <a href="https://chatgpt.com/g/g-69f6ccaad32c8191a04a7d0a850be300-anime-ost-mv-cutscene-prompt-builder" target="_blank" rel="noopener noreferrer">
+                <strong>MV 컷 제작</strong>
+                <span>Midjourney 30컷 설계</span>
+              </a>
+              <a href="https://chatgpt.com/g/g-69f19263544881919eb0c78f0153e8c6-sunopogseu-ost-sseomneil" target="_blank" rel="noopener noreferrer">
+                <strong>썸네일 제작</strong>
+                <span>SunoFox OST 썸네일 구성</span>
+              </a>
+              <a href="https://chatgpt.com/g/g-69e396ce2fa08191a9dfd1a3445875f6-sunofox-eobrodeu-seteu" target="_blank" rel="noopener noreferrer">
+                <strong>업로드 문안 제작</strong>
+                <span>제목 · 설명 · 해시태그 정리</span>
+              </a>
+            </div>
+          </section>
+        </div>
       </section>
 
       <section class="mv-import-studio" id="mv-import-studio" aria-label="Workflow MD 가져오기" hidden>

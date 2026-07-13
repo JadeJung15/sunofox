@@ -1073,6 +1073,10 @@
       applyPreset: document.getElementById('mv-apply-preset'),
       deletePreset: document.getElementById('mv-delete-preset'),
       categoryHome: document.getElementById('mv-category-home'),
+      homeProjectState: document.getElementById('mv-home-project-state'),
+      homeQuickRestore: document.getElementById('mv-home-quick-restore'),
+      consoleProjectTitle: document.getElementById('mv-console-project-title'),
+      consoleProjectState: document.getElementById('mv-console-project-state'),
       imageStartFiles: document.getElementById('mv-image-start-files'),
       imageStartDrop: document.querySelector('[data-image-start-drop]'),
       importSurface: document.getElementById('mv-import-studio'),
@@ -1200,6 +1204,7 @@
     els.downloadMd.addEventListener('click', downloadMarkdown);
     els.downloadCsv.addEventListener('click', downloadCsv);
     els.quickRestore?.addEventListener('click', loadProject);
+    els.homeQuickRestore?.addEventListener('click', loadProject);
     els.applyTemplate?.addEventListener('click', applySelectedProjectTemplate);
     els.savePreset?.addEventListener('click', saveCurrentPreset);
     els.applyPreset?.addEventListener('click', applySelectedPreset);
@@ -3666,6 +3671,7 @@
     const payload = readSavedProject();
     if (els.loadWork) els.loadWork.disabled = !payload;
     if (els.quickRestore) els.quickRestore.disabled = !payload;
+    syncHomeProjectState(payload);
     if (!els.storageState) return;
 
     if (!payload) {
@@ -3678,6 +3684,28 @@
     const title = payload.inputs?.title || payload.storyboard?.title || 'SF Studio';
     const cuts = payload.storyboard?.cuts?.length || 0;
     els.storageState.textContent = `마지막 작업 · ${title} · ${cuts}컷 · ${formatSavedAt(payload.savedAt)}`;
+  }
+
+  function syncHomeProjectState(payload) {
+    const cuts = payload?.storyboard?.cuts?.length || 0;
+    const hasSavedProject = cuts > 0;
+    const title = hasSavedProject
+      ? payload.inputs?.title || payload.storyboard?.title || 'SF Studio'
+      : 'SF Studio';
+    const saved = hasSavedProject ? formatSavedAt(payload.savedAt) : '저장된 작업 없음';
+
+    if (els.homeQuickRestore) els.homeQuickRestore.disabled = !hasSavedProject;
+    if (els.homeProjectState) {
+      els.homeProjectState.textContent = hasSavedProject
+        ? `${title} · ${cuts}컷 · ${saved}`
+        : '저장된 작업 없음';
+    }
+    if (els.consoleProjectTitle) els.consoleProjectTitle.textContent = title;
+    if (els.consoleProjectState) {
+      els.consoleProjectState.textContent = hasSavedProject
+        ? `${cuts}컷 · 마지막 저장 ${saved}`
+        : '새 작업 준비됨';
+    }
   }
 
   function formatSavedAt(value) {
